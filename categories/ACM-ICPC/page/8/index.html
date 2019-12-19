@@ -406,8 +406,8 @@
       </div>
 
       <h2 class="post-title">
-          <a class="post-title-link" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" itemprop="url">
-            <span itemprop="name">POJ百练 - 2964:日历问题</span>
+          <a class="post-title-link" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202804%E8%AF%8D%E5%85%B8/" itemprop="url">
+            <span itemprop="name">POJ百练 - 2804:词典</span>
           </a>
       </h2>
 
@@ -426,8 +426,8 @@
       </div>
 
       <h2 class="post-title">
-          <a class="post-title-link" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202804%E8%AF%8D%E5%85%B8/" itemprop="url">
-            <span itemprop="name">POJ百练 - 2804:词典</span>
+          <a class="post-title-link" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" itemprop="url">
+            <span itemprop="name">POJ百练 - 2964:日历问题</span>
           </a>
       </h2>
 
@@ -593,9 +593,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {

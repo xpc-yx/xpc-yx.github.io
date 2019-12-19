@@ -337,7 +337,7 @@
       <div class="popular-posts-title"><a href="\2012\09\30\poj 2406 Power Strings kmp的妙用\" rel="bookmark">poj 2406 Power Strings kmp的妙用</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2012\10\24\poj 3294 Life Forms 后缀数组求至少出现在K个字符串中的最长公共子串\" rel="bookmark">poj 3294 Life Forms 后缀数组求至少出现在K个字符串中的最长公共子串</a></div>
+      <div class="popular-posts-title"><a href="\2012\09\28\poj 3461 Oulipo Rabin-Karp 字符串匹配\" rel="bookmark">poj 3461 Oulipo Rabin-Karp 字符串匹配</a></div>
     </li>
   </ul>
 
@@ -535,9 +535,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {

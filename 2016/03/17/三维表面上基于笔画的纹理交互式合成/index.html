@@ -351,7 +351,7 @@
       <div class="popular-posts-title"><a href="\2013\03\24\OpenGL如何使用长宽非2次方的纹理\" rel="bookmark">OpenGL如何使用长宽非2次方的纹理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\10\27\OpenGL立即模式必须先指定纹理坐标\" rel="bookmark">OpenGL立即模式必须先指定纹理坐标</a></div>
+      <div class="popular-posts-title"><a href="\2013\03\24\OpenGL使用位图纹理\" rel="bookmark">OpenGL使用位图纹理</a></div>
     </li>
   </ul>
 
@@ -551,9 +551,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {

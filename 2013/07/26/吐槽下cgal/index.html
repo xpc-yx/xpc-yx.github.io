@@ -333,10 +333,10 @@
       <div class="popular-posts-title"><a href="\2013\11\15\Assimp与CGAL的联合使用问题\" rel="bookmark">Assimp与CGAL的联合使用问题</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现平面分割三维模型\" rel="bookmark">使用CGAL实现平面分割三维模型</a></div>
+      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
+      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现平面分割三维模型\" rel="bookmark">使用CGAL实现平面分割三维模型</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2015\01\22\使用CGAL计算SDF分割模型\" rel="bookmark">使用CGAL计算SDF分割模型</a></div>
@@ -540,9 +540,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {
