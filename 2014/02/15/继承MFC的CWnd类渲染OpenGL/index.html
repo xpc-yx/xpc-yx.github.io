@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="我以前使用过glut的窗口环境，以及在CView中渲染OpenGL的类。但是这些都不怎么方便。首先，在windows下，MFC比glut，glui作为界面框架要方便很多，其次，CView类没有单独的CWnd类方便，自定义的窗口类可以嵌入到任意窗口内部，这样就可以脱离框架，方便移植了。我的思路是实现一个COglWnd类。该类可以负责构建OpenGL渲染环境，并且调用模型类渲染，另外负责响应鼠标旋转放">
+<meta property="og:type" content="article">
+<meta property="og:title" content="继承MFC的CWnd类渲染OpenGL">
+<meta property="og:url" content="http://xiaopengcheng.top/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="我以前使用过glut的窗口环境，以及在CView中渲染OpenGL的类。但是这些都不怎么方便。首先，在windows下，MFC比glut，glui作为界面框架要方便很多，其次，CView类没有单独的CWnd类方便，自定义的窗口类可以嵌入到任意窗口内部，这样就可以脱离框架，方便移植了。我的思路是实现一个COglWnd类。该类可以负责构建OpenGL渲染环境，并且调用模型类渲染，另外负责响应鼠标旋转放">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c7.staticflickr.com/8/7755/27174995310_3c6b96eba2_o.jpg">
+<meta property="article:published_time" content="2014-02-15T03:12:31.000Z">
+<meta property="article:modified_time" content="2019-12-19T16:22:33.351Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c7.staticflickr.com/8/7755/27174995310_3c6b96eba2_o.jpg">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>继承MFC的CWnd类渲染OpenGL | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          继承MFC的CWnd类渲染OpenGL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-02-15 11:12:31" itemprop="dateCreated datePublished" datetime="2014-02-15T11:12:31+08:00">2014-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/" class="post-meta-item leancloud_visitors" data-flag-title="继承MFC的CWnd类渲染OpenGL" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我以前使用过glut的窗口环境，以及在CView中渲染OpenGL的类。但是这些都不怎么方便。首先，在windows下，MFC比glut，glui作为界面框架要方便很多，其次，CView类没有单独的CWnd类方便，自定义的窗口类可以<strong>嵌入</strong>到任意窗口内部，这样就可以脱离框架，方便移植了。<br>我的思路是实现一个COglWnd类。该类可以负责构建OpenGL渲染环境，并且调用模型类渲染，另外负责响应鼠标旋转放缩移动模型等，也可以添加一些额外的操作。<br>该类需要提供的外部接口，创建窗口和渲染模型。<br>COglWnd使用方法：在容器类（比如CView）的OnCreate函数内调用COglWnd的Create函数创建窗口，在容器类的OnSize函数类内调用COglWnd类的<strong>SetWindowPos</strong>移动窗口位置。<br>COglWnd的实现：<br>1.构建OpenGL渲染环境。这个必须在COglWnd的OnCreate函数类实现。具体实现我写在了SetupGLContext函数内部。该函数主要是依次调用了ChoosePixelFormat，SetPixelFormat，wglCreateContext，wglMakeCurrent函数而已。基本上就是设置下OpenGL的一些参数，然后构造下渲染环境的意思，非常好理解。具体可以google。<br>2.渲染。这里需要屏蔽<strong>OnEraseBkgnd</strong>函数，还有OnPaint内调用实际的渲染函数RenderScene而已。这里需要注意的是，我们屏蔽了CWnd的背景擦除函数，这样能够避免一定程度的闪烁。还有，当我们需要更新显示的时候，可以直接调用RenderScene而不是调用MFC的Invalidate函数。这样可以略去MFC的消息传递等。<br>3.鼠标响应。这里旋转我使用了<strong>轨迹球</strong>类。其余的直接调用OpenGL函数即可实现。<br>下面是我的COglWnd类，内部使用了一个vertex模版类存储数据和渲染球类来实现鼠标响应。上面所述，均可参照我的实现细节。我这个类就是嵌入在CView内作为子窗口使用的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/vertex.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/trackball.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Mesh/TriMesh.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Mesh/Texture.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="comment">// COglWnd</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	class COglWnd : public CWnd</span><br><span class="line">	&#123;</span><br><span class="line">		DECLARE_DYNAMIC(COglWnd)</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		COglWnd();</span><br><span class="line">		virtual ~COglWnd();</span><br><span class="line">		enum CURSOR_TYPE</span><br><span class="line">		&#123;</span><br><span class="line">			CURSOR_HAND = <span class="number">0</span>, CURSOR_PEN = <span class="number">1</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		enum MOUSE_STATE</span><br><span class="line">		&#123;</span><br><span class="line">			MOUSE_NONE = <span class="number">0</span>,</span><br><span class="line">			MOUSE_LEFTBUTTON_DOWN = <span class="number">1</span>, MOUSE_LEFTBUTTON_UP = <span class="number">2</span>,</span><br><span class="line">			MOUSE_MIDDLEBUTTON_DOWN = <span class="number">3</span>, MOUSE_MIDDLEBUTTON_UP = <span class="number">4</span>,</span><br><span class="line">			MOUSE_RIGHTBUTTON_DOWN = <span class="number">5</span>, MOUSE_RIGHTBUTTON_UP = <span class="number">6</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//外部接口</span></span><br><span class="line">	public:</span><br><span class="line">		void Create(CRect rect, CWnd *parent);</span><br><span class="line">		CString LoadModel();</span><br><span class="line">		CString SaveModel();</span><br><span class="line">		bool ChooseDrawColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		bool ChooseStrokeColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		CString ChooseDrawTexture();</span><br><span class="line">		bool ChooseBackColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		void RenderScene();//渲染函数</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		void SetCursorType(int nType) &#123; m_cursorType = nType; &#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//消息处理函数</span></span><br><span class="line">	protected:</span><br><span class="line">		DECLARE_MESSAGE_MAP()</span><br><span class="line">		afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);</span><br><span class="line">		afx_msg void OnSize(UINT nType, int cx, int cy);</span><br><span class="line">		afx_msg void OnDestroy();</span><br><span class="line">		afx_msg void OnPaint();</span><br><span class="line">		afx_msg BOOL OnEraseBkgnd(CDC* pDC);</span><br><span class="line">		afx_msg void OnLButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnLButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnRButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnRButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMouseMove(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);</span><br><span class="line">		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//OpenGL函数</span></span><br><span class="line">	private:</span><br><span class="line">		BOOL SetupGLContext();</span><br><span class="line">		BOOL DetachGLContext();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void SetGLViewFrustum(int <span class="attribute">left</span>, int top, int right, int bottom, float DepthMin, float DepthMax, float Fov);</span><br><span class="line">		void SetGLViewFrustum(int <span class="attribute">left</span>, int top, int right, int bottom);</span><br><span class="line">		void SetGLFOV(<span class="attribute">float</span> Fov);</span><br><span class="line">		void ResizeGLViewport(int <span class="attribute">width</span>, int height);</span><br><span class="line">		void SetEye(v3f pos, v3f dest, v3f up);</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void InitColor();</span><br><span class="line">		void InitLight();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void InitialScene();</span><br><span class="line">		void ReleaseScene();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void RenderBackGround();</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		CTriMesh m_mesh;</span><br><span class="line">		CTexture m_backTexture;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		CRect m_rect;</span><br><span class="line">		CWnd* m_parent;</span><br><span class="line">		int		m_nWinWidth;</span><br><span class="line">		int		m_nWinHeight;</span><br><span class="line">		HDC		m_hDC;</span><br><span class="line">		HGLRC	m_hGLRC;</span><br><span class="line">		<span class="attribute">float</span> m_fGLDepthMin;</span><br><span class="line">		<span class="attribute">float</span> m_fGLDepthMax;</span><br><span class="line">		<span class="attribute">float</span> m_fGLFov;</span><br><span class="line">		BOOL m_bGLSetup;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		v4f	m_backColor;</span><br><span class="line">		v4f m_diffuseLight;</span><br><span class="line">		v4f m_specularLight;</span><br><span class="line">		v4f	m_ambientLight;</span><br><span class="line">		v4f m_emissionLight;</span><br><span class="line">		v4f m_gloabalAmbientLight;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		v3f m_eye;</span><br><span class="line">		v3f m_dest;</span><br><span class="line">		v3f m_up;</span><br><span class="line">		Trackball m_trackball;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		int m_cursorType;</span><br><span class="line">		int m_mouseState;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>GlWnd.cpp : 实现文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"OglWnd.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"../Resource.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glew.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opengl.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"glu.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"glew32.lib"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// CGlWnd</span></span><br><span class="line">namespace LibYX</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	IMPLEMENT_DYNAMIC(COglWnd, CWnd)</span><br><span class="line"></span><br><span class="line">	COglWnd::COglWnd()</span><br><span class="line">	&#123;</span><br><span class="line">		m_bGLSetup = false;</span><br><span class="line">		m_fGLDepthMin = 0.0001f;</span><br><span class="line">		m_fGLDepthMax = 100.0f;</span><br><span class="line">		m_fGLFov = 60.0f;</span><br><span class="line">		m_cursorType = CURSOR_HAND;</span><br><span class="line">		m_mouseState = MOUSE_NONE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	COglWnd::~COglWnd()</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::Create(CRect rect, CWnd *parent)</span><br><span class="line">	&#123;</span><br><span class="line">		if (m_bGLSetup) return;</span><br><span class="line"></span><br><span class="line">		ASSERT(rect);</span><br><span class="line">		ASSERT(parent);</span><br><span class="line">		m_rect = rect;</span><br><span class="line">		m_parent = parent;</span><br><span class="line"></span><br><span class="line">		CString className = AfxRegisterWndClass(</span><br><span class="line">			CS_HREDRAW | CS_VREDRAW | CS_OWNDC, NULL, (HBRUSH)GetStockObject(BLACK_BRUSH), NULL);</span><br><span class="line"></span><br><span class="line">		CreateEx(0, className, "OglWnd", WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,</span><br><span class="line">			rect, parent, 0);</span><br><span class="line">		m_mesh.Wnd(this);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	CString COglWnd::LoadModel()</span><br><span class="line">	&#123;</span><br><span class="line">		char filefilter[] = _T("M Files (*.m) |*.m|Wavefront Files (*.obj) |*.obj|");</span><br><span class="line">		CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,</span><br><span class="line">			filefilter, NULL, 0);</span><br><span class="line">		CString pathname;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (IDOK != dlg.DoModal())</span><br><span class="line">			return pathname;</span><br><span class="line"></span><br><span class="line">		pathname = dlg.GetPathName();</span><br><span class="line">		<span class="keyword">if</span> (pathname.IsEmpty() == TRUE)</span><br><span class="line">		&#123;</span><br><span class="line">			AfxMessageBox("输入模型文件名为空!");</span><br><span class="line">			return pathname;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CString ext = dlg.GetFileExt();</span><br><span class="line">		if (ext == "obj" || ext == "OBJ")</span><br><span class="line">		&#123;</span><br><span class="line">			m_mesh.LoadOBJModel(pathname);</span><br><span class="line">		&#125;</span><br><span class="line">		else if (ext == "m" || ext == "M")</span><br><span class="line">		&#123;</span><br><span class="line">			m_mesh.LoadMModel(pathname);</span><br><span class="line">		&#125;</span><br><span class="line">		RenderScene();</span><br><span class="line"></span><br><span class="line">		return pathname;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	CString COglWnd::SaveModel()</span><br><span class="line">	&#123;</span><br><span class="line">		CString pathname;</span><br><span class="line">		<span class="keyword">if</span> (m_mesh.HasModelLoad() == FALSE)</span><br><span class="line">		&#123;</span><br><span class="line">			return pathname;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		char defExt[] = _T(".obj");</span><br><span class="line">		char filefilter[] = _T("Wavefront Files (*.obj) |*.obj|m Files (*.m) |*.m||");</span><br><span class="line">		CFileDialog dlg(FALSE, defExt, m_mesh.GetModelName().c_str(), OFN_HIDEREADONLY, filefilter, NULL, 0);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (IDOK != dlg.DoModal())</span><br><span class="line">			return pathname;</span><br><span class="line"></span><br><span class="line">		CString ext = dlg.GetFileExt();</span><br><span class="line"></span><br><span class="line">		if (ext == _T("obj") || ext == _T("OBJ"))</span><br><span class="line">		&#123;</span><br><span class="line">			pathname = dlg.GetPathName();</span><br><span class="line">			<span class="keyword">if</span> (pathname.IsEmpty())</span><br><span class="line">			&#123;</span><br><span class="line">				AfxMessageBox("输入模型文件名为空!");</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				m_mesh.SaveOBJModel(pathname);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		else if (ext == _T("m") || ext == _T("M"))// Save model without material)</span><br><span class="line">		&#123;</span><br><span class="line">			pathname = dlg.GetPathName();</span><br><span class="line">			<span class="keyword">if</span> (pathname.IsEmpty())</span><br><span class="line">			&#123;</span><br><span class="line">				AfxMessageBox("输入模型文件名为空!");</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				m_mesh.SaveMModel(pathname);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return pathname;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bool COglWnd::ChooseDrawColor(v4f <span class="attribute">color</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CColorDialog colorDialog;</span><br><span class="line">		COLORREF colorRef;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (colorDialog.DoModal() == IDOK)<span class="comment">//如果按下颜色对话框的OK键</span></span><br><span class="line">		&#123;</span><br><span class="line">			colorRef = colorDialog.GetColor();</span><br><span class="line">			<span class="attribute">color</span>[<span class="number">0</span>] = GetRValue(colorRef);</span><br><span class="line">			<span class="attribute">color</span>[<span class="number">1</span>] = GetGValue(colorRef);</span><br><span class="line">			<span class="attribute">color</span>[<span class="number">2</span>] = GetBValue(colorRef);</span><br><span class="line"></span><br><span class="line">			m_mesh.DrawColor(<span class="attribute">color</span>);</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bool COglWnd::ChooseStrokeColor(v4f <span class="attribute">color</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CColorDialog colorDialog;</span><br><span class="line">		COLORREF colorRef;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (colorDialog.DoModal() == IDOK)<span class="comment">//如果按下颜色对话框的OK键</span></span><br><span class="line">		&#123;</span><br><span class="line">			colorRef = colorDialog.GetColor();</span><br><span class="line">			<span class="attribute">color</span>[<span class="number">0</span>] = GetRValue(colorRef);</span><br><span class="line">			<span class="attribute">color</span>[<span class="number">1</span>] = GetGValue(colorRef);</span><br><span class="line">			<span class="attribute">color</span>[<span class="number">2</span>] = GetBValue(colorRef);</span><br><span class="line">			m_mesh.StrokeColor(<span class="attribute">color</span>);</span><br><span class="line">			RenderScene();</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bool COglWnd::ChooseBackColor(v4f <span class="attribute">color</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CColorDialog colorDialog;</span><br><span class="line">		COLORREF colorRef;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (colorDialog.DoModal() == IDOK)<span class="comment">//如果按下颜色对话框的OK键</span></span><br><span class="line">		&#123;</span><br><span class="line">			colorRef = colorDialog.GetColor();</span><br><span class="line">			m_backColor[0] = GetRValue(colorRef);</span><br><span class="line">			m_backColor[1] = GetGValue(colorRef);</span><br><span class="line">			m_backColor[2] = GetBValue(colorRef);</span><br><span class="line">			<span class="attribute">color</span> = m_backColor;</span><br><span class="line">			glClearColor(m_backColor[0], m_backColor[1], m_backColor[2], 1.0f);</span><br><span class="line">			RenderScene();</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	CString COglWnd::ChooseDrawTexture()</span><br><span class="line">	&#123;</span><br><span class="line">		char filefilter[] = _T(<span class="string">"Jpg Files (*.jpg)|*jpg|Bmp Files (*.bmp)|*.bmp|\</span></span><br><span class="line">							   					Png Files (*.png)|*.png|Gif Files (*.gif)|*.gif|Tga Files (*.tga)|*.tga|");</span><br><span class="line">		CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,</span><br><span class="line">			filefilter, NULL, 0);</span><br><span class="line">		CString strPathName;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (dlg.DoModal() == IDOK)</span><br><span class="line">		&#123;</span><br><span class="line">			strPathName = dlg.GetPathName();</span><br><span class="line">			m_mesh.SetTexture(strPathName);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return strPathName;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">	<span class="comment">//以下是OpenGL相关的函数</span></span><br><span class="line">	BOOL COglWnd::SetupGLContext()</span><br><span class="line">	&#123;</span><br><span class="line">		DWORD dwFlags = (PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL);</span><br><span class="line"></span><br><span class="line">		PIXELFORMATDESCRIPTOR pfd =</span><br><span class="line">		&#123;</span><br><span class="line">			sizeof(PIXELFORMATDESCRIPTOR),	<span class="comment">// Structure size,</span></span><br><span class="line">			<span class="number">1</span>,				<span class="comment">// Structure version number</span></span><br><span class="line">			dwFlags,			<span class="comment">// Property flags</span></span><br><span class="line">			PFD_TYPE_RGBA,			<span class="comment">// RGBA mode</span></span><br><span class="line">			<span class="number">24</span>,				<span class="comment">// 24-bit color</span></span><br><span class="line">			<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,		<span class="comment">// 8-bit each color</span></span><br><span class="line">			<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,		<span class="comment">// No alpha or accum. buffer,</span></span><br><span class="line">			<span class="number">32</span>,				<span class="comment">// 32-bit z-buffer</span></span><br><span class="line">			<span class="number">0</span>, <span class="number">0</span>,				<span class="comment">// No stencil or aux buffer</span></span><br><span class="line">			PFD_MAIN_PLANE,			<span class="comment">// Mainn layer type</span></span><br><span class="line">			<span class="number">0</span>,				<span class="comment">// Reserved</span></span><br><span class="line">			<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,			<span class="comment">// Unsupported.</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		m_hDC = GetDC()-&gt;m_hDC;</span><br><span class="line"></span><br><span class="line">		int PixelFormat = ChoosePixelFormat(m_hDC, pfd);</span><br><span class="line">		BOOL bOk = false;</span><br><span class="line">		bOk = SetPixelFormat(m_hDC, PixelFormat, pfd);</span><br><span class="line">		<span class="keyword">if</span> (!bOk)</span><br><span class="line">		&#123;</span><br><span class="line">			MessageBox(_T("GL set pixel format fail!"), _T("Error"), MB_OK);</span><br><span class="line">			return bOk;</span><br><span class="line">		&#125;</span><br><span class="line">		m_hGLRC = wglCreateContext(m_hDC);</span><br><span class="line">		bOk = wglMakeCurrent(m_hDC, m_hGLRC);</span><br><span class="line">		<span class="keyword">if</span> (!bOk)</span><br><span class="line">		&#123;</span><br><span class="line">			MessageBox(_T("Set up GL render context fail!"), _T("Error"), MB_OK);</span><br><span class="line">			return bOk;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return bOk;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	BOOL COglWnd::DetachGLContext()</span><br><span class="line">	&#123;</span><br><span class="line">		wglMakeCurrent(m_hDC, NULL);</span><br><span class="line">		wglDeleteContext(m_hGLRC);</span><br><span class="line">		::ReleaseDC(this-&gt;m_hWnd, m_hDC);</span><br><span class="line"></span><br><span class="line">		return TRUE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::SetGLViewFrustum(GLint <span class="attribute">left</span>, GLint top, GLint right, GLint bottom,</span><br><span class="line">		GLfloat DepthMin, GLfloat DepthMax, GLfloat Fov)</span><br><span class="line">	&#123;</span><br><span class="line">		m_fGLDepthMin = DepthMin;</span><br><span class="line">		m_fGLDepthMax = DepthMax;</span><br><span class="line">		m_fGLFov = Fov;</span><br><span class="line"></span><br><span class="line">		SetGLViewFrustum(<span class="attribute">left</span>, top, right, bottom);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::SetGLViewFrustum(GLint <span class="attribute">left</span>, GLint top, GLint right, GLint bottom)</span><br><span class="line">	&#123;</span><br><span class="line">		glViewport(<span class="attribute">left</span>, top, (right - left), (bottom - top));</span><br><span class="line"></span><br><span class="line">		<span class="attribute">float</span> AspectRatio = (float)(right - left) / (float)(bottom - top);</span><br><span class="line">		glMatrixMode(GL_PROJECTION);</span><br><span class="line">		glLoadIdentity();</span><br><span class="line"></span><br><span class="line">		gluPerspective(m_fGLFov, AspectRatio, m_fGLDepthMin, m_fGLDepthMax);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::SetGLFOV(GLfloat Fov)</span><br><span class="line">	&#123;</span><br><span class="line">		m_fGLFov = Fov;</span><br><span class="line"></span><br><span class="line">		int vp[4];</span><br><span class="line">		glGetIntegerv(GL_VIEWPORT, vp);</span><br><span class="line">		<span class="attribute">float</span> AspectRatio = (float)(vp[<span class="number">2</span>]) / (float)(vp[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">		glMatrixMode(GL_PROJECTION);</span><br><span class="line">		glLoadIdentity();</span><br><span class="line"></span><br><span class="line">		gluPerspective(m_fGLFov, AspectRatio, m_fGLDepthMin, m_fGLDepthMax);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::SetEye(v3f pos, v3f desti, v3f up)</span><br><span class="line">	&#123;</span><br><span class="line">		glMatrixMode(GL_MODELVIEW);</span><br><span class="line">		glLoadIdentity();</span><br><span class="line">		gluLookAt(pos[0], pos[1], pos[2], desti[0], desti[1], desti[2], up[0], up[1], up[2]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::ResizeGLViewport(GLint <span class="attribute">width</span>, GLint height)</span><br><span class="line">	&#123;</span><br><span class="line">		glViewport(<span class="number">0</span>, <span class="number">0</span>, <span class="attribute">width</span>, height);</span><br><span class="line"></span><br><span class="line">		<span class="attribute">float</span> AspectRatio = (float)width / (float)height;</span><br><span class="line"></span><br><span class="line">		glMatrixMode(GL_PROJECTION);</span><br><span class="line">		glLoadIdentity();</span><br><span class="line"></span><br><span class="line">		gluPerspective(m_fGLFov, AspectRatio, m_fGLDepthMin, m_fGLDepthMax);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::InitialScene()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (glewInit() != GLEW_OK)</span><br><span class="line">		&#123;</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		m_eye[0] = m_eye[1] = 0.0;</span><br><span class="line">		m_eye[2] = 6.0f;</span><br><span class="line">		m_dest[0] = m_dest[1] = m_dest[2] = 0.0;</span><br><span class="line">		m_up[0] = m_up[2] = 0.0;</span><br><span class="line">		m_up[1] = 1.0;</span><br><span class="line">		SetEye(m_eye, m_dest, m_up);</span><br><span class="line"></span><br><span class="line">		InitColor();</span><br><span class="line">		InitLight();</span><br><span class="line"></span><br><span class="line">		glCullFace(GL_BACK);</span><br><span class="line">		glEnable(GL_CULL_FACE);</span><br><span class="line">		glShadeModel(GL_SMOOTH);</span><br><span class="line">		glEnable(GL_DEPTH_TEST);</span><br><span class="line">		glDepthFunc(GL_LEQUAL);</span><br><span class="line">		glClearColor(m_backColor[0], m_backColor[1], m_backColor[2], 1.0f);</span><br><span class="line">		glDrawBuffer(GL_BACK);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//glEnable(GL_ALPHA_TEST);</span></span><br><span class="line">		<span class="comment">//glAlphaFunc(GL_GREATER, 0.9);//0.5可以换成任何在0~1之间的数 </span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//m_backTexture.LoadFromFile("OglWnd\\blue_back.jpg");</span></span><br><span class="line">		<span class="comment">//m_backTexture.Init2DTex();</span></span><br><span class="line"></span><br><span class="line">		m_trackball.setBallSpeed(10.0);</span><br><span class="line">		m_mesh.InitData();</span><br><span class="line">		m_mesh.DrawMouseStroke(true);</span><br><span class="line">		<span class="comment">//m_mesh.LoadOBJModel("MeshData\\bunny_480k.obj");</span></span><br><span class="line">		<span class="comment">//m_mesh.LoadModel("MeshData\\plane.obj");</span></span><br><span class="line">		m_mesh.LoadMModel("MeshData\\bunny_80k.m");</span><br><span class="line">		<span class="comment">//m_mesh.LoadMModel("MeshData\\bunny_5k.m");</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::InitColor()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//m_backColor[0] = 0.15f;</span></span><br><span class="line">		<span class="comment">//m_backColor[1] = 0.20f;</span></span><br><span class="line">		<span class="comment">//m_backColor[2] = 0.267f;</span></span><br><span class="line">		m_backColor[0] = m_backColor[1] = m_backColor[2] = 0.0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::InitLight()</span><br><span class="line">	&#123;</span><br><span class="line">		v4f lightOnePos(V4F(0.0f, 0.0f, 20.0f, 0.0f));</span><br><span class="line"></span><br><span class="line">		m_gloabalAmbientLight[<span class="number">0</span>] = m_gloabalAmbientLight[<span class="number">1</span>] = m_gloabalAmbientLight[<span class="number">2</span>]</span><br><span class="line">			= m_gloabalAmbientLight[3] = 0.2f;</span><br><span class="line">		m_diffuseLight[0] = m_diffuseLight[1] = m_diffuseLight[2] = m_diffuseLight[3] = 1.0;</span><br><span class="line">		m_diffuseLight[3] = 1.0;</span><br><span class="line">		m_specularLight[0] = m_specularLight[1] = m_specularLight[2] = m_specularLight[3] = 1.0;</span><br><span class="line">		m_specularLight[3] = 1.0;</span><br><span class="line">		m_ambientLight[0] = m_ambientLight[1] = m_ambientLight[2] = m_ambientLight[3] = 0.2;</span><br><span class="line">		m_emissionLight[0] = m_emissionLight[1] = m_emissionLight[2] = m_emissionLight[3] = 0.1;</span><br><span class="line"></span><br><span class="line">		glEnable(GL_LIGHT0);</span><br><span class="line">		glEnable(GL_LIGHTING);</span><br><span class="line"></span><br><span class="line">		glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);//纹理映射之后再应用镜面光高亮的效果</span><br><span class="line">		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, (<span class="attribute">float</span>*)m_gloabalAmbientLight);</span><br><span class="line"></span><br><span class="line">		glLightfv(GL_LIGHT0, GL_POSITION, (<span class="attribute">float</span>*)lightOnePos);</span><br><span class="line">		glLightfv(GL_LIGHT0, GL_DIFFUSE, (<span class="attribute">float</span>*)m_diffuseLight);</span><br><span class="line">		glLightfv(GL_LIGHT0, GL_SPECULAR, (<span class="attribute">float</span>*)m_specularLight);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::RenderBackGround()</span><br><span class="line">	&#123;</span><br><span class="line">		glPushAttrib(GL_ALL_ATTRIB_BITS);</span><br><span class="line">		glDisable(GL_DEPTH_TEST);</span><br><span class="line"></span><br><span class="line">		glEnable(GL_TEXTURE_2D);</span><br><span class="line">		m_backTexture.Bind2d();</span><br><span class="line"></span><br><span class="line">		glMatrixMode(GL_PROJECTION);</span><br><span class="line">		glPushMatrix();</span><br><span class="line">		glLoadIdentity();</span><br><span class="line">		gluOrtho2D(0.0, 1.0, 0.0, 1.0);</span><br><span class="line"></span><br><span class="line">		glMatrixMode(GL_MODELVIEW);</span><br><span class="line">		glPushMatrix();</span><br><span class="line">		glLoadIdentity();</span><br><span class="line">		glBegin(GL_QUADS);</span><br><span class="line">		glTexCoord2f(0.0, 1.0);</span><br><span class="line">		glVertex2f(0.0, 0.0);</span><br><span class="line">		glTexCoord2f(1.0, 1.0);</span><br><span class="line">		glVertex2f(1.0, 0.0);</span><br><span class="line">		glTexCoord2f(1.0, 0.0);</span><br><span class="line">		glVertex2f(1.0, 1.0);</span><br><span class="line">		glTexCoord2f(0.0, 0.0);</span><br><span class="line">		glVertex2f(0.0, 1.0);</span><br><span class="line">		glEnd();</span><br><span class="line">		glPopMatrix();</span><br><span class="line"></span><br><span class="line">		glMatrixMode(GL_PROJECTION);</span><br><span class="line">		glPopMatrix();</span><br><span class="line"></span><br><span class="line">		glPopAttrib();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::RenderScene()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_hGLRC != wglGetCurrentContext())</span><br><span class="line">		&#123;</span><br><span class="line">			wglMakeCurrent(m_hDC, m_hGLRC);</span><br><span class="line">		&#125;</span><br><span class="line">		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer</span><br><span class="line"></span><br><span class="line">		<span class="comment">//RenderBackGround();</span></span><br><span class="line">		glMatrixMode(GL_MODELVIEW);</span><br><span class="line">		glPushMatrix();</span><br><span class="line">		glMultMatrixf((float*)(m_trackball.matrix().transpose()));</span><br><span class="line"></span><br><span class="line">		m_mesh.DrawScene();</span><br><span class="line"></span><br><span class="line">		glPopMatrix();</span><br><span class="line">		SwapBuffers(m_hDC);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::ReleaseScene()</span><br><span class="line">	&#123;</span><br><span class="line">		m_mesh.DestroyData();</span><br><span class="line">		DetachGLContext();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	BEGIN_MESSAGE_MAP(COglWnd, CWnd)</span><br><span class="line">		ON_WM_DESTROY()</span><br><span class="line">		ON_WM_PAINT()</span><br><span class="line">		ON_WM_CREATE()</span><br><span class="line">		ON_WM_SIZE()</span><br><span class="line">		ON_WM_ERASEBKGND()</span><br><span class="line">		ON_WM_LBUTTONDOWN()</span><br><span class="line">		ON_WM_LBUTTONUP()</span><br><span class="line">		ON_WM_MBUTTONDOWN()</span><br><span class="line">		ON_WM_MBUTTONUP()</span><br><span class="line">		ON_WM_RBUTTONDOWN()</span><br><span class="line">		ON_WM_RBUTTONUP()</span><br><span class="line">		ON_WM_MOUSEMOVE()</span><br><span class="line">		ON_WM_MOUSEWHEEL()</span><br><span class="line">		ON_WM_SETCURSOR()</span><br><span class="line">		ON_WM_MBUTTONDOWN()</span><br><span class="line">		ON_WM_MBUTTONUP()</span><br><span class="line">		ON_WM_RBUTTONDOWN()</span><br><span class="line">		ON_WM_RBUTTONUP()</span><br><span class="line">	END_MESSAGE_MAP()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//以下是消息处理函数</span></span><br><span class="line">	int COglWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (CWnd::OnCreate(lpCreateStruct) == -<span class="number">1</span>)</span><br><span class="line">			return -1;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!SetupGLContext())</span><br><span class="line">		&#123;</span><br><span class="line">			AfxMessageBox("初始化OpenGL窗口设置失败!");</span><br><span class="line">			return -1;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		InitialScene();</span><br><span class="line"></span><br><span class="line">		m_bGLSetup = TRUE;</span><br><span class="line"></span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// COglWnd 消息处理程序</span></span><br><span class="line"></span><br><span class="line">	void COglWnd::OnSize(UINT nType, int cx, int cy)</span><br><span class="line">	&#123;</span><br><span class="line">		CWnd::OnSize(nType, cx, cy);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// <span class="doctag">TODO:</span> 在此处添加消息处理程序代码</span></span><br><span class="line">		m_nWinWidth = cx;</span><br><span class="line">		m_nWinHeight = cy;</span><br><span class="line">		m_mesh.WindowWidth(m_nWinWidth);</span><br><span class="line">		m_mesh.WindowHeight(m_nWinHeight);</span><br><span class="line">		m_trackball.init(cx, cy);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (m_bGLSetup)</span><br><span class="line">		&#123;</span><br><span class="line">			wglMakeCurrent(m_hDC, m_hGLRC);</span><br><span class="line">			ResizeGLViewport(cx, cy);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	BOOL COglWnd::OnEraseBkgnd(CDC* pDC)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// <span class="doctag">TODO:</span>  在此添加消息处理程序代码和/或调用默认值</span></span><br><span class="line">		return TRUE;</span><br><span class="line">		<span class="comment">//return CWnd::OnEraseBkgnd(pDC);</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnDestroy()</span><br><span class="line">	&#123;</span><br><span class="line">		CWnd::OnDestroy();</span><br><span class="line"></span><br><span class="line">		ReleaseScene();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnPaint()</span><br><span class="line">	&#123;</span><br><span class="line">		CPaintDC dc(this); // device context for painting</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (m_bGLSetup)</span><br><span class="line">		&#123;</span><br><span class="line">			RenderScene();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	BOOL COglWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			SetCursor(LoadCursor(AfxGetApp()-&gt;m_hInstance, MAKEINTRESOURCE(IDC_CURSOR_HAND)));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (m_cursorType == CURSOR_PEN)</span><br><span class="line">		&#123;</span><br><span class="line">			SetCursor(LoadCursor(AfxGetApp()-&gt;m_hInstance, MAKEINTRESOURCE(IDC_CURSOR_PEN)));</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return TRUE;</span><br><span class="line">		<span class="comment">//return CWnd::OnSetCursor(pWnd, nHitTest, message);</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnLButtonDown(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		m_mouseState = MOUSE_LEFTBUTTON_DOWN;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)<span class="comment">//如果是浏览模式</span></span><br><span class="line">		&#123;</span><br><span class="line">			m_trackball.buttonPressed(Trackball::LEFT_BUTTON, point.x, point.y);</span><br><span class="line">			m_mesh.DrawMouseStroke(false);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (m_cursorType == CURSOR_PEN)<span class="comment">//如果是绘制模式</span></span><br><span class="line">		&#123;</span><br><span class="line">			m_mesh.DrawMouseStroke(true);</span><br><span class="line">			m_mesh.ClearMouseStroke();//清除原鼠标点集合</span><br><span class="line">			<span class="comment">//添加新鼠标点</span></span><br><span class="line">			m_mesh.AddMousePoint(V2F(point.x, m_nWinHeight - point.y - 1));</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CWnd::OnLButtonDown(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnLButtonUp(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		m_mouseState = MOUSE_LEFTBUTTON_UP;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			m_trackball.buttonReleased(Trackball::LEFT_BUTTON);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (m_cursorType == CURSOR_PEN)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//添加新鼠标点</span></span><br><span class="line">			m_mesh.AddMousePoint(V2F(point.x, m_nWinHeight - point.y - 1));</span><br><span class="line">			m_mesh.DrawStroke();//绘制笔画</span><br><span class="line">		&#125;</span><br><span class="line">		RenderScene();</span><br><span class="line"></span><br><span class="line">		CWnd::OnLButtonUp(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnMButtonDown(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		m_mouseState = MOUSE_MIDDLEBUTTON_DOWN;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			m_mesh.DrawMouseStroke(false);</span><br><span class="line">			m_trackball.buttonPressed(Trackball::MIDDLE_BUTTON, point.x, point.y);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CWnd::OnMButtonDown(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnMButtonUp(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		m_mouseState = MOUSE_MIDDLEBUTTON_UP;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			m_trackball.buttonReleased(Trackball::MIDDLE_BUTTON);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CWnd::OnMButtonUp(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnRButtonDown(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		m_mouseState = MOUSE_RIGHTBUTTON_DOWN;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			m_mesh.DrawMouseStroke(false);</span><br><span class="line">			m_trackball.buttonPressed(Trackball::RIGHT_BUTTON, point.x, point.y);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CWnd::OnRButtonDown(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnRButtonUp(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		m_mouseState = MOUSE_RIGHTBUTTON_UP;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			m_trackball.buttonReleased(Trackball::RIGHT_BUTTON);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CWnd::OnRButtonUp(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void COglWnd::OnMouseMove(UINT nFlags, CPoint point)</span><br><span class="line">	&#123;</span><br><span class="line">		SetFocus();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (m_mouseState == MOUSE_LEFTBUTTON_DOWN</span><br><span class="line">				|| m_mouseState == MOUSE_MIDDLEBUTTON_DOWN</span><br><span class="line">				|| m_mouseState == MOUSE_RIGHTBUTTON_DOWN)</span><br><span class="line">			&#123;</span><br><span class="line">				m_trackball.update(point.x, point.y);</span><br><span class="line">				RenderScene();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (m_cursorType == CURSOR_PEN)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (m_mouseState == MOUSE_LEFTBUTTON_DOWN)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//添加新鼠标点</span></span><br><span class="line">				m_mesh.AddMousePoint(V2F(point.x, m_nWinHeight - point.y - 1));</span><br><span class="line">				RenderScene();//更新显示</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		CWnd::OnMouseMove(nFlags, point);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//中键滚动放缩模型</span></span><br><span class="line">	BOOL COglWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_cursorType == CURSOR_HAND  m_mesh.HasModelLoad())</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attribute">float</span> z = m_eye[<span class="number">2</span>];</span><br><span class="line">			z += zDelta / 1000.f;</span><br><span class="line">			z = z &lt; m_fGLDepthMin ? m_fGLDepthMin : z;</span><br><span class="line">			SetEye(m_eye, m_dest, m_up);</span><br><span class="line"></span><br><span class="line">			RenderScene();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return CWnd::OnMouseWheel(nFlags, zDelta, pt);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下图所示的中间渲染窗口：<br><img src="https://c7.staticflickr.com/8/7755/27174995310_3c6b96eba2_o.jpg" alt=""></p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/" title="继承MFC的CWnd类渲染OpenGL">http://xiaopengcheng.top/2014/02/15/继承MFC的CWnd类渲染OpenGL/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" rel="prev" title="CMFCToolBar上添加组合框的bug">
+      <i class="fa fa-chevron-left"></i> CMFCToolBar上添加组合框的bug
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" rel="next" title="MFC框架下OpenGL全屏抗锯齿">
+      MFC框架下OpenGL全屏抗锯齿 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

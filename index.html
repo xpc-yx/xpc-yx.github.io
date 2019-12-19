@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="远行的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="远行&#39;s Blog">
+<meta property="og:url" content="http://xiaopengcheng.top/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="远行的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="post-title-link" itemprop="url">Unity3D代码规范</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-19 17:15:51" itemprop="dateCreated datePublished" datetime="2018-12-19T17:15:51+08:00">2018-12-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity3d/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity3d</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="post-meta-item leancloud_visitors" data-flag-title="Unity3D代码规范" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h2><h3 id="排版约定"><a href="#排版约定" class="headerlink" title="排版约定"></a>排版约定</h3><ol>
+<li>字段：私有字段、受保护字段（尽量不要使用公有字段）</li>
+<li>属性：私有属性、受保护属性、公有属性</li>
+<li>事件：私有事件、受保护事件、公有事件</li>
+<li>构造函数：参数数量最少的构造函数，参数数量中等的构造函数，参数数量最多的构造函数</li>
+<li>方法：重载方法的排列顺序与构造函数相同，从参数数量最少往下至参数最多。方法按照功能分块即可，不需要按照私有、保护、公有分布。</li>
+</ol>
+<h3 id="命名的基本约定"><a href="#命名的基本约定" class="headerlink" title="命名的基本约定"></a>命名的基本约定</h3><h4 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h4><p>尽量不要缩写名字，名字长没关系，尽可能描述清楚。</p>
+<h4 id="命名方法"><a href="#命名方法" class="headerlink" title="命名方法"></a>命名方法</h4><p>命名采用驼峰规则，不采用下划线分割规则。</p>
+<ol>
+<li>Pascal命名法：每个单词首字母大写。</li>
+<li>Camel命名法：第一个单词首字母小写，其余单词首字母大写。</li>
+</ol>
+<h4 id="类型前缀"><a href="#类型前缀" class="headerlink" title="类型前缀"></a>类型前缀</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">NGUI概述</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-01-12 17:15:51" itemprop="dateCreated datePublished" datetime="2017-01-12T17:15:51+08:00">2017-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity3d/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity3d</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" class="post-meta-item leancloud_visitors" data-flag-title="NGUI概述" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="NGUI介绍"><a href="#NGUI介绍" class="headerlink" title="NGUI介绍"></a>NGUI介绍</h2><p>NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。<br>NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循<a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank" rel="noopener">Kiss准则</a>，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。<br><a href="http://www.tasharen.com/?page_id=140" target="_blank" rel="noopener">NGUI官方网址</a><br><a href="http://www.tasharen.com/forum/index.php?board=12.0" target="_blank" rel="noopener">NGUI官方文档地址</a></p>
+<h2 id="NGUI下载"><a href="#NGUI下载" class="headerlink" title="NGUI下载"></a>NGUI下载</h2><p>我们可以从unity商店购买NGUI，或者下载其免费版本。<br><a href="https://www.assetstore.unity3d.com/cn/#!/content/2413" target="_blank" rel="noopener">NGUI的Unity商店</a><br>当然也可以下载网上其它人提供的版本学习研究。<br><a href="http://www.ceeger.com/forum/read.php?tid=20718fid=16" target="_blank" rel="noopener">NGUI 3.10.2</a></p>
+<h2 id="NGUI导入"><a href="#NGUI导入" class="headerlink" title="NGUI导入"></a>NGUI导入</h2><p>下载NGUI后，我们得到的是一个.unitypackage文件，比如NGUI Next-Gen UI v3.6.8.unitypackage。<br>Unity编辑器中，打开菜单Assets-&gt;ImportPackage-&gt;CustomPackage，然后选择下载的.unitypackage文件导入编辑器。导入NGUI后，在工程的Assets目录下会出现一个NGUI文件夹，并且Unity编辑器中会多了一个NGUI主菜单。</p>
+<h2 id="NGUI例子"><a href="#NGUI例子" class="headerlink" title="NGUI例子"></a>NGUI例子</h2><p>打开NGUI-&gt;Options-&gt;Reset Prefab ToolBar，会出现如下工具条：</p>
+<p><img src="https://c1.staticflickr.com/1/782/31420422424_657c6cee61_o.png" alt="NGUI例子"><br>这里面有基本的NGUI控件例子，是我们学习参照的好材料。</p>
+<h2 id="NGUI类图"><a href="#NGUI类图" class="headerlink" title="NGUI类图"></a>NGUI类图</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">WebGL编程模型</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-25 18:16:11" itemprop="dateCreated datePublished" datetime="2016-12-25T18:16:11+08:00">2016-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/WebGL/" itemprop="url" rel="index">
+                    <span itemprop="name">WebGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="WebGL编程模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文主要介绍编写一个原生的WebGL程序需要哪些步骤。</p>
+<h2 id="WebGL程序的软件结构"><a href="#WebGL程序的软件结构" class="headerlink" title="WebGL程序的软件结构"></a>WebGL程序的软件结构</h2><p>默认情况下，一个动态网页程序只包括HTML和JavaScript两种语言。<br>而在WebGL程序中，还包括了第三种语言：GLSL ES。</p>
+<p><img src="https://c1.staticflickr.com/1/417/31743655591_e5815e1579_o.png" alt="enter description here"></p>
+<h2 id="WebGL编程模型"><a href="#WebGL编程模型" class="headerlink" title="WebGL编程模型"></a>WebGL编程模型</h2><p><img src="https://c1.staticflickr.com/1/502/31050538443_ca9377f3a2_o.png" alt="enter description here"><br>上图表示一个WebGL程序运行的主要流程。主要分为3个阶段，应用程序阶段、着色器阶段、片元后处理阶段。<br>本文接下来按照一定的规律介绍编写一个原生WebGL程序主要的步骤。</p>
+<h3 id="获得WebGL渲染环境"><a href="#获得WebGL渲染环境" class="headerlink" title="获得WebGL渲染环境"></a>获得WebGL渲染环境</h3><h4 id="在Html中定义canvas标签"><a href="#在Html中定义canvas标签" class="headerlink" title="在Html中定义canvas标签"></a>在Html中定义canvas标签</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">canvas</span> id=<span class="string">"webgl"</span> <span class="attribute">width</span>=<span class="string">"400"</span> height=<span class="string">"400"</span>&gt; &lt;/canvas&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="在JS代码中获得canvas对象"><a href="#在JS代码中获得canvas对象" class="headerlink" title="在JS代码中获得canvas对象"></a>在JS代码中获得canvas对象</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">虚幻引擎游戏命令</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-03 22:06:24" itemprop="dateCreated datePublished" datetime="2016-12-03T22:06:24+08:00">2016-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E/" itemprop="url" rel="index">
+                    <span itemprop="name">虚幻引擎</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" class="post-meta-item leancloud_visitors" data-flag-title="虚幻引擎游戏命令" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="命令行参数和控制台命令"><a href="#命令行参数和控制台命令" class="headerlink" title="命令行参数和控制台命令"></a>命令行参数和控制台命令</h2><p>游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。</p>
+<h2 id="控制台命令"><a href="#控制台命令" class="headerlink" title="控制台命令"></a>控制台命令</h2><p>对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。<br>下面根据用途统一总结，不进行区分。</p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h4 id="exit-quit"><a href="#exit-quit" class="headerlink" title="exit(quit)"></a>exit(quit)</h4><p>退出游戏</p>
+<h4 id="pause"><a href="#pause" class="headerlink" title="pause"></a>pause</h4><p>暂停游戏，按pause break键也可以。</p>
+<h4 id="open-url"><a href="#open-url" class="headerlink" title="open [url]"></a>open [url]</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">虚幻引擎命令行参数</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-03 21:17:20" itemprop="dateCreated datePublished" datetime="2016-12-03T21:17:20+08:00">2016-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E/" itemprop="url" rel="index">
+                    <span itemprop="name">虚幻引擎</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="虚幻引擎命令行参数" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。</p>
+<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。</p>
+<h3 id="编译命令行参数"><a href="#编译命令行参数" class="headerlink" title="编译命令行参数"></a>编译命令行参数</h3><p>编译代码期间会用到的参数如下：</p>
+<ol>
+<li><p>版本 -debug -release</p><p></p>
+</li>
+<li><p>全量 -full （默认增量）</p>
+</li>
+<li><p>自动更新C++头文件，不弹框确认 -auto<br>注意：虚幻三编译脚本.uc文件时候，会更新.h头文件</p>
+</li>
+<li><p>移除.u文件中的源代码信息 -stripsource注意：.u文件是虚幻三脚本文件编译后的字节码文件，虚幻四中不存在</p>
+<p>因此，编译代码时候最多可能指定以下参数组合：<br>make -debug -full -auto -stripsource<br>make -release -full -auto  -stripsource</p>
+</li>
+</ol>
+<p><strong>注意：通过在vs中指定make命令可以调试编译代码的过程。</strong><br>如下图所示：<br><img src="https://c2.staticflickr.com/6/5486/31353510066_d0fd3565ee_o.png" alt="enter description here"></p>
+<h3 id="运行命令行参数"><a href="#运行命令行参数" class="headerlink" title="运行命令行参数"></a>运行命令行参数</h3><p>启动游戏进程指定的命令行参数分为两个个部分，第一个部分用于指定进程的运行模式（客户端、服务器、编辑器），第二个部分用于指定地图的URL以及附加选项。</p>
+<h4 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/10/30/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/10/30/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" class="post-title-link" itemprop="url">新的开始</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-10-30 16:14:09" itemprop="dateCreated datePublished" datetime="2016-10-30T16:14:09+08:00">2016-10-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E6%83%B3/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/10/30/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" class="post-meta-item leancloud_visitors" data-flag-title="新的开始" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/10/30/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/10/30/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>805</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>岁月如梭，光阴似箭。转眼间工作一年多了，我也即将二十八周岁了。常说三十而立，想想就觉得忐忑。生命一分分、一秒秒流逝，就如同抓不住的流水，站在漫漫的荒野中，永远无法回头。</p>
+<p>佛说，人之所以痛苦，在于追求错误的东西。佛说，缘起缘灭，缘生已空。佛说，世间万物皆空，唯其空，便能包容万物。我不是佛，我是人。所以，我痛苦，我在追求错误的东西，我执着于缘生，我无法放空自己。</p>
+<p>岁月如梭。感慨万千。沉沦于苦海中，幻想过很多或许。或许勇敢一些，自信一些，或许努力一些，或许早点觉悟，早点逃离自己的舒适床，早点更有担当，或许我是一个刻苦的人，或许早点学会伪装，早点懂得高情商套路。或许我就不该怀恋那片刻的阳光。但是，乞丐一旦品尝过美食的味道，一辈子就无法忘怀，而我就是那个乞丐。</p>
+<p>如果可以选择，我宁愿从来没有感受过这样的温暖。</p>
+<p>对了，我想要说的是新的开始，而不是一直啰嗦于曾经的苦水。未来真的还不知道要怎么过，想想这几年最开心的日子除了发工资发奖金的那天，就是在家里钓鱼有收获的时刻。其实，作为一个loser又有什么不开心的了，所以我一般都笑得很开心，因为确实没什么不开心的。无论我开心也好，痛苦也好，努力也好，懒惰也好，今天都会过去，明年总会来临，总有一个今天会成为我最后的一天。总有一天我会经历生老病死别离。有个时候觉得，让自己在乎的人快乐也是一件很有意义的事情。</p>
+<p>作为一个年近三十的大叔，还这么幼稚，表示无法接受。我这个年纪应该是在干大事，不是当CTO，当老板，就应该在美利坚读博士，在龙泉寺出家，或者在各种聊天软件约小妹妹。作为一个无病呻吟的屌丝，表示完全无法接受这一切。所以，我只能呻吟几下，聊作慰藉。</p>
+<p>总有一天，风雪会过去的吧。乘着这场大风雪，多吃几顿炖菜吧。是时候拿出壮士断腕的勇气了，该彻底抛弃的抛弃，该培养的坚持培养，总不能再下一个三到五年后，又悔不当初，悔之晚矣。时光才是最珍贵的。</p>
+<p>我经历的所有困难，只是为了遇见更好的你。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/10/30/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/" class="post-title-link" itemprop="url">使用DebugView实时显示Log</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-08-15 20:48:18" itemprop="dateCreated datePublished" datetime="2016-08-15T20:48:18+08:00">2016-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/" class="post-meta-item leancloud_visitors" data-flag-title="使用DebugView实时显示Log" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="DebugView简介"><a href="#DebugView简介" class="headerlink" title="DebugView简介"></a>DebugView简介</h3><p>DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。<br>这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。</p>
+<h2 id="安装DebugView"><a href="#安装DebugView" class="headerlink" title="安装DebugView"></a>安装DebugView</h2><p>下载地址：<a href="https://technet.microsoft.com/en-us/sysinternals/debugview.aspx" target="_blank" rel="noopener">DebugView</a><br>下载后面后解压压缩包，发现里面有三个文件：Dbgview.exe、dbgview.chm、Eula.txt。<br>Dbgview.exe就是我们要使用的实时显示Log工具。dbgview.chm是自带的文档，有不懂的地方可以查阅该文档。<br>现在可以将DebugView.exe放到任何你喜欢的目录，比如桌面。</p>
+<h2 id="配置DebugView"><a href="#配置DebugView" class="headerlink" title="配置DebugView"></a>配置DebugView</h2><h3 id="配置Capture"><a href="#配置Capture" class="headerlink" title="配置Capture"></a>配置Capture</h3><p>如下图所示，要记得勾选Capture Win32和Capture Global Win32。Capture Global Win32用于网络模式下捕获网络主机的Debug输出的时候。如果需要捕获内核模式的调试输出，记得勾选Capture Kernel Win32。<br><img src="https://c1.staticflickr.com/9/8750/28713108000_0384dfb06a_o.png" alt="enter description here"><br>如果点击Capture Global Win32菜单出现提示：<br><img src="https://c1.staticflickr.com/9/8315/28999300555_61681b6880_o.png" alt="enter description here"><br>重新以管理员的身份启动DebugView。<br><img src="https://c1.staticflickr.com/9/8897/28999300535_075a591b02_o.png" alt="enter description here"></p>
+<h3 id="配置Filter"><a href="#配置Filter" class="headerlink" title="配置Filter"></a>配置Filter</h3><p>如下图所示，打开Filter对话框，<br><img src="https://c2.staticflickr.com/8/7507/28923046321_72cd949daa_o.png" alt="enter description here"><img src="https://c1.staticflickr.com/9/8744/28713274070_2809e64189_o.png" alt="enter description here"><br>然后在Include中输入要包含的字符串，比如”hankpcxiao”，多个字符串用;分隔，比如”hankpcxiao;xpc”。<br>这样就只会捕获包括过滤字符串hankpcxiao或者xpc的OutputDebugString输出。<br>如果我们在每个OutputDebugString输出前自动加上过滤字符串，那么DebugView就只会输出我们的Log信息了。</p>
+<h3 id="开启捕获"><a href="#开启捕获" class="headerlink" title="开启捕获"></a>开启捕获</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">WebGL介绍</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-07-09 22:22:43" itemprop="dateCreated datePublished" datetime="2016-07-09T22:22:43+08:00">2016-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/WebGL/" itemprop="url" rel="index">
+                    <span itemprop="name">WebGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/" class="post-meta-item leancloud_visitors" data-flag-title="WebGL介绍" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>842</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="WebGL概述"><a href="#WebGL概述" class="headerlink" title="WebGL概述"></a>WebGL概述</h2><p>什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL的接口移植到浏览器中使用。具体的可以参考<a href="https://zh.wikipedia.org/wiki/WebGL" target="_blank" rel="noopener">WebGL的维基百科</a>。<br>使用WebGL可以通过编写网页代码在浏览器中渲染三维图像，而且不需要任何的插件，比如Adobe Flash Player等。<br>WebGL在最新的浏览器中得到了广泛支持。</p>
+<h2 id="WebGL与HTML5的关系"><a href="#WebGL与HTML5的关系" class="headerlink" title="WebGL与HTML5的关系"></a>WebGL与HTML5的关系</h2><p><a href="https://zh.wikipedia.org/zh-cn/HTML5" target="_blank" rel="noopener">HTML5</a>是最新的HTML（超文本标记语言）的最新修订版本。<br>HTML5中新增了<code>&lt;canvas&gt;</code>标签用于绘图。在HTML5之前，只能使用<code>&lt;img&gt;</code>标签在网页中显示静态图片，如果要显示动画得借助于Adobe Flash Player等第三方插件。在HTML5中，可以在<code>&lt;canvas&gt;</code>标签上绘制二维图像，也可以使用WebGL绘制三维图像。<br>WebGL相对于HTML5的关系就好比是OpenGL库和三维应用程序的关系。WebGL只是提供了底层的渲染和计算的函数。</p>
+<h2 id="WebGL与JavaScript的关系"><a href="#WebGL与JavaScript的关系" class="headerlink" title="WebGL与JavaScript的关系"></a>WebGL与JavaScript的关系</h2><p><a href="https://zh.wikipedia.org/wiki/JavaScript" target="_blank" rel="noopener">JavaScript</a>是一种浏览器中运行的动态脚本语言。WebGL也需要依靠JavaScript来操作浏览器中的对象。JavaScript与WebGL的关系类似于C或者C++和OpenGL的关系。</p>
+<h2 id="WebGL与OpenGL的关系"><a href="#WebGL与OpenGL的关系" class="headerlink" title="WebGL与OpenGL的关系"></a>WebGL与OpenGL的关系</h2><p>WebGL基于OpenGL ES 2.0，WebGL实现了OpenGL ES 2.0的一个子集。WebGL使用Javascript进行内存管理，使用GLSL ES作为着色器语言。具体的关系可以参考下图：<br><img src="https://c2.staticflickr.com/8/7581/28115784971_1e25355d87_o.png" alt="WebGL与OpenGL"></p>
+<h2 id="WebGL程序的结构"><a href="#WebGL程序的结构" class="headerlink" title="WebGL程序的结构"></a>WebGL程序的结构</h2><p>默认情况下，网页程序包括HTML和Javascript脚本语言两部分。但是WebGL程序，还有特殊的GLSL ES着色器语言部分。<br>具体结构如下图所示：<br><img src="https://c1.staticflickr.com/9/8738/27578325223_d5b354ecce_o.png" alt="WebGL程序的结构"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/07/09/%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%9C%80%E8%BF%91%E5%8F%98%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/07/09/%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%9C%80%E8%BF%91%E5%8F%98%E5%8A%A8/" class="post-title-link" itemprop="url">关于博客的最近变动</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-07-09 17:53:05" itemprop="dateCreated datePublished" datetime="2016-07-09T17:53:05+08:00">2016-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/07/09/%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%9C%80%E8%BF%91%E5%8F%98%E5%8A%A8/" class="post-meta-item leancloud_visitors" data-flag-title="关于博客的最近变动" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/07/09/%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%9C%80%E8%BF%91%E5%8F%98%E5%8A%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/07/09/%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%9C%80%E8%BF%91%E5%8F%98%E5%8A%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="博客移动到www-xpc-yx-blog"><a href="#博客移动到www-xpc-yx-blog" class="headerlink" title="博客移动到www.xpc-yx/blog"></a>博客移动到<a href="http://www.xpc-yx/blog" target="_blank" rel="noopener">www.xpc-yx/blog</a></h2><p>以前一直想用个炫酷的个人页放到网站根目录，一直没弄好，不了了之。wordpresss用多了之后发现挺简单的，只需要把wordpress安装到空间的public_html的子目录就可以，于是在网上搜索wordpress安装到子目录解决之。目前首页放的是一个ThreeJs渲染的天空盒，以后再慢慢修改吧。</p>
+<h2 id="文章采用markdown编写"><a href="#文章采用markdown编写" class="headerlink" title="文章采用markdown编写"></a>文章采用markdown编写</h2><p>一直以来都是直接在wordpress的后台编辑器写文章，去年开始用微软的windows live write发布文章，可以参考<a href="http://www.xpc-yx.com/blog/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2/" target="_blank" rel="noopener">试试windows live write发布博客</a>。<br>Markdown的语法比较简单，随便找个文档尝试下，找个编辑器就可以开始写作了。关于编辑器的选择，我现在也不知道，找了好久也没觉得哪个特别合适。大家都觉得好的大部分要收费，或者是付费会员服务。目前选择了<a href="http://soft.xiaoshujiang.com/" target="_blank" rel="noopener">小书匠</a>，先尝试一段时间吧。小书匠可以将文章存储在云空间上，我选择了保存到我的印象笔记中，这样内容就不会轻易丢失了，打算以后所有的写作都使用Markdown了。<br>wordpress的Markdown插件我选择了JP Markdown，代码编辑器继续使用SyntaxHighlighter Evolved。不过SyntaxHighlighter Evolved和JP Markdown有一个兼容问题，无法识别<code>&lt;</code>和<code>&gt;</code>符号。为此需要将将插件代码syntaxhighlighter\syntaxhighlighter.php 中的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$code = ( <span class="literal">false</span> === strpos( $code, <span class="string">'&lt;'</span> )  <span class="literal">false</span> === strpos( $code, <span class="string">'&gt;'</span> )  <span class="number">2</span> == $<span class="keyword">this</span>-&gt;get_code_format($post) ) ? strip_tags( $code ) : htmlspecialchars( $code );</span><br></pre></td></tr></table></figure>
+
+<p>替换为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$code = ( <span class="literal">false</span> === strpos( $code, <span class="string">'&lt;'</span> )  <span class="literal">false</span> === strpos( $code, <span class="string">'&gt;'</span> ) ) ? strip_tags( $code ) : htmlspecialchars( $code );</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立了个github的静态副站"><a href="#建立了个github的静态副站" class="headerlink" title="建立了个github的静态副站"></a>建立了个github的静态副站</h2><p>由于上个月20号左右博客的流量就耗尽了，所以这个月本来打算将博客迁移到github上面去的。在网上搜索了教程用hexo建立一个静态网站，地址是<a href="https://xpc-yx.github.io/" target="_blank" rel="noopener">远行’s Life Github 副站</a>。使用的是最流行的next主题。由于我的博客文章实在太多了，前言过程中出现不少错误，忙了两天后发现迁移过去的文章格式也不对，只得作罢。把全部迁移过去耗费的时间实在需要太多了。<br>不过，这个github副站也是可能会更新内容的。</p>
+<h2 id="打算写WebGL相关的教程"><a href="#打算写WebGL相关的教程" class="headerlink" title="打算写WebGL相关的教程"></a>打算写WebGL相关的教程</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/07/09/%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%9C%80%E8%BF%91%E5%8F%98%E5%8A%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/" class="post-title-link" itemprop="url">使用MFC创建基于图片的不规则窗口程序</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-04-23 20:45:25" itemprop="dateCreated datePublished" datetime="2016-04-23T20:45:25+08:00">2016-04-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/" class="post-meta-item leancloud_visitors" data-flag-title="使用MFC创建基于图片的不规则窗口程序" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。</p>
+<h2 id="第一步，在资源文件rc中设置对话框的属性"><a href="#第一步，在资源文件rc中设置对话框的属性" class="headerlink" title="第一步，在资源文件rc中设置对话框的属性"></a><strong>第一步，在资源文件rc中设置对话框的属性</strong></h2><p>Border：None</p>
+<p>Style：Popup</p>
+<h2 id="第二步，导入背景图片到程序资源中"><a href="#第二步，导入背景图片到程序资源中" class="headerlink" title="第二步，导入背景图片到程序资源中"></a><strong>第二步，导入背景图片到程序资源中</strong></h2><p>最好是导入位图，虽然也可以导入其它格式的图片。假设导入位图ID为IDB_BITMAP_BACK。</p>
+<h2 id="第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域"><a href="#第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域" class="headerlink" title="第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域"></a><strong>第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;OnInitDialog()中</span><br><span class="line">CRgn wndRgn;</span><br><span class="line"></span><br><span class="line">m_bitmapBack.LoadBitmap(IDB_BITMAP_BACK);</span><br><span class="line">CreateRgn(m_bitmapBack, RGB(255, 255, 255), wndRgn);</span><br><span class="line">SetWindowRgn(wndRgn, TRUE);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;根据图片创建区域的函数</span><br><span class="line">void CClientBrowserDlg::CreateRgn(CBitmap cBitmap, COLORREF dwColorKey, CRgn wndRgn)  </span><br><span class="line">&#123;  </span><br><span class="line">    CDC *pDC &#x3D; this-&gt;GetDC();  </span><br><span class="line">    CDC memDC;  </span><br><span class="line">    &#x2F;&#x2F;创建与传入DC兼容的临时DC  </span><br><span class="line">    memDC.CreateCompatibleDC(pDC);  </span><br><span class="line"></span><br><span class="line">    CBitmap *pOldMemBmp&#x3D;NULL;  </span><br><span class="line">    &#x2F;&#x2F;将位图选入临时DC  </span><br><span class="line">    pOldMemBmp &#x3D; memDC.SelectObject(cBitmap);  </span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;创建总的窗体区域，初始region为0  </span><br><span class="line">    wndRgn.CreateRectRgn(0,0,0,0);  </span><br><span class="line"></span><br><span class="line">    BITMAP bit;     </span><br><span class="line">    cBitmap.GetBitmap (bit);&#x2F;&#x2F;取得位图参数，这里要用到位图的长和宽       </span><br><span class="line"></span><br><span class="line">    int y;  </span><br><span class="line">    for(y&#x3D;0; y &lt;&#x3D; bit.bmHeight; y++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        CRgn rgnTemp;  </span><br><span class="line">        int iX &#x3D; 0;  </span><br><span class="line">        do  </span><br><span class="line">        &#123;  </span><br><span class="line">            &#x2F;&#x2F;跳过透明色找到下一个非透明色的点.  </span><br><span class="line">            while (iX &lt;&#x3D; bit.bmWidth   memDC.GetPixel(iX, y) &#x3D;&#x3D; dwColorKey)  </span><br><span class="line">                iX++;  </span><br><span class="line">            &#x2F;&#x2F;记住这个起始点  </span><br><span class="line">            int iLeftX &#x3D; iX;  </span><br><span class="line">            &#x2F;&#x2F;寻找下个透明色的点  </span><br><span class="line">            while (iX &lt;&#x3D; bit.bmWidth   memDC.GetPixel(iX, y) !&#x3D; dwColorKey)  </span><br><span class="line">                ++iX;  </span><br><span class="line">            &#x2F;&#x2F;创建一个包含起点与重点间高为1像素的临时“region”  </span><br><span class="line">            rgnTemp.CreateRectRgn(iLeftX, y, iX, y+1);  </span><br><span class="line">            &#x2F;&#x2F;合并到主&quot;region&quot;.  </span><br><span class="line">            wndRgn.CombineRgn(wndRgn, rgnTemp, RGN_OR);  </span><br><span class="line">            &#x2F;&#x2F;删除临时&quot;region&quot;,否则下次创建时和出错  </span><br><span class="line">            rgnTemp.DeleteObject();  </span><br><span class="line">        &#125; while(iX &lt; bit.bmWidth );  </span><br><span class="line">        iX &#x3D; 0;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    if(pOldMemBmp)  </span><br><span class="line">        memDC.SelectObject(pOldMemBmp);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="第四步，在OnPaint-绘制窗口背景图片"><a href="#第四步，在OnPaint-绘制窗口背景图片" class="headerlink" title="第四步，在OnPaint()绘制窗口背景图片"></a><strong>第四步，在OnPaint()绘制窗口背景图片</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">void CClientBrowserDlg::OnPaint()</span><br><span class="line">&#123;</span><br><span class="line">    if (IsIconic())</span><br><span class="line">    &#123;</span><br><span class="line">        CPaintDC dc(this); &#x2F;&#x2F; device context for painting</span><br><span class="line"></span><br><span class="line">        SendMessage(WM_ICONERASEBKGND, reinterpret_cast&lt;WPARAM&gt;(dc.GetSafeHdc()), 0);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Center icon in client rectangle</span><br><span class="line">        int cxIcon &#x3D; GetSystemMetrics(SM_CXICON);</span><br><span class="line">        int cyIcon &#x3D; GetSystemMetrics(SM_CYICON);</span><br><span class="line">        CRect rect;</span><br><span class="line">        GetClientRect(rect);</span><br><span class="line">        int x &#x3D; (rect.Width() - cxIcon + 1) &#x2F; 2;</span><br><span class="line">        int y &#x3D; (rect.Height() - cyIcon + 1) &#x2F; 2;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Draw the icon</span><br><span class="line">        dc.DrawIcon(x, y, m_hIcon);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;选入DC  </span><br><span class="line">        CClientDC cdc(this);</span><br><span class="line">        CDC comdc;  </span><br><span class="line">        comdc.CreateCompatibleDC(cdc);  </span><br><span class="line">        comdc.SelectObject(m_bitmapBack);  </span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;生成BITMAP  </span><br><span class="line">        BITMAP bit;  </span><br><span class="line">        m_bitmapBack.GetBitmap(bit);  </span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;客户区域  </span><br><span class="line">        CRect rect;  </span><br><span class="line">        GetClientRect(rect);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;用客户区的DC绘制所生成的BITMAP，并适应为窗口大小  </span><br><span class="line">        cdc.StretchBlt(0,0,rect.Width(),rect.Height(),comdc,0,0,bit.bmWidth,bit.bmHeight,SRCCOPY);</span><br><span class="line"></span><br><span class="line">        CDialog::OnPaint();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">## **第五步，点击客户区移动窗口**</span><br><span class="line"></span><br><span class="line">这一点还是有意义的，比如上一篇定制IE浏览器窗口的文章，其外部窗口就是使用这里介绍的不规则窗体。不规则窗体由于是无边框的，因此无法点击边框移动窗口了。因此，设置点击客户端移动是有意义的。而**且窗口的内部区域已经被浏览器控件占据了，只有外部的边界区域可以点击到，因此这样刚好模拟出了点击正常窗口边框的效果。**</span><br><span class="line"></span><br><span class="line">设置客户区可以点击的代码如下：</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96; cpp?linenums</span><br><span class="line">LRESULT CClientBrowserDlg::OnNcHitTest(CPoint point)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; TODO: Add your message handler code here and&#x2F;or call default</span><br><span class="line">    &#x2F;&#x2F; 取得鼠标所在的窗口区域</span><br><span class="line">    UINT nHitTest &#x3D; CDialog::OnNcHitTest(point);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 如果鼠标在窗口客户区，则返回标题条代号给Windows</span><br><span class="line">    &#x2F;&#x2F; 使Windows按鼠标在标题条上类进行处理，即可单击移动窗口</span><br><span class="line">    return (nHitTest &#x3D;&#x3D; HTCLIENT) ? HTCAPTION : nHitTest;</span><br><span class="line">    &#x2F;&#x2F;return CDialog::OnNcHitTest(point);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

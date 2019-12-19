@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="假如你定义了一个位图类，里面包含位图头，位图信息头，调色板，位图数据。然后你按照位图的格式将位图文件读入你的类中，现在你知道了位图的全部信息了。主要信息包含在位图信息头里面，数据则在位图数据缓冲里面。现在的问题是，在Windows下面如何将一张位图画出来，而且现在是如何从数据缓存里面绘画出位图。一般情况，我们都是直接绘制在dc里面，而不是绑定到子控件，让子控件自己绘画，比如picture控件之类的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何将内存中的位图数据绘制在DC上">
+<meta property="og:url" content="http://xiaopengcheng.top/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="假如你定义了一个位图类，里面包含位图头，位图信息头，调色板，位图数据。然后你按照位图的格式将位图文件读入你的类中，现在你知道了位图的全部信息了。主要信息包含在位图信息头里面，数据则在位图数据缓冲里面。现在的问题是，在Windows下面如何将一张位图画出来，而且现在是如何从数据缓存里面绘画出位图。一般情况，我们都是直接绘制在dc里面，而不是绑定到子控件，让子控件自己绘画，比如picture控件之类的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2012-12-26T02:06:47.000Z">
+<meta property="article:modified_time" content="2019-12-19T16:22:33.342Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="MFC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>如何将内存中的位图数据绘制在DC上 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何将内存中的位图数据绘制在DC上
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-12-26 10:06:47" itemprop="dateCreated datePublished" datetime="2012-12-26T10:06:47+08:00">2012-12-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/" class="post-meta-item leancloud_visitors" data-flag-title="如何将内存中的位图数据绘制在DC上" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>假如你定义了一个位图类，里面包含位图头，位图信息头，调色板，位图数据。然后你按照位图的格式将位图文件读入你的类中，现在你知道了位图的全部信息了。主要信息包含在位图信息头里面，数据则在位图数据缓冲里面。现在的问题是，在Windows下面如何将一张位图画出来，而且现在是如何从数据缓存里面绘画出位图。<br>一般情况，我们都是直接绘制在dc里面，而不是绑定到子控件，让子控件自己绘画，比如picture控件之类的，我觉得提供绘制在dc里面的接口更具有广泛性。</p>
+<p>现在我知道两种从内存数据绘制彩色位图的2种方法。第一种麻烦一点，第二种则相当直接。<br>方法一：<br>第一步，用CreateCompatibleDC创建跟目标dc的兼容性内存dc。<br>第二步，用CreateCompatibleBitmap创建跟目标dc的兼容性位图。<br>第三步，用SelectObject将第二步创建的兼容位图选入第一步创建的兼容dc中。<br>第四步，<strong>用SetDIBits设置兼容位图的数据缓冲</strong>。<br>第五步，用BitBlt将数据从兼容内存dc绘制到目标dc。<br>第六步，删除兼容位图和兼容dc。<br>代码如下，其中buffer代表位图数据缓冲。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HDC hCompatibleDC = CreateCompatibleDC(hDc);</span><br><span class="line">HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(hDc, bitmapinfoheader<span class="selector-class">.biWidth</span>,</span><br><span class="line">bitmapinfoheader.biHeight);</span><br><span class="line">HBITMAP hOldBitmap = (HBITMAP)SelectObject(hCompatibleDC, hCompatibleBitmap);</span><br><span class="line">SetDIBits(hDc, hCompatibleBitmap, <span class="number">0</span>, bitmapinfoheader<span class="selector-class">.biHeight</span>,</span><br><span class="line">buffer, (BITMAPINFO*)&amp;bitmapinfoheader, DIB_RGB_COLORS);</span><br><span class="line">BitBlt(hDc, nStartX, nStartY, bitmapinfoheader<span class="selector-class">.biWidth</span>, bitmapinfoheader<span class="selector-class">.biHeight</span>,</span><br><span class="line">hCompatibleDC, 0, 0, SRCCOPY);</span><br><span class="line">SelectObject(hCompatibleDC, hOldBitmap);</span><br><span class="line">DeleteObject(hCompatibleDC);</span><br><span class="line">DeleteObject(hCompatibleDC);</span><br></pre></td></tr></table></figure>
+
+<p>方法二：<strong>直接调用StretchDIBits绘制位图</strong>。<br>该函数功能相当强悍，似乎专为从内存数据绘制位图到dc而生。<br>函数原型如下：<br>int StretchDIBits(<br>HDC hdc,                      // handle to DC<br>int XDest,                    // x-coord of destination upper-left corner<br>int YDest,                    // y-coord of destination upper-left corner<br>int nDestWidth,               // width of destination rectangle<br>int nDestHeight,              // height of destination rectangle<br>int XSrc,                     // x-coord of source upper-left corner<br>int YSrc,                     // y-coord of source upper-left corner<br>int nSrcWidth,                // width of source rectangle<br>int nSrcHeight,               // height of source rectangle<br>CONST VOID *lpBits,           // bitmap bits<br>CONST BITMAPINFO *lpBitsInfo, // bitmap data<br>UINT iUsage,                  // usage options<br>DWORD dwRop                   // raster operation code<br>);<br>使用也相当简单，调用</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">StretchDIBits(hDc, nStartX, nStartY, bitmapinfoheader<span class="selector-class">.biWidth</span>,</span><br><span class="line">bitmapinfoheader<span class="selector-class">.biHeight</span>, <span class="number">0</span>, <span class="number">0</span>, bitmapinfoheader<span class="selector-class">.biWidth</span>,</span><br><span class="line">bitmapinfoheader<span class="selector-class">.biHeight</span>, buffer, (BITMAPINFO*)&amp;bitmapinfoheader,</span><br><span class="line">DIB_RGB_COLORS, SRCCOPY);</span><br></pre></td></tr></table></figure>
+
+<p>即可了。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\04\03\vc内嵌wmplayer播放器(屏蔽右键，全屏，播放信息等）\" rel="bookmark">vc内嵌wmplayer播放器(屏蔽右键，全屏，播放信息等）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2016\04\23\使用MFC创建基于图片的不规则窗口程序\" rel="bookmark">使用MFC创建基于图片的不规则窗口程序</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2014\04\27\如何在MFC的OpenGL窗口中使用AntTweakBar\" rel="bookmark">如何在MFC中使用AntTweakBar</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\01\03\自定义可变参数函数BatchDelFile, 调用cmd批量删除指定格式文件, Windows界面下不回显Console窗口\" rel="bookmark">自定义可变参数函数BatchDelFile, 调用cmd批量删除指定格式文件, Windows界面下不回显Console窗口</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2012/12/26/%E5%A6%82%E4%BD%95%E5%B0%86%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%98%E5%88%B6%E5%9C%A8DC%E4%B8%8A/" title="如何将内存中的位图数据绘制在DC上">http://xiaopengcheng.top/2012/12/26/如何将内存中的位图数据绘制在DC上/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MFC/" rel="tag"># MFC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="指针和引用的区别">
+      <i class="fa fa-chevron-left"></i> 指针和引用的区别
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2013/01/02/Hough%E5%8F%98%E6%8D%A2%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF/" rel="next" title="Hough变换检测直线">
+      Hough变换检测直线 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

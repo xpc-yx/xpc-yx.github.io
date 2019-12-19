@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="转角法判断点和多边形的关系大家都知道，原理比较简单，在多边形内扫过的转角一定是360度，在边界上和外面则不一定。实现起来也比较麻烦，浮点误差比较大，而且还要考虑些特殊情况。在网上找到一种叫做改进弧长法的算法，原理和转角法类似，但是做了很多重要的改进。比如，计算转角改成了计算叉积，根据叉积决定旋转方向，还要根据计算下一个点的象限决定偏转多少，每次偏转的都是90度的倍数。该算法可以方便判断出点在多边形">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系">
+<meta property="og:url" content="http://xiaopengcheng.top/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="转角法判断点和多边形的关系大家都知道，原理比较简单，在多边形内扫过的转角一定是360度，在边界上和外面则不一定。实现起来也比较麻烦，浮点误差比较大，而且还要考虑些特殊情况。在网上找到一种叫做改进弧长法的算法，原理和转角法类似，但是做了很多重要的改进。比如，计算转角改成了计算叉积，根据叉积决定旋转方向，还要根据计算下一个点的象限决定偏转多少，每次偏转的都是90度的倍数。该算法可以方便判断出点在多边形">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2012-06-26T09:00:00.000Z">
+<meta property="article:modified_time" content="2019-12-19T16:22:33.315Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-26 17:00:00" itemprop="dateCreated datePublished" datetime="2012-06-26T17:00:00+08:00">2012-06-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACM-ICPC/" itemprop="url" rel="index">
+                    <span itemprop="name">ACM-ICPC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/" class="post-meta-item leancloud_visitors" data-flag-title="zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>转角法判断点和多边形的关系大家都知道，原理比较简单，在多边形内扫过的转角一定是360度，在边界上和外面则不一定。<br>实现起来也比较麻烦，浮点误差比较大，而且还要考虑些特殊情况。<br>在网上找到一种叫做改进弧长法的算法，原理和转角法类似，但是做了很多重要的改进。比如，计算转角改成了计算叉积，根据叉积决定旋转方向，还要根据计算下一个点的象限决定偏转多少，每次偏转的都是90度的倍数。该算法可以方便判断出点在多边形内，还是边界上，还是在多边形外面。</p>
+<p>摘自别人对该算法的描述如下：<br>首先从该书中摘抄一段弧长法的介绍：“弧长法要求多边形是有向多边形，一般规定沿多边形的正向，边的左侧为多边形的内侧域。以被测点为圆心作单位圆，将全部有向边向单位圆作径向投影，并计算其中单位圆上弧长的代数和。若代数和为0，则点在多边形外部；若代数和为2π则点在多边形内部；若代数和为π，则点在多边形上。”<br>按书上的这个介绍，其实弧长法就是转角法。但它的改进方法比较厉害：将坐标原点平移到被测点P，这个新坐标系将平面划分为4个象限，对每个多边形顶点P ，只考虑其所在的象限，然后按邻接顺序访问多边形的各个顶点P，分析P和P[i+1]，有下列三种情况：<br>（1）P[i+1]在P的下一象限。此时弧长和加π/2；<br>（2）P[i+1]在P的上一象限。此时弧长和减π/2；<br>（3）P[i+1]在Pi的相对象限。首先计算f=y[i+1]<em>x-x[i+1]</em>y（叉积），若f=0，则点在多边形上；若f&lt;0，弧长和减π；若f&gt;0，弧长和加π。<br>最后对算出的代数和和上述的情况一样判断即可。实现的时候还有两点要注意，第一个是若P的某个坐标为0时，一律当正号处理；第二点是若被测点和多边形的顶点重合时要特殊处理。</p>
+<p>以上就是书上讲解的内容，其实还存在一个问题。那就是当多边形的某条边在坐标轴上而且两个顶点分别在原点的两侧时会出错。如边(3,0)-(-3,0)，按以上的处理，象限分别是第一和第二，这样会使代数和加π/2，有可能导致最后结果是被测点在多边形外。而实际上被测点是在多边形上（该边穿过该点）。对于这点，我的处理办法是：每次算P和P[i+1]时，就计算叉积和点积，判断该点是否在该边上，是则判断结束，否则继续上述过程。这样牺牲了时间，但保证了正确性。<br>具体实现的时候，由于只需知道当前点和上一点的象限位置，所以附加空间只需O(1)。实现的时候可以把上述的“π/2”改成1，“π”改成2，这样便可以完全使用整数进行计算。不必考虑顶点的顺序，逆时针和顺时针都可以处理，只是最后的代数和符号不同而已。整个算法编写起来非常容易。</p>
+<p>代码如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="number">#def</span>ine MAX (<span class="number">100</span> + <span class="number">10</span>)</span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x,y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Point pts[MAX];</span><br><span class="line">const int OUT = 0;</span><br><span class="line">const int IN = 1;</span><br><span class="line">const int EDGE = 2;</span><br><span class="line">const double fPre = 1e-8;</span><br><span class="line"></span><br><span class="line">int DblCmp(double fD)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (fabs(fD) &lt; fPre)</span><br><span class="line">    &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        return fD &gt; 0 ? 1 : -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int GetQuadrant(Point p)</span><br><span class="line">&#123;</span><br><span class="line">    return DblCmp(p.x) &gt;= 0 ? (DblCmp(p.y) &gt;= 0 ? 0 : 3) :</span><br><span class="line">               (DblCmp(p.y) &gt;= 0 ? 1 : 2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Det(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">&#123;</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int PtInPolygon(Point* pts, int nN, Point p)</span><br><span class="line">&#123;</span><br><span class="line">    int i, j, k;</span><br><span class="line">    for (j = 0; j &lt; nN; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        pts[j].x -= p.x;</span><br><span class="line">        pts[j].y -= p.y;</span><br><span class="line">    &#125;</span><br><span class="line">    int nA1, nA2;</span><br><span class="line">    int nSum = 0;</span><br><span class="line">    nA1 = GetQuadrant(pts[0]);</span><br><span class="line">    for (i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        k = (i + 1) % nN;</span><br><span class="line">        <span class="keyword">if</span> (DblCmp(pts[k].x) == <span class="number">0</span>  DblCmp(pts[k].y) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            break;//与顶点重合</span><br><span class="line">        &#125;</span><br><span class="line">        int nC = DblCmp(Det(pts[i]<span class="selector-class">.x</span>, pts[i]<span class="selector-class">.y</span>,</span><br><span class="line">                            pts[k].x, pts[k].y));</span><br><span class="line">        if (!nC  DblCmp(pts[i].x * pts[k].x) &lt;= 0</span><br><span class="line">                 DblCmp(pts[i].y * pts[k].y) &lt;= 0)</span><br><span class="line">        &#123;</span><br><span class="line">            break;//边上</span><br><span class="line">        &#125;</span><br><span class="line">        nA2 = GetQuadrant(pts[k]);</span><br><span class="line">        if ((nA1 + 1) % 4 == nA2)</span><br><span class="line">        &#123;</span><br><span class="line">            nSum += 1;</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((nA1 + 2) % 4 == nA2)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nC &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                nSum += 2;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                nSum -= 2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((nA1 + 3) % 4 == nA2)</span><br><span class="line">        &#123;</span><br><span class="line">            nSum -= 1;</span><br><span class="line">        &#125;</span><br><span class="line">        nA1 = nA2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (j = 0; j &lt; nN; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        pts[j].x += p.x;</span><br><span class="line">        pts[j].y += p.y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">i</span> &lt; nN)</span><br><span class="line">    &#123;</span><br><span class="line">        return EDGE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nSum)<span class="comment">//逆时针nSum == 4, 顺时针nSum == -4</span></span><br><span class="line">    &#123;</span><br><span class="line">        return IN;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        return OUT;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nN, nM;</span><br><span class="line">    int nCase = 1;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nN, &amp;nM), nN)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (nCase &gt; <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            printf("\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;pts[i].x, &amp;pts[i].y);</span><br><span class="line">        &#125;</span><br><span class="line">        printf("Problem %d:\n", nCase++);</span><br><span class="line">        for (int i = 0; i &lt; nM; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            Point p;</span><br><span class="line">            scanf("%lf%lf", p.x, p.y);</span><br><span class="line">            <span class="keyword">if</span> (PtInPolygon(pts, nN, p))</span><br><span class="line">            &#123;</span><br><span class="line">                printf("Within\n");</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                printf("Outside\n");</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/" title="zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系">http://xiaopengcheng.top/2012/06/26/zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2012/06/24/poj-3348-cows/" rel="prev" title="poj 3348 Cows">
+      <i class="fa fa-chevron-left"></i> poj 3348 Cows
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2012/06/28/poj-1265-area/" rel="next" title="poj 1265 Area">
+      poj 1265 Area <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="远行的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="远行&#39;s Blog">
+<meta property="og:url" content="http://xiaopengcheng.top/page/4/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="远行的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/page/4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/09/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/04/09/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD/" class="post-title-link" itemprop="url">关于生命</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-04-09 21:31:11" itemprop="dateCreated datePublished" datetime="2015-04-09T21:31:11+08:00">2015-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E6%83%B3/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/04/09/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD/" class="post-meta-item leancloud_visitors" data-flag-title="关于生命" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/04/09/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/04/09/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近一直在写毕业论文，过得乱七八糟的，也不知道自己干了些什么。今天是交论文的最后一天，终于发过去查重了。这一个月虽然乱七八糟发生了很多煎熬的事情，不过我貌似没有干太多学习上的事情。。。关于学习二字的定义，我觉得不应该再继续以前的理解了。以前总有点类似把自己当做容器，看书学习之类的都一股脑下来，全看完，到后面也不知道看了些什么，也忘记学了些什么。更重要的是，我为什么要去看这些书，我为什么要去学这些东西，如果以前是为了毕业，那么现在了，以后了。也许，我已经太久不记得我喜欢做的事情了。不知不觉，总是承担起来别人的喜好，别人的希望，直到最后步步艰辛。现在想来，我根本不需要这样活着。不说以前，说以后，以后一定要选择合适的，喜欢的事情去做，选择合适，喜欢的人去在一起，毕竟我现在有机会去选择了。觉得接下来这几个月，我该好好思考自己该干些什么事情了，以及我以后想成为什么样的人。非热血，非理想，非责任，只是我适合的，无压力的状态下，我适合成为什么样的人。我很清楚我不是学霸类型，也不是那种为了虚名或者牛逼而愿意逼自己做什么事情的人，选择成为那种人，我宁愿选择回家种田。某段时候，觉得自己就适合成为个家庭主男，以后上上班带带孩子就好，真心没有什么崇高的理想。到了这个年纪，我已经意识到我改变不了世界了。或者说，我已经不再有改变世界的冲动了。人生的美好，莫过于生病时候有人关怀，吐槽时候有人听着不介意，寂寞时候有人骚扰。总之，我已经不再年轻了。</p>
+<p>今天接到妈妈的电话，听到三代以上一个堂叔前几天脑溢血离世了，真的很感慨啊。42岁的年纪，上有老下有小。突然意识到，岁月走得悄无声息，再这样过几年，我也30了。生老病死离我一点都不遥远啊，人生就那么短，何必执着于那么些事情了。该吃该喝该玩该干活，就这样过吧，无论发生什么，都应该坦然接受不是吗。过得快乐最重要。但求无愧于心，虽然做不到对自己。不过，我不一直是在坑自己么。。。。。。</p>
+<p>大学的室友，几年不见结婚生子了，这一切都那么悄无声息的发生。也许几年之后这样的事情会发生在我身上，或者是更久之后。感觉，我这个样子肯定会坑到我崽的。哎，记得从小到大我一直挺有理想的，在中南呆了七年，什么都不想了。越写越乱。。。理想很丰满，现实很骨感。。。问题是，忘记什么是理想了。。。理想远不上一桶方便面来的实在，但是没有的话，吃方便面和吃大餐貌似也没啥区别，反正一直是没发现了，也许是麻木了。这一年，太麻木了。愿这一切早点结束吧，最后的这一个月，做完论文，答完辩，剩下的时间，尽可能用脚去丈量这个世界吧。</p>
+<p>总之，不能把锻炼身体压缩到每天的例行公事上了。我不想成为猝死的IT男，不过我也没那么努力，没去大huawei，也不会做大huawei的项目，这里黑了下，莫见怪。期待鹅厂的MM。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/04/09/%E5%85%B3%E4%BA%8E%E7%94%9F%E5%91%BD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">说说我的QT下使用OpenGL渲染Mesh的框架</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-03-13 21:22:39" itemprop="dateCreated datePublished" datetime="2015-03-13T21:22:39+08:00">2015-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-meta-item leancloud_visitors" data-flag-title="说说我的QT下使用OpenGL渲染Mesh的框架" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我终于把界面换成qt的了，即使我从大二开始就用mfc，一直用到去年上半年。也终于到了，我实在受不了mfc代码混乱的时候了，qt那么方便的东西，我为什么不早点用了。这里就不吐槽mfc的混乱，qt的方便了。在mfc里面建立一个复杂的界面，比如说有dock窗口，或者tab页面的，代码多，而且混乱麻烦，更无语的是，每次我都必须去搜索下，解决各种各样的问题，有的还可以理解，有的就是莫名其妙了。更别说什么代码清晰，跨平台之类的，何止是天方夜谭。</p>
+<p>下面，说说我自己逐渐搭建的这个框架吧。其实，这个框架是从我上一个项目里，使用mfc的单文档单视图，主窗口里面有几个dockpane，视图里面放置了渲染OpenGL的子窗口，过渡来的。在qt的框架里面，mfc所有的这些恶心的东西都没有了，只剩下一个MainWindow类。在这个类里面，创建菜单，工具条，状态条，主窗口，dock窗口，tab窗口。代码简洁方便。渲染opengl的窗口设置为MainWindow的主widget。渲染窗口只是一个普通的widget而已，可以任意放置。</p>
+<p>这样的做法能够把界面和渲染窗口独立出来，渲染窗口对应一个独立的类(COglWidget)，所以方便创建不同类型的复杂界面。我觉得我应该先用viso画个类图，才能说清楚。下图是我的界面。中间是COglWidget。右侧是一个DockWidget，里面放置了个设置Mesh属性的widget。</p>
+<p><img src="https://c7.staticflickr.com/8/7463/26842619574_12cf1f5142_o.jpg" alt></p>
+<p>通过主窗口的构造函数，可以看看如何创建这个界面，虽然在主窗口里面做这么的事情不是个好的习惯。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::CMainWindow(QWidget *parent)</span><br><span class="line">        : QMainWindow(parent)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        setWindowTitle(tr("Skeleton Extract"));</span><br><span class="line"></span><br><span class="line">        m_pSEMesh = new CSEMesh();</span><br><span class="line">        m_pOglForSE = new COglWidget(this, m_pSEMesh);</span><br><span class="line">        m_pSEMesh-&gt;SetOglWidget(m_pOglForSE);</span><br><span class="line">        setCentralWidget((QWidget*)m_pOglForSE);//设置中间是渲染OpenGL的widget      </span><br><span class="line"></span><br><span class="line">        m_pPCMesh = new CPointCloudMesh();</span><br><span class="line">        m_pOglForPC = new COglWidget(this, m_pPCMesh);</span><br><span class="line">        <span class="comment">//m_pOglForPC-&gt;SetEye(0.0, 0.0, 1.0);</span></span><br><span class="line">        m_pOglForPC-&gt;setFixedSize(960, 720);</span><br><span class="line">        m_pOglForPC-&gt;setWindowTitle(tr("Point Cloud For Geodesic Matrix Eigen Vector"));</span><br><span class="line">        m_pOglForPC-&gt;move((QApplication::desktop()-&gt;<span class="attribute">width</span>() - m_pOglForPC-&gt;width()) / <span class="number">2</span>,</span><br><span class="line">            (QApplication::desktop()-&gt;<span class="attribute">height</span>() - m_pOglForPC-&gt;height())/<span class="number">2</span>);</span><br><span class="line">        m_pOglForPC-&gt;hide();</span><br><span class="line">        m_pOglForPC-&gt;setWindowFlags(Qt::Window);</span><br><span class="line"></span><br><span class="line">        CreateActions();</span><br><span class="line">        CreateMenus();</span><br><span class="line">        CreateToolBars();</span><br><span class="line">        CreateStatusBar();</span><br><span class="line">        CreateDockWidgets();</span><br><span class="line"></span><br><span class="line">        setMinimumSize(960, 720);</span><br><span class="line">        setWindowState(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        std::string strName = "MeshData\\bunny_3k.m";</span><br><span class="line">        m_pSEMesh-&gt;LoadModel(strName.c_str());</span><br><span class="line">        m_pMeshNameLabel-&gt;setText(QString(strName.c_str()));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来看一个使用tabwidget的界面，记得在mfc中使用tab页面应该是比较麻烦，我也没用过。不过，在qt里面，唯一需要改变的是把tabwidget设置为central的widget，把其它widget加入到tab页面里面就行了。效果如图：<br><img src="https://c5.staticflickr.com/8/7433/27175531460_7ebec89490_o.jpg" alt><br>这个界面的创建代码如下，这里我把菜单，工具条，状态栏都去掉了。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::CMainWindow(QWidget *parent)</span><br><span class="line">        : QMainWindow(parent)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        setWindowTitle(tr("Virtual Box"));</span><br><span class="line"></span><br><span class="line">        m_pMesh = new CCubeMesh();</span><br><span class="line">        m_pOglWidget = new COglWidget(this, m_pMesh);</span><br><span class="line"></span><br><span class="line">        m_pMainViewMesh = new CCubeMesh();</span><br><span class="line">        m_pMainViewMesh-&gt;DrawStyle(CCubeMesh::MAIN_VIEW);</span><br><span class="line">        m_pMainViewWidget = new CViewWidget(this, m_pMainViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pTopViewMesh = new CCubeMesh();</span><br><span class="line">        m_pTopViewMesh-&gt;DrawStyle(CCubeMesh::TOP_VIEW);</span><br><span class="line">        m_pTopViewWidget = new CViewWidget(this, m_pTopViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pSideViewMesh = new CCubeMesh();</span><br><span class="line">        m_pSideViewMesh-&gt;DrawStyle(CCubeMesh::SIDE_VIEW);</span><br><span class="line">        m_pSideViewWidget = new CViewWidget(this, m_pSideViewMesh);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//CreateActions();</span></span><br><span class="line">        <span class="comment">//CreateMenus();</span></span><br><span class="line">        <span class="comment">//CreateToolBars();</span></span><br><span class="line">        <span class="comment">//CreateStatusBar();</span></span><br><span class="line">        <span class="comment">//CreateDockWidgets();</span></span><br><span class="line"></span><br><span class="line">        setMinimumSize(960, 720);</span><br><span class="line">        setWindowState(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//std::string strName = "cube.obj";</span></span><br><span class="line">        <span class="comment">//m_pMesh-&gt;LoadModel(strName.c_str());</span></span><br><span class="line">        <span class="comment">//m_pMeshNameLabel-&gt;setText(QString(strName.c_str()));</span></span><br><span class="line">        m_pTabWidget = new QTabWidget(this);</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pOglWidget, "Cube View");</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pMainViewWidget, "Main View");</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pTopViewWidget, "Top View");</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pSideViewWidget, "Side View");</span><br><span class="line">        setCentralWidget((QWidget*)m_pTabWidget);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中，可以看到创建一个OglWidget需要一个Mesh指针。在我的框架中，COglWidget内中只使用几个固定的Mesh函数。因此，可以把COglWidget实现为依赖于一个IMesh接口，这样就进一步把OpenGL窗口和Mesh分离开来。不管Mesh类的具体实现如何，OpenGL窗口只需要依赖IMesh接口，因此，第一个界面里面的Mesh类实际上组合了一个CGAL的CGAL::Polyhedron_3对象。而第二个界面的Mesh类是一个简单的渲染长方体的类，不过支持渲染多个视图而已。<br>下面说说，COglWidget类具有哪些功能。首先，渲染Mesh，包括设置视口，eye，投影，光照，背景等等，其次，处理鼠标按键操作模型，我的实现是把所有的鼠标按键消息都丢给了下层的一个trackball类，这个trackball类支持旋转缩放移动模型，另外还写了几个打开文件，以及选取背景色的操作。<br>现在到了Mesh的部分了。因为跟OpenGL窗口相关的只是IMesh接口，所以，我可以任意实现实际的Mesh类。<br>IMesh的定义如下，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> IMESH_H</span><br><span class="line"><span class="number">#def</span>ine IMESH_H</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/vertex.h"</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">&#123;</span><br><span class="line">    struct IMesh</span><br><span class="line">    &#123;</span><br><span class="line">        IMesh()</span><br><span class="line">        &#123;</span><br><span class="line">            m_pMatMV = new double[16];</span><br><span class="line">            m_pMatProj = new double[16];</span><br><span class="line">            m_pViewport = new int[4];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        virtual ~IMesh()</span><br><span class="line">        &#123;</span><br><span class="line">            FreeModel();</span><br><span class="line">            delete[] m_pMatMV;</span><br><span class="line">            delete[] m_pMatProj;</span><br><span class="line">            delete[] m_pViewport;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        virtual bool LoadModel(const char* pFilename) &#123; return true; &#125;</span><br><span class="line">        virtual void SaveModel(const char* sFilename) &#123;&#125;</span><br><span class="line">        virtual void UnifyModel() &#123;&#125;</span><br><span class="line"></span><br><span class="line">        virtual bool HasModelLoad() const &#123; return true; &#125;</span><br><span class="line">        virtual void FreeModel() &#123;&#125;</span><br><span class="line"></span><br><span class="line">        virtual void InitData() &#123;&#125;</span><br><span class="line">        virtual void DestroyData() &#123;&#125;</span><br><span class="line"></span><br><span class="line">        virtual void DrawScene()</span><br><span class="line">        &#123;</span><br><span class="line">            glGetDoublev(GL_MODELVIEW_MATRIX, m_pMatMV);</span><br><span class="line">            glGetDoublev(GL_PROJECTION_MATRIX, m_pMatProj);</span><br><span class="line">            glGetIntegerv(GL_VIEWPORT, m_pViewport);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        void WindowWidth(int nWidth) &#123; m_nWinWidth = nWidth; &#125;</span><br><span class="line">        int WindowWidth() const &#123; return m_nWinWidth; &#125;</span><br><span class="line">        void WindowHeight(int nHeight) &#123; m_nWinHeight = nHeight; &#125;</span><br><span class="line">        int WindowHeight() const &#123; return m_nWinHeight; &#125;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        double* m_pMatMV;//模型视图矩阵</span><br><span class="line">        double* m_pMatProj;//投影矩阵</span><br><span class="line">        int* m_pViewport;//视口</span><br><span class="line">        int m_nWinWidth;</span><br><span class="line">        int m_nWinHeight;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        v3d m_vMax, m_vMin;         // bounding box of the scene</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/" class="post-title-link" itemprop="url">提取三维表面标量场的等值线</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-02-06 16:16:47" itemprop="dateCreated datePublished" datetime="2015-02-06T16:16:47+08:00">2015-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/" class="post-meta-item leancloud_visitors" data-flag-title="提取三维表面标量场的等值线" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>上一篇文章说了提取拉普拉斯矩阵的第二个（或者其它）特征向量能得到一个有规律分布的标量场。现在讲的是如何在这样一个规律分布的标量场上提取出等值线。注意，这是在一个三角网格上面提取等值线，并不是真正的曲面。提取出等值线后，可以做一些相关的应用。</p>
+<p>那么，如何提取等值线了？</p>
+<p>首先，如果只是绘制出等值线，可以简单的设置纹理贴图值（比如间隔多少行，设置纹理值为白色），标量场对应一维纹理坐标。更详细的说明，可以参考我的一篇博文：<a href="http://www.xpc-yx.com/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/" target="_blank" rel="noopener" title="在三维模型上可视化标量场及注意方面">在三维模型上可视化标量场及注意方面</a>。</p>
+<p>现在考虑如何计算等值线上的间隔点。先看单个的三角面，无论如何可以得到一条等值线的。最简单的思想，就是把单个三角面上的等值线连接起来。</p>
+<p>给定一个三角面，如何计算从该三角面出发的一条等值线了？</p>
+<p>第一步，求出三个顶点的标量值顺序，那么标量范围在[fMin,fMax]之间。可以任选区间内的一个值，比如中间值作为该等值线的标量值。</p>
+<p>第二步，得到等值线标量值在[fMin,fMax]所在边pEdge的位置ptBeg，作为起始点，加入点集合isoLine。</p>
+<p>第三步，在pEdge所在的三角面上，找pEdge相邻的两条边的等值点(ptBeg的标量值相等的点)ptNext。如果存在这样的点，那么修改ptBeg = ptNext，加入点集合isoLine。同时，修改pEdge为对应的相邻边pEdge-&gt;next()或者是pEdge-&gt;next()-&gt;next()。如果不存在ptNext，进入第四步，同时设置不成环标志。否则，pEdge = pEdge-&gt;opposite()，(效果是进入相邻面，再循环第三步），如果发现ptNext等于isoLine的第一个点，那么说明已经成环，进入第四步，同时设置成环标志。</p>
+<p>第四步，返回等值线，以及等值线是否成环状。</p>
+<p>相关代码如下，里面使用了cgal的半边结构，同时该函数标记了当前面是否已经计算过等值线，避免等值线过密。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/02/03/%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%B0%B1%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/02/03/%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%B0%B1%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">对模型进行谱分析计算特征向量</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-02-03 14:01:30" itemprop="dateCreated datePublished" datetime="2015-02-03T14:01:30+08:00">2015-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/02/03/%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%B0%B1%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-meta-item leancloud_visitors" data-flag-title="对模型进行谱分析计算特征向量" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/02/03/%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%B0%B1%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/02/03/%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%B0%B1%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一个三维模型，可以看做是一个无向图。顶点是图的点，边可以作为图的边，那么可以得到一个邻接矩阵，该矩阵叫做拉普拉斯矩阵，计算这个邻接矩阵的特征向量就是所谓的谱分析。</p>
+<p>那么问题来了。如何定义边的权重？额，当然有不同的方法，看你需要分析的特性是什么。一般来说是边的两个对角的cotangle之和。另外，矩阵对角线元素是该行其它元素之和再取负。下一步就是计算该矩阵的特征向量了。如果计算了？我前面写过两篇文章讲述如何使用MATLAB计算稀疏矩阵的特征向量，现在我就是这么做的。首先，拉普拉斯矩阵是一个对称矩阵，而且是一个大型的稀疏矩阵。因此，只能使用稀疏矩阵来存储数据了。而且对称矩阵能保证一些特殊的性质，比如第一个特征向量是k * (1,1,1,1…)。第二个特征向量分布得比较有规律，但是通过实验发现，也许第二个也没有规律，可能是第三或者第四个，因为要利用特征向量的分布，需要综合多个特征向量。</p>
+<p>下面是我计算拉普拉斯矩阵的代码，需要考虑角度大于90的情况，以及除0等等。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a和b夹角的cot</span></span><br><span class="line">    double CSEMesh::GetCotangent(double <span class="selector-tag">a</span>, double <span class="selector-tag">b</span>, double c)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a*<span class="selector-tag">b</span> &lt; <span class="number">1</span>e-<span class="number">8</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            double cosc = (a*a+b*b-c*c)/(2*a*b);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (cosc &lt; -<span class="number">1</span>)</span><br><span class="line">                cosc = -1;</span><br><span class="line">            <span class="keyword">if</span> (cosc &gt; <span class="number">1</span>)</span><br><span class="line">                cosc = 1;</span><br><span class="line"></span><br><span class="line">            double angle = acos(cosc);</span><br><span class="line"></span><br><span class="line">            double tan_angle = tan(angle);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fabs(tan_angle) &lt; <span class="number">1</span>e-<span class="number">8</span>)</span><br><span class="line">                return 1 / 1e-8;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                return 0.5 / tan_angle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void CSEMesh::ComputeLaplaceWeight()</span><br><span class="line">    &#123;</span><br><span class="line">        for (Enriched_Model::Edge_iterator pEdge = m_pModel-&gt;edges_begin();</span><br><span class="line">            pEdge != m_pModel-&gt;edges_end();</span><br><span class="line">            pEdge++)</span><br><span class="line">        &#123;</span><br><span class="line">            double cotA = 1.0, cotB = 1.0;</span><br><span class="line">            double a, b, c;</span><br><span class="line"></span><br><span class="line">            Enriched_Model::Edge_iterator pEdgeTmp = pEdge;</span><br><span class="line">            <span class="keyword">if</span> (!pEdgeTmp-&gt;is_border())</span><br><span class="line">            &#123;</span><br><span class="line">                c = pEdgeTmp-&gt;length();</span><br><span class="line">                b = pEdgeTmp-&gt;next()-&gt;length();</span><br><span class="line">                a = pEdgeTmp-&gt;next()-&gt;next()-&gt;length();</span><br><span class="line">                cotA = GetCotangent(a, b, c);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            pEdgeTmp = pEdge-&gt;opposite();</span><br><span class="line">            <span class="keyword">if</span> (!pEdgeTmp-&gt;is_border())</span><br><span class="line">            &#123;</span><br><span class="line">                c = pEdgeTmp-&gt;length();</span><br><span class="line">                b = pEdgeTmp-&gt;next()-&gt;length();</span><br><span class="line">                a = pEdgeTmp-&gt;next()-&gt;next()-&gt;length();</span><br><span class="line">                cotB = GetCotangent(a, b, c);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(cotA + cotB &lt; <span class="number">1</span>e-<span class="number">7</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                pEdge-&gt;weight() = 1e-7;</span><br><span class="line">                pEdge-&gt;opposite()-&gt;weight() = 1e-7;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                pEdge-&gt;weight() = cotA + cotB;</span><br><span class="line">                pEdge-&gt;opposite()-&gt;weight() = cotA + cotB;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来是计算特征向量的代码，因为混合着cgal等，不是很好分离，但是可以用来参考下。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">void CSEMesh::ComputeEigen(int type)</span><br><span class="line">&#123;</span><br><span class="line">        static vector&lt;MatlabSparseInfor&gt; siVec;</span><br><span class="line"></span><br><span class="line">        int nRow = m_pModel-&gt;size_of_vertices();</span><br><span class="line">        int nColum = nRow;</span><br><span class="line">        m_eigenValues.<span class="attribute">resize</span>(EIGEN_VECTOR_NUM);</span><br><span class="line">        for (int i = 0; i &lt; EIGEN_VECTOR_NUM; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            m_eigenVectors[type][i].<span class="attribute">resize</span>(nRow);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int nNum = m_pModel-&gt;size_of_halfedges();</span><br><span class="line">        siVec.<span class="attribute">resize</span>(nNum + nRow);</span><br><span class="line"></span><br><span class="line">        int i = 0;</span><br><span class="line">        for (Enriched_Model::Edge_iterator pEdge = m_pModel-&gt;edges_begin();</span><br><span class="line">            pEdge != m_pModel-&gt;edges_end();</span><br><span class="line">            pEdge++)</span><br><span class="line">        &#123;</span><br><span class="line">            int beg = pEdge-&gt;opposite()-&gt;vertex()-&gt;tag();</span><br><span class="line">            int end = pEdge-&gt;vertex()-&gt;tag();</span><br><span class="line"></span><br><span class="line">            siVec[i].r = beg;</span><br><span class="line">            siVec[i].c = end;</span><br><span class="line">            siVec[i].v = -pEdge-&gt;weight();</span><br><span class="line">            ++i;</span><br><span class="line"></span><br><span class="line">            siVec[i].r = end;</span><br><span class="line">            siVec[i].c = beg;</span><br><span class="line">            siVec[i].v = -pEdge-&gt;weight();</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        assert(i == nNum);</span><br><span class="line"></span><br><span class="line">        for(Enriched_Model::Vertex_iterator pVertex = m_pModel-&gt;vertices_begin(); </span><br><span class="line">            pVertex != m_pModel-&gt;vertices_end(); pVertex++)</span><br><span class="line">        &#123;</span><br><span class="line">            Enriched_Model::Vertex::Halfedge_around_vertex_circulator pHalfEdge = pVertex-&gt;vertex_begin();</span><br><span class="line">            Enriched_Model::Vertex::Halfedge_around_vertex_circulator d = pHalfEdge;</span><br><span class="line">            double sum = 0.0;</span><br><span class="line"></span><br><span class="line">            CGAL_For_all(pHalfEdge, d)</span><br><span class="line">            &#123;</span><br><span class="line">                sum += pHalfEdge-&gt;weight();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fabs(sum) &lt; <span class="number">1</span>e-<span class="number">7</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                sum = 0.0;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            siVec[i].r = pVertex-&gt;tag();</span><br><span class="line">            siVec[i].c = pVertex-&gt;tag();</span><br><span class="line">            siVec[i].v = sum;</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        assert(i == nNum + nRow);</span><br><span class="line">        std::sort(siVec.begin(), siVec.end());</span><br><span class="line"></span><br><span class="line">        CMatlabSparseMatrix sm(siVec[0], nNum + nRow, nRow, nColum);</span><br><span class="line">        int nEigenNum = std::min(nRow, (int)EIGEN_VECTOR_NUM);</span><br><span class="line">        sm.GetEigens(m_eigenValues, m_eigenVectors[type], nEigenNum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于如何实现MATLAB稀疏矩阵类，可以参考我其它的两篇文章。下面是第二个特征向量的分布效果，能够观察到是一个非常有规律的标量场。<br><a href="https://c2.staticflickr.com/8/7068/27380408921_bcdfd8ed53_o.png" target="_blank" rel="noopener"><img src="https://c2.staticflickr.com/8/7068/27380408921_bcdfd8ed53_o.png" alt></a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/02/03/%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%B0%B1%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">使用CGAL计算SDF分割模型</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-22 20:28:12" itemprop="dateCreated datePublished" datetime="2015-01-22T20:28:12+08:00">2015-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
+                    <span itemprop="name">CGAL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL计算SDF分割模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最新版的cgal4.5，提供了个<a href="http://doc.cgal.org/latest/Surface_mesh_segmentation/index.html" target="_blank" rel="noopener" title="Triangulated Surface Mesh Segmentation">Triangulated Surface Mesh Segmentation</a>包，利用该部分代码可以计算三维模型每个面或者顶点的sdf（<em>Shape Diameter Function）_属性。sdf的具体定义可以参考论文：L. Shapira, A. Shamir, and D. Cohen-Or. Consistent mesh partitioning and skeletonisation using the shape diameter function. _The Visual Computer</em>, 24(4):249–259, 2008.</p>
+<p>那么sdf可以做什么了？sdf最终能表示三维模型上面的一个标量场，该标量场代表的是模型厚度的分布。因此，利用该标量场可以对模型进行分割，不管是自动化的还是交互的都可以。如何计算sdf了？可以利用定义自己去实现算法，或者利用库，比如cgal。</p>
+<p>关于如何使用sdf标量场进行模型分割？cgal的文档说的很清楚，先用k个gmm进行软聚类（每个cluster是k-means初始化的），再利用软聚类的结果进行硬聚类，这一步实际上利用graph-cut求能量最小化。更清楚的解释，参考CGAL的相关文档。刘利刚老师用sdf进行交互式分割的文章，也是利用gmm和graph-cut作为工具实现的，原理和cgal的实现思路基本一致。</p>
+<p>下面将一下，我使用该代码碰到的问题。计算sdf的函数是CGAL::sdf_values，这是一个复杂的模板函数，该函数的第一个参数是一个模板类Polyhedron的引用。由于cgal使用了非常复杂的模板语法，所以经常会碰到一些恶心的语法问题，编译无法通过。这一次也是。由于默认情况下，使用cgal都会继承CGAL::Polyhedron_3&lt;kernel, items&gt;以实现自定义的多面体类。所以，使用这个函数的时候就会出现模板参数不匹配的情况。怎么解决了。首先，没必要去修改自己的多面体类，也不可能去修改cgal库，再重新构造个cgal默认的Polyhedron_3对象也很浪费。</p>
+<p>其实，这里可以考虑到转型。类型转换有两种考虑，转值和转指针。如果将自定义多面体类转换为默认的多面体类，肯定会生成个具大的临时对象，多浪费啊。所以了，可以先取地址转换为基类指针再解引用就获得了cgal默认的Polyhedron_3对象了。我的代码如下：std::pair&lt;double, double&gt; min_max_sdf = CGAL::sdf_values(<em>(Polyhedron</em>)m_pModel, m_sdf_property_map);</p>
+<p>至于其它部分的使用，参考cgal手册即可，非常简单方便。下面再贴几张图，展示下sdf标量场的分布，以及利用sdf的分割结果。</p>
+<p>sdf标量场，白色的是等值线。</p>
+<p><img src="https://c2.staticflickr.com/8/7719/27451907645_8f5cee7a2e_o.png" alt></p>
+<p>sdf分割模型结果：</p>
+<p><img src="https://c2.staticflickr.com/8/7604/27417732786_830e67189b_o.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">使用C++调用MATLAB引擎计算稀疏矩阵的特征向量</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-20 21:43:19" itemprop="dateCreated datePublished" datetime="2015-01-20T21:43:19+08:00">2015-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-meta-item leancloud_visitors" data-flag-title="使用C++调用MATLAB引擎计算稀疏矩阵的特征向量" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>上一篇文章讲了如何用MATLAB计算稀疏矩阵的特征向量，但是我们最终的目的是使用C++达到这个需求。大致搜索了下，发现使用C++调用MATLAB计算引擎的方式最方便，就采用了，目前的计算速度和方便性都能满足要求。下面讲一下如何操作。</p>
+<p>1.首先是安装MATLAB，并且保证版本正确，比如32位程序只能调用32位的MATLAB，如我的机器是64位win8.1，所以必须强制安装32位的MATLAB，才能配合我用vs2010编写的32位程序。如果，我用vs2010开放64位程序，那么当然是可以使用64MATLAB的，但是配置64位开源库是个大工程，有些库并没有针对64位版本测试过。</p>
+<p>2.假设我的MATLAB安装在C:\Program Files (x86)\MATLAB下面，那么include目录是C:\Program Files (x86)\MATLAB\R2013a\extern\include，lib目录是C:\Program Files (x86)\MATLAB\R2013a\extern\lib\win32\microsoft，bin目录是C:\Program Files (x86)\MATLAB\R2013a\bin\win32。include和lib在vs里面设置好就行了，至于bin目录需要加入到path环境变量中，最后重启电脑生效，当然你一个个去找需要的dll也是可以的。</p>
+<p>3.配置好之后，就可以使用MATLAB引擎了。大致需要1&gt;打开引擎，2&gt;用C++创建变量，3&gt;把变量对应到MATLAB命令中，4&gt;执行MATLAB命令，5&gt;将MATLAB变量传回C++这样的一些操作。比如，engOpen打开引擎，mxCreateSparse用于创建稀疏矩阵，engPutVariable将变量传入MATLAB，engEvalString执行命令，engGetVariable返回结果。具体怎么操作还是得参考相应教程。另外，可以用C++创建不同类型的变量，稀疏矩阵是比较特殊的一种。</p>
+<p>4.至于如何用MATLAB计算稀疏矩阵的特征向量，参阅上一篇文章。</p>
+<p>5.关键的一步，如何设置mxCreateSparse返回的稀疏矩阵的值。先看下面的代码吧。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mxArray* sm = mxCreateSparse(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">double* pr = mxGetPr(sm);</span><br><span class="line">mwIndex* ir = mxGetIr(sm);</span><br><span class="line">mwIndex* jc = mxGetJc(sm); </span><br><span class="line"></span><br><span class="line">int k = 0;</span><br><span class="line">int nLastC = -1;</span><br><span class="line">for (int i = 0; i &lt; m_nNum; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    pr[i] = m_pSI[i].v;</span><br><span class="line">    ir[i] = m_pSI[i].r;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m_pSI[i]<span class="selector-class">.c</span> != nLastC)</span><br><span class="line">    &#123;</span><br><span class="line">        jc[k] = i;</span><br><span class="line">        nLastC = m_pSI[i].c;</span><br><span class="line">        ++k;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">jc[k] = m_nNum;</span><br></pre></td></tr></table></figure>
+
+<p>pr对应的是值，ir对应的是行，关键的是jc，jc并不是列，而是到当前列为止出现的值数目，具体可以查阅MATLAB文档，或者理解下以上代码，正确初始化稀疏矩阵是成功的关键。<br>下面随附我的计算拉普拉斯矩阵FiedlerVector的函数。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">void CSparseMatrix::GetFiedlerVector(double* pVector, int nChoose)</span><br><span class="line">    &#123;</span><br><span class="line">        assert(nChoose &gt;= 0  nChoose &lt;= 5);</span><br><span class="line"></span><br><span class="line">        Engine *ep = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!(ep = engOpen(NULL)))<span class="comment">//打开matlab引擎</span></span><br><span class="line">        &#123;</span><br><span class="line">            fprintf(stderr, "\nCan't start MATLAB engine\n");</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mxArray* sm = mxCreateSparse(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">        double* pr = mxGetPr(sm);</span><br><span class="line">        mwIndex* ir = mxGetIr(sm);</span><br><span class="line">        mwIndex* jc = mxGetJc(sm); </span><br><span class="line"></span><br><span class="line">        int k = 0;</span><br><span class="line">        int nLastC = -1;</span><br><span class="line">        for (int i = 0; i &lt; m_nNum; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            pr[i] = m_pSI[i].v;</span><br><span class="line">            ir[i] = m_pSI[i].r;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (m_pSI[i]<span class="selector-class">.c</span> != nLastC)</span><br><span class="line">            &#123;</span><br><span class="line">                jc[k] = i;</span><br><span class="line">                nLastC = m_pSI[i].c;</span><br><span class="line">                ++k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        jc[k] = m_nNum;</span><br><span class="line"></span><br><span class="line">        engPutVariable(ep, "sm", sm);</span><br><span class="line">        engEvalString(ep, "max_d = eigs(sm, 1);");//获得最大绝对值的特征值</span><br><span class="line"></span><br><span class="line">        double fMaxE;</span><br><span class="line">        mxArray* max_d = engGetVariable(ep, "max_d");</span><br><span class="line">        memcpy(fMaxE, (void *)mxGetPr(max_d), sizeof(double));//获得最大的特征值(假设特征值是从最大排列到0)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//更新对角线元素，相当于sm = sm - fMaxE，这样会使计算出来的特征值都减去fMaxE</span></span><br><span class="line">        pr = mxGetPr(sm);</span><br><span class="line">        for (int i = 0; i &lt; m_nNum; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            pr[i] = m_pSI[i].v;</span><br><span class="line">            <span class="keyword">if</span> (m_pSI[i]<span class="selector-class">.r</span> == m_pSI[i].c)<span class="comment">//对角线元素</span></span><br><span class="line">            &#123;</span><br><span class="line">                pr[i] -= fMaxE;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        engPutVariable(ep, "sm", sm);</span><br><span class="line">        engEvalString(ep, "[V,D] = eigs(sm);");</span><br><span class="line">        engEvalString(ep, "[newD,IX] = sort(diag(D));");</span><br><span class="line">        engEvalString(ep, "newV=V(:,IX);");</span><br><span class="line"></span><br><span class="line">        const int EVAl_STR_LEN = 100;</span><br><span class="line">        char szEvalString[EVAl_STR_LEN];</span><br><span class="line">        sprintf(szEvalString, "Fiedler = newV(:, %d);", nChoose);</span><br><span class="line">        engEvalString(ep, szEvalString);</span><br><span class="line"></span><br><span class="line">        mxArray* fiedler = engGetVariable(ep, "Fiedler"); //返回计算结果</span><br><span class="line">        memcpy(pVector, (void *)mxGetPr(fiedler), sizeof(double) * m_nRow);</span><br><span class="line"></span><br><span class="line">        mxDestroyArray(sm);</span><br><span class="line">        mxDestroyArray(fiedler);</span><br><span class="line">        engClose(ep);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>参照以上函数基本可以知道本文所讲的内容了，一切尽在代码中。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">使用Matlab计算稀疏矩阵的特征向量</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-12 17:03:06" itemprop="dateCreated datePublished" datetime="2015-01-12T17:03:06+08:00">2015-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-meta-item leancloud_visitors" data-flag-title="使用Matlab计算稀疏矩阵的特征向量" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>825</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>首先，说明下为什么要用MATLAB。原因是，支持稀疏矩阵的矩阵库比较少，即使支持去学习使用时间也更多。所以，就用MATLAB了。目的是使用MATLAB计算稀疏矩阵的特征向量，再用C++调用MATLAB代码。</p>
+<p>问题1：如何定义稀疏矩阵。MATLAB使用sparse函数创建稀疏矩阵。如下调用：S = sparse(i,j,s,m,n)，根据参数创建稀疏矩阵。i和j代表不为0元素的行和列值，s则是对应的值，m和n是矩阵的大小。当然还有其它接口，具体查阅MATLAB文档。</p>
+<p>问题2：怎么计算稀疏矩阵的特征向量？MATLAB提供了eigs函数。其实，还有个eig函数，经本人实验，在使用C++调用MATLAB引擎的过程中，该函数失败了。那么，就只能使用eigs函数了。eigs函数有几种形式。下面说下我用到的几种形式。</p>
+<p>形式1：d = eigs(A)，返回的是稀疏矩阵A的特征值（所有的特征值构成一个向量d，本人的理解是没有保证d是有序的）。</p>
+<p>形式2：d = <tt><span class="highlight_01">eigs</span>(A,k)，返回的是最大的k个特征值，文档也没有说是有序的，如果设置k为1，那么返回的是最大的特征值。</tt></p>
+<p>形式3：[V,D] = eigs(A)，V是特征向量构成的矩阵，每列是一个特征矩阵，D则是一个对角矩阵，对角线上的值是和V对应的特征值。不过，V和D的大小都固定为6。</p>
+<p>形式4：[V,D] = eigs(A，k)，则可以返回最大的k个特征向量和对应的特征值，但是也没有排序，需要根据D排序V，以方便使用。</p>
+<p>问题3：如何实现返回k个根据特征值排序后的特征向量？这是最有价值的问题了。直接提供代码吧。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[V,D] = eigs(sm,k);</span><br><span class="line">[newD,IX] = sort(diag(D)));;</span><br><span class="line">newV=V(:,IX);</span><br></pre></td></tr></table></figure>
+
+<p>newV就是根据特征值排序后的特征向量，sm当然需要先建立了。<br>写在最后的话，之所以使用MATLAB计算稀疏矩阵的特征向量，是因为可以用C++调用。所以，关于这篇文章这些知识就够了，也算是我为自己做的整理吧。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/08/2015%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B%E6%83%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/08/2015%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B%E6%83%85/" class="post-title-link" itemprop="url">2015要完成的事情</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-08 22:16:54" itemprop="dateCreated datePublished" datetime="2015-01-08T22:16:54+08:00">2015-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E6%83%B3/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/08/2015%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B%E6%83%85/" class="post-meta-item leancloud_visitors" data-flag-title="2015要完成的事情" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/08/2015%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B%E6%83%85/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/08/2015%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B%E6%83%85/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>421</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>无论如何，不得不承认，我不是个学霸，也不是个苦行僧，我做不到太努力，太拼命，也不想去那么做。所以，对于我来说，最好的方式就是把该做的事情好好做完吧。走自己的路，让别人无路可走这种人生意义，终究不适合我。</p>
+<p>下面是2015年，我必须完成和尽可能去完成的事情。</p>
+<p>必须完成：1.顺利毕业。2.毕业前拿到驾照。3.每周至少给奶奶打三次电话，尽可能多回家。4.坚持跑步和健身。</p>
+<p>尽可能去完成：5.尽可能多看些计算机之外的书籍。6.骑车旅行。</p>
+<p>其余的时间，就还没有想好了，暂时就这样吧。虽然有些事情，描述得很不具体，但是我会在今后将其尽可能具体化的。正因为我有这么多缺点，这么多不懂的东西，才值得被批评，被说教，很多事情才有存在的意义吧。如果有人再走进我的生活，请原谅我是一个不完美的人，有很多的缺点。总之，我应该比2014年更努力点了，而且应该多做些具体的事情，这样才更有意义。荒芜最需要的是被庄稼覆盖。求被覆盖。</p>
+<p>到6.30号，终于拿到毕业证、学位证和驾驶证了。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/01/08/2015%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B%E6%83%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-title-link" itemprop="url">stl源码剖析之heap</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-01 13:59:33" itemprop="dateCreated datePublished" datetime="2015-01-01T13:59:33+08:00">2015-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之heap" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。</p>
+<p>下图是push_heap的示意图。<img src="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png" alt></p>
+<p>从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void push_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    <span class="comment">// 注意，调用该函数时候，新元素位于最后一个位置(last-1)。</span></span><br><span class="line">    __push_heap_aux(first, last, distance_type(first), value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">inline void __push_heap_aux(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, Distance*, T*) &#123;</span><br><span class="line">    __push_heap(first, Distance((last - first) - <span class="number">1</span>), Distance(<span class="number">0</span>),</span><br><span class="line">        T(*(last - 1)));</span><br><span class="line">    <span class="comment">// (last-first)–1代表新元素的索引，0是堆首的索引，*(last - 1)是新加入的值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void __push_heap(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance topIndex, T value) &#123;</span><br><span class="line">    Distance parent = (holeIndex - 1) / 2;  // 找出父節點</span><br><span class="line">    while (holeIndex &gt; topIndex  *(first + parent) &lt; value) &#123;</span><br><span class="line">        <span class="comment">// 尚未到达顶端，且父节点小于新值</span></span><br><span class="line">        <span class="comment">// 由于以上使用 operator&lt;，可知 STL heap 是max-heap</span></span><br><span class="line">        *(first + holeIndex) = *(first + parent);   // 令洞值为父值</span><br><span class="line">        holeIndex = parent; // percolate up：调整洞号，向上提升至父节点。</span><br><span class="line">        parent = (holeIndex - 1) / 2;   // 新洞的父节点</span><br><span class="line">    &#125;    <span class="comment">// 持续至顶端，或满足 heap 的次序特性为止。</span></span><br><span class="line">    *(first + holeIndex) = value;   // 令洞值为新值。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>push_heap的用法是输入迭代器对，并且保证[first,last-1)是最大堆，*(last-1)是新加入的元素。push_heap调用辅助函数<strong>push_heap_aux。至于为什么需要这个辅助函数了？应该是为了提取出distance_type和value_type吧，这两个内联函数的定义，可以参考stl源码剖析迭代器的那章。下面来思考真正的实现函数</strong>push_heap。这个函数需要新加入元素位置holeIndex和堆首位置topIndex，另外还有保存好的新加入值。算法的过程很简单，就是上溯holeIndex，找到真正满足条件的位置（无法继续上回溯），然后把value放入该位置即可。<br>pop_heap实际上是一个相反的过程。实现思路是将堆大小加一后，再找出最后一个元素应该放入的位置holeIndex，最后再加入这个值。示意图如下：</p>
+<p><img src="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png" alt><br>下面看看摘录出来的代码，思想类似于push_heap，只需要求出最终的holeIndex。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    __pop_heap_aux(first, last, value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void __pop_heap_aux(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, T*) &#123;</span><br><span class="line">    __pop_heap(first, last - 1, last - 1, T(*(last - 1)), distance_type(first));</span><br><span class="line">    <span class="comment">// pop动作的結果为底层容器的第一個元素。因此，首先设定欲调整值为尾值，然后將首值調至 </span></span><br><span class="line">    <span class="comment">// 尾节点（所以以上將迭代器result设为last-1）。然后重整 [first, last-1)，</span></span><br><span class="line">    <span class="comment">// 使之重新成一個合格的 heap。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,</span><br><span class="line">    RandomAccessIterator result, T value, Distance*) &#123;</span><br><span class="line">    *result = *first; // 設定尾值为首值，于是尾值即是結果，</span><br><span class="line">    <span class="comment">// 可由调用底层容器之 pop_back() 取出尾值。</span></span><br><span class="line">    __adjust_heap(first, Distance(0), Distance(last - first), value);</span><br><span class="line">    <span class="comment">// 以上欲重新調整 heap，洞号为 0，欲調整值为value。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void __adjust_heap(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance len, T value) &#123;</span><br><span class="line">    Distance topIndex = holeIndex;</span><br><span class="line">    Distance secondChild = 2 * holeIndex + 2;   // 洞节点之右子节点</span><br><span class="line">    while (secondChild &lt; len) &#123;</span><br><span class="line">        <span class="comment">// 比较洞节点之左右兩个子值，然后以 secondChild 代表较大子节点。</span></span><br><span class="line">        <span class="keyword">if</span> (*(first + secondChild) &lt; *(first + (secondChild - <span class="number">1</span>)))</span><br><span class="line">            secondChild--;</span><br><span class="line">        <span class="comment">// Percolate down：令较大大子值为洞值，再令洞号下移至较大子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + secondChild);</span><br><span class="line">        holeIndex = secondChild;</span><br><span class="line">        <span class="comment">// 找出新洞节点的右子节点</span></span><br><span class="line">        secondChild = 2 * (secondChild + 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (secondChild == len) &#123; <span class="comment">// 沒有右子节点，只有左子节点</span></span><br><span class="line">        <span class="comment">// Percolate down：令左子值为洞值，再令洞号下移至左子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + (secondChild - 1));</span><br><span class="line">        holeIndex = secondChild - 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 將欲调整值填入目前的洞号內。注意，此時肯定滿足次序特性。</span></span><br><span class="line">    <span class="comment">// 依侯捷之见，下面直接改為 *(first + holeIndex) = value; 应该可以。</span></span><br><span class="line">    __push_heap(first, holeIndex, topIndex, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似于push_heap，pop_heap也是调用辅助函数<strong>pop_heap_aux。</strong>pop_heap_aux调用<strong>pop_heap。</strong>pop_heap调用<strong>adjust_heap调整holeIndex，最终在holeIndex处放入value（原最后一个的值）。关键代码是</strong>adjust_heap中的循环。循环的主要意思是将holeIndex不断下放，直到最底层。最后的if语句的意思是，如果最底层有左子节点，而没有右子节点，那么最终位置肯定是这个左子节点。最后一句代码的意思是加入value到holeIndex，由于已经调整完毕，所以一个赋值操作也可以达到要求，参见侯捷注释。<br>sort_heap就比较简单了，不断将极值移动到末尾，不断pop_heap。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下這個 sort_heap() 不允許指定「大小比較標準」</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void sort_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    <span class="comment">// 以下，每執行一次 pop_heap()，極值（在STL heap中為極大值）即被放在尾端。</span></span><br><span class="line">    <span class="comment">// 扣除尾端再執行一次 pop_heap()，次極值又被放在新尾端。一直下去，最後即得</span></span><br><span class="line">    <span class="comment">// 排序結果。</span></span><br><span class="line">    while (last - first &gt; <span class="number">1</span>)</span><br><span class="line">        pop_heap(first, last--); // 每執行 pop_heap() 一次，操作範圍即退縮一格。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后要将的是make_heap，即将一个迭代器对里面的内容构造为最大堆。代码如下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/" class="post-title-link" itemprop="url">stl源码剖析之stack</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-12-31 11:22:15" itemprop="dateCreated datePublished" datetime="2014-12-31T11:22:15+08:00">2014-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之stack" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>类似于queue，stack也是个简单的适配器。在实现上，stack与queue非常类似。底层可以使用同样的容器，比如默认都采用deque。因此，stack的源码和queue的非常类似。代码过于简单，都可以自解释了。下面是摘录出来的代码，可以顺便编译通过。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _STL_STACK_H</span><br><span class="line"><span class="number">#def</span>ine _STL_STACK_H</span><br><span class="line"></span><br><span class="line">namespace std</span><br><span class="line">&#123;</span><br><span class="line">    template &lt;class T, class Sequence = deque&lt;T&gt; &gt;</span><br><span class="line">    class stack &#123;</span><br><span class="line">        friend bool operator==(const stack, const stack);</span><br><span class="line">        friend bool operator&lt;(const stack, const stack);</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        typedef typename Sequence::value_type value_type;</span><br><span class="line">        typedef typename Sequence::size_type size_type;</span><br><span class="line">        typedef typename Sequence::reference reference;</span><br><span class="line">        typedef typename Sequence::const_reference const_reference;</span><br><span class="line">    protected:</span><br><span class="line">        Sequence c; // 底层容器</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        <span class="comment">// 以下完全利用 Sequence c 的操作，完成 stack 的操作。</span></span><br><span class="line">        bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">        size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">        reference top() &#123; return c.back(); &#125;</span><br><span class="line">        const_reference top() const &#123; return c.back(); &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// deque 是两头可进出，stack 是末端进，末端出（所以后进者先出）。</span></span><br><span class="line">        void push(const value_type x) &#123; c.push_back(x); &#125;</span><br><span class="line">        void pop() &#123; c.pop_back(); &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator==(const stack&lt;T, Sequence&gt; x, const stack&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c == y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator&lt;(const stack&lt;T, Sequence&gt; x, const stack&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c &lt; y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>代码非常类似于queue，除了pop弹出的是末尾元素，top也是返回末尾元素之外。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

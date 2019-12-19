@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="远行的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="远行&#39;s Blog">
+<meta property="og:url" content="http://xiaopengcheng.top/page/12/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="远行的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/page/12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/28/%E4%BD%BF%E7%94%A8STL%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/28/%E4%BD%BF%E7%94%A8STL%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%AF%86/" class="post-title-link" itemprop="url">使用STL容器的一些常识</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-28 14:26:55" itemprop="dateCreated datePublished" datetime="2012-11-28T14:26:55+08:00">2012-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/28/%E4%BD%BF%E7%94%A8STL%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%AF%86/" class="post-meta-item leancloud_visitors" data-flag-title="使用STL容器的一些常识" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/28/%E4%BD%BF%E7%94%A8STL%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%AF%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/28/%E4%BD%BF%E7%94%A8STL%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%AF%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>stl这种东西这几年确实用得不少了，大一暑假刚开始看c++primer的时候就知道有这么个东西，当时觉得非常神奇的样子。不过，我用stl最多的地方还是在做acm的一些题目的时候。很多时候为了方便，为了代码简洁性就用stl了。我还是比较喜欢stl这个东西的。</p>
+<p>我只打算讲点简单的东西。比如大致的实现原理和使用的一些注意情况，另外讲下我对迭代器失效的理解。</p>
+<p>vector是一个动态数组，既然是数组，那么在末尾增加和删除是很快的，复杂度是O(1)。但是，在其它位置增加和删除复杂度就跟位置有关系了，复杂度是O(n)。默认情况对vector的查找是不会应用二分的，所以你用stl里面的find查找复杂度也是O(n)。当vector的容量大小需要经常改变时候，你可以预估计容量的最大大小，然后调用reserve函数预分配一块大内存，这样就可以避免频繁的内存分配释放造成的性能损失了。</p>
+<p>deque类似于vector。但是在头部增加和删除复杂度也是O(1)，不过我没看过stl的实现，也不知道为什么。</p>
+<p>list的内部实现大概是双向链表。那么在任意位置的插入和删除复制度都是O(1)。对于查找的话，虽然理论复杂度也是O(n)。不过，list的查找肯定会比vector慢的，因为多了一次取地址的间接操作。而且，数组因为地址是连续的，可以来个地址的缓存。</p>
+<p>set和map内部是用红黑树实现的。红黑树也就是一棵平衡查找树吧，大家都学过二叉平衡树，红黑树大概类似这种东西。算法导论里面有对红黑树的详细介绍，不过看得让我很头晕，而且我也不想去实现一个红黑树，光是二叉平衡树的旋转已经很无语了。反正红黑树类似二叉平衡查找树就行了。那么，红黑树的插入删除都可能改变原有结点的位置之间的关系，意思是不仅仅是破坏或者增加一个结点的位置。但是原有结点的地址肯定是没有变化的。增删查改的复杂度都是log(n)。还有，对set和map的查找要应用容器内部的成员函数find，而不是全局的stl函数find。前者是二分查找，而后者是顺序查找。</p>
+<p>下面我讲讲我对stl迭代器失效的理解。其实，大致知道了stl容器的实现，这个问题就很好理解了。</p>
+<p>vector是动态数组，那么插入和删除元素都会改变该元素后面元素的地址，那么先前获取的指向后面位置元素的迭代器就会失效了。而且即使你插入在最后，也可能使所有的迭代器失效，因为可能这个时候刚好vector必须增加容量来容纳你新插入的元素了。你再访问这些迭代器的话，不是访问到错误的内容就是内存错误了。</p>
+<p>list的话，由于结点是孤立的，是用指针把所有结点串起来的，那么原有结点的地址一直都不会改变。只要不对结点进行了删除，那么原来获取的迭代器就不会失效。但是，++和–的结果可能会和原来不一致的。</p>
+<p>deque类似于vector吧。不过，我还是不是很清楚。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/28/%E4%BD%BF%E7%94%A8STL%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/22/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%86%85%E8%81%94%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/22/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%86%85%E8%81%94%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">关于函数内联的一些理解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-22 19:38:44" itemprop="dateCreated datePublished" datetime="2012-11-22T19:38:44+08:00">2012-11-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/22/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%86%85%E8%81%94%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="关于函数内联的一些理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/22/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%86%85%E8%81%94%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/22/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%86%85%E8%81%94%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在看提高C++性能的编程技术一书，居然发现里面有三章是专门讲述内联的。看来内联在作者心中占据了非常重要的位置，内联在作者心里是最有效的改进性能的策略了。</p>
+<p>阅读完这三章内容之后，我对内联的理解更加模糊了。因为到最后作者也说你内联性能不一定变好，你不内联性能也不一定变坏。能跟内联牵扯上关系的东西太多了。</p>
+<p>我记得有人曾经问过我这个问题，内联和宏替换的区别是什么。当时我还是大三的时候，准备找个实习，是电面的时候被别人问到的。还是国内著名的IT企业，我就这样的水水的跟人家乱扯。现在回忆起来我好像什么也没说出来的样子。说实话，我那个时候感觉内联和宏替换区别不大，一样的对待也没什么大不了的。第三次电面的时候我就彻底悲剧了，最主要的原因还是因为C++功底不扎实。想想那个时候也挺可爱的，把简历写的那么好笑那么烂，他们居然也给我机会进到最后一轮。最后一轮我实在表现的太烂了。</p>
+<p>那么区别到底是什么了。我说说现在的理解吧。首先，宏替换不能算编译器的时候，应该算预处理器的工作，而<strong>内联属于编译器的工作</strong>，阶段都不同了。其次，宏替换很白痴就是简单的应用些规则进行代码替换而已，而内联是很高级的功能吧，inline只是对编译器的指示，内联不内联是编译器自己的决定，有可能你不写inline函数也被内联了，不过我觉得可能性比较小，而且内联不仅仅是在调用位置替换上被调用函数的代码，<strong>编译器还会对替换之后的新代码整个进行优化，也就是能够跨越函数调用进行优化</strong>，这一点据说是内联提高性能的关键。最后，宏的可读性很差，什么机制都没有，而内联就不同，函数还是函数，参数和返回类型，<strong>编译器对函数的检查等等都还在</strong>，而宏就没有这些优待。我能说出来的也就这么些了。。。</p>
+<p>关于什么是内联的话应该就不需要我进行解释了。内联能避免函数调用的代价这一点也不需要解释了。函数调用的代价说简单点就是保存现场，主要是一些寄存器的内容，一般会把这些寄存器的内容压栈保存起来，还有就是传递参数，参数的传递是通过改变堆栈指针达到的。函数调用完成之后还需要恢复现场，就是从栈里面恢复一些寄存器的内容，还有恢复原来的栈指针。但是，具体起来函数调用需要做些什么还是比较难说清楚的，不同的体系结构做的事情都不一样，再说写c++代码的时候谁又想过多的考虑底层具体发生了什么了。</p>
+<p>那么来思考下为什么要使用内联和为什么又不要使用内联吧。大家都知道函数调用会造成一定的代价，既然内联可以避免这个代价那么为什么我们不用内联了。好吧，那么我们就用内联把函数调用的代价消去。那么为什么我们只内联比较小的函数了，而超过一定规模的函数就不内联了。首先，如果一个函数规模较大，那么函数调用的代价在整个代价里面的比例就较小了。其次，内联较大规模的函数会造成编译后的二进制代码增大，如果函数非叶子位置函数(只会被别的函数调用的函数)那么这个可能性更大，很可能就会到达无法忍受的地步，内联造成编译时间变长也是一方面。最后，内联也会损失某种性能，比如<strong>缓存和页交换</strong>之类的，如果是函数调用，机器可以运用指令和数据缓存之类的，但是如果是内联，那么不同的调用位置其在映像里面的位置是不一样的，那么机器是不会缓存的。所以，内联也不是能随便用的。</p>
+<p>其实说了这么多了，我们还是不知道什么时候该内联什么时候不该内联。我们只了解到，如果函数足够小就内联吧，那么小的标准是什么，代码五行以内没有循环？什么时候不该内联，函数规模太大了？反正内联是一件太纠结的事情了，有可能你用编译器测试一下内联和不内联性能是没有变化的，因为可能编译器在幕后就内联了。</p>
+<p>根据我所看的这本书的说法，我有一些建议。对<strong>少于五行的代码和调用频率大于80%的函数</strong>一定内联，其余的你还是仔细考虑下吧。你可以再分解调用频率大于80%的函数，使其规模变小，然后再考虑是否内联它。其实，这本书的思想还是对整个系统进行测试之后才进行内联选择，毕竟性能优化也是最后阶段的事情。你需要找出系统执行的关键路径，其实也就是执行频率最高的一些函数，根据整个系统的流程图，你就会发现<strong>一条系统执行频率最高的路径</strong>，内联应该只发生在这条路径上面。</p>
+<p>好了，这就是我对内联的一些理解，这本书关于内联的内容实在太多了，我觉得还是下次再写一篇文章扯扯吧。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/22/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%86%85%E8%81%94%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-title-link" itemprop="url">多线程内存池</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-19 21:04:54" itemprop="dateCreated datePublished" datetime="2012-11-19T21:04:54+08:00">2012-11-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="多线程内存池" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如果一个内存池需要线程同步了，估计和默认的内存操作也差不了多远了。现在对内存操作的优化只是在优化线程同步操作上面了。默认的lock和unlock可能实现得过于完美，因而要求更多的cpu周期。如果选择更原子的lock和unlock实现，还是可以加快内存操作的速度的。</p>
+<p>多线程内存池在实现上也就是在申请和释放外面包裹了一对加锁和解锁操作而已。</p>
+<p>如果我们采用模板编程，就可以实现一个功能强悍的模板类，该模板类有两个参数，单线程内存池和锁。这样的话，可以组合出很多情况。比如说，单线程内存池有对象大小固定和不固定两种实现，锁在Windows下可以用临界区，互斥体，信号量，事件实现。这样最多可以组合出8种不同的实例化。</p>
+<p>一般说来互斥体比临界区慢很多，在这里可以进行很好的测试。我实现了临界区和互斥体版本的锁，经过测试发现前者比后者快30多倍。因为互斥体据说是内核对象，而临界区是用户态对象，那么互斥体的使用就需要系统在用户态和内核态之间进行切换，肯定会消耗更多的时间。</p>
+<p>互斥体版本代码如下，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; class MemoryPool</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MemoryPool(size_t size = EXPANSION_SIZE)</span><br><span class="line">    &#123;</span><br><span class="line">        expandTheFreeList(size);</span><br><span class="line">    &#125;</span><br><span class="line">    ~MemoryPool();</span><br><span class="line">    <span class="comment">//allocate a T element from the free list.</span></span><br><span class="line">    void* alloc(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (next == NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            expandTheFreeList();</span><br><span class="line">        &#125;</span><br><span class="line">        MemoryPool&lt;T&gt;* head = next;</span><br><span class="line">        next = head-&gt;next;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//return a T element to the free list.</span></span><br><span class="line">    void free(void* doomed)</span><br><span class="line">    &#123;</span><br><span class="line">        MemoryPool&lt;T&gt;* head = static_cast&lt; MemoryPool&lt;T&gt;* &gt; (doomed);</span><br><span class="line">        head-&gt;next = next;</span><br><span class="line">        next = head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//next element on the free list.</span></span><br><span class="line">    MemoryPool&lt;T&gt;* next;</span><br><span class="line">    <span class="comment">//if the freelist is empty, expand it by this amount.</span></span><br><span class="line">    enum &#123;EXPANSION_SIZE = 32&#125;;</span><br><span class="line">    <span class="comment">//add free elements to the free list</span></span><br><span class="line">    void expandTheFreeList(int howMany = EXPANSION_SIZE);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; MemoryPool&lt;T&gt; :: ~MemoryPool()</span><br><span class="line">&#123;</span><br><span class="line">    MemoryPool&lt;T&gt;* nextPtr = NULL;</span><br><span class="line">    while (nextPtr)</span><br><span class="line">    &#123;</span><br><span class="line">        nextPtr = next;</span><br><span class="line">        next = next-&gt;next;</span><br><span class="line">        delete [] nextPtr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; void MemoryPool&lt;T&gt; :: expandTheFreeList(int howMany)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//we must allocate an object enough to contain the next pointer</span></span><br><span class="line">    size_t size = sizeof(T) &gt; sizeof(MemoryPool&lt;T&gt;*) ? sizeof(T) :</span><br><span class="line">                  sizeof(MemoryPool&lt;T&gt;*);</span><br><span class="line"></span><br><span class="line">    MemoryPool&lt;T&gt;* runner = (MemoryPool&lt;T&gt;*) new char[size];</span><br><span class="line">    next = runner;</span><br><span class="line">    for (int i = 0; i &lt; howMany; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        runner-&gt;next = (MemoryPool&lt;T&gt;*) new char[size];</span><br><span class="line">        runner = runner-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    runner-&gt;next = NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ABClock <span class="comment">//abstract base class</span></span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual ~ABClock() &#123;&#125;</span><br><span class="line">    virtual void lock() = 0;</span><br><span class="line">    virtual void unlock() = 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class MutexLock : public ABClock</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MutexLock()</span><br><span class="line">    &#123;</span><br><span class="line">        hMutex = CreateMutex(NULL, FALSE, NULL);</span><br><span class="line">    &#125;</span><br><span class="line">    ~MutexLock()</span><br><span class="line">    &#123;</span><br><span class="line">        CloseHandle(hMutex);</span><br><span class="line">    &#125;</span><br><span class="line">    void lock()</span><br><span class="line">    &#123;</span><br><span class="line">        WaitForSingleObject(hMutex, INFINITE);</span><br><span class="line">    &#125;</span><br><span class="line">    void unlock()</span><br><span class="line">    &#123;</span><br><span class="line">        ReleaseMutex(hMutex);</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    HANDLE hMutex;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;typename POOLTYPE, typename LOCK&gt;</span><br><span class="line">class MTMemoryPool</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    <span class="comment">//allocate an element from the freelist.</span></span><br><span class="line">    void* alloc(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        void* mem;</span><br><span class="line">        theLock.lock();</span><br><span class="line">        mem = stPool.alloc(size);</span><br><span class="line">        theLock.unlock();</span><br><span class="line">        return mem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//return an element to the freelist</span></span><br><span class="line">    void free(void* someElement)</span><br><span class="line">    &#123;</span><br><span class="line">        theLock.lock();</span><br><span class="line">        stPool.free(someElement);</span><br><span class="line">        theLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    POOLTYPE stPool;//Single-threaded pool.</span><br><span class="line">    LOCK theLock;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Rational(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : n(a), d(b) &#123;&#125;</span><br><span class="line">    void* operator new(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        return memPool-&gt;alloc(size);</span><br><span class="line">    &#125;</span><br><span class="line">    void operator delete(void* doomed, size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        memPool-&gt;free(doomed);</span><br><span class="line">    &#125;</span><br><span class="line">    static void newMemPool()</span><br><span class="line">    &#123;</span><br><span class="line">        memPool = new MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, MutexLock&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">    static void deleteMemPool()</span><br><span class="line">    &#123;</span><br><span class="line">        delete memPool;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, MutexLock&gt;* memPool;</span><br><span class="line">&#125;;</span><br><span class="line">MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, MutexLock&gt;* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const int ARRAY_SIZE = 1000;</span><br><span class="line">    const int LOOP_TIMES = 5000;</span><br><span class="line"></span><br><span class="line">    Rational* array[ARRAY_SIZE];</span><br><span class="line">    clock_t beg = clock();</span><br><span class="line">    Rational::newMemPool();</span><br><span class="line">    for (int i = 0; i &lt; LOOP_TIMES; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            array[j] = new Rational(j);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            delete array[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    clock_t end = clock();</span><br><span class="line">    printf("use %f second(s).\n", 1.0 * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    system("pause");</span><br><span class="line">    Rational::deleteMemPool();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果，</p>
+<p><img src="https://c2.staticflickr.com/8/7573/27396123196_0e8f1d69ee_o.png" alt></p>
+<p>临界区版本代码如下，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; class MemoryPool</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MemoryPool(size_t size = EXPANSION_SIZE)</span><br><span class="line">    &#123;</span><br><span class="line">        expandTheFreeList(size);</span><br><span class="line">    &#125;</span><br><span class="line">    ~MemoryPool();</span><br><span class="line">    <span class="comment">//allocate a T element from the free list.</span></span><br><span class="line">    void* alloc(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (next == NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            expandTheFreeList();</span><br><span class="line">        &#125;</span><br><span class="line">        MemoryPool&lt;T&gt;* head = next;</span><br><span class="line">        next = head-&gt;next;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//return a T element to the free list.</span></span><br><span class="line">    void free(void* doomed)</span><br><span class="line">    &#123;</span><br><span class="line">        MemoryPool&lt;T&gt;* head = static_cast&lt; MemoryPool&lt;T&gt;* &gt; (doomed);</span><br><span class="line">        head-&gt;next = next;</span><br><span class="line">        next = head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//next element on the free list.</span></span><br><span class="line">    MemoryPool&lt;T&gt;* next;</span><br><span class="line">    <span class="comment">//if the freelist is empty, expand it by this amount.</span></span><br><span class="line">    enum &#123;EXPANSION_SIZE = 32&#125;;</span><br><span class="line">    <span class="comment">//add free elements to the free list</span></span><br><span class="line">    void expandTheFreeList(int howMany = EXPANSION_SIZE);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; MemoryPool&lt;T&gt; :: ~MemoryPool()</span><br><span class="line">&#123;</span><br><span class="line">    MemoryPool&lt;T&gt;* nextPtr = NULL;</span><br><span class="line">    while (nextPtr)</span><br><span class="line">    &#123;</span><br><span class="line">        nextPtr = next;</span><br><span class="line">        next = next-&gt;next;</span><br><span class="line">        delete [] nextPtr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; void MemoryPool&lt;T&gt; :: expandTheFreeList(int howMany)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//we must allocate an object enough to contain the next pointer</span></span><br><span class="line">    size_t size = sizeof(T) &gt; sizeof(MemoryPool&lt;T&gt;*) ? sizeof(T) :</span><br><span class="line">                  sizeof(MemoryPool&lt;T&gt;*);</span><br><span class="line"></span><br><span class="line">    MemoryPool&lt;T&gt;* runner = (MemoryPool&lt;T&gt;*) new char[size];</span><br><span class="line">    next = runner;</span><br><span class="line">    for (int i = 0; i &lt; howMany; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        runner-&gt;next = (MemoryPool&lt;T&gt;*) new char[size];</span><br><span class="line">        runner = runner-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    runner-&gt;next = NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ABClock <span class="comment">//abstract base class</span></span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual ~ABClock() &#123;&#125;</span><br><span class="line">    virtual void lock() = 0;</span><br><span class="line">    virtual void unlock() = 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class CriticalSectionLock : public ABClock</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CriticalSectionLock()</span><br><span class="line">    &#123;</span><br><span class="line">        InitializeCriticalSection(csMyCriticalSection);</span><br><span class="line">    &#125;</span><br><span class="line">    ~CriticalSectionLock()</span><br><span class="line">    &#123;</span><br><span class="line">        DeleteCriticalSection(csMyCriticalSection);</span><br><span class="line">    &#125;</span><br><span class="line">    void lock()</span><br><span class="line">    &#123;</span><br><span class="line">        EnterCriticalSection(csMyCriticalSection);</span><br><span class="line">    &#125;</span><br><span class="line">    void unlock()</span><br><span class="line">    &#123;</span><br><span class="line">        LeaveCriticalSection(csMyCriticalSection);</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    CRITICAL_SECTION csMyCriticalSection;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;typename POOLTYPE, typename LOCK&gt;</span><br><span class="line">class MTMemoryPool</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    <span class="comment">//allocate an element from the freelist.</span></span><br><span class="line">    void* alloc(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        void* mem;</span><br><span class="line">        theLock.lock();</span><br><span class="line">        mem = stPool.alloc(size);</span><br><span class="line">        theLock.unlock();</span><br><span class="line">        return mem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//return an element to the freelist</span></span><br><span class="line">    void free(void* someElement)</span><br><span class="line">    &#123;</span><br><span class="line">        theLock.lock();</span><br><span class="line">        stPool.free(someElement);</span><br><span class="line">        theLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    POOLTYPE stPool;//Single-threaded pool.</span><br><span class="line">    LOCK theLock;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Rational(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : n(a), d(b) &#123;&#125;</span><br><span class="line">    void* operator new(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        return memPool-&gt;alloc(size);</span><br><span class="line">    &#125;</span><br><span class="line">    void operator delete(void* doomed, size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        memPool-&gt;free(doomed);</span><br><span class="line">    &#125;</span><br><span class="line">    static void newMemPool()</span><br><span class="line">    &#123;</span><br><span class="line">        memPool = new MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, CriticalSectionLock&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">    static void deleteMemPool()</span><br><span class="line">    &#123;</span><br><span class="line">        delete memPool;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, CriticalSectionLock&gt;* memPool;</span><br><span class="line">&#125;;</span><br><span class="line">MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, CriticalSectionLock&gt;* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const int ARRAY_SIZE = 1000;</span><br><span class="line">    const int LOOP_TIMES = 5000;</span><br><span class="line"></span><br><span class="line">    Rational* array[ARRAY_SIZE];</span><br><span class="line">    clock_t beg = clock();</span><br><span class="line">    Rational::newMemPool();</span><br><span class="line">    for (int i = 0; i &lt; LOOP_TIMES; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            array[j] = new Rational(j);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            delete array[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    clock_t end = clock();</span><br><span class="line">    printf("use %f second(s).\n", 1.0 * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    system("pause");</span><br><span class="line">    Rational::deleteMemPool();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-title-link" itemprop="url">单线程环境中对象大小可变的内存池</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-18 22:11:45" itemprop="dateCreated datePublished" datetime="2012-11-18T22:11:45+08:00">2012-11-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="单线程环境中对象大小可变的内存池" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>很多系统中申请的内存大小都不是固定的，而是变化的，比如一个http服务器。http服务器获得的请求不同，不同的请求需要不同大小的内存块。那么如何构造一个可以申请不同大小内存的内存池了。其实，构造方法类似vs2008下面的debug模式中的全局new和delete的实现。思路大致是申请很多不同大小的内存块，链接起来，根据需求从内存块链的头部申请指定大小内存。<br>注意，本文代码中的内存池只<strong>在内存块链的头部申请内存，而且从不进行内存释放，一直到内存池使用完毕</strong>。这样的设计确实可以尽可能得提高全局的速度，只要能保证系统的使用过程中不会把内存耗光就行了。不过，我觉得如果耗光内存的可能性还是太大了。但是，你想想实现一个允许对象大小可变的内存池本来就不那么容易，而且得在充分考虑效率的前提下了。如果效率太差了，为什么不直接使用默认的new和delete表达式了。<br>不过，其实有一个更好的办法，我们只使用内存池一段时间，就马上删除这个内存池，再重新申请一次内存池。也就是我们不能一次使用内存池的时间太长了。困难的是我们如何确定一次使用内存池的时间，什么需要删除内存池，时间太久了也许内存会耗光的，删除频繁了点又得不到想要的效率。这些也许就需要具体情况具体对待了，也许这个内存池的实现根本不能用。</p>
+<p>内存池代码如下，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">class MemoryChunk</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MemoryChunk(MemoryChunk* nextChunk, size_t reqSize)</span><br><span class="line">    &#123;</span><br><span class="line">        chunkSize = reqSize &gt; DEFAULT_CHUNK_SIZE ? reqSize :</span><br><span class="line">                    DEFAULT_CHUNK_SIZE;</span><br><span class="line">        next = nextChunk;</span><br><span class="line">        byteAlreadyAllocated = 0;</span><br><span class="line">        mem = new char[chunkSize];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~MemoryChunk()</span><br><span class="line">    &#123;</span><br><span class="line">        delete [] mem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void* alloc(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        void* addr = (void*)(mem + byteAlreadyAllocated);</span><br><span class="line">        byteAlreadyAllocated += size;</span><br><span class="line">        return addr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//不需要释放内存块</span></span><br><span class="line">    void free(void* doomed)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MemoryChunk* nextMemChunk() &#123; return next; &#125;</span><br><span class="line">    size_t spaceAvailable()</span><br><span class="line">    &#123;</span><br><span class="line">        return chunkSize - byteAlreadyAllocated;</span><br><span class="line">    &#125;</span><br><span class="line">    enum &#123;DEFAULT_CHUNK_SIZE = 4096&#125;;</span><br><span class="line">private:</span><br><span class="line">    MemoryChunk* next;//下一个内存块</span><br><span class="line">    char* mem;//该内存块地址</span><br><span class="line">    size_t chunkSize; //该内存块的大小</span><br><span class="line">    size_t byteAlreadyAllocated;//该内存块被申请使用的大小</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class ByteMemoryPool</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ByteMemoryPool(size_t initSize = MemoryChunk::DEFAULT_CHUNK_SIZE)</span><br><span class="line">    &#123;</span><br><span class="line">        expandStorage(initSize);</span><br><span class="line">    &#125;</span><br><span class="line">    ~ByteMemoryPool();</span><br><span class="line"></span><br><span class="line">    void* alloc(size_t reqSize)</span><br><span class="line">    &#123;</span><br><span class="line">        size_t space = listOfMemoryChunks-&gt;spaceAvailable();</span><br><span class="line">        <span class="keyword">if</span> (space &lt; reqSize)</span><br><span class="line">        &#123;</span><br><span class="line">            expandStorage(reqSize);</span><br><span class="line">        &#125;</span><br><span class="line">        return listOfMemoryChunks-&gt;alloc(reqSize);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void free(void* doomed)</span><br><span class="line">    &#123;</span><br><span class="line">        listOfMemoryChunks-&gt;free(doomed);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    void expandStorage(size_t reqSize)</span><br><span class="line">    &#123;</span><br><span class="line">        listOfMemoryChunks = new MemoryChunk(listOfMemoryChunks, reqSize);</span><br><span class="line">    &#125;</span><br><span class="line">    MemoryChunk* listOfMemoryChunks;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ByteMemoryPool::~ByteMemoryPool()</span><br><span class="line">&#123;</span><br><span class="line">    MemoryChunk* memChunk = listOfMemoryChunks;</span><br><span class="line">    while (memChunk)</span><br><span class="line">    &#123;</span><br><span class="line">        listOfMemoryChunks = memChunk-&gt;nextMemChunk();</span><br><span class="line">        delete memChunk;</span><br><span class="line">        memChunk = listOfMemoryChunks;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Rational(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : n(a), d(b) &#123;&#125;</span><br><span class="line">    void* operator new(size_t size) &#123;return memPool-&gt;alloc(size);&#125;</span><br><span class="line">    void operator delete(void* doomed, size_t size) &#123;/*memPool-&gt;free(doomed);*/&#125;</span><br><span class="line">    static void newMemPool() &#123;memPool = new ByteMemoryPool;&#125;</span><br><span class="line">    static void deleteMemPool() &#123;delete memPool;&#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static ByteMemoryPool* memPool;</span><br><span class="line">&#125;;</span><br><span class="line">ByteMemoryPool* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const int ARRAY_SIZE = 1000;</span><br><span class="line">    const int LOOP_TIMES = 5000;</span><br><span class="line"></span><br><span class="line">    Rational* array[ARRAY_SIZE];</span><br><span class="line">    clock_t beg = clock();</span><br><span class="line">    Rational::newMemPool();</span><br><span class="line">    for (int i = 0; i &lt; LOOP_TIMES; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            array[j] = new Rational(j);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            delete array[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    clock_t end = clock();</span><br><span class="line">    printf("use %f second(s).\n", 1.0 * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    system("pause");</span><br><span class="line">    Rational::deleteMemPool();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行效果，<br>与上一篇文章里面的二个内存池实现的运行时间相比，没有多大差别。</p>
+<p>你可以好好的阅读下代码，或者自己重新敲一遍，就会发现这个内存池的实现确实简单明了，没有一点冗余的代码，但是又非常高效。如果我们采用<strong>使用一段时间就重新初始化内存池</strong>的方式就不会耗光内存，不过恰当的使用该内存池也不是件容易的事情。其实，我主要还是觉得这个版本的内存池实现主要应该用在<strong>一次的业务处理时间不会太长，或者说内存申请量不会太多的场景中</strong>。</p>
+<p>本文的思路和代码主要来自提高C++性能的编程技术一书。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-title-link" itemprop="url">单线程环境中对象大小固定的内存池</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-15 11:51:36" itemprop="dateCreated datePublished" datetime="2012-11-15T11:51:36+08:00">2012-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="单线程环境中对象大小固定的内存池" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>内存池并不是表面意义上存储大量可分配内存的池子，如果是这样的话，new和delete对应的就是一个理论上无限大的内存池。标题中的单线程指的是该内存池实现为了加快速度没有处理线程同步，因为很多应用你明显知道不需要线程同步。固定大小指的是该内存池每次只分配或者删除固定大小的对象。</p>
+<p>这样的内存池怎么就加快了速度了。我觉得主要有以下几个方面。</p>
+<p>1.不需要处理线程同步，去除掉线程同步的代码后，显然速度会加快。</p>
+<p>2.总体来看，该内存池只会扩张不会收缩，也就是向系统释放堆内存的次数减少了。事实上，该内存池总是按需操作的。</p>
+<p>3.该内存池的new和delete操作并没有去真正申请和释放堆内存，而是向自定义的对象空闲列表申请和释放。当对象空闲列表为空的时候，才一次性申请一大片空闲对象。大家都知道堆申请和释放比较耗时，最快的栈内存。所以，这也是一个显著的方面。</p>
+<p>以下2段代码分别展示了原始的内存操作和使用内存池后的操作，</p>
+<p>原始情况，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include</span><br><span class="line">#include</span><br><span class="line">#include</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Rational(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : n(a), d(b) &#123;&#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n; // Numerator</span><br><span class="line">    int d; // Denominator</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const int ARRAY_SIZE = 1000;</span><br><span class="line">    const int LOOP_TIMES = 5000;</span><br><span class="line">    Rational* array[ARRAY_SIZE];</span><br><span class="line"></span><br><span class="line">    clock_t beg = clock();</span><br><span class="line">    for (int i = 0; i &lt; LOOP_TIMES; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            array[j] = new Rational(j);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            delete array[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    clock_t end = clock();</span><br><span class="line">    printf("use %f second(s).\n", 1.0 * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    system("pause");</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该代码的运行结果，</p>
+<p><img src="https://c2.staticflickr.com/8/7643/27430249375_aaa747666a_o.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/" class="post-title-link" itemprop="url">虚函数所造成的性能损失</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-13 10:04:19" itemprop="dateCreated datePublished" datetime="2012-11-13T10:04:19+08:00">2012-11-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/" class="post-meta-item leancloud_visitors" data-flag-title="虚函数所造成的性能损失" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>947</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>假设在一个线程同步环境中，有类似下面所示的代码段：</p>
+<p>//进入线程同步</p>
+<p>nNum++;</p>
+<p>//退出线程同步</p>
+<p>以win32为例，如我们所知，线程同步工具有临界区，互斥体，信号量。我们可以任意选择一个，为了简单很可能我们就选择了临界区。假如我们需要同步的代码非常简单，我非常建议不需要使用c++的任何功能。但是，很可能没这么幸运，很可能你的代码会被很多人修改，很可能同步的时候需要异常退出，很可能同步的里面还有点逻辑处理，很可能你在退出的时候没有释放锁。那么你就悲剧了。</p>
+<p>C++在这里一点上就体现出了与生俱来的优势，构造函数和析构函数。假如我们把获得锁写进构造函数里面，释放锁写进析构函数里面，就能保证任意情况的退出之前都能够释放锁，从而不会造成死锁。</p>
+<p>还有个问题是我们应该如何实现这些不同的同步工具。如果，我们分别写三个类，CCriticalSection，CMutex，CSemaphore，这三个类不是继承自同一个基类的，而且这三个类里面也没有任何的虚函数，而且我们把操作都写成内联的。那么，在效率上与直接用C相比基本没有差别。因为，所有额外的调用开销都内联了。<strong>在不丧失效率的同时保持了灵活性</strong>，这确实是非常强大的地方。</p>
+<p>万一你说为了灵活性，需要让这三个类继承同一个基类，CBaseLock，同时需要把析构函数定义成虚的，这样就会造成很多额外的性能损失。比如，可能需要构造和析构基类对象，需要初始化虚函数指针，执行阶段需要通过虚函数指针间接调用，还有一个最重要的损失，编译器无法内联虚函数，如果虚函数比较小，那么相对于原来的情况，这是一个巨大的性能损失。某种意义上，我们可以忽视，基类对象的构造和析构，以及虚函数指针的初始化和调用时刻的间接寻址，因为这些可以其它方面的因素来抵消。</p>
+<p><strong>但是，无法内联一个小的函数所造成的额外开销是很大的。</strong>想象一下，比如刚才几个类里面的析构函数只是释放锁这一个操作，肯定是可以内联的，但是现在写成虚函数了，就无法内联了，如果这个函数被调用很多次，比如几百万次，和原来消耗的时候相比，肯定是天壤之别了，因为原来没有函数调用开销，现在有，而且因为函数内部操作太少了，函数调用开销所占据的比例非常大，所以你的设计造成了巨大的性能损失。</p>
+<p>本文的观点主要来自<strong>提高C++性能的编程技术</strong>一书，欢迎吐槽。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">计算机图形学OpenGL版第五章代码汇总</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-12 21:13:34" itemprop="dateCreated datePublished" datetime="2012-11-12T21:13:34+08:00">2012-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" class="post-meta-item leancloud_visitors" data-flag-title="计算机图形学OpenGL版第五章代码汇总" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>5.6.2 网格场景</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"></span><br><span class="line">const int WINDOW_WIDTH = 640;</span><br><span class="line">const int WINDOW_HEIGHT = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);</span><br><span class="line">    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw a z-axis, with cone at end</span></span><br><span class="line">void axis(double length)</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glBegin(GL_LINES);</span><br><span class="line">    glVertex3d(0, 0, 0);</span><br><span class="line">    glVertex3d(0, 0, length);</span><br><span class="line">    glEnd();</span><br><span class="line">    glTranslated(0, 0, length - 0.2);//平移</span><br><span class="line">    glutWireCone(0.04, 0.2, 12, 9);</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void displayWire()</span><br><span class="line">&#123;</span><br><span class="line">    glMatrixMode(GL_PROJECTION);//设置视景体</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    glOrtho(-2.0 * 64 / 48, 2.0 * 64 / 48, -2.0, 2.0, 0.1, 100);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_MODELVIEW);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluLookAt(1.0, 1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);</span><br><span class="line"></span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">    glColor3d(0, 0, 0);</span><br><span class="line"></span><br><span class="line">    axis(0.5);//z-axis</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glRotated(-90, 1.0, 0, 0);</span><br><span class="line">    axis(0.5);//y-axis</span><br><span class="line">    glRotated(90.0, 0, 1.0, 0);</span><br><span class="line">    axis(0.5);//x-axis</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.5, 0.5, 0.5);</span><br><span class="line">    glutWireCube(1.0);//线框立方体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(1.0, 0, 0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 1.0, 0);</span><br><span class="line">    glutWireSphere(0.25, 10, 8);//线框球体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0, 1.0, 0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 0, 1.0);</span><br><span class="line">    glutWireCone(0.2, 0.5, 10, 8);//线框圆锥体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0, 0, 1.0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 1.0, 1.0);</span><br><span class="line">    glutWireTeapot(0.2);//线框茶壶</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(1.0, 0, 1.00);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 1.0, 0);</span><br><span class="line">    glutWireTorus(0.1, 0.3, 10, 10);//线框花环</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0, 1.0, 1.0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 0, 0);</span><br><span class="line">    glScaled(0.15, 0.15, 0.15);</span><br><span class="line">    glutWireDodecahedron();//线框12面体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0.1, 0.5, 0.2);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 1.0, 1.0);</span><br><span class="line">    glutWireCube(0.25);</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 0, 1.0);</span><br><span class="line">    GLUquadricObj* qobj = gluNewQuadric();//创建二次曲面对象</span><br><span class="line">    gluQuadricDrawStyle(qobj, GLU_LINE);</span><br><span class="line">    glColor3d(0.3, 0.5, 0.4);</span><br><span class="line">    gluCylinder(qobj, 0.2, 0.2, 0.4, 8, 8);//圆柱体</span><br><span class="line">    glPopMatrix();</span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);</span><br><span class="line">    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("Transformation Test -Wireframes");</span><br><span class="line">    glutDisplayFunc(displayWire);</span><br><span class="line">    myInit();</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.6.3 着色三维场景绘制</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line">#include</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"></span><br><span class="line">const int WINDOW_WIDTH = 640;</span><br><span class="line">const int WINDOW_HEIGHT = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glEnable(GL_LIGHTING);//enable the light source</span><br><span class="line">    glEnable(GL_LIGHT0);</span><br><span class="line">    glShadeModel(GL_SMOOTH);//光滑着色</span><br><span class="line">    glEnable(GL_DEPTH_TEST);//启用深度测试,根据坐标的远近自动隐藏被遮住的图形</span><br><span class="line">    glEnable(GL_NORMALIZE);//根据函数glNormal的设置条件，启用法向量</span><br><span class="line">    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);</span><br><span class="line">    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw thin wall with top = xz-plane, corner at origin</span></span><br><span class="line">void wall(double thickness)</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.5, 0.5 * thickness, 0.5);</span><br><span class="line">    glScaled(1.0, thickness, 1.0);</span><br><span class="line">    glutSolidCube(1.0);</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//table leg</span></span><br><span class="line">void tableLeg(double thick, double len)</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, len / 2, 0);</span><br><span class="line">    glScaled(thick, len, thick);</span><br><span class="line">    glutSolidCube(1.0);</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw one axis of the unit jack-a stretched sphere</span></span><br><span class="line">void jackPart()</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glScaled(0.2, 0.2, 1.0);</span><br><span class="line">    glutSolidSphere(1, 15, 15);</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 0, 1.2);//ball on one end</span><br><span class="line">    glutSolidSphere(0.2, 15, 15);</span><br><span class="line">    glTranslated(0, 0, -2.4);</span><br><span class="line">    glutSolidSphere(0.2, 15, 15);//ball on the other end</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw a unit jact out of spheroids</span></span><br><span class="line">void jack()</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    jackPart();</span><br><span class="line">    glRotated(90.0, 0, 1, 0);</span><br><span class="line">    jackPart();</span><br><span class="line">    glRotated(90.0, 1.0, 0, 0);</span><br><span class="line">    jackPart();</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw the table - a top and four legs</span></span><br><span class="line"><span class="comment">//绘画桌子时候，外部调用已经使原点到达桌子中间了</span></span><br><span class="line">void table(double topWid, double topThick, double legThick, double legLen)</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, legLen, 0);</span><br><span class="line">    glScaled(topWid, topThick, topWid);</span><br><span class="line">    glutSolidCube(1.0);//桌面</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    double dist = 0.95 * topWid / 2.0 - legThick / 2.0;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    <span class="comment">//glTranslated(dist, 0, dist);</span></span><br><span class="line">    glTranslated(dist, 0, dist);</span><br><span class="line">    tableLeg(legThick, legLen);</span><br><span class="line">    glTranslated(0, 0, -2 * dist);</span><br><span class="line">    tableLeg(legThick, legLen);</span><br><span class="line">    glTranslated(-2 * dist, 0, 2 * dist);</span><br><span class="line">    tableLeg(legThick, legLen);</span><br><span class="line">    glTranslated(0, 0, -2 * dist);</span><br><span class="line">    tableLeg(legThick, legLen);</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void displaySolid()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//设置表面纹理属性</span></span><br><span class="line">    GLfloat mat_ambient[] = &#123;0.7, 0.7, 0.7, 1.0&#125;;</span><br><span class="line">    GLfloat mat_diffuse[] = &#123;0.6, 0.6, 0.6, 1.0&#125;;</span><br><span class="line">    GLfloat mat_specular[] = &#123;1.0, 1.0, 1.0, 1.0&#125;;//反射</span><br><span class="line">    GLfloat mat_shininess[] = &#123;50.0&#125;;//光</span><br><span class="line"></span><br><span class="line">    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);//环境光材质</span><br><span class="line">    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);//漫反射</span><br><span class="line">    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);//镜面反射</span><br><span class="line">    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);//光亮</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置光源属性</span></span><br><span class="line">    GLfloat lightIntensity[] = &#123;0.7, 0.7, 0.7, 1.0&#125;;</span><br><span class="line">    GLfloat lightPosition[] = &#123;2.0, 6.0, 3.0, 0.0&#125;;</span><br><span class="line">    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);//设置光源0的位置</span><br><span class="line">    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightIntensity);//光源漫反射强度的RGBA值</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    double winHt = 1.0; // half - height of th window</span><br><span class="line">    glOrtho(-winHt * 64 / 48.0, winHt * 64 / 48.0, -winHt, winHt, 0.1, 100.0);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_MODELVIEW);//设置照相机</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluLookAt(2.3, 1.3, 2, 0, 0.25, 0, 0.0, 1.0, 0.0);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//start draw</span></span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.4, 0.4, 0.6);</span><br><span class="line">    glRotated(45, 0, 0, 1);</span><br><span class="line">    glScaled(0.08, 0.08, 0.08);</span><br><span class="line">    jack();//draw the jack</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.6, 0.38, 0.5);</span><br><span class="line">    glRotated(30, 0, 1, 0);</span><br><span class="line">    glutSolidTeapot(0.08);//draw the teapot</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.25, 0.42, 0.35);</span><br><span class="line">    glutSolidSphere(0.1, 15, 15);//draw the sphere</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.4, 0, 0.4);</span><br><span class="line">    table(0.6, 0.02, 0.02, 0.3);//draw the table</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    wall(0.02); //wall #1: in xz-plane</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glRotated(90.0, 0.0, 0.0, 1.0);</span><br><span class="line">    wall(0.02);//wall #2: in xy-plane</span><br><span class="line">    glRotated(90.0, 1.0, 0.0, 0.0);</span><br><span class="line">    wall(0.02);</span><br><span class="line">    glPopMatrix();//wall #3: in yz-plane</span><br><span class="line"></span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);</span><br><span class="line">    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("Shaded example-3D scene");</span><br><span class="line">    glutDisplayFunc(displaySolid);</span><br><span class="line">    myInit();</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.6.4 使用SDL从文件中读取场景描述</p>
+<p><a href="https://pan.baidu.com/s/1nvvSLKl" target="_blank" rel="noopener">SDLDraw</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/12/%E9%87%91%E5%8D%8E%E5%8C%BA%E5%9F%9F%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/12/%E9%87%91%E5%8D%8E%E5%8C%BA%E5%9F%9F%E8%B5%9B/" class="post-title-link" itemprop="url">金华区域赛</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-12 00:30:43" itemprop="dateCreated datePublished" datetime="2012-11-12T00:30:43+08:00">2012-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E6%83%B3/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/12/%E9%87%91%E5%8D%8E%E5%8C%BA%E5%9F%9F%E8%B5%9B/" class="post-meta-item leancloud_visitors" data-flag-title="金华区域赛" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/12/%E9%87%91%E5%8D%8E%E5%8C%BA%E5%9F%9F%E8%B5%9B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/12/%E9%87%91%E5%8D%8E%E5%8C%BA%E5%9F%9F%E8%B5%9B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>其实，我除了对自己的强烈不满之外一无所有。真的真的非常痛恨自己不争气，非常不争气。种种理由种种意外种种借口根本一点益处都没有。输了就是输了，而且是输得非常彻底，非常彻底。我这么些年到底做了些什么啊，我到底做了些什么啊。</p>
+<p>我真的不自由，一点都不自由。我要去做的种种事情，老是被各种羁绊了。我要做什么事情了。很多时候真的非常痛苦，非常痛苦，压抑又毫无办法。唉，我这么多年了，到底改变了什么。到底改变了什么，到底得到了什么，我快乐吗，我真的内心深处得到过片刻的安宁吗。没有，一点都没有，一点都没有。毫无资本，毫无安慰，毫无安全感得活着，还将要继续多久。过了快半个月了，真不想多说什么了。</p>
+<p>明明想去做，却一点也做不好，这就是我，这就是一直以来的我。</p>
+<p>我一直以来最大的缺陷就是不专心，一心多用，有的时候又想怪别人为什么都没给过我深刻的教导，让我意识到这种人格上的缺陷其实是致命的，我又想起了小学时候小猫钓鱼的课文，我知道了，我一直以来太过于自以为是了。从小到大，老是喜欢按照自己的性子自以为是的做下去，但是有些东西是致命的，如果没有改掉，总有一天会死得很惨。</p>
+<p>我不专心，也许表面上看起来没多大影响，其实影响了我整个人生。我一天不专心没事，两天也没事，一个星期也没事，一个月也没事，一年也没事，十年也没事，一辈子的话我就完了。有可能我一辈子都无法真正意识到我为什么这么搓的原因就是因为我做事情不专心。但是，我现在意识到了，我真的意识到了，非常深刻的意识到了。我不专心，不认真，所以我学习效率不行，我浪费了很多时间，所以我习惯不好，我意识也不深刻，我思考问题不深入，我写代码老是有bug，所以我比赛时候会被误导，我的代码也会有bug，我会在一点感冒的情形下做不出做过的题，我会和别人一起怀疑自己的想法，整场比赛都证明不了自己的想法，在只有我能拯救比赛的情况下，我毁了整场比赛，我连个奖牌都从来没有拿到过。也许，这些都不算什么，真不算什么，只要我从此以后做事情都一心一意，专心致志。</p>
+<p>ACM失败了还有很多其它事情，我甚至可以参加其它比赛，比如百度之星，我做完一些该做的事情后还能够在读研期间再好好学习下算法，搞一下比赛。只要我克服了不专心，一心二用的毛病，很多事情都好说，至少没那么容易悲剧掉。习惯的力量确实很大，我从小就是太自以为是了。</p>
+<p>想写的东西很多很多，写的时候又说不出口，不知道该说什么。这一年ACM历程，这一次金华区域赛，永生难忘。如果能让我重新来一次，我一定选择大二时候就搞ACM，一定不会等到大四才去认真得搞了一年ACM，还没有尽到全力，还把比赛搞悲剧了。</p>
+<p>坚强起来吧，少玩点游戏，少逛点网站，对自己狠起来，把该解决的事情解决了，让自己也欣慰一回吧。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/12/%E9%87%91%E5%8D%8E%E5%8C%BA%E5%9F%9F%E8%B5%9B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B0%86%E7%BB%A7%E6%89%BF%E5%B1%82%E6%AC%A1%E4%B8%AD%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%88%90virtual%E7%9A%84%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B0%86%E7%BB%A7%E6%89%BF%E5%B1%82%E6%AC%A1%E4%B8%AD%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%88%90virtual%E7%9A%84%EF%BC%9F/" class="post-title-link" itemprop="url">为什么需要将继承层次中类的析构函数定义成virtual的？</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-10 15:44:59" itemprop="dateCreated datePublished" datetime="2012-11-10T15:44:59+08:00">2012-11-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B0%86%E7%BB%A7%E6%89%BF%E5%B1%82%E6%AC%A1%E4%B8%AD%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%88%90virtual%E7%9A%84%EF%BC%9F/" class="post-meta-item leancloud_visitors" data-flag-title="为什么需要将继承层次中类的析构函数定义成virtual的？" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B0%86%E7%BB%A7%E6%89%BF%E5%B1%82%E6%AC%A1%E4%B8%AD%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%88%90virtual%E7%9A%84%EF%BC%9F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B0%86%E7%BB%A7%E6%89%BF%E5%B1%82%E6%AC%A1%E4%B8%AD%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%88%90virtual%E7%9A%84%EF%BC%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如标题所示，如果该类没有父类也没有任何子类，把析构函数还定义成虚的，确实没多大必要吧。对象的构建和析构完全是一个入栈和出栈的过程，也就是说肯定会从父类构造到子类，也肯定会从子类析构到父类，这些都是毋容置疑的。</p>
+<p>那么把析构函数定义成virtual有个什么意义了。确实没有多大意义，至少对于一个非delete造成的析构。无论是析构一个堆栈对象还是全局对象，编译器肯定能在编译时就做出决策了。但是，假如有人一时兴起，new了一个子类对象并且将地址存储在基类指针中。那么，你该怎么删除这个对象了，只能delete父类指针了。</p>
+<p>问题就出在这里了。<strong>你既然delete父类指针，假如是在编译层次决策的话，编译器只能帮你调用父类的析构函数了。</strong>但是，事实上你是一个子类对象，那么子类的析构函数没有调用，假如你在子类的析构函数做了些什么释放，结果就是那个释放永远不会执行，这样就造成内存泄漏或者资源重复申请之类的。</p>
+<p>其实，上面的这种写法就是利用多态的性质，既然要利用多态，肯定得把析构函数定义成virtual的，那么调用哪个析构函数的决策就能到运行时候再决定。如果基类的析构函数定义成virtual的话，其所有子类的析构函数当然也是virtual的，那么我们删除基类指针的时候，就能通过多态机制决定该调用子类的析构函数，也就是从子类的析构函数开始往基类的析构函数调用释放整个对象。这样就不会造成任何资源泄漏了。</p>
+<p>以下的代码展示了这样的一种情况，注意Class CA作为基类，就需要把析构函数定义成virtual的。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">class CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CA(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nA = new int[nSize];</span><br><span class="line">            printf("构造CA\n");</span><br><span class="line">        &#125;</span><br><span class="line">        virtual ~CA()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nA;</span><br><span class="line">            printf("析构CA\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nA;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class CB : public CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CB(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nB = new int[nSize];</span><br><span class="line">            printf("构造CB\n");</span><br><span class="line">        &#125;</span><br><span class="line">        ~CB()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nB;</span><br><span class="line">            printf("析构CB\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nB;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CA* pCA = new CB();</span><br><span class="line">    delete pCA;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如图:</p>
+<p><img src="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png" alt>，</p>
+<p>如果删掉CA析构函数前面的virtual，效果如图，</p>
+<p><img src="https://c2.staticflickr.com/8/7672/27396028106_085b740b99_o.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%B0%86%E7%BB%A7%E6%89%BF%E5%B1%82%E6%AC%A1%E4%B8%AD%E7%B1%BB%E7%9A%84%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%88%90virtual%E7%9A%84%EF%BC%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%BA%90%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%BA%90%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">计算机图形学OpenGL版第三章源代码汇总</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-07 22:41:48" itemprop="dateCreated datePublished" datetime="2012-11-07T22:41:48+08:00">2012-11-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%BA%90%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" class="post-meta-item leancloud_visitors" data-flag-title="计算机图形学OpenGL版第三章源代码汇总" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%BA%90%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%BA%90%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>写了下第三章部分作业和例子的代码，如下。</p>
+<p>3.2节 sinc</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"></span><br><span class="line">const <span class="attribute">float</span> PI = atan(<span class="number">1.0</span>) * <span class="number">4</span>;</span><br><span class="line">const int WINDOW_WIDTH = 640;</span><br><span class="line">const int WINDOW_HEIGHT = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置世界窗口</span></span><br><span class="line">void SetWindow(GLdouble <span class="attribute">left</span>, GLdouble right, GLdouble bottom, GLdouble top)</span><br><span class="line">&#123;</span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(<span class="attribute">left</span>, right, bottom, top);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置视口</span></span><br><span class="line">void SetViewport(GLint <span class="attribute">left</span>, GLint right, GLint bottom, GLint top)</span><br><span class="line">&#123;</span><br><span class="line">    glViewport(<span class="attribute">left</span>, bottom, right - left, top - bottom);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glClearColor(1.0, 1.0, 1.0, 0.0);//白色背景</span><br><span class="line">    glColor3f(0.0, 0.0, 1.0);</span><br><span class="line">    glLineWidth(2.0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myDisplay()</span><br><span class="line">&#123;</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">    glMatrixMode(GL_MODELVIEW);//使视图矩形栈有效</span><br><span class="line">    glLoadIdentity();</span><br><span class="line"></span><br><span class="line">    SetViewport(0, WINDOW_WIDTH / 2, 0, WINDOW_HEIGHT);//这个函数调用在main里面一直没效果</span><br><span class="line">    glBegin(GL_LINE_STRIP);</span><br><span class="line">    for (float x = -4.0; x &lt;= 4.0; x += 0.1)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (fabs(x) &lt; <span class="number">1</span>e-<span class="number">8</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            glVertex2f(0.0, 1.0);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            glVertex2f(x, sin(PI * x) / (PI* x));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    glEnd();</span><br><span class="line"></span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);//设置显示模式</span><br><span class="line">    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("The Famous Sinc Function");</span><br><span class="line">    glutDisplayFunc(myDisplay);</span><br><span class="line">    myInit();</span><br><span class="line">    SetWindow(-5.0, 5.0, -0.3, 1.0);</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.2节 放大显示</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"></span><br><span class="line">const <span class="attribute">float</span> PI = atan(<span class="number">1.0</span>) * <span class="number">4</span>;</span><br><span class="line">int nWidth = 640;</span><br><span class="line">int nHeight = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置世界窗口</span></span><br><span class="line">void SetWindow(GLdouble <span class="attribute">left</span>, GLdouble right, GLdouble bottom, GLdouble top)</span><br><span class="line">&#123;</span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(<span class="attribute">left</span>, right, bottom, top);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置视口</span></span><br><span class="line">void SetViewport(GLint <span class="attribute">left</span>, GLint right, GLint bottom, GLint top)</span><br><span class="line">&#123;</span><br><span class="line">    glViewport(<span class="attribute">left</span>, bottom, right - left, top - bottom);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glClearColor(1.0, 1.0, 1.0, 0.0);//白色背景</span><br><span class="line">    glColor3f(0.0, 0.0, 1.0);</span><br><span class="line">    glLineWidth(2.0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/////////////////////////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">// Function: hexswirl()</span></span><br><span class="line"><span class="comment">// This draws a hexagon on the screen many times.  Each new</span></span><br><span class="line"><span class="comment">// hexagon is slightly bigger than the previous one and rotated</span></span><br><span class="line"><span class="comment">// slightly so that a hexagon "swirl" is drawn.</span></span><br><span class="line"><span class="comment">/////////////////////////////////////////////////////////////////</span></span><br><span class="line">void hexSwirl()</span><br><span class="line">&#123;</span><br><span class="line">    double angle;                       //the angle of rotation</span><br><span class="line">    double angleInc = 2*3.14159265/6.0; //the angle increment</span><br><span class="line">    double inc = 5.0 / 100;               //the radius increment</span><br><span class="line">    double radius = 5.0 / 100.0;          //the radius to be used</span><br><span class="line"></span><br><span class="line">    <span class="comment">//glMatrixMode(GL_MODELVIEW);</span></span><br><span class="line">    <span class="comment">//glLoadIdentity();</span></span><br><span class="line">    <span class="comment">//clear the background</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//draw the hexagon swirl</span></span><br><span class="line">    for (int j = 0; j &lt;= 100; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//the angle of rotation depends on which hexagon is </span></span><br><span class="line">        <span class="comment">//being drawn.</span></span><br><span class="line">        angle = j* (3.14159265/180.0);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//draw one hexagon</span></span><br><span class="line">        glBegin (GL_LINE_STRIP);</span><br><span class="line">        for (int k=0; k &lt;= 6; k++)</span><br><span class="line">        &#123;</span><br><span class="line">            angle += angleInc;</span><br><span class="line">            glVertex2d(radius * cos(angle), radius *sin(angle));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        glEnd();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//determine the radius of the next hexagon</span></span><br><span class="line">        radius += inc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//swap buffers for a smooth change from one</span></span><br><span class="line">    <span class="comment">//frame to another</span></span><br><span class="line">    glutSwapBuffers();</span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myDisplay()</span><br><span class="line">&#123;</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">    <span class="attribute">float</span> cx = <span class="number">0.3</span>, cy = <span class="number">0.2</span>;</span><br><span class="line">    <span class="attribute">float</span> H, W, aspect = <span class="number">0.7</span>;</span><br><span class="line"></span><br><span class="line">    int frame = 50;</span><br><span class="line">    for (int i = 0; i &lt; frame; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">        W *= 0.7;</span><br><span class="line">        H = W * aspect;</span><br><span class="line">        SetWindow(cx - W, cx + W, cy - H, cy + H);</span><br><span class="line">        hexSwirl();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void reShape(int nNewWidth, int nNewHeight)</span><br><span class="line">&#123;</span><br><span class="line">    nWidth = nNewWidth;</span><br><span class="line">    nHeight = nNewHeight;</span><br><span class="line">    SetViewport(0, nWidth, 0, nHeight);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);//设置显示模式</span><br><span class="line">    glutInitWindowSize(nWidth, nHeight);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("hexSwirl");</span><br><span class="line">    glutDisplayFunc(myDisplay);</span><br><span class="line">    glutReshapeFunc(reShape);</span><br><span class="line">    myInit();</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.2节 回旋的旋涡</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"></span><br><span class="line">const <span class="attribute">float</span> PI = atan(<span class="number">1.0</span>) * <span class="number">4</span>;</span><br><span class="line">int nWidth = 640;</span><br><span class="line">int nHeight = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150;</span><br><span class="line">const int ROW = 8;</span><br><span class="line">const int COLUMU = 6;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置世界窗口</span></span><br><span class="line">void SetWindow(GLdouble <span class="attribute">left</span>, GLdouble right, GLdouble bottom, GLdouble top)</span><br><span class="line">&#123;</span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(<span class="attribute">left</span>, right, bottom, top);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置视口</span></span><br><span class="line">void SetViewport(GLint <span class="attribute">left</span>, GLint right, GLint bottom, GLint top)</span><br><span class="line">&#123;</span><br><span class="line">    glViewport(<span class="attribute">left</span>, bottom, right - left, top - bottom);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glClearColor(1.0, 1.0, 1.0, 0.0);//白色背景</span><br><span class="line">    glColor3f(0.0, 0.0, 1.0);</span><br><span class="line">    glLineWidth(2.0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/////////////////////////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">// Function: hexswirl()</span></span><br><span class="line"><span class="comment">// This draws a hexagon on the screen many times.  Each new</span></span><br><span class="line"><span class="comment">// hexagon is slightly bigger than the previous one and rotated</span></span><br><span class="line"><span class="comment">// slightly so that a hexagon "swirl" is drawn.</span></span><br><span class="line"><span class="comment">/////////////////////////////////////////////////////////////////</span></span><br><span class="line">void hexSwirl()</span><br><span class="line">&#123;</span><br><span class="line">    double angle;                       //the angle of rotation</span><br><span class="line">    double angleInc = 2*3.14159265/6.0; //the angle increment</span><br><span class="line">    double inc = 5.0 / 100;               //the radius increment</span><br><span class="line">    double radius = 5.0 / 100.0;          //the radius to be used</span><br><span class="line"></span><br><span class="line">    <span class="comment">//glMatrixMode(GL_MODELVIEW);</span></span><br><span class="line">    <span class="comment">//glLoadIdentity();</span></span><br><span class="line">    <span class="comment">//clear the background</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//draw the hexagon swirl</span></span><br><span class="line">    for (int j = 0; j &lt;= 100; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//the angle of rotation depends on which hexagon is </span></span><br><span class="line">        <span class="comment">//being drawn.</span></span><br><span class="line">        angle = j* (3.14159265/180.0);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//draw one hexagon</span></span><br><span class="line">        glBegin (GL_LINE_STRIP);</span><br><span class="line">        for (int k=0; k &lt;= 6; k++)</span><br><span class="line">        &#123;</span><br><span class="line">            angle += angleInc;</span><br><span class="line">            glVertex2d(radius * cos(angle), radius *sin(angle));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        glEnd();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//determine the radius of the next hexagon</span></span><br><span class="line">        radius += inc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myDisplay()</span><br><span class="line">&#123;</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    const int  L = nWidth / ROW;</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; ROW; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; COLUMU; ++j)</span><br><span class="line">        &#123; </span><br><span class="line">            if ((i + j) % 2 == 0)</span><br><span class="line">            &#123;</span><br><span class="line">                SetWindow(-0.6, 0.6, -0.6, 0.6);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                SetWindow(-0.6, 0.6, 0.6, -0.6);</span><br><span class="line">            &#125;</span><br><span class="line">            SetViewport(i * L, L + i * L, j * L, L + j * L);</span><br><span class="line">            hexSwirl();</span><br><span class="line">            <span class="comment">//for (int k = 0; k &lt;= 200000000; k++);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//swap buffers for a smooth change from one</span></span><br><span class="line">    <span class="comment">//frame to another</span></span><br><span class="line">    glutSwapBuffers();</span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void reShape(int nNewWidth, int nNewHeight)</span><br><span class="line">&#123;</span><br><span class="line">    nWidth = nNewWidth;</span><br><span class="line">    nHeight = nNewHeight;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);//设置显示模式</span><br><span class="line">    glutInitWindowSize(nWidth, nHeight);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("hexSwirl");</span><br><span class="line">    glutDisplayFunc(myDisplay);</span><br><span class="line">    glutReshapeFunc(reShape);</span><br><span class="line">    myInit();</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.4节 5花环</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>) <span class="comment">//设置连接器选项</span></span><br><span class="line"></span><br><span class="line">const int WINDOW_WIDTH = 640;</span><br><span class="line">const int WINDOW_HEIGHT = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150; </span><br><span class="line">const int NUM = 55000;</span><br><span class="line">const double PI = atan(1.0) * 4;</span><br><span class="line"></span><br><span class="line">struct GLintPoint</span><br><span class="line">&#123;</span><br><span class="line">    GLint x;</span><br><span class="line">    GLint y;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line">class Point2</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    <span class="attribute">float</span> x, y;</span><br><span class="line">    void set(float dx, float dy) &#123;x = dx; y = dy;&#125;</span><br><span class="line">    void set(Point2 p) &#123;x = p.x; y = p.y;&#125;</span><br><span class="line">    Point2(<span class="attribute">float</span> xx, float yy) &#123;x = xx, y = yy;&#125;</span><br><span class="line">    Point2() &#123;x = y = 0;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Point2 curpos, cp;</span><br><span class="line"></span><br><span class="line">void moveTo(Point2 p)</span><br><span class="line">&#123;</span><br><span class="line">    cp.set(p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void lineTo(Point2 p)</span><br><span class="line">&#123;</span><br><span class="line">    glBegin(GL_LINES);</span><br><span class="line">    glVertex2f(cp.x, cp.y);</span><br><span class="line">    glVertex2f(p.x, p.y);</span><br><span class="line">    glEnd();</span><br><span class="line">    glFlush();</span><br><span class="line">    cp.set(p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glClearColor(1.0, 0.0, 0.0, 0.0);</span><br><span class="line">    glColor3f(0.0f, 1.0f, 0.0f);</span><br><span class="line">    glPointSize(4.0);//设置点的大小为4*4像素</span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(-WINDOW_WIDTH / 2, WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2, WINDOW_HEIGHT / 2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void rosette(int N, <span class="attribute">float</span> radius)</span><br><span class="line">&#123;</span><br><span class="line">    Point2* pointlist = new Point2[N];</span><br><span class="line"></span><br><span class="line">    GLfloat theta = (2.0 * PI) / N;</span><br><span class="line">    for (int c = 0; c &lt; N; ++c)</span><br><span class="line">    &#123;</span><br><span class="line">        pointlist``` stylus.set(radius * sin(c * theta), radius * cos(theta * c));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; N; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; N; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            moveTo(pointlist[i]);</span><br><span class="line">            lineTo(pointlist[j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void myDisplay()</span><br><span class="line">&#123;</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);//清屏</span><br><span class="line">    glViewport(10, 10, 640, 480);</span><br><span class="line">    rosette(5, 200);</span><br><span class="line">    glFlush();//送往设备显示</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);//设置显示模式</span><br><span class="line">    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("花环");</span><br><span class="line">    glutDisplayFunc(myDisplay);//注册重绘回调函数</span><br><span class="line">    myInit();</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.4.3 阴阳符号</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%B8%89%E7%AB%A0%E6%BA%90%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

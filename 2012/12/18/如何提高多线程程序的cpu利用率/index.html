@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="正如大家所知道的那样，多核多cpu越来越普遍了，而且编写多线程程序也是件很简单的事情。在Windows下面，调用CreateThread函数一次就能够以你想要的函数地址新建一个子线程运行。然后，事情确实你发现创建多线程根本没有让程序快多少，也没有提高多少cpu利用率，甚至可能让cpu利用率下降。唯一能够确定的是多线程能够避免界面假死。为什么会是这样的了。本文将举一些例子和讲述一些原因。 首先，我来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何提高多线程程序的cpu利用率">
+<meta property="og:url" content="http://xiaopengcheng.top/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="正如大家所知道的那样，多核多cpu越来越普遍了，而且编写多线程程序也是件很简单的事情。在Windows下面，调用CreateThread函数一次就能够以你想要的函数地址新建一个子线程运行。然后，事情确实你发现创建多线程根本没有让程序快多少，也没有提高多少cpu利用率，甚至可能让cpu利用率下降。唯一能够确定的是多线程能够避免界面假死。为什么会是这样的了。本文将举一些例子和讲述一些原因。 首先，我来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7602/26843192743_1a58643141_o.png">
+<meta property="og:image" content="http://www.xpc-yx.com/wp-content/uploads/2012/12/%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%A3%8E%E6%9A%B4.png">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7661/26843193313_87aceb0b9a_o.png">
+<meta property="article:published_time" content="2012-12-18T11:54:13.000Z">
+<meta property="article:modified_time" content="2019-12-19T16:22:33.343Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="线程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c2.staticflickr.com/8/7602/26843192743_1a58643141_o.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>如何提高多线程程序的cpu利用率 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何提高多线程程序的cpu利用率
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-12-18 19:54:13" itemprop="dateCreated datePublished" datetime="2012-12-18T19:54:13+08:00">2012-12-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/" class="post-meta-item leancloud_visitors" data-flag-title="如何提高多线程程序的cpu利用率" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>正如大家所知道的那样，多核多cpu越来越普遍了，而且编写多线程程序也是件很简单的事情。在Windows下面，调用CreateThread函数一次就能够以你想要的函数地址新建一个子线程运行。然后，事情确实你发现创建多线程根本没有让程序快多少，也没有提高多少cpu利用率，甚至可能让cpu利用率下降。唯一能够确定的是多线程能够避免界面假死。为什么会是这样的了。本文将举一些例子和讲述一些原因。</p>
+<p>首先，我来讲一下多处理的一些知识。如下图所示，<br><img src="https://c2.staticflickr.com/8/7602/26843192743_1a58643141_o.png" alt=""><br>多处理器系统也只有一个待运行的线程队列，内存中也只有一个操作系统拷贝，而且也只有一个内存系统，但是会有多个cpu同时运行不同的线程。一个cpu运行一个线程，那么上图中的系统最多能在同一时间运行2个线程。其实，多处理系统需要掌握的知识不是这些，而是<strong>缓存一致性</strong>。<br>现在来解释下什么是缓存一致性。由于，还是只有一个内存系统。所有cpu都要和这个内存系统通信，但是只有一条总线，那么这无疑会造成总线紧张，限制整体的速度了。那么，你多个cpu也没多少意义了。解决这个问题的办法还是利用cpu的缓存机制，学过组成原理的同学都知道，cpu的缓存命中率还是很高的，有90%以上吧。那么，我继续利用缓存机制还是可以降低总线的频繁使用的。但是，每个cpu都有自己的缓存。如果有2个cpu的缓存存储的是同一内存数据的内容，其中一个cpu的缓存更新了，另外一个cpu的缓存也必须更新，这就是所谓的缓存一致性。编程多线程程序的一个很重要的一点就是避免因为缓存一致性引起的缓存更新风暴。<br>现在我举一个<strong>缓存更新风暴</strong>的例子。<br>如图所示的类定义，<br><a href="http://www.xpc-yx.com/2012/12/%e5%a6%82%e4%bd%95%e6%8f%90%e9%ab%98%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%a8%8b%e5%ba%8f%e7%9a%84cpu%e5%88%a9%e7%94%a8%e7%8e%87/%e7%bc%93%e5%ad%98%e4%b8%80%e8%87%b4%e6%80%a7%e9%a3%8e%e6%9a%b4/" target="_blank" rel="noopener"><img src="http://www.xpc-yx.com/wp-content/uploads/2012/12/%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E9%A3%8E%E6%9A%B4.png" alt="缓存一致性风暴"></a><br>锁lockHttp和lockSsl中间只有8个字节，而绝大部分系统上一个缓存行是128个字节，那么这2个锁很可能就处在同一个缓存行上面。那么，最坏的情况会发生什么事情了。假设处理器P1在运行一个处理http请求的线程T1，处理器P2在运行一个处理ssl请求的线程T2，那么当T1获得锁lockHttp的时候，锁的内容就会改变，为了保持缓存一致性，就会更新P2的缓存。那么，T2要获得锁lockssl的时候，发现缓存已经失效了，就必须从内存中重新加载缓存之类。总之，这会将缓存命中率降低到90%以下，引起性能的严重降低。而且发生这种事情的原因是因为我们不了解硬件的体系结构。</p>
+<p>多cpu不能成倍提高速度的原因是任务的某些部分是必须串行处理的。比如，矩阵乘法可以分为三个部分，初始化矩阵，相乘，返回结果。这三部分第二部分可以用多线程来处理，第一部分和第三部分则是不可以的。而且第二部分必须在第一部分完成之后，第三部分必须在第一部分完成之后。那么，无论你添加多少个处理器，最快的时间都至少是第一部分和第二部分的时间之和。这个事实好像叫做Amdahl法则。<br>如果使用多线程，那么就必须考虑线程同步，而线程同步又是导致速度降低的关键。所以下面就讲述一些方法来加快多线程程序的吞吐速度。<br><strong>方法一，把一个任务分解为多个可以子任务。</strong><br>因为总有些子任务是可以并发的，多个子任务并发执行了很可能就能够避免cpu需要io操作的完成了，而且能够提高系统的吞吐量。<br><strong>方法二，缓存多线程的共享数据。</strong><br>当你已经在使用多线程了，很多时候必须使用共享数据。如果，数据是只读的，那么可以在第一次获取后保存起来，以后就可以重复使用了。但是，第一次的获取还是无法避免的需要线程同步操作的。<br><strong>方法三，如果线程数目有限，就不要共享数据。</strong><br>做法是为每一个线程实例化一个单独的数据，其实就是为每一个线程分配一块数据使用。这样没有线程同步操作了，速度可以尽可能的提示。<br><strong>方法四，如果没办法确定线程数目到底有多少，那么使用部分共享吧。</strong><br>部分共享其实就是使用多个资源池代替一个资源池，资源池的数目得更加经验来确定。如下图所示，<br><img src="https://c2.staticflickr.com/8/7661/26843193313_87aceb0b9a_o.png" alt=""><br>最后在提一个叫做<strong>Thundering Herd的问题</strong>，该问题维基百科有定义<a href="http://en.wikipedia.org/wiki/Thundering_herd_problem" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Thundering_herd_problem</a>。大意是，当多个线程在等待一个资源的时候，如果事件等待到了，操作系统是唤醒所有等待的线程让它们自己去竞争资源了还是选择一个线程把资源给它。当然唤醒所有的线程肯定开销要大，而且所有没有抢到资源的线程还得重新进入等待状态，这无疑造成很多没必要的操作，浪费了没必要的线程上下文切换。总之，会不会存在Thundering Herd还是跟不同的操作系统有关的。万一存在Thundering Herd了，多线程可能就没那么好办了。</p>
+<p>到现在我们知道了为什么多cpu并不能成倍提高程序的速度了。首先因为有些任务无法并行，其次即使是并行cpu之间还是有很多牵制的。本书的内容主要来自提高c++性能的编程技术一书。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\11\18\单线程环境中对象大小可变的内存池\" rel="bookmark">单线程环境中对象大小可变的内存池</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\11\15\单线程环境中对象大小固定的内存池\" rel="bookmark">单线程环境中对象大小固定的内存池</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\11\19\多线程内存池\" rel="bookmark">多线程内存池</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2014\08\07\模块、进程、线程的概念\" rel="bookmark">模块、进程、线程的概念</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/" title="如何提高多线程程序的cpu利用率">http://xiaopengcheng.top/2012/12/18/如何提高多线程程序的cpu利用率/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E7%A8%8B/" rel="tag"># 线程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/" rel="prev" title="C++的设计优化">
+      <i class="fa fa-chevron-left"></i> C++的设计优化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/" rel="next" title="SetWindowPos移动子窗口或占满桌面工作区域">
+      SetWindowPos移动子窗口或占满桌面工作区域 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

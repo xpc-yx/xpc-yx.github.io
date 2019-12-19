@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C&#x2F;C++中使用链接命令&#x2F;entry:function可以修改默认设置。 那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？    函数 默认    mainCRTStartup (or wmainCRTStartup) An applic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&#x2F;C++编写的程序启动过程">
+<meta property="og:url" content="http://xiaopengcheng.top/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C&#x2F;C++中使用链接命令&#x2F;entry:function可以修改默认设置。 那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？    函数 默认    mainCRTStartup (or wmainCRTStartup) An applic">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-01-16T09:21:46.000Z">
+<meta property="article:modified_time" content="2019-12-19T16:22:33.150Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="程序启动">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>C/C++编写的程序启动过程 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C/C++编写的程序启动过程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-01-16 17:21:46" itemprop="dateCreated datePublished" datetime="2016-01-16T17:21:46+08:00">2016-01-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-meta-item leancloud_visitors" data-flag-title="C/C++编写的程序启动过程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。</p>
+<p>那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>默认</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>mainCRTStartup</strong> (or <strong>wmainCRTStartup</strong>)</td>
+<td>An application using /SUBSYSTEM:<strong>CONSOLE</strong>; calls <strong>main</strong> (or <strong>wmain</strong>)</td>
+</tr>
+<tr>
+<td><strong>WinMainCRTStartup</strong> (or <strong>wWinMainCRTStartup</strong>)</td>
+<td>An application using /SUBSYSTEM:<strong>WINDOWS</strong>; calls <strong>WinMain</strong> (or <strong>wWinMain</strong>), which must be defined with <strong>__stdcall</strong></td>
+</tr>
+</tbody></table>
+<p>注意，区分入口函数和主函数（main，WinMain）。</p>
+<p>默认情况下，控制台程序使用<strong>mainCRTStartup</strong>作为入口函数，窗口程序使用<strong>WinMainCRTStartup</strong>作为入口函数。同时，这两个函数都有对应的Unicode版本（前缀加w)。</p>
+<p>现在要考虑的是，这些启动函数都做了什么事情？</p>
+<p>在crtexe.c文件中可以找到这几个启动函数的定义，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#ifdef _WINMAIN_</span><br><span class="line"></span><br><span class="line">#ifdef WPRFLAG</span><br><span class="line">int wWinMainCRTStartup(</span><br><span class="line">#else  &#x2F;* WPRFLAG *&#x2F;</span><br><span class="line">int WinMainCRTStartup(</span><br><span class="line">#endif  &#x2F;* WPRFLAG *&#x2F;</span><br><span class="line"></span><br><span class="line">#else  &#x2F;* _WINMAIN_ *&#x2F;</span><br><span class="line"></span><br><span class="line">#ifdef WPRFLAG</span><br><span class="line">int wmainCRTStartup(</span><br><span class="line">#else  &#x2F;* WPRFLAG *&#x2F;</span><br><span class="line">int mainCRTStartup(</span><br><span class="line">#endif  &#x2F;* WPRFLAG *&#x2F;</span><br><span class="line"></span><br><span class="line">#endif  &#x2F;* _WINMAIN_ *&#x2F;</span><br><span class="line">        void</span><br><span class="line">        )</span><br><span class="line">&#123;</span><br><span class="line">        &#x2F;*</span><br><span class="line">         * The &#x2F;GS security cookie must be initialized before any exception</span><br><span class="line">         * handling targetting the current image is registered.  No function</span><br><span class="line">         * using exception handling can be called in the current image until</span><br><span class="line">         * after __security_init_cookie has been called.</span><br><span class="line">         *&#x2F;</span><br><span class="line">        __security_init_cookie();</span><br><span class="line"></span><br><span class="line">        return __tmainCRTStartup();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因此，实际上是根据平台（Windows或者Console），多字节还是Unicode，生成不同的默认入口函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">__declspec(noinline)</span><br><span class="line">int</span><br><span class="line">__tmainCRTStartup(</span><br><span class="line">         void</span><br><span class="line">         )</span><br><span class="line">&#123;</span><br><span class="line">        int initret;</span><br><span class="line">        int mainret&#x3D;0;</span><br><span class="line">        int managedapp;</span><br><span class="line">#ifdef _WINMAIN_</span><br><span class="line">        _TUCHAR *lpszCommandLine;</span><br><span class="line">        STARTUPINFO StartupInfo;</span><br><span class="line"></span><br><span class="line">        __try &#123;</span><br><span class="line">            &#x2F;*</span><br><span class="line">            Note: MSDN specifically notes that GetStartupInfo returns no error, and throws unspecified SEH if it fails, so</span><br><span class="line">            the very general exception handler below is appropriate</span><br><span class="line">            *&#x2F;</span><br><span class="line">            GetStartupInfo( amp;StartupInfo );</span><br><span class="line">        &#125; __except(EXCEPTION_EXECUTE_HANDLER) &#123;</span><br><span class="line">            return 255;</span><br><span class="line">        &#125;</span><br><span class="line">#endif  &#x2F;* _WINMAIN_ *&#x2F;</span><br><span class="line">        &#x2F;*</span><br><span class="line">         * Determine if this is a managed application</span><br><span class="line">         *&#x2F;</span><br><span class="line">        managedapp &#x3D; check_managed_app();</span><br><span class="line"></span><br><span class="line">        if ( !_heap_init(1) )               &#x2F;* initialize heap *&#x2F;</span><br><span class="line">            fast_error_exit(_RT_HEAPINIT);  &#x2F;* write message and die *&#x2F;</span><br><span class="line"></span><br><span class="line">        if( !_mtinit() )                    &#x2F;* initialize multi-thread *&#x2F;</span><br><span class="line">            fast_error_exit(_RT_THREAD);    &#x2F;* write message and die *&#x2F;</span><br><span class="line"></span><br><span class="line">        &#x2F;* Enable buffer count checking if linking against static lib *&#x2F;</span><br><span class="line">        _CrtSetCheckCount(TRUE);</span><br><span class="line"></span><br><span class="line">        &#x2F;*</span><br><span class="line">         * Initialize the Runtime Checks stuff</span><br><span class="line">         *&#x2F;</span><br><span class="line">#ifdef _RTC</span><br><span class="line">        _RTC_Initialize();</span><br><span class="line">#endif  &#x2F;* _RTC *&#x2F;</span><br><span class="line">        &#x2F;*</span><br><span class="line">         * Guard the remainder of the initialization code and the call</span><br><span class="line">         * to user&#39;s main, or WinMain, function in a __try&#x2F;__except</span><br><span class="line">         * statement.</span><br><span class="line">         *&#x2F;</span><br><span class="line"></span><br><span class="line">        __try &#123;</span><br><span class="line"></span><br><span class="line">            if ( _ioinit() lt; 0 )            &#x2F;* initialize lowio *&#x2F;</span><br><span class="line">                _amsg_exit(_RT_LOWIOINIT);</span><br><span class="line"></span><br><span class="line">            &#x2F;* get wide cmd line info *&#x2F;</span><br><span class="line">            _tcmdln &#x3D; (_TSCHAR *)GetCommandLineT();</span><br><span class="line"></span><br><span class="line">            &#x2F;* get wide environ info *&#x2F;</span><br><span class="line">            _tenvptr &#x3D; (_TSCHAR *)GetEnvironmentStringsT();</span><br><span class="line"></span><br><span class="line">            if ( _tsetargv() lt; 0 )</span><br><span class="line">                _amsg_exit(_RT_SPACEARG);</span><br><span class="line">            if ( _tsetenvp() lt; 0 )</span><br><span class="line">                _amsg_exit(_RT_SPACEENV);</span><br><span class="line"></span><br><span class="line">            initret &#x3D; _cinit(TRUE);                  &#x2F;* do C data initialize *&#x2F;</span><br><span class="line">            if (initret !&#x3D; 0)</span><br><span class="line">                _amsg_exit(initret);</span><br><span class="line"></span><br><span class="line">#ifdef _WINMAIN_</span><br><span class="line"></span><br><span class="line">            lpszCommandLine &#x3D; _twincmdln();</span><br><span class="line">            mainret &#x3D; _tWinMain( (HINSTANCE)amp;__ImageBase,</span><br><span class="line">                                 NULL,</span><br><span class="line">                                 lpszCommandLine,</span><br><span class="line">                                 StartupInfo.dwFlags amp; STARTF_USESHOWWINDOW</span><br><span class="line">                                      ? StartupInfo.wShowWindow</span><br><span class="line">                                      : SW_SHOWDEFAULT</span><br><span class="line">                                );</span><br><span class="line">#else  &#x2F;* _WINMAIN_ *&#x2F;</span><br><span class="line">            _tinitenv &#x3D; _tenviron;</span><br><span class="line">            mainret &#x3D; _tmain(__argc, _targv, _tenviron);</span><br><span class="line">#endif  &#x2F;* _WINMAIN_ *&#x2F;</span><br><span class="line"></span><br><span class="line">            if ( !managedapp )</span><br><span class="line">                exit(mainret);</span><br><span class="line"></span><br><span class="line">            _cexit();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        __except ( _XcptFilter(GetExceptionCode(), GetExceptionInformation()) )</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;*</span><br><span class="line">             * Should never reach here</span><br><span class="line">             *&#x2F;</span><br><span class="line"></span><br><span class="line">            mainret &#x3D; GetExceptionCode();</span><br><span class="line"></span><br><span class="line">            if ( !managedapp )</span><br><span class="line">                _exit(mainret);</span><br><span class="line"></span><br><span class="line">            _c_exit();</span><br><span class="line"></span><br><span class="line">        &#125; &#x2F;* end of try - except *&#x2F;</span><br><span class="line"></span><br><span class="line">        return mainret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面代码，可以很清晰了解启动函数到底做了什么事情。</p>
+<p>Console版本</p>
+<p>1.初始化C的堆申请（_heap_init(1)）</p>
+<p>2.初始化多线程（_mtinit()）</p>
+<p>3.获取命令行（GetCommandLineT()）</p>
+<p>4.获取环境变量（GetEnvironmentStringsT()）</p>
+<p>5.初始化C和C++的全局变量（_cinit(TRUE)）</p>
+<p>6.调用main函数（_tmain(__argc, _targv, _tenviron)）</p>
+<p>Windows版本</p>
+<p>1.获取StartupInfo（GetStartupInfo( StartupInfo )）</p>
+<p>2.初始化C的堆申请（_heap_init(1)）</p>
+<p>3.初始化多线程（_mtinit()）</p>
+<p>4.获取命令行（GetCommandLineT()）</p>
+<p>5.获取环境变量（GetEnvironmentStringsT()）</p>
+<p>6.初始化C和C++的全局变量（_cinit(TRUE)）</p>
+<p>7.调用WinMain函数</p>
+<p>最后再看看_cinit(TRUE)到底做了什么事情？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl _cinit (</span><br><span class="line">        int initFloatingPrecision</span><br><span class="line">        )</span><br><span class="line">&#123;</span><br><span class="line">        int initret;</span><br><span class="line"></span><br><span class="line">        &#x2F;*</span><br><span class="line">         * initialize floating point package, if present</span><br><span class="line">         *&#x2F;</span><br><span class="line">#ifdef CRTDLL</span><br><span class="line">        _fpmath(initFloatingPrecision);</span><br><span class="line">#else  &#x2F;* CRTDLL *&#x2F;</span><br><span class="line">        if (_FPinit !&#x3D; NULL amp;amp;</span><br><span class="line">            _IsNonwritableInCurrentImage((PBYTE)amp;_FPinit))</span><br><span class="line">        &#123;</span><br><span class="line">            (*_FPinit)(initFloatingPrecision);</span><br><span class="line">        &#125;</span><br><span class="line">        _initp_misc_cfltcvt_tab();</span><br><span class="line">#endif  &#x2F;* CRTDLL *&#x2F;</span><br><span class="line"></span><br><span class="line">        &#x2F;*</span><br><span class="line">         * do initializations</span><br><span class="line">         *&#x2F;</span><br><span class="line">        initret &#x3D; _initterm_e( __xi_a, __xi_z );</span><br><span class="line">        if ( initret !&#x3D; 0 )</span><br><span class="line">            return initret;</span><br><span class="line"></span><br><span class="line">#ifdef _RTC</span><br><span class="line">        atexit(_RTC_Terminate);</span><br><span class="line">#endif  &#x2F;* _RTC *&#x2F;</span><br><span class="line">        &#x2F;*</span><br><span class="line">         * do C++ initializations</span><br><span class="line">         *&#x2F;</span><br><span class="line">        _initterm( __xc_a, __xc_z );</span><br><span class="line"></span><br><span class="line">#ifndef CRTDLL</span><br><span class="line">        &#x2F;*</span><br><span class="line">         * If we have any dynamically initialized __declspec(thread)</span><br><span class="line">         * variables, then invoke their initialization for the thread on</span><br><span class="line">         * which the DLL is being loaded, by calling __dyn_tls_init through</span><br><span class="line">         * a callback defined in tlsdyn.obj.  We can&#39;t rely on the OS</span><br><span class="line">         * calling __dyn_tls_init with DLL_PROCESS_ATTACH because, on</span><br><span class="line">         * Win2K3 and before, that call happens before the CRT is</span><br><span class="line">         * initialized.</span><br><span class="line">         *&#x2F;</span><br><span class="line">        if (__dyn_tls_init_callback !&#x3D; NULL amp;amp;</span><br><span class="line">            _IsNonwritableInCurrentImage((PBYTE)amp;__dyn_tls_init_callback))</span><br><span class="line">        &#123;</span><br><span class="line">            __dyn_tls_init_callback(NULL, DLL_THREAD_ATTACH, NULL);</span><br><span class="line">        &#125;</span><br><span class="line">#endif  &#x2F;* CRTDLL *&#x2F;</span><br><span class="line"></span><br><span class="line">        return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最重要的两行，initret = _initterm_e( __xi_a, __xi_z )和_initterm( __xc_a, __xc_z )。这两行的作用分别是初始化C标准库中的全局变量和初始化C++的全局变量。</p>
+<p>至此，对C++程序的默认启动函数的基本过程有个了解了。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" title="C&#x2F;C++编写的程序启动过程">http://xiaopengcheng.top/2016/01/16/C C++编写的程序启动过程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8/" rel="tag"># 程序启动</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/01/11/%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/" rel="prev" title="书籍推荐列表">
+      <i class="fa fa-chevron-left"></i> 书籍推荐列表
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/" rel="next" title="三维表面上基于笔画的纹理交互式合成">
+      三维表面上基于笔画的纹理交互式合成 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

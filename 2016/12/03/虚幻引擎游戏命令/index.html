@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="命令行参数和控制台命令游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。 控制台命令对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。下面根据用途统一总结，不进行区分。 常用命令exit(quit)退出游戏 pause暂停游戏，按pa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚幻引擎游戏命令">
+<meta property="og:url" content="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="命令行参数和控制台命令游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。 控制台命令对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。下面根据用途统一总结，不进行区分。 常用命令exit(quit)退出游戏 pause暂停游戏，按pa">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-12-03T14:06:24.000Z">
+<meta property="article:modified_time" content="2019-12-19T16:22:33.353Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>虚幻引擎游戏命令 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          虚幻引擎游戏命令
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-03 22:06:24" itemprop="dateCreated datePublished" datetime="2016-12-03T22:06:24+08:00">2016-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E/" itemprop="url" rel="index">
+                    <span itemprop="name">虚幻引擎</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" class="post-meta-item leancloud_visitors" data-flag-title="虚幻引擎游戏命令" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="命令行参数和控制台命令"><a href="#命令行参数和控制台命令" class="headerlink" title="命令行参数和控制台命令"></a>命令行参数和控制台命令</h2><p>游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。</p>
+<h2 id="控制台命令"><a href="#控制台命令" class="headerlink" title="控制台命令"></a>控制台命令</h2><p>对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。<br>下面根据用途统一总结，不进行区分。</p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h4 id="exit-quit"><a href="#exit-quit" class="headerlink" title="exit(quit)"></a>exit(quit)</h4><p>退出游戏</p>
+<h4 id="pause"><a href="#pause" class="headerlink" title="pause"></a>pause</h4><p>暂停游戏，按pause break键也可以。</p>
+<h4 id="open-url"><a href="#open-url" class="headerlink" title="open [url]"></a>open [url]</h4><p>打开地图，额外的参数同命令行参数的url部分。比如，在大厅中开始游戏就是用的该命令打开服务器下发的ip地址。</p>
+<h4 id="restartLevel"><a href="#restartLevel" class="headerlink" title="restartLevel"></a>restartLevel</h4><p>重启当前关卡</p>
+<h4 id="reconnect-disconnect-cancel"><a href="#reconnect-disconnect-cancel" class="headerlink" title="reconnect/disconnect/cancel"></a>reconnect/disconnect/cancel</h4><p>重新连接服务器，断开服务器连接，取消进行的服务器连接操作。</p>
+<h4 id="Kill系列"><a href="#Kill系列" class="headerlink" title="Kill系列"></a>Kill系列</h4><ol>
+<li>KillAll [class] - 销毁或破坏关卡中特定类的所有实例。</li>
+<li>KillPawns - 销毁关卡中的所有 pawn。</li>
+<li>KillBadGuys - 销毁所有不在同一个团队作为玩家的 pawns。</li>
+<li>Suicide -玩家自杀</li>
+</ol>
+<h4 id="god-fly-walk"><a href="#god-fly-walk" class="headerlink" title="god/fly/walk"></a>god/fly/walk</h4><p>幽灵模式（可以飞、穿墙）/飞行模式/正常模式</p>
+<h4 id="AllAmmo"><a href="#AllAmmo" class="headerlink" title="AllAmmo"></a>AllAmmo</h4><p>将弹药数目设置为所有武器的最大值</p>
+<h4 id="SetRes"><a href="#SetRes" class="headerlink" title="SetRes"></a>SetRes</h4><p>setres [width] [x|X] [height] [w|f]<br>改变分辨率（width为宽，height为高）<br>模式(w = 窗口; f = 全屏)，<br>比如 800x600w表示分辨率为800乘以600的窗口模式，<br>1024x768f表示分辨率为1024乘以768的全屏模式。</p>
+<h4 id="FreeCamera"><a href="#FreeCamera" class="headerlink" title="FreeCamera"></a>FreeCamera</h4><p>将玩家的相机设置为自由轨道相机模式（第三人称视角），FreeCamera false恢复。</p>
+<h4 id="Addbots"><a href="#Addbots" class="headerlink" title="Addbots"></a>Addbots</h4><ol>
+<li>AddBots [number] - 为了进行测试，会向关卡中添加指定机器人数.</li>
+<li>AddBlueBots [number] - 在团队游戏中为蓝队添加指定的机器人数。</li>
+<li>AddRedBots [number] - 在团队游戏中为红队添加指定的机器人数。</li>
+<li>AddNamedBot [name] [bUseTeamNum] [teamnum] - 添加一个使用指定名称的机器人。如果 bUseTeamNum 为真而且指定了团队数，那么将该机器人添加到指定的团队。</li>
+</ol>
+<h4 id="Shot"><a href="#Shot" class="headerlink" title="Shot"></a>Shot</h4><ol>
+<li>shot/screenshot 以当前的屏幕分辨率截取屏幕截图。</li>
+<li>tiledshot [factor] 以当前分辨率乘以指定因数为分辨率来获取屏幕截图。比如，tiledshot 2会得到2乘以2的shot截图，分辨率也是shot的2倍。</li>
+<li>SHOTNOHUD，不截屏hud。</li>
+</ol>
+<h3 id="渲染命令"><a href="#渲染命令" class="headerlink" title="渲染命令"></a>渲染命令</h3><h4 id="ViewMode"><a href="#ViewMode" class="headerlink" title="ViewMode"></a>ViewMode</h4><p>viewmode命令设置渲染模式<br>1. detaillight 默认模式，使用受到法线贴图的光照影响的中性色彩材质渲染场景<br>2. unlit 无光照<br>3. lightingonly 只使用光照<br>4. wireframe 线框模式<br>5. brushwireframe 线框模式，但是显示画刷边缘<br>6. lightcomplexity 显示光照复杂度<br>7. lightmapdensity 显示光照贴图密度<br>8. litlightmapdensity 显示光照贴图像素密度 6和7的结合<br>9. texturedensity 显示每个表面上漫反射通道上的贴图像素密度<br>10. shadercomplexity 显示每个表面上所应用的材质的复杂度</p>
+<h4 id="Show"><a href="#Show" class="headerlink" title="Show"></a>Show</h4><p>切换各种项目的显示(仅用于客户端)<br>1. bounds  切换actor边界的显示（包围盒和包围球）<br>2. volumes 切换体积的显示（体积盒）<br>3. collision 切换碰撞体的显示状态<br>4. bsp  切换bsp几何体的显示（用bsp画刷制作的物体，比如墙）<br>5. fog  切换雾actors的显示<br>6. particles 切换粒子几何体的显示（比如烟雾弹，特效做的门）<br>7. paths 切换路径或导航网格物体的显示<br>8. navnodes 切换和寻路相关的actors的显示<br>9. foliage 切换植被的显示<br>10. terrain 切换地形几何体的显示<br>11. terrainpatches 切换地形块的显示。在每个块的周围描画一个轮廓。<br>12. staticmeshes 切换静态网格物体几何体的显示<br>13. decal 切换decal actors的显示<br>14. decalinfo 切换decals（贴花）的调试开发信息的显示(平头截体、切线轴等)。<br>15. staticmeshes 切换静态网格物体几何体的显示。<br>16. postprocess  切换后期处理特效的显示<br>17. skelmeshes/skeletalmeshes 切换骨架网格物体几何体的显示<br>18. MISSINGCOLLISION  切换高亮显示启用了碰撞但是没有碰撞网格物体的静态网格物体</p>
+<h3 id="显示命令"><a href="#显示命令" class="headerlink" title="显示命令"></a>显示命令</h3><h4 id="display系列"><a href="#display系列" class="headerlink" title="display系列"></a>display系列</h4><h4 id="displayall-class-prop"><a href="#displayall-class-prop" class="headerlink" title="displayall class prop"></a>displayall class prop</h4><p>在屏幕上实时地显示类class所有实例的属性prop的值</p>
+<h4 id="display-obj-prop"><a href="#display-obj-prop" class="headerlink" title="display obj prop"></a>display obj prop</h4><p>在屏幕上实时地显示对象obj的属性prop的值。</p>
+<h4 id="displayallstate-class"><a href="#displayallstate-class" class="headerlink" title="displayallstate class"></a>displayallstate class</h4><p>在屏幕上实时地显示类class所有实例的当前处于的状态，比如行走，空闲，攻击等</p>
+<h4 id="displayclear"><a href="#displayclear" class="headerlink" title="displayclear"></a>displayclear</h4><p>清楚display系列命令所有的输出</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><p>set class/obj prop value<br>1. 设置给定类class（包括其子类）的所有对象的属性prop的值为value<br>2. 设置给定对象obj的属性prop的值为value</p>
+<p>可以用displayall实时显示出来这个属性，再用set设置后观察属性变化。</p>
+<h3 id="统计命令"><a href="#统计命令" class="headerlink" title="统计命令"></a>统计命令</h3><p>stat命令负责在游戏运行时在屏幕上启用显示统计数据功能。</p>
+<h3 id="none"><a href="#none" class="headerlink" title="none"></a>none</h3><p>关闭所有统计数据的显示</p>
+<h4 id="fps"><a href="#fps" class="headerlink" title="fps"></a>fps</h4><p>切换帧频率统计数据的显示</p>
+<h4 id="anim"><a href="#anim" class="headerlink" title="anim"></a>anim</h4><p>切换动画系统统计数据的显示状态</p>
+<h4 id="net"><a href="#net" class="headerlink" title="net"></a>net</h4><p>切换网络统计数据显示的 打开/关闭 状态</p>
+<h4 id="game"><a href="#game" class="headerlink" title="game"></a>game</h4><p>切换游戏统计数据的显示。(更新时间等)</p>
+<h4 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h4><p>切换UIScene统计数据的显示</p>
+<h4 id="collision"><a href="#collision" class="headerlink" title="collision"></a>collision</h4><p>切换碰撞统计数据的显示状态</p>
+<h4 id="octree"><a href="#octree" class="headerlink" title="octree"></a>octree</h4><p>切换八叉树相关统计数据的显示</p>
+<h4 id="physics"><a href="#physics" class="headerlink" title="physics"></a>physics</h4><p>切换一般物理统计数据的显示<br>1. physicscloth 切换关于布料仿真统计数据的显示。<br>2. physicsfields 切换关于物理域的统计数据的显示状态。<br>3. physicsfluids 切换关于PhysX流体仿真统计数据的显示。</p>
+<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><p>切换一般内存统计数据的显示</p>
+<h4 id="memorychurn"><a href="#memorychurn" class="headerlink" title="memorychurn"></a>memorychurn</h4><p>切换处理内存分配的统计数据的显示</p>
+<h4 id="scenerendering"><a href="#scenerendering" class="headerlink" title="scenerendering"></a>scenerendering</h4><p>切换场景渲染统计数据的显示</p>
+<h4 id="startfile-stopfile"><a href="#startfile-stopfile" class="headerlink" title="startfile/stopfile"></a>startfile/stopfile</h4><ol>
+<li>startfile开始捕获统计数据文件以便和StatsViewer结合使用。</li>
+<li>stopfile完成捕获统计数据文件。</li>
+<li>文件存储位置：UDKGame\Profiling\UE3Stats\xxx文件..ustats</li>
+<li>打开工具：Binaries\StatsViewer.exe</li>
+</ol>
+<h4 id="GameProfile-ProfileGame"><a href="#GameProfile-ProfileGame" class="headerlink" title="GameProfile/ProfileGame"></a>GameProfile/ProfileGame</h4><p>该命令在虚幻三和UDK中用于统计脚本函数的运行时间。<br>1. start 开始Profile<br>2. stop 结束Profile<br>3. 文件：UDKGame\Profiling\T-2016.11.29-19.26.55.gprof<br>4. 打开工具：Binaries\GameplayProfiler.exe<br>5. UObject::CallFunction中统计了每个函数的调用时间。</p>
+<h3 id="调试命令"><a href="#调试命令" class="headerlink" title="调试命令"></a>调试命令</h3><p>调试命令的结果是控制台形式的输出，并不是在游戏窗口中显示。在逆战中，需要按f8显示控制台窗口，再输入调试命令。其余类型的命令可以使用f7也可以使用f8。</p>
+<h4 id="obj"><a href="#obj" class="headerlink" title="obj"></a>obj</h4><h5 id="gc-garbage"><a href="#gc-garbage" class="headerlink" title="gc/garbage"></a>gc/garbage</h5><p>强制进行垃圾回收清理。</p>
+<h5 id="list"><a href="#list" class="headerlink" title="list"></a>list</h5><p>显示包中的一个类别的所有物体的列表。<br>1. obj list显示包中所有的物体列表。<br>2. obj list class=pawn 只显示指定的类的所有物体的对象列表，比如pawn。</p>
+<h5 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h5><p>dump objname<br>在控制台中输出某个对象的所有属性，可以先用displayall找到这个对象名。</p>
+<h3 id="物理命令"><a href="#物理命令" class="headerlink" title="物理命令"></a>物理命令</h3><h5 id="nxvis-collision…"><a href="#nxvis-collision…" class="headerlink" title="nxvis collision…"></a>nxvis collision…</h5><p>碰撞相关命令</p>
+<h5 id="nxvis-joint…"><a href="#nxvis-joint…" class="headerlink" title="nxvis joint…"></a>nxvis joint…</h5><p>关节相关命令</p>
+<h5 id="nxvis-cloth…"><a href="#nxvis-cloth…" class="headerlink" title="nxvis cloth…"></a>nxvis cloth…</h5><p>布料相关命令</p>
+<h5 id="nxvis-fluid…"><a href="#nxvis-fluid…" class="headerlink" title="nxvis fluid…"></a>nxvis fluid…</h5><p>流体相关命令</p>
+<h5 id="nxvis-softbody…"><a href="#nxvis-softbody…" class="headerlink" title="nxvis softbody…"></a>nxvis softbody…</h5><p>软体相关命令</p>
+<h3 id="内存命令"><a href="#内存命令" class="headerlink" title="内存命令"></a>内存命令</h3><h5 id="mem"><a href="#mem" class="headerlink" title="mem"></a>mem</h5><p>显示内存分配信息<br>1.  mem<br>2.  mem detailed<br>3.  mem stat</p>
+<h5 id="configmem"><a href="#configmem" class="headerlink" title="configmem"></a>configmem</h5><p>显示配置文件内存分配信息</p>
+<h5 id="particlememory"><a href="#particlememory" class="headerlink" title="particlememory"></a>particlememory</h5><p>粒子内存信息</p>
+<h5 id="memfragcheck"><a href="#memfragcheck" class="headerlink" title="memfragcheck"></a>memfragcheck</h5><p>内存碎片检测</p>
+<h5 id="memleakcheck"><a href="#memleakcheck" class="headerlink" title="memleakcheck"></a>memleakcheck</h5><p>内存泄漏检测</p>
+<h3 id="UI-GFX命令"><a href="#UI-GFX命令" class="headerlink" title="UI/GFX命令"></a>UI/GFX命令</h3><h3 id="ShowHUD"><a href="#ShowHUD" class="headerlink" title="ShowHUD"></a>ShowHUD</h3><p>显示(隐藏)所有的HUD</p>
+<h5 id="ShowScores"><a href="#ShowScores" class="headerlink" title="ShowScores"></a>ShowScores</h5><p>显示(隐藏)积分面板</p>
+<h5 id="Toggleui"><a href="#Toggleui" class="headerlink" title="Toggleui"></a>Toggleui</h5><p>切换UI的更新和显示</p>
+<h5 id="gfxinvoke"><a href="#gfxinvoke" class="headerlink" title="gfxinvoke"></a>gfxinvoke</h5><p>调用GfxMovie对应的flash文件的as函数</p>
+<h5 id="dumpsftextures"><a href="#dumpsftextures" class="headerlink" title="dumpsftextures"></a>dumpsftextures</h5><p>输出GFx Texture Usage到log文件中。</p>
+<h2 id="虚幻三控制台命令调用流程"><a href="#虚幻三控制台命令调用流程" class="headerlink" title="虚幻三控制台命令调用流程"></a>虚幻三控制台命令调用流程</h2><ul>
+<li>APlayerController::ConsoleCommand。</li>
+<li><ul>
+<li>ULocalPlayer::Exec，处理一部分命令。</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>UGameViewportClient::Exec，引擎自带的大部分命令在此函数中实现。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UGFxInteraction::Exec，执行gfx相关的命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUIInteraction::Exec，处理一部分命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUIInteraction::ScriptConsoleExec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UGameUISceneClient::Exec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUISceneClient::Exec.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUISceneClient::ScriptConsoleExec.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UGameViewportClient::ScriptConsoleExec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UEngine::Exec，处理一部分命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>UPlayer::Exec，处理一部分命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UWorld::Exec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>APlayerInput::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>APlayerController::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>APawn::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AInvManager::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AWeapon::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AHUD::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AGameInfo::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>ACheatManager::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AInteraction::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回APlayerController::ConsoleCommand，命令未处理。</li>
+</ul>
+<p>注意：UObkect::ScriptConsoleExec，处理的是当前类中自定义脚本命令（执行带exec前缀的脚本函数）。<br>因此，流程中带有ScriptConsoleExec函数执行的类（以及子类）都可以定exec脚本函数来执行控制台命令。只有在处理流程中的命令才有效，处理流程外的命令无法被处理。</p>
+<h3 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h3><h4 id="Native命令"><a href="#Native命令" class="headerlink" title="Native命令"></a>Native命令</h4><p>在控制台命令调用流程中涉及到的C++类的Exec函数中添加对新命令的处理逻辑。</p>
+<h4 id="脚本命令"><a href="#脚本命令" class="headerlink" title="脚本命令"></a>脚本命令</h4><p>在处理流程中的有ScriptConsoleExec调用的类(Interaction、UISceneClient、GameViewportClient、PlayerInput、PlayerController、Pawn、InvManager、Weapon、HUD、GameInfo、CheatManager)<br>中添加exec前缀的脚本函数。</p>
+<p>更多的游戏命令可以参考文档：<a href="https://wiki.beyondunreal.com/Legacy:Console_Commands" target="_blank" rel="noopener">Console Commands</a>。</p>
+<h3 id="虚幻引擎游戏命令"><a href="#虚幻引擎游戏命令" class="headerlink" title="虚幻引擎游戏命令"></a>虚幻引擎游戏命令</h3><div class="video-container"><iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&resid=4330CD349D9ADD44%21723&authkey=AFSrpMCVspcze0g&em=2" width="800" height="700" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" title="虚幻引擎游戏命令">http://xiaopengcheng.top/2016/12/03/虚幻引擎游戏命令/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/12/03/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" rel="prev" title="虚幻引擎命令行参数">
+      <i class="fa fa-chevron-left"></i> 虚幻引擎命令行参数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" rel="next" title="WebGL编程模型">
+      WebGL编程模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行参数和控制台命令"><span class="nav-number">1.</span> <span class="nav-text">命令行参数和控制台命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制台命令"><span class="nav-number">2.</span> <span class="nav-text">控制台命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">2.1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exit-quit"><span class="nav-number">2.1.1.</span> <span class="nav-text">exit(quit)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pause"><span class="nav-number">2.1.2.</span> <span class="nav-text">pause</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#open-url"><span class="nav-number">2.1.3.</span> <span class="nav-text">open [url]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#restartLevel"><span class="nav-number">2.1.4.</span> <span class="nav-text">restartLevel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reconnect-disconnect-cancel"><span class="nav-number">2.1.5.</span> <span class="nav-text">reconnect&#x2F;disconnect&#x2F;cancel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kill系列"><span class="nav-number">2.1.6.</span> <span class="nav-text">Kill系列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#god-fly-walk"><span class="nav-number">2.1.7.</span> <span class="nav-text">god&#x2F;fly&#x2F;walk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AllAmmo"><span class="nav-number">2.1.8.</span> <span class="nav-text">AllAmmo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SetRes"><span class="nav-number">2.1.9.</span> <span class="nav-text">SetRes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FreeCamera"><span class="nav-number">2.1.10.</span> <span class="nav-text">FreeCamera</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Addbots"><span class="nav-number">2.1.11.</span> <span class="nav-text">Addbots</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shot"><span class="nav-number">2.1.12.</span> <span class="nav-text">Shot</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染命令"><span class="nav-number">2.2.</span> <span class="nav-text">渲染命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewMode"><span class="nav-number">2.2.1.</span> <span class="nav-text">ViewMode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show"><span class="nav-number">2.2.2.</span> <span class="nav-text">Show</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示命令"><span class="nav-number">2.3.</span> <span class="nav-text">显示命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#display系列"><span class="nav-number">2.3.1.</span> <span class="nav-text">display系列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#displayall-class-prop"><span class="nav-number">2.3.2.</span> <span class="nav-text">displayall class prop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#display-obj-prop"><span class="nav-number">2.3.3.</span> <span class="nav-text">display obj prop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#displayallstate-class"><span class="nav-number">2.3.4.</span> <span class="nav-text">displayallstate class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#displayclear"><span class="nav-number">2.3.5.</span> <span class="nav-text">displayclear</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">2.3.6.</span> <span class="nav-text">set</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计命令"><span class="nav-number">2.4.</span> <span class="nav-text">统计命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#none"><span class="nav-number">2.5.</span> <span class="nav-text">none</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fps"><span class="nav-number">2.5.1.</span> <span class="nav-text">fps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#anim"><span class="nav-number">2.5.2.</span> <span class="nav-text">anim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#net"><span class="nav-number">2.5.3.</span> <span class="nav-text">net</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#game"><span class="nav-number">2.5.4.</span> <span class="nav-text">game</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ui"><span class="nav-number">2.5.5.</span> <span class="nav-text">ui</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#collision"><span class="nav-number">2.5.6.</span> <span class="nav-text">collision</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#octree"><span class="nav-number">2.5.7.</span> <span class="nav-text">octree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#physics"><span class="nav-number">2.5.8.</span> <span class="nav-text">physics</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memory"><span class="nav-number">2.6.</span> <span class="nav-text">memory</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#memorychurn"><span class="nav-number">2.6.1.</span> <span class="nav-text">memorychurn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scenerendering"><span class="nav-number">2.6.2.</span> <span class="nav-text">scenerendering</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#startfile-stopfile"><span class="nav-number">2.6.3.</span> <span class="nav-text">startfile&#x2F;stopfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GameProfile-ProfileGame"><span class="nav-number">2.6.4.</span> <span class="nav-text">GameProfile&#x2F;ProfileGame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试命令"><span class="nav-number">2.7.</span> <span class="nav-text">调试命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#obj"><span class="nav-number">2.7.1.</span> <span class="nav-text">obj</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#gc-garbage"><span class="nav-number">2.7.1.1.</span> <span class="nav-text">gc&#x2F;garbage</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#list"><span class="nav-number">2.7.1.2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dump"><span class="nav-number">2.7.1.3.</span> <span class="nav-text">dump</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理命令"><span class="nav-number">2.8.</span> <span class="nav-text">物理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#nxvis-collision…"><span class="nav-number">2.8.0.1.</span> <span class="nav-text">nxvis collision…</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nxvis-joint…"><span class="nav-number">2.8.0.2.</span> <span class="nav-text">nxvis joint…</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nxvis-cloth…"><span class="nav-number">2.8.0.3.</span> <span class="nav-text">nxvis cloth…</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nxvis-fluid…"><span class="nav-number">2.8.0.4.</span> <span class="nav-text">nxvis fluid…</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nxvis-softbody…"><span class="nav-number">2.8.0.5.</span> <span class="nav-text">nxvis softbody…</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存命令"><span class="nav-number">2.9.</span> <span class="nav-text">内存命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mem"><span class="nav-number">2.9.0.1.</span> <span class="nav-text">mem</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#configmem"><span class="nav-number">2.9.0.2.</span> <span class="nav-text">configmem</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#particlememory"><span class="nav-number">2.9.0.3.</span> <span class="nav-text">particlememory</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#memfragcheck"><span class="nav-number">2.9.0.4.</span> <span class="nav-text">memfragcheck</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#memleakcheck"><span class="nav-number">2.9.0.5.</span> <span class="nav-text">memleakcheck</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI-GFX命令"><span class="nav-number">2.10.</span> <span class="nav-text">UI&#x2F;GFX命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ShowHUD"><span class="nav-number">2.11.</span> <span class="nav-text">ShowHUD</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ShowScores"><span class="nav-number">2.11.0.1.</span> <span class="nav-text">ShowScores</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Toggleui"><span class="nav-number">2.11.0.2.</span> <span class="nav-text">Toggleui</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gfxinvoke"><span class="nav-number">2.11.0.3.</span> <span class="nav-text">gfxinvoke</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dumpsftextures"><span class="nav-number">2.11.0.4.</span> <span class="nav-text">dumpsftextures</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚幻三控制台命令调用流程"><span class="nav-number">3.</span> <span class="nav-text">虚幻三控制台命令调用流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义命令"><span class="nav-number">3.1.</span> <span class="nav-text">自定义命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Native命令"><span class="nav-number">3.1.1.</span> <span class="nav-text">Native命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本命令"><span class="nav-number">3.1.2.</span> <span class="nav-text">脚本命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚幻引擎游戏命令"><span class="nav-number">3.2.</span> <span class="nav-text">虚幻引擎游戏命令</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">567k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:36</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+            'X-LC-Key': 'dWX3wyEMQ9djk8yiujbPp4pz',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
