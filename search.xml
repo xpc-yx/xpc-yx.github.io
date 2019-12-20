@@ -100,7 +100,8 @@
         <category>Unity3d</category>
       </categories>
       <tags>
-        <tag>Unity3D, 代码规范</tag>
+        <tag>Unity3D</tag>
+        <tag>代码规范</tag>
       </tags>
   </entry>
   <entry>
@@ -119,7 +120,8 @@
         <category>Unity3d</category>
       </categories>
       <tags>
-        <tag>NGUI, Unity3D</tag>
+        <tag>NGUI</tag>
+        <tag>Unity3D</tag>
       </tags>
   </entry>
   <entry>
@@ -518,8 +520,11 @@
 <p>更多的游戏命令可以参考文档：<a href="https://wiki.beyondunreal.com/Legacy:Console_Commands" target="_blank" rel="noopener">Console Commands</a>。</p>
 <h3 id="虚幻引擎游戏命令"><a href="#虚幻引擎游戏命令" class="headerlink" title="虚幻引擎游戏命令"></a>虚幻引擎游戏命令</h3><div class="video-container"><iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&resid=4330CD349D9ADD44%21723&authkey=AFSrpMCVspcze0g&em=2" width="800" height="700" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>]]></content>
       <categories>
-        <category>虚幻引擎</category>
+        <category>UE4</category>
       </categories>
+      <tags>
+        <tag>UE4</tag>
+      </tags>
   </entry>
   <entry>
     <title>虚幻引擎命令行参数</title>
@@ -563,8 +568,11 @@
 </ol>
 ]]></content>
       <categories>
-        <category>虚幻引擎</category>
+        <category>UE4</category>
       </categories>
+      <tags>
+        <tag>UE4</tag>
+      </tags>
   </entry>
   <entry>
     <title>新的开始</title>
