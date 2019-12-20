@@ -223,126 +223,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">POJ百练 - 2964:日历问题</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2011-11-16 10:00:00" itemprop="dateCreated datePublished" datetime="2011-11-16T10:00:00+08:00">2011-11-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ACM-ICPC/" itemprop="url" rel="index">
-                    <span itemprop="name">ACM-ICPC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="POJ百练 - 2964:日历问题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>链接: [<a href="http://poj.grids.cn/practice/2964/]" target="_blank" rel="noopener">http://poj.grids.cn/practice/2964/]</a></p>
-<p>这本来就是一个简单的题目,但是还是值得我用一篇文章的位置。大家都做过闰年的题目,这只是闰年的一个升级版。。。本来我不至于这么纠结这个题目的,一看到题目,<br>我就考虑到了一次次减去天数来加年数和月份,而且我还想在读入数据之前初始化一个存储2000-9999年每年有多少天得数组…这样就可以避免循环时候计算每年的天数了…但是我还是怕时间不够,所以我想到了个O(1)的算法…<br>那就是按照题目的说明,其实每400是一个周期的,但是我前面写代码的时候把4年当中一个小周期,100年当中一个中周期,400年当中一个大周期,同样的处理了…<br>事实上,只能对400作为周期处理,其它的必须分类讨论,虽然代码写出来很复杂,而且我也因为出现这个bug错了无数次,但是我还是感觉非常值得的…因为这是我独立思考的成果,耗费了多少时间和精力倒是无所谓…写算法题,目的不仅仅应该是学习了多少个算法,而是在于能力的提高,个人的严谨性,思考问题的完整性等等…一直觉得自己思考问题时候有创意,但是完整性和严谨性很低…</p>
-<p>下面贴我的代码吧,只用了10ms,如果采用第一种方法则需要60ms-70ms…</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202804%E8%AF%8D%E5%85%B8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -440,6 +320,126 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202804%E8%AF%8D%E5%85%B8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">POJ百练 - 2964:日历问题</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2011-11-16 10:00:00" itemprop="dateCreated datePublished" datetime="2011-11-16T10:00:00+08:00">2011-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-20 00:22:33" itemprop="dateModified" datetime="2019-12-20T00:22:33+08:00">2019-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACM-ICPC/" itemprop="url" rel="index">
+                    <span itemprop="name">ACM-ICPC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="POJ百练 - 2964:日历问题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>链接: [<a href="http://poj.grids.cn/practice/2964/]" target="_blank" rel="noopener">http://poj.grids.cn/practice/2964/]</a></p>
+<p>这本来就是一个简单的题目,但是还是值得我用一篇文章的位置。大家都做过闰年的题目,这只是闰年的一个升级版。。。本来我不至于这么纠结这个题目的,一看到题目,<br>我就考虑到了一次次减去天数来加年数和月份,而且我还想在读入数据之前初始化一个存储2000-9999年每年有多少天得数组…这样就可以避免循环时候计算每年的天数了…但是我还是怕时间不够,所以我想到了个O(1)的算法…<br>那就是按照题目的说明,其实每400是一个周期的,但是我前面写代码的时候把4年当中一个小周期,100年当中一个中周期,400年当中一个大周期,同样的处理了…<br>事实上,只能对400作为周期处理,其它的必须分类讨论,虽然代码写出来很复杂,而且我也因为出现这个bug错了无数次,但是我还是感觉非常值得的…因为这是我独立思考的成果,耗费了多少时间和精力倒是无所谓…写算法题,目的不仅仅应该是学习了多少个算法,而是在于能力的提高,个人的严谨性,思考问题的完整性等等…一直觉得自己思考问题时候有创意,但是完整性和严谨性很低…</p>
+<p>下面贴我的代码吧,只用了10ms,如果采用第一种方法则需要60ms-70ms…</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
