@@ -320,22 +320,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          因为是最近才接触cuda，安装的是6.5版本，所以网上的教程都不是完全适用了。
-总之，设置高亮大致分为四步，不限于vs2013，其他平台下也类似。
-第一步，是在vs2013里面设置vc++文件支持.cu;cuh;文件。方法：工具->选项->文本编辑器->文件扩展名。
-得到如图所示的界面：注意，在右侧可以添加vc++类型的文件扩展名，这是我的设置效果，操作就不用细说了。
+          <p>因为是最近才接触cuda，安装的是6.5版本，所以网上的教程都不是完全适用了。<br>总之，设置高亮大致分为四步，不限于vs2013，其他平台下也类似。<br>第一步，是在vs2013里面设置vc++文件支持.cu;cuh;文件。方法：工具-&gt;选项-&gt;文本编辑器-&gt;文件扩展名。<br>得到如图所示的界面：注意，在右侧可以添加vc++类型的文件扩展名，这是我的设置效果，操作就不用细说了。<br><img src="https://c2.staticflickr.com/8/7108/27175378080_ea4f90c9db_o.png" alt=""><br>第二步，是设置visual assist的目录。在va的c/c++directory里面，选择custom选项，然后包含你的cuda的sdk目录，效果如图：<br><img src="https://c2.staticflickr.com/8/7376/27175377940_b07f4d0af3_o.png" alt=""><br>第三步，是设置va的支持文件类型，类似于第一步。但是，这次是修改注册表的值。注册表目录：<br>HKEY_CURRENT_USER/Software/Whole Tomato/Visual Assist X/VANet12，修改属性ExtSource的值为：.c;.cpp;.cc;.cxx;.tli;.cu;.cuh;<br>意思就是添加上cuda的头文件和源文件类型，vs2010的改法类似。<br>第四步，完成以上步骤之后，还可能会发现一些内置变量下面是有波浪线的。怎么办了？<br>加上这句：#include “device_launch_parameters.h”，就行了。cuda 6.5估计把内置变量的声明放在该头文件下面了吧。<br>最终的效果：<br><img src="https://c2.staticflickr.com/8/7543/26844573893_3f74990273_o.png" alt=""></p>
 
-第二步，是设置visual assist的目录。在va的c/c++directory里面，选择custom选项，然后包含你的cuda的sdk目录，效果如图：
-
-第三步，是设置va的支持文件类型，类似于第一步。但是，这次是修改注
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -445,21 +431,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束
-程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。
-书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)，
-清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。
-abort则真的是什么都不干，就退出来了。
-以上两者都没有解栈(stack unwinding），也就是栈里面的变量没有析构。这个只有从main函数返回才会正常解栈。
-那么，考虑这样的一个问题，既然程序都要结束了，这些操作到
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束<br>程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。<br>书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)，<br>清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。<br>abort则真的是什么都不干，就退出来了。<br>以上两者都没有解栈(stack unwinding），也就是栈里面的变量没有析构。这个只有从main函数返回才会正常解栈。<br>那么，考虑这样的一个问题，既然程序都要结束了，这些操作到底有没有区别了。进程介绍了，<br>所有的资源都是还给操作系统了吧。只是从程序设计角度来说，资源还是应该由申请者释放的，个人是从这个角度看的。</p>
+
       
     </div>
 
@@ -936,17 +909,8 @@ abort则真的是什么都不干，就退出来了。
     <div class="post-body" itemprop="articleBody">
 
       
-          最近因为准备找工作的东西，看了不少书，感悟也挺多的。stl源码剖析，effective c++，面试宝典，剑指offer，大话设计模式，编程精粹，还有很多想看的还没看完了。。。这段时间，看完这些书后，真的发现，看书是一件很棒的事情，不仅仅是知识的学习，查漏补缺，思维的体验也是一件让人觉得满心愉悦的事情。有点明白古人雪夜读书的感觉，那时候没有电脑可以玩，没有那么多娱乐的游戏，读书确实是一件让人愉悦的事情。
-很久没有更新博客了，随便扯扯吧。
-所谓的top k算法，意思就是求n个数字的最大k个或者最小k个，大概也是个比较常见的面试题了。一般有两种思路，第一种是利用快排里面的partion函数，不断用
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>最近因为准备找工作的东西，看了不少书，感悟也挺多的。stl源码剖析，effective c++，面试宝典，剑指offer，大话设计模式，编程精粹，还有很多想看的还没看完了。。。这段时间，看完这些书后，真的发现，看书是一件很棒的事情，不仅仅是知识的学习，查漏补缺，思维的体验也是一件让人觉得满心愉悦的事情。有点明白古人雪夜读书的感觉，那时候没有电脑可以玩，没有那么多娱乐的游戏，读书确实是一件让人愉悦的事情。<br>很久没有更新博客了，随便扯扯吧。<br>所谓的top k算法，意思就是求n个数字的最大k个或者最小k个，大概也是个比较常见的面试题了。一般有两种思路，第一种是利用快排里面的partion函数，不断用轴元素分割数组，直到分割出前k个或者后k个，迭代或者递归都是很方便的；stl里面有个nth_element泛函做的就是这件事情。第二种思路，则是假定有一个容量为k的容器，存储了当前的top k元素，当处理下一个元素的时候，判断当前处理元素是否可能是top k元素，比如如果求最大的k个元素，则判断当前处理元素是否比容器里面最小元素大，如果大的话，则需要加入当前元素，并且删除容器里面最小的元素，反之亦然。现在的问题是，如何选取一个很好的容器了。能够使得这些操作尽可能快。其实大家知道的容器也就那几种类型，基本上是stl里面已经实现了的。线性？搜索树？hash？<br>hash的话，没法快速查找极值，线性结构的话，插入新元素，保持有序结构的话，也需要O(n)。那么，搜索树结构了，查找和删除都是log(n)，stl里面有现成的红黑树实现set容器。另外，还有个更奇葩的用数组表示的完全二叉树结构，最大堆和最小堆。可以满足O(1)查找极值元素和log(n)插入删除操作，最终还可以排序元素。综上所说，堆结构是在时间和空间上最佳的满足要求的容器了。<br>刚好stl里面有个partial_sort函数也是用这个思路实现的，而且最后还排了一个序，所以，实际开发的时候多了解下标准库是值得投入的一件事情。<br>下面是用stl的heap操作实现的top k算法。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;cstdlib&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; vi;</span><br><span class="line">    const int NUM = 100;</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        vi.push_back(rand() % NUM);</span><br><span class="line">        printf("%d ", vi[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    <span class="comment">//求最小k个数字</span></span><br><span class="line">    const int K = 10;</span><br><span class="line"></span><br><span class="line">    make_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">    for (int i = K; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (vi[i] &lt; vi[<span class="number">0</span>])</span><br><span class="line">        &#123;</span><br><span class="line">            pop_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">            vi[K - 1] = vi[i];</span><br><span class="line">            push_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sort_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">    for (int i = 0; i &lt; K; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("%d ", vi[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -1418,17 +1382,8 @@ abort则真的是什么都不干，就退出来了。
     <div class="post-body" itemprop="articleBody">
 
       
-          通常，我们知道，一个程序执行起来就是一个进程，一个进程里面至少包含一个线程。那么什么是模块了，被加载内存中的dll或者exe都是模块。
-据说，windows有个数据结构叫做Module Database(MDB)，专门代表模块。可执行程序（exe或者dll)，包括其代码、资源等被加载到内存中，windows大概就用这个结果管理它吧。这个数据结构其实代表的就是一个PE文件的表头。
-那么进程了，代表的又是什么了，既然模块表示的是加载到内存的pe文件。进程应该代表的是资源拥有者吧。比如说，地址空间、申请的内存、打开的文件、所有的线程、以及模块(加载的dll，本身的exe）。windows也有一个叫做
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>通常，我们知道，一个程序执行起来就是一个进程，一个进程里面至少包含一个线程。那么什么是模块了，被加载内存中的dll或者exe都是模块。<br>据说，windows有个数据结构叫做Module Database(MDB)，专门代表模块。可执行程序（exe或者dll)，包括其代码、资源等被加载到内存中，windows大概就用这个结果管理它吧。这个数据结构其实代表的就是一个PE文件的表头。<br>那么进程了，代表的又是什么了，既然模块表示的是加载到内存的pe文件。进程应该代表的是资源拥有者吧。比如说，地址空间、申请的内存、打开的文件、所有的线程、以及模块(加载的dll，本身的exe）。windows也有一个叫做Process Database(PDB)的数据结构负责管理它。这样看，进程是各种所有权的集合吧。<br>那么线程了。执行的线程表示的是模块中一段正在被执行的代码吧。线程是被cpu调度的基本单位，因此真正占有cpu时间片的是线程，而不是进程。也有一个叫做Thread Database（TDB）的数据结构来代表线程，里面会记录执行线程区域储存空间（Thread Local Storage，TLS）、讯息队列、handle表格等等。其实，只有在多cpu的机器上面才能实现真正的并行。在单cpu上面，只是在硬件计时器的通知下不断的切换线程。</p>
+
       
     </div>
 

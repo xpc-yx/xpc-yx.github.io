@@ -45,12 +45,12 @@
   };
 </script>
 
-  <meta name="description" content="这题意思很简单。求一棵树里面的一条路径，使得其异或权(就是将路径里面所有边的权值异或起来)最大。 这个题有两步。第一步是假定根为节点0，求出根到其它节点的异或距离，保存在数组xor里面，这个dfs一下即可。然后，用xor[i]^xor[j]就能代表节点i到节点j的路径。这个结论可以这么看。如果，i和j之间的路径经过根节点，那么上面的结论肯定是正确的。如果，该路径不经过根，那么xor[i]和xor[">
+  <meta name="description" content="这题意思很简单。求一棵树里面的一条路径，使得其异或权(就是将路径里面所有边的权值异或起来)最大。这个题有两步。第一步是假定根为节点0，求出根到其它节点的异或距离，保存在数组xor里面，这个dfs一下即可。然后，用xor[i]^xor[j]就能代表节点i到节点j的路径。这个结论可以这么看。如果，i和j之间的路径经过根节点，那么上面的结论肯定是正确的。如果，该路径不经过根，那么xor[i]和xor[j">
 <meta property="og:type" content="article">
 <meta property="og:title" content="poj 3764 The xor-longest Path 字典树 + Xor">
 <meta property="og:url" content="http://xiaopengcheng.top/2012/10/12/poj%203764%20The%20xor-longest%20Path%20%E5%AD%97%E5%85%B8%E6%A0%91%20+%20Xor/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="这题意思很简单。求一棵树里面的一条路径，使得其异或权(就是将路径里面所有边的权值异或起来)最大。 这个题有两步。第一步是假定根为节点0，求出根到其它节点的异或距离，保存在数组xor里面，这个dfs一下即可。然后，用xor[i]^xor[j]就能代表节点i到节点j的路径。这个结论可以这么看。如果，i和j之间的路径经过根节点，那么上面的结论肯定是正确的。如果，该路径不经过根，那么xor[i]和xor[">
+<meta property="og:description" content="这题意思很简单。求一棵树里面的一条路径，使得其异或权(就是将路径里面所有边的权值异或起来)最大。这个题有两步。第一步是假定根为节点0，求出根到其它节点的异或距离，保存在数组xor里面，这个dfs一下即可。然后，用xor[i]^xor[j]就能代表节点i到节点j的路径。这个结论可以这么看。如果，i和j之间的路径经过根节点，那么上面的结论肯定是正确的。如果，该路径不经过根，那么xor[i]和xor[j">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2012-10-12T02:30:00.000Z">
 <meta property="article:modified_time" content="2019-12-19T16:22:33.298Z">
