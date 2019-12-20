@@ -45,12 +45,12 @@
   };
 </script>
 
-  <meta name="description" content="假设在一个线程同步环境中，有类似下面所示的代码段： &#x2F;&#x2F;进入线程同步 nNum++; &#x2F;&#x2F;退出线程同步 以win32为例，如我们所知，线程同步工具有临界区，互斥体，信号量。我们可以任意选择一个，为了简单很可能我们就选择了临界区。假如我们需要同步的代码非常简单，我非常建议不需要使用c++的任何功能。但是，很可能没这么幸运，很可能你的代码会被很多人修改，很可能同步的时候需要异常退出，很可能同步的里面还">
+  <meta name="description" content="假设在一个线程同步环境中，有类似下面所示的代码段： &#x2F;&#x2F;进入线程同步 nNum++;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="虚函数所造成的性能损失">
 <meta property="og:url" content="http://xiaopengcheng.top/2012/11/13/%E8%99%9A%E5%87%BD%E6%95%B0%E6%89%80%E9%80%A0%E6%88%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8D%9F%E5%A4%B1/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="假设在一个线程同步环境中，有类似下面所示的代码段： &#x2F;&#x2F;进入线程同步 nNum++; &#x2F;&#x2F;退出线程同步 以win32为例，如我们所知，线程同步工具有临界区，互斥体，信号量。我们可以任意选择一个，为了简单很可能我们就选择了临界区。假如我们需要同步的代码非常简单，我非常建议不需要使用c++的任何功能。但是，很可能没这么幸运，很可能你的代码会被很多人修改，很可能同步的时候需要异常退出，很可能同步的里面还">
+<meta property="og:description" content="假设在一个线程同步环境中，有类似下面所示的代码段： &#x2F;&#x2F;进入线程同步 nNum++;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2012-11-13T02:04:19.000Z">
 <meta property="article:modified_time" content="2019-12-19T16:22:33.352Z">
@@ -337,7 +337,7 @@
     
     
       
-  <div class="popular-posts-header">相关文章推荐</div>
+  <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2012\11\10\为什么需要将继承层次中类的析构函数定义成virtual的？\" rel="bookmark">为什么需要将继承层次中类的析构函数定义成virtual的？</a></div>

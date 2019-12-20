@@ -45,12 +45,12 @@
   };
 </script>
 
-  <meta name="description" content="这是一个计算几何的题目。题意是，按顺序给一系列的线段，问最终哪些线段处在顶端。只需要穷举判断，当前的线段会与哪些线段有交点即可。也就是暴力求解，但是线段数目N有10的5次方，平方算法是不能过的。这个题能过的原因是题目描述里面说了，top的stick不会超过1000个。那么修改下暴力的方式题目就能过了。从小到大枚举每个棍子，判断它是否与后面的棍子相交，如果相交直接把当前棍子的top属性置为false">
+  <meta name="description" content="这是一个计算几何的题目。题意是，按顺序给一系列的线段，问最终哪些线段处在顶端。只需要穷举判断，当前的线段会与哪些线段有交点即可。也就是暴力求解，但是线段数目N有10的5次方，平方算法是不能过的。这个题能过的原因是题目描述里面说了，top的stick不会超过1000个。那么修改下暴力的方式题目就能过了。 从小到大枚举每个棍子，判断它是否与后面的棍子相交，如果相交直接把当前棍子的top属性置为fals">
 <meta property="og:type" content="article">
 <meta property="og:title" content="poj 2653 Pick-up sticks">
 <meta property="og:url" content="http://xiaopengcheng.top/2012/06/17/poj-2653-pick-up-sticks/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="这是一个计算几何的题目。题意是，按顺序给一系列的线段，问最终哪些线段处在顶端。只需要穷举判断，当前的线段会与哪些线段有交点即可。也就是暴力求解，但是线段数目N有10的5次方，平方算法是不能过的。这个题能过的原因是题目描述里面说了，top的stick不会超过1000个。那么修改下暴力的方式题目就能过了。从小到大枚举每个棍子，判断它是否与后面的棍子相交，如果相交直接把当前棍子的top属性置为false">
+<meta property="og:description" content="这是一个计算几何的题目。题意是，按顺序给一系列的线段，问最终哪些线段处在顶端。只需要穷举判断，当前的线段会与哪些线段有交点即可。也就是暴力求解，但是线段数目N有10的5次方，平方算法是不能过的。这个题能过的原因是题目描述里面说了，top的stick不会超过1000个。那么修改下暴力的方式题目就能过了。 从小到大枚举每个棍子，判断它是否与后面的棍子相交，如果相交直接把当前棍子的top属性置为fals">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2012-06-17T06:30:00.000Z">
 <meta property="article:modified_time" content="2019-12-19T16:22:33.302Z">
@@ -329,7 +329,7 @@
     
     
       
-  <div class="popular-posts-header">相关文章推荐</div>
+  <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2012\06\20\poj-1269-intersecting-lines\" rel="bookmark">poj 1269 Intersecting Lines</a></div>

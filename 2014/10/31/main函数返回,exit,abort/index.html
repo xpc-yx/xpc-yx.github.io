@@ -45,12 +45,12 @@
   };
 </script>
 
-  <meta name="description" content="最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)，清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。abort则真的是什么都不干，就">
+  <meta name="description" content="最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束 程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。 书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)， 清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。 abort则真的是什么都">
 <meta property="og:type" content="article">
 <meta property="og:title" content="main函数返回,exit,abort">
 <meta property="og:url" content="http://xiaopengcheng.top/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)，清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。abort则真的是什么都不干，就">
+<meta property="og:description" content="最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束 程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。 书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)， 清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。 abort则真的是什么都">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2014-10-31T08:39:05.000Z">
 <meta property="article:modified_time" content="2019-12-19T16:22:33.287Z">

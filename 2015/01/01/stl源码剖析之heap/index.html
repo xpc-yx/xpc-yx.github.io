@@ -45,12 +45,12 @@
   };
 </script>
 
-  <meta name="description" content="前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。 下图是push_heap的示意图。 从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。 12345">
+  <meta name="description" content="前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。 下图是push_heap的示意图。 从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="stl源码剖析之heap">
 <meta property="og:url" content="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。 下图是push_heap的示意图。 从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。 12345">
+<meta property="og:description" content="前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。 下图是push_heap的示意图。 从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png">
 <meta property="og:image" content="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png">
@@ -352,13 +352,13 @@
     
     
       
-  <div class="popular-posts-header">相关文章推荐</div>
+  <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\12\29\stl源码剖析之priority_queue\" rel="bookmark">stl源码剖析之priority_queue</a></div>
+      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
+      <div class="popular-posts-title"><a href="\2014\12\29\stl源码剖析之priority_queue\" rel="bookmark">stl源码剖析之priority_queue</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2015\04\22\stl源码剖析之sort\" rel="bookmark">stl源码剖析之sort</a></div>
