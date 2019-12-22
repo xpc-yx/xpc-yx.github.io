@@ -14,6 +14,8 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -25,8 +27,8 @@
     version: '7.6.0',
     exturl: false,
     sidebar: {"position":"left"},
-    copycode: {"enable":true,"show_result":true,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -204,10 +206,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -371,12 +369,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" rel="prev" title="POJ百练 - 2964:日历问题">
-      <i class="fa fa-chevron-left"></i> POJ百练 - 2964:日历问题
+    <a href="/2011/11/10/POJ%E7%99%BE%E7%BB%83%20-%202818%E5%AF%86%E7%A0%81/" rel="prev" title="POJ百练 - 2818:密码">
+      <i class="fa fa-chevron-left"></i> POJ百练 - 2818:密码
     </a></div>
       <div class="post-nav-item">
-    <a href="/2011/11/18/POJ%E7%99%BE%E7%BB%83%20-%202820%E5%8F%A4%E4%BB%A3%E5%AF%86%E7%A0%81%20AND%20POJ%E7%99%BE%E7%BB%83%20-%202801%E5%A1%AB%E8%AF%8D/" rel="next" title="POJ百练 - 2820:古代密码 AND POJ百练 - 2801:填词">
-      POJ百练 - 2820:古代密码 AND POJ百练 - 2801:填词 <i class="fa fa-chevron-right"></i>
+    <a href="/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202964%E6%97%A5%E5%8E%86%E9%97%AE%E9%A2%98/" rel="next" title="POJ百练 - 2964:日历问题">
+      POJ百练 - 2964:日历问题 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -467,6 +465,10 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -573,6 +575,25 @@
 
 
 
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
 
 
 

@@ -14,6 +14,8 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -25,8 +27,8 @@
     version: '7.6.0',
     exturl: false,
     sidebar: {"position":"left"},
-    copycode: {"enable":true,"show_result":true,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -205,10 +207,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -334,10 +332,10 @@
       <div class="popular-posts-title"><a href="\2011\11\24\POJ百练 - 1183反正切函数的应用\" rel="bookmark">POJ百练 - 1183:反正切函数的应用</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2012\05\03\uva-10014-simple-calculations\" rel="bookmark">uva 10014 - Simple calculations</a></div>
+      <div class="popular-posts-title"><a href="\2012\05\02\uva-10061-how-many-zeros-and-how-many-digits\" rel="bookmark">uva 10061 - How many zero's and how many digits ?</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2012\05\02\uva-10061-how-many-zeros-and-how-many-digits\" rel="bookmark">uva 10061 - How many zero's and how many digits ?</a></div>
+      <div class="popular-posts-title"><a href="\2012\05\03\uva-10014-simple-calculations\" rel="bookmark">uva 10014 - Simple calculations</a></div>
     </li>
   </ul>
 
@@ -467,6 +465,10 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -573,6 +575,25 @@
 
 
 
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
 
 
 

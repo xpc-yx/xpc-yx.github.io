@@ -14,6 +14,8 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -25,8 +27,8 @@
     version: '7.6.0',
     exturl: false,
     sidebar: {"position":"left"},
-    copycode: {"enable":true,"show_result":true,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -204,10 +206,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -333,13 +331,13 @@
       <div class="popular-posts-title"><a href="\2013\03\24\OpenGL使用位图纹理\" rel="bookmark">OpenGL使用位图纹理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\03\08\OpenGL渲染Obj模型(模型·材质·纹理)\" rel="bookmark">OpenGL渲染Obj模型(模型·材质·纹理)</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2013\08\31\OpenGL使用多种格式和任意尺寸的图片作为纹理\" rel="bookmark">OpenGL使用多种格式和任意尺寸的图片作为纹理</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2014\10\27\OpenGL立即模式必须先指定纹理坐标\" rel="bookmark">OpenGL立即模式必须先指定纹理坐标</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\03\08\OpenGL渲染Obj模型(模型·材质·纹理)\" rel="bookmark">OpenGL渲染Obj模型(模型·材质·纹理)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2016\03\17\三维表面上基于笔画的纹理交互式合成\" rel="bookmark">三维表面上基于笔画的纹理交互式合成</a></div>
@@ -471,6 +469,10 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -577,6 +579,25 @@
 
 
 
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
 
 
 

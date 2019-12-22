@@ -27,10 +27,13 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;命名规则&quot;&gt;&lt;a href=&quot;#命名规则&quot; class=&quot;headerlink&quot; title=&quot;命名规则&quot;&gt;&lt;/a&gt;命名规则&lt;/h2&gt;&lt;h3 id=&quot;排版约定&quot;&gt;&lt;a href=&quot;#排版约定&quot; class=&quot;headerlink&quot; title=&quot;排版约定&quot;&gt;&lt;/a
-      
+      &lt;h2 id=&quot;命名规则&quot;&gt;&lt;a href=&quot;#命名规则&quot; class=&quot;headerlink&quot; title=&quot;命名规则&quot;&gt;&lt;/a&gt;命名规则&lt;/h2&gt;&lt;h3 id=&quot;排版约定&quot;&gt;&lt;a href=&quot;#排版约定&quot; class=&quot;headerlink&quot; title=&quot;排版约定&quot;&gt;&lt;/a&gt;排版约定&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;字段：私有字段、受保护字段（尽量不要使用公有字段）&lt;/li&gt;
+&lt;li&gt;属性：私有属性、受保护属性、公有属性&lt;/li&gt;
+&lt;li&gt;事件：私有事件、受保护事件、公有事件&lt;/li&gt;
+&lt;li&gt;构造函数：参数数量最少的构造函数，参数数量中等的构造函数，参数数量最多的构造函数&lt;/li&gt;
+&lt;li&gt;方法：重载方法的排列顺序与构造函数相同，从参数数量最少往下至参数最多。方法按照功能分块即可，不需要按照私有、保护、公有分布。&lt;/li&gt;
+&lt;/ol&gt;
     
     </summary>
     
@@ -55,10 +58,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI
-      
+      &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循&lt;a href=&quot;https://en.wikipedia.org/wiki/KISS_principle&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Kiss准则&lt;/a&gt;，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/?page_id=140&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方网址&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/forum/index.php?board=12.0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方文档地址&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;NGUI下载&quot;&gt;&lt;a href=&quot;#NGUI下载&quot; class=&quot;headerlink&quot; title=&quot;NGUI下载&quot;&gt;&lt;/a&gt;NGUI下载&lt;/h2&gt;
     
     </summary>
     
@@ -83,11 +84,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
-&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h
-      
+      &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h2&gt;&lt;p&gt;默认情况下，一个动态网页程序只包括HTML和JavaScript两种语言。&lt;br&gt;而在WebGL程序中，还包括了第三种语言：GLSL ES。&lt;/p&gt;
     
     </summary>
     
@@ -112,10 +110,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的
-      
+      &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。&lt;/p&gt;
+&lt;h2 id=&quot;控制台命令&quot;&gt;&lt;a href=&quot;#控制台命令&quot; class=&quot;headerlink&quot; title=&quot;控制台命令&quot;&gt;&lt;/a&gt;控制台命令&lt;/h2&gt;
     
     </summary>
     
@@ -138,11 +134,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
-&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数
-      
+      &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
+&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。&lt;/p&gt;
     
     </summary>
     
@@ -165,11 +158,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;岁月如梭，光阴似箭。转眼间工作一年多了，我也即将二十八周岁了。常说三十而立，想想就觉得忐忑。生命一分分、一秒秒流逝，就如同抓不住的流水，站在漫漫的荒野中，永远无法回头。&lt;/p&gt;
-&lt;p&gt;佛说，人之所以痛苦，在于追求错误的东西。佛说，缘起缘灭，缘生已空。佛说，世间万物皆空，唯其
-      
+      &lt;p&gt;岁月如梭，光阴似箭。转眼间工作一年多了，我也即将二十八周岁了。常说三十而立，想想就觉得忐忑。生命一分分、一秒秒流逝，就如同抓不住的流水，站在漫漫的荒野中，永远无法回头。&lt;/p&gt;
+&lt;p&gt;佛说，人之所以痛苦，在于追求错误的东西。佛说，缘起缘灭，缘生已空。佛说，世间万物皆空，唯其空，便能包容万物。我不是佛，我是人。所以，我痛苦，我在追求错误的东西，我执着于缘生，我无法放空自己。&lt;/p&gt;
+&lt;p&gt;岁月如梭。感慨万千。沉沦于苦海中，幻想过很多或许。或许勇敢一些，自信一些，或许努力一些，或许早点觉悟，早点逃离自己的舒适床，早点更有担当，或许我是一个刻苦的人，或许早点学会伪装，早点懂得高情商套路。或许我就不该怀恋那片刻的阳光。但是，乞丐一旦品尝过美食的味道，一辈子就无法忘怀，而我就是那个乞丐。&lt;/p&gt;
     
     </summary>
     
@@ -192,10 +183,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系
-      
+      &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。&lt;br&gt;这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。&lt;/p&gt;
+&lt;h2 id=&quot;安装DebugView&quot;&gt;&lt;a href=&quot;#安装DebugView&quot; class=&quot;headerlink&quot; title=&quot;安装DebugView&quot;&gt;&lt;/a&gt;安装DebugView&lt;/h2&gt;
     
     </summary>
     
@@ -218,10 +207,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL
-      
+      &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL的接口移植到浏览器中使用。具体的可以参考&lt;a href=&quot;https://zh.wikipedia.org/wiki/WebGL&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;WebGL的维基百科&lt;/a&gt;。&lt;br&gt;使用WebGL可以通过编写网页代码在浏览器中渲染三维图像，而且不需要任何的插件，比如Adobe Flash Player等。&lt;br&gt;WebGL在最新的浏览器中得到了广泛支持。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL与HTML5的关系&quot;&gt;&lt;a href=&quot;#WebGL与HTML5的关系&quot; class=&quot;headerlink&quot; title=&quot;WebGL与HTML5的关系&quot;&gt;&lt;/a&gt;WebGL与HTML5的关系&lt;/h2&gt;
     
     </summary>
     
@@ -246,10 +233,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;博客移动到www-xpc-yx-blog&quot;&gt;&lt;a href=&quot;#博客移动到www-xpc-yx-blog&quot; class=&quot;headerlink&quot; title=&quot;博客移动到www.xpc-yx/blog&quot;&gt;&lt;/a&gt;博客移动到&lt;a href=&quot;http://www.x
-      
+      &lt;h2 id=&quot;博客移动到www-xpc-yx-blog&quot;&gt;&lt;a href=&quot;#博客移动到www-xpc-yx-blog&quot; class=&quot;headerlink&quot; title=&quot;博客移动到www.xpc-yx/blog&quot;&gt;&lt;/a&gt;博客移动到&lt;a href=&quot;http://www.xpc-yx/blog&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;www.xpc-yx/blog&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;以前一直想用个炫酷的个人页放到网站根目录，一直没弄好，不了了之。wordpresss用多了之后发现挺简单的，只需要把wordpress安装到空间的public_html的子目录就可以，于是在网上搜索wordpress安装到子目录解决之。目前首页放的是一个ThreeJs渲染的天空盒，以后再慢慢修改吧。&lt;/p&gt;
+&lt;h2 id=&quot;文章采用markdown编写&quot;&gt;&lt;a href=&quot;#文章采用markdown编写&quot; class=&quot;headerlink&quot; title=&quot;文章采用markdown编写&quot;&gt;&lt;/a&gt;文章采用markdown编写&lt;/h2&gt;
     
     </summary>
     
@@ -270,11 +255,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。&lt;/p&gt;
-&lt;h2 id=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;a href=&quot;#第一步，在资源文件r
-      
+      &lt;p&gt;上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。&lt;/p&gt;
+&lt;h2 id=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;a href=&quot;#第一步，在资源文件rc中设置对话框的属性&quot; class=&quot;headerlink&quot; title=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;/a&gt;&lt;strong&gt;第一步，在资源文件rc中设置对话框的属性&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;Border：None&lt;/p&gt;
     
     </summary>
     
@@ -297,11 +279,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。&lt;/p&gt;
-&lt;p&gt;本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中
-      
+      &lt;p&gt;在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。&lt;/p&gt;
+&lt;p&gt;本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中，下面Show一下这个自带萌妹子的弹窗吧。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png&quot; alt&gt;&lt;/p&gt;
     
     </summary>
     
@@ -324,11 +304,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。&lt;/p&gt;
-&lt;p&gt;这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹
-      
+      &lt;p&gt;这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。&lt;/p&gt;
+&lt;p&gt;这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹理），就可以用鼠标在模型上刷三维纹理了。&lt;/p&gt;
+&lt;p&gt;看起来挺好玩的，实际上整个系统的实现过程非常繁杂。这个系统主要用了两个算法，一个是扩展指数映射计算笔画的局部参数化，另外一个是根据样本纹理动态合成新的大纹理（要贴到笔画区域），这个用了并行可控制纹理合成算法，在约束条件下做了特殊实现。由于扩展指数映射用的是他人的实现代码，严重影响了整个系统的速度，也影响了我后面做实验的效果，非常恶心，所以不到无奈时候，千万不要用所谓的牛人的资源。&lt;/p&gt;
     
     </summary>
     
@@ -355,11 +333,24 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。&lt;/p&gt;
-&lt;p&gt;那么，默认情况下，我们使用VC编写的应用程序
-      
+      &lt;p&gt;记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。&lt;/p&gt;
+&lt;p&gt;那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;默认&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;mainCRTStartup&lt;/strong&gt; (or &lt;strong&gt;wmainCRTStartup&lt;/strong&gt;)&lt;/td&gt;
+&lt;td&gt;An application using /SUBSYSTEM:&lt;strong&gt;CONSOLE&lt;/strong&gt;; calls &lt;strong&gt;main&lt;/strong&gt; (or &lt;strong&gt;wmain&lt;/strong&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;WinMainCRTStartup&lt;/strong&gt; (or &lt;strong&gt;wWinMainCRTStartup&lt;/strong&gt;)&lt;/td&gt;
+&lt;td&gt;An application using /SUBSYSTEM:&lt;strong&gt;WINDOWS&lt;/strong&gt;; calls &lt;strong&gt;WinMain&lt;/strong&gt; (or &lt;strong&gt;wWinMain&lt;/strong&gt;), which must be defined with &lt;strong&gt;__stdcall&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
     
     </summary>
     
@@ -382,12 +373,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;突然想想说说看过的一些书籍。当然只会提看过之后觉得很不错的，或者很有收获的。看过的21天系列、精通系列的就不提了。有些手册或者教程类的书籍也不提了。&lt;/p&gt;
+      &lt;p&gt;突然想想说说看过的一些书籍。当然只会提看过之后觉得很不错的，或者很有收获的。看过的21天系列、精通系列的就不提了。有些手册或者教程类的书籍也不提了。&lt;/p&gt;
 &lt;p&gt;IT类：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;C++ primer 4/5&lt;/strong&gt; （我C++是看4入门的
-      
+&lt;p&gt;&lt;strong&gt;C++ primer 4/5&lt;/strong&gt; （我C++是看4入门的，5大致浏览过，觉得也很不错）&lt;/p&gt;
     
     </summary>
     
@@ -410,11 +398,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;时间过得真快。一恍惚，就是一年了。生命中太多的无奈。&lt;/p&gt;
-&lt;p&gt;有一个笑话，说的是小时候都会考虑考清华还是考北大。其实，除了考清华还是考北大，还有更多的笑话。很多时候真的觉得好无奈，真的是无可奈何。虽然能够知耻而后勇，但我终究不是诸葛，能够力挽狂澜。我终究是一个普普通通
-      
+      &lt;p&gt;时间过得真快。一恍惚，就是一年了。生命中太多的无奈。&lt;/p&gt;
+&lt;p&gt;有一个笑话，说的是小时候都会考虑考清华还是考北大。其实，除了考清华还是考北大，还有更多的笑话。很多时候真的觉得好无奈，真的是无可奈何。虽然能够知耻而后勇，但我终究不是诸葛，能够力挽狂澜。我终究是一个普普通通的人。我是尘世中的一个小书童，华安，潜入华府就是为了秋香姐你。&lt;/p&gt;
+&lt;p&gt;我那天真而又卑微的学生生涯真的是结束了，只是半年来我没有意识到。虽然公司生活，对于我这样的宅男，跟学校差别不大，无非是实验室换成公司，而且公司还发工资，食堂更好。但是，我那简简单单对未来幻想的生活结束了。小时候，想着长大了要怎么样。高中时候，想着读大学要怎么样。上大学时候，想着未来自己多么牛逼，进入大公司。结果，一不小心读了研究生。读研时候，想着未来多么美好。结果，世事难料，美好的后面是更长时间的煎熬，一旦记住了需要花费更多的时间忘记，一旦认真了就会继续认真下去，这就是我一直来的方式。不是不想忘记，不是不想重新开始，只是抬头一看发现满目狼藉。花非花，雾非雾。&lt;/p&gt;
     
     </summary>
     
@@ -437,10 +423,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;1.发布博客软件：Windows Live Write，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A
-      
+      &lt;p&gt;1.发布博客软件：Windows Live Write，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的WindowsLiveWrite博文&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;2.Windows7/Xp上显示TGA图片的缩略图：MysticThumbs，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/10/12/%E5%A6%82%E4%BD%95%E8%AE%A9tga%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的MysticThumbs博文&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;3.记笔记：印象笔记（Evernote），不用介绍了，任何设备上都可以用（电脑，手机，ipad…)。&lt;/p&gt;
     
     </summary>
     
@@ -463,10 +448,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;今天搜东西乱入一同学博客，以前也搜到过。看了下about和简历，以及他在thu的一些事情。感慨万千。作为同一届中南的本科生，我在信息学院，他在软院，才没有认识这位大神。他是学霸，拿到了保研资格，去了清华。本科就去了腾讯实习，参加过不少比赛。这些虽然都只是光环。但是，再看看这
-      
+      &lt;p&gt;今天搜东西乱入一同学博客，以前也搜到过。看了下about和简历，以及他在thu的一些事情。感慨万千。作为同一届中南的本科生，我在信息学院，他在软院，才没有认识这位大神。他是学霸，拿到了保研资格，去了清华。本科就去了腾讯实习，参加过不少比赛。这些虽然都只是光环。但是，再看看这家伙居然去贵州支教了，我曾只是动过这个念头。他在本科生时候封装过飞信做了web版的东西，另外各种旅游等等。&lt;/p&gt;
+&lt;p&gt;不用多说了。谨以此文纪念我逝去七年的所谓象牙塔生涯。被狗吃掉的岁月。&lt;/p&gt;
+&lt;p&gt;虽然看最终的结果，仅以毕业第一份工作，我并不一定比他差，或者差多少。我也不讨论以后谁差谁好，这根本不是意义的所在。我真心觉得他过的才是人生，才是青春，才是岁月。&lt;/p&gt;
     
     </summary>
     
@@ -489,11 +473,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。&lt;/p&gt;
-&lt;p&gt;我在尝试beamer的过程中，发现网上
-      
+      &lt;p&gt;我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。&lt;/p&gt;
+&lt;p&gt;我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。&lt;br&gt; 下面给出这个模板的设置。  &lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;\documentclass&amp;#123;beamer&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usetheme&amp;#123;Warsaw&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;fontspec,xunicode,xltxtra&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[slantfont,boldfont]&amp;#123;xeCJK&amp;#125; % 允许斜体和粗体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setbeamercovered&amp;#123;transparent&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[english]&amp;#123;babel&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% or whatever&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;hyperref&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[T1]&amp;#123;fontenc&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% or whatever&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usefonttheme&amp;#123;professionalfonts&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;times&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;mathptmx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;tabularx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% Or whatever. Note that the encoding and the font should match. If T1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% does not look nice, try deleting the line with the fontenc.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;xcolor&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;booktabs, multirow, enumerate&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;animate&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;multimedia&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% ... or whatever. Note that the encoding and the font should match.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% If T1 does not look nice, try deleting the line with the fontenc.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;lmodern&amp;#125; %optional&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;listings&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% Delete this, if you do not want the table of contents to pop up at&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the beginning of each subsection:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\AtBeginSection[]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \begin&amp;#123;frame&amp;#125;&amp;lt;beamer&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \frametitle&amp;#123;内容大纲&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \tableofcontents[currentsection]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setCJKmainfont&amp;#123;Microsoft YaHei&amp;#125;   % 设置缺省中文字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setCJKmonofont&amp;#123;SimSun&amp;#125;   % 设置等宽字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setmainfont&amp;#123;TeX Gyre Pagella&amp;#125; % 英文衬线字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setmonofont&amp;#123;Microsoft YaHei&amp;#125; % 英文等宽字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setsansfont&amp;#123;Trebuchet MS&amp;#125; % 英文无衬线字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;document&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\title[***纹理***]% optional, use only with long paper titles&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123; ***纹理***\\[&lt;span class=&quot;number&quot;&gt;2ex&lt;/span&gt;]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%\subtitle[malloc] %optional&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%&amp;#123;malloc\ 实现&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\author[yx] % optional, use only with lots of authors&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\textcolor[rgb]&amp;#123;&lt;span class=&quot;number&quot;&gt;0.00&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.41&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.66&lt;/span&gt;&amp;#125;&amp;#123;yx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the titlepage&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the plain option removes the sidebar and header from the title page&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;[plain]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \titlepage&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \frametitle&amp;#123;内容大纲&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \tableofcontents&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\section&amp;#123;研究背景和意义&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;&amp;#123;纹理的作用&amp;#125;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \begin&amp;#123;block&amp;#125;&amp;lt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;-&amp;gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    纹理是图形学中增强真实性的重要手段。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \end&amp;#123;block&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \begin&amp;#123;block&amp;#125;&amp;lt;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;-&amp;gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \end&amp;#123;block&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;document&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -516,10 +498,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;我是研一时候正式从cppblog上面赚到wordpress搭建的独立博客上面的。这三年来一直忍受着wordpress日志编辑器的不人性化。这篇博客是我第一次尝试用windows live write发布博客的，姑且看看效果吧。&lt;br&gt;文字版的还不错啊，自动有段落的效果了。再
-      
+      &lt;p&gt;我是研一时候正式从cppblog上面赚到wordpress搭建的独立博客上面的。这三年来一直忍受着wordpress日志编辑器的不人性化。这篇博客是我第一次尝试用windows live write发布博客的，姑且看看效果吧。&lt;br&gt;文字版的还不错啊，自动有段落的效果了。再试试图片吧。点击右侧插入下面的图片就可以了。&lt;br&gt;感觉也挺方便的，选中图片后，在右侧可以设置图片的格式。&lt;/p&gt;
+&lt;p&gt;再试试超链接吧，我是参照这篇文章设置的windows live write，其实过程很简单，&lt;a href=&quot;http://wangbaiyuan.cn/using-windows-live-writer-write-wordpress-offline-logs.html#prettyPhoto&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;用Windows Live Writer离线写WordPress日志&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;右侧还可以插入相册，既然没有相册那就算了。试试插入表格吧。&lt;/p&gt;
     
     </summary>
     
@@ -540,12 +521,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;今天逆战发布新版了。我做的新军衔系统和转生系统在这次上线了。哈哈，好有成就感。第一次写的代码能够影响这么多人的生活。听说玩家都挤在主城转生NPC处了。&lt;/p&gt;
+      &lt;p&gt;今天逆战发布新版了。我做的新军衔系统和转生系统在这次上线了。哈哈，好有成就感。第一次写的代码能够影响这么多人的生活。听说玩家都挤在主城转生NPC处了。&lt;/p&gt;
 &lt;p&gt;新军衔系统：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/8/7
-      
+&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/8/7669/27417989086_57309c8dcd_o.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/8/7669/27417989086_57309c8dcd_o.jpg&quot; alt&gt;&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
