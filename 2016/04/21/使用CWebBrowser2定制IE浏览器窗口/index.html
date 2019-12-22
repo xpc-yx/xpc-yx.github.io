@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -315,7 +316,7 @@
       
         <p>在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。</p>
 <p>本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中，下面Show一下这个自带萌妹子的弹窗吧。</p>
-<p><img src="https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png" alt=""></p>
+<p><img alt data-src="https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png"></p>
 <p>这是一个无边框的Windows对话框程序，并且是一个基于背景图片的不规则弹窗窗口；内部嵌入了一个浏览器控件窗口，这个漂亮的妹子就是浏览器控件打开的网页显示出来的。对这个妹子有兴趣的，可以去玩一把逆战，退出客户端的时候就会出来这个弹窗了。</p>
 <p>下面介绍一些关于实现该弹窗浏览器的Tips。</p>
 <h2 id="一、如何获得CWebBrowser2"><a href="#一、如何获得CWebBrowser2" class="headerlink" title="一、如何获得CWebBrowser2"></a>一、如何获得CWebBrowser2</h2><p>方法1：网络搜索下载，比如我以前的一篇博文里面有下载链接：vc内嵌浏览器。</p>
@@ -576,6 +577,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

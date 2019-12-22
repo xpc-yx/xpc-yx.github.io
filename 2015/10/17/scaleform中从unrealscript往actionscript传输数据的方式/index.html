@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -327,13 +328,13 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">String strTest = "测试";</span><br><span class="line">String path = "_root.TestFlash.strTest";</span><br><span class="line">SetVariableString(path，strTest);</span><br><span class="line">TestFlash.as中：</span><br><span class="line">var strTest:String;</span><br></pre></td></tr></table></figure>
 
 <p>二、传输数组</p>
-<p>native function bool SetVariableStringArray(string path, int index, array<string> Arg);</p>
-<p>native function bool SetVariableFloatArray(string path, int index, array<float> Arg);</p>
-<p>native function bool SetVariableIntArray(string path, int index, array<int> Arg);</p>
+<p>native function bool SetVariableStringArray(string path, int index, array<string> Arg);</string></p>
+<p>native function bool SetVariableFloatArray(string path, int index, array<float> Arg);</float></p>
+<p>native function bool SetVariableIntArray(string path, int index, array<int> Arg);</int></p>
 <p>其对应的cpp实现</p>
-<p>String：SetVariableStringArray(const FString path,  INT Index，const TArray<FString> arg);</p>
-<p>Float：SetVariableFloatArray(const FString path, INT Index，const TArray<FLOAT> arg);</p>
-<p>Int：SetVariableFloatArray(const FString path, INT Index，const TArray<INT> arg);</p>
+<p>String：SetVariableStringArray(const FString path,  INT Index，const TArray<fstring> arg);</fstring></p>
+<p>Float：SetVariableFloatArray(const FString path, INT Index，const TArray<float> arg);</float></p>
+<p>Int：SetVariableFloatArray(const FString path, INT Index，const TArray<int> arg);</int></p>
 <p>这里Index表示从数组的第几个元素开始，0表示传输全部，arg是要传输的数组。</p>
 <p>例子：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">local array&lt;String&gt; strArray;</span><br><span class="line">strArray.AddItem("0");</span><br><span class="line">strArray.AddItem("1");</span><br><span class="line">String path = "_root.TestFlash.strTest";</span><br><span class="line">SetVariableStringArray(path，strArray);</span><br><span class="line">TestFlash.as中：</span><br><span class="line">var strArray:Array = new Array();</span><br></pre></td></tr></table></figure>
@@ -572,6 +573,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

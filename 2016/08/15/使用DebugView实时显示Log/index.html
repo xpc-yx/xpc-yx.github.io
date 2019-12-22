@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -320,9 +321,9 @@
       
         <h3 id="DebugView简介"><a href="#DebugView简介" class="headerlink" title="DebugView简介"></a>DebugView简介</h3><p>DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。<br>这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。</p>
 <h2 id="安装DebugView"><a href="#安装DebugView" class="headerlink" title="安装DebugView"></a>安装DebugView</h2><p>下载地址：<a href="https://technet.microsoft.com/en-us/sysinternals/debugview.aspx" target="_blank" rel="noopener">DebugView</a><br>下载后面后解压压缩包，发现里面有三个文件：Dbgview.exe、dbgview.chm、Eula.txt。<br>Dbgview.exe就是我们要使用的实时显示Log工具。dbgview.chm是自带的文档，有不懂的地方可以查阅该文档。<br>现在可以将DebugView.exe放到任何你喜欢的目录，比如桌面。</p>
-<h2 id="配置DebugView"><a href="#配置DebugView" class="headerlink" title="配置DebugView"></a>配置DebugView</h2><h3 id="配置Capture"><a href="#配置Capture" class="headerlink" title="配置Capture"></a>配置Capture</h3><p>如下图所示，要记得勾选Capture Win32和Capture Global Win32。Capture Global Win32用于网络模式下捕获网络主机的Debug输出的时候。如果需要捕获内核模式的调试输出，记得勾选Capture Kernel Win32。<br><img src="https://c1.staticflickr.com/9/8750/28713108000_0384dfb06a_o.png" alt="enter description here"><br>如果点击Capture Global Win32菜单出现提示：<br><img src="https://c1.staticflickr.com/9/8315/28999300555_61681b6880_o.png" alt="enter description here"><br>重新以管理员的身份启动DebugView。<br><img src="https://c1.staticflickr.com/9/8897/28999300535_075a591b02_o.png" alt="enter description here"></p>
-<h3 id="配置Filter"><a href="#配置Filter" class="headerlink" title="配置Filter"></a>配置Filter</h3><p>如下图所示，打开Filter对话框，<br><img src="https://c2.staticflickr.com/8/7507/28923046321_72cd949daa_o.png" alt="enter description here"><img src="https://c1.staticflickr.com/9/8744/28713274070_2809e64189_o.png" alt="enter description here"><br>然后在Include中输入要包含的字符串，比如”hankpcxiao”，多个字符串用;分隔，比如”hankpcxiao;xpc”。<br>这样就只会捕获包括过滤字符串hankpcxiao或者xpc的OutputDebugString输出。<br>如果我们在每个OutputDebugString输出前自动加上过滤字符串，那么DebugView就只会输出我们的Log信息了。</p>
-<h3 id="开启捕获"><a href="#开启捕获" class="headerlink" title="开启捕获"></a>开启捕获</h3><p>最后确保开启了捕获，如下图所示：<br><img src="https://c1.staticflickr.com/9/8842/28999300405_0355a4405f_o.png" alt="enter description here"></p>
+<h2 id="配置DebugView"><a href="#配置DebugView" class="headerlink" title="配置DebugView"></a>配置DebugView</h2><h3 id="配置Capture"><a href="#配置Capture" class="headerlink" title="配置Capture"></a>配置Capture</h3><p>如下图所示，要记得勾选Capture Win32和Capture Global Win32。Capture Global Win32用于网络模式下捕获网络主机的Debug输出的时候。如果需要捕获内核模式的调试输出，记得勾选Capture Kernel Win32。<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8750/28713108000_0384dfb06a_o.png"><br>如果点击Capture Global Win32菜单出现提示：<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8315/28999300555_61681b6880_o.png"><br>重新以管理员的身份启动DebugView。<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8897/28999300535_075a591b02_o.png"></p>
+<h3 id="配置Filter"><a href="#配置Filter" class="headerlink" title="配置Filter"></a>配置Filter</h3><p>如下图所示，打开Filter对话框，<br><img alt="enter description here" data-src="https://c2.staticflickr.com/8/7507/28923046321_72cd949daa_o.png"><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8744/28713274070_2809e64189_o.png"><br>然后在Include中输入要包含的字符串，比如”hankpcxiao”，多个字符串用;分隔，比如”hankpcxiao;xpc”。<br>这样就只会捕获包括过滤字符串hankpcxiao或者xpc的OutputDebugString输出。<br>如果我们在每个OutputDebugString输出前自动加上过滤字符串，那么DebugView就只会输出我们的Log信息了。</p>
+<h3 id="开启捕获"><a href="#开启捕获" class="headerlink" title="开启捕获"></a>开启捕获</h3><p>最后确保开启了捕获，如下图所示：<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8842/28999300405_0355a4405f_o.png"></p>
 <h2 id="如何在程序中输出Log信息？"><a href="#如何在程序中输出Log信息？" class="headerlink" title="如何在程序中输出Log信息？"></a>如何在程序中输出Log信息？</h2><p>默认情况下，DebugView会捕获函数OutputDebugString的输出，但是这个函数的参数是个字符串指针，不太方便。下面我们通过一些列步骤来创建一个方便使用的Log类。</p>
 <h3 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h3><p>我们习惯使用printf这样的函数来格式化输出信息，因此这次我们也把OutputDebugString包装成可变参数形式的格式化输出函数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DebugViewOutput</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* fm, ...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">char</span> szMsg[MAX_PATH];</span><br><span class="line"></span><br><span class="line">    va_list argList;</span><br><span class="line">    va_start(argList, fm);</span><br><span class="line">    vsprintf_s(szMsg, fm, argList);</span><br><span class="line">    va_end(argList);</span><br><span class="line"></span><br><span class="line">    OutputDebugString(szMsg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -551,6 +552,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

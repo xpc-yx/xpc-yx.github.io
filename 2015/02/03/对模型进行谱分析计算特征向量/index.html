@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -322,7 +323,7 @@
 <p>接下来是计算特征向量的代码，因为混合着cgal等，不是很好分离，但是可以用来参考下。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">void CSEMesh::ComputeEigen(int type)</span><br><span class="line">&#123;</span><br><span class="line">        static vector&lt;MatlabSparseInfor&gt; siVec;</span><br><span class="line"></span><br><span class="line">        int nRow = m_pModel-&gt;size_of_vertices();</span><br><span class="line">        int nColum = nRow;</span><br><span class="line">        m_eigenValues.<span class="attribute">resize</span>(EIGEN_VECTOR_NUM);</span><br><span class="line">        for (int i = 0; i &lt; EIGEN_VECTOR_NUM; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            m_eigenVectors[type][i].<span class="attribute">resize</span>(nRow);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int nNum = m_pModel-&gt;size_of_halfedges();</span><br><span class="line">        siVec.<span class="attribute">resize</span>(nNum + nRow);</span><br><span class="line"></span><br><span class="line">        int i = 0;</span><br><span class="line">        for (Enriched_Model::Edge_iterator pEdge = m_pModel-&gt;edges_begin();</span><br><span class="line">            pEdge != m_pModel-&gt;edges_end();</span><br><span class="line">            pEdge++)</span><br><span class="line">        &#123;</span><br><span class="line">            int beg = pEdge-&gt;opposite()-&gt;vertex()-&gt;tag();</span><br><span class="line">            int end = pEdge-&gt;vertex()-&gt;tag();</span><br><span class="line"></span><br><span class="line">            siVec[i].r = beg;</span><br><span class="line">            siVec[i].c = end;</span><br><span class="line">            siVec[i].v = -pEdge-&gt;weight();</span><br><span class="line">            ++i;</span><br><span class="line"></span><br><span class="line">            siVec[i].r = end;</span><br><span class="line">            siVec[i].c = beg;</span><br><span class="line">            siVec[i].v = -pEdge-&gt;weight();</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        assert(i == nNum);</span><br><span class="line"></span><br><span class="line">        for(Enriched_Model::Vertex_iterator pVertex = m_pModel-&gt;vertices_begin(); </span><br><span class="line">            pVertex != m_pModel-&gt;vertices_end(); pVertex++)</span><br><span class="line">        &#123;</span><br><span class="line">            Enriched_Model::Vertex::Halfedge_around_vertex_circulator pHalfEdge = pVertex-&gt;vertex_begin();</span><br><span class="line">            Enriched_Model::Vertex::Halfedge_around_vertex_circulator d = pHalfEdge;</span><br><span class="line">            double sum = 0.0;</span><br><span class="line"></span><br><span class="line">            CGAL_For_all(pHalfEdge, d)</span><br><span class="line">            &#123;</span><br><span class="line">                sum += pHalfEdge-&gt;weight();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fabs(sum) &lt; <span class="number">1</span>e-<span class="number">7</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                sum = 0.0;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            siVec[i].r = pVertex-&gt;tag();</span><br><span class="line">            siVec[i].c = pVertex-&gt;tag();</span><br><span class="line">            siVec[i].v = sum;</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        assert(i == nNum + nRow);</span><br><span class="line">        std::sort(siVec.begin(), siVec.end());</span><br><span class="line"></span><br><span class="line">        CMatlabSparseMatrix sm(siVec[0], nNum + nRow, nRow, nColum);</span><br><span class="line">        int nEigenNum = std::min(nRow, (int)EIGEN_VECTOR_NUM);</span><br><span class="line">        sm.GetEigens(m_eigenValues, m_eigenVectors[type], nEigenNum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>关于如何实现MATLAB稀疏矩阵类，可以参考我其它的两篇文章。下面是第二个特征向量的分布效果，能够观察到是一个非常有规律的标量场。<br><a href="https://c2.staticflickr.com/8/7068/27380408921_bcdfd8ed53_o.png" target="_blank" rel="noopener"><img src="https://c2.staticflickr.com/8/7068/27380408921_bcdfd8ed53_o.png" alt=""></a></p>
+<p>关于如何实现MATLAB稀疏矩阵类，可以参考我其它的两篇文章。下面是第二个特征向量的分布效果，能够观察到是一个非常有规律的标量场。<br><a href="https://c2.staticflickr.com/8/7068/27380408921_bcdfd8ed53_o.png" target="_blank" rel="noopener"><img alt data-src="https://c2.staticflickr.com/8/7068/27380408921_bcdfd8ed53_o.png"></a></p>
 
     </div>
 
@@ -339,10 +340,10 @@
       <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现平面分割三维模型\" rel="bookmark">使用CGAL实现平面分割三维模型</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
+      <div class="popular-posts-title"><a href="\2015\01\22\使用CGAL计算SDF分割模型\" rel="bookmark">使用CGAL计算SDF分割模型</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\01\22\使用CGAL计算SDF分割模型\" rel="bookmark">使用CGAL计算SDF分割模型</a></div>
+      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2013\07\30\分享下我的OpenGL，CGAL，Boost库\" rel="bookmark">分享下我的OpenGL，CGAL，Boost库</a></div>
@@ -553,6 +554,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

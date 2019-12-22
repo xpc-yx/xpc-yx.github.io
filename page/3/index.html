@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -553,7 +554,7 @@
 
       
           <p>7月26号封闭培训，到部门来已经是8月10号了。刚开始懵懵懂懂的，不知道干啥。部门上课的那几天，把新人手册的步骤做了一遍。悲伤的是，做完之后不少忘记了。编译脚本的addin插件至今没有显示出来，虽然有几天它显示过。除此之外，还有不少纠结过的问题。让我一一道来吧。配置vs字体和颜色，va快捷键，查找快捷键无效，F12查看定义无效，uc断点无效，调试uc时候游戏进程掉了。。。下面来说说成功解决掉的几个问题吧，非常感谢jerry哥和vivin姐的帮忙。</p>
-<p>1.vs的字体和颜色。默认字体是新宋体，这个字体据说不是很好，推荐consolas字体。颜色的话，有个网站叫做<a href="https://studiostyl.es/" target="_blank" rel="noopener">https://studiostyl.es/</a>，<br>可以去里面选自己喜欢的风格，设置好就行。值得注意的是，安装nfringe后，字体颜色设置面板里面会出现unrealscript相关的设置，注意修改。<br>如图所示，<br><img src="https://c2.staticflickr.com/8/7317/26842778024_ed21d0f0b6_o.png" alt></p>
+<p>1.vs的字体和颜色。默认字体是新宋体，这个字体据说不是很好，推荐consolas字体。颜色的话，有个网站叫做<a href="https://studiostyl.es/" target="_blank" rel="noopener">https://studiostyl.es/</a>，<br>可以去里面选自己喜欢的风格，设置好就行。值得注意的是，安装nfringe后，字体颜色设置面板里面会出现unrealscript相关的设置，注意修改。<br>如图所示，<br><img alt data-src="https://c2.staticflickr.com/8/7317/26842778024_ed21d0f0b6_o.png"></p>
 <p>另一个需要注意的地方是，与.uc文件不同，.cpp中的代码颜色是在visual assist x中修改的，这个我找了半天才反应过来。</p>
           <!--noindex-->
             <div class="post-button">
@@ -805,7 +806,7 @@
 
       
           <p>很久没更新博客了。额，一直想写这个来着。记得以前写过绘制三维标量场的文章，方法是找的渐变颜色纹理图片，然后用一维纹理坐标映射贴上去的。后面发现根本不需要去找图片，这种渐变色本来就是一种颜色空间的定义。<a href="http://baike.baidu.com/link?url=RUroPPZprWlPOJx8JaodE2Je0wql6wHv0N3LigWMqsRjCxxVDAT_yWwGYL4myeEkHTKIeBxFbC9qjwvrzD2XlzgyxW-2lUZ25TyUePioufQBbhhZSTRB5VUApB0gCfgsJPG-CtbbTBBs3DacsTvMAFk5YzmyeD5uius5R5vTr3sPZbGsfmiL-6ovaPXrncfqk0vcp8KhirUnmKEEZdR_0q" target="_blank" rel="noopener">请看hsv颜色模型</a>，这种颜色模型类似于rgb，也是三个分量h（色调），s（饱和度），v（亮度）。h表示的绕圆锥的一周，也就是纯颜色的渐变，正是我们需要的东西。s表示从圆心到圆边缘的半径，0-1的范围，表示颜色纯度。v则是垂直的轴，表示亮度。如下图，我们要的就是绕圈一周的颜色渐变。</p>
-<p><img src="https://c2.staticflickr.com/8/7213/27452089865_0225e3c1e8_o.png" alt></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7213/27452089865_0225e3c1e8_o.png"></p>
 <p>总体思路就是数值0-1，映射到hsv颜色空间的（0-360,1,255）。实现标量场的方法是，首先，将hsv的（0-360,1,255）转换为rgb，保存为一维数组。以该数组为数据，生成一维纹理，数值0-1作为纹理坐标，再贴图即可生成标量场。下面是用该方法生成标量场的相关代码。首先是构造一维纹理数组，然后用其生成1d纹理。</p>
           <!--noindex-->
             <div class="post-button">
@@ -1599,6 +1600,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

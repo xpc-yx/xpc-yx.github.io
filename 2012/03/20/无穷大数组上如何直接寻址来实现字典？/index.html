@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -315,7 +316,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这是算法导论习题11.1-4。<br>具体题目如下：<br><img src="https://c5.staticflickr.com/8/7454/27312219812_3440407ffa_o.jpg" alt=""></p>
+        <p>这是算法导论习题11.1-4。<br>具体题目如下：<br><img alt data-src="https://c5.staticflickr.com/8/7454/27312219812_3440407ffa_o.jpg"></p>
 <p>解决该题目的要点：<br>1.由于是无穷大的数组，所以无法事先初始化该数组。<br>2.所提供的方案必须是O（1）。<br>3.使用的额外空间只能是O（n），这样平均到每一个项上的空间都是O（1）。</p>
 <p>一时之间好像没有一点头绪，在几个群里面发问了，网上搜了很久也没有找到答案，后面一群里有个高人给了个链接，里面有解法。链接地址：</p>
 <blockquote>
@@ -534,6 +535,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

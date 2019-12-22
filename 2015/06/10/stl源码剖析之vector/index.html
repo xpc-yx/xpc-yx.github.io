@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -326,8 +327,8 @@
 <p>下面分几部分来讲述vector的定义。首先，模板参数一个是类型T作为vector的内含物类型，class Alloc = alloc则是使用默认的内存申请器。这一句typedef simple_alloc&lt;value_type, Alloc&gt; data_allocator;则是重定义相应的内存申请器类型。<br>然后，vector的迭代器类型其实就是原始的指针类型重定义了一下。以下这几句重定义，</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typedef T value_type;             // (1)</span><br><span class="line">typedef value_type* pointer;          // (2)</span><br><span class="line">typedef const value_type* const_pointer;</span><br><span class="line">typedef const value_type* const_iterator;</span><br><span class="line">typedef value_type reference;         // (3)</span><br><span class="line">typedef const value_type const_reference;</span><br><span class="line">typedef size_t size_type;</span><br><span class="line">typedef ptrdiff_t difference_type;    // (4)</span><br></pre></td></tr></table></figure>
 
-<p>在list，deque，map，set等支持迭代器操作的容器定义中都会出现。其中，vector中的定义是最简单的。每个容器都有值类型，指针类型，迭代器类型，引用类型，以及大小类型，difference_type。知道这些后，写代码时候，可以避免一些错误，或者说代码更规范，就能自然而然的使用容易内置类型，比如vector<int>::size_type而不是int来进行一些操作。原始指针支持随机存储，因此vector的迭代器就是功能最强的随机迭代器。<br>vector采用的数据结构很简单，就是一段线性内存。不过，有三个指针分别指向内存的头，已使用的尾部，尾。为了避免过多的重新分配内存，vector的容量永远比大小大，而且每次重新配置内存，大小翻倍。所以，vector的很多操作，比如，begin，end，front，back，size等的实现就很直观了，具体参看源码。下图很清楚的说明了这一情况。</p>
-<p><img src="https://c2.staticflickr.com/8/7355/26844795653_d590b6b031_o.png" alt=""></p>
+<p>在list，deque，map，set等支持迭代器操作的容器定义中都会出现。其中，vector中的定义是最简单的。每个容器都有值类型，指针类型，迭代器类型，引用类型，以及大小类型，difference_type。知道这些后，写代码时候，可以避免一些错误，或者说代码更规范，就能自然而然的使用容易内置类型，比如vector<int>::size_type而不是int来进行一些操作。原始指针支持随机存储，因此vector的迭代器就是功能最强的随机迭代器。<br>vector采用的数据结构很简单，就是一段线性内存。不过，有三个指针分别指向内存的头，已使用的尾部，尾。为了避免过多的重新分配内存，vector的容量永远比大小大，而且每次重新配置内存，大小翻倍。所以，vector的很多操作，比如，begin，end，front，back，size等的实现就很直观了，具体参看源码。下图很清楚的说明了这一情况。</int></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7355/26844795653_d590b6b031_o.png"></p>
 <p>接着要讲的是vector如何管理空间的。先看下面三个函数，</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vector(size_type n, const T value) &#123; fill_initialize(n, value); &#125;</span><br><span class="line">void fill_initialize(size_type n, const T value) &#123;</span><br><span class="line">    start = allocate_and_fill(n, value);  // 配置空間並設初值</span><br><span class="line">    finish = start + n;             // 調整水位</span><br><span class="line">    end_of_storage = finish;            // 調整水位</span><br><span class="line">  &#125;</span><br><span class="line">iterator allocate_and_fill(size_type n, const T x) &#123;</span><br><span class="line">    iterator result = data_allocator::allocate(n); // 配置n個元素空間</span><br><span class="line">      <span class="comment">// 全域函式，記憶體低階工具，將result所指之未初始化空間設定初值為 x，n個</span></span><br><span class="line">      <span class="comment">// 定義於 &lt;stl_uninitialized.h&gt;。</span></span><br><span class="line">      uninitialized_fill_n(result, n, x);  </span><br><span class="line">      return result;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
@@ -345,19 +346,19 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2015\01\01\stl源码剖析之heap\" rel="bookmark">stl源码剖析之heap</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2014\12\29\stl源码剖析之priority_queue\" rel="bookmark">stl源码剖析之priority_queue</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\01\01\stl源码剖析之heap\" rel="bookmark">stl源码剖析之heap</a></div>
+      <div class="popular-posts-title"><a href="\2015\04\22\stl源码剖析之sort\" rel="bookmark">stl源码剖析之sort</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之stack\" rel="bookmark">stl源码剖析之stack</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\04\22\stl源码剖析之sort\" rel="bookmark">stl源码剖析之sort</a></div>
+      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
     </li>
   </ul>
 
@@ -564,6 +565,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

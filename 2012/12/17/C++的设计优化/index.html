@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -323,7 +324,7 @@
 
 <p><strong>例子六，避免无用计算。</strong><br>比如，很多时候memset并不是必须的，那么就应该避免，尤其memset大块内存的时候。类中对成员的默认构造函数调用有的时候也是浪费，应该使用成员初始化列表。这种情况，应该还有很多其它的例子。</p>
 <p><strong>例子七，删除已经失效的代码。</strong><br>已经失效的代码是只不会再使用的代码，你应该将其删除掉，否则那些代码还是会造成性能损失。</p>
-<p>总之，设计上面的优化是个太难的题目了，我觉得这本书上面很多例子都有点和代码上的优化重复了。不过，性能和灵活性确实是相反的方向，有的时候牺牲灵活性是非常必须的。</pre></p>
+<p>总之，设计上面的优化是个太难的题目了，我觉得这本书上面很多例子都有点和代码上的优化重复了。不过，性能和灵活性确实是相反的方向，有的时候牺牲灵活性是非常必须的。</p>
 
     </div>
 
@@ -532,6 +533,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

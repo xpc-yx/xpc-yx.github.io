@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -313,7 +314,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>先看算导上输油管道问题的描述：<br><img src="https://c4.staticflickr.com/8/7589/27410289675_6cabb3a489_o.jpg" alt=""></p>
+        <p>先看算导上输油管道问题的描述：<br><img alt data-src="https://c4.staticflickr.com/8/7589/27410289675_6cabb3a489_o.jpg"></p>
 <p>这个题，虽然说给出了井的x,y坐标，但是要修建的主管道却只是一条横向的，而且其余管道也只是到这条管道的竖向距离。那么，就转换为确定一条直线 y = m，使得其它个点到这条直线的距离最多。也许不需要多的提示，大家的直觉就会想到应该所有y值的中点。但是，这个的证明却不是那么的明显。</p>
 <p>证明如下：<br>设所有的y值系列为y1,y2,…,yn，并且假设这个是按递增排列的。我们要求的是Sum = Σ|yi-m|(1&lt;=i&lt;=n),</p>
 <p><strong>1）显然假如选小于y1或者大于yn的y=m都不会比选y1或者yn更好。<br>2）如果选y1或者yn，那么|y1-m|+|yn-m| = |yn-y1|都是一样的结果，甚至选y1和yn之间的任意一个值。<br>3）如此继续下去，对于y2和yn，也有2）所描述的性质<br>4）继续到最后，只需要取最中间一对点之间的值即可，如果n是奇数，那么就是中间的点，如果n是偶数，取任意一个中间点都可以</strong>。</p>
@@ -366,8 +367,8 @@
       <i class="fa fa-chevron-left"></i> 快排的一种简易写法
     </a></div>
       <div class="post-nav-item">
-    <a href="/2012/03/11/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97%20%E5%92%8C%20%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" rel="next" title="两个栈实现一个队列 和 两个队列实现一个栈">
-      两个栈实现一个队列 和 两个队列实现一个栈 <i class="fa fa-chevron-right"></i>
+    <a href="/2012/03/11/%E9%82%AE%E5%B1%80%E4%BD%8D%E7%BD%AE%E9%97%AE%E9%A2%98%E5%92%8C%E5%B8%A6%E6%9D%83%E4%B8%AD%E4%BD%8D%E6%95%B0/" rel="next" title="邮局位置问题和带权中位数">
+      邮局位置问题和带权中位数 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -536,6 +537,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

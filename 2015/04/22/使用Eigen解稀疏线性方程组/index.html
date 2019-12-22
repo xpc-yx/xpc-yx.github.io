@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -325,7 +326,7 @@
 <p>迭代解法对应的头文件是#include “Eigen/IterativeLinearSolvers”。QR分解求线性系统的完整代码如下，相关定义很容易看懂。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//适合于解决最小二乘法问题</span></span><br><span class="line">    int CSparseMatrix::SolveLinearSystemByEigenQR(double* pColumnB, double* pX)</span><br><span class="line">    &#123;</span><br><span class="line">        Eigen::SparseMatrix&lt;<span class="attribute">float</span>&gt; smA(m_nRow, m_nColumn);</span><br><span class="line"></span><br><span class="line">        std::sort(m_pSI, m_pSI + m_nNum);//排序，列主序</span><br><span class="line">        for (int i = 0; i &lt; m_nNum; ++i)// 初始化非零元素</span><br><span class="line">        &#123;</span><br><span class="line">            smA.insert(m_pSI[i].r, m_pSI[i].c) = m_pSI[i].v;</span><br><span class="line">        &#125;</span><br><span class="line">        smA.makeCompressed();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//std::cout &lt;&lt; smA &lt;&lt; std::endl;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 一个QR分解的实例</span></span><br><span class="line">        Eigen::SparseQR&lt;Eigen::SparseMatrix&lt;<span class="attribute">float</span>&gt;, Eigen::COLAMDOrdering&lt;int&gt;&gt; linearSolver;</span><br><span class="line">        <span class="comment">// 计算分解</span></span><br><span class="line">        linearSolver.compute(smA);</span><br><span class="line"></span><br><span class="line">        Eigen::VectorXf vecB(m_nRow);</span><br><span class="line">        for (int i = 0; i &lt; m_nRow; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            vecB[i] = pColumnB[i];</span><br><span class="line">        &#125;</span><br><span class="line">        Eigen::VectorXf vecX = linearSolver.solve(vecB);// 求一个A*x = b</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; m_nColumn; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            pX[i] = vecX[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>  QR分解对应的头文件是#include “Eigen/SparseQR”。</pre></p>
+<p>  QR分解对应的头文件是#include “Eigen/SparseQR”。</p>
 
     </div>
 
@@ -544,6 +545,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

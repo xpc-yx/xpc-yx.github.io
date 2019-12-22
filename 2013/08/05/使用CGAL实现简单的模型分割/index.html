@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -323,9 +324,9 @@
       
         <p>第一步，先把鼠标轨迹点<strong>逆投影</strong>到三维世界的观察坐标系。<br>第二步，把第一步获得的三维坐标点集合<strong>投射到模型上面</strong>，获得笔画，就是模型内部的一些相互连接的边。<br>第三步，沿着第二步获得那些相互连接的边进行<strong>欧拉操作分裂边</strong>。可能需要多分割几次才会分割出模型的一部分。<br>第四步，<strong>搜索整个模型，对不同的部分进行标记</strong>。</p>
 <p>下面是实现的一些效果。绿色线是鼠标轨迹，红色线是投影到模型上面的边的连接线。</p>
-<p><img src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png" alt=""></p>
-<p><img src="https://c2.staticflickr.com/8/7046/27417002526_77b7704140_o.png" alt=""></p>
-<p><img src="https://c2.staticflickr.com/8/7021/27174724330_dab475eef1_o.png" alt=""><br>下面具体解释下以上几个步骤。<br>步骤一，比较简单，网上代码一堆，不过要自己注意理解。</p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7046/27417002526_77b7704140_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7021/27174724330_dab475eef1_o.png"><br>下面具体解释下以上几个步骤。<br>步骤一，比较简单，网上代码一堆，不过要自己注意理解。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">glGetIntegerv(GL_VIEWPORT, m_nViewPort);</span><br><span class="line">glGetDoublev(GL_PROJECTION_MATRIX, m_fProjmatrix);</span><br><span class="line">glGetDoublev(GL_MODELVIEW_MATRIX, m_fMvmatrix);</span><br><span class="line"></span><br><span class="line"><span class="attribute">float</span> fWinX, fWinY, fWinZ;</span><br><span class="line">int nX, nY;</span><br><span class="line">double fX, fY, fZ;</span><br><span class="line"></span><br><span class="line">m_pt3ds.<span class="attribute">clear</span>();</span><br><span class="line">for (int i = 0; i &lt; m_ptStroke.size(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">    nX = m_ptStroke[i].x;</span><br><span class="line">    nY = m_nViewPort[3] - m_ptStroke[i].y - 1;</span><br><span class="line">    glReadBuffer(GL_BACK);</span><br><span class="line">    glReadPixels(nX, nY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);</span><br><span class="line">    <span class="comment">//if (fabs(fWinZ - 1.0) &gt; 1e-8)</span></span><br><span class="line">    &#123;</span><br><span class="line">        fWinX = nX;</span><br><span class="line">        fWinY = nY;</span><br><span class="line">        gluUnProject(fWinX, fWinY, fWinZ, m_fMvmatrix, m_fProjmatrix, m_nViewPort,</span><br><span class="line">            fX, fY, fZ);</span><br><span class="line">        m_pt3ds.push_back(Point_3(fX, fY, fZ));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">m_ptStroke.<span class="attribute">clear</span>();</span><br></pre></td></tr></table></figure>
 
 <p>该代码就是把m_ptStroke的点转化为观察坐标系的点m_pt3ds。<br>步骤二，大致思路如下：第一步，把所有鼠标经过的点，都投影回观察空间。第二步，找到离第一个鼠标点p[0]，最近的模型内的顶点pClosed。第三步，循环剩余的鼠标点，如果当前鼠标点离pClosed的相邻顶点更近的话，那么将pClosed更新为上一次找到的pClosed的相邻顶点。所有的这些，pClosed点就是笔画的投影点。</p>
@@ -568,6 +569,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

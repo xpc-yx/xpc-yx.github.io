@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -566,7 +567,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>说实话，这几天为了CMFCToolBarComboBoxButton上的莫名其妙自动切换选择的bug烦死了，浪费了很多时间。也是过其它替代方法，发现都实现不了需要的界面效果。<br>我也不知道为什么自己对界面效果这么纠结。伤不起啊。本来我就没用过vs2008更新版本的MFC，也没打算用这个。由于上一次做的东西用到了切分视图，但是发现FormView自适应控件大小的实现非常麻烦，老是出现些不爽的bug，而且添加新的控件还得编辑界面，非常不爽。所以，打算使用新版本MFC里面的属性窗口。<br>刚好发现vs2010的项目导航可以生成这样的工程，果断试验之。虽然过程无比艰辛，总算可以使用这些自适应的DockPane窗口了。而且还发现这样的结构非常合适添加子窗口，以后的项目都可以采用这样的界面了，只要平台在windows下。<br>但是，美中最不足的是CFrameWndEx(使用CDockablePane必须使用扩展的框架窗口)，<strong>只能使用恶心的CMFCToolBar</strong>，因为CFrameWndEx的菜单和工具栏都是可以DockPane的子类。我只能说CMFCToolBar的使用太TMD的讲究了，一个不注意效果就不对。因为使用这个东西的人少，网上资料也很少。只能一直google，还有查看类定义的源码，慢慢尝试了。<br>现在，我这里说的只是添加组合框。<br>首先，在资源编辑器中新建工具栏IDR_BUILD，留下一个<strong>空位</strong>，如ID_BUILD_CHOOSE。如下图，第二个就是我预留的ID_BUILD_CHOOSE的空位。<img src="https://c8.staticflickr.com/8/7637/27379836511_65ae3047e4_o.jpg" alt><br>然后，在CMainFrame::OnCreate中创建两个工具栏，代码如下：</p>
+          <p>说实话，这几天为了CMFCToolBarComboBoxButton上的莫名其妙自动切换选择的bug烦死了，浪费了很多时间。也是过其它替代方法，发现都实现不了需要的界面效果。<br>我也不知道为什么自己对界面效果这么纠结。伤不起啊。本来我就没用过vs2008更新版本的MFC，也没打算用这个。由于上一次做的东西用到了切分视图，但是发现FormView自适应控件大小的实现非常麻烦，老是出现些不爽的bug，而且添加新的控件还得编辑界面，非常不爽。所以，打算使用新版本MFC里面的属性窗口。<br>刚好发现vs2010的项目导航可以生成这样的工程，果断试验之。虽然过程无比艰辛，总算可以使用这些自适应的DockPane窗口了。而且还发现这样的结构非常合适添加子窗口，以后的项目都可以采用这样的界面了，只要平台在windows下。<br>但是，美中最不足的是CFrameWndEx(使用CDockablePane必须使用扩展的框架窗口)，<strong>只能使用恶心的CMFCToolBar</strong>，因为CFrameWndEx的菜单和工具栏都是可以DockPane的子类。我只能说CMFCToolBar的使用太TMD的讲究了，一个不注意效果就不对。因为使用这个东西的人少，网上资料也很少。只能一直google，还有查看类定义的源码，慢慢尝试了。<br>现在，我这里说的只是添加组合框。<br>首先，在资源编辑器中新建工具栏IDR_BUILD，留下一个<strong>空位</strong>，如ID_BUILD_CHOOSE。如下图，第二个就是我预留的ID_BUILD_CHOOSE的空位。<img alt data-src="https://c8.staticflickr.com/8/7637/27379836511_65ae3047e4_o.jpg"><br>然后，在CMainFrame::OnCreate中创建两个工具栏，代码如下：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">   if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER</span><br><span class="line">| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC)</span><br><span class="line">	|| !m_wndToolBar.LoadToolBar(IDR_MAINFRAME))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建工具栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (!m_wndToolBarBuild.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_TOOLTIPS | CBRS_FLYBY</span><br><span class="line">	| CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC| CBRS_GRIPPER | CBRS_BORDER_3D, IDC_MFCTOOLBAR_BUILD)</span><br><span class="line">	|| !m_wndToolBarBuild.LoadToolBar(IDR_BUILD))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建build工具栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndStatusBar.Create(this))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建状态栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line">m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));</span><br><span class="line"></span><br><span class="line">m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBarBuild.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line"></span><br><span class="line">EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">DockPane(m_wndMenuBar);</span><br><span class="line">DockPane(m_wndToolBarBuild);</span><br><span class="line">DockPaneLeftOf(m_wndToolBar, m_wndToolBarBuild);</span><br></pre></td></tr></table></figure>
 <p>注意，创建第二个工具栏的时候需要使用<strong>Create</strong>而不是CreateEx，如果使用CreateEx就不能使用后面的ID参数。<br>现在需要实现三个消息。</p>
           <!--noindex-->
@@ -1295,7 +1296,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这里讲得纹理合成指的是合成图片纹理，也就是二维纹理合成，并不是指将纹理直接合成到三维模型上面。虽然从本质上面来说，三维纹理合成和二维纹理是一样的。<br>纹理合成基本上是用的非参数化的采样方法，也就是Li-Yi-Wei的那篇纹理合成的论文所使用的方法。基本思路就是为当前要合成的像素在样图中寻找一个最佳的邻域，至于这个邻域的形状是可以变化的。合成像素选取的顺序也是可以变化的。这些或多或少都会影响合成的最终结果。LiYiWei的论文里面选取的是L形状的邻域，并且使用扫描线的顺序。<br>在LiYiWei的三维纹理合成论文居然又提到了合成顺序对合成结果影响不大，这个好像没那么正确。因为，合成纹理像素的使用，需要匹配邻域，而且这些邻域最好是已经合成的像素，如果不是就不会得到较好的结果。这个是最关键的一点。所以说，合成顺序对合成结果还是有一定的影响的。<br>为什么L邻域能够得到较好的结果了，那是因为扫描线顺序下，L邻域里面的像素都是已经合成的像素。所以，如果打算对合成纹理算法进行局部的修改就需要注意邻域和合成顺序的设定，必须尽可能使用已经合成的像素。<br>为什么说三维纹理的合成和二维纹理的合成，本质是一致的了？因为三维纹理合成需要局部铺平，来构造邻域，然后的匹配和二维的思想是完全一致的。<br>下面是我自己实现代码的合成结果。纹理合成的代码网上还是能够找到的，虽然不是那么好找，这也只限于二维合成的代码。最好不要看csdn上面那个自以为写了加速的代码。<br>样本纹理：<img src="https://c1.staticflickr.com/8/7087/27352028232_085b3cb8aa_o.jpg" alt=""><br>合成纹理：<img src="https://c2.staticflickr.com/8/7455/26841928854_35ef671fb0_o.png" alt=""></p>
+          <p>这里讲得纹理合成指的是合成图片纹理，也就是二维纹理合成，并不是指将纹理直接合成到三维模型上面。虽然从本质上面来说，三维纹理合成和二维纹理是一样的。<br>纹理合成基本上是用的非参数化的采样方法，也就是Li-Yi-Wei的那篇纹理合成的论文所使用的方法。基本思路就是为当前要合成的像素在样图中寻找一个最佳的邻域，至于这个邻域的形状是可以变化的。合成像素选取的顺序也是可以变化的。这些或多或少都会影响合成的最终结果。LiYiWei的论文里面选取的是L形状的邻域，并且使用扫描线的顺序。<br>在LiYiWei的三维纹理合成论文居然又提到了合成顺序对合成结果影响不大，这个好像没那么正确。因为，合成纹理像素的使用，需要匹配邻域，而且这些邻域最好是已经合成的像素，如果不是就不会得到较好的结果。这个是最关键的一点。所以说，合成顺序对合成结果还是有一定的影响的。<br>为什么L邻域能够得到较好的结果了，那是因为扫描线顺序下，L邻域里面的像素都是已经合成的像素。所以，如果打算对合成纹理算法进行局部的修改就需要注意邻域和合成顺序的设定，必须尽可能使用已经合成的像素。<br>为什么说三维纹理的合成和二维纹理的合成，本质是一致的了？因为三维纹理合成需要局部铺平，来构造邻域，然后的匹配和二维的思想是完全一致的。<br>下面是我自己实现代码的合成结果。纹理合成的代码网上还是能够找到的，虽然不是那么好找，这也只限于二维合成的代码。最好不要看csdn上面那个自以为写了加速的代码。<br>样本纹理：<img alt data-src="https://c1.staticflickr.com/8/7087/27352028232_085b3cb8aa_o.jpg"><br>合成纹理：<img alt data-src="https://c2.staticflickr.com/8/7455/26841928854_35ef671fb0_o.png"></p>
 
       
     </div>
@@ -1596,6 +1597,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

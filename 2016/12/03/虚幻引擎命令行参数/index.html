@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -317,7 +318,7 @@
 <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。</p>
 <h3 id="编译命令行参数"><a href="#编译命令行参数" class="headerlink" title="编译命令行参数"></a>编译命令行参数</h3><p>编译代码期间会用到的参数如下：</p>
 <ol>
-<li><p>版本 -debug -release</p></p>
+<li><p>版本 -debug -release</p><p></p>
 </li>
 <li><p>全量 -full （默认增量）</p>
 </li>
@@ -327,7 +328,7 @@
 <p>因此，编译代码时候最多可能指定以下参数组合：<br>make -debug -full -auto -stripsource<br>make -release -full -auto  -stripsource</p>
 </li>
 </ol>
-<p><strong>注意：通过在vs中指定make命令可以调试编译代码的过程。</strong><br>如下图所示：<br><img src="https://c2.staticflickr.com/6/5486/31353510066_d0fd3565ee_o.png" alt="enter description here"></p>
+<p><strong>注意：通过在vs中指定make命令可以调试编译代码的过程。</strong><br>如下图所示：<br><img alt="enter description here" data-src="https://c2.staticflickr.com/6/5486/31353510066_d0fd3565ee_o.png"></p>
 <h3 id="运行命令行参数"><a href="#运行命令行参数" class="headerlink" title="运行命令行参数"></a>运行命令行参数</h3><p>启动游戏进程指定的命令行参数分为两个个部分，第一个部分用于指定进程的运行模式（客户端、服务器、编辑器），第二个部分用于指定地图的URL以及附加选项。</p>
 <h4 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h4><p>游戏进程可以用三种不同的模式进行启动，分别是客户端、服务器、编辑器模式。因此，虚幻引擎生成的游戏可执行文件同时可以作为游戏服务器、游戏客户端、游戏编辑器运行。这是一个很神奇的地方。</p>
 <ol>
@@ -346,7 +347,7 @@
 <p>常用的选项参数：<br>dedicated：指定服务器作为专用服务器。<br>listen: 指定服务器作为监听服务器 。<br>spectatoronly：以观看模式启动游戏<br>class: 告诉引擎要使用的玩家类(覆盖默认值)。<br>game:: 指定使用的GameInfo类。<br>name: 要使用的玩家名称。<br>team: 指定玩家所在的团队。<br>resx/resy: 设置游戏窗口的分辨率。<br>consolex/consoley：设置控制台窗口(log窗口)分辨率。</p>
 <p>常用的开关参数：<br>log: 打开日志窗口。<br>windowed：窗口模式运行。<br>nomoviestartup: 略过启动动画。<br>nosplash: 略过启动splash窗口。</p>
 <p>更多的附加参数请参考文档：[虚幻四引擎命令行参数](https://docs.unrealengine.com/latest/CHN/Programming/Basics/CommandLineArguments/index.html)
-</li>
+</p></li>
 <li><p>一些示例：<br>UDK.exe server MyMap.udk<br>UDK.exe 127.0.0.1<br>UDK.exe MyMap.udk?-resX=640 -resY=480 -log log=log.txt<br>UDKLift.exe DM-发电站?Game=UTGame.UTTeamGame?listen=true?TeamIndex=0?Name=FS01 -log -windowed -resX=640 -resY=360 -nomoviestartup -nosplash windowPosX=0 windowPosY=0 -consolePosX=0 -consolePosY=365<br>MyGame.exe editor MyMap.umap -NoLoadStartupPackages -NoGADWarning</p>
 </li>
 </ol>
@@ -568,6 +569,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

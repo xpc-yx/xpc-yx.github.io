@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -59,8 +60,8 @@
 <meta property="article:published_time" content="2015-03-13T13:22:39.000Z">
 <meta property="article:modified_time" content="2019-12-19T16:22:33.355Z">
 <meta property="article:author" content="远行">
-<meta property="article:tag" content="CGAL">
 <meta property="article:tag" content="OpenGL">
+<meta property="article:tag" content="CGAL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://c7.staticflickr.com/8/7463/26842619574_12cf1f5142_o.jpg">
 
@@ -324,11 +325,11 @@
         <p>我终于把界面换成qt的了，即使我从大二开始就用mfc，一直用到去年上半年。也终于到了，我实在受不了mfc代码混乱的时候了，qt那么方便的东西，我为什么不早点用了。这里就不吐槽mfc的混乱，qt的方便了。在mfc里面建立一个复杂的界面，比如说有dock窗口，或者tab页面的，代码多，而且混乱麻烦，更无语的是，每次我都必须去搜索下，解决各种各样的问题，有的还可以理解，有的就是莫名其妙了。更别说什么代码清晰，跨平台之类的，何止是天方夜谭。</p>
 <p>下面，说说我自己逐渐搭建的这个框架吧。其实，这个框架是从我上一个项目里，使用mfc的单文档单视图，主窗口里面有几个dockpane，视图里面放置了渲染OpenGL的子窗口，过渡来的。在qt的框架里面，mfc所有的这些恶心的东西都没有了，只剩下一个MainWindow类。在这个类里面，创建菜单，工具条，状态条，主窗口，dock窗口，tab窗口。代码简洁方便。渲染opengl的窗口设置为MainWindow的主widget。渲染窗口只是一个普通的widget而已，可以任意放置。</p>
 <p>这样的做法能够把界面和渲染窗口独立出来，渲染窗口对应一个独立的类(COglWidget)，所以方便创建不同类型的复杂界面。我觉得我应该先用viso画个类图，才能说清楚。下图是我的界面。中间是COglWidget。右侧是一个DockWidget，里面放置了个设置Mesh属性的widget。</p>
-<p><img src="https://c7.staticflickr.com/8/7463/26842619574_12cf1f5142_o.jpg" alt=""></p>
+<p><img alt data-src="https://c7.staticflickr.com/8/7463/26842619574_12cf1f5142_o.jpg"></p>
 <p>通过主窗口的构造函数，可以看看如何创建这个界面，虽然在主窗口里面做这么的事情不是个好的习惯。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::CMainWindow(QWidget *parent)</span><br><span class="line">        : QMainWindow(parent)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        setWindowTitle(tr("Skeleton Extract"));</span><br><span class="line"></span><br><span class="line">        m_pSEMesh = new CSEMesh();</span><br><span class="line">        m_pOglForSE = new COglWidget(this, m_pSEMesh);</span><br><span class="line">        m_pSEMesh-&gt;SetOglWidget(m_pOglForSE);</span><br><span class="line">        setCentralWidget((QWidget*)m_pOglForSE);//设置中间是渲染OpenGL的widget      </span><br><span class="line"></span><br><span class="line">        m_pPCMesh = new CPointCloudMesh();</span><br><span class="line">        m_pOglForPC = new COglWidget(this, m_pPCMesh);</span><br><span class="line">        <span class="comment">//m_pOglForPC-&gt;SetEye(0.0, 0.0, 1.0);</span></span><br><span class="line">        m_pOglForPC-&gt;setFixedSize(960, 720);</span><br><span class="line">        m_pOglForPC-&gt;setWindowTitle(tr("Point Cloud For Geodesic Matrix Eigen Vector"));</span><br><span class="line">        m_pOglForPC-&gt;move((QApplication::desktop()-&gt;<span class="attribute">width</span>() - m_pOglForPC-&gt;width()) / <span class="number">2</span>,</span><br><span class="line">            (QApplication::desktop()-&gt;<span class="attribute">height</span>() - m_pOglForPC-&gt;height())/<span class="number">2</span>);</span><br><span class="line">        m_pOglForPC-&gt;hide();</span><br><span class="line">        m_pOglForPC-&gt;setWindowFlags(Qt::Window);</span><br><span class="line"></span><br><span class="line">        CreateActions();</span><br><span class="line">        CreateMenus();</span><br><span class="line">        CreateToolBars();</span><br><span class="line">        CreateStatusBar();</span><br><span class="line">        CreateDockWidgets();</span><br><span class="line"></span><br><span class="line">        setMinimumSize(960, 720);</span><br><span class="line">        setWindowState(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        std::string strName = "MeshData\\bunny_3k.m";</span><br><span class="line">        m_pSEMesh-&gt;LoadModel(strName.c_str());</span><br><span class="line">        m_pMeshNameLabel-&gt;setText(QString(strName.c_str()));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>再来看一个使用tabwidget的界面，记得在mfc中使用tab页面应该是比较麻烦，我也没用过。不过，在qt里面，唯一需要改变的是把tabwidget设置为central的widget，把其它widget加入到tab页面里面就行了。效果如图：<br><img src="https://c5.staticflickr.com/8/7433/27175531460_7ebec89490_o.jpg" alt=""><br>这个界面的创建代码如下，这里我把菜单，工具条，状态栏都去掉了。</p>
+<p>再来看一个使用tabwidget的界面，记得在mfc中使用tab页面应该是比较麻烦，我也没用过。不过，在qt里面，唯一需要改变的是把tabwidget设置为central的widget，把其它widget加入到tab页面里面就行了。效果如图：<br><img alt data-src="https://c5.staticflickr.com/8/7433/27175531460_7ebec89490_o.jpg"><br>这个界面的创建代码如下，这里我把菜单，工具条，状态栏都去掉了。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::CMainWindow(QWidget *parent)</span><br><span class="line">        : QMainWindow(parent)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        setWindowTitle(tr("Virtual Box"));</span><br><span class="line"></span><br><span class="line">        m_pMesh = new CCubeMesh();</span><br><span class="line">        m_pOglWidget = new COglWidget(this, m_pMesh);</span><br><span class="line"></span><br><span class="line">        m_pMainViewMesh = new CCubeMesh();</span><br><span class="line">        m_pMainViewMesh-&gt;DrawStyle(CCubeMesh::MAIN_VIEW);</span><br><span class="line">        m_pMainViewWidget = new CViewWidget(this, m_pMainViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pTopViewMesh = new CCubeMesh();</span><br><span class="line">        m_pTopViewMesh-&gt;DrawStyle(CCubeMesh::TOP_VIEW);</span><br><span class="line">        m_pTopViewWidget = new CViewWidget(this, m_pTopViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pSideViewMesh = new CCubeMesh();</span><br><span class="line">        m_pSideViewMesh-&gt;DrawStyle(CCubeMesh::SIDE_VIEW);</span><br><span class="line">        m_pSideViewWidget = new CViewWidget(this, m_pSideViewMesh);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//CreateActions();</span></span><br><span class="line">        <span class="comment">//CreateMenus();</span></span><br><span class="line">        <span class="comment">//CreateToolBars();</span></span><br><span class="line">        <span class="comment">//CreateStatusBar();</span></span><br><span class="line">        <span class="comment">//CreateDockWidgets();</span></span><br><span class="line"></span><br><span class="line">        setMinimumSize(960, 720);</span><br><span class="line">        setWindowState(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//std::string strName = "cube.obj";</span></span><br><span class="line">        <span class="comment">//m_pMesh-&gt;LoadModel(strName.c_str());</span></span><br><span class="line">        <span class="comment">//m_pMeshNameLabel-&gt;setText(QString(strName.c_str()));</span></span><br><span class="line">        m_pTabWidget = new QTabWidget(this);</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pOglWidget, "Cube View");</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pMainViewWidget, "Main View");</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pTopViewWidget, "Top View");</span><br><span class="line">        m_pTabWidget-&gt;addTab(m_pSideViewWidget, "Side View");</span><br><span class="line">        setCentralWidget((QWidget*)m_pTabWidget);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>从上面的代码中，可以看到创建一个OglWidget需要一个Mesh指针。在我的框架中，COglWidget内中只使用几个固定的Mesh函数。因此，可以把COglWidget实现为依赖于一个IMesh接口，这样就进一步把OpenGL窗口和Mesh分离开来。不管Mesh类的具体实现如何，OpenGL窗口只需要依赖IMesh接口，因此，第一个界面里面的Mesh类实际上组合了一个CGAL的CGAL::Polyhedron_3对象。而第二个界面的Mesh类是一个简单的渲染长方体的类，不过支持渲染多个视图而已。<br>下面说说，COglWidget类具有哪些功能。首先，渲染Mesh，包括设置视口，eye，投影，光照，背景等等，其次，处理鼠标按键操作模型，我的实现是把所有的鼠标按键消息都丢给了下层的一个trackball类，这个trackball类支持旋转缩放移动模型，另外还写了几个打开文件，以及选取背景色的操作。<br>现在到了Mesh的部分了。因为跟OpenGL窗口相关的只是IMesh接口，所以，我可以任意实现实际的Mesh类。<br>IMesh的定义如下，</p>
@@ -346,19 +347,19 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\11\07\谈谈QT和OpenGL\" rel="bookmark">谈谈QT和OpenGL</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现平面分割三维模型\" rel="bookmark">使用CGAL实现平面分割三维模型</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
+      <div class="popular-posts-title"><a href="\2013\11\07\谈谈QT和OpenGL\" rel="bookmark">谈谈QT和OpenGL</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\01\22\使用CGAL计算SDF分割模型\" rel="bookmark">使用CGAL计算SDF分割模型</a></div>
+      <div class="popular-posts-title"><a href="\2014\04\27\如何在MFC的OpenGL窗口中使用AntTweakBar\" rel="bookmark">如何在MFC中使用AntTweakBar</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\07\30\分享下我的OpenGL，CGAL，Boost库\" rel="bookmark">分享下我的OpenGL，CGAL，Boost库</a></div>
+      <div class="popular-posts-title"><a href="\2013\09\12\使用GDI+加载多种格式的纹理\" rel="bookmark">使用GDI+加载多种格式的纹理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2014\03\03\使用OpenGL渲染到图片\" rel="bookmark">使用OpenGL渲染到图片</a></div>
     </li>
   </ul>
 
@@ -382,8 +383,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CGAL/" rel="tag"># CGAL</a>
               <a href="/tags/OpenGL/" rel="tag"># OpenGL</a>
+              <a href="/tags/CGAL/" rel="tag"># CGAL</a>
           </div>
 
         
@@ -566,6 +567,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

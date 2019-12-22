@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -323,9 +324,9 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">class CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CA(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nA = new int[nSize];</span><br><span class="line">            printf("构造CA\n");</span><br><span class="line">        &#125;</span><br><span class="line">        virtual ~CA()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nA;</span><br><span class="line">            printf("析构CA\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nA;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class CB : public CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CB(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nB = new int[nSize];</span><br><span class="line">            printf("构造CB\n");</span><br><span class="line">        &#125;</span><br><span class="line">        ~CB()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nB;</span><br><span class="line">            printf("析构CB\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nB;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CA* pCA = new CB();</span><br><span class="line">    delete pCA;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>效果如图:</p>
-<p><img src="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png" alt="">，</p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png">，</p>
 <p>如果删掉CA析构函数前面的virtual，效果如图，</p>
-<p><img src="https://c2.staticflickr.com/8/7672/27396028106_085b740b99_o.png" alt=""></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7672/27396028106_085b740b99_o.png"></p>
 <p>你也可以实验在主函数里面定义些栈变量的CA和CB的对象，无论构造函数是否是virtual的，都能够正确的析构。</p>
 
     </div>
@@ -545,6 +546,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

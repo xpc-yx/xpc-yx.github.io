@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -330,7 +331,7 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算所有等值线</span></span><br><span class="line">    void CSEMesh::ComputeIsoLines(std::vector&lt;double&gt; scalarField)</span><br><span class="line">    &#123;</span><br><span class="line">        IsoLine isoline;</span><br><span class="line">        std::vector&lt;bool&gt; bHasIsoLine(FaceNum(), false);</span><br><span class="line"></span><br><span class="line">        m_isoLines.<span class="attribute">clear</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//找到值最小的顶点</span></span><br><span class="line">        Enriched_Model::Vertex_iterator pVertex = m_pModel-&gt;vertices_begin();</span><br><span class="line">        double fMinValue = 1e8;</span><br><span class="line">        Enriched_Model::Vertex_iterator pMinVertex;</span><br><span class="line">        while (pVertex != m_pModel-&gt;vertices_end())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (scalarField[pVertex-&gt;tag()] &lt; fMinValue)</span><br><span class="line">            &#123;</span><br><span class="line">                fMinValue = scalarField[pVertex-&gt;tag()];</span><br><span class="line">                pMinVertex = pVertex;</span><br><span class="line">            &#125;</span><br><span class="line">            pVertex++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vector&lt;bool&gt; bVisited(FaceNum(), false);</span><br><span class="line"></span><br><span class="line">        Enriched_Model::Facet_iterator pSourceFace = pMinVertex-&gt;vertex_begin()-&gt;facet();</span><br><span class="line">        &#123;</span><br><span class="line">            struct FaceInfor</span><br><span class="line">            &#123;</span><br><span class="line">                Enriched_Model::Face_iterator pFace;</span><br><span class="line">                int nOrder;</span><br><span class="line">                FaceInfor(Enriched_Model::Face_iterator face, int <span class="attribute">order</span>) : pFace(face), nOrder(order)&#123;&#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            std::queue&lt;FaceInfor&gt; queFaces;</span><br><span class="line">            bVisited[pSourceFace-&gt;tag()] = true;</span><br><span class="line">            queFaces.push(FaceInfor(pSourceFace, 0));</span><br><span class="line"></span><br><span class="line">            while (queFaces.empty() == false)</span><br><span class="line">            &#123;</span><br><span class="line">                FaceInfor faceInfor = queFaces.front();</span><br><span class="line">                queFaces.pop();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (ComputeIsoLine(scalarField, faceInfor<span class="selector-class">.pFace</span>, bHasIsoLine, isoline))</span><br><span class="line">                &#123;</span><br><span class="line">                    isoline.order = faceInfor.nOrder;</span><br><span class="line">                    m_isoLines.push_back(isoline);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                Enriched_Model::Halfedge_around_facet_circulator pHalfedge = faceInfor.pFace-&gt;facet_begin();</span><br><span class="line">                do</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (pHalfedge-&gt;opposite()-&gt;is_border())</span><br><span class="line">                    &#123;</span><br><span class="line">                        continue;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    Enriched_Model::Face_iterator pFace = pHalfedge-&gt;opposite()-&gt;facet();</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (bVisited[pFace-&gt;tag()] == false)</span><br><span class="line">                    &#123;</span><br><span class="line">                        queFaces.push(FaceInfor(pFace, faceInfor.nOrder + 1));</span><br><span class="line">                        bVisited[pFace-&gt;tag()] = true;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; while (++pHalfedge != faceInfor.pFace-&gt;facet_begin());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sort(m_isoLines.begin(), m_isoLines.end());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>等值线效果图：</p>
-<p><img src="https://c2.staticflickr.com/8/7187/27175488890_71fc72e245_o.png" alt=""></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7187/27175488890_71fc72e245_o.png"></p>
 
     </div>
 
@@ -347,10 +348,10 @@
       <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现平面分割三维模型\" rel="bookmark">使用CGAL实现平面分割三维模型</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
+      <div class="popular-posts-title"><a href="\2015\01\22\使用CGAL计算SDF分割模型\" rel="bookmark">使用CGAL计算SDF分割模型</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\01\22\使用CGAL计算SDF分割模型\" rel="bookmark">使用CGAL计算SDF分割模型</a></div>
+      <div class="popular-posts-title"><a href="\2013\08\05\使用CGAL实现简单的模型分割\" rel="bookmark">使用CGAL实现简单的模型分割</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2013\07\30\分享下我的OpenGL，CGAL，Boost库\" rel="bookmark">分享下我的OpenGL，CGAL，Boost库</a></div>
@@ -561,6 +562,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -327,9 +328,9 @@
 <p>其实，这里可以考虑到转型。类型转换有两种考虑，转值和转指针。如果将自定义多面体类转换为默认的多面体类，肯定会生成个具大的临时对象，多浪费啊。所以了，可以先取地址转换为基类指针再解引用就获得了cgal默认的Polyhedron_3对象了。我的代码如下：std::pair&lt;double, double&gt; min_max_sdf = CGAL::sdf_values(<em>(Polyhedron</em>)m_pModel, m_sdf_property_map);</p>
 <p>至于其它部分的使用，参考cgal手册即可，非常简单方便。下面再贴几张图，展示下sdf标量场的分布，以及利用sdf的分割结果。</p>
 <p>sdf标量场，白色的是等值线。</p>
-<p><img src="https://c2.staticflickr.com/8/7719/27451907645_8f5cee7a2e_o.png" alt=""></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7719/27451907645_8f5cee7a2e_o.png"></p>
 <p>sdf分割模型结果：</p>
-<p><img src="https://c2.staticflickr.com/8/7604/27417732786_830e67189b_o.png" alt=""></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7604/27417732786_830e67189b_o.png"></p>
 <p>至于分割边界不是很整齐，这只是跟模型密度有关系，模型越密，能够得到越平滑的边界，也有相关的算法优化边界。</p>
 
     </div>
@@ -560,6 +561,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -315,10 +316,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>带权中位数定义如下：<br><img src="https://c3.staticflickr.com/8/7433/27312306842_c847ce5c27_o.jpg" alt=""></p>
-<p>邮局位置问题定义如下：<br><img src="https://c1.staticflickr.com/8/7123/27312315312_79d8c06f47_o.jpg" alt=""></p>
+        <p>带权中位数定义如下：<br><img alt data-src="https://c3.staticflickr.com/8/7433/27312306842_c847ce5c27_o.jpg"></p>
+<p>邮局位置问题定义如下：<br><img alt data-src="https://c1.staticflickr.com/8/7123/27312315312_79d8c06f47_o.jpg"></p>
 <p>上一篇文章输油管道问题里面证明了，当权值Wi都为1的时候，中位数就是最佳的解。但是，现在Wi已经不一定是1了。所以，现在<br>需要证明在任意Wi的取值情况下，带权中位数能够成为邮局位置的最佳解。假设，所有Wi都是1的倍数，如果是小数的话，可以所有的<br>Wi都乘以一定的倍数。那么wi<em>d(p,pi) = Σ(p,pi)(i从1到wi)，这个意思是把距离乘以了wi倍。<br>但是，现在可以换一种看法，换成了pi位置有wi个重合的点，且每一个点的权值都是1，那么其和也是wi</em>d(p,pi)。<strong>那么对所有的pi<br>都这样分解，就把问题重新转换成了输油管道问题了</strong>。输油管道问题的最优解就是中位数，那么邮局问题的最优解就是<strong>转换之后的<br>这些点的中位数点</strong>。而这个点一定存在于<strong>带权中位数</strong>那个点分解出的一堆点中。<br>二维邮局问题的解法是把x和y分开求2次一维邮局问题，然后把解组和起来，得到答案。</p>
-<p>求带权中位数的算法比较简单，直接的做法是，先把n个点按照位置排序，然后按点的位置从小到大遍历，找到满足要求的点即可。<br>不算排序点位置的预处理，因为很多时候点应该就是按顺序给出的，所以其时间复杂度是O(n)。<br>要求：<img src="https://c6.staticflickr.com/8/7430/26803630933_bbf4ab1389_o.jpg" alt=""></p>
+<p>求带权中位数的算法比较简单，直接的做法是，先把n个点按照位置排序，然后按点的位置从小到大遍历，找到满足要求的点即可。<br>不算排序点位置的预处理，因为很多时候点应该就是按顺序给出的，所以其时间复杂度是O(n)。<br>要求：<img alt data-src="https://c6.staticflickr.com/8/7430/26803630933_bbf4ab1389_o.jpg"></p>
 
     </div>
 
@@ -362,12 +363,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2012/03/11/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97%20%E5%92%8C%20%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" rel="prev" title="两个栈实现一个队列 和 两个队列实现一个栈">
-      <i class="fa fa-chevron-left"></i> 两个栈实现一个队列 和 两个队列实现一个栈
+    <a href="/2012/03/09/%E8%BE%93%E6%B2%B9%E7%AE%A1%E9%81%93%E9%97%AE%E9%A2%98(POJ%20-%201723)/" rel="prev" title="输油管道问题(POJ - 1723)">
+      <i class="fa fa-chevron-left"></i> 输油管道问题(POJ - 1723)
     </a></div>
       <div class="post-nav-item">
-    <a href="/2012/03/14/hdu%20-%201225Football%20Score/" rel="next" title="hdu - 1225:Football Score">
-      hdu - 1225:Football Score <i class="fa fa-chevron-right"></i>
+    <a href="/2012/03/11/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97%20%E5%92%8C%20%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" rel="next" title="两个栈实现一个队列 和 两个队列实现一个栈">
+      两个栈实现一个队列 和 两个队列实现一个栈 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -536,6 +537,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -321,12 +322,12 @@
 
       
         <p>前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。</p>
-<p>下图是push_heap的示意图。<img src="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png" alt=""></p>
+<p>下图是push_heap的示意图。<img alt data-src="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png"></p>
 <p>从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void push_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    <span class="comment">// 注意，调用该函数时候，新元素位于最后一个位置(last-1)。</span></span><br><span class="line">    __push_heap_aux(first, last, distance_type(first), value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">inline void __push_heap_aux(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, Distance*, T*) &#123;</span><br><span class="line">    __push_heap(first, Distance((last - first) - <span class="number">1</span>), Distance(<span class="number">0</span>),</span><br><span class="line">        T(*(last - 1)));</span><br><span class="line">    <span class="comment">// (last-first)–1代表新元素的索引，0是堆首的索引，*(last - 1)是新加入的值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void __push_heap(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance topIndex, T value) &#123;</span><br><span class="line">    Distance parent = (holeIndex - 1) / 2;  // 找出父節點</span><br><span class="line">    while (holeIndex &gt; topIndex  *(first + parent) &lt; value) &#123;</span><br><span class="line">        <span class="comment">// 尚未到达顶端，且父节点小于新值</span></span><br><span class="line">        <span class="comment">// 由于以上使用 operator&lt;，可知 STL heap 是max-heap</span></span><br><span class="line">        *(first + holeIndex) = *(first + parent);   // 令洞值为父值</span><br><span class="line">        holeIndex = parent; // percolate up：调整洞号，向上提升至父节点。</span><br><span class="line">        parent = (holeIndex - 1) / 2;   // 新洞的父节点</span><br><span class="line">    &#125;    <span class="comment">// 持续至顶端，或满足 heap 的次序特性为止。</span></span><br><span class="line">    *(first + holeIndex) = value;   // 令洞值为新值。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>push_heap的用法是输入迭代器对，并且保证[first,last-1)是最大堆，*(last-1)是新加入的元素。push_heap调用辅助函数<strong>push_heap_aux。至于为什么需要这个辅助函数了？应该是为了提取出distance_type和value_type吧，这两个内联函数的定义，可以参考stl源码剖析迭代器的那章。下面来思考真正的实现函数</strong>push_heap。这个函数需要新加入元素位置holeIndex和堆首位置topIndex，另外还有保存好的新加入值。算法的过程很简单，就是上溯holeIndex，找到真正满足条件的位置（无法继续上回溯），然后把value放入该位置即可。<br>pop_heap实际上是一个相反的过程。实现思路是将堆大小加一后，再找出最后一个元素应该放入的位置holeIndex，最后再加入这个值。示意图如下：</p>
-<p><img src="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png" alt=""><br>下面看看摘录出来的代码，思想类似于push_heap，只需要求出最终的holeIndex。</p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png"><br>下面看看摘录出来的代码，思想类似于push_heap，只需要求出最终的holeIndex。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    __pop_heap_aux(first, last, value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void __pop_heap_aux(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, T*) &#123;</span><br><span class="line">    __pop_heap(first, last - 1, last - 1, T(*(last - 1)), distance_type(first));</span><br><span class="line">    <span class="comment">// pop动作的結果为底层容器的第一個元素。因此，首先设定欲调整值为尾值，然后將首值調至 </span></span><br><span class="line">    <span class="comment">// 尾节点（所以以上將迭代器result设为last-1）。然后重整 [first, last-1)，</span></span><br><span class="line">    <span class="comment">// 使之重新成一個合格的 heap。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,</span><br><span class="line">    RandomAccessIterator result, T value, Distance*) &#123;</span><br><span class="line">    *result = *first; // 設定尾值为首值，于是尾值即是結果，</span><br><span class="line">    <span class="comment">// 可由调用底层容器之 pop_back() 取出尾值。</span></span><br><span class="line">    __adjust_heap(first, Distance(0), Distance(last - first), value);</span><br><span class="line">    <span class="comment">// 以上欲重新調整 heap，洞号为 0，欲調整值为value。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void __adjust_heap(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance len, T value) &#123;</span><br><span class="line">    Distance topIndex = holeIndex;</span><br><span class="line">    Distance secondChild = 2 * holeIndex + 2;   // 洞节点之右子节点</span><br><span class="line">    while (secondChild &lt; len) &#123;</span><br><span class="line">        <span class="comment">// 比较洞节点之左右兩个子值，然后以 secondChild 代表较大子节点。</span></span><br><span class="line">        <span class="keyword">if</span> (*(first + secondChild) &lt; *(first + (secondChild - <span class="number">1</span>)))</span><br><span class="line">            secondChild--;</span><br><span class="line">        <span class="comment">// Percolate down：令较大大子值为洞值，再令洞号下移至较大子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + secondChild);</span><br><span class="line">        holeIndex = secondChild;</span><br><span class="line">        <span class="comment">// 找出新洞节点的右子节点</span></span><br><span class="line">        secondChild = 2 * (secondChild + 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (secondChild == len) &#123; <span class="comment">// 沒有右子节点，只有左子节点</span></span><br><span class="line">        <span class="comment">// Percolate down：令左子值为洞值，再令洞号下移至左子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + (secondChild - 1));</span><br><span class="line">        holeIndex = secondChild - 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 將欲调整值填入目前的洞号內。注意，此時肯定滿足次序特性。</span></span><br><span class="line">    <span class="comment">// 依侯捷之见，下面直接改為 *(first + holeIndex) = value; 应该可以。</span></span><br><span class="line">    __push_heap(first, holeIndex, topIndex, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>类似于push_heap，pop_heap也是调用辅助函数<strong>pop_heap_aux。</strong>pop_heap_aux调用<strong>pop_heap。</strong>pop_heap调用<strong>adjust_heap调整holeIndex，最终在holeIndex处放入value（原最后一个的值）。关键代码是</strong>adjust_heap中的循环。循环的主要意思是将holeIndex不断下放，直到最底层。最后的if语句的意思是，如果最底层有左子节点，而没有右子节点，那么最终位置肯定是这个左子节点。最后一句代码的意思是加入value到holeIndex，由于已经调整完毕，所以一个赋值操作也可以达到要求，参见侯捷注释。<br>sort_heap就比较简单了，不断将极值移动到末尾，不断pop_heap。</p>
@@ -349,7 +350,7 @@
       <div class="popular-posts-title"><a href="\2014\12\29\stl源码剖析之priority_queue\" rel="bookmark">stl源码剖析之priority_queue</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
+      <div class="popular-posts-title"><a href="\2015\04\22\stl源码剖析之sort\" rel="bookmark">stl源码剖析之sort</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之stack\" rel="bookmark">stl源码剖析之stack</a></div>
@@ -358,7 +359,7 @@
       <div class="popular-posts-title"><a href="\2015\06\10\stl源码剖析之vector\" rel="bookmark">stl源码剖析之vector</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\04\22\stl源码剖析之sort\" rel="bookmark">stl源码剖析之sort</a></div>
+      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
     </li>
   </ul>
 
@@ -565,6 +566,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

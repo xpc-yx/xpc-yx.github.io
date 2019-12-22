@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -1048,8 +1049,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>该题就是求一个字符串的最长回文子串，就是一个满足本身是回文的最长的子串。<br>该题貌似可以用后缀数组和扩展kmp做，但是好像后缀数组貌似会tle，改学了下一个专门的叫Manacher算法的东西。。。<br>这又是一个线性改良算法。找到有篇文章写的不错，链接如下：<br><a href="http://www.felix021.com/blog/read.php?2040" target="_blank" rel="noopener">http://www.felix021.com/blog/read.php?2040</a>。<br>该算法说起来也不是太复杂，比较容易看懂的那种，当然是接触过其它字符串算法的前提下了。记得以前就看了看，硬是没看懂，想不到现在这么快就明白了。<br>该算法需要额外的O(N)空间。说起来是空间换时间吧。<br>大概的思路是先预处理字符串，使其成为一个长度一定为偶数的串。而且第一个字符是’$’，假设’$’没有在原串出现过。然后再在原来的每个字符前面加上’#’，最后再加个<br>‘#’。比如，abc就变成了$#a#b#c#。现在再对新的字符串进行处理。<br>开一个新的数组nRad[MAX]，nRad[i]表示新串中第i个位置向左边和向右边同时扩展并且保持对称的最大距离。如果求出了nRad数组后，有一个结论，nRad[i]-1恰好表示原串对应的位置能够扩展的回文子串长度。这个的证明，应该比较简单，因为新串基本上是原串的2倍了，而且新串每一个有效字符两侧都有插入的#，这个找个例子看下就知道是这样了。<br>最重要的是如何求出nRad数组。<br>求这个数组的算法也主要是利用了一些间接的结论优化了nRad[i]的初始化值。比如我们求nRad[i]的时候，如果知道了i以前的nRad值，而且知道了前面有一个位置id，能够最大的向两边扩展距离max。那么有一个结论，nRad[i] 能够初始化为min(nRad[2*id - i], max - i)，然后再进行递增。关键是如何证明这个，这个的证明，对照图片就很清楚了。<br>证明如下：<br>当 mx - i &gt; P[j] 的时候，以S[j]为中心的回文子串包含在以S[id]为中心的回文子串中，由于 i 和 j 对称，<br>以S[i]为中心的回文子串必然包含在以S[id]为中心的回文子串中，所以必有 P[i] = P[j]，见下图。<br><img src="https://c2.staticflickr.com/8/7049/27312602222_9f02e36521_o.png" alt></p>
-<p>当 P[j] &gt; mx - i 的时候，以S[j]为中心的回文子串不完全包含于以S[id]为中心的回文子串中，但是基于<br>对称性可知，下图中两个绿框所包围的部分是相同的，也就是说以S[i]为中心的回文子串，其向右至少会<br>扩张到mx的位置，也就是说 P[i] &gt;= mx - i。至于mx之后的部分是否对称，就只能老老实实去匹配了。<br><img src="https://c2.staticflickr.com/8/7322/27312603572_34d229d8e5_o.png" alt><br>这个就说明得很清楚了。。。</p>
+          <p>该题就是求一个字符串的最长回文子串，就是一个满足本身是回文的最长的子串。<br>该题貌似可以用后缀数组和扩展kmp做，但是好像后缀数组貌似会tle，改学了下一个专门的叫Manacher算法的东西。。。<br>这又是一个线性改良算法。找到有篇文章写的不错，链接如下：<br><a href="http://www.felix021.com/blog/read.php?2040" target="_blank" rel="noopener">http://www.felix021.com/blog/read.php?2040</a>。<br>该算法说起来也不是太复杂，比较容易看懂的那种，当然是接触过其它字符串算法的前提下了。记得以前就看了看，硬是没看懂，想不到现在这么快就明白了。<br>该算法需要额外的O(N)空间。说起来是空间换时间吧。<br>大概的思路是先预处理字符串，使其成为一个长度一定为偶数的串。而且第一个字符是’$’，假设’$’没有在原串出现过。然后再在原来的每个字符前面加上’#’，最后再加个<br>‘#’。比如，abc就变成了$#a#b#c#。现在再对新的字符串进行处理。<br>开一个新的数组nRad[MAX]，nRad[i]表示新串中第i个位置向左边和向右边同时扩展并且保持对称的最大距离。如果求出了nRad数组后，有一个结论，nRad[i]-1恰好表示原串对应的位置能够扩展的回文子串长度。这个的证明，应该比较简单，因为新串基本上是原串的2倍了，而且新串每一个有效字符两侧都有插入的#，这个找个例子看下就知道是这样了。<br>最重要的是如何求出nRad数组。<br>求这个数组的算法也主要是利用了一些间接的结论优化了nRad[i]的初始化值。比如我们求nRad[i]的时候，如果知道了i以前的nRad值，而且知道了前面有一个位置id，能够最大的向两边扩展距离max。那么有一个结论，nRad[i] 能够初始化为min(nRad[2*id - i], max - i)，然后再进行递增。关键是如何证明这个，这个的证明，对照图片就很清楚了。<br>证明如下：<br>当 mx - i &gt; P[j] 的时候，以S[j]为中心的回文子串包含在以S[id]为中心的回文子串中，由于 i 和 j 对称，<br>以S[i]为中心的回文子串必然包含在以S[id]为中心的回文子串中，所以必有 P[i] = P[j]，见下图。<br><img alt data-src="https://c2.staticflickr.com/8/7049/27312602222_9f02e36521_o.png"></p>
+<p>当 P[j] &gt; mx - i 的时候，以S[j]为中心的回文子串不完全包含于以S[id]为中心的回文子串中，但是基于<br>对称性可知，下图中两个绿框所包围的部分是相同的，也就是说以S[i]为中心的回文子串，其向右至少会<br>扩张到mx的位置，也就是说 P[i] &gt;= mx - i。至于mx之后的部分是否对称，就只能老老实实去匹配了。<br><img alt data-src="https://c2.staticflickr.com/8/7322/27312603572_34d229d8e5_o.png"><br>这个就说明得很清楚了。。。</p>
 <p>代码如下：</p>
           <!--noindex-->
             <div class="post-button">
@@ -1572,6 +1573,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

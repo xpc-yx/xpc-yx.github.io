@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -315,9 +316,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这篇论文讲的是交互式模型分割。用户用画笔在模型上面绘制出一笔，然后获得相关的分割区域。<br>这篇论文的思路大致分为三步。第一步，对所有顶点或者面计算sdf值。第二步，将笔画投影作为前景，估计一个混合高斯模型，另外随机选取1000个顶点或面估计一个高斯混合模型。第三步，利用sdf值和高斯混合模型，进行graph-cut。<br>关于sdf值和graph-cut都可以阅读论文引用的文章从而得到知晓。sdf值的计算可以到提出该观点的作者主页上面下载相关软件。但是该软件只能计算面的sdf值，不过可以再映射到顶点上面。graph-cut的应用更为广泛，这个也能到Yuri Y. Boykov主页上下载相关代码，然后使用即可。<br>更困难的事情是确定graph-cut的参数，这个需要多次调整。<br>下面是实现效果。<br><img src="https://c2.staticflickr.com/8/7355/27379585191_91565d63b1_o.png" alt=""></p>
-<p><img src="https://c2.staticflickr.com/8/7623/26843934273_32cfa03b9b_o.png" alt=""></p>
-<p><img src="https://c2.staticflickr.com/8/7741/26843934033_afc01718a5_o.png" alt=""></p>
+        <p>这篇论文讲的是交互式模型分割。用户用画笔在模型上面绘制出一笔，然后获得相关的分割区域。<br>这篇论文的思路大致分为三步。第一步，对所有顶点或者面计算sdf值。第二步，将笔画投影作为前景，估计一个混合高斯模型，另外随机选取1000个顶点或面估计一个高斯混合模型。第三步，利用sdf值和高斯混合模型，进行graph-cut。<br>关于sdf值和graph-cut都可以阅读论文引用的文章从而得到知晓。sdf值的计算可以到提出该观点的作者主页上面下载相关软件。但是该软件只能计算面的sdf值，不过可以再映射到顶点上面。graph-cut的应用更为广泛，这个也能到Yuri Y. Boykov主页上下载相关代码，然后使用即可。<br>更困难的事情是确定graph-cut的参数，这个需要多次调整。<br>下面是实现效果。<br><img alt data-src="https://c2.staticflickr.com/8/7355/27379585191_91565d63b1_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7623/26843934273_32cfa03b9b_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7741/26843934033_afc01718a5_o.png"></p>
 
     </div>
 
@@ -547,6 +548,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

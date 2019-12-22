@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -566,9 +567,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这篇论文讲的是交互式模型分割。用户用画笔在模型上面绘制出一笔，然后获得相关的分割区域。<br>这篇论文的思路大致分为三步。第一步，对所有顶点或者面计算sdf值。第二步，将笔画投影作为前景，估计一个混合高斯模型，另外随机选取1000个顶点或面估计一个高斯混合模型。第三步，利用sdf值和高斯混合模型，进行graph-cut。<br>关于sdf值和graph-cut都可以阅读论文引用的文章从而得到知晓。sdf值的计算可以到提出该观点的作者主页上面下载相关软件。但是该软件只能计算面的sdf值，不过可以再映射到顶点上面。graph-cut的应用更为广泛，这个也能到Yuri Y. Boykov主页上下载相关代码，然后使用即可。<br>更困难的事情是确定graph-cut的参数，这个需要多次调整。<br>下面是实现效果。<br><img src="https://c2.staticflickr.com/8/7355/27379585191_91565d63b1_o.png" alt></p>
-<p><img src="https://c2.staticflickr.com/8/7623/26843934273_32cfa03b9b_o.png" alt></p>
-<p><img src="https://c2.staticflickr.com/8/7741/26843934033_afc01718a5_o.png" alt></p>
+          <p>这篇论文讲的是交互式模型分割。用户用画笔在模型上面绘制出一笔，然后获得相关的分割区域。<br>这篇论文的思路大致分为三步。第一步，对所有顶点或者面计算sdf值。第二步，将笔画投影作为前景，估计一个混合高斯模型，另外随机选取1000个顶点或面估计一个高斯混合模型。第三步，利用sdf值和高斯混合模型，进行graph-cut。<br>关于sdf值和graph-cut都可以阅读论文引用的文章从而得到知晓。sdf值的计算可以到提出该观点的作者主页上面下载相关软件。但是该软件只能计算面的sdf值，不过可以再映射到顶点上面。graph-cut的应用更为广泛，这个也能到Yuri Y. Boykov主页上下载相关代码，然后使用即可。<br>更困难的事情是确定graph-cut的参数，这个需要多次调整。<br>下面是实现效果。<br><img alt data-src="https://c2.staticflickr.com/8/7355/27379585191_91565d63b1_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7623/26843934273_32cfa03b9b_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7741/26843934033_afc01718a5_o.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2013/08/31/PaintMeshCutting%E7%9A%84%E5%AE%9E%E7%8E%B0/#more" rel="contents">
@@ -694,7 +695,7 @@
       
           <p>第一步，先把鼠标轨迹点<strong>逆投影</strong>到三维世界的观察坐标系。<br>第二步，把第一步获得的三维坐标点集合<strong>投射到模型上面</strong>，获得笔画，就是模型内部的一些相互连接的边。<br>第三步，沿着第二步获得那些相互连接的边进行<strong>欧拉操作分裂边</strong>。可能需要多分割几次才会分割出模型的一部分。<br>第四步，<strong>搜索整个模型，对不同的部分进行标记</strong>。</p>
 <p>下面是实现的一些效果。绿色线是鼠标轨迹，红色线是投影到模型上面的边的连接线。</p>
-<p><img src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png" alt></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/#more" rel="contents">
@@ -818,9 +819,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>关于cgal的使用就不介绍了。安装了也很麻烦，但是可以直接使用库，可以去我的上一篇文章下载，<a href="http://www.xpc-yx.com/2013/07/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84opengl%EF%BC%8Ccgal%EF%BC%8Cboost%E5%BA%93/" target="_blank" rel="noopener" title="cgal下载">cgal下载</a>。<br>这里只简单的说说实现切割模型的方法。<br>判断所有的顶点在面的哪一面，如果一个面的<strong>所有点</strong>都在切割面的正面，那么这个面就是在切割面的positive部分，反之，如果一个面的所有点都在切割面的负面，那么这个面就是在切割面的negative部分，其余的面就是和切割面<strong>相交</strong>了。根据这个简单的原理，我们就可以用切割面把模型分为<strong>三部分</strong>。以下是我用cgal实现的效果。<br><img src="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png" alt></p>
-<p><img src="https://c2.staticflickr.com/8/7623/27451282835_e4faaef81a_o.png" alt></p>
-<p><img src="https://c2.staticflickr.com/8/7010/27379670911_ebe4a7eace_o.png" alt><br>从图片来看，效果基本还行，只是切割处不光滑，但是对于这么简单的算法能实现的效果，已经不错了，性价比很高。<br>如果想进一步平滑分割处，有什么办法了？我们既然已经把模型内部的面分成三部分了，那么我们只需要计算会和切割面相交的面和切割面的交点，面和面的交点应该是一条直线，那么应该有2个交点，我们再沿着这条相交线，<strong>对模型内部的面进行分割</strong>就行了。如果分割后出现非三角面，我们还可以进行<strong>三角面片化</strong>。具体的实现也不会难如上青天。</p>
+          <p>关于cgal的使用就不介绍了。安装了也很麻烦，但是可以直接使用库，可以去我的上一篇文章下载，<a href="http://www.xpc-yx.com/2013/07/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84opengl%EF%BC%8Ccgal%EF%BC%8Cboost%E5%BA%93/" target="_blank" rel="noopener" title="cgal下载">cgal下载</a>。<br>这里只简单的说说实现切割模型的方法。<br>判断所有的顶点在面的哪一面，如果一个面的<strong>所有点</strong>都在切割面的正面，那么这个面就是在切割面的positive部分，反之，如果一个面的所有点都在切割面的负面，那么这个面就是在切割面的negative部分，其余的面就是和切割面<strong>相交</strong>了。根据这个简单的原理，我们就可以用切割面把模型分为<strong>三部分</strong>。以下是我用cgal实现的效果。<br><img alt data-src="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7623/27451282835_e4faaef81a_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7010/27379670911_ebe4a7eace_o.png"><br>从图片来看，效果基本还行，只是切割处不光滑，但是对于这么简单的算法能实现的效果，已经不错了，性价比很高。<br>如果想进一步平滑分割处，有什么办法了？我们既然已经把模型内部的面分成三部分了，那么我们只需要计算会和切割面相交的面和切割面的交点，面和面的交点应该是一条直线，那么应该有2个交点，我们再沿着这条相交线，<strong>对模型内部的面进行分割</strong>就行了。如果分割后出现非三角面，我们还可以进行<strong>三角面片化</strong>。具体的实现也不会难如上青天。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/#more" rel="contents">
@@ -1605,6 +1606,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

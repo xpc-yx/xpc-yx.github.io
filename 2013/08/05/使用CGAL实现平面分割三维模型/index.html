@@ -14,6 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -30,9 +31,9 @@
     copycode: {"enable":true,"show_result":true,"style":"flat"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     algolia: {
       appID: '',
@@ -60,8 +61,8 @@
 <meta property="article:published_time" content="2013-08-05T13:29:42.000Z">
 <meta property="article:modified_time" content="2019-12-19T16:22:33.319Z">
 <meta property="article:author" content="远行">
-<meta property="article:tag" content="CGAL">
 <meta property="article:tag" content="OpenGL">
+<meta property="article:tag" content="CGAL">
 <meta property="article:tag" content="三维模型处理">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png">
@@ -323,9 +324,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>关于cgal的使用就不介绍了。安装了也很麻烦，但是可以直接使用库，可以去我的上一篇文章下载，<a href="http://www.xpc-yx.com/2013/07/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84opengl%EF%BC%8Ccgal%EF%BC%8Cboost%E5%BA%93/" target="_blank" rel="noopener" title="cgal下载">cgal下载</a>。<br>这里只简单的说说实现切割模型的方法。<br>判断所有的顶点在面的哪一面，如果一个面的<strong>所有点</strong>都在切割面的正面，那么这个面就是在切割面的positive部分，反之，如果一个面的所有点都在切割面的负面，那么这个面就是在切割面的negative部分，其余的面就是和切割面<strong>相交</strong>了。根据这个简单的原理，我们就可以用切割面把模型分为<strong>三部分</strong>。以下是我用cgal实现的效果。<br><img src="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png" alt=""></p>
-<p><img src="https://c2.staticflickr.com/8/7623/27451282835_e4faaef81a_o.png" alt=""></p>
-<p><img src="https://c2.staticflickr.com/8/7010/27379670911_ebe4a7eace_o.png" alt=""><br>从图片来看，效果基本还行，只是切割处不光滑，但是对于这么简单的算法能实现的效果，已经不错了，性价比很高。<br>如果想进一步平滑分割处，有什么办法了？我们既然已经把模型内部的面分成三部分了，那么我们只需要计算会和切割面相交的面和切割面的交点，面和面的交点应该是一条直线，那么应该有2个交点，我们再沿着这条相交线，<strong>对模型内部的面进行分割</strong>就行了。如果分割后出现非三角面，我们还可以进行<strong>三角面片化</strong>。具体的实现也不会难如上青天。</p>
+        <p>关于cgal的使用就不介绍了。安装了也很麻烦，但是可以直接使用库，可以去我的上一篇文章下载，<a href="http://www.xpc-yx.com/2013/07/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84opengl%EF%BC%8Ccgal%EF%BC%8Cboost%E5%BA%93/" target="_blank" rel="noopener" title="cgal下载">cgal下载</a>。<br>这里只简单的说说实现切割模型的方法。<br>判断所有的顶点在面的哪一面，如果一个面的<strong>所有点</strong>都在切割面的正面，那么这个面就是在切割面的positive部分，反之，如果一个面的所有点都在切割面的负面，那么这个面就是在切割面的negative部分，其余的面就是和切割面<strong>相交</strong>了。根据这个简单的原理，我们就可以用切割面把模型分为<strong>三部分</strong>。以下是我用cgal实现的效果。<br><img alt data-src="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7623/27451282835_e4faaef81a_o.png"></p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7010/27379670911_ebe4a7eace_o.png"><br>从图片来看，效果基本还行，只是切割处不光滑，但是对于这么简单的算法能实现的效果，已经不错了，性价比很高。<br>如果想进一步平滑分割处，有什么办法了？我们既然已经把模型内部的面分成三部分了，那么我们只需要计算会和切割面相交的面和切割面的交点，面和面的交点应该是一条直线，那么应该有2个交点，我们再沿着这条相交线，<strong>对模型内部的面进行分割</strong>就行了。如果分割后出现非三角面，我们还可以进行<strong>三角面片化</strong>。具体的实现也不会难如上青天。</p>
 
     </div>
 
@@ -336,19 +337,19 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\11\07\谈谈QT和OpenGL\" rel="bookmark">谈谈QT和OpenGL</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2015\03\13\说说我的QT下使用OpenGL渲染Mesh的框架\" rel="bookmark">说说我的QT下使用OpenGL渲染Mesh的框架</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2015\02\03\对模型进行谱分析计算特征向量\" rel="bookmark">对模型进行谱分析计算特征向量</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2015\02\06\提取三维表面标量场的等值线\" rel="bookmark">提取三维表面标量场的等值线</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2015\03\13\说说我的QT下使用OpenGL渲染Mesh的框架\" rel="bookmark">说说我的QT下使用OpenGL渲染Mesh的框架</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\11\07\谈谈QT和OpenGL\" rel="bookmark">谈谈QT和OpenGL</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\03\13\OpenGL视口点投影到视角空间及反投影\" rel="bookmark">OpenGL视口点投影到视角空间及反投影</a></div>
+      <div class="popular-posts-title"><a href="\2013\11\15\Assimp与CGAL的联合使用问题\" rel="bookmark">Assimp与CGAL的联合使用问题</a></div>
     </li>
   </ul>
 
@@ -372,8 +373,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CGAL/" rel="tag"># CGAL</a>
               <a href="/tags/OpenGL/" rel="tag"># OpenGL</a>
+              <a href="/tags/CGAL/" rel="tag"># CGAL</a>
               <a href="/tags/%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E5%A4%84%E7%90%86/" rel="tag"># 三维模型处理</a>
           </div>
 
@@ -557,6 +558,9 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
