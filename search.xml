@@ -1007,7 +1007,7 @@
 <p>从上面代码可以看出，调用GfxTempObj.SetObject(“RankAward”, GfxAwardDatas)可以设置GFxObject对象的GFxObject属性，从而能够传输复合结构体类型的数组。假设as中对应的数组定义为var RankAwardDatas:Array=new Array();那么，在as代码中RankAwardDatas[0].RankAward.IconSource则能访问该数组第一个元素的结构体成员的IconSource属性。</p>
 ]]></content>
       <categories>
-        <category>虚幻引擎</category>
+        <category>UE4</category>
       </categories>
       <tags>
         <tag>scaleform</tag>
