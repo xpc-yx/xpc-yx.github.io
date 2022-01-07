@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="链接:http:&#x2F;&#x2F;acm.csu.edu.cn&#x2F;OnlineJudge&#x2F;problem.php?id&#x3D;1219 这个题就是求出所有结点的距离之后,再找出某个结点,该结点离其它结点的最大距离是所有结点中是最小的…解法1:深搜出所有结点间的距离,但是会超时,即使深搜的过程使用中记忆化搜索(就是用2维数组保存已经搜出的答案,如果后面的搜索需要用到直接使用即可)…解法2:Floyd算法,3重循环直接找出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSU OJ - 1219: 建食堂 (所有结点间的最短路径)">
+<meta property="og:url" content="http://xiaopengcheng.top/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="链接:http:&#x2F;&#x2F;acm.csu.edu.cn&#x2F;OnlineJudge&#x2F;problem.php?id&#x3D;1219 这个题就是求出所有结点的距离之后,再找出某个结点,该结点离其它结点的最大距离是所有结点中是最小的…解法1:深搜出所有结点间的距离,但是会超时,即使深搜的过程使用中记忆化搜索(就是用2维数组保存已经搜出的答案,如果后面的搜索需要用到直接使用即可)…解法2:Floyd算法,3重循环直接找出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c5.staticflickr.com/8/7303/26782450284_e07c633d3f_o.jpg">
+<meta property="article:published_time" content="2011-12-04T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-26T08:22:55.743Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="搜索">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c5.staticflickr.com/8/7303/26782450284_e07c633d3f_o.jpg">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>CSU OJ - 1219: 建食堂 (所有结点间的最短路径) | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSU OJ - 1219: 建食堂 (所有结点间的最短路径)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2011-12-04 10:00:00" itemprop="dateCreated datePublished" datetime="2011-12-04T10:00:00+08:00">2011-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/" class="post-meta-item leancloud_visitors" data-flag-title="CSU OJ - 1219: 建食堂 (所有结点间的最短路径)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>链接:<a href="http://acm.csu.edu.cn/OnlineJudge/problem.php?id=1219" target="_blank" rel="noopener">http://acm.csu.edu.cn/OnlineJudge/problem.php?id=1219</a></p>
+<p>这个题就是求出所有结点的距离之后,再找出某个结点,该结点离其它结点的最大距离是所有结点中是最小的…<br>解法1:深搜出所有结点间的距离,但是会超时,即使深搜的过程使用中记忆化搜索(就是用2维数组保存已经搜出的答案,如果后面的搜索需要用到直接使用即可)…<br>解法2:Floyd算法,3重循环直接找出所有结点之间的最短距离<br>解法3:对每一个结点应用一次迪杰斯特拉算法,找出所有结点与其它结点间的最短距离…</p>
+<p>解法2:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="number">#def</span>ine MAX  (<span class="number">100</span> + <span class="number">10</span>)</span><br><span class="line"><span class="number">#def</span>ine INF (<span class="number">1000000</span> + <span class="number">10</span>)</span><br><span class="line">int nN, nM;</span><br><span class="line">int nDis[MAX][MAX];</span><br><span class="line">void SearchAll()</span><br><span class="line">&#123;</span><br><span class="line">    for (int k = 0; k &lt; nN; ++k)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;   </span><br><span class="line">            for (int j = 0; j &lt; nN; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nDis[i][k] + nDis[k][j] &lt; nDis[i][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    nDis[i][j] = nDis[j][i] = nDis[i][k] + nDis[k][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nN, &amp;nM) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            for (int j = 0; j &lt; nN; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="selector-tag">i</span> == j)</span><br><span class="line">                &#123;</span><br><span class="line">                    nDis[i][j] = 0;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    nDis[i][j] = INF;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while (nM--)</span><br><span class="line">        &#123;</span><br><span class="line">            int nX, nY, nK;</span><br><span class="line">            scanf("%d%d%d", &amp;nX, &amp;nY, &amp;nK);</span><br><span class="line">            nDis[nX][nY] = nDis[nY][nX] = nK;</span><br><span class="line">        &#125;</span><br><span class="line">        SearchAll();</span><br><span class="line">        bool bOk = false;</span><br><span class="line">        int nMin = 1 &lt;&lt; 30;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            int nTemp = 0;</span><br><span class="line">            int j = 0;</span><br><span class="line">            for ( ; j &lt; nN; ++j) </span><br><span class="line">            &#123; </span><br><span class="line">                if (i == j) continue; </span><br><span class="line">                <span class="keyword">if</span> (nDis[i][j] == INF) </span><br><span class="line">                &#123; </span><br><span class="line">                    break; </span><br><span class="line">                &#125; </span><br><span class="line">                <span class="keyword">else</span> </span><br><span class="line">                &#123; </span><br><span class="line">                    <span class="keyword">if</span> (nDis[i][j] &gt; nTemp)</span><br><span class="line">                    &#123;</span><br><span class="line">                        nTemp = nDis[i][j];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j == nN)</span><br><span class="line">            &#123;</span><br><span class="line">                bOk = true;</span><br><span class="line">                <span class="keyword">if</span> (nTemp &lt; nMin)</span><br><span class="line">                &#123;</span><br><span class="line">                    nMin = nTemp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bOk)</span><br><span class="line">        &#123;</span><br><span class="line">            printf("%d\n", nMin);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            printf("Can not\n");</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于Floyd算法,可以这样理解…比如刚开始只取2个结点i,j,它们的距离一定是dis(i,j),但是还有其它结点,需要把其它结点也慢慢加进来,所以最外层关于k的循环意思就是从0至nN-1,把所有其它结点加进来,比如加入0号结点后,距离dis(i,0)+dis(0,j)可能会比dis(i,j)小,如果是这样就更新dis(i,j),然后后面加入1号结点的时候,实际上是在已经加入0号结点的基础上进行的处理了,效果变成dis(i,0,1,j),可能是最小的,而且中间的0,1也可能是不存在的,当然是在dis(i,j)原本就是最小的情况下…<br>这个算法可以用下面这个图片描述…<br><img alt data-src="https://c5.staticflickr.com/8/7303/26782450284_e07c633d3f_o.jpg"></p>
+<p>解法3:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="number">#def</span>ine MAX  (<span class="number">100</span> + <span class="number">10</span>)</span><br><span class="line"><span class="number">#def</span>ine INF (<span class="number">1000000</span> + <span class="number">10</span>)</span><br><span class="line">int nN, nM;</span><br><span class="line">int nDis[MAX][MAX];</span><br><span class="line">void Search(int nSource)</span><br><span class="line">&#123;</span><br><span class="line">    bool bVisit[MAX];</span><br><span class="line">    memset(bVisit, false, sizeof(bVisit));</span><br><span class="line">    bVisit[nSource] = true;</span><br><span class="line">    for (int i = 0; i &lt; nN - 1; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int nMin = INF;</span><br><span class="line">        int nMinPos = 0;</span><br><span class="line">        for (int j = 0; j &lt; nN; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!bVisit[j] &amp;&amp; nDis[nSource][j] &lt; nMin)</span><br><span class="line">            &#123;</span><br><span class="line">                nMin = nDis[nSource][j];</span><br><span class="line">                nMinPos = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (bVisit[nMinPos] == false)</span><br><span class="line">        &#123;</span><br><span class="line">            bVisit[nMinPos] = true;</span><br><span class="line">            for (int j = 0; j &lt; nN; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nDis[nSource][nMinPos] + nDis[nMinPos][j] &lt; nDis[nSource][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    nDis[nSource][j] = nDis[nSource][nMinPos] + nDis[nMinPos][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void SearchAll()</span><br><span class="line">&#123;</span><br><span class="line">    for (int k = 0; k &lt; nN; ++k)</span><br><span class="line">    &#123;</span><br><span class="line">        Search(k);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nN, &amp;nM) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            for (int j = 0; j &lt; nN; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="selector-tag">i</span> == j)</span><br><span class="line">                &#123;</span><br><span class="line">                    nDis[i][j] = 0;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    nDis[i][j] = INF;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while (nM--)</span><br><span class="line">        &#123;</span><br><span class="line">            int nX, nY, nK;</span><br><span class="line">            scanf("%d%d%d", &amp;nX, &amp;nY, &amp;nK);</span><br><span class="line">            nDis[nX][nY] = nDis[nY][nX] = nK;</span><br><span class="line">        &#125;</span><br><span class="line">        SearchAll();</span><br><span class="line">        bool bOk = false;</span><br><span class="line">        int nMin = 1 &lt;&lt; 30;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            int nTemp = 0;</span><br><span class="line">            int j = 0;</span><br><span class="line">            for ( ; j &lt; nN; ++j) </span><br><span class="line">            &#123; </span><br><span class="line">                if (i == j) continue; </span><br><span class="line">                <span class="keyword">if</span> (nDis[i][j] == INF) </span><br><span class="line">                &#123; </span><br><span class="line">                    break;</span><br><span class="line">                &#125; </span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123; </span><br><span class="line">                    <span class="keyword">if</span> (nDis[i][j] &gt; nTemp)</span><br><span class="line">                    &#123;</span><br><span class="line">                        nTemp = nDis[i][j];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j == nN)</span><br><span class="line">            &#123;</span><br><span class="line">                bOk = true;</span><br><span class="line">                <span class="keyword">if</span> (nTemp &lt; nMin)</span><br><span class="line">                &#123;</span><br><span class="line">                    nMin = nTemp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (bOk)</span><br><span class="line">        &#123;</span><br><span class="line">            printf("%d\n", nMin);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            printf("Can not\n");</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>迪杰斯特拉算法的核心思想是维护一个源点顶点集合,任何最短路径一定是从这个顶点集合发出的…<br>初始化时,这个集合就是源点…<br>我们从该其它结点中选出一个结点,该结点到源点的距离最小…<br>显然,这个距离就是源点到该结点的最短距离了,我们已经找到了答案的一部分了…然后,我们就把该结点加入前面所说的顶点集合…<br>现在顶点集合更新了,我们必须得更新距离了…由于新加入的结点可能发出边使得原来源点到某些结点的距离更小,也就是我们的源点变大了,边也变多了,所以我们的最短距离集合的值也必须变化了…<br>该算法一直循环nN-1次,直至所有的点都加入源点顶点集合…</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2011\11\28\POJ百练 - 2814拨钟问题\" rel="bookmark">POJ百练 - 2814:拨钟问题</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\03\30\Uva 10132 - File Fragmentation\" rel="bookmark">Uva 10132 - File Fragmentation</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\09\18\hdu 4294 Multiple 数论 + bfs\" rel="bookmark">hdu 4294 Multiple 数论 + bfs</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\09\03\poj 3255 Roadblocks 次短路\" rel="bookmark">poj 3255 Roadblocks 次短路</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2012\06\16\uva-657-the-die-is-cast\" rel="bookmark">uva 657 - The die is cast</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2011/12/04/CSU%20OJ%20-%201219%20%E5%BB%BA%E9%A3%9F%E5%A0%82%20(%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84)/" title="CSU OJ - 1219: 建食堂 (所有结点间的最短路径)">http://xiaopengcheng.top/2011/12/04/CSU OJ - 1219 建食堂 (所有结点间的最短路径)/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i> 搜索</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2011/11/28/POJ%E7%99%BE%E7%BB%83%20-%202814%E6%8B%A8%E9%92%9F%E9%97%AE%E9%A2%98/" rel="prev" title="POJ百练 - 2814:拨钟问题">
+      <i class="fa fa-chevron-left"></i> POJ百练 - 2814:拨钟问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2011/12/08/POJ%E7%99%BE%E7%BB%83%20-%202774%E6%9C%A8%E6%9D%90%E5%8A%A0%E5%B7%A5/" rel="next" title="POJ百练 - 2774:木材加工">
+      POJ百练 - 2774:木材加工 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

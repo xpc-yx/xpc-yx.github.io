@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、命名法Pascal命名法：每个单词首字母大写。Camel命名法：第一个单词首字母小写，其余单词首字母大写。C++标准库命名法：全小写，单词用下划线分割。 1.1 C#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity3D代码规范">
+<meta property="og:url" content="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="一、命名法Pascal命名法：每个单词首字母大写。Camel命名法：第一个单词首字母小写，其余单词首字母大写。C++标准库命名法：全小写，单词用下划线分割。 1.1 C#">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-19T09:15:51.000Z">
+<meta property="article:modified_time" content="2022-01-07T02:27:47.418Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="Unity, 代码规范">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Unity3D代码规范 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity3D代码规范
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-19 17:15:51" itemprop="dateCreated datePublished" datetime="2018-12-19T17:15:51+08:00">2018-12-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏开发</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="post-meta-item leancloud_visitors" data-flag-title="Unity3D代码规范" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、命名法"><a href="#一、命名法" class="headerlink" title="一、命名法"></a>一、命名法</h1><p>Pascal命名法：每个单词首字母大写。<br>Camel命名法：第一个单词首字母小写，其余单词首字母大写。<br>C++标准库命名法：全小写，单词用下划线分割。</p>
+<h2 id="1-1-C"><a href="#1-1-C" class="headerlink" title="1.1 C#"></a>1.1 C#</h2><p>函数和类采用Pascal命名法，变量采用Camel命名法。<br>代码目录和文件采用Pascal命名法。</p>
+<h2 id="1-2-Lua"><a href="#1-2-Lua" class="headerlink" title="1.2 Lua"></a>1.2 Lua</h2><p>类采用Pascal命名法，其余采用C++标准库命名法。<br>代码目录和文件采用C++标准库命名法。</p>
+<h2 id="1-3-其它"><a href="#1-3-其它" class="headerlink" title="1.3 其它"></a>1.3 其它</h2><p>其它目录和文件采用Pascal命名法。</p>
+<h1 id="二、C-代码规范"><a href="#二、C-代码规范" class="headerlink" title="二、C#代码规范"></a>二、C#代码规范</h1><h2 id="2-1-命名的基本约定"><a href="#2-1-命名的基本约定" class="headerlink" title="2.1 命名的基本约定"></a>2.1 命名的基本约定</h2><p>函数用动词命名，其它的用名词或者形容词命名。</p>
+<h3 id="避免使用拼音"><a href="#避免使用拼音" class="headerlink" title="避免使用拼音"></a>避免使用拼音</h3><p>原则上避免使用拼音命名代码。</p>
+<h3 id="尽量避免缩写"><a href="#尽量避免缩写" class="headerlink" title="尽量避免缩写"></a>尽量避免缩写</h3><p>尽量不要缩写名字，名字长没关系，尽可能描述清楚。</p>
+<h3 id="类型前缀"><a href="#类型前缀" class="headerlink" title="类型前缀"></a>类型前缀</h3><p>类和变量前一般不要加前缀。模板类型加前缀T，接口加前缀I，枚举加前缀E。</p>
+<h3 id="类型后缀"><a href="#类型后缀" class="headerlink" title="类型后缀"></a>类型后缀</h3><p>特殊类型可选加后缀。<br>List：可选加List后缀。<br>Dictionary：可选加Dict后缀。<br>delegate：加上后缀Event。</p>
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>使用Pascal命名法。<br>命名空间采用GY开头，比如GYEngine、GYGame。</p>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>使用Pascal命名法。<br>类名要用名词。模板类开头用T。</p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>使用Pascal命名法。<br>接口开头用I。接口名要用名词或者形容词。</p>
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>枚举类型采用Pascal命名法，需要加上前缀E，比如EMessageType。<br>枚举常量不需要加前缀，采用Pascal命名法，特殊情况下可以拆成两部分用下划线区分，比如Message_Start。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Enum EWeaponType</span><br><span class="line">&#123;</span><br><span class="line">	Knife,</span><br><span class="line">	Pistol,</span><br><span class="line">	MachineGun,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Enum EMessageType</span><br><span class="line">&#123;</span><br><span class="line">	Message_Start,</span><br><span class="line">	Message_End,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>使用Pascal命名法。<br>函数名最好用动词开头。</p>
+<h3 id="委托和事件"><a href="#委托和事件" class="headerlink" title="委托和事件"></a>委托和事件</h3><p>使用Pascal命名法。<br>使用动词短语命名，delegate类型的命名需要加上后缀Event。<br>event类型的实例需要加上On前缀，Event后缀。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">KillMonsterEvent</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">event</span> KillMonsterEvent OnKillMonsterEvent = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>使用Pascal命名法。<br>属性是对Get和Set的语法封装，一般是public或者protected采有意义。</p>
+<h3 id="特性-Attribute"><a href="#特性-Attribute" class="headerlink" title="特性(Attribute)"></a>特性(Attribute)</h3><p>使用Pascal命名法。<br>用名词或名词短语+Attribute方式命名特性。<br>比如，</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ObsoleteAttribute</span></span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><p>采用Camel命名法。</p>
+<h4 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h4><p>采用Camel命名法。</p>
+<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p>类非公有非静态成员变量用m开头。比如mActorId。<br>类的公有成员变量大写开头，不需要加m前缀，尽量用属性代替公有变量。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>类的静态成员变量用s开头。<br>函数内的静态变量用s开头。<br>比如，</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Actor</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> mActorId = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> sActorNumInClass = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">int</span> mActorClassId = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">string</span> ActorName = <span class="string">"name"</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> ActorId</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">get</span></span><br><span class="line">		&#123; </span><br><span class="line">			<span class="keyword">return</span> mActorId;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">set</span></span><br><span class="line">		&#123; </span><br><span class="line">			mActorId = <span class="keyword">value</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">KillMonsterEvent</span>(<span class="params"></span>)</span>;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">public</span> <span class="keyword">event</span> KillMonsterEvent OnKillMonsterEvent = <span class="literal">null</span>;</span><br><span class="line">  </span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="title">Actor</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		mActorId = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">GetActorNum</span>(<span class="params"><span class="keyword">bool</span> isFirstTime</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">int</span> sActorNumInFun;</span><br><span class="line">		<span class="keyword">int</span> addNum = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">return</span> sActorNumInFun = (isFirstTime ? <span class="number">0</span> : sActorNumInFun + addNum);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>所有单词大写，多个单词之间用下划线隔开，比如public const int MAX_NUM = 10。</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>原则上，尽量写可读性良好、自解释的代码，避免写冗余的注释。</p>
+<h3 id="文件注释"><a href="#文件注释" class="headerlink" title="文件注释"></a>文件注释</h3><p>文件开头必须要有注释，如果是单个类的文件，可以将用类注释替代。</p>
+<h3 id="类注释"><a href="#类注释" class="headerlink" title="类注释"></a>类注释</h3><p>单个类的文件，必须有类注释。<br>类注释说明该类是做什么的，可选包含怎么实现以及为什么这么实现的原因。</p>
+<h3 id="函数注释"><a href="#函数注释" class="headerlink" title="函数注释"></a>函数注释</h3><p>简单函数不需要注释，难以使用的函数需要加注释，想想为什么难以使用，这个时候往往需要重构或者拆分函数代码了。</p>
+<h3 id="语句注释"><a href="#语句注释" class="headerlink" title="语句注释"></a>语句注释</h3><p>关键难以理解的代码语句，需要加上注释说明。</p>
+<h3 id="变量注释"><a href="#变量注释" class="headerlink" title="变量注释"></a>变量注释</h3><p>关键变量加上注释，普通的不需要加注释。</p>
+<h2 id="2-2-代码风格"><a href="#2-2-代码风格" class="headerlink" title="2.2 代码风格"></a>2.2 代码风格</h2><h3 id="类成员排列顺序"><a href="#类成员排列顺序" class="headerlink" title="类成员排列顺序"></a>类成员排列顺序</h3><ol>
+<li>属性：公有属性 、受保护属性 </li>
+<li>字段：受保护字段、私有字段（公有字段当作属性对待）</li>
+<li>事件：公有事件、受保护事件、私有事件</li>
+<li>构造函数：参数数量最少的构造函数，参数数量中等的构造函数，参数数量最多的构造函数</li>
+<li>方法：重载方法的排列顺序与构造函数相同，从参数数量最少往下至参数最多。方法按照功能分块，尽可能按照公有、保护、私有的访问级别来分布。</li>
+</ol>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ol>
+<li>一行只能声明一个变量，尽量避免用var定义变量类型，除非类型写起来很冗余。</li>
+<li>尽量在声明的同时初始化。</li>
+<li>变量定义在开头，比如类开头或者函数开头。除非是根据条件定义的块变量。</li>
+</ol>
+<p>比如，</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">People</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">string</span> mName = <span class="string">"PeopleName"</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> mAge = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChangeAge</span>(<span class="params"><span class="keyword">int</span> newAge, <span class="keyword">bool</span> needAddAge</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		mAge = newAge;	</span><br><span class="line">		<span class="keyword">if</span> (needAddAge)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> tempAddAge = <span class="number">1</span>;</span><br><span class="line">			mAge += tempAddAge;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h3><ol>
+<li><p>一行只能有一条语句。</p>
+</li>
+<li><p>单行复合语句必须加大括号。原则上，即使只有一行语句，也需要加大括号包起来，防止后续修改代码破坏忘记语句范围。比如，</p>
+</li>
+<li><p>else if等必须新起一行。比如，</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (isWorkday)</span><br><span class="line">&#123;</span><br><span class="line">	Work();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (isHoliday)</span><br><span class="line">&#123;</span><br><span class="line">	Rest();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h3><p>代码缩进使用Tab键实现，最好不要使用空格，为保证在不同机器上使代码缩进保持一致，设置Tab键宽度为4个字符。</p>
+<h3 id="大括号"><a href="#大括号" class="headerlink" title="大括号"></a>大括号</h3><ol>
+<li>大括号需要占一行对齐，而不是将左大括号放在行尾。</li>
+<li>Lambda函数可以将左大括号放在同一行，不需要另起一行。</li>
+</ol>
+<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><ol>
+<li>if、while、for、return等关键词后应有一个空格［eg. “if (a == b)”］。</li>
+<li>运算符前后应各有一个空格［eg. “a = b + c;”］。</li>
+<li>函数调用后不需要加空格。</li>
+<li>左括号后面和右括号前面不需要加额外的空格。</li>
+</ol>
+<h3 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h3><ol>
+<li>函数之间必须加空行。</li>
+<li>较长函数的代码块直接用空行分割。</li>
+<li>变量定义可以分块加空行分割。</li>
+</ol>
+<h3 id="行长度"><a href="#行长度" class="headerlink" title="行长度"></a>行长度</h3><p>每一行代码的行长度，建议不要超过110个字符或者说不超过屏幕宽度。如果超过这个长度，可以按照以下规则换行：</p>
+<ol>
+<li>在逗号后换行。</li>
+<li>在操作符前换行。</li>
+<li>第一条优先于第二条。</li>
+</ol>
+<h3 id="函数长度"><a href="#函数长度" class="headerlink" title="函数长度"></a>函数长度</h3><p>建议单个函数长度不要超过80行。越简短越好。<br>超过80行，可以考虑拆分函数重用代码。</p>
+<h3 id="类长度"><a href="#类长度" class="headerlink" title="类长度"></a>类长度</h3><p>单个类文件原则上不超过1000行。接近或者超过，考虑拆分类或者多个文件实现类。</p>
+<h2 id="2-3-示例代码"><a href="#2-3-示例代码" class="headerlink" title="2.3 示例代码"></a>2.3 示例代码</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">YMGame</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> Enum EWeaponType</span><br><span class="line">	&#123;</span><br><span class="line">		Knife,</span><br><span class="line">		Pistol,</span><br><span class="line">		MachineGun,</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> Actor</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">int</span> mActorId = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> sActorNumInClass;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">protected</span> <span class="keyword">int</span> mActorClassId;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">string</span> ActorName;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">int</span> ActorId</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">get</span></span><br><span class="line">			&#123; </span><br><span class="line">				<span class="keyword">return</span> mActorId;</span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">			<span class="keyword">set</span></span><br><span class="line">			&#123; </span><br><span class="line">				mActorId = <span class="keyword">value</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">GetActorNum</span>(<span class="params"><span class="keyword">bool</span> isFirstTime</span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">static</span> <span class="keyword">int</span> sActorNumInFun;</span><br><span class="line">			<span class="keyword">int</span> addNum = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">return</span> sActorNumInFun = (isFirstTime ? <span class="number">0</span> : sActorNumInFun + addNum);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetActorId</span>(<span class="params"><span class="keyword">int</span> classId, <span class="keyword">int</span> actorId</span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">static</span> <span class="keyword">int</span> sNonClassIdActorNum = <span class="number">0</span>;</span><br><span class="line">			</span><br><span class="line">			mActorClassId = classId;</span><br><span class="line">			mActorId = actorId;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span> (mActorClassId &lt;= <span class="number">0</span> )</span><br><span class="line">			&#123;</span><br><span class="line">				sNonClassIdActorNum++;</span><br><span class="line">				<span class="keyword">bool</span> isNonClassIdActor = <span class="literal">true</span>;</span><br><span class="line">				actorId = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、Lua代码规范"><a href="#三、Lua代码规范" class="headerlink" title="三、Lua代码规范"></a>三、Lua代码规范</h1><p>除了以下特殊提及到的，Lua的代码规范参照C#的代码规范。</p>
+<h2 id="3-1-命名规则"><a href="#3-1-命名规则" class="headerlink" title="3.1 命名规则"></a>3.1 命名规则</h2><h3 id="文件（类）名"><a href="#文件（类）名" class="headerlink" title="文件（类）名"></a>文件（类）名</h3><p>采用Pascal命名法。</p>
+<h3 id="函数-1"><a href="#函数-1" class="headerlink" title="函数"></a>函数</h3><p>采用Pascal命名法。</p>
+<h3 id="文件的local变量"><a href="#文件的local变量" class="headerlink" title="文件的local变量"></a>文件的local变量</h3><p>下划线开头，采用Camel命名法。比如_classType。</p>
+<h3 id="函数的local变量"><a href="#函数的local变量" class="headerlink" title="函数的local变量"></a>函数的local变量</h3><p>采用Camel命名法。</p>
+<h3 id="函数参数-1"><a href="#函数参数-1" class="headerlink" title="函数参数"></a>函数参数</h3><p>采用Camel命名法。</p>
+<h3 id="C-代码导出到Lua"><a href="#C-代码导出到Lua" class="headerlink" title="C#代码导出到Lua"></a>C#代码导出到Lua</h3><p>必须增加Cs前缀以做区分，比如CsFileManager = CS.GYEngine.FileManager.Instance。</p>
+<h3 id="双下划线"><a href="#双下划线" class="headerlink" title="双下划线"></a>双下划线</h3><p>双下划线用于一些特殊函数的前缀，比如类的初始化和销毁函数。</p>
+<h3 id="日志打印"><a href="#日志打印" class="headerlink" title="日志打印"></a>日志打印</h3><p>使用项目规定的log函数。比如使用log.l，可以通过个人logid来过滤其他人日志；警告使用log.w；错误使用log.e，避免使用默认的error。</p>
+<h1 id="四、编程技巧"><a href="#四、编程技巧" class="headerlink" title="四、编程技巧"></a>四、编程技巧</h1><h2 id="避免使用魔数"><a href="#避免使用魔数" class="headerlink" title="避免使用魔数"></a>避免使用魔数</h2><p>代码里面不要出现魔法数字，用常量来替代。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">CalculateCircularArea</span>(<span class="params"><span class="keyword">double</span> radius</span>) </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (<span class="number">3.1415</span>) * radius * radius;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 常量替代魔法数字</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> final Double PI = <span class="number">3.1415</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">CalculateCircularArea</span>(<span class="params"><span class="keyword">double</span> radius</span>) </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> 	<span class="keyword">return</span> PI * radius * radius;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解释型变量"><a href="#解释型变量" class="headerlink" title="解释型变量"></a>解释型变量</h2><p>如下所示，用bool变量代替复杂的条件判断，bool变量的命名可以解释条件判断的意思。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (date.after(SUMMER_START) &amp;&amp; date.before(SUMMER_END))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引入解释性变量后逻辑更加清晰</span></span><br><span class="line"><span class="keyword">bool</span> isSummer = date.after(SUMMER_START)&amp;&amp;date.before(SUMMER_END);</span><br><span class="line"><span class="keyword">if</span> (isSummer)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="避免函数参数过多"><a href="#避免函数参数过多" class="headerlink" title="避免函数参数过多"></a>避免函数参数过多</h2><p>参数过多时候，可以将参数组合成一个结构体传入，方便后续对参数的修改。</p>
+<h3 id="避免函数参数控制函数内部逻辑"><a href="#避免函数参数控制函数内部逻辑" class="headerlink" title="避免函数参数控制函数内部逻辑"></a>避免函数参数控制函数内部逻辑</h3><p>可以考虑拆分成多个函数，保证函数职责单一。</p>
+<h2 id="避免嵌套过深"><a href="#避免嵌套过深" class="headerlink" title="避免嵌套过深"></a>避免嵌套过深</h2><p><code>可以考虑使用</code>continue、break、return关键字，提前退出嵌套。</p>
+<h2 id="分割代码和单一职责"><a href="#分割代码和单一职责" class="headerlink" title="分割代码和单一职责"></a>分割代码和单一职责</h2><p>如果函数或者类的代码过长，考虑拆分成多个函数或者类，保证职责单一。</p>
+<h2 id="预计算和缓存"><a href="#预计算和缓存" class="headerlink" title="预计算和缓存"></a>预计算和缓存</h2><p>比如Component或者UI控件的获得等，可以在初始化的时候获取然后缓存引用，避免重复查询。</p>
+<h2 id="避免频繁创建字符串"><a href="#避免频繁创建字符串" class="headerlink" title="避免频繁创建字符串"></a>避免频繁创建字符串</h2><p>由于C#中的string是独一无二的，无法修改，所以字符串操作会创建新的字符串，不像C++可以就地初始化或者重复利用对象，因此避免大量使用string的操作符构建字符串，改成使用StringBuilder。</p>
+<h1 id="五、安全性编程"><a href="#五、安全性编程" class="headerlink" title="五、安全性编程"></a>五、安全性编程</h1><h2 id="5-1-安全性编程原则"><a href="#5-1-安全性编程原则" class="headerlink" title="5.1 安全性编程原则"></a>5.1 安全性编程原则</h2><h3 id="判空"><a href="#判空" class="headerlink" title="判空"></a>判空</h3><p>C#中的对象都是引用，使用前需要判空，空引用会造成异常。这个是良好的编程习惯。可以用空值传播操作符等，简略代码。</p>
+<h3 id="参数检查"><a href="#参数检查" class="headerlink" title="参数检查"></a>参数检查</h3><p>对传入的参数要进行安全性检查，比如空引用，索引范围等，非法情况提前返回，然后再进行正常的逻辑处理。</p>
+<h3 id="尽可能使用错误处理而不是异常处理"><a href="#尽可能使用错误处理而不是异常处理" class="headerlink" title="尽可能使用错误处理而不是异常处理"></a>尽可能使用错误处理而不是异常处理</h3><p>异常有额外的性能消耗，加上异常会破坏调用链，应该尽可能用错误判断得方式处理各种可以预测的问题，而不是抛出异常。游戏引擎内一般不使用异常，比如UE4的源码内就禁用异常。</p>
+<h2 id="5-2-示例代码"><a href="#5-2-示例代码" class="headerlink" title="5.2 示例代码"></a>5.2 示例代码</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> IEnumerator <span class="title">SpawnObjectAsync</span>(<span class="params"><span class="keyword">string</span> assetPath, Vector3 position, Quaternion rotation, Vector3 scale, Transform parent = <span class="literal">null</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">string</span> name = <span class="string">""</span>, Action&lt;GameObject&gt; onSpawnObjectDone = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(assetPath))</span><br><span class="line">    &#123;</span><br><span class="line">        GYLog.LogError(<span class="string">"GameObjectPool SpawnObjectAsync assetPath is IsNullOrEmpty"</span>);</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    GameObjectPooledItemList pool = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (mAssetPathLookup.TryGetValue(assetPath, <span class="keyword">out</span> pool) == <span class="literal">false</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">yield</span> return <span class="title">WarmPoolAsync</span>(<span class="params">assetPath, <span class="number">1</span>, (tempPool</span>)</span> =&gt; pool = tempPool);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pool == <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        GYLog.LogError(<span class="string">"GameObjectPool SpawnObjectAsync Get GameObjectCollection return null"</span>);</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    GameObject clone = pool.GetItem();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (clone == <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        GYLog.LogError(<span class="string">"GameObjectPool SpawnObject Get GameObject from GameObjectCollection return null"</span>);</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    clone.SetActiveEx(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (parent != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        clone.transform.parent = parent;</span><br><span class="line">    &#125;</span><br><span class="line">    clone.transform.position = position;</span><br><span class="line">    clone.transform.rotation = rotation;</span><br><span class="line">    clone.transform.localScale = scale;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (name != <span class="string">""</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        clone.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mInstanceLookup.Add(clone.GetInstanceID(), pool);</span><br><span class="line">    mIsDirty = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    onSpawnObjectDone?.Invoke(clone);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比如示例代码，首先做了输入参数检查，然后在执行过程中做了条件检查，检查失败直接主动报错，马上返回。</p>
+<h1 id="六、改动权限"><a href="#六、改动权限" class="headerlink" title="六、改动权限"></a>六、改动权限</h1><p>项目中可以通过SVN或者Git的权限限制，避免过多人改动底层或者关键代码。下面举例说明，</p>
+<h2 id="C-的Engine代码"><a href="#C-的Engine代码" class="headerlink" title="C#的Engine代码"></a>C#的Engine代码</h2><p>原则上，Engine代码不做改动，主程或者指定的人有权限改动，其它人需要改动需要事先跟主程沟通后才能改动。</p>
+<h2 id="C-的Game代码"><a href="#C-的Game代码" class="headerlink" title="C#的Game代码"></a>C#的Game代码</h2><p>在游戏发布之前，Game代码允许改动；在游戏发布之后，改动Game层的C#代码需要热更新二进制包或者打补丁更新，有改动需求需要事先跟主程沟通。</p>
+<h2 id="Lua的框架代码"><a href="#Lua的框架代码" class="headerlink" title="Lua的框架代码"></a>Lua的框架代码</h2><p>框架代码改动之前需要考虑清楚，客户端程序都有改动权限，改动大的部分最好同步主程或者执行主程等，并且负责跟踪和修复改动后引入的问题</p>
+<h2 id="Lua的业务代码"><a href="#Lua的业务代码" class="headerlink" title="Lua的业务代码"></a>Lua的业务代码</h2><p>客户端程序一直有改动权限，需要遵守代码规范。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" title="Unity3D代码规范">http://xiaopengcheng.top/2018/12/19/Unity3D代码规范/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Unity-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" rel="tag"><i class="fa fa-tag"></i> Unity, 代码规范</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/08/12/C++%E7%B1%BB%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" rel="prev" title="C++类对象的内存布局">
+      <i class="fa fa-chevron-left"></i> C++类对象的内存布局
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/15/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" rel="next" title="Urp下自定义特效管线和后处理特效实现">
+      Urp下自定义特效管线和后处理特效实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、命名法"><span class="nav-number">1.</span> <span class="nav-text">一、命名法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-C"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 C#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Lua"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Lua</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-其它"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 其它</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、C-代码规范"><span class="nav-number">2.</span> <span class="nav-text">二、C#代码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-命名的基本约定"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 命名的基本约定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#避免使用拼音"><span class="nav-number">2.1.1.</span> <span class="nav-text">避免使用拼音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尽量避免缩写"><span class="nav-number">2.1.2.</span> <span class="nav-text">尽量避免缩写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型前缀"><span class="nav-number">2.1.3.</span> <span class="nav-text">类型前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型后缀"><span class="nav-number">2.1.4.</span> <span class="nav-text">类型后缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命名空间"><span class="nav-number">2.1.5.</span> <span class="nav-text">命名空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类"><span class="nav-number">2.1.6.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">2.1.7.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举"><span class="nav-number">2.1.8.</span> <span class="nav-text">枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">2.1.9.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#委托和事件"><span class="nav-number">2.1.10.</span> <span class="nav-text">委托和事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">2.1.11.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特性-Attribute"><span class="nav-number">2.1.12.</span> <span class="nav-text">特性(Attribute)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部变量"><span class="nav-number">2.1.13.</span> <span class="nav-text">局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数参数"><span class="nav-number">2.1.13.1.</span> <span class="nav-text">函数参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#成员变量"><span class="nav-number">2.1.14.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态变量"><span class="nav-number">2.1.15.</span> <span class="nav-text">静态变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常量"><span class="nav-number">2.1.16.</span> <span class="nav-text">常量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">2.2.</span> <span class="nav-text">注释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件注释"><span class="nav-number">2.2.1.</span> <span class="nav-text">文件注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类注释"><span class="nav-number">2.2.2.</span> <span class="nav-text">类注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数注释"><span class="nav-number">2.2.3.</span> <span class="nav-text">函数注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语句注释"><span class="nav-number">2.2.4.</span> <span class="nav-text">语句注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量注释"><span class="nav-number">2.2.5.</span> <span class="nav-text">变量注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-代码风格"><span class="nav-number">2.3.</span> <span class="nav-text">2.2 代码风格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类成员排列顺序"><span class="nav-number">2.3.1.</span> <span class="nav-text">类成员排列顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">2.3.2.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语句"><span class="nav-number">2.3.3.</span> <span class="nav-text">语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩进"><span class="nav-number">2.3.4.</span> <span class="nav-text">缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大括号"><span class="nav-number">2.3.5.</span> <span class="nav-text">大括号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空格"><span class="nav-number">2.3.6.</span> <span class="nav-text">空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空行"><span class="nav-number">2.3.7.</span> <span class="nav-text">空行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行长度"><span class="nav-number">2.3.8.</span> <span class="nav-text">行长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数长度"><span class="nav-number">2.3.9.</span> <span class="nav-text">函数长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类长度"><span class="nav-number">2.3.10.</span> <span class="nav-text">类长度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-示例代码"><span class="nav-number">2.4.</span> <span class="nav-text">2.3 示例代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Lua代码规范"><span class="nav-number">3.</span> <span class="nav-text">三、Lua代码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-命名规则"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 命名规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件（类）名"><span class="nav-number">3.1.1.</span> <span class="nav-text">文件（类）名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数-1"><span class="nav-number">3.1.2.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件的local变量"><span class="nav-number">3.1.3.</span> <span class="nav-text">文件的local变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的local变量"><span class="nav-number">3.1.4.</span> <span class="nav-text">函数的local变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数参数-1"><span class="nav-number">3.1.5.</span> <span class="nav-text">函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-代码导出到Lua"><span class="nav-number">3.1.6.</span> <span class="nav-text">C#代码导出到Lua</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双下划线"><span class="nav-number">3.1.7.</span> <span class="nav-text">双下划线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志打印"><span class="nav-number">3.1.8.</span> <span class="nav-text">日志打印</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、编程技巧"><span class="nav-number">4.</span> <span class="nav-text">四、编程技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#避免使用魔数"><span class="nav-number">4.1.</span> <span class="nav-text">避免使用魔数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释型变量"><span class="nav-number">4.2.</span> <span class="nav-text">解释型变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免函数参数过多"><span class="nav-number">4.3.</span> <span class="nav-text">避免函数参数过多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#避免函数参数控制函数内部逻辑"><span class="nav-number">4.3.1.</span> <span class="nav-text">避免函数参数控制函数内部逻辑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免嵌套过深"><span class="nav-number">4.4.</span> <span class="nav-text">避免嵌套过深</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分割代码和单一职责"><span class="nav-number">4.5.</span> <span class="nav-text">分割代码和单一职责</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预计算和缓存"><span class="nav-number">4.6.</span> <span class="nav-text">预计算和缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免频繁创建字符串"><span class="nav-number">4.7.</span> <span class="nav-text">避免频繁创建字符串</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、安全性编程"><span class="nav-number">5.</span> <span class="nav-text">五、安全性编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-安全性编程原则"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 安全性编程原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判空"><span class="nav-number">5.1.1.</span> <span class="nav-text">判空</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数检查"><span class="nav-number">5.1.2.</span> <span class="nav-text">参数检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尽可能使用错误处理而不是异常处理"><span class="nav-number">5.1.3.</span> <span class="nav-text">尽可能使用错误处理而不是异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-示例代码"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 示例代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、改动权限"><span class="nav-number">6.</span> <span class="nav-text">六、改动权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-的Engine代码"><span class="nav-number">6.1.</span> <span class="nav-text">C#的Engine代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-的Game代码"><span class="nav-number">6.2.</span> <span class="nav-text">C#的Game代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lua的框架代码"><span class="nav-number">6.3.</span> <span class="nav-text">Lua的框架代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lua的业务代码"><span class="nav-number">6.4.</span> <span class="nav-text">Lua的业务代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

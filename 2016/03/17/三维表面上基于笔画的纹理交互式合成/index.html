@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。 这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹理），就可以用鼠标在模型上刷三维纹理了。 看起来挺好玩的，实际上整个系统的实现过程非常繁杂。这个系统主要用了两个算法，一个是扩展指数映射计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三维表面上基于笔画的纹理交互式合成">
+<meta property="og:url" content="http://xiaopengcheng.top/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。 这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹理），就可以用鼠标在模型上刷三维纹理了。 看起来挺好玩的，实际上整个系统的实现过程非常繁杂。这个系统主要用了两个算法，一个是扩展指数映射计算">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7736/27418072966_11479198e3_o.png">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7178/27380808391_b2dabb9474_o.png">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7678/26845040783_b243d6bff6_o.png">
+<meta property="article:published_time" content="2016-03-17T12:41:27.000Z">
+<meta property="article:modified_time" content="2019-12-19T17:57:28.518Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="纹理">
+<meta property="article:tag" content="三维模型处理">
+<meta property="article:tag" content="纹理合成">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c2.staticflickr.com/8/7736/27418072966_11479198e3_o.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>三维表面上基于笔画的纹理交互式合成 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          三维表面上基于笔画的纹理交互式合成
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-17 20:41:27" itemprop="dateCreated datePublished" datetime="2016-03-17T20:41:27+08:00">2016-03-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/" class="post-meta-item leancloud_visitors" data-flag-title="三维表面上基于笔画的纹理交互式合成" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>378</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。</p>
+<p>这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹理），就可以用鼠标在模型上刷三维纹理了。</p>
+<p>看起来挺好玩的，实际上整个系统的实现过程非常繁杂。这个系统主要用了两个算法，一个是扩展指数映射计算笔画的局部参数化，另外一个是根据样本纹理动态合成新的大纹理（要贴到笔画区域），这个用了并行可控制纹理合成算法，在约束条件下做了特殊实现。由于扩展指数映射用的是他人的实现代码，严重影响了整个系统的速度，也影响了我后面做实验的效果，非常恶心，所以不到无奈时候，千万不要用所谓的牛人的资源。</p>
+<p>系统流程：</p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7736/27418072966_11479198e3_o.png"></p>
+<p>最终效果：</p>
+<p><a href="https://c2.staticflickr.com/8/7178/27380808391_b2dabb9474_o.png" target="_blank" rel="noopener"><img alt data-src="https://c2.staticflickr.com/8/7178/27380808391_b2dabb9474_o.png"></a></p>
+<p><a href="https://c2.staticflickr.com/8/7678/26845040783_b243d6bff6_o.png" target="_blank" rel="noopener"><img alt data-src="https://c2.staticflickr.com/8/7678/26845040783_b243d6bff6_o.png"></a></p>
+<p>PDF下载：<a href="https://pan.baidu.com/s/1dDTrBIL" target="_blank" rel="noopener">三维表面上基于笔画的纹理交互式合成</a></p>
+<p>预览如下：</p>
+<iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&amp;resid=4330CD349D9ADD44%21366&amp;authkey=AIXNiZJrZHuLNX8&amp;em=2&amp;wdStartOn=1" width="800" height="700" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\03\08\OpenGL渲染Obj模型(模型·材质·纹理)\" rel="bookmark">OpenGL渲染Obj模型(模型·材质·纹理)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\10\21\纹理合成\" rel="bookmark">纹理合成</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\03\24\OpenGL使用位图纹理\" rel="bookmark">OpenGL使用位图纹理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\03\24\OpenGL如何使用长宽非2次方的纹理\" rel="bookmark">OpenGL如何使用长宽非2次方的纹理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2013\08\31\OpenGL使用多种格式和任意尺寸的图片作为纹理\" rel="bookmark">OpenGL使用多种格式和任意尺寸的图片作为纹理</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/" title="三维表面上基于笔画的纹理交互式合成">http://xiaopengcheng.top/2016/03/17/三维表面上基于笔画的纹理交互式合成/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%B9%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 纹理</a>
+              <a href="/tags/%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E5%A4%84%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 三维模型处理</a>
+              <a href="/tags/%E7%BA%B9%E7%90%86%E5%90%88%E6%88%90/" rel="tag"><i class="fa fa-tag"></i> 纹理合成</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="C/C++编写的程序启动过程">
+      <i class="fa fa-chevron-left"></i> C/C++编写的程序启动过程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" rel="next" title="使用CWebBrowser2定制IE浏览器窗口">
+      使用CWebBrowser2定制IE浏览器窗口 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

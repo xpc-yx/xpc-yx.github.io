@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="远行的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="远行&#39;s Blog">
+<meta property="og:url" content="http://xiaopengcheng.top/page/9/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="远行的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="Unity3D">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/page/9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/07/30/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84OpenGL%EF%BC%8CCGAL%EF%BC%8CBoost%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/07/30/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84OpenGL%EF%BC%8CCGAL%EF%BC%8CBoost%E5%BA%93/" class="post-title-link" itemprop="url">分享下我的OpenGL，CGAL，Boost库</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-07-30 13:10:55" itemprop="dateCreated datePublished" datetime="2013-07-30T13:10:55+08:00">2013-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/07/30/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84OpenGL%EF%BC%8CCGAL%EF%BC%8CBoost%E5%BA%93/" class="post-meta-item leancloud_visitors" data-flag-title="分享下我的OpenGL，CGAL，Boost库" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/07/30/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84OpenGL%EF%BC%8CCGAL%EF%BC%8CBoost%E5%BA%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/07/30/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84OpenGL%EF%BC%8CCGAL%EF%BC%8CBoost%E5%BA%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>300</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>作为在学习图形学的苦逼，刚开始弄这些库也不简单。即使会弄，也麻烦得要死。装cgal就得去找教程，按照教程安装。<br>但是如果有安装好的库之后，只需要配置vs的路径就行了。而且库可以带走，不用多次安装了。我还是有一点分享精神的，我就把我的库都分享出来吧。<br>CGAL是4.1的，Boost是1.47的，OpenGL里面有glew，还有个freeimage，不过没有glm。glm可以去opengl超级宝典的源代码里面找，不过感觉不是很需要glm，即使需要几何计算，还不如找成熟的几何计算的类。</p>
+<p>由于这篇文章访问量较大，而且不少同学留言问过我链接失效的事情，因此再次更新百度云盘的分享链接：<br><a href="http://pan.baidu.com/s/1i5AStvB" target="_blank" rel="noopener">点此下载</a>，密码：15j6。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/06/18/VS2010%E4%B8%8B%E4%BD%BF%E7%94%A8glui/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/06/18/VS2010%E4%B8%8B%E4%BD%BF%E7%94%A8glui/" class="post-title-link" itemprop="url">VS2010下使用glui</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-06-18 09:56:07" itemprop="dateCreated datePublished" datetime="2013-06-18T09:56:07+08:00">2013-06-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/06/18/VS2010%E4%B8%8B%E4%BD%BF%E7%94%A8glui/" class="post-meta-item leancloud_visitors" data-flag-title="VS2010下使用glui" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/06/18/VS2010%E4%B8%8B%E4%BD%BF%E7%94%A8glui/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/06/18/VS2010%E4%B8%8B%E4%BD%BF%E7%94%A8glui/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>629</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>编译一个程序的时候发现glui一直链接不上去，也许是我的glui版本太低了，结果到最后发现作者设置了lib的附加路径。也许glui2.35真的不能在vs2010下使用了。我下载过好几次，都还是发现glui2.36编译不过去，最后把一个<strong>模板实例化移到全局命名空间里面</strong>才编译过去了。这里打算讲一下怎么编译对应开发平台下的代码库和编译glui2.36。<br>我下载过cximage，opencv2.2，cgal，glui等开发库，有些开发库可能一下载下来就有头文件和lib,dll了。但是大多的是下载下来一个工程。而且，这个工程的原始环境还可能和你所用的环境不一样。比如，你下载下来的是vs2005或者vs2008的工程，但是你的环境是vs2010。如果，<strong>你在vs2010下面用别人用vs2005编译好的lib就可以链接不成功</strong>，这个时候你就需要用vs2010打开工程，重新编译vs2010下的lib。一般情况是打开包含所有工程的workspace，然后点击批生成，把所有需要的lib都生成出来。具体步骤就不用细说了。<br>但是还是可能遇到其它问题，比如说glui2.36就是编译不过去，因为出现了语法问题。那么就需要发挥你的聪明才智了，经验越多，语法了解的越多，就能够编译过去。我这里再上传，我修改过的glui.236的工程，里面已经包含vs2010下面的各种lib和dll了，放心使用吧。工程和lib,dll都在msvc目录下面，头文件在include里面。<br><a href="http://pan.baidu.com/s/1o7QcL1C" target="_blank" rel="noopener" title="glui2.36">glui2.36</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/06/05/%E4%BD%BF%E7%94%A8VB.NET%E6%93%8D%E4%BD%9C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/06/05/%E4%BD%BF%E7%94%A8VB.NET%E6%93%8D%E4%BD%9C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88/" class="post-title-link" itemprop="url">使用VB.NET操作二进制文件以序列化对象集合</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-06-05 09:09:04" itemprop="dateCreated datePublished" datetime="2013-06-05T09:09:04+08:00">2013-06-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/06/05/%E4%BD%BF%E7%94%A8VB.NET%E6%93%8D%E4%BD%9C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88/" class="post-meta-item leancloud_visitors" data-flag-title="使用VB.NET操作二进制文件以序列化对象集合" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/06/05/%E4%BD%BF%E7%94%A8VB.NET%E6%93%8D%E4%BD%9C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/06/05/%E4%BD%BF%E7%94%A8VB.NET%E6%93%8D%E4%BD%9C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如果是用c，c++这当然是相当熟悉的操作了，也不需要做个记录了。但是现在用的是vs2010版本的vb.net。而现在我有一个大对象，里面存储了整形，浮点，字符串，还有图片。我想将数据归档到文件里面，还有从文件中恢复出来。所以，只能使用二进制的读写方法，顺便记录图片的长度。至于要不要记录字符串的长度，只能问VB.NET了。<br>读取文件的使用BinaryReader，写文件的使用BinaryWriter。这2个对.net的string也支持二进制读写，所以只需要存储图片的长度了。图片本身当做byte[]存储。这2个类在Imports System.IO空间，都需要从FileStream创建。<br>虽说对VB.NET不熟悉，但是实现之后还是发现这个东西很好用的。以后还可以用来参考下。</p>
+<p>存储的对象的类定义如下，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">Imports System.IO</span><br><span class="line"></span><br><span class="line">Public Class Project</span><br><span class="line"></span><br><span class="line">    <span class="string">'建筑，供水，供电，结构，供暖，环境</span></span><br><span class="line"><span class="string">    Public oldValueFactor(0 To 5) As Double</span></span><br><span class="line"><span class="string">    Public oldValue(0 To 5) As Integer</span></span><br><span class="line"><span class="string">    Public newValueFactor(0 To 5) As Double</span></span><br><span class="line"><span class="string">    Public newValue(0 To 5) As Integer</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Public idLen As Integer</span></span><br><span class="line"><span class="string">    Public id As String</span></span><br><span class="line"><span class="string">    Public nameLen As Integer</span></span><br><span class="line"><span class="string">    Public name As String</span></span><br><span class="line"><span class="string">    Public placeLen As Integer</span></span><br><span class="line"><span class="string">    Public place As String</span></span><br><span class="line"><span class="string">    Public situationLen As Integer</span></span><br><span class="line"><span class="string">    Public situation As String</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Public oldTotal As Integer  '</span>总分</span><br><span class="line">    Public newTotal As Integer</span><br><span class="line"></span><br><span class="line">    Public oldLen As Integer</span><br><span class="line">    Public oldPic() As Byte</span><br><span class="line">    Public newLen As Integer</span><br><span class="line">    Public newPic() As Byte <span class="string">'图片</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Public Sub New()</span></span><br><span class="line"><span class="string">        oldLen = 0</span></span><br><span class="line"><span class="string">        newLen = 0</span></span><br><span class="line"><span class="string">        Dim j As Integer</span></span><br><span class="line"><span class="string">        For j = 0 To 5</span></span><br><span class="line"><span class="string">            oldValueFactor(j) = New Double()</span></span><br><span class="line"><span class="string">            oldValue(j) = New Double()</span></span><br><span class="line"><span class="string">            newValueFactor(j) = New Double()</span></span><br><span class="line"><span class="string">            newValue(j) = New Double()</span></span><br><span class="line"><span class="string">        Next</span></span><br><span class="line"><span class="string">    End Sub</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">End Class</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/06/05/%E4%BD%BF%E7%94%A8VB.NET%E6%93%8D%E4%BD%9C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E4%BB%A5%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/05/27/%E4%BD%BF%E7%94%A8OpenCV%E8%AF%86%E5%88%AB%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/05/27/%E4%BD%BF%E7%94%A8OpenCV%E8%AF%86%E5%88%AB%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86/" class="post-title-link" itemprop="url">使用OpenCV识别直线和圆</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-05-27 10:35:54" itemprop="dateCreated datePublished" datetime="2013-05-27T10:35:54+08:00">2013-05-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/05/27/%E4%BD%BF%E7%94%A8OpenCV%E8%AF%86%E5%88%AB%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86/" class="post-meta-item leancloud_visitors" data-flag-title="使用OpenCV识别直线和圆" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/05/27/%E4%BD%BF%E7%94%A8OpenCV%E8%AF%86%E5%88%AB%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/05/27/%E4%BD%BF%E7%94%A8OpenCV%E8%AF%86%E5%88%AB%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>过程基本分四步或者三步走。第一步，加载图片。第二步，灰度化图片。第三步，Canny边缘化，第四步，检测直线或者圆。<br>首先，说明下OpenCv表示图片的结构是IplImage。这个东西代表了很多有用的东西。接下来的几步，都有该结构的指针对应图片。<br>第一步，<strong>加载图</strong>片。可以直接加载成灰度图，或者加载成彩色图，或者加载为原有图片的格式，第二步再灰度化。<br>直接加载为灰度图，<br><code>IplImage* imgZero = cvLoadImage(szZero, CV_LOAD_IMAGE_GRAYSCALE);</code><br>加载为彩色图，则把cvLoadImage函数的第二个参数改为CV_LOAD_IMAGE_COLOR，改为CV_LOAD_IMAGE_ANYCOLOR则保持图片原有格式。<br>第二步，如果第一步不是按灰度图加载，那么在这一步需要<strong>灰度化</strong>。代码如下，<br><code>IplImage *imgGray = NULL;imgGray = cvCreateImage(cvGetSize(imgZero),IPL_DEPTH_8U,1);cvCvtColor(imgZero, imgGray ,CV_BGR2GRAY);</code></p>
+<p>这几句代码的意思是根据原图片大小创建单通道位深为8的图片，然后把原有图片转换为创建的单通道8位深灰度图片。<br>第三步，<strong>canny处理</strong>。代码如下，<br><code>IplImage *imgCanny = cvCreateImage(cvGetSize(imgZero ),IPL_DEPTH_8U,1);cvCanny(imgGray , imgCanny, 50, 100);</code><br>这几句代码的意思是根据原图片大小创建单通道位深为8的图片，然后对灰度图片进行canny处理，处理结果存储在新建立的imgCanny图片中。<br>第四步，使用识别函数进行<strong>识别</strong>直线或者圆。<br>识别直线的函数是cvHoughLines2。识别圆的函数是cvHoughCircles。进行识别之前，先创建存储区。<br><code>CvMemStorage *storage = cvCreateMemStorage(0);</code></p>
+<p>识别直线的代码如下，</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/05/27/%E4%BD%BF%E7%94%A8OpenCV%E8%AF%86%E5%88%AB%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/" class="post-title-link" itemprop="url">使用OpenGL绘制太阳系</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-05-06 22:01:17" itemprop="dateCreated datePublished" datetime="2013-05-06T22:01:17+08:00">2013-05-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/" class="post-meta-item leancloud_visitors" data-flag-title="使用OpenGL绘制太阳系" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>365</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>写这个程序的目的最初是给别人做个作业，最后那个人也不知道要不要，很郁闷。本来不怎么想写的，去网上下了别人的代码，后面发现完全不对头，就拿来做了大幅度的修改，不过使用了下载的图片作为纹理。<br>这个例子最大的用处是使用OpenGL怎么<strong>自动产生球体纹理</strong>，自己计算球体的纹理坐标毕竟麻烦了点，虽然也不难。当然还有加载纹理，以及光照，视角设定，特殊键处理等的方法。可以使用上下键放缩和左右键移动。由于使用的是别人的代码修改的，自己感觉一坨糟，也不想去改好了。总之，要模拟出个漂亮的太阳系没那么容易，我的这个比网上有些下载的貌似稍微强点。<br>先上张图片，再把代码和纹理都贡献了，不过得传到百度网盘了，提供链接。<br><img alt data-src="https://c1.staticflickr.com/8/7433/26841670424_a40d9b5a11_o.jpg"><br>对于靠近太阳的行星，可以按上键靠近，对于贴了地球纹理那个球体，还可以看到地球的样子了。有兴趣的完全可以把这个太阳系改得再漂亮点。<br><a href="https://pan.baidu.com/s/1qYDxEZM" target="_blank" rel="noopener">百度网盘下载</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/" class="post-title-link" itemprop="url">vc内嵌wmplayer播放器(屏蔽右键，全屏，播放信息等）</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-04-03 14:06:18" itemprop="dateCreated datePublished" datetime="2013-04-03T14:06:18+08:00">2013-04-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="vc内嵌wmplayer播放器(屏蔽右键，全屏，播放信息等）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>764</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这应该是用vc在程序中添加视频音频播放器最方便的方法了。但是，你如果只是用vs2010或者其它版本工具插入activex控件，然后生成代码，那就不一定能够得到你想要的全部功能。<br>wmplayer貌似还有个对应的wm sdk。这个可以用com接口的形式更加底层的控制播放器。<strong>但是，如果我们能够得到相关的实现播放器功能的代码，我们也能够得到相同程度的控制。</strong>前段时间，在网上找了很久，终于找到一大堆有个wmplayer的类代码。用其中的CWMPPlayer4类绑定播放器就能够得到很强大的控制了，用这个类的成员函数可以得到其他控制和设置类的接口等。<br>用这个东西最大的缺陷是<strong>无法播放内存数据</strong>，如果是内存数据，必须生成临时文件。最大的优点是简单方便，功能强大，还可以在<strong>不同版本的windows平台兼容</strong>，只要上面有默认的wmplayer播放器。这个东西还可以<strong>播放网络数据</strong>，因为文件其实是通过url索引的。因此，在要求简单的时候，还可以用这个东西快速实现一个<strong>网络播放器</strong>。<br>下面提供wmplayer相关类的代码，<a href="https://pan.baidu.com/s/1cunwJW" target="_blank" rel="noopener">WMP</a>。</p>
+<p>屏蔽右键和全屏都可以在PreTranslateMessage这个虚函数里面处理，比如if (pMsg-&gt;message == WM_LBUTTONDBLCLK)<br>return TRUE;返回TRUE就不会对这个消息进行处理了。屏蔽右键也可以通过调用m_mediaPlayer.put_enableContextMenu(FALSE);处理。<br>最奇葩的是屏蔽当前播放的是哪个文件的信息，居然有人奇葩到提出这样的需求。找来找去都没有这样的接口，我都直接看wmsdk的文档了，最后想出了个奇葩的办法，就是用一个static控件遮住。<br>到现在觉得，最好的操作wmplayer的方式是下载微软的<strong>wmsdk</strong>，从而直接用接口操作，可以提供最大限度的控制。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/30/vc%E5%86%85%E5%B5%8C%E6%B5%8F%E8%A7%88%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/03/30/vc%E5%86%85%E5%B5%8C%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-title-link" itemprop="url">vc内嵌浏览器</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-03-30 19:35:11" itemprop="dateCreated datePublished" datetime="2013-03-30T19:35:11+08:00">2013-03-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/03/30/vc%E5%86%85%E5%B5%8C%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-meta-item leancloud_visitors" data-flag-title="vc内嵌浏览器" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/03/30/vc%E5%86%85%E5%B5%8C%E6%B5%8F%E8%A7%88%E5%99%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/30/vc%E5%86%85%E5%B5%8C%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>782</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>至于vc内嵌浏览器的方式有很多种，vs2008就可以使用htmldialog了，使用htmlview也行，但是个人觉得还是插入activex控件，然后再绑定变量来的舒服。我就是用插入activex控件再绑定变量的方式的，记得使用vc6就会生产类CWebBrowser2，但是这个类使用起来并不是那么的舒服，所以我对它再进行了一次继承。<br>注意到，CWebBrowser2继承自CWnd，所以我们继承自CWebBrowser2得类CxExplorer就必须支持mfc里面的动态创建机制，总之这个也很简单，加几句宏就行了，原理其实也不需要弄得太清楚，把mfc的原理弄得太清楚实在太费时间了。。。<br>我创建的这个浏览器类，除了提供基类的接口外，还提供了几个方便自动填表之类操作的接口。比如，获取text的值，写text的值，点击按钮或者复选框，执行js函数等的功能，由于我基本也就只用过这些功能，所以也就弄了几个这样的接口，也没过多区关注其原理等。<br>其实，我也没学过太多的com知识，只看过一本com技术内幕的书，更别说com的模板ATL了。所以啊，很多知识也不是很了解。用内嵌浏览器也玩过几次，以前没怎么发掘它的强大应用了。。。<br>其实，内嵌浏览器很多很好的应用，比如说可以作为<strong>客户端</strong>，由于内嵌了浏览器，所以不需要实现太多的客户端逻辑，而且服务端直接写web页面就行了，不过速度要求不能太高。还有自动填写表之类的应用，还有写网页游戏的自动玩的功能应该都能发掘出来吧。。。<br>关于如何判断网页是否加载完成的方法，网上一直说用OnDocumentComplete事件，其实还可能出现网页离线的状态，但是我试了几个方法都检测不出来。所以，最好还是用<strong>OnTimer</strong>检测和设置你想要的东西。</p>
+<p>下面提供这几个类的下载，我用的使用方式是DDX，不使用vs生成的类还可以保持代码的一致性。<a href="https://pan.baidu.com/s/1qXFPqVy" target="_blank" rel="noopener">explorer</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/" class="post-title-link" itemprop="url">OpenGL使用位图纹理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-03-24 16:47:34" itemprop="dateCreated datePublished" datetime="2013-03-24T16:47:34+08:00">2013-03-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL使用位图纹理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用位图纹理主要需要注意2个地方。1个是<strong>非二次方纹理的处理</strong>，这个可以参考我<a href="http://www.xpc-yx.com/2013/03/opengl%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" target="_blank" rel="noopener">上一篇文章</a>的。另外一个是需要注意<strong>位图数据的格式</strong>，24位的是BGR而不是RGB,32位的是BGRA，而不是RGBA，所以用glTexImage2D之类的函数需要注意把format改成<strong>GL_BGR_EXT</strong>或者<strong>GL_BGRA_EXT</strong>，但是internalformat必须是GL_RGB或者GL_RGBA，如果没有进行这个处理的话，颜色效果会变掉的。<br>下面我给出我的一个任务里面所实现的bitmap位图类，我加载数据的时候使用了以前实现的类CxBitmap，这个也可以从我的另一篇文章中得到。整个类还是比较简单的，你也可以修改加载文件的代码，从而不需要使用CxBitmap类。</p>
+<p>CBitmapTex类的定义如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> XPC_YX_BITMAPTEX_H</span><br><span class="line"><span class="number">#def</span>ine XPC_YX_BITMAPTEX_H</span><br><span class="line">#include</span><br><span class="line"></span><br><span class="line"><span class="number">#def</span>ine RGB16(r,g,b)   ( ((r&gt;&gt;<span class="number">3</span>) &lt;&lt; <span class="number">10</span>) + ((g&gt;&gt;<span class="number">3</span>) &lt;&lt; <span class="number">5</span>) + (<span class="selector-tag">b</span> &gt;&gt; <span class="number">3</span>) )</span><br><span class="line"><span class="number">#def</span>ine RGB24(r,g,b)   ( ((r) &lt;&lt; <span class="number">16</span>) + ((g) &lt;&lt; <span class="number">8</span>) + (b) )</span><br><span class="line"></span><br><span class="line">class CBitmapTex</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CBitmapTex() &#123; m_byData = 0; m_szTexName[0] = 0; &#125;</span><br><span class="line">    CBitmapTex(const char* pcszFileName) &#123; m_byData = 0; LoadBitmapTex(pcszFileName); &#125;</span><br><span class="line">    ~CBitmapTex() &#123; if (m_byData) free(m_byData); &#125;</span><br><span class="line">    int LoadBitmapTex(const char* pcszFileName);</span><br><span class="line">    void InitTex();</span><br><span class="line">    void SetTexture();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int m_nWidth;</span><br><span class="line">    int m_nHeight;</span><br><span class="line">    int m_nBytesPerPixel;</span><br><span class="line">    BYTE* m_byData;</span><br><span class="line">    char m_szTexName[MAX_PATH];</span><br><span class="line">    unsigned m_uTexName;</span><br><span class="line">    double m_fTexScaleX;</span><br><span class="line">    double m_fTexScaleY;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" class="post-title-link" itemprop="url">OpenGL如何使用长宽非2次方的纹理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-03-24 15:52:00" itemprop="dateCreated datePublished" datetime="2013-03-24T15:52:00+08:00">2013-03-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL如何使用长宽非2次方的纹理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>也许在某些显卡上面，直接用glTexImage2D是可以使用非2次方纹理的。但是在我的机子上，直接用出现<strong>运行错误</strong>了。有没有办法让我们的程序<strong>同时支持2次方纹理和非二次方纹理了，并且我们还不需要改变纹理坐标</strong>了。<br>有，我们可以判断纹理的宽和高是不是都为2次方的。如果都是，那么直接使用就行了。如果不是，我们先用<strong>glTexImage2D申请2次方的纹理</strong>，然后用<strong>glTexSubImage2D</strong>把我们的数据放进去，再计算<strong>纹理坐标的变化因子</strong>，最后用glMatrixMode进入<strong>纹理堆栈</strong>操作，用<strong>glScaled</strong>设置坐标变化因子，这一切做完之后就可以按照非二次方纹理使用了。<br>下面提供部分代码，大致可以看出操作方法。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">3</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nFormat = GL_BGR_EXT;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">4</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nFormat = GL_BGRA_EXT;//bitmap内部数据是bgra格式,所以输入格式必须变化下</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (nWidthPowerOfTwo == m_nWidth  nHeightPowerOfTwo == m_nHeight)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//输出格式必须是GL_RGB,写成GL_BGR_EXT会出现空白</span></span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, nWidthPowerOfTwo, nHeightPowerOfTwo, </span><br><span class="line">        0, nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, nWidthPowerOfTwo, nHeightPowerOfTwo,</span><br><span class="line">    0, nFormat, GL_UNSIGNED_BYTE, NULL);</span><br><span class="line">    glTexSubImage2D(GL_TEXTURE_2D, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, m_nWidth, m_nHeight,</span><br><span class="line">    nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">    fTexScaleX = 1.0 * m_nWidth / nWidthPowerOfTwo;</span><br><span class="line">    fTexScaleY = 1.0 * m_nHeight / nHeightPowerOfTwo;</span><br><span class="line">    <span class="comment">//设置纹理堆栈</span></span><br><span class="line">    glMatrixMode(GL_TEXTURE);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    glScaled(fTexScaleX, fTexScaleY, 1.0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" class="post-title-link" itemprop="url">OpenGL渲染Obj模型(模型·材质·纹理)</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-03-08 10:53:24" itemprop="dateCreated datePublished" datetime="2013-03-08T10:53:24+08:00">2013-03-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL渲染Obj模型(模型·材质·纹理)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是我寒假的一个作业吧，到最后基本是在学校完成的了。这个程序主要完成的功能是读取<strong>.obj文件</strong>，顺便读取了其附带<strong>.mtl文件</strong>，以及.mtl文件附带的<strong>.tga格式的纹理</strong>(我没有处理其它格式了，因为自己下载的几个模型的纹理都是这种图片格式)。然后，用透视投影，调整视点<strong>对准模型正中央</strong>，渲染在视口里面。程序也提供了键盘上下左右旋转，上下左右移动，放大放小的功能，已经鼠标旋转模型的功能，不过鼠标旋转的效果不好。</p>
+<p>首先要介绍下obj模型文件的格式，这个百度或者google肯定能找到不少文章。.obj文件里面主要是定义了点，线，面，当然还描述了其他元素。.mtl文件里面定义了模型的材质以及纹理的路径。我主要描述下我的代码用到的和假定的obj文件格式。<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>vn 1.0 1.0 1.0 //法线<br>vt 0.3 0.4 //纹理坐标<br>p 1 //第一个v代表的点<br>l 1 2 //第一个v和第二个v连接的直线<br>f 1//  2//  3//  4//  //1,2,3,4构成的面，没有法线和纹理<br>f 1/1/1 2/1/1 3/1/1 4/1/1  //1,2,3,4构成的面,结构是顶点索引,纹理索引,法线索引<br>我的代码基本上假定没有法线和纹理索引的时候，<strong>后面也必须带//</strong>。<br>另外一个最重要的是定义材质库的路径，mtllib xxx.mtl。<br>至于obj文件更加详细的描述，请查阅更标准的文档吧。</p>
+<p>然后，介绍下.mtl的格式，我也只介绍我用到的东西。<br>比如下面这个材质文件的内容，<br>newmtl Arakkoa_Gray //定义材质设置的名字，一个材质库可能会出现多个材质设置<br>d 1.0 //透明度<br>Kd 1.000000 1.000000 1.000000 //模型散射颜色<br>Ka 0.250000 0.250000 0.250000 //模型环境颜色<br>Ks 0.000000 0.000000 0.000000//模型镜面颜色<br>Ke 0.000000 0.000000 0.000000//模型发射颜色<br>Ns 0.000000//模型镜面指数<br>map_Kd Arakkoa_Gray.tga//纹理路径<br>其它设置我就没有用到了。<br>至于tga图片的格式，请自行google吧。我只处理了<strong>未压缩</strong>版本的.tga纹理，格式类似于.bmp文件，处理起来也比较简单。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

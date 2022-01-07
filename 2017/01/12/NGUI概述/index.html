@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="NGUI介绍NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循Kiss准则，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。NGUI官方网址NGUI官方文档地址 NGUI下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NGUI概述">
+<meta property="og:url" content="http://xiaopengcheng.top/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="NGUI介绍NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循Kiss准则，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。NGUI官方网址NGUI官方文档地址 NGUI下载">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c1.staticflickr.com/1/782/31420422424_657c6cee61_o.png">
+<meta property="og:image" content="https://c1.staticflickr.com/1/363/32223724406_7e07b90f4b_o.png">
+<meta property="article:published_time" content="2017-01-12T09:15:51.000Z">
+<meta property="article:modified_time" content="2021-12-26T08:52:46.108Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="NGUI">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c1.staticflickr.com/1/782/31420422424_657c6cee61_o.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>NGUI概述 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NGUI概述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-01-12 17:15:51" itemprop="dateCreated datePublished" datetime="2017-01-12T17:15:51+08:00">2017-01-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏开发</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" class="post-meta-item leancloud_visitors" data-flag-title="NGUI概述" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="NGUI介绍"><a href="#NGUI介绍" class="headerlink" title="NGUI介绍"></a>NGUI介绍</h2><p>NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。<br>NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循<a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank" rel="noopener">Kiss准则</a>，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。<br><a href="http://www.tasharen.com/?page_id=140" target="_blank" rel="noopener">NGUI官方网址</a><br><a href="http://www.tasharen.com/forum/index.php?board=12.0" target="_blank" rel="noopener">NGUI官方文档地址</a></p>
+<h2 id="NGUI下载"><a href="#NGUI下载" class="headerlink" title="NGUI下载"></a>NGUI下载</h2><p>我们可以从unity商店购买NGUI，或者下载其免费版本。<br><a href="https://www.assetstore.Unity.com/cn/#!/content/2413" target="_blank" rel="noopener">NGUI的Unity商店</a><br>当然也可以下载网上其它人提供的版本学习研究。<br><a href="http://www.ceeger.com/forum/read.php?tid=20718fid=16" target="_blank" rel="noopener">NGUI 3.10.2</a></p>
+<h2 id="NGUI导入"><a href="#NGUI导入" class="headerlink" title="NGUI导入"></a>NGUI导入</h2><p>下载NGUI后，我们得到的是一个.unitypackage文件，比如NGUI Next-Gen UI v3.6.8.unitypackage。<br>Unity编辑器中，打开菜单Assets-&gt;ImportPackage-&gt;CustomPackage，然后选择下载的.unitypackage文件导入编辑器。导入NGUI后，在工程的Assets目录下会出现一个NGUI文件夹，并且Unity编辑器中会多了一个NGUI主菜单。</p>
+<h2 id="NGUI例子"><a href="#NGUI例子" class="headerlink" title="NGUI例子"></a>NGUI例子</h2><p>打开NGUI-&gt;Options-&gt;Reset Prefab ToolBar，会出现如下工具条：</p>
+<p><img alt="NGUI例子" data-src="https://c1.staticflickr.com/1/782/31420422424_657c6cee61_o.png"><br>这里面有基本的NGUI控件例子，是我们学习参照的好材料。</p>
+<h2 id="NGUI类图"><a href="#NGUI类图" class="headerlink" title="NGUI类图"></a>NGUI类图</h2><p>下面是我整理的NGUI类图：<br><img alt="NGUI类图" data-src="https://c1.staticflickr.com/1/363/32223724406_7e07b90f4b_o.png"></p>
+<p>该类图中列出了NGUI中绝大部分的类。<br>类图中有两个最重要的分支，UIWidgetContainer分支和UIWidget分支。<br>NGUI中的大部分控件都继承自UIWidgetContainer，这说明在NGUI中，其实是把控件当作Sprite的容器而已。UIWidget的子类就是Sprite和Texture，表示NGUI中的控件都是图片化的，控件的表现都依赖图片。</p>
+<h2 id="NGUI常用组件"><a href="#NGUI常用组件" class="headerlink" title="NGUI常用组件"></a>NGUI常用组件</h2><h3 id="UILabel-文本"><a href="#UILabel-文本" class="headerlink" title="UILabel 文本"></a>UILabel 文本</h3><h3 id="UIInput-输入框"><a href="#UIInput-输入框" class="headerlink" title="UIInput 输入框"></a>UIInput 输入框</h3><h3 id="UITextList-多文本显示框，类似聊天窗"><a href="#UITextList-多文本显示框，类似聊天窗" class="headerlink" title="UITextList 多文本显示框，类似聊天窗"></a>UITextList 多文本显示框，类似聊天窗</h3><h3 id="UISprite-图片精灵"><a href="#UISprite-图片精灵" class="headerlink" title="UISprite 图片精灵"></a>UISprite 图片精灵</h3><h3 id="UIBotton-按钮"><a href="#UIBotton-按钮" class="headerlink" title="UIBotton 按钮"></a>UIBotton 按钮</h3><h3 id="UIToggle-单选框-复选框"><a href="#UIToggle-单选框-复选框" class="headerlink" title="UIToggle 单选框/复选框"></a>UIToggle 单选框/复选框</h3><h3 id="UIScrollBar-滚动条"><a href="#UIScrollBar-滚动条" class="headerlink" title="UIScrollBar 滚动条"></a>UIScrollBar 滚动条</h3><h3 id="UISlider-滑动条-进度条"><a href="#UISlider-滑动条-进度条" class="headerlink" title="UISlider 滑动条/进度条"></a>UISlider 滑动条/进度条</h3><h3 id="UIProgressBar-进度条"><a href="#UIProgressBar-进度条" class="headerlink" title="UIProgressBar 进度条"></a>UIProgressBar 进度条</h3><h3 id="UIPopupList-下拉框"><a href="#UIPopupList-下拉框" class="headerlink" title="UIPopupList 下拉框"></a>UIPopupList 下拉框</h3><h3 id="UIGrid-将子控件按照单元格布局"><a href="#UIGrid-将子控件按照单元格布局" class="headerlink" title="UIGrid 将子控件按照单元格布局"></a>UIGrid 将子控件按照单元格布局</h3><h3 id="UITable-UIGrid加强版，类似Html的table"><a href="#UITable-UIGrid加强版，类似Html的table" class="headerlink" title="UITable UIGrid加强版，类似Html的table"></a>UITable UIGrid加强版，类似Html的table</h3><h3 id="UIPanel-控件渲染器，管理和绘制其下所有的组件"><a href="#UIPanel-控件渲染器，管理和绘制其下所有的组件" class="headerlink" title="UIPanel 控件渲染器，管理和绘制其下所有的组件"></a>UIPanel 控件渲染器，管理和绘制其下所有的组件</h3><h3 id="UIScrollView-滚动视窗"><a href="#UIScrollView-滚动视窗" class="headerlink" title="UIScrollView 滚动视窗"></a>UIScrollView 滚动视窗</h3><h3 id="UIKeyBinding-给控件的点击或者选中事情绑定按键"><a href="#UIKeyBinding-给控件的点击或者选中事情绑定按键" class="headerlink" title="UIKeyBinding 给控件的点击或者选中事情绑定按键"></a>UIKeyBinding 给控件的点击或者选中事情绑定按键</h3><h3 id="UIRoot-NGUI的UI根物体"><a href="#UIRoot-NGUI的UI根物体" class="headerlink" title="UIRoot NGUI的UI根物体"></a>UIRoot NGUI的UI根物体</h3><h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a href="http://www.tasharen.com/forum/index.php?topic=6754" target="_blank" rel="noopener">NGUI官网</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" title="NGUI概述">http://xiaopengcheng.top/2017/01/12/NGUI概述/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/NGUI/" rel="tag"><i class="fa fa-tag"></i> NGUI</a>
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" rel="prev" title="WebGL编程模型">
+      <i class="fa fa-chevron-left"></i> WebGL编程模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/08/12/C++%E7%B1%BB%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" rel="next" title="C++类对象的内存布局">
+      C++类对象的内存布局 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NGUI介绍"><span class="nav-number">1.</span> <span class="nav-text">NGUI介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NGUI下载"><span class="nav-number">2.</span> <span class="nav-text">NGUI下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NGUI导入"><span class="nav-number">3.</span> <span class="nav-text">NGUI导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NGUI例子"><span class="nav-number">4.</span> <span class="nav-text">NGUI例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NGUI类图"><span class="nav-number">5.</span> <span class="nav-text">NGUI类图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NGUI常用组件"><span class="nav-number">6.</span> <span class="nav-text">NGUI常用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UILabel-文本"><span class="nav-number">6.1.</span> <span class="nav-text">UILabel 文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIInput-输入框"><span class="nav-number">6.2.</span> <span class="nav-text">UIInput 输入框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UITextList-多文本显示框，类似聊天窗"><span class="nav-number">6.3.</span> <span class="nav-text">UITextList 多文本显示框，类似聊天窗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UISprite-图片精灵"><span class="nav-number">6.4.</span> <span class="nav-text">UISprite 图片精灵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIBotton-按钮"><span class="nav-number">6.5.</span> <span class="nav-text">UIBotton 按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIToggle-单选框-复选框"><span class="nav-number">6.6.</span> <span class="nav-text">UIToggle 单选框&#x2F;复选框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIScrollBar-滚动条"><span class="nav-number">6.7.</span> <span class="nav-text">UIScrollBar 滚动条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UISlider-滑动条-进度条"><span class="nav-number">6.8.</span> <span class="nav-text">UISlider 滑动条&#x2F;进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIProgressBar-进度条"><span class="nav-number">6.9.</span> <span class="nav-text">UIProgressBar 进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIPopupList-下拉框"><span class="nav-number">6.10.</span> <span class="nav-text">UIPopupList 下拉框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIGrid-将子控件按照单元格布局"><span class="nav-number">6.11.</span> <span class="nav-text">UIGrid 将子控件按照单元格布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UITable-UIGrid加强版，类似Html的table"><span class="nav-number">6.12.</span> <span class="nav-text">UITable UIGrid加强版，类似Html的table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIPanel-控件渲染器，管理和绘制其下所有的组件"><span class="nav-number">6.13.</span> <span class="nav-text">UIPanel 控件渲染器，管理和绘制其下所有的组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIScrollView-滚动视窗"><span class="nav-number">6.14.</span> <span class="nav-text">UIScrollView 滚动视窗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIKeyBinding-给控件的点击或者选中事情绑定按键"><span class="nav-number">6.15.</span> <span class="nav-text">UIKeyBinding 给控件的点击或者选中事情绑定按键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIRoot-NGUI的UI根物体"><span class="nav-number">6.16.</span> <span class="nav-text">UIRoot NGUI的UI根物体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料："><span class="nav-number">7.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

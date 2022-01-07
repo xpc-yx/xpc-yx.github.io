@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。 下图是push_heap的示意图。 从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stl源码剖析之heap">
+<meta property="og:url" content="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。 下图是push_heap的示意图。 从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png">
+<meta property="og:image" content="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png">
+<meta property="article:published_time" content="2015-01-01T05:59:33.000Z">
+<meta property="article:modified_time" content="2021-12-26T12:47:09.658Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="stl源码剖析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>stl源码剖析之heap | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          stl源码剖析之heap
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-01 13:59:33" itemprop="dateCreated datePublished" datetime="2015-01-01T13:59:33+08:00">2015-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之heap" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。</p>
+<p>下图是push_heap的示意图。<img alt data-src="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png"></p>
+<p>从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void push_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    <span class="comment">// 注意，调用该函数时候，新元素位于最后一个位置(last-1)。</span></span><br><span class="line">    __push_heap_aux(first, last, distance_type(first), value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">inline void __push_heap_aux(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, Distance*, T*) &#123;</span><br><span class="line">    __push_heap(first, Distance((last - first) - <span class="number">1</span>), Distance(<span class="number">0</span>),</span><br><span class="line">        T(*(last - 1)));</span><br><span class="line">    <span class="comment">// (last-first)–1代表新元素的索引，0是堆首的索引，*(last - 1)是新加入的值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void __push_heap(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance topIndex, T value) &#123;</span><br><span class="line">    Distance parent = (holeIndex - 1) / 2;  // 找出父節點</span><br><span class="line">    while (holeIndex &gt; topIndex  *(first + parent) &lt; value) &#123;</span><br><span class="line">        <span class="comment">// 尚未到达顶端，且父节点小于新值</span></span><br><span class="line">        <span class="comment">// 由于以上使用 operator&lt;，可知 STL heap 是max-heap</span></span><br><span class="line">        *(first + holeIndex) = *(first + parent);   // 令洞值为父值</span><br><span class="line">        holeIndex = parent; // percolate up：调整洞号，向上提升至父节点。</span><br><span class="line">        parent = (holeIndex - 1) / 2;   // 新洞的父节点</span><br><span class="line">    &#125;    <span class="comment">// 持续至顶端，或满足 heap 的次序特性为止。</span></span><br><span class="line">    *(first + holeIndex) = value;   // 令洞值为新值。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>push_heap的用法是输入迭代器对，并且保证[first,last-1)是最大堆，*(last-1)是新加入的元素。push_heap调用辅助函数<strong>push_heap_aux。至于为什么需要这个辅助函数了？应该是为了提取出distance_type和value_type吧，这两个内联函数的定义，可以参考stl源码剖析迭代器的那章。下面来思考真正的实现函数</strong>push_heap。这个函数需要新加入元素位置holeIndex和堆首位置topIndex，另外还有保存好的新加入值。算法的过程很简单，就是上溯holeIndex，找到真正满足条件的位置（无法继续上回溯），然后把value放入该位置即可。<br>pop_heap实际上是一个相反的过程。实现思路是将堆大小加一后，再找出最后一个元素应该放入的位置holeIndex，最后再加入这个值。示意图如下：</p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png"><br>下面看看摘录出来的代码，思想类似于push_heap，只需要求出最终的holeIndex。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    __pop_heap_aux(first, last, value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void __pop_heap_aux(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, T*) &#123;</span><br><span class="line">    __pop_heap(first, last - 1, last - 1, T(*(last - 1)), distance_type(first));</span><br><span class="line">    <span class="comment">// pop动作的結果为底层容器的第一個元素。因此，首先设定欲调整值为尾值，然后將首值調至 </span></span><br><span class="line">    <span class="comment">// 尾节点（所以以上將迭代器result设为last-1）。然后重整 [first, last-1)，</span></span><br><span class="line">    <span class="comment">// 使之重新成一個合格的 heap。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,</span><br><span class="line">    RandomAccessIterator result, T value, Distance*) &#123;</span><br><span class="line">    *result = *first; // 設定尾值为首值，于是尾值即是結果，</span><br><span class="line">    <span class="comment">// 可由调用底层容器之 pop_back() 取出尾值。</span></span><br><span class="line">    __adjust_heap(first, Distance(0), Distance(last - first), value);</span><br><span class="line">    <span class="comment">// 以上欲重新調整 heap，洞号为 0，欲調整值为value。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void __adjust_heap(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance len, T value) &#123;</span><br><span class="line">    Distance topIndex = holeIndex;</span><br><span class="line">    Distance secondChild = 2 * holeIndex + 2;   // 洞节点之右子节点</span><br><span class="line">    while (secondChild &lt; len) &#123;</span><br><span class="line">        <span class="comment">// 比较洞节点之左右兩个子值，然后以 secondChild 代表较大子节点。</span></span><br><span class="line">        <span class="keyword">if</span> (*(first + secondChild) &lt; *(first + (secondChild - <span class="number">1</span>)))</span><br><span class="line">            secondChild--;</span><br><span class="line">        <span class="comment">// Percolate down：令较大大子值为洞值，再令洞号下移至较大子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + secondChild);</span><br><span class="line">        holeIndex = secondChild;</span><br><span class="line">        <span class="comment">// 找出新洞节点的右子节点</span></span><br><span class="line">        secondChild = 2 * (secondChild + 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (secondChild == len) &#123; <span class="comment">// 沒有右子节点，只有左子节点</span></span><br><span class="line">        <span class="comment">// Percolate down：令左子值为洞值，再令洞号下移至左子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + (secondChild - 1));</span><br><span class="line">        holeIndex = secondChild - 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 將欲调整值填入目前的洞号內。注意，此時肯定滿足次序特性。</span></span><br><span class="line">    <span class="comment">// 依侯捷之见，下面直接改為 *(first + holeIndex) = value; 应该可以。</span></span><br><span class="line">    __push_heap(first, holeIndex, topIndex, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似于push_heap，pop_heap也是调用辅助函数<strong>pop_heap_aux。</strong>pop_heap_aux调用<strong>pop_heap。</strong>pop_heap调用<strong>adjust_heap调整holeIndex，最终在holeIndex处放入value（原最后一个的值）。关键代码是</strong>adjust_heap中的循环。循环的主要意思是将holeIndex不断下放，直到最底层。最后的if语句的意思是，如果最底层有左子节点，而没有右子节点，那么最终位置肯定是这个左子节点。最后一句代码的意思是加入value到holeIndex，由于已经调整完毕，所以一个赋值操作也可以达到要求，参见侯捷注释。<br>sort_heap就比较简单了，不断将极值移动到末尾，不断pop_heap。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下這個 sort_heap() 不允許指定「大小比較標準」</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void sort_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    <span class="comment">// 以下，每執行一次 pop_heap()，極值（在STL heap中為極大值）即被放在尾端。</span></span><br><span class="line">    <span class="comment">// 扣除尾端再執行一次 pop_heap()，次極值又被放在新尾端。一直下去，最後即得</span></span><br><span class="line">    <span class="comment">// 排序結果。</span></span><br><span class="line">    while (last - first &gt; <span class="number">1</span>)</span><br><span class="line">        pop_heap(first, last--); // 每執行 pop_heap() 一次，操作範圍即退縮一格。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后要将的是make_heap，即将一个迭代器对里面的内容构造为最大堆。代码如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 將 [first,last) 排列為一個 heap。</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void make_heap(RandomAccessIterator first, RandomAccessIterator last) &#123;</span><br><span class="line">    __make_heap(first, last, value_type(first), distance_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下這組 make_heap() 不允許指定「大小比較標準」。</span></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">void __make_heap(RandomAccessIterator first, RandomAccessIterator last, T*,</span><br><span class="line">    Distance*) &#123;</span><br><span class="line">    if (last - first &lt; 2) return;   // 如果長度為 0 或 1，不必重新排列。</span><br><span class="line">    Distance len = last - first;</span><br><span class="line">    <span class="comment">// 找出第一個需要重排的子樹頭部，以 parent 標示出。由於任何葉節點都不需執行 </span></span><br><span class="line">    <span class="comment">// perlocate down，所以有以下計算。parent 命名不佳，名為 holeIndex 更好。</span></span><br><span class="line">    Distance parent = (len - 2) / 2;</span><br><span class="line"></span><br><span class="line">    while (true) &#123;</span><br><span class="line">        <span class="comment">// 重排以 parent 為首的子樹。len 是為了讓 __adjust_heap() 判斷操作範圍</span></span><br><span class="line">        __adjust_heap(first, parent, len, T(*(first + parent)));</span><br><span class="line">        if (parent == 0) return;    // 走完根節點，就結束。</span><br><span class="line">        parent--;                   // （即將重排之子樹的）頭部向前一個節點</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>make_heap中代码的思路也很简单。从原序列的中间位置开始不断调整（调用</strong>adjust_heap），每次调整的目的是以当前位置为根的构建一个子堆。至于为什么从中间位置开始就可以了？原因很简单，最底层元素的数目大致就会占了一半了。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2014\12\29\stl源码剖析之priority_queue\" rel="bookmark">stl源码剖析之priority_queue</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之queue\" rel="bookmark">stl源码剖析之queue</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2014\12\31\stl源码剖析之stack\" rel="bookmark">stl源码剖析之stack</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2015\04\22\stl源码剖析之sort\" rel="bookmark">stl源码剖析之sort</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2015\06\10\stl源码剖析之vector\" rel="bookmark">stl源码剖析之vector</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" title="stl源码剖析之heap">http://xiaopengcheng.top/2015/01/01/stl源码剖析之heap/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> stl源码剖析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/" rel="prev" title="stl源码剖析之stack">
+      <i class="fa fa-chevron-left"></i> stl源码剖析之stack
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" rel="next" title="使用Matlab计算稀疏矩阵的特征向量">
+      使用Matlab计算稀疏矩阵的特征向量 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

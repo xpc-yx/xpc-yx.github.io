@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、反射的实现原理分类首先要说明下反射向量，指的是视线的镜面反射向量，如下图所示，实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。 1.1 CubeMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反射效果的实现总结">
+<meta property="og:url" content="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="一、反射的实现原理分类首先要说明下反射向量，指的是视线的镜面反射向量，如下图所示，实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。 1.1 CubeMap">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E8%A7%86%E7%BA%BF%E5%8F%8D%E5%B0%84%E6%96%B9%E5%90%91.png">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/SSPR.jpg">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84.jpg">
+<meta property="article:published_time" content="2021-10-22T04:15:00.000Z">
+<meta property="article:modified_time" content="2022-01-07T02:59:34.659Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="反射效果">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E8%A7%86%E7%BA%BF%E5%8F%8D%E5%B0%84%E6%96%B9%E5%90%91.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>反射效果的实现总结 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          反射效果的实现总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-22 12:15:00" itemprop="dateCreated datePublished" datetime="2021-10-22T12:15:00+08:00">2021-10-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="反射效果的实现总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、反射的实现原理分类"><a href="#一、反射的实现原理分类" class="headerlink" title="一、反射的实现原理分类"></a>一、反射的实现原理分类</h1><p>首先要说明下<strong>反射向量</strong>，指的是视线的镜面反射向量，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E8%A7%86%E7%BA%BF%E5%8F%8D%E5%B0%84%E6%96%B9%E5%90%91.png"><br>实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。</p>
+<h2 id="1-1-CubeMap"><a href="#1-1-CubeMap" class="headerlink" title="1.1 CubeMap"></a>1.1 CubeMap</h2><p>天空盒就是一个CubeMap，我们可以假定天空盒是一个环境反射来源，也可以指定另外的CubeMap，用反射向量采样这个CubeMap就能得到反射颜色。CubeMap虽然比较简单，但是也能出很好的效果，而且不需要实时计算反射信息，性能很好。<br>优点：实现简单，效率高，只需要额外的CubeMap存储反射信息；适用于多种情况，不仅仅限于平面反射。<br>缺点：反射信息固定，没有变化。</p>
+<h2 id="1-2-反射探针"><a href="#1-2-反射探针" class="headerlink" title="1.2 反射探针"></a>1.2 反射探针</h2><p>这种方式需要在场景内布置反射探针，用来采集反射信息。渲染时候，在Shader内根据反射探针来获得反射信息。反射探针如果是实时的，性能就会很差，这个时候可以考虑降低反射探针的更新频率或者使用烘焙模式的反射探针。因为反射探针的输出就是CubeMap，因此烘焙模式的反射探针，本质上和CubeMap没有区别。<br>优点：直接利用引擎计算反射信息，不需要额外工作；适用于多种情况，不仅仅限于平面反射。<br>缺点：实时反射探针性能差，计算一次反射探针需要朝着6个方向渲染场景，Drawcall增加6倍，性能太差；烘焙反射探针无法变化。</p>
+<h2 id="1-3-平面反射"><a href="#1-3-平面反射" class="headerlink" title="1.3 平面反射"></a>1.3 平面反射</h2><p>这种方式限制于只能在平面上做反射。如果要求在凹凸不平的表面上实现反射效果，则不太适合。基本思路是将场景根据平面对称镜像一次，具体实现上是将生成的反射矩阵乘以到原场景摄像机的世界到相机空间的矩阵，然后用新的相机再渲染一次场景生成RT。然后在屏幕空间内采样这个RT，得到的像素值作为反射信息。<br>其实，使用反射探针也能实现平面反射的效果，原理是将探针的位置放在摄像机在平面的对称位置。可以参考大佬的这篇文章，<a href="https://baddogzz.github.io/2020/04/22/Probe-Reflection/" target="_blank" rel="noopener">关于反射探头的实时反射</a>。实现难度相对平面反射低很多，不过实时探针比平面反射性能差6倍，优化起来难度太大。<br>优点：反射效果最好，最真实接近平面反射。<br>缺点：需要额外渲染一次场景，DrawCall翻倍。</p>
+<h2 id="1-4-屏幕空间反射（SSR）"><a href="#1-4-屏幕空间反射（SSR）" class="headerlink" title="1.4 屏幕空间反射（SSR）"></a>1.4 屏幕空间反射（SSR）</h2><p>屏幕空间反射的基本原理比较简单，也就是在屏幕空间内通过深度法线纹理恢复世界空间坐标。然后，沿着反射向量方向做步进，也就是所谓的RayMarching，检查当前深度是否已经超过深度纹理对应的值，如果超过，表面已经碰到物体了，那么取当前步进到的颜色值作为反射结果即可。<br>优点：适用于多种情况，不仅仅限于平面反射；DrawCall不变。<br>缺点：需要额外的深度和法线纹理，在前向渲染中这不是免费的，需要多渲染一次场景得到深度和法线纹理；效果一般；无法反射屏幕之外的信息；实现比较复杂，移动平台下性能差（步进相交的计算量大），很可能跑不起来；带宽增加。</p>
+<p>SSR应该是更适合于延迟渲染的一个反射效果实现方案，毕竟可以免费得到深度和法线纹理。</p>
+<h2 id="1-5-屏幕空间平面反射"><a href="#1-5-屏幕空间平面反射" class="headerlink" title="1.5 屏幕空间平面反射"></a>1.5 屏幕空间平面反射</h2><p>这个是平面反射在屏幕空间下的一个实现。<br>SSPR大体的实现思路如下，<br>1、用当前屏幕UV从深度图重建当前世界坐标，将世界坐标以反射平面进行对称翻转<br>2、使用翻转后的世界坐标的计算屏幕UV<br>3、对当前屏幕纹理进行采样得到ReflectColor保存到一张新的ColorRT中，保存位置是翻转后的世界坐标的屏幕UV<br>4、在反射平面的Shader中用屏幕UV对ColorRT进行采样得到反射颜。<br>5、在反射平面的Shader中将反射颜色和着色结果进行组合得到最终颜色。</p>
+<p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/SSPR.jpg"><br>如上大佬的图能够基本说明SSPR的实现思路。UAV write即是3的输出。关键点和难点是要得到步骤三的ColorRT，并且要正确高效。网上有不少博客说的是如何正确高效实现前三步，基本上要使用Computer Shader，图形接口要求是vulkan/metal。具体实现比较复杂，不在此详细说明。</p>
+<p>优点：效果较高；性能比SSR好；DrawCall不变。<br>缺点：对硬件要求高；需要额外的ColorRT，带宽和内存增加；只适用于平面反射。</p>
+<h1 id="二、Unity对反射效果支持"><a href="#二、Unity对反射效果支持" class="headerlink" title="二、Unity对反射效果支持"></a>二、Unity对反射效果支持</h1><h2 id="2-1-CubeMap"><a href="#2-1-CubeMap" class="headerlink" title="2.1 CubeMap"></a>2.1 CubeMap</h2><p>Unity自带的Shader或许有支持，实现起来也很简单，关键代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">half3 reflectVector = reflect(-viewDirectionWS, normalWS);</span><br><span class="line">half3 reflectColor = SAMPLE_TEXTURECUBE(_Cubemap, sampler_Cubemap, reflectVector).rgb;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-反射探针"><a href="#2-2-反射探针" class="headerlink" title="2.2 反射探针"></a>2.2 反射探针</h2><p>目前，Unity内置管线和Urp支持<a href="https://docs.unity3d.com/cn/2019.4/Manual/class-ReflectionProbe.html" target="_blank" rel="noopener">反射探针</a>，HDRP管线还支持一种特殊的<a href="https://docs.unity3d.com/cn/Packages/com.unity.render-pipelines.high-definition@10.4/manual/Planar-Reflection-Probe.html" target="_blank" rel="noopener">平面反射探针</a>，平面反射探针猜测是针对平面反射这种特殊情况的一种优化手段。<br>场景内布置了反射探针后，Urp管线中反射信息是存储在叫做unity_SpecCube0的内置CubeMap中。Shader中需要采样该CubeMap获得反射信息，Urp代码中搜索函数GlossyEnvironmentReflection，可以得到如下代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">half3 <span class="title">GlossyEnvironmentReflection</span>(<span class="params">half3 reflectVector, half perceptualRoughness, half occlusion</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined(_ENVIRONMENTREFLECTIONS_OFF)</span></span><br><span class="line">    half mip = PerceptualRoughnessToMipmapLevel(perceptualRoughness);</span><br><span class="line">    half4 encodedIrradiance = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);</span><br><span class="line"></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span>DOTS - we need to port probes to live in c# so we can manage this manually.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(UNITY_USE_NATIVE_HDR) || defined(UNITY_DOTS_INSTANCING_ENABLED)</span></span><br><span class="line">    half3 irradiance = encodedIrradiance.rgb;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    half3 irradiance = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> irradiance * occlusion;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> // GLOSSY_REFLECTIONS</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _GlossyEnvironmentColor.rgb * occlusion;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述函数三个关键点，根据粗糙度计算mipmap，采样光照探针，解析HDR贴图。我们重点关注的是mipmap计算，mipmap大家都知道，越远的地方，贴图采样率越低效果才好，看起来越模糊，没有锐利的毛刺感觉；同时粗糙度刚好可以表示这个概率，粗糙度越低越接近镜面，那么反射效果更接近光滑镜子的效果，粗糙度越高，反射效果越模糊。<br><strong>计算Mipmap的概念可以应用到所有的反射效果实现中，不仅仅反射探针</strong>。</p>
+<h2 id="2-3-平面反射"><a href="#2-3-平面反射" class="headerlink" title="2.3 平面反射"></a>2.3 平面反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p>
+<h2 id="2-4-屏幕空间反射"><a href="#2-4-屏幕空间反射" class="headerlink" title="2.4 屏幕空间反射"></a>2.4 屏幕空间反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p>
+<h2 id="2-5-屏幕空间平面反射"><a href="#2-5-屏幕空间平面反射" class="headerlink" title="2.5 屏幕空间平面反射"></a>2.5 屏幕空间平面反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p>
+<h1 id="三、UE4对反射效果支持"><a href="#三、UE4对反射效果支持" class="headerlink" title="三、UE4对反射效果支持"></a>三、UE4对反射效果支持</h1><h2 id="3-1-CubeMap"><a href="#3-1-CubeMap" class="headerlink" title="3.1 CubeMap"></a>3.1 CubeMap</h2><p>UE4的材质编辑器可以实现。</p>
+<h2 id="3-2-反射探针"><a href="#3-2-反射探针" class="headerlink" title="3.2 反射探针"></a>3.2 反射探针</h2><p><a href="https://docs.unrealengine.com/4.27/zh-CN/BuildingWorlds/LightingAndShadows/ReflectionEnvironment/" target="_blank" rel="noopener">UE4有盒子和球形的反射探针</a>。</p>
+<h2 id="3-3-平面反射"><a href="#3-3-平面反射" class="headerlink" title="3.3 平面反射"></a>3.3 平面反射</h2><p>UE4有<a href="https://docs.unrealengine.com/4.27/zh-CN/BuildingWorlds/LightingAndShadows/PlanarReflections/" target="_blank" rel="noopener">Planar Reflection Actor</a>，放入场景中即可。不过先要在工程设置中开启平面反射。</p>
+<h2 id="3-4-屏幕空间反射"><a href="#3-4-屏幕空间反射" class="headerlink" title="3.4 屏幕空间反射"></a>3.4 屏幕空间反射</h2><p>UE4默认是启用<a href="https://docs.unrealengine.com/4.27/zh-CN/RenderingAndGraphics/PostProcessEffects/ScreenSpaceReflection/" target="_blank" rel="noopener">屏幕空间反射</a>的。不过是可以在工程设置或者配置文件中关闭的。</p>
+<h2 id="3-5-屏幕空间平面反射"><a href="#3-5-屏幕空间平面反射" class="headerlink" title="3.5 屏幕空间平面反射"></a>3.5 屏幕空间平面反射</h2><p>目前没有发现UE4支持这个特性。</p>
+<h1 id="四、反射颜色与物体颜色的组合"><a href="#四、反射颜色与物体颜色的组合" class="headerlink" title="四、反射颜色与物体颜色的组合"></a>四、反射颜色与物体颜色的组合</h1><h2 id="4-1-Mipmap"><a href="#4-1-Mipmap" class="headerlink" title="4.1 Mipmap"></a>4.1 Mipmap</h2><p>计算Mipmap，模拟粗糙度的效果，这个在反射探针中已经有说明。</p>
+<h2 id="4-2-菲涅尔效果"><a href="#4-2-菲涅尔效果" class="headerlink" title="4.2 菲涅尔效果"></a>4.2 菲涅尔效果</h2><p>获得反射颜色后，可以根据菲涅尔定律与物体本身的着色结果进行一定的组合即可。不过，不一定完全照搬菲涅尔定律的公式。关键在于NdotV或者HdotV，也就是反射强弱基本是跟视线相关的。当NdotV为1的时候，说明视线垂直平面，为0的时候说明视线跟平面平行。因此，可以根据NdotV在反射颜色和物体颜色之间进行某种插值，来得到想要的效果。</p>
+<p>以下是一个同时应用了粗糙度计算Mipmap和菲涅尔效果的反射平面，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84.jpg"></p>
+<h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote>
+<p>1、<a href="https://blog.csdn.net/puppet_master/article/details/80808486" target="_blank" rel="noopener">Unity Shader-反射效果（CubeMap，Reflection Probe，Planar Reflection，Screen Space Reflection）</a><br>2、<a href="https://baddogzz.github.io/2020/04/22/Probe-Reflection/" target="_blank" rel="noopener">关于反射探头的实时反射</a><br>3、<a href="https://zhuanlan.zhihu.com/p/150890059" target="_blank" rel="noopener">Unity URP 移动平台的屏幕空间平面反射（SSPR）趟坑记</a><br>4、<a href="https://www.lfzxb.top/screen-space-plana-reflection-in-urp-study/" target="_blank" rel="noopener">URP下屏幕空间平面反射（ScreenSpacePlanarReflection）学习笔记</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" title="反射效果的实现总结">http://xiaopengcheng.top/2021/10/22/反射效果的实现总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C/" rel="tag"><i class="fa fa-tag"></i> 反射效果</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/15/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" rel="prev" title="Urp下自定义特效管线和后处理特效实现">
+      <i class="fa fa-chevron-left"></i> Urp下自定义特效管线和后处理特效实现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" rel="next" title="游戏引擎渲染管线的总结">
+      游戏引擎渲染管线的总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、反射的实现原理分类"><span class="nav-number">1.</span> <span class="nav-text">一、反射的实现原理分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-CubeMap"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 CubeMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-反射探针"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 反射探针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-平面反射"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 平面反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-屏幕空间反射（SSR）"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 屏幕空间反射（SSR）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-屏幕空间平面反射"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 屏幕空间平面反射</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Unity对反射效果支持"><span class="nav-number">2.</span> <span class="nav-text">二、Unity对反射效果支持</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-CubeMap"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 CubeMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-反射探针"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 反射探针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-平面反射"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 平面反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-屏幕空间反射"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 屏幕空间反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-屏幕空间平面反射"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 屏幕空间平面反射</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、UE4对反射效果支持"><span class="nav-number">3.</span> <span class="nav-text">三、UE4对反射效果支持</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-CubeMap"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 CubeMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-反射探针"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 反射探针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-平面反射"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 平面反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-屏幕空间反射"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 屏幕空间反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-屏幕空间平面反射"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 屏幕空间平面反射</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、反射颜色与物体颜色的组合"><span class="nav-number">4.</span> <span class="nav-text">四、反射颜色与物体颜色的组合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Mipmap"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Mipmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-菲涅尔效果"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 菲涅尔效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、参考资料"><span class="nav-number">5.</span> <span class="nav-text">五、参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

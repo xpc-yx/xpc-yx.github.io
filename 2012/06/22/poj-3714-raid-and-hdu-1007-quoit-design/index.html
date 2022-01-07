@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="典型的最近点对算法的应用，不过这个题多了个限制条件，就是点分为2类，最短距离必须在不同的类之间。为了满足这个限制，只需要把同类别点直接的距离都当作INF处理即可。最近点对的算法，算导上面说是nlogn的。但是这个复杂度实现起来略微麻烦点，有一种实现方法是nlognlogn的，其只对x坐标进行了排序。nlogn的算法需要对x和y分量分别进行排序，还需要用到其它的辅助数组。第一个题我用了nlogn算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="poj 3714 Raid and hdu 1007 Quoit Design">
+<meta property="og:url" content="http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="典型的最近点对算法的应用，不过这个题多了个限制条件，就是点分为2类，最短距离必须在不同的类之间。为了满足这个限制，只需要把同类别点直接的距离都当作INF处理即可。最近点对的算法，算导上面说是nlogn的。但是这个复杂度实现起来略微麻烦点，有一种实现方法是nlognlogn的，其只对x坐标进行了排序。nlogn的算法需要对x和y分量分别进行排序，还需要用到其它的辅助数组。第一个题我用了nlogn算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2012-06-22T12:30:00.000Z">
+<meta property="article:modified_time" content="2021-12-26T08:20:31.731Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="最近点对">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>poj 3714 Raid and hdu 1007 Quoit Design | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          poj 3714 Raid and hdu 1007 Quoit Design
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-22 20:30:00" itemprop="dateCreated datePublished" datetime="2012-06-22T20:30:00+08:00">2012-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3714 Raid and hdu 1007 Quoit Design" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>典型的最近点对算法的应用，不过这个题多了个限制条件，就是点分为2类，最短距离必须在不同的类之间。为了满足这个限制，只需要把同类别点直接的距离都当作INF处理即可。<br>最近点对的算法，算导上面说是nlogn的。但是这个复杂度实现起来略微麻烦点，有一种实现方法是n<em>logn</em>logn的，其只对x坐标进行了排序。n<em>logn的算法需要对x和y分量分别进行排序，还需要用到其它的辅助数组。<br>第一个题我用了n</em>logn算法实现了，第二个题则用了n<em>logn</em>logn算法实现了。但是时间上相差不大，因为第一个算法每次进行分治时候消耗的O(n)时间也有几次。第二个算法分治时候，需要再次排序的时间也不一定很多，因为可能数据量不够大。<br>算法的本质就是二分按照X排序好的点数组，n<em>logn</em>logn变成n*logn的关键是预先对y也排序好一个点数组，因为按y排序好的点数组，在分治后的合并中要用到。算法更详细的解释请参照算法导论。<br>poj 3714 代码如下： </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define MAX_N (100000 * 2 + 10)</span><br><span class="line">const double FINF = 1LL &lt;&lt; 60;</span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x, y;</span><br><span class="line">    int nKind;</span><br><span class="line">&#125;;</span><br><span class="line">Point pts[MAX_N], ptsY[MAX_N], ptsTemp[MAX_N];</span><br><span class="line">Point ptsSave[MAX_N];</span><br><span class="line">int nNum;</span><br><span class="line">bool CmpX(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return a.x &lt; b.x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool CmpY(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return a.y &lt; b.y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Dis(Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">a</span><span class="selector-class">.nKind</span> == <span class="selector-tag">b</span>.nKind)</span><br><span class="line">    &#123;</span><br><span class="line">        return FINF;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double FindMinDis(Point pts[], Point ptsY[], Point ptsTemp[], int nBeg, int nEnd)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nBeg == nEnd)</span><br><span class="line">    &#123;</span><br><span class="line">        return FINF;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nBeg + <span class="number">1</span> == nEnd)</span><br><span class="line">    &#123;</span><br><span class="line">        return Dis(pts[nBeg], pts[nEnd]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nBeg + <span class="number">2</span> == nEnd)</span><br><span class="line">    &#123;</span><br><span class="line">        return min(min(Dis(pts[nBeg], pts[nBeg + <span class="number">1</span>]), Dis(pts[nBeg], pts[nEnd])),</span><br><span class="line">                   Dis(pts[nBeg + 1], pts[nEnd]));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        memcpy(ptsSave + nBeg, ptsY + nBeg, sizeof(Point) * (nEnd - nBeg + 1));//保存当前的Y坐标顺序</span><br><span class="line">        int nMid = (nBeg + nEnd) / 2;</span><br><span class="line">        int nL = nBeg;</span><br><span class="line">        int nR = nMid + 1;</span><br><span class="line">        for (int i = nBeg; i &lt;= nEnd; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (ptsY[i]<span class="selector-class">.x</span> - pts[nMid]<span class="selector-class">.x</span> &lt;= <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                ptsTemp[nL++] = ptsY[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                ptsTemp[nR++] = ptsY[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        double fAns = min(FindMinDis(pts, ptsTemp, ptsY, nBeg, nMid),</span><br><span class="line">                          FindMinDis(pts, ptsTemp, ptsY, nMid + 1, nEnd));</span><br><span class="line">        int nK = 1;</span><br><span class="line"></span><br><span class="line">        for (int i = nBeg; i &lt;= nEnd; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (fabs(ptsSave[i]<span class="selector-class">.x</span> - pts[nMid].x) &lt;= fAns)</span><br><span class="line">            &#123;</span><br><span class="line">                ptsTemp[nK++] = ptsSave[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 1; i &lt; nK; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            for (int j = i + 1; j &lt; nK; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (ptsTemp[j]<span class="selector-class">.y</span> - ptsTemp[i]<span class="selector-class">.y</span> &gt; fAns)</span><br><span class="line">                &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                fAns = min(fAns, Dis(ptsTemp[i], ptsTemp[j]));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return fAns;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nT;</span><br><span class="line">    int nN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//printf("%f", FINF);</span></span><br><span class="line">    scanf("%d", &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf("%d", &amp;nN);</span><br><span class="line">        nNum = nN * 2;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;pts[i].x, &amp;pts[i].y);</span><br><span class="line">            pts[i].nKind = 1;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = nN; i &lt; nNum; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;pts[i].x, &amp;pts[i].y);</span><br><span class="line">            pts[i].nKind = 2;</span><br><span class="line">        &#125;</span><br><span class="line">        memcpy(ptsY, pts, sizeof(Point) * nNum);</span><br><span class="line">        sort(pts, pts + nNum, CmpX);</span><br><span class="line">        sort(ptsY, ptsY + nNum, CmpY);</span><br><span class="line">        printf("%.3f\n", FindMinDis(pts, ptsY, ptsTemp, 0, nNum - 1));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>hdu 1007 代码如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="number">#def</span>ine MAX (<span class="number">100000</span> + <span class="number">10</span>)</span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x, y;</span><br><span class="line">&#125;;</span><br><span class="line">Point pts[MAX];</span><br><span class="line">Point ptsTemp[MAX];</span><br><span class="line">const double FINF = 1LL &lt;&lt; 60;</span><br><span class="line">bool CmpX(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return a.x &lt; b.x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool CmpY(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return a.y &lt; b.y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Dis(Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return sqrt((a.x - b.x) * (a.x - b.x) + (b.y - a.y) * (b.y - a.y));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Find(int nL, int nH)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nL == nH)</span><br><span class="line">    &#123;</span><br><span class="line">        return FINF;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nL + <span class="number">1</span> == nH)</span><br><span class="line">    &#123;</span><br><span class="line">        return Dis(pts[nL], pts[nH]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nL + <span class="number">2</span> == nH)</span><br><span class="line">    &#123;</span><br><span class="line">        return min(Dis(pts[nL], pts[nL + <span class="number">1</span>]), </span><br><span class="line">                   min(Dis(pts[nL], pts[nH]), Dis(pts[nH], pts[nL + 1])));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        int nMid = (nL + nH) / 2;</span><br><span class="line">        double fAns = min(Find(nL, nMid), Find(nMid + 1, nH));</span><br><span class="line">        int nK = 0;</span><br><span class="line">        for (int i = nL; i &lt;= nH; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (fabs(pts[i]<span class="selector-class">.x</span> - pts[nMid].x) &lt;= fAns)</span><br><span class="line">            &#123;</span><br><span class="line">                ptsTemp[nK++] = pts[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        sort(ptsTemp, ptsTemp + nK, CmpY);</span><br><span class="line">        for (int i = 0; i &lt; nK; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            for (int j = i + 1; j &lt; nK; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (ptsTemp[j]<span class="selector-class">.y</span> - ptsTemp[i]<span class="selector-class">.y</span> &gt;= fAns)</span><br><span class="line">                &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                fAns = min(fAns, Dis(ptsTemp[j], ptsTemp[i]));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return fAns;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nN;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;pts[i].x, &amp;pts[i].y);</span><br><span class="line">        &#125;</span><br><span class="line">        sort(pts, pts + nN, CmpX);</span><br><span class="line">        printf("%.2f\n", Find(0, nN -1) * 0.5);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/" title="poj 3714 Raid and hdu 1007 Quoit Design">http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%80%E8%BF%91%E7%82%B9%E5%AF%B9/" rel="tag"><i class="fa fa-tag"></i> 最近点对</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2012/06/20/poj-1269-intersecting-lines/" rel="prev" title="poj 1269 Intersecting Lines">
+      <i class="fa fa-chevron-left"></i> poj 1269 Intersecting Lines
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2012/06/24/poj-3348-cows/" rel="next" title="poj 3348 Cows">
+      poj 3348 Cows <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">589k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
