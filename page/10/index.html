@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" class="post-title-link" itemprop="url">OpenGL渲染Obj模型(模型·材质·纹理)</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-03-08 10:53:24" itemprop="dateCreated datePublished" datetime="2013-03-08T10:53:24+08:00">2013-03-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL渲染Obj模型(模型·材质·纹理)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是我寒假的一个作业吧，到最后基本是在学校完成的了。这个程序主要完成的功能是读取<strong>.obj文件</strong>，顺便读取了其附带<strong>.mtl文件</strong>，以及.mtl文件附带的<strong>.tga格式的纹理</strong>(我没有处理其它格式了，因为自己下载的几个模型的纹理都是这种图片格式)。然后，用透视投影，调整视点<strong>对准模型正中央</strong>，渲染在视口里面。程序也提供了键盘上下左右旋转，上下左右移动，放大放小的功能，已经鼠标旋转模型的功能，不过鼠标旋转的效果不好。</p>
+<p>首先要介绍下obj模型文件的格式，这个百度或者google肯定能找到不少文章。.obj文件里面主要是定义了点，线，面，当然还描述了其他元素。.mtl文件里面定义了模型的材质以及纹理的路径。我主要描述下我的代码用到的和假定的obj文件格式。<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>vn 1.0 1.0 1.0 //法线<br>vt 0.3 0.4 //纹理坐标<br>p 1 //第一个v代表的点<br>l 1 2 //第一个v和第二个v连接的直线<br>f 1//  2//  3//  4//  //1,2,3,4构成的面，没有法线和纹理<br>f 1/1/1 2/1/1 3/1/1 4/1/1  //1,2,3,4构成的面,结构是顶点索引,纹理索引,法线索引<br>我的代码基本上假定没有法线和纹理索引的时候，<strong>后面也必须带//</strong>。<br>另外一个最重要的是定义材质库的路径，mtllib xxx.mtl。<br>至于obj文件更加详细的描述，请查阅更标准的文档吧。</p>
+<p>然后，介绍下.mtl的格式，我也只介绍我用到的东西。<br>比如下面这个材质文件的内容，<br>newmtl Arakkoa_Gray //定义材质设置的名字，一个材质库可能会出现多个材质设置<br>d 1.0 //透明度<br>Kd 1.000000 1.000000 1.000000 //模型散射颜色<br>Ka 0.250000 0.250000 0.250000 //模型环境颜色<br>Ks 0.000000 0.000000 0.000000//模型镜面颜色<br>Ke 0.000000 0.000000 0.000000//模型发射颜色<br>Ns 0.000000//模型镜面指数<br>map_Kd Arakkoa_Gray.tga//纹理路径<br>其它设置我就没有用到了。<br>至于tga图片的格式，请自行google吧。我只处理了<strong>未压缩</strong>版本的.tga纹理，格式类似于.bmp文件，处理起来也比较简单。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/01/09/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OpenGL3.1%E5%8F%8A%E5%85%B6%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1253,125 +1372,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">C++的设计优化</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-12-17 11:12:34" itemprop="dateCreated datePublished" datetime="2012-12-17T11:12:34+08:00">2012-12-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/" class="post-meta-item leancloud_visitors" data-flag-title="C++的设计优化" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>设计优化是一种全局的优化，是比代码优化更难判断的东西。本文只以提高c++性能的编程技术一书的说法再自己的理解为例子。性能和灵活性本来就是相互冲突的东西。将两者结合得很好的例子一般能想到STL，但是STL在特定的场合肯定比不上专用代码的性能。比如，用stl里面的accmulate累加int能够与自己的实现效果一样，但是累加string的话就会比手动实现效果差很多。所以作者提出了个这样的观点，软件库是通用的，但是软件不是，所以没必要让软件太通用，视野应该窄一点。</p>
-<p><strong>例子一，还是利用缓存机制。</strong><br>比如，一个web服务器经常要计算时间戳，而且是在1s内要计算不少次。由于时间戳没必要以ms进行区分，那么可以只计算一次时间戳，然后将时间戳保存起来，或者作为参数传递给后面的调用。</p>
-<p><strong>例子二，扩展数据类型。</strong><br>比如，使用字符串的时候假如经常要计算字符串长度，那么可以定义一个结构体，内部有个成员用于保存长度。这样在很多需要长度的场合就可以避免重复计算长度了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1422,7 +1422,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-count">206</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1435,7 +1435,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">84</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1487,12 +1487,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">589k</span>
+    <span title="站点总字数">592k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:56</span>
+    <span title="站点阅读时长">8:58</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
