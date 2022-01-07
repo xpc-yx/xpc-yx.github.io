@@ -178,7 +178,9 @@
         <category>Rendering</category>
       </categories>
       <tags>
-        <tag>urp,特效,后处理</tag>
+        <tag>urp</tag>
+        <tag>特效</tag>
+        <tag>后处理</tag>
       </tags>
   </entry>
   <entry>
@@ -215,7 +217,8 @@
         <category>Rendering</category>
       </categories>
       <tags>
-        <tag>左手坐标系,右手坐标,左手定理,右手定理</tag>
+        <tag>左右手坐标系</tag>
+        <tag>左右手定理</tag>
       </tags>
   </entry>
   <entry>
@@ -346,7 +349,8 @@
         <category>Unity</category>
       </categories>
       <tags>
-        <tag>Unity, 代码规范</tag>
+        <tag>Unity</tag>
+        <tag>代码规范</tag>
       </tags>
   </entry>
   <entry>
@@ -405,7 +409,8 @@
         <category>C++</category>
       </categories>
       <tags>
-        <tag>C++, 内存布局</tag>
+        <tag>C++</tag>
+        <tag>内存布局</tag>
       </tags>
   </entry>
   <entry>
@@ -1456,8 +1461,8 @@
         <category>OpenGL</category>
       </categories>
       <tags>
-        <tag>CGAL</tag>
         <tag>OpenGL</tag>
+        <tag>CGAL</tag>
       </tags>
   </entry>
   <entry>
@@ -2322,8 +2327,8 @@ CImage CImage::operator=(const CImage yxImage)
         <category>OpenGL</category>
       </categories>
       <tags>
-        <tag>CGAL</tag>
         <tag>OpenGL</tag>
+        <tag>CGAL</tag>
       </tags>
   </entry>
   <entry>
@@ -2451,8 +2456,8 @@ CImage CImage::operator=(const CImage yxImage)
         <category>CGAL</category>
       </categories>
       <tags>
-        <tag>CGAL</tag>
         <tag>OpenGL</tag>
+        <tag>CGAL</tag>
         <tag>三维模型处理</tag>
       </tags>
   </entry>
@@ -4077,8 +4082,8 @@ XX***
         <category>算法题</category>
       </categories>
       <tags>
-        <tag>递归</tag>
         <tag>数学</tag>
+        <tag>递归</tag>
       </tags>
   </entry>
   <entry>
