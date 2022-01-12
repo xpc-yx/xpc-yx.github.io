@@ -1461,8 +1461,8 @@
         <category>OpenGL</category>
       </categories>
       <tags>
-        <tag>OpenGL</tag>
         <tag>CGAL</tag>
+        <tag>OpenGL</tag>
       </tags>
   </entry>
   <entry>
@@ -2327,8 +2327,8 @@ CImage CImage::operator=(const CImage yxImage)
         <category>OpenGL</category>
       </categories>
       <tags>
-        <tag>OpenGL</tag>
         <tag>CGAL</tag>
+        <tag>OpenGL</tag>
       </tags>
   </entry>
   <entry>
@@ -2456,8 +2456,8 @@ CImage CImage::operator=(const CImage yxImage)
         <category>CGAL</category>
       </categories>
       <tags>
-        <tag>OpenGL</tag>
         <tag>CGAL</tag>
+        <tag>OpenGL</tag>
         <tag>三维模型处理</tag>
       </tags>
   </entry>
@@ -4082,8 +4082,8 @@ XX***
         <category>算法题</category>
       </categories>
       <tags>
-        <tag>递归</tag>
         <tag>数学</tag>
+        <tag>递归</tag>
       </tags>
   </entry>
   <entry>
