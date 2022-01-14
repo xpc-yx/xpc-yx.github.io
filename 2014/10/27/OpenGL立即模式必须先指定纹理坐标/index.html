@@ -318,11 +318,9 @@
       
         <p>说实话，立即模式用了一年多了，还是犯了这个错误。因为很多代码例子里面都是先指定法线，再指定位置，结果添加纹理坐标的时候就变成了指定纹理坐标在最后。<br>错误的写法：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glNormal3f(n.x(), n.y(), n.z());</span><br><span class="line">glVertex3f(p.x(), p.y(), p.z());</span><br><span class="line">glTexCoord1f(g_p_DisFromFile-&gt;norm_dis[g_denoted_point_id][he-&gt;vertex()-&gt;tag()]);</span><br></pre></td></tr></table></figure>
-
 <p>不要以为这个bug很简单，说实话这种绘制的bug，不知道真的无从调试起来。。。这样写出现什么样子的bug，看下图吧。。。<br><img alt data-src="https://c2.staticflickr.com/8/7241/27175251640_077ce24c67_o.png"></p>
 <p><img alt data-src="https://c2.staticflickr.com/8/7691/27417552636_58c2958b6a_o.png"><br>面片是不是很恶心的块状物？？？我这里绘制的是三维属性场，肯定是连续的，我无论怎么改插值模式，都没有用。。。<br>后面才回想起以前遇到过这个bug，所以改过来了。正确的代码应该是：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glTexCoord1f(g_p_DisFromFile-&gt;norm_dis[g_denoted_point_id][he-&gt;vertex()-&gt;tag()]);</span><br><span class="line">glNormal3f(n.x(), n.y(), n.z());</span><br><span class="line">glVertex3f(p.x(), p.y(), p.z());</span><br></pre></td></tr></table></figure>
-
 <p>正确的显示结果是：</p>
 <p><img alt data-src="https://c2.staticflickr.com/8/7425/27380202661_e1bb2be00c_o.png"></p>
 <p><img alt data-src="https://c2.staticflickr.com/8/7541/27175250770_c2656854e3_o.png"><br>如此简单的事情，能造成这样大的差距。</p>
@@ -342,10 +340,10 @@
       <div class="popular-posts-title"><a href="\2013\08\31\OpenGL使用多种格式和任意尺寸的图片作为纹理\" rel="bookmark">OpenGL使用多种格式和任意尺寸的图片作为纹理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\03\08\OpenGL渲染Obj模型(模型·材质·纹理)\" rel="bookmark">OpenGL渲染Obj模型(模型·材质·纹理)</a></div>
+      <div class="popular-posts-title"><a href="\2013\03\24\OpenGL如何使用长宽非2次方的纹理\" rel="bookmark">OpenGL如何使用长宽非2次方的纹理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\03\24\OpenGL如何使用长宽非2次方的纹理\" rel="bookmark">OpenGL如何使用长宽非2次方的纹理</a></div>
+      <div class="popular-posts-title"><a href="\2013\03\08\OpenGL渲染Obj模型(模型·材质·纹理)\" rel="bookmark">OpenGL渲染Obj模型(模型·材质·纹理)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2016\03\17\三维表面上基于笔画的纹理交互式合成\" rel="bookmark">三维表面上基于笔画的纹理交互式合成</a></div>
@@ -442,20 +440,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -512,7 +510,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -614,6 +612,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

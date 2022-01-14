@@ -317,7 +317,6 @@
 <p>使用glew也不是那么简单的事情，首先得下载glew，我下载了的是1.9的版本。即使配置成功了，也不一定说就能使用成功了。因为还必须初始化glew，<strong>最坑爹的是这个初始化必须在你创建窗口之后，否则一定会失败</strong>。</p>
 <p>下面给出使用glew的示例代码。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"windows.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;glew.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;glut.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib , <span class="string">"glew32.lib"</span>)</span><br><span class="line"></span><br><span class="line">const GLint WINDOW_WIDTH = 600;</span><br><span class="line">const GLint WINDOW_HEIGHT = 450;</span><br><span class="line">const GLint WINDOW_POS_X = 100;</span><br><span class="line">const GLint WINDOW_POS_Y = 100;</span><br><span class="line">const char* cszWindowTitile = "primrestart";</span><br><span class="line"></span><br><span class="line">void Display()</span><br><span class="line">&#123;</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br><span class="line">    glColor3f(1.0, 1.0, 1.0);</span><br><span class="line">    glRectf(0.0, 0.0, 100.0, 100.0);</span><br><span class="line">    glutSwapBuffers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Reshape(int nW, int nH)</span><br><span class="line">&#123;</span><br><span class="line">    glViewport(0, 0, nW, nH);</span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(0, nW, 0, nH);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);</span><br><span class="line">    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow(cszWindowTitile);</span><br><span class="line">    int nRet = glewInit();</span><br><span class="line">    <span class="keyword">if</span> (nRet != GLEW_OK)</span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox(NULL, "glew初始化失败", "Error", MB_ICONERROR);</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    Init();</span><br><span class="line">    glutDisplayFunc(Display);</span><br><span class="line">    glutReshapeFunc(Reshape);</span><br><span class="line">    glutMainLoop();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>从该代码中可以看到，glew.h之前不能包含gl.h，否则编译不过，还有链接上glew.lib，另外最恶心的就是glewInit的正确位置，一定要在创建了窗口（函数调用glutCreateWindow)之后，否则glewInit一定会失败的，glewInit失败了的话，再使用3.1及其以上版本的函数就会出现内存错误了。</p>
 <p>最后做下贡献，附录下我的opengl sdk，<a href="https://pan.baidu.com/s/1bS3dV4" target="_blank" rel="noopener">opengl3.0+glew1.9+一点文档</a>，基本上可以满足要求了。</p>
 
@@ -437,20 +436,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -507,7 +506,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -609,6 +608,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

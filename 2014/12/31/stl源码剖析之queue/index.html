@@ -319,7 +319,6 @@
       
         <p>接着上面一篇，这次要讲的是另一个适配器容器queue。queue的操作很简单，先进先出。现在能够使用底层容器来实现，所以也非常简单。总之，这就是个简单的适配器吧。queue需要两个模版参数，类型和底层容器，默认的底层容器是deque。摘录出的代码如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _STL_QUEUE_H</span><br><span class="line"><span class="number">#def</span>ine _STL_QUEUE_H</span><br><span class="line"><span class="selector-id">#include</span> &lt;deque&gt;</span><br><span class="line"></span><br><span class="line">namespace std</span><br><span class="line">&#123;</span><br><span class="line">    template &lt;class T, class Sequence = deque&lt;T&gt; &gt;</span><br><span class="line">    class queue &#123;</span><br><span class="line">        friend bool operator== (const queue x, const queue y);</span><br><span class="line">        friend bool operator&lt; (const queue x, const queue y);</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        typedef typename Sequence::value_type value_type;</span><br><span class="line">        typedef typename Sequence::size_type size_type;</span><br><span class="line">        typedef typename Sequence::reference reference;</span><br><span class="line">        typedef typename Sequence::const_reference const_reference;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        Sequence c; // 底层容器</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        <span class="comment">// 以下完全利用 Sequence c 的操作，完成 queue 的操作。</span></span><br><span class="line">        bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">        size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">        reference front() &#123; return c.front(); &#125;</span><br><span class="line">        const_reference front() const &#123; return c.front(); &#125;</span><br><span class="line">        reference back() &#123; return c.back(); &#125;</span><br><span class="line">        const_reference back() const &#123; return c.back(); &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// deque 是两头可进出，queue 是末端进，前端出（所以先进者先出）。</span></span><br><span class="line">        void push(const value_type x) &#123; c.push_back(x); &#125;</span><br><span class="line">        void pop() &#123; c.pop_front(); &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator==(const queue&lt;T, Sequence&gt; x, const queue&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c == y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator&lt;(const queue&lt;T, Sequence&gt; x, const queue&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c &lt; y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-
 <p>总之，代码非常简洁。分析下代码，<span style="font-family: Consolas, Monaco, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace; font-size: 13px; line-height: 1.5;">typedef typename Sequence::value_type value_type;</span>这其实，就是声明嵌套模版类型。还有必须注意的是，声明嵌套模版类型，必须加typename关键字，否则会将其视作定义。</p>
 
     </div>
@@ -437,20 +436,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -507,7 +506,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -609,6 +608,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

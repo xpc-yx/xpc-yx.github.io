@@ -315,7 +315,6 @@
 <p>形式4：[V,D] = eigs(A，k)，则可以返回最大的k个特征向量和对应的特征值，但是也没有排序，需要根据D排序V，以方便使用。</p>
 <p>问题3：如何实现返回k个根据特征值排序后的特征向量？这是最有价值的问题了。直接提供代码吧。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[V,D] = eigs(sm,k);</span><br><span class="line">[newD,IX] = sort(diag(D)));;</span><br><span class="line">newV=V(:,IX);</span><br></pre></td></tr></table></figure>
-
 <p>newV就是根据特征值排序后的特征向量，sm当然需要先建立了。<br>写在最后的话，之所以使用MATLAB计算稀疏矩阵的特征向量，是因为可以用C++调用。所以，关于这篇文章这些知识就够了，也算是我为自己做的整理吧。</p>
 
     </div>
@@ -425,20 +424,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -495,7 +494,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -597,6 +596,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

@@ -309,10 +309,8 @@
 <p>不用算法牛人，算法学得好或者对快排理解深刻的，不用把这篇文章看完了，相信你们都能在10分钟之内写一个正确的快排了。<br>废话少说，还是来讲讲如何保证10分钟之内写一个正确的快排，而且以后都能10分钟之内写出来，而不是此刻看了我说的这些胡言之后。</p>
 <p>快排的主函数大家都会，现在我给个简易点的样子：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void QuickSort(int* pnA, int nLen)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nLen &gt; <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        int nP = Partion(pnA, nLen);</span><br><span class="line">        QuickSort(pnA, nP);//排序第nP+1个元素前面的nP个元素</span><br><span class="line">        QuickSort(pnA + nP + 1, nLen - nP - 1);//排序第nP+1个元素后面的元素</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>那么现在就剩下Partion函数了。<br>我记得严蔚敏书上的写法中Partion 函数里面是有几个循环的。而且即使大概写出来了，也很难处理正确边界。<br>现在，我要说的就是算法导论上，作为教材内容出现的Partion函数。还是看代码吧。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int Partion(int* pnA, int nLen)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//这里选择最后一个元素作为轴元素</span></span><br><span class="line">    int i, j;</span><br><span class="line">    for (i = j = 0; i &lt; nLen - 1; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (pnA[i] &lt; pnA[nLen - <span class="number">1</span>])</span><br><span class="line">        &#123;</span><br><span class="line">            swap(pnA[i], pnA[j];//交换2个数的函数，大家都能写吧，stl中也有</span><br><span class="line">            ++j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(pnA[j], pnA[nLen - 1]);</span><br><span class="line">    return j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>为了公平起见，上面的代码我都是在blog上面直接敲的，写这10多行代码是绝对用不了10分钟的。主递归函数大家都会写，Partion函数里面只有一个for循环，所以只要明确了for循环的意思，快排的速写就迎刃而解了。其实，按照算导的说法，<strong>这个for一直在划分区间。区间[0,j-1]是小于最后一个元素的区间，[j,nLen - 2]是大于等于最后一个元素的区间，所以最后将第nLen-1个元素与第j个元素交换即可，Partion应该返回的值也应该是j</strong>。<br>我不知道大家理解上面那句黑体字的话没，如果理解了，随便写个快排是没问题了。至少，可能的下次面试时候，可以潇洒地写个快排给面试官看看了，虽然这也许并不是什么值得庆幸的事情。</p>
 <p>算法导论里面的快速排序那章后面还有思考题，其中第一个思考题，提出的另外一种叫做Hoare划分的partion写法，意思就和严蔚敏书上的partion函数一致的。理解的关键是，<strong>轴元素一直处于被交换中</strong>。只要发现了这点，写一两次后，这种partion方法也能掌握好了，不过写起来是循环嵌循环了，没那么舒服。</p>
 
@@ -419,20 +417,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -489,7 +487,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -591,6 +589,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

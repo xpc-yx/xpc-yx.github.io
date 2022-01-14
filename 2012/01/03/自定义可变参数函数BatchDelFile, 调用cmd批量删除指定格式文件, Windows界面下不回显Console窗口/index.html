@@ -309,18 +309,14 @@
 <p>函数代码如下:</p>
 <p>//批量删除指定格式文件,不显示console窗口</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">void BatchDelFile(char* pszFile)</span><br><span class="line">&#123;</span><br><span class="line">    char szDelCmd[MAX_INFO_LEN];</span><br><span class="line">    char szCurDir[MAX_PATH];</span><br><span class="line">    char szCmdPath[MAX_PATH];</span><br><span class="line">    SHELLEXECUTEINFO shExecInfo = &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    GetCurrentDirectory(MAX_PATH, szCurDir);//获取当前路径</span><br><span class="line">    GetSystemDirectory(szCmdPath, MAX_PATH);//获取cmd路径</span><br><span class="line">    strcat(szCmdPath, "\\cmd.exe");</span><br><span class="line">    sprintf(szDelCmd, <span class="string">"%s /c del /f /q /s %s"</span>,</span><br><span class="line">    szCmdPath, pszFile);//格式化出命令字符串, 注意加上/c, 还有那2个""</span><br><span class="line"></span><br><span class="line">    shExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);</span><br><span class="line">    shExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;</span><br><span class="line">    shExecInfo.hwnd = NULL;</span><br><span class="line">    shExecInfo.lpVerb = NULL;</span><br><span class="line">    shExecInfo.lpFile = szCmdPath;//cmd的路径</span><br><span class="line">    shExecInfo.lpParameters = szDelCmd;//程序参数,参数格式必须保证正确</span><br><span class="line">    shExecInfo.lpDirectory = szCurDir;//如果szFile是相对路径,那个这个参数就会起作用</span><br><span class="line">    shExecInfo.nShow = SW_HIDE;//隐藏cmd窗口</span><br><span class="line">    shExecInfo.hInstApp = NULL;</span><br><span class="line">    ShellExecuteEx(&amp;shExecInfo);</span><br><span class="line">    WaitForSingleObject(shExecInfo.hProcess, INFINITE);//无限等待cmd窗口执行完毕</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以下是我在一个消息出来函数的调用：<br>char szDelFiles[MAX_PATH];<br>sprintf(szDelFiles, “&quot;<em>.tcp.txt&quot; + &quot;</em>.udp.txt&quot;“);<br>BatchDelFile(szDelFiles);</p>
+<p>以下是我在一个消息出来函数的调用：<br>char szDelFiles[MAX_PATH];<br>sprintf(szDelFiles, “\”<em>.tcp.txt\” + \”</em>.udp.txt\””);<br>BatchDelFile(szDelFiles);</p>
 <p>为了调用方便，我还实现了一个可变参数列表的版本，以及一个传一个文件名数组的版本。</p>
 <p>可变参数版本代码如下：<br>//批量删除指定格式文件,不显示console窗口</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void BatchDelFile(int nNum, ...)</span><br><span class="line">&#123;</span><br><span class="line">    va_list argPtr;</span><br><span class="line">    int i;</span><br><span class="line">    char* pszDelCmd;</span><br><span class="line">    char szCurDir[MAX_PATH];</span><br><span class="line">    char szCmdPath[MAX_PATH];</span><br><span class="line">    SHELLEXECUTEINFO shExecInfo = &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    pszDelCmd = (char*)malloc((nNum + 2)* MAX_PATH);</span><br><span class="line">    GetCurrentDirectory(MAX_PATH, szCurDir);//获取当前路径</span><br><span class="line">    GetSystemDirectory(szCmdPath, MAX_PATH);//获取cmd路径</span><br><span class="line">    strcat(szCmdPath, "\\cmd.exe");</span><br><span class="line">    sprintf(pszDelCmd, "%s /c del /f /q /s ", szCmdPath);//格式化出命令字符串, 注意加上/c</span><br><span class="line">    va_start(argPtr, nNum);</span><br><span class="line">    for(i = 0; i &lt; nNum; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        strcat(pszDelCmd, "\"");</span><br><span class="line">        strcat(pszDelCmd, *(char**)argPtr);</span><br><span class="line">        strcat(pszDelCmd, "\"");</span><br><span class="line">        <span class="keyword">if</span> (<span class="selector-tag">i</span> != nNum - <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            strcat(pszDelCmd, " + ");</span><br><span class="line">        &#125;</span><br><span class="line">        va_arg(argPtr, char**);</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(argPtr);</span><br><span class="line">    shExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);</span><br><span class="line">    shExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;</span><br><span class="line">    shExecInfo.hwnd = NULL;</span><br><span class="line">    shExecInfo.lpVerb = NULL;</span><br><span class="line">    shExecInfo.lpFile = szCmdPath;//cmd的路径</span><br><span class="line">    shExecInfo.lpParameters = pszDelCmd;//程序参数,参数格式必须保证正确</span><br><span class="line">    shExecInfo.lpDirectory = szCurDir;//如果szFile是相对路径,那个这个参数就会起作用</span><br><span class="line">    shExecInfo.nShow = SW_HIDE;//隐藏cmd窗口</span><br><span class="line">    shExecInfo.hInstApp = NULL;</span><br><span class="line">    ShellExecuteEx(&amp;shExecInfo);</span><br><span class="line">    WaitForSingleObject(shExecInfo.hProcess, INFINITE);//无限等待cmd窗口执行完毕</span><br><span class="line">    free(pszDelCmd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>调用方法：<br>BatchDelFile(2, “<em>.tcp.txt”, “</em>.udp.txt”);//第一个是文件个数，后面依次是文件路径，文件路径可以是相对路径也可以是绝对路径。</p>
 <p>文件名数组的版本代码如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">void BatchDelFile(int nNum, char** pszFiles)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    char* pszDelCmd;</span><br><span class="line">    char szCurDir[MAX_PATH];</span><br><span class="line">    char szCmdPath[MAX_PATH];</span><br><span class="line">    SHELLEXECUTEINFO shExecInfo = &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">    pszDelCmd = (char*)malloc((nNum + 2)* MAX_PATH);</span><br><span class="line">    GetCurrentDirectory(MAX_PATH, szCurDir);//获取当前路径</span><br><span class="line">    GetSystemDirectory(szCmdPath, MAX_PATH);//获取cmd路径</span><br><span class="line">    strcat(szCmdPath, "\\cmd.exe");</span><br><span class="line">    sprintf(pszDelCmd, "%s /c del /f /q /s ", szCmdPath);//格式化出命令字符串, 注意加上/c</span><br><span class="line"></span><br><span class="line">    for(i = 0; i &lt; nNum; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        strcat(pszDelCmd, "\"");</span><br><span class="line">        strcat(pszDelCmd, *(pszFiles + i));</span><br><span class="line">        strcat(pszDelCmd, "\"");</span><br><span class="line">        <span class="keyword">if</span> (<span class="selector-tag">i</span> != nNum - <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            strcat(pszDelCmd, " + ");</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    shExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);</span><br><span class="line">    shExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;</span><br><span class="line">    shExecInfo.hwnd = NULL;</span><br><span class="line">    shExecInfo.lpVerb = NULL;</span><br><span class="line">    shExecInfo.lpFile = szCmdPath;//cmd的路径</span><br><span class="line">    shExecInfo.lpParameters = pszDelCmd;//程序参数,参数格式必须保证正确</span><br><span class="line">    shExecInfo.lpDirectory = szCurDir;//如果szFile是相对路径,那个这个参数就会起作用</span><br><span class="line">    shExecInfo.nShow = SW_HIDE;//隐藏cmd窗口</span><br><span class="line">    shExecInfo.hInstApp = NULL;</span><br><span class="line">    ShellExecuteEx(&amp; shExecInfo);</span><br><span class="line">    WaitForSingleObject(shExecInfo.hProcess, INFINITE);//无限等待cmd窗口执行完毕</span><br><span class="line">    free(pszDelCmd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>调用方法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char* szFiles[2];</span><br><span class="line">szFiles[0] = "*.tcp.txt";</span><br><span class="line">szFiles[1] = "*.udp.txt";</span><br><span class="line">BatchDelFile(2, szFiles);</span><br></pre></td></tr></table></figure>
+<p>调用方法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char* szFiles[2];</span><br><span class="line">szFiles[0] = "*.tcp.txt";</span><br><span class="line">szFiles[1] = "*.udp.txt";</span><br><span class="line">BatchDelFile(2, szFiles);</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -337,10 +333,10 @@
       <div class="popular-posts-title"><a href="\2016\04\23\使用MFC创建基于图片的不规则窗口程序\" rel="bookmark">使用MFC创建基于图片的不规则窗口程序</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\04\27\如何在MFC的OpenGL窗口中使用AntTweakBar\" rel="bookmark">如何在MFC中使用AntTweakBar</a></div>
+      <div class="popular-posts-title"><a href="\2012\12\26\如何将内存中的位图数据绘制在DC上\" rel="bookmark">如何将内存中的位图数据绘制在DC上</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2012\12\26\如何将内存中的位图数据绘制在DC上\" rel="bookmark">如何将内存中的位图数据绘制在DC上</a></div>
+      <div class="popular-posts-title"><a href="\2014\04\27\如何在MFC的OpenGL窗口中使用AntTweakBar\" rel="bookmark">如何在MFC中使用AntTweakBar</a></div>
     </li>
   </ul>
 
@@ -434,20 +430,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -504,7 +500,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -606,6 +602,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

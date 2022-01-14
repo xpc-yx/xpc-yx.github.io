@@ -317,7 +317,7 @@
 </blockquote>
 <p>这篇文章里面另外给了个pdf，这个pdf估计是解法的来源。伪代码写得不给力，不过前面的英文描述却很清晰。说实话，这个方法很巧妙。</p>
 <p>解法大概的意思如下：<br>开一个额外的数组A，A[0]表示A数组元素的数目(当然不包括A[0]本身)，A[i]代表插入的第i个元素的key。假设原来的无穷大数组用Huge<br>表示，如果Huge<a href="直接寻址，假设i就是key">i</a>有效，则表示其在A数组中的索引。那么如果A[Huge[i]] == i 而且 Huge[i] &lt;= A[0] &amp;&amp;<br>Huge[i] &gt; 0，则表示i这个位置已经有元素插入了。</p>
-<p>插入：A[0]++;A[A[0]] = key; Huge[key] = A[0];<br>搜索:  A[Huge[i]] == i &amp;&amp; Huge[i] &lt;= A[0] &amp;&amp; Huge[i] &gt; 0 则return true;<br>删除:  先搜索该位置是否有元素, 如果Search(key)成功，则先把Huge[ A[A[0]] ] = Huge[key]，<br>然后交换A[A[0]]和A[Huge[key]]，A[0]–即可。<br>所有操作都是O（1），平均到每一个项，使用的空间都是O（1）。</p>
+<p>插入：A[0]++;A[A[0]] = key; Huge[key] = A[0];<br>搜索:  A[Huge[i]] == i &amp;&amp; Huge[i] &lt;= A[0] &amp;&amp; Huge[i] &gt; 0 则return true;<br>删除:  先搜索该位置是否有元素, 如果Search(key)成功，则先把Huge[ A[A[0]] ] = Huge[key]，<br>然后交换A[A[0]]和A[Huge[key]]，A[0]—即可。<br>所有操作都是O（1），平均到每一个项，使用的空间都是O（1）。</p>
 <p>我用代码实现的模拟如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using std::swap;</span><br><span class="line">using std::vector;</span><br><span class="line"><span class="number">#def</span>ine INF (<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">int nHuge[INF];//假设这个巨大的数组是无法初始化的</span><br><span class="line">vector&lt;int&gt; vA;</span><br><span class="line"></span><br><span class="line">void Init()</span><br><span class="line">&#123;</span><br><span class="line">    vA.push_back(0);//添加A[0]表示元素的数目</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Insert(int nKey)</span><br><span class="line">&#123;</span><br><span class="line">    vA[0]++;</span><br><span class="line">    nHuge[nKey] = vA[0];</span><br><span class="line">    vA.push_back(nKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool Search(int nKey)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nHuge[nKey] &gt; <span class="number">0</span> &amp;&amp; nHuge[nKey] &lt;= vA[<span class="number">0</span>] &amp;&amp; vA[nHuge[nKey]] == nKey)</span><br><span class="line">    &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Delete(int nKey)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (Search(nKey))</span><br><span class="line">    &#123;</span><br><span class="line">        nHuge[ vA[vA[0]] ] = nHuge[nKey];//将huge的最后一个元素中存储的A数组的索引改为nHuge[nKey]</span><br><span class="line">        swap(vA[vA[0]], vA[nHuge[nKey]]);//交换key</span><br><span class="line">        --vA[0];</span><br><span class="line">        vA.erase(vA.end() - 1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">#def</span>ine MAX (<span class="number">10</span>)</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Init();</span><br><span class="line">    int i;</span><br><span class="line">    for (i = 0; i &lt; MAX; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        Insert(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (i = 0; i &lt; MAX; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("Search:%d %s\n", i, Search(i) == true? "Success" : "Failure");</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    Delete(4);</span><br><span class="line">    Delete(9);</span><br><span class="line">    Delete(1);</span><br><span class="line">    for (i = 0; i &lt; MAX * 2; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("Search:%d %s\n", i, Search(i) == true? "Success" : "Failure");</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -414,20 +414,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -484,7 +484,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -586,6 +586,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

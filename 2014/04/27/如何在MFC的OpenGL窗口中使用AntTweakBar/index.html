@@ -316,13 +316,10 @@
       
         <p>这篇文章是在我的另一篇文章“<a href="http://www.xpc-yx.com/2014/02/15/%E7%BB%A7%E6%89%BFmfc%E7%9A%84cwnd%E7%B1%BB%E6%B8%B2%E6%9F%93opengl/" target="_blank" rel="noopener">继承mfc的cwnd类渲染opengl</a>”的基础上改进的。<br>AntTweakBar是一个条状的菜单库，类似于内嵌于渲染窗口的属性条，可以和OpenGL渲染窗口融为一体，效果很好看。以前见过有人用这个库，效果比较好看就关注了下。在网上找相关的资料，发现只有人在glut下使用。还有人因为在MFC下使用不成功，认为和MFC不兼容。其实，这个库只要给了渲染引擎就行了，然后把一些事情传给它就能交互了。<br>AntTweakBar提供的都是简单的C接口，所以非常方便和已有的界面框架整合，无论你用的是OpenGL还是DX渲染，无论你用的界面框架是glut还是glfw或者sdl等等都行。官方网站也提供了<a href="http://anttweakbar.sourceforge.net/doc/tools:anttweakbar:howto" target="_blank" rel="noopener">整合步骤</a>。<br>我现在介绍下，在我的框架里面的整合步骤。<br>第一步，在OnCreate函数里面调用TwInit(TW_OPENGL, NULL);初始化。<br>第二步，在OnCreate函数里面创建bar并且绑定变量。如，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*myBar;</span><br><span class="line">myBar &#x3D; TwNewBar(&quot;Test&quot;);</span><br><span class="line">TwDefine(&quot; Test refresh&#x3D;0.5 color&#x3D;&#39;96 216 224&#39; alpha&#x3D;0 text&#x3D;dark&quot;);</span><br><span class="line">static int nTest &#x3D; 0;</span><br><span class="line">TwAddVarRW(myBar, &quot;Test&quot;, TW_TYPE_INT32, nTest, &quot;test&quot;);</span><br></pre></td></tr></table></figure>
-
 <p>第三步，在OnSize里面调用TwWindowSize(cx, cy);<br>第四步，修改PreTranslateMessage实现为，</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (TwEventWin(pMsg-&gt;hwnd, pMsg-&gt;message, pMsg-&gt;wParam, pMsg-&gt;lParam))</span><br><span class="line">&#123;</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br><span class="line">return CWnd::PreTranslateMessage(pMsg);</span><br></pre></td></tr></table></figure>
-
 <p>第五步，在RenderScene函数最后添加TwDraw()，但是得保证在SwapBuffers(m_hDC)之前添加这句。<br>第六步，在OnDestroy()中调用TwTerminate()释放资源。<br>综上所述，整合还是非常简单的。<br>另外，AntTweakBar提供TwDefine函数用于设置颜色，透明度等参数，可以调整效果，非常方便。还有一个需要注意的是，TwAddVarRW绑定的变量不能是局部变量，否则会出错。当你绑定的变量值变化时候，就是你和AntTweakBar交互的时候了。总之，非常方便使用吧。<br>最后，我要说的是，AntTweakBar自己会使用自身的光标，它的光标会覆盖MFC窗口的光标。如果，我们坚持使用MFC的光标的话，该怎么办了。只能禁止掉AntTweakBar的光标了。方法是，修改它的源码，重新编译成库。我们把TwMgr.cpp的针对windows系统的<strong>SetCursor</strong>函数内部实现注视掉就行了。如下所示：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void CTwMgr::SetCursor(CTwMgr::CCursor _Cursor)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/*if( m_CursorsCreated )</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">	CURSORINFO ci;</span></span><br><span class="line"><span class="comment">	memset(ci, 0, sizeof(ci));</span></span><br><span class="line"><span class="comment">	ci.cbSize = sizeof(ci);</span></span><br><span class="line"><span class="comment">	BOOL ok = ::GetCursorInfo(ci);</span></span><br><span class="line"><span class="comment">	if( ok  (ci.flags  CURSOR_SHOWING) )</span></span><br><span class="line"><span class="comment">	::SetCursor(_Cursor);</span></span><br><span class="line"><span class="comment">	&#125;*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>以下是实现效果，</p>
 <p><img alt data-src="https://c4.staticflickr.com/8/7482/27380004971_4d45801816_o.jpg"></p>
 
@@ -442,20 +439,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -512,7 +509,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -614,6 +611,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

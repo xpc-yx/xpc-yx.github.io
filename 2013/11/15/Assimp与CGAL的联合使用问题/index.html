@@ -315,7 +315,6 @@
 <p> 这有什么办法了。难道在assimp中计算法线。即使这样，我能够得到正确的顶点法线，但是cgal里面已经没有原有模型的拓扑性质了。我的数据结构还是加载失败的。所以，我不能使用assimp。而且，assimp还不能导入.m模型。虽然，它能导入格式麻烦的obj模型已经很不错了。</p>
 <p> 下面是我用assimp加载模型，并且导入到cgal中的代码。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;CGAL/Polyhedron_incremental_builder_3.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Enriched_polyhedron.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;assimp/Importer.hpp&gt;      <span class="comment">// C++ importer interface</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;assimp/scene.h&gt;           <span class="comment">// Output data structure</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;assimp/postprocess.h&gt;     <span class="comment">// Post processing flags</span></span><br><span class="line"></span><br><span class="line">template &lt;class HDS&gt;</span><br><span class="line">class Builder_obj : public CGAL::Modifier_base&lt;HDS&gt;</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	typedef typename HDS::Vertex::Point Point;</span><br><span class="line">	typedef typename CGAL::Polyhedron_incremental_builder_3&lt;HDS&gt; Builder;</span><br><span class="line">	const char* pcszfileName;</span><br><span class="line">	const aiScene* scene;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	Builder_obj(const char* pFilename)</span><br><span class="line">	&#123;</span><br><span class="line">		pcszfileName = pFilename;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Builder_obj() &#123;&#125;</span><br><span class="line"></span><br><span class="line">	void operator()(HDS hds)</span><br><span class="line">	&#123;</span><br><span class="line">		Builder builder(hds,true);</span><br><span class="line">		builder.begin_surface(3,1,6);</span><br><span class="line"></span><br><span class="line">		Assimp::Importer importer;</span><br><span class="line">		scene = importer.ReadFile(pcszfileName,  aiProcessPreset_TargetRealtime_Quality);</span><br><span class="line">		<span class="keyword">if</span> (!scene) &#123;</span><br><span class="line">			fprintf (stderr, "ERROR: reading mesh %s\n", pcszfileName);</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		for (unsigned int m_i = 0; m_i &lt; scene-&gt;mNumMeshes; m_i++)</span><br><span class="line">		&#123;</span><br><span class="line">			const aiMesh* mesh = scene-&gt;mMeshes[m_i];</span><br><span class="line"></span><br><span class="line">			for (unsigned int v_i = 0; v_i &lt; mesh-&gt;mNumVertices; v_i++) </span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (mesh-&gt;HasPositions())</span><br><span class="line">				&#123;</span><br><span class="line">					const aiVector3D* vp = (mesh-&gt;mVertices[v_i]);</span><br><span class="line">					printf ("      vp %i (%f,%f,%f)\n", v_i, vp-&gt;x, vp-&gt;y, vp-&gt;z);</span><br><span class="line">					builder.add_vertex(Point(vp-&gt;x, vp-&gt;y, vp-&gt;z));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			for (unsigned int j = 0; j &lt; mesh-&gt;mNumFaces; ++j)</span><br><span class="line">			&#123;</span><br><span class="line">				const aiFace face = mesh-&gt;mFaces[j];</span><br><span class="line">				assert(face.mNumIndices == 3);</span><br><span class="line"></span><br><span class="line">				builder.begin_facet();</span><br><span class="line">				builder.add_vertex_to_facet(face.mIndices[0]);</span><br><span class="line">				builder.add_vertex_to_facet(face.mIndices[1]);</span><br><span class="line">				builder.add_vertex_to_facet(face.mIndices[2]);</span><br><span class="line">				builder.end_facet();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		builder.end_surface();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;class kernel, class items&gt;</span><br><span class="line">class Parser_obj</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	typedef typename Enriched_Model::HalfedgeDS HalfedgeDS;</span><br><span class="line">	Parser_obj() &#123;&#125;</span><br><span class="line">	~Parser_obj() &#123;&#125;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	bool read(const char*pFilename,</span><br><span class="line">		Enriched_Model *pMesh)</span><br><span class="line">	&#123;</span><br><span class="line">		CGAL_assertion(pMesh != NULL);</span><br><span class="line">		Builder_obj&lt;HalfedgeDS&gt; builder(pFilename);</span><br><span class="line">		pMesh-&gt;delegate(builder);</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p> 代码确实非常简洁，但是不能到达要求，又有什么办法了。如果谁有什么解决办法的，欢迎回复啊。。。所以，我打算自己实现一个适用于cgal的导入obj模型（我只导入顶点），.m模型，.off模型等的类吧，以方便以后扩充和重复使用吧。</p>
 
     </div>
@@ -433,20 +432,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -503,7 +502,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -605,6 +604,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

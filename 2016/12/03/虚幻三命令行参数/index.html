@@ -317,8 +317,7 @@
 <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。</p>
 <h3 id="编译命令行参数"><a href="#编译命令行参数" class="headerlink" title="编译命令行参数"></a>编译命令行参数</h3><p>编译代码期间会用到的参数如下：</p>
 <ol>
-<li><p>版本 -debug -release</p><p></p>
-</li>
+<li>版本 -debug -release&lt;/p&gt;</li>
 <li><p>全量 -full （默认增量）</p>
 </li>
 <li><p>自动更新C++头文件，不弹框确认 -auto<br>注意：虚幻三编译脚本.uc文件时候，会更新.h头文件</p>
@@ -345,8 +344,8 @@
 <li><p>附加参数<br>附加参数与地图之间用”?”分隔。<br>附加参数分为两种类型，一种是用”=”指定的选项，一种是用”-“指定的开关。</p>
 <p>常用的选项参数：<br>dedicated：指定服务器作为专用服务器。<br>listen: 指定服务器作为监听服务器 。<br>spectatoronly：以观看模式启动游戏<br>class: 告诉引擎要使用的玩家类(覆盖默认值)。<br>game:: 指定使用的GameInfo类。<br>name: 要使用的玩家名称。<br>team: 指定玩家所在的团队。<br>resx/resy: 设置游戏窗口的分辨率。<br>consolex/consoley：设置控制台窗口(log窗口)分辨率。</p>
 <p>常用的开关参数：<br>log: 打开日志窗口。<br>windowed：窗口模式运行。<br>nomoviestartup: 略过启动动画。<br>nosplash: 略过启动splash窗口。</p>
-<p>更多的附加参数请参考文档：[虚幻四引擎命令行参数](https://docs.unrealengine.com/latest/CHN/Programming/Basics/CommandLineArguments/index.html)
-</p></li>
+<p></p><p>更多的附加参数请参考文档：<a href="https://docs.unrealengine.com/latest/CHN/Programming/Basics/CommandLineArguments/index.html" target="_blank" rel="noopener">虚幻四引擎命令行参数</a></p>
+</li>
 <li><p>一些示例：<br>UDK.exe server MyMap.udk<br>UDK.exe 127.0.0.1<br>UDK.exe MyMap.udk?-resX=640 -resY=480 -log log=log.txt<br>UDKLift.exe DM-发电站?Game=UTGame.UTTeamGame?listen=true?TeamIndex=0?Name=FS01 -log -windowed -resX=640 -resY=360 -nomoviestartup -nosplash windowPosX=0 windowPosY=0 -consolePosX=0 -consolePosY=365<br>MyGame.exe editor MyMap.umap -NoLoadStartupPackages -NoGADWarning</p>
 </li>
 </ol>
@@ -455,20 +454,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -525,7 +524,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -627,6 +626,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

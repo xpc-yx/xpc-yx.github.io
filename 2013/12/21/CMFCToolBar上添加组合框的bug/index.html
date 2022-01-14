@@ -313,7 +313,6 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ON_REGISTERED_MESSAGE</span><span class="params">(AFX_WM_RESETTOOLBAR, CMainFrame::OnToolbarReset)</span></span></span><br><span class="line"><span class="function"><span class="title">ON_COMMAND</span><span class="params">(ID_BUILD_CHOOSE, CMainFrame::OnClickChoose)</span></span></span><br><span class="line"><span class="function"><span class="title">ON_CBN_SELCHANGE</span><span class="params">(ID_BUILD_CHOOSE, CMainFrame::OnSelChangeClick)</span></span></span><br></pre></td></tr></table></figure>
 <p>代码如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">LRESULT CMainFrame::OnToolbarReset(WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">	UINT uiToolBarId = (UINT)wParam;</span><br><span class="line"></span><br><span class="line">	switch (uiToolBarId)</span><br><span class="line">	&#123;</span><br><span class="line">	case IDR_MAINFRAME:</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	case IDR_BUILD:</span><br><span class="line">		&#123;</span><br><span class="line">		   CMFCToolBarComboBoxButton comboButton(ID_BUILD_CHOOSE, GetCmdMgr()-&gt;GetCmdImage(ID_BUILD_CHOOSE, FALSE), CBS_DROPDOWN);</span><br><span class="line">		   comboButton.EnableWindow(TRUE);</span><br><span class="line">		   comboButton.SetCenterVert();</span><br><span class="line">		   comboButton.SetFlatMode();</span><br><span class="line">		   comboButton.AddItem(_T("Example Stack"));</span><br><span class="line">		   comboButton.AddItem(_T("Upsample Pyramid"));</span><br><span class="line">		   comboButton.AddItem(_T("Jitter Pyramid"));</span><br><span class="line">		   comboButton.AddItem(_T("Correct Pyramid"));</span><br><span class="line">		   comboButton.SelectItem(0);</span><br><span class="line">		   m_wndToolBarBuild.ReplaceButton(ID_BUILD_CHOOSE, comboButton);</span><br><span class="line">		&#125;</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	default:</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void CMainFrame::OnClickChoose()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void CMainFrame::OnSelChangeClick()</span><br><span class="line">&#123;</span><br><span class="line">	CMFCToolBarComboBoxButton* pCombo = CMFCToolBarComboBoxButton::GetByCmd(ID_BUILD_CHOOSE, TRUE);</span><br><span class="line"></span><br><span class="line">	int nIndex = pCombo-&gt;GetCurSel();</span><br><span class="line">	theAppState.ts.m_nDisplayMode = nIndex;</span><br><span class="line">	theAppState.ts.UpdateDisplayWnd();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>OnToolbarReset中实现的是添加组合框，根据MSDN的文档，应该采用这样的方法，当然也可以采用CMFCToolBar的protected方法InsertButton，不过需要把这个方法改成public的，这个就需要修改类定义的源码。必须响应ID_BUILD_CHOOSE的点击消息，否则组合框是灰的，无法点击。<br>OnSelChangeClick响应的是组合框选择变化的消息，这个消息的实现必须用 CMFCToolBarComboBoxButton::GetByCmd获得组合框的指针，否则得不到正确的效果。<br>最后要讲的是我碰到的一个bug，恶心了我一周了。我在工具栏上面定义了向前和向后操作，如果我一直点击向前或者向后按钮，<strong>组合框会自动切换选择到最后一项</strong>。我调试了很久，发现跟我的算法实现代码一点关系都没有，我什么都不做，操作界面就会出现这个bug。最后，我偶然发现修改CMFCToolBarComboBoxButton comboButton(ID_BUILD_CHOOSE, GetCmdMgr()-&gt;GetCmdImage(ID_BUILD_CHOOSE, FALSE), <strong>CBS_DROPDOWNLIST</strong>);的最后一个参数为<strong>CBS_DROPDOWN</strong>就不会出现这样的bug。只是有一个不爽的地方，那就是点击组合框的时候，会出现光标而已。勉强接受了吧。</p>
 
     </div>
@@ -413,20 +412,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -483,7 +482,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -585,6 +584,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

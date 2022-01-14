@@ -314,8 +314,8 @@
 
       
         <p>这个题目是求N！后面有多少个0，注意N可能最大到10的9次。哈哈，直接枚举1-N有多少个2和5的因子，然后取小的值肯定会超时的。但是，我还是试了下，果断超时了。<br>那就只有想数学结论了，果断想到1-N中能被2整除的数字有N / 2。哈哈，再往后思考下，发现1-N中能被4整除的数字有N / 4个，再往后就是N / 8，一直到N 除以2的某个次方为0为止，那么把所有的值加起来就是2的因子的个数了。求5的因子的个数也是这样的方法了。<br>很明显，5的因子的个数一定会小于等于2的因子的个数。那么直接求5的因子的个数就行了。由于，N / 5的时候用到了向下取整，所以不能用等比数列求和公式，怎么把答案弄成一个公式，还不知道了。<br>PS：其实我这种思路的灵感来自于筛选素数的方法了。</p>
-<p>代码如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int GetAns(int nN)</span><br><span class="line">&#123;</span><br><span class="line">    int nAns = 0;</span><br><span class="line">    while (nN)</span><br><span class="line">    &#123;</span><br><span class="line">        nAns += nN / 5;</span><br><span class="line">        nN /= 5;</span><br><span class="line">    &#125;</span><br><span class="line">    return nAns;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nT;</span><br><span class="line"></span><br><span class="line">    scanf("%d", &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    &#123;</span><br><span class="line">        int nN;</span><br><span class="line">        scanf("%d", &amp;nN);</span><br><span class="line">        printf("%d\n", GetAns(nN));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int GetAns(int nN)</span><br><span class="line">&#123;</span><br><span class="line">    int nAns = 0;</span><br><span class="line">    while (nN)</span><br><span class="line">    &#123;</span><br><span class="line">        nAns += nN / 5;</span><br><span class="line">        nN /= 5;</span><br><span class="line">    &#125;</span><br><span class="line">    return nAns;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nT;</span><br><span class="line"></span><br><span class="line">    scanf("%d", &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    &#123;</span><br><span class="line">        int nN;</span><br><span class="line">        scanf("%d", &amp;nN);</span><br><span class="line">        printf("%d\n", GetAns(nN));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
     </div>
 
     
@@ -409,20 +409,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -479,7 +479,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -581,6 +581,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

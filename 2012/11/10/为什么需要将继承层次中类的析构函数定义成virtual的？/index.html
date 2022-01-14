@@ -321,7 +321,6 @@
 <p>其实，上面的这种写法就是利用多态的性质，既然要利用多态，肯定得把析构函数定义成virtual的，那么调用哪个析构函数的决策就能到运行时候再决定。如果基类的析构函数定义成virtual的话，其所有子类的析构函数当然也是virtual的，那么我们删除基类指针的时候，就能通过多态机制决定该调用子类的析构函数，也就是从子类的析构函数开始往基类的析构函数调用释放整个对象。这样就不会造成任何资源泄漏了。</p>
 <p>以下的代码展示了这样的一种情况，注意Class CA作为基类，就需要把析构函数定义成virtual的。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">class CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CA(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nA = new int[nSize];</span><br><span class="line">            printf("构造CA\n");</span><br><span class="line">        &#125;</span><br><span class="line">        virtual ~CA()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nA;</span><br><span class="line">            printf("析构CA\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nA;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class CB : public CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CB(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nB = new int[nSize];</span><br><span class="line">            printf("构造CB\n");</span><br><span class="line">        &#125;</span><br><span class="line">        ~CB()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nB;</span><br><span class="line">            printf("析构CB\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nB;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CA* pCA = new CB();</span><br><span class="line">    delete pCA;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>效果如图:</p>
 <p><img alt data-src="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png">，</p>
 <p>如果删掉CA析构函数前面的virtual，效果如图，</p>
@@ -432,20 +431,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -502,7 +501,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -604,6 +603,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

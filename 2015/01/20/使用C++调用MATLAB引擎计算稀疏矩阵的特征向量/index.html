@@ -319,10 +319,8 @@
 <p>4.至于如何用MATLAB计算稀疏矩阵的特征向量，参阅上一篇文章。</p>
 <p>5.关键的一步，如何设置mxCreateSparse返回的稀疏矩阵的值。先看下面的代码吧。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mxArray* sm = mxCreateSparse(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">double* pr = mxGetPr(sm);</span><br><span class="line">mwIndex* ir = mxGetIr(sm);</span><br><span class="line">mwIndex* jc = mxGetJc(sm); </span><br><span class="line"></span><br><span class="line">int k = 0;</span><br><span class="line">int nLastC = -1;</span><br><span class="line">for (int i = 0; i &lt; m_nNum; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    pr[i] = m_pSI[i].v;</span><br><span class="line">    ir[i] = m_pSI[i].r;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m_pSI[i]<span class="selector-class">.c</span> != nLastC)</span><br><span class="line">    &#123;</span><br><span class="line">        jc[k] = i;</span><br><span class="line">        nLastC = m_pSI[i].c;</span><br><span class="line">        ++k;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">jc[k] = m_nNum;</span><br></pre></td></tr></table></figure>
-
 <p>pr对应的是值，ir对应的是行，关键的是jc，jc并不是列，而是到当前列为止出现的值数目，具体可以查阅MATLAB文档，或者理解下以上代码，正确初始化稀疏矩阵是成功的关键。<br>下面随附我的计算拉普拉斯矩阵FiedlerVector的函数。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">void CSparseMatrix::GetFiedlerVector(double* pVector, int nChoose)</span><br><span class="line">    &#123;</span><br><span class="line">        assert(nChoose &gt;= 0  nChoose &lt;= 5);</span><br><span class="line"></span><br><span class="line">        Engine *ep = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!(ep = engOpen(NULL)))<span class="comment">//打开matlab引擎</span></span><br><span class="line">        &#123;</span><br><span class="line">            fprintf(stderr, "\nCan't start MATLAB engine\n");</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mxArray* sm = mxCreateSparse(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">        double* pr = mxGetPr(sm);</span><br><span class="line">        mwIndex* ir = mxGetIr(sm);</span><br><span class="line">        mwIndex* jc = mxGetJc(sm); </span><br><span class="line"></span><br><span class="line">        int k = 0;</span><br><span class="line">        int nLastC = -1;</span><br><span class="line">        for (int i = 0; i &lt; m_nNum; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            pr[i] = m_pSI[i].v;</span><br><span class="line">            ir[i] = m_pSI[i].r;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (m_pSI[i]<span class="selector-class">.c</span> != nLastC)</span><br><span class="line">            &#123;</span><br><span class="line">                jc[k] = i;</span><br><span class="line">                nLastC = m_pSI[i].c;</span><br><span class="line">                ++k;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        jc[k] = m_nNum;</span><br><span class="line"></span><br><span class="line">        engPutVariable(ep, "sm", sm);</span><br><span class="line">        engEvalString(ep, "max_d = eigs(sm, 1);");//获得最大绝对值的特征值</span><br><span class="line"></span><br><span class="line">        double fMaxE;</span><br><span class="line">        mxArray* max_d = engGetVariable(ep, "max_d");</span><br><span class="line">        memcpy(fMaxE, (void *)mxGetPr(max_d), sizeof(double));//获得最大的特征值(假设特征值是从最大排列到0)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//更新对角线元素，相当于sm = sm - fMaxE，这样会使计算出来的特征值都减去fMaxE</span></span><br><span class="line">        pr = mxGetPr(sm);</span><br><span class="line">        for (int i = 0; i &lt; m_nNum; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            pr[i] = m_pSI[i].v;</span><br><span class="line">            <span class="keyword">if</span> (m_pSI[i]<span class="selector-class">.r</span> == m_pSI[i].c)<span class="comment">//对角线元素</span></span><br><span class="line">            &#123;</span><br><span class="line">                pr[i] -= fMaxE;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        engPutVariable(ep, "sm", sm);</span><br><span class="line">        engEvalString(ep, "[V,D] = eigs(sm);");</span><br><span class="line">        engEvalString(ep, "[newD,IX] = sort(diag(D));");</span><br><span class="line">        engEvalString(ep, "newV=V(:,IX);");</span><br><span class="line"></span><br><span class="line">        const int EVAl_STR_LEN = 100;</span><br><span class="line">        char szEvalString[EVAl_STR_LEN];</span><br><span class="line">        sprintf(szEvalString, "Fiedler = newV(:, %d);", nChoose);</span><br><span class="line">        engEvalString(ep, szEvalString);</span><br><span class="line"></span><br><span class="line">        mxArray* fiedler = engGetVariable(ep, "Fiedler"); //返回计算结果</span><br><span class="line">        memcpy(pVector, (void *)mxGetPr(fiedler), sizeof(double) * m_nRow);</span><br><span class="line"></span><br><span class="line">        mxDestroyArray(sm);</span><br><span class="line">        mxDestroyArray(fiedler);</span><br><span class="line">        engClose(ep);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 <p>参照以上函数基本可以知道本文所讲的内容了，一切尽在代码中。</p>
 
     </div>
@@ -432,20 +430,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -502,7 +500,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -604,6 +602,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

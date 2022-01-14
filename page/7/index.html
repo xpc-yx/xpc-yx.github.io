@@ -222,6 +222,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/" class="post-title-link" itemprop="url">三维平面的向量表示法</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-07-06 11:36:42" itemprop="dateCreated datePublished" datetime="2014-07-06T11:36:42+08:00">2014-07-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="三维平面的向量表示法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>691</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我们都知道平面可以表示为A<em>x+B</em>y+C<em>z+d=0，但是很多人不知道这个表达式隐含的意义。<br>从另一个角度，点法式来看平面，假设法线n=(a,b,c),平面上一点p0(x0,y0,z0),平面上任意一点p为(x,y,z)。那么平面可以表示为n</em>(p-p0)=0，即(a,b,c)<em>(x-x0,y-y0,z-z0)=0，可以化简为a</em>x+b<em>y+c</em>z-a<em>x0-b</em>y0-c<em>z0=0。<br>上面两个式子一对比，就能发现a=kA,b=kB,c=kC，-a</em>x0-b<em>y0-c</em>z0=kD。取k=1，就可以得到系数相等。所以，看到平面的一般式就能够得到法线为n=(A,B,C)。<br>根据上面的结论，进一步推广，我们可以把一般式改成点积的形式(A,B,C)<em>(x,y,z)+D=0。这个就是平面的向量表示，即**n</em>P+d=0<strong>。那么这个向量表示法有什么意义了。首先，在程序实现中，我们只需要保存法线n和系数d就可以了。<br>其次，d还代表从原点到平面上任意点的向量在法线上的投影长度。所以，利用这个信息，可以方便的求出任意点到平面的距离。<br>假设n为单位法线，假设任意点为q，q在平面上的投影为q’，那么向量</strong>(q-q’)=kn<strong>。意思是向量(q-q’)肯定和法线共线，长度是其k倍。在上式两边乘以n，可以得到(q-q’)<em>n=kn</em>n，即(q<em>n-q’</em>n)=k，即k=q*n-q’n。由于q’是平面上的点，所以</strong>q’<em>n=-d<strong>，那么，</strong>k=q</em>n+d<strong>。k即是点q到平面的长度，其中q，n，d都是已知的。运用这个式子的时候，必须得先</strong>归一化n**。<br>现在可以很清晰的看到，如果我们将平面表示为向量形式，而且n是归一化的，那么计算任意点到平面的距离是非常方便的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -293,7 +397,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>639</span>
+              <span>637</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -314,7 +418,7 @@
       
           <p>三维模型上的标量场指的是三维模型上面的每个顶点都有一个标量值，从而构成了整体的标量场。如果能够以颜色代表这个标量值的大小，那么整体的标量场就能够方便的观察出来。一般来说，hls颜色模型的色相能够代表从红到蓝的渐进过度，因此可以用hsl转rgb的方法生成一维纹理。然后归一化标量场，将标量值作为一维的纹理坐标，从而显示出整个标量场。如何加载任意格式图片作为纹理，以及其它关于OpenGL纹理的内容，可以参考我其它文章。<br>但是这样比较麻烦。首先，需要颜色空间转换，还有使用的是一维纹理。其实，有更方便的做法。直接找一张代表从红到蓝的渐进过度纹理图片，加载这张图片生成纹理，使用二维纹理坐标，固定一维的坐标，如s，变化t。<br>对应的二维纹理图和实现效果：</p>
 <p><img alt data-src="https://c2.staticflickr.com/8/7400/27380050181_bbd0509152_o.png"><br>这里需要注意一个问题，就是极限纹理坐标的跳变。比如说，纹理坐标很小接近0，可能就会直接跳到1去了，插值出来的颜色就会从红直接变成蓝，或者从蓝直接变成红，明显是不对的。如图所示，</p>
-<p><img alt data-src="https://c2.staticflickr.com/8/7299/27380049411_75cf1fbd34_o.png"><br>处理这个问题的方法，有两种，一种是修改纹理坐标的模型为GL_MIRRORED_REPEAT的而不是一般的GL_REPEAT，第二个是将纹理坐标的范围压缩到大于0小于1之间。求的最大和最小标量值后，往外扩展下，再进行标量值的归一化。可以用下面的代码，处理。<br>float fDis = fMax - fMin;<br>fMin = fMin - fDis * 0.001;<br>fMax = fMax + fDis * 0.001;<br>这样正确的显示如下，</p>
+<p><img alt data-src="https://c2.staticflickr.com/8/7299/27380049411_75cf1fbd34_o.png"><br>处理这个问题的方法，有两种，一种是修改纹理坐标的模型为GL_MIRRORED_REPEAT的而不是一般的GL_REPEAT，第二个是将纹理坐标的范围压缩到大于0小于1之间。求的最大和最小标量值后，往外扩展下，再进行标量值的归一化。可以用下面的代码，处理。<br>float fDis = fMax - fMin;<br>fMin = fMin - fDis <em> 0.001;<br>fMax = fMax + fDis </em> 0.001;<br>这样正确的显示如下，</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/#more" rel="contents">
@@ -433,7 +537,6 @@
       
           <p>这篇文章是在我的另一篇文章“<a href="http://www.xpc-yx.com/2014/02/15/%E7%BB%A7%E6%89%BFmfc%E7%9A%84cwnd%E7%B1%BB%E6%B8%B2%E6%9F%93opengl/" target="_blank" rel="noopener">继承mfc的cwnd类渲染opengl</a>”的基础上改进的。<br>AntTweakBar是一个条状的菜单库，类似于内嵌于渲染窗口的属性条，可以和OpenGL渲染窗口融为一体，效果很好看。以前见过有人用这个库，效果比较好看就关注了下。在网上找相关的资料，发现只有人在glut下使用。还有人因为在MFC下使用不成功，认为和MFC不兼容。其实，这个库只要给了渲染引擎就行了，然后把一些事情传给它就能交互了。<br>AntTweakBar提供的都是简单的C接口，所以非常方便和已有的界面框架整合，无论你用的是OpenGL还是DX渲染，无论你用的界面框架是glut还是glfw或者sdl等等都行。官方网站也提供了<a href="http://anttweakbar.sourceforge.net/doc/tools:anttweakbar:howto" target="_blank" rel="noopener">整合步骤</a>。<br>我现在介绍下，在我的框架里面的整合步骤。<br>第一步，在OnCreate函数里面调用TwInit(TW_OPENGL, NULL);初始化。<br>第二步，在OnCreate函数里面创建bar并且绑定变量。如，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*myBar;</span><br><span class="line">myBar &#x3D; TwNewBar(&quot;Test&quot;);</span><br><span class="line">TwDefine(&quot; Test refresh&#x3D;0.5 color&#x3D;&#39;96 216 224&#39; alpha&#x3D;0 text&#x3D;dark&quot;);</span><br><span class="line">static int nTest &#x3D; 0;</span><br><span class="line">TwAddVarRW(myBar, &quot;Test&quot;, TW_TYPE_INT32, nTest, &quot;test&quot;);</span><br></pre></td></tr></table></figure>
-
 <p>第三步，在OnSize里面调用TwWindowSize(cx, cy);<br>第四步，修改PreTranslateMessage实现为，</p>
           <!--noindex-->
             <div class="post-button">
@@ -552,25 +655,26 @@
 
       
           <p>有些时候，我们想知道鼠标点中了哪个物体或者哪个部分，更详细的是最靠近模型的哪个顶点或者哪条线，或者哪个面。这些选取问题有不同的解决办法。如果只是针对<strong>图元</strong>的选取，可以直接用OpenGL的<strong>选取模式</strong>实现。但是有的时候，情况更加复杂，比如我们想通过鼠标在模型上面绘制一条线，然后对模型进行剖分等。这就需要把鼠标点变换到三维顶点，再进一步的操作。<br>我在这里贴出2个我自己使用的函数，针对鼠标点投影视角空间和反投影。<br>投影：``` stylus<br>void CMesh::ScreenToModel(v2f point, v3f point3d)<br>{<br>        float fWinX, fWinY, fWinZ;<br>        int nX, nY;<br>        GLdouble fX, fY, fZ;</p>
-<pre><code>nX = point[0];
-nY = point[1];
-glReadBuffer(GL_BACK);
-glReadPixels(nX, nY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);
-if (fabs(fWinZ - 1.0) &gt; 1e-8)
-{
-    fWinX = nX;
-    fWinY = nY;
-    gluUnProject(fWinX, fWinY, fWinZ, m_pMatMV, m_pMatProj, m_pViewport,
-        fX, fY, fZ);
-    point3d[0] = fX;
-    point3d[1] = fY;
-    point3d[2] = fZ;
-}
-else
-{
-    point3d[0] = point3d[1] = 0.0;
-    point3d[2] = 1.0;
-}</code></pre><p>}</p>
+<pre><code>    nX = point[0];
+    nY = point[1];
+    glReadBuffer(GL_BACK);
+    glReadPixels(nX, nY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);
+    if (fabs(fWinZ - 1.0) &gt; 1e-8)
+    {
+        fWinX = nX;
+        fWinY = nY;
+        gluUnProject(fWinX, fWinY, fWinZ, m_pMatMV, m_pMatProj, m_pViewport,
+            fX, fY, fZ);
+        point3d[0] = fX;
+        point3d[1] = fY;
+        point3d[2] = fZ;
+    }
+    else
+    {
+        point3d[0] = point3d[1] = 0.0;
+        point3d[2] = 1.0;
+    }
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">使用该函数必须注意的是，point必须已经转换为**视口点**，即point[1] &#x3D; window_height - point[1] - 1。</span><br><span class="line">反投影:&#96;&#96;&#96; stylus</span><br><span class="line">void CMesh::ModelToScreen(v3f point3d, v2f point)</span><br><span class="line">&#123;</span><br><span class="line">        double fWinX, fWinY, fWinZ;</span><br><span class="line">        gluProject(point3d[0], point3d[1], point3d[2], m_pMatMV, m_pMatProj, m_pViewport,</span><br><span class="line">            fWinX, fWinY, fWinZ);</span><br><span class="line"></span><br><span class="line">        point[0] &#x3D; (float)fWinX;</span><br><span class="line">        point[1] &#x3D; (float)fWinY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>反投影得到的2维点同样是基于<strong>左下角</strong>为原点的视口点，要转换为鼠标点的话还得变换y值，即point[1] = window_height - point[1] - 1。<br>至于其它的实现方法，当然可以自己直接操作投影矩阵和模型矩阵，视口信息，进行转换，不过也是重复造轮子，但对于理解原理有帮助。<br>鼠标点投影到三维之后，就可以找到<strong>最近</strong>的模型点，或者通过射线之类求相交面。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/#more" rel="contents">
@@ -797,17 +901,8 @@ else
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>标题的意思是使用OpenGL生成特定的图片。比如说，把OpenGL渲染出来的特定结果保存出来，或者生成特殊的纹理图片。<br>第一步，保存OpenGL环境。这个使用glPushAttrib(GL_ALL_ATTRIB_BITS)实现。<br>第二步，设置视口。既然我们要生成指定大小的图片，那我们就<strong>把视口设置为该图片的大小</strong>。glViewport(0, 0, nWidth, nHeight);<br>第三步，设置投影矩阵。<br>第四步，设置模型视图矩阵。<br>第五步，进行相关绘制。<br>第六步，调用<strong>glReadPixels</strong>保存绘制内容。（这一步也可以放到后面的任意位置）<br>第七步，恢复模型视图矩阵。<br>第八步，恢复投影矩阵。<br>第九步，恢复OpenGL环境。<br>大致的代码，可以用下面这个函数描述。只需要替换绘制的代码就可以改成你需要的形式了。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">void CDrawedTexture::InterpolateData(int m_nWidth, int m_nHeight)</span><br><span class="line">&#123;</span><br><span class="line">    glPushAttrib(GL_ALL_ATTRIB_BITS);</span><br><span class="line"></span><br><span class="line">    glViewport(0, 0, nWidth, nHeight);</span><br><span class="line">    glClearColor(0.0, 0.0, 0.0, 1.0);</span><br><span class="line">    glDisable(GL_TEXTURE_2D);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(0.0, 1.0, 0.0, 1.0);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_MODELVIEW);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glLoadIdentity();</span><br><span class="line"></span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//绘制三角形</span></span><br><span class="line">    glEnable(GL_TEXTURE_2D);</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; m_faces.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        m_faces[i].v[0].pTexture-&gt;Bind2d();</span><br><span class="line">        glBegin(GL_TRIANGLES);</span><br><span class="line">        for (int j = 0; j &lt; 3; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//设置纹理坐标</span></span><br><span class="line">            glTexCoord2f(m_faces[i].v[j].oldTexPos[0], m_faces[i].v[j].oldTexPos[1]);</span><br><span class="line">            <span class="comment">//设置坐标</span></span><br><span class="line">            glVertex2f(m_faces[i].v[j].newTexPos[0], m_faces[i].v[j].newTexPos[1]);</span><br><span class="line">        &#125;</span><br><span class="line">        glEnd();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, m_img.raw());</span><br><span class="line"></span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPopAttrib();</span><br><span class="line"></span><br><span class="line">    m_img.save("插值纹理.bmp");</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意请使用<strong>双缓存区</strong>，而且<strong>绝对不能调用交换缓存区函数</strong>。原因是生成图片是幕后工作，交换缓存区会破坏屏幕当前的显示。这里还有个必须很注意的地方，就是glReadPixels的参数一定要正确。比如<strong>像素的格式</strong>，还有<strong>数据的类型</strong>。如果你的颜色缓存区是rgba的，那么你一定得使用<strong>GL_RGBA</strong>而不是GL_RGB，还有一般不能使用GL_BYTE，而是要使用<strong>GL_UNSIGNED_BYTE</strong>，否则会造成数据截断。<br>我这段代码的意图是将笔画绘制所经过的三维部分投影到二维图片上面保存起来。三维模型上面贴了纹理。<br>当然还可以用FBO实现和本文类似的功能。<br>如果实现所谓的渲染到纹理，我们只需要把渲染到后缓存区的数据提取出来，绑定到纹理就行了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/03/03/%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93%E5%88%B0%E5%9B%BE%E7%89%87/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>标题的意思是使用OpenGL生成特定的图片。比如说，把OpenGL渲染出来的特定结果保存出来，或者生成特殊的纹理图片。<br>第一步，保存OpenGL环境。这个使用glPushAttrib(GL_ALL_ATTRIB_BITS)实现。<br>第二步，设置视口。既然我们要生成指定大小的图片，那我们就<strong>把视口设置为该图片的大小</strong>。glViewport(0, 0, nWidth, nHeight);<br>第三步，设置投影矩阵。<br>第四步，设置模型视图矩阵。<br>第五步，进行相关绘制。<br>第六步，调用<strong>glReadPixels</strong>保存绘制内容。（这一步也可以放到后面的任意位置）<br>第七步，恢复模型视图矩阵。<br>第八步，恢复投影矩阵。<br>第九步，恢复OpenGL环境。<br>大致的代码，可以用下面这个函数描述。只需要替换绘制的代码就可以改成你需要的形式了。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">void CDrawedTexture::InterpolateData(int m_nWidth, int m_nHeight)</span><br><span class="line">&#123;</span><br><span class="line">    glPushAttrib(GL_ALL_ATTRIB_BITS);</span><br><span class="line"></span><br><span class="line">    glViewport(0, 0, nWidth, nHeight);</span><br><span class="line">    glClearColor(0.0, 0.0, 0.0, 1.0);</span><br><span class="line">    glDisable(GL_TEXTURE_2D);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluOrtho2D(0.0, 1.0, 0.0, 1.0);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_MODELVIEW);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glLoadIdentity();</span><br><span class="line"></span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//绘制三角形</span></span><br><span class="line">    glEnable(GL_TEXTURE_2D);</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; m_faces.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        m_faces[i].v[0].pTexture-&gt;Bind2d();</span><br><span class="line">        glBegin(GL_TRIANGLES);</span><br><span class="line">        for (int j = 0; j &lt; 3; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//设置纹理坐标</span></span><br><span class="line">            glTexCoord2f(m_faces[i].v[j].oldTexPos[0], m_faces[i].v[j].oldTexPos[1]);</span><br><span class="line">            <span class="comment">//设置坐标</span></span><br><span class="line">            glVertex2f(m_faces[i].v[j].newTexPos[0], m_faces[i].v[j].newTexPos[1]);</span><br><span class="line">        &#125;</span><br><span class="line">        glEnd();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, m_img.raw());</span><br><span class="line"></span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_PROJECTION);</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPopAttrib();</span><br><span class="line"></span><br><span class="line">    m_img.save("插值纹理.bmp");</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>注意请使用<strong>双缓存区</strong>，而且<strong>绝对不能调用交换缓存区函数</strong>。原因是生成图片是幕后工作，交换缓存区会破坏屏幕当前的显示。这里还有个必须很注意的地方，就是glReadPixels的参数一定要正确。比如<strong>像素的格式</strong>，还有<strong>数据的类型</strong>。如果你的颜色缓存区是rgba的，那么你一定得使用<strong>GL_RGBA</strong>而不是GL_RGB，还有一般不能使用GL_BYTE，而是要使用<strong>GL_UNSIGNED_BYTE</strong>，否则会造成数据截断。<br>我这段代码的意图是将笔画绘制所经过的三维部分投影到二维图片上面保存起来。三维模型上面贴了纹理。<br>当然还可以用FBO实现和本文类似的功能。<br>如果实现所谓的渲染到纹理，我们只需要把渲染到后缓存区的数据提取出来，绑定到纹理就行了。</p>
+
       
     </div>
 
@@ -1141,7 +1236,6 @@ else
       
           <p>其实OpenGL的全屏抗锯齿就是开启多重采样。在使用glut的时候，很方便就能实现。只要启用多重采样缓冲就行了。但是，在MFC窗口中的实现就很麻烦了。<br>首先，在MFC窗口中渲染OpenGL就需要比较麻烦的设置。所以，需要在设置OpenGL渲染环境的时候进一步处理。具体的来看下面一段代码吧。<br>这段代码就是MFC窗口创建的时候，设置OpenGL渲染环境的代码。<br>对于没有启用多重采样的情况，思路是先获取DC，然后调用ChoosePixelFormat获取最佳像素格式，再调用SetPixelFormat设置像素格式，接着调用wglCreateContext创建OpenGL渲染环境，最后调用wglMakeCurrent设置OpenGL渲染环境。<br>如果启用了多重采样，代码逻辑就更加复杂了。最恶心的一点是窗口必须创建2次。第一次按照常规思路设置好OpenGL渲染环境，然后调用函数InitMultisample判断是否支持多重采样，如果支持则销毁窗口，重新创建一次。第二次的思路是按照多重采样初始化得到的像素格式设置好OpenGL渲染环境的像素格式，其余的设置和常规的一样。具体参见下面的代码。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">BOOL COglWnd::SetupGLContext()</span><br><span class="line"> &#123;</span><br><span class="line">     DWORD dwFlags = (PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL);</span><br><span class="line"></span><br><span class="line">     PIXELFORMATDESCRIPTOR pfd =</span><br><span class="line">     &#123;</span><br><span class="line">         sizeof(PIXELFORMATDESCRIPTOR),  <span class="comment">// Structure size,</span></span><br><span class="line">         <span class="number">1</span>,              <span class="comment">// Structure version number</span></span><br><span class="line">         dwFlags,            <span class="comment">// Property flags</span></span><br><span class="line">         PFD_TYPE_RGBA,          <span class="comment">// RGBA mode</span></span><br><span class="line">         <span class="number">24</span>,             <span class="comment">// 24-bit color</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,       <span class="comment">// 8-bit each color</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,        <span class="comment">// No alpha or accum. buffer,</span></span><br><span class="line">         <span class="number">16</span>,             <span class="comment">// 32-bit z-buffer</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>,               <span class="comment">// No stencil or aux buffer</span></span><br><span class="line">         PFD_MAIN_PLANE,         <span class="comment">// Mainn layer type</span></span><br><span class="line">         <span class="number">0</span>,              <span class="comment">// Reserved</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,            <span class="comment">// Unsupported.</span></span><br><span class="line">     &#125;;</span><br><span class="line"></span><br><span class="line">     BOOL bOk = false;</span><br><span class="line">     m_hDC = GetDC()-&gt;m_hDC;</span><br><span class="line">     int PixelFormat;</span><br><span class="line"></span><br><span class="line">     static bool bFirst = true;</span><br><span class="line">     <span class="keyword">if</span> (bFirst)</span><br><span class="line">     &#123;</span><br><span class="line">         bFirst = false;</span><br><span class="line"></span><br><span class="line">         PixelFormat = ChoosePixelFormat(m_hDC, pfd);</span><br><span class="line">         bOk = SetPixelFormat(m_hDC, PixelFormat, pfd);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         &#123;</span><br><span class="line">             MessageBox(_T("GL set pixel format fail!"), _T("Error"), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         m_hGLRC = wglCreateContext(m_hDC);</span><br><span class="line">         bOk = wglMakeCurrent(m_hDC, m_hGLRC);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         &#123;</span><br><span class="line">             MessageBox(_T("Set up GL render context fail!"), _T("Error"), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         InitMultisample(m_hWnd);</span><br><span class="line">         <span class="keyword">if</span> (arbMultisampleSupported)</span><br><span class="line">         &#123;</span><br><span class="line">             DestroyWindow();</span><br><span class="line">             CreateEx(0, m_className, "OglWnd", WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,</span><br><span class="line">                 m_rect, m_parent, 0);</span><br><span class="line">             return bOk;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">     &#123;</span><br><span class="line">         PixelFormat = arbMultisampleFormat;//第二次创建</span><br><span class="line">         bOk = SetPixelFormat(m_hDC, PixelFormat, pfd);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         &#123;</span><br><span class="line">             MessageBox(_T("GL set pixel format fail!"), _T("Error"), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         m_hGLRC = wglCreateContext(m_hDC);</span><br><span class="line">         bOk = wglMakeCurrent(m_hDC, m_hGLRC);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         &#123;</span><br><span class="line">             MessageBox(_T("Set up GL render context fail!"), _T("Error"), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return bOk;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
 <p>那么函数InitMultisample是怎么来的了。NeHe刚好有一节课是讲这个的，我是从那里下载得到的。该函数代码如下。</p>
           <!--noindex-->
             <div class="post-button">
@@ -1261,124 +1355,10 @@ else
       
           <p>我以前使用过glut的窗口环境，以及在CView中渲染OpenGL的类。但是这些都不怎么方便。首先，在windows下，MFC比glut，glui作为界面框架要方便很多，其次，CView类没有单独的CWnd类方便，自定义的窗口类可以<strong>嵌入</strong>到任意窗口内部，这样就可以脱离框架，方便移植了。<br>我的思路是实现一个COglWnd类。该类可以负责构建OpenGL渲染环境，并且调用模型类渲染，另外负责响应鼠标旋转放缩移动模型等，也可以添加一些额外的操作。<br>该类需要提供的外部接口，创建窗口和渲染模型。<br>COglWnd使用方法：在容器类（比如CView）的OnCreate函数内调用COglWnd的Create函数创建窗口，在容器类的OnSize函数类内调用COglWnd类的<strong>SetWindowPos</strong>移动窗口位置。<br>COglWnd的实现：<br>1.构建OpenGL渲染环境。这个必须在COglWnd的OnCreate函数类实现。具体实现我写在了SetupGLContext函数内部。该函数主要是依次调用了ChoosePixelFormat，SetPixelFormat，wglCreateContext，wglMakeCurrent函数而已。基本上就是设置下OpenGL的一些参数，然后构造下渲染环境的意思，非常好理解。具体可以google。<br>2.渲染。这里需要屏蔽<strong>OnEraseBkgnd</strong>函数，还有OnPaint内调用实际的渲染函数RenderScene而已。这里需要注意的是，我们屏蔽了CWnd的背景擦除函数，这样能够避免一定程度的闪烁。还有，当我们需要更新显示的时候，可以直接调用RenderScene而不是调用MFC的Invalidate函数。这样可以略去MFC的消息传递等。<br>3.鼠标响应。这里旋转我使用了<strong>轨迹球</strong>类。其余的直接调用OpenGL函数即可实现。<br>下面是我的COglWnd类，内部使用了一个vertex模版类存储数据和渲染球类来实现鼠标响应。上面所述，均可参照我的实现细节。我这个类就是嵌入在CView内作为子窗口使用的。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/vertex.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/trackball.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Mesh/TriMesh.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Mesh/Texture.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="comment">// COglWnd</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	class COglWnd : public CWnd</span><br><span class="line">	&#123;</span><br><span class="line">		DECLARE_DYNAMIC(COglWnd)</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		COglWnd();</span><br><span class="line">		virtual ~COglWnd();</span><br><span class="line">		enum CURSOR_TYPE</span><br><span class="line">		&#123;</span><br><span class="line">			CURSOR_HAND = <span class="number">0</span>, CURSOR_PEN = <span class="number">1</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		enum MOUSE_STATE</span><br><span class="line">		&#123;</span><br><span class="line">			MOUSE_NONE = <span class="number">0</span>,</span><br><span class="line">			MOUSE_LEFTBUTTON_DOWN = <span class="number">1</span>, MOUSE_LEFTBUTTON_UP = <span class="number">2</span>,</span><br><span class="line">			MOUSE_MIDDLEBUTTON_DOWN = <span class="number">3</span>, MOUSE_MIDDLEBUTTON_UP = <span class="number">4</span>,</span><br><span class="line">			MOUSE_RIGHTBUTTON_DOWN = <span class="number">5</span>, MOUSE_RIGHTBUTTON_UP = <span class="number">6</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//外部接口</span></span><br><span class="line">	public:</span><br><span class="line">		void Create(CRect rect, CWnd *parent);</span><br><span class="line">		CString LoadModel();</span><br><span class="line">		CString SaveModel();</span><br><span class="line">		bool ChooseDrawColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		bool ChooseStrokeColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		CString ChooseDrawTexture();</span><br><span class="line">		bool ChooseBackColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		void RenderScene();//渲染函数</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		void SetCursorType(int nType) &#123; m_cursorType = nType; &#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//消息处理函数</span></span><br><span class="line">	protected:</span><br><span class="line">		DECLARE_MESSAGE_MAP()</span><br><span class="line">		afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);</span><br><span class="line">		afx_msg void OnSize(UINT nType, int cx, int cy);</span><br><span class="line">		afx_msg void OnDestroy();</span><br><span class="line">		afx_msg void OnPaint();</span><br><span class="line">		afx_msg BOOL OnEraseBkgnd(CDC* pDC);</span><br><span class="line">		afx_msg void OnLButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnLButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnRButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnRButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMouseMove(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);</span><br><span class="line">		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//OpenGL函数</span></span><br><span class="line">	private:</span><br><span class="line">		BOOL SetupGLContext();</span><br><span class="line">		BOOL DetachGLContext();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void SetGLViewFrustum(int <span class="attribute">left</span>, int top, int right, int bottom, float DepthMin, float DepthMax, float Fov);</span><br><span class="line">		void SetGLViewFrustum(int <span class="attribute">left</span>, int top, int right, int bottom);</span><br><span class="line">		void SetGLFOV(<span class="attribute">float</span> Fov);</span><br><span class="line">		void ResizeGLViewport(int <span class="attribute">width</span>, int height);</span><br><span class="line">		void SetEye(v3f pos, v3f dest, v3f up);</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void InitColor();</span><br><span class="line">		void InitLight();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void InitialScene();</span><br><span class="line">		void ReleaseScene();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void RenderBackGround();</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		CTriMesh m_mesh;</span><br><span class="line">		CTexture m_backTexture;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		CRect m_rect;</span><br><span class="line">		CWnd* m_parent;</span><br><span class="line">		int		m_nWinWidth;</span><br><span class="line">		int		m_nWinHeight;</span><br><span class="line">		HDC		m_hDC;</span><br><span class="line">		HGLRC	m_hGLRC;</span><br><span class="line">		<span class="attribute">float</span> m_fGLDepthMin;</span><br><span class="line">		<span class="attribute">float</span> m_fGLDepthMax;</span><br><span class="line">		<span class="attribute">float</span> m_fGLFov;</span><br><span class="line">		BOOL m_bGLSetup;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		v4f	m_backColor;</span><br><span class="line">		v4f m_diffuseLight;</span><br><span class="line">		v4f m_specularLight;</span><br><span class="line">		v4f	m_ambientLight;</span><br><span class="line">		v4f m_emissionLight;</span><br><span class="line">		v4f m_gloabalAmbientLight;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		v3f m_eye;</span><br><span class="line">		v3f m_dest;</span><br><span class="line">		v3f m_up;</span><br><span class="line">		Trackball m_trackball;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		int m_cursorType;</span><br><span class="line">		int m_mouseState;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>GlWnd.cpp : 实现文件</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-title-link" itemprop="url">CMFCToolBar上添加组合框的bug</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-12-21 20:04:29" itemprop="dateCreated datePublished" datetime="2013-12-21T20:04:29+08:00">2013-12-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-meta-item leancloud_visitors" data-flag-title="CMFCToolBar上添加组合框的bug" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>说实话，这几天为了CMFCToolBarComboBoxButton上的莫名其妙自动切换选择的bug烦死了，浪费了很多时间。也是过其它替代方法，发现都实现不了需要的界面效果。<br>我也不知道为什么自己对界面效果这么纠结。伤不起啊。本来我就没用过vs2008更新版本的MFC，也没打算用这个。由于上一次做的东西用到了切分视图，但是发现FormView自适应控件大小的实现非常麻烦，老是出现些不爽的bug，而且添加新的控件还得编辑界面，非常不爽。所以，打算使用新版本MFC里面的属性窗口。<br>刚好发现vs2010的项目导航可以生成这样的工程，果断试验之。虽然过程无比艰辛，总算可以使用这些自适应的DockPane窗口了。而且还发现这样的结构非常合适添加子窗口，以后的项目都可以采用这样的界面了，只要平台在windows下。<br>但是，美中最不足的是CFrameWndEx(使用CDockablePane必须使用扩展的框架窗口)，<strong>只能使用恶心的CMFCToolBar</strong>，因为CFrameWndEx的菜单和工具栏都是可以DockPane的子类。我只能说CMFCToolBar的使用太TMD的讲究了，一个不注意效果就不对。因为使用这个东西的人少，网上资料也很少。只能一直google，还有查看类定义的源码，慢慢尝试了。<br>现在，我这里说的只是添加组合框。<br>首先，在资源编辑器中新建工具栏IDR_BUILD，留下一个<strong>空位</strong>，如ID_BUILD_CHOOSE。如下图，第二个就是我预留的ID_BUILD_CHOOSE的空位。<img alt data-src="https://c8.staticflickr.com/8/7637/27379836511_65ae3047e4_o.jpg"><br>然后，在CMainFrame::OnCreate中创建两个工具栏，代码如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">   if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER</span><br><span class="line">| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC)</span><br><span class="line">	|| !m_wndToolBar.LoadToolBar(IDR_MAINFRAME))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建工具栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (!m_wndToolBarBuild.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_TOOLTIPS | CBRS_FLYBY</span><br><span class="line">	| CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC| CBRS_GRIPPER | CBRS_BORDER_3D, IDC_MFCTOOLBAR_BUILD)</span><br><span class="line">	|| !m_wndToolBarBuild.LoadToolBar(IDR_BUILD))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建build工具栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndStatusBar.Create(this))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建状态栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line">m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));</span><br><span class="line"></span><br><span class="line">m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBarBuild.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line"></span><br><span class="line">EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">DockPane(m_wndMenuBar);</span><br><span class="line">DockPane(m_wndToolBarBuild);</span><br><span class="line">DockPaneLeftOf(m_wndToolBar, m_wndToolBarBuild);</span><br></pre></td></tr></table></figure>
-<p>注意，创建第二个工具栏的时候需要使用<strong>Create</strong>而不是CreateEx，如果使用CreateEx就不能使用后面的ID参数。<br>现在需要实现三个消息。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1448,20 +1428,20 @@ else
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1518,7 +1498,7 @@ else
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -1620,6 +1600,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

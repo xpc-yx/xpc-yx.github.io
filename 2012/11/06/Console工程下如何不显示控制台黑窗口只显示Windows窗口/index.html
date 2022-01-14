@@ -290,7 +290,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>973</span>
+              <span>957</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -312,7 +312,7 @@
         <p>本文是以OpenGL的代码为例子的。计算机图形学OpenGL版上面的例子都是控制台模式的，如果不进行设置，运行的时候会先出现黑窗口再出现Windows窗口。</p>
 <p>其实要去除控制台窗口非常简单，只需要修改工程设置，把子系统改成Windows，程序的入口点改成mainCRTStartup。</p>
 <p>下面我先把几中解决办法列举出来，再解释下我的理解。</p>
-<p>方法一：在程序中加入一句#pragma comment(linker, “/subsystem:&quot;windows&quot; /entry:&quot;mainCRTStartup&quot;“)，建议加在include的后面。</p>
+<p>方法一：在程序中加入一句#pragma comment(linker, “/subsystem:\”windows\” /entry:\”mainCRTStartup\””)，建议加在include的后面。</p>
 <p>方法二：修改工程设置。</p>
 <p>对于vc6，地方在Project-&gt;setting-&gt;Link-&gt;Project Options。</p>
 <p>点开后的界面如图，<br><img alt data-src="https://c2.staticflickr.com/8/7311/26822691403_8a9e32a9b9_o.png"></p>
@@ -422,20 +422,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -492,7 +492,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -594,6 +594,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

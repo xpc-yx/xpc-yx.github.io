@@ -292,7 +292,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>944</span>
+              <span>940</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -311,9 +311,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这是一个数学题，比较有意思。题意大致是：有2条平行的直线，第一条上面有m个点，第二条上面有n个点。那么连接这写点能产生m<em>n条直线(不包括和原来的执行平行的直线)。问这m</em>n直线最多有多少个内交点(意思是不属于原来m,n个点的交点)…<br>想来想去，推理了1个多小时才出来正式结果。感觉比较有意思，写篇博文记录下。我先是从反面排除，想了试了好久到最后还是发现无法排除干净。。。最后只能从正面开始求证了。我这样定义一条执行(i，j)，其中i代表在第一条直线中的端点，j代表在第二条直线中的端点。显然1 现在的话只要求出和直线(i，j)相加的直线有多少条，然后对i，j进行累加求和。再对和除以2就能得到答案了。<br>那么有多少条直线能和直线(i，j）相交了。很显然，和(i,j)相交的直线的端点必须在其两侧。意思是在第一条直线中的端点范围为[1, i - 1],在第二条直线中的端点范围为[j + 1, n]，总结(i - 1) * (n - j) 条直线。但是还有第二种情况,在第一条直线中的端点范围为[i + 1, m], 在第二条直线中的端点范围为[1, j - 1]，总计(m - i) * (j - 1) 条直线。总计sum = i * n + i - m -n + j (m - 2 * i + 1) 条直线。<br>再求Σsum（j从1到n)得到和式(m<em>n</em>n - m<em>n - n</em>n + n) / 2，再对这个式子进行i从1到m的累加。因为没有i了，其效果就是乘以m。然后最终的和除以2，所以最后的表达式是(m<em>m</em>n<em>n - m</em>m<em>n - m</em>n<em>n + m</em>n) / 4。这个式子显然是关于m,n对称的。这一点也可以验证这个式子的正确性。</p>
-<p>程序写起来就很简单了，代码如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    long long m, n;</span><br><span class="line">    int nCases = 0;</span><br><span class="line"></span><br><span class="line">    while (cin &gt;&gt; m &gt;&gt; n, m + n != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        long long a = m * m;</span><br><span class="line">        long long b = n * n;</span><br><span class="line">        cout &lt;&lt; ";Case "; &lt;&lt; ++nCases &lt;&lt; ";: ";</span><br><span class="line">             &lt;&lt; (a * b - a * n - b * m + m * n) / 4 &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>这是一个数学题，比较有意思。题意大致是：有2条平行的直线，第一条上面有m个点，第二条上面有n个点。那么连接这写点能产生m<em>n条直线(不包括和原来的执行平行的直线)。问这m</em>n直线最多有多少个内交点(意思是不属于原来m,n个点的交点)…<br>想来想去，推理了1个多小时才出来正式结果。感觉比较有意思，写篇博文记录下。我先是从反面排除，想了试了好久到最后还是发现无法排除干净。。。最后只能从正面开始求证了。我这样定义一条执行(i，j)，其中i代表在第一条直线中的端点，j代表在第二条直线中的端点。显然1 现在的话只要求出和直线(i，j)相加的直线有多少条，然后对i，j进行累加求和。再对和除以2就能得到答案了。<br>那么有多少条直线能和直线(i，j）相交了。很显然，和(i,j)相交的直线的端点必须在其两侧。意思是在第一条直线中的端点范围为[1, i - 1],在第二条直线中的端点范围为[j + 1, n]，总结(i - 1) <em> (n - j) 条直线。但是还有第二种情况,在第一条直线中的端点范围为[i + 1, m], 在第二条直线中的端点范围为[1, j - 1]，总计(m - i) </em> (j - 1) 条直线。总计sum = i <em> n + i - m -n + j (m - 2 </em> i + 1) 条直线。<br>再求Σsum（j从1到n)得到和式(m<em>n</em>n - m<em>n - n</em>n + n) / 2，再对这个式子进行i从1到m的累加。因为没有i了，其效果就是乘以m。然后最终的和除以2，所以最后的表达式是(m<em>m</em>n<em>n - m</em>m<em>n - m</em>n<em>n + m</em>n) / 4。这个式子显然是关于m,n对称的。这一点也可以验证这个式子的正确性。</p>
+<p>程序写起来就很简单了，代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    long long m, n;</span><br><span class="line">    int nCases = 0;</span><br><span class="line"></span><br><span class="line">    while (cin &gt;&gt; m &gt;&gt; n, m + n != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        long long a = m * m;</span><br><span class="line">        long long b = n * n;</span><br><span class="line">        cout &lt;&lt; ";Case "; &lt;&lt; ++nCases &lt;&lt; ";: ";</span><br><span class="line">             &lt;&lt; (a * b - a * n - b * m + m * n) / 4 &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
     </div>
 
     
@@ -420,20 +420,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -490,7 +490,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -592,6 +592,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

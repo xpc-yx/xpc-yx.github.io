@@ -315,7 +315,7 @@
 
       
         <p>需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。</p>
-<h1 id="一、渲染管线的思维导图"><a href="#一、渲染管线的思维导图" class="headerlink" title="一、渲染管线的思维导图"></a>一、渲染管线的思维导图</h1><p>这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF.png"></p>
+<h1 id="一、渲染管线的思维导图"><a href="#一、渲染管线的思维导图" class="headerlink" title="一、渲染管线的思维导图"></a>一、渲染管线的思维导图</h1><p>这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/渲染管线.png"></p>
 <h1 id="二、应用程序阶段"><a href="#二、应用程序阶段" class="headerlink" title="二、应用程序阶段"></a>二、应用程序阶段</h1><h2 id="2-1-渲染数据加载"><a href="#2-1-渲染数据加载" class="headerlink" title="2.1 渲染数据加载"></a>2.1 渲染数据加载</h2><p>这个阶段指的是将渲染所需要的相关数据，比如模型、贴图、材质、Shader等加载到内存中，通常只发生一次，不需要每帧重复加载。比如，Unity游戏需要在运行时，将需要的场景或者人物从AssetBundle中加载出来，然后引擎才能显示加载的场景或者人物。</p>
 <h2 id="2-2-物体级别的裁剪"><a href="#2-2-物体级别的裁剪" class="headerlink" title="2.2 物体级别的裁剪"></a>2.2 物体级别的裁剪</h2><p>以下描述的裁剪算法是按照粒度从粗到细的裁剪，相应复杂度和代价也是在递增。最简单的是基于距离的裁剪；然后是利用空间数据结构实现的视锥体裁剪；动态的入口裁剪是一种特殊情况，可以算在视口裁剪内也可以用于预计算；然后预计算数据的裁剪；接下来才是动态的遮挡剔除。</p>
 <h3 id="2-2-1-基于距离的裁剪"><a href="#2-2-1-基于距离的裁剪" class="headerlink" title="2.2.1 基于距离的裁剪"></a>2.2.1 基于距离的裁剪</h3><p>思路是超过一定的视距即不渲染该物体，Unreal引擎支持这个特性，参考<a href="https://docs.unrealengine.com/4.27/en-US/RenderingAndGraphics/VisibilityCulling/CullDistanceVolume/" target="_blank" rel="noopener">Cull Distance Volumes</a>。对于Unity，可以使用<a href="https://docs.unity3d.com/Manual/CullingGroupAPI.html" target="_blank" rel="noopener">CullingGroup</a>实现类似的功能。即使引擎没有提供类似的支持，在游戏逻辑层面，先可以每帧或者隔帧判断物体跟摄像机的距离，来动态显示隐藏物体。</p>
@@ -326,7 +326,7 @@
 <h5 id="KD-Tree"><a href="#KD-Tree" class="headerlink" title="KD-Tree"></a>KD-Tree</h5><p>BSP全称是K-Dimensional Tree。这是一种特殊的BSP，在BSP上进一步将划分面限制跟坐标轴垂直，但是保持从物体分布的中间划分，以尽可能得到一个物体分布均匀的树。KD-Tree不仅仅可以用来做空间划分，在其它领域经常用来组织K维度的数据来做搜索，比如K维数据查询、近邻查询。<br>优点：物体分布均匀，不会出现树层次过深；数据可以组织为数组形式的完全二叉树，缓存友好等。<br>缺点：如何确定最优或者较优的划分面？<br>适用场景：紧凑并且分布均匀的室内场景；辅助其它数据结构进行邻域查询。</p>
 <h5 id="BVH"><a href="#BVH" class="headerlink" title="BVH"></a>BVH</h5><p>全名是Bounding Volume Hierarchy，中文翻译层次包围盒。BSP和KD-Tree的节点代表的都是分割面，但是面有可能穿过物体。层次包围盒的思想是每个节点代表一个空间，空间计算其包含物体的最小包围盒，划分空间后重新计算子空间的包围盒。与BSP最大区别是节点代表的不再是分割平面而是包含最小包围盒的子空间。因此，这些子空间可能出现一定的重叠，但是不会出现物体出现在不同的划分里面。<br>优点：节点存储的是物体，方便碰撞检测等查询；构建快，动态更新方便。<br>缺点：如何确定最优的包围盒？<br>适用场景：视锥剔除；物体碰撞检测；射线检测；光线跟踪。</p>
 <h5 id="空间数据结构的其它应用"><a href="#空间数据结构的其它应用" class="headerlink" title="空间数据结构的其它应用"></a>空间数据结构的其它应用</h5><p>除了视锥体裁剪外，空间数据结构还有很多其它应用，比如<br>1、Ray Casting （射线检测）<br>2、碰撞检测<br>3、邻近查询 （比如查询玩家周围敌人）<br>4、光线追踪</p>
-<h4 id="Portal-Culling（入口裁剪）"><a href="#Portal-Culling（入口裁剪）" class="headerlink" title="Portal Culling（入口裁剪）"></a>Portal Culling（入口裁剪）</h4><p>适用于将场景划分为格子，格子之间可能存在入口的情形，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/portal-diagram.png"></p>
+<h4 id="Portal-Culling（入口裁剪）"><a href="#Portal-Culling（入口裁剪）" class="headerlink" title="Portal Culling（入口裁剪）"></a>Portal Culling（入口裁剪）</h4><p>适用于将场景划分为格子，格子之间可能存在入口的情形，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/portal-diagram.png"></p>
 <p>从入口只能看到部分被墙壁遮挡住的物体，因此可以借助这个特性加速视锥体和格子的相交裁剪。Unity中的<a href="https://docs.unity3d.com/Manual/class-OcclusionPortal.html" target="_blank" rel="noopener">Occlusion Portal</a>即是这个特性。如果预计算出Protal Culling的结果，那么可以在运行时加快物体裁剪。</p>
 <h3 id="2-2-3-预计算遮挡剔除"><a href="#2-2-3-预计算遮挡剔除" class="headerlink" title="2.2.3 预计算遮挡剔除"></a>2.2.3 预计算遮挡剔除</h3><p>这是一种空间换时间的算法，会增大内存占用，降低Cpu的裁剪消耗。所以是否需要预计算遮挡数据，还需要具体讨论。一般如果内存消耗不大，但是Cpu占用较高的话，可以尝试开启预计算遮挡数据。</p>
 <h4 id="Precomputed-Visibility-UE4"><a href="#Precomputed-Visibility-UE4" class="headerlink" title="Precomputed Visibility (UE4)"></a>Precomputed Visibility (UE4)</h4><p>参考虚幻引擎的<a href="https://docs.unrealengine.com/4.27/en-US/RenderingAndGraphics/VisibilityCulling/PrecomputedVisibilityVolume/" target="_blank" rel="noopener">Precomputed Visibility</a>。思想是将场景划分为格子，计算每个格子内可以看到的可见物体集合相关的数据，用于运行时动态查询。</p>
@@ -393,6 +393,12 @@
     
     
       
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\07\19\渲染管线中的坐标空间和相关变换\" rel="bookmark">渲染管线中的坐标空间和相关变换</a></div>
+    </li>
+  </ul>
 
         
 
@@ -482,20 +488,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -552,7 +558,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -654,6 +660,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

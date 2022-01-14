@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">说说我的QT下使用OpenGL渲染Mesh的框架</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-03-13 21:22:39" itemprop="dateCreated datePublished" datetime="2015-03-13T21:22:39+08:00">2015-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-meta-item leancloud_visitors" data-flag-title="说说我的QT下使用OpenGL渲染Mesh的框架" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我终于把界面换成qt的了，即使我从大二开始就用mfc，一直用到去年上半年。也终于到了，我实在受不了mfc代码混乱的时候了，qt那么方便的东西，我为什么不早点用了。这里就不吐槽mfc的混乱，qt的方便了。在mfc里面建立一个复杂的界面，比如说有dock窗口，或者tab页面的，代码多，而且混乱麻烦，更无语的是，每次我都必须去搜索下，解决各种各样的问题，有的还可以理解，有的就是莫名其妙了。更别说什么代码清晰，跨平台之类的，何止是天方夜谭。</p>
+<p>下面，说说我自己逐渐搭建的这个框架吧。其实，这个框架是从我上一个项目里，使用mfc的单文档单视图，主窗口里面有几个dockpane，视图里面放置了渲染OpenGL的子窗口，过渡来的。在qt的框架里面，mfc所有的这些恶心的东西都没有了，只剩下一个MainWindow类。在这个类里面，创建菜单，工具条，状态条，主窗口，dock窗口，tab窗口。代码简洁方便。渲染opengl的窗口设置为MainWindow的主widget。渲染窗口只是一个普通的widget而已，可以任意放置。</p>
+<p>这样的做法能够把界面和渲染窗口独立出来，渲染窗口对应一个独立的类(COglWidget)，所以方便创建不同类型的复杂界面。我觉得我应该先用viso画个类图，才能说清楚。下图是我的界面。中间是COglWidget。右侧是一个DockWidget，里面放置了个设置Mesh属性的widget。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -538,7 +657,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最新版的cgal4.5，提供了个<a href="http://doc.cgal.org/latest/Surface_mesh_segmentation/index.html" target="_blank" rel="noopener" title="Triangulated Surface Mesh Segmentation">Triangulated Surface Mesh Segmentation</a>包，利用该部分代码可以计算三维模型每个面或者顶点的sdf（<em>Shape Diameter Function）_属性。sdf的具体定义可以参考论文：L. Shapira, A. Shamir, and D. Cohen-Or. Consistent mesh partitioning and skeletonisation using the shape diameter function. _The Visual Computer</em>, 24(4):249–259, 2008.</p>
+          <p>最新版的cgal4.5，提供了个<a href="http://doc.cgal.org/latest/Surface_mesh_segmentation/index.html" target="_blank" rel="noopener" title="Triangulated Surface Mesh Segmentation">Triangulated Surface Mesh Segmentation</a>包，利用该部分代码可以计算三维模型每个面或者顶点的sdf（_Shape Diameter Function）_属性。sdf的具体定义可以参考论文：L. Shapira, A. Shamir, and D. Cohen-Or. Consistent mesh partitioning and skeletonisation using the shape diameter function. _The Visual Computer_, 24(4):249–259, 2008.</p>
 <p>那么sdf可以做什么了？sdf最终能表示三维模型上面的一个标量场，该标量场代表的是模型厚度的分布。因此，利用该标量场可以对模型进行分割，不管是自动化的还是交互的都可以。如何计算sdf了？可以利用定义自己去实现算法，或者利用库，比如cgal。</p>
 <p>关于如何使用sdf标量场进行模型分割？cgal的文档说的很清楚，先用k个gmm进行软聚类（每个cluster是k-means初始化的），再利用软聚类的结果进行硬聚类，这一步实际上利用graph-cut求能量最小化。更清楚的解释，参考CGAL的相关文档。刘利刚老师用sdf进行交互式分割的文章，也是利用gmm和graph-cut作为工具实现的，原理和cgal的实现思路基本一致。</p>
           <!--noindex-->
@@ -1022,7 +1141,6 @@
       
           <p>类似于queue，stack也是个简单的适配器。在实现上，stack与queue非常类似。底层可以使用同样的容器，比如默认都采用deque。因此，stack的源码和queue的非常类似。代码过于简单，都可以自解释了。下面是摘录出来的代码，可以顺便编译通过。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _STL_STACK_H</span><br><span class="line"><span class="number">#def</span>ine _STL_STACK_H</span><br><span class="line"></span><br><span class="line">namespace std</span><br><span class="line">&#123;</span><br><span class="line">    template &lt;class T, class Sequence = deque&lt;T&gt; &gt;</span><br><span class="line">    class stack &#123;</span><br><span class="line">        friend bool operator==(const stack, const stack);</span><br><span class="line">        friend bool operator&lt;(const stack, const stack);</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        typedef typename Sequence::value_type value_type;</span><br><span class="line">        typedef typename Sequence::size_type size_type;</span><br><span class="line">        typedef typename Sequence::reference reference;</span><br><span class="line">        typedef typename Sequence::const_reference const_reference;</span><br><span class="line">    protected:</span><br><span class="line">        Sequence c; // 底层容器</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        <span class="comment">// 以下完全利用 Sequence c 的操作，完成 stack 的操作。</span></span><br><span class="line">        bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">        size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">        reference top() &#123; return c.back(); &#125;</span><br><span class="line">        const_reference top() const &#123; return c.back(); &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// deque 是两头可进出，stack 是末端进，末端出（所以后进者先出）。</span></span><br><span class="line">        void push(const value_type x) &#123; c.push_back(x); &#125;</span><br><span class="line">        void pop() &#123; c.pop_back(); &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator==(const stack&lt;T, Sequence&gt; x, const stack&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c == y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator&lt;(const stack&lt;T, Sequence&gt; x, const stack&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c &lt; y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-
 <p>代码非常类似于queue，除了pop弹出的是末尾元素，top也是返回末尾元素之外。</p>
           <!--noindex-->
             <div class="post-button">
@@ -1148,7 +1266,6 @@
       
           <p>接着上面一篇，这次要讲的是另一个适配器容器queue。queue的操作很简单，先进先出。现在能够使用底层容器来实现，所以也非常简单。总之，这就是个简单的适配器吧。queue需要两个模版参数，类型和底层容器，默认的底层容器是deque。摘录出的代码如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _STL_QUEUE_H</span><br><span class="line"><span class="number">#def</span>ine _STL_QUEUE_H</span><br><span class="line"><span class="selector-id">#include</span> &lt;deque&gt;</span><br><span class="line"></span><br><span class="line">namespace std</span><br><span class="line">&#123;</span><br><span class="line">    template &lt;class T, class Sequence = deque&lt;T&gt; &gt;</span><br><span class="line">    class queue &#123;</span><br><span class="line">        friend bool operator== (const queue x, const queue y);</span><br><span class="line">        friend bool operator&lt; (const queue x, const queue y);</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        typedef typename Sequence::value_type value_type;</span><br><span class="line">        typedef typename Sequence::size_type size_type;</span><br><span class="line">        typedef typename Sequence::reference reference;</span><br><span class="line">        typedef typename Sequence::const_reference const_reference;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        Sequence c; // 底层容器</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        <span class="comment">// 以下完全利用 Sequence c 的操作，完成 queue 的操作。</span></span><br><span class="line">        bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">        size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">        reference front() &#123; return c.front(); &#125;</span><br><span class="line">        const_reference front() const &#123; return c.front(); &#125;</span><br><span class="line">        reference back() &#123; return c.back(); &#125;</span><br><span class="line">        const_reference back() const &#123; return c.back(); &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// deque 是两头可进出，queue 是末端进，前端出（所以先进者先出）。</span></span><br><span class="line">        void push(const value_type x) &#123; c.push_back(x); &#125;</span><br><span class="line">        void pop() &#123; c.pop_front(); &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator==(const queue&lt;T, Sequence&gt; x, const queue&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c == y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class T, class Sequence&gt;</span><br><span class="line">    bool operator&lt;(const queue&lt;T, Sequence&gt; x, const queue&lt;T, Sequence&gt; y) &#123;</span><br><span class="line">        return x.c &lt; y.c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
-
 <p>总之，代码非常简洁。分析下代码，<span style="font-family: Consolas, Monaco, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace; font-size: 13px; line-height: 1.5;">typedef typename Sequence::value_type value_type;</span>这其实，就是声明嵌套模版类型。还有必须注意的是，声明嵌套模版类型，必须加typename关键字，否则会将其视作定义。</p>
           <!--noindex-->
             <div class="post-button">
@@ -1272,120 +1389,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>暑假时候好好阅读过，stl源码剖析这本书，之后又看了c++标准程序库，effective c++，more<br>effecttive c++。虽然每次都如醍醐灌顶般，明白了很多知识概念，有种拨开迷雾的感觉，但是终究抵不过<br>遗忘，所以了还是随便写写吧。<br>首先从实现代码差不多最短的优先队列开始，虽然简单的代码后面依赖很庞大的东西，比如泛型<br>迭代器，还有泛型二叉堆算法。我是这样理解优先队列的。首先，数据是存在一个泛型序列容器(线性容器)，<br>这个可以指定，默认是vector，当然指定list和deque也是可以的。另外还需要给数据类型提供个小于比较仿<br>函数，有些类型有默认的less泛型仿函数。所以了，对模版比较熟悉的同学，很自然就猜到了，priority_queue<br>的外观-&gt;一个模版（类型，线性容器，less仿函数）。<br>优先队列支持哪些操作了？什么empty，size，top，直接转交给底层容器就行了，所谓的适配器模式。<br>只需要思考，如何实现push和pop操作。对算法熟悉的同学，都知道底层数据的组织是用二叉堆的，而且是最大<br>堆。问题是，我们还需不需要实现个堆操作了。不需要了，stl做了所有的事情。push_heap就是将输入范围的最<br>后一个元素作为在原堆后面加入的新元素，再重构堆。pop_heap则是将堆首元素交换到堆末，再重构缩小之后的堆。<br>至于二叉堆的原理，就不仔细介绍了。其实也比较简单，如果不去思考一些复杂度的证明。<br>到最后，priority_queue的代码可以很清爽的出来了。尤其注意下面的那些typedef，可以说是模版<br>trick的常见手法，习惯了就好。这种写法还有个用法是为了使内嵌模版声明可见，记得effect c++提到过。以下<br>源码基本来自stl源码剖析随书奉送代码，做了些修改。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T, typename Sequence = vector&lt;T&gt;,</span><br><span class="line">    typename Compare = less&lt;typename Sequence::value_type &gt;&gt;</span><br><span class="line">class  priority_queue</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    typedef typename Sequence::value_type value_type;</span><br><span class="line">    typedef typename Sequence::size_type size_type;</span><br><span class="line">    typedef typename Sequence::reference reference;</span><br><span class="line">    typedef typename Sequence::const_reference const_reference; //为了使内嵌模版声明可见</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    Sequence c; // 底层容器</span><br><span class="line">    Compare comp;   // 元素大小比较仿函数</span><br><span class="line"></span><br><span class="line">    priority_queue() : c() &#123;&#125;</span><br><span class="line">    explicit priority_queue(const Compare x) : c(), comp(x) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    priority_queue(InputIterator first, InputIterator last, const Compare x)</span><br><span class="line">        : c(first, last), comp(x) &#123;</span><br><span class="line">        make_heap(c.begin(), c.end(), comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    priority_queue(InputIterator first, InputIterator last)</span><br><span class="line">        : c(first, last) &#123;</span><br><span class="line">        make_heap(c.begin(), c.end(), comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">    size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">    const_reference top() const &#123; return c.front(); &#125;</span><br><span class="line"></span><br><span class="line">    void push(const value_type x)</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            c.push_back(x);</span><br><span class="line">            push_heap(c.begin(), c.end(), comp);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (...)</span><br><span class="line">        &#123;</span><br><span class="line">            c.<span class="attribute">clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void pop()</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            pop_heap(c.begin(), c.end(), comp);</span><br><span class="line">            c.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        catch (...)</span><br><span class="line">        &#123;</span><br><span class="line">            c.<span class="attribute">clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>再啰嗦几句，刚看源码剖析的时候，对某些模版写法很头疼，但是看完书之后，另外看了几本其它的书，<br>就对这些写法习以为常了，觉得不这么写才怪了。有点艺术的感觉。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/" class="post-title-link" itemprop="url">任意点到二维直线或者三维平面上的投影点</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-12-09 19:59:42" itemprop="dateCreated datePublished" datetime="2014-12-09T19:59:42+08:00">2014-12-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/" class="post-meta-item leancloud_visitors" data-flag-title="任意点到二维直线或者三维平面上的投影点" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>454</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这里统一考虑二维直线和三维平面的情况。<br>假设法线（二维直线和三维平面的法线）为n，其上的任意一点为p0。那么，<br>可以得到方程为：(p - p0)  *  n = 0。展开得到p * n = p0 * n。令p0 * n = d，由此可以得到<br>方程可以简单的表示为p * n = d，即(x, y, z) * (nx ,ny, nz) = d，二维情况直线的为(x, y) * (nx, ny) = d。<br>至此，我们可以方便的用(n,d)代表任意的二维直线或者三维平面了。<br>下面，开始应用这个表示。<br>比如，求点到直线或者平面的距离，然后求投影点，再求对称点。<br>最关键的是如何方便求出距离。假设我们要求q到直线的距离。我们现在的直线方程为<br>p * n = d。那么经过q与当前直线的平行直线的法线也为n。由于q在经过q的平行直线上面，有q * n = d’。<br>有符号距离为 d - d’ = d - q * n。通过这个式子，也可以知道d其实就是原点到直线或者平面的有符号距离。<br>那么投影点q’ = q + (d - d’) = q + (d - q * n)。<br>对称点则为 q’’ =  q’ +  (d  -  d’)  =  q + 2 * (d  -  q * n)。<br>利用这种表示方法，基本上可以直接给出答案。</p>
+          <p>暑假时候好好阅读过，stl源码剖析这本书，之后又看了c++标准程序库，effective c++，more<br>effecttive c++。虽然每次都如醍醐灌顶般，明白了很多知识概念，有种拨开迷雾的感觉，但是终究抵不过<br>遗忘，所以了还是随便写写吧。<br>首先从实现代码差不多最短的优先队列开始，虽然简单的代码后面依赖很庞大的东西，比如泛型<br>迭代器，还有泛型二叉堆算法。我是这样理解优先队列的。首先，数据是存在一个泛型序列容器(线性容器)，<br>这个可以指定，默认是vector，当然指定list和deque也是可以的。另外还需要给数据类型提供个小于比较仿<br>函数，有些类型有默认的less泛型仿函数。所以了，对模版比较熟悉的同学，很自然就猜到了，priority_queue<br>的外观-&gt;一个模版（类型，线性容器，less仿函数）。<br>优先队列支持哪些操作了？什么empty，size，top，直接转交给底层容器就行了，所谓的适配器模式。<br>只需要思考，如何实现push和pop操作。对算法熟悉的同学，都知道底层数据的组织是用二叉堆的，而且是最大<br>堆。问题是，我们还需不需要实现个堆操作了。不需要了，stl做了所有的事情。push_heap就是将输入范围的最<br>后一个元素作为在原堆后面加入的新元素，再重构堆。pop_heap则是将堆首元素交换到堆末，再重构缩小之后的堆。<br>至于二叉堆的原理，就不仔细介绍了。其实也比较简单，如果不去思考一些复杂度的证明。<br>到最后，priority_queue的代码可以很清爽的出来了。尤其注意下面的那些typedef，可以说是模版<br>trick的常见手法，习惯了就好。这种写法还有个用法是为了使内嵌模版声明可见，记得effect c++提到过。以下<br>源码基本来自stl源码剖析随书奉送代码，做了些修改。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T, typename Sequence = vector&lt;T&gt;,</span><br><span class="line">    typename Compare = less&lt;typename Sequence::value_type &gt;&gt;</span><br><span class="line">class  priority_queue</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    typedef typename Sequence::value_type value_type;</span><br><span class="line">    typedef typename Sequence::size_type size_type;</span><br><span class="line">    typedef typename Sequence::reference reference;</span><br><span class="line">    typedef typename Sequence::const_reference const_reference; //为了使内嵌模版声明可见</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    Sequence c; // 底层容器</span><br><span class="line">    Compare comp;   // 元素大小比较仿函数</span><br><span class="line"></span><br><span class="line">    priority_queue() : c() &#123;&#125;</span><br><span class="line">    explicit priority_queue(const Compare x) : c(), comp(x) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    priority_queue(InputIterator first, InputIterator last, const Compare x)</span><br><span class="line">        : c(first, last), comp(x) &#123;</span><br><span class="line">        make_heap(c.begin(), c.end(), comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    priority_queue(InputIterator first, InputIterator last)</span><br><span class="line">        : c(first, last) &#123;</span><br><span class="line">        make_heap(c.begin(), c.end(), comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">    size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">    const_reference top() const &#123; return c.front(); &#125;</span><br><span class="line"></span><br><span class="line">    void push(const value_type x)</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            c.push_back(x);</span><br><span class="line">            push_heap(c.begin(), c.end(), comp);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (...)</span><br><span class="line">        &#123;</span><br><span class="line">            c.<span class="attribute">clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void pop()</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            pop_heap(c.begin(), c.end(), comp);</span><br><span class="line">            c.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        catch (...)</span><br><span class="line">        &#123;</span><br><span class="line">            c.<span class="attribute">clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>再啰嗦几句，刚看源码剖析的时候，对某些模版写法很头疼，但是看完书之后，另外看了几本其它的书，<br>就对这些写法习以为常了，觉得不这么写才怪了。有点艺术的感觉。</p>
 
       
     </div>
@@ -1451,20 +1455,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1521,7 +1525,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -1623,6 +1627,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

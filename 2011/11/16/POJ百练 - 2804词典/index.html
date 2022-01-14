@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="链接: http:&#x2F;&#x2F;poj.grids.cn&#x2F;practice&#x2F;2804&#x2F; 这也是一个很简单的题目,大家一看都知道用什么方法了,当然如果是查找的话,顺序查找是不行的,方法一,是用map,建立个map&lt;string, string&gt;的字典,注意不要想当然用map&lt;char, char&gt;,那样得动态分配内存,或者还是先开个大数组存好字典,其结果还是多浪费了内存…排序+二分也不">
+  <meta name="description" content="链接: http:&#x2F;&#x2F;poj.grids.cn&#x2F;practice&#x2F;2804&#x2F; 这也是一个很简单的题目,大家一看都知道用什么方法了,当然如果是查找的话,顺序查找是不行的,方法一,是用map,建立个map的字典,注意不要想当然用map,那样得动态分配内存,或者还是先开个大数组存好字典,其结果还是多浪费了内存…排序+二分也不错的,因为数据量确实很大,而且题目也建议用c的io输入,所以这样再建立map中间">
 <meta property="og:type" content="article">
 <meta property="og:title" content="POJ百练 - 2804:词典">
 <meta property="og:url" content="http://xiaopengcheng.top/2011/11/16/POJ%E7%99%BE%E7%BB%83%20-%202804%E8%AF%8D%E5%85%B8/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="链接: http:&#x2F;&#x2F;poj.grids.cn&#x2F;practice&#x2F;2804&#x2F; 这也是一个很简单的题目,大家一看都知道用什么方法了,当然如果是查找的话,顺序查找是不行的,方法一,是用map,建立个map&lt;string, string&gt;的字典,注意不要想当然用map&lt;char, char&gt;,那样得动态分配内存,或者还是先开个大数组存好字典,其结果还是多浪费了内存…排序+二分也不">
+<meta property="og:description" content="链接: http:&#x2F;&#x2F;poj.grids.cn&#x2F;practice&#x2F;2804&#x2F; 这也是一个很简单的题目,大家一看都知道用什么方法了,当然如果是查找的话,顺序查找是不行的,方法一,是用map,建立个map的字典,注意不要想当然用map,那样得动态分配内存,或者还是先开个大数组存好字典,其结果还是多浪费了内存…排序+二分也不错的,因为数据量确实很大,而且题目也建议用c的io输入,所以这样再建立map中间">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2011-11-16T02:00:00.000Z">
 <meta property="article:modified_time" content="2021-12-26T08:20:52.711Z">
@@ -292,7 +292,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -312,10 +312,9 @@
 
       
         <p>链接: <a href="http://poj.grids.cn/practice/2804/" target="_blank" rel="noopener">http://poj.grids.cn/practice/2804/</a></p>
-<p>这也是一个很简单的题目,大家一看都知道用什么方法了,当然如果是查找的话,顺序查找是不行的,<br>方法一,是用map,建立个map&lt;string, string&gt;的字典,注意不要想当然用map&lt;char<em>, char</em>&gt;,<br>那样得动态分配内存,或者还是先开个大数组存好字典,其结果还是多浪费了内存…<br>排序+二分也不错的,因为数据量确实很大,而且题目也建议用c的io输入,所以这样再建立map&lt;string, string&gt;<br>中间还得转换一下…<br>总之做这个题还是很顺利的,就wa了一次,原因是2分写错了,我也很久没在oj上写2分了…</p>
+<p>这也是一个很简单的题目,大家一看都知道用什么方法了,当然如果是查找的话,顺序查找是不行的,<br>方法一,是用map,建立个map<string, string>的字典,注意不要想当然用map<char*, char*>,<br>那样得动态分配内存,或者还是先开个大数组存好字典,其结果还是多浪费了内存…<br>排序+二分也不错的,因为数据量确实很大,而且题目也建议用c的io输入,所以这样再建立map<string, string><br>中间还得转换一下…<br>总之做这个题还是很顺利的,就wa了一次,原因是2分写错了,我也很久没在oj上写2分了…</string,></char*,></string,></p>
 <p>代码如下:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line"><span class="number">#def</span>ine MAX_WORD_LEN <span class="number">11</span></span><br><span class="line"><span class="number">#def</span>ine MAX_DICTION_ITEM (<span class="number">100000</span> + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">using std::sort;</span><br><span class="line"></span><br><span class="line">struct Dictionary</span><br><span class="line">&#123;</span><br><span class="line">    char szWord[MAX_WORD_LEN];</span><br><span class="line">    char szEnglish[MAX_WORD_LEN];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Dictionary diction[MAX_DICTION_ITEM];</span><br><span class="line"></span><br><span class="line">bool CmpDictionItem(Dictionary one, Dictionary two)</span><br><span class="line">&#123;</span><br><span class="line">    return strcmp(one.szWord, two.szWord) &lt; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int FindEnglish(char* pszWord, int nItemNum)</span><br><span class="line">&#123;</span><br><span class="line">    int nBeg = 0, nEnd = nItemNum - 1;</span><br><span class="line">    int nCmp = 0;</span><br><span class="line"></span><br><span class="line">    while (nBeg &lt;= nEnd)</span><br><span class="line">    &#123;</span><br><span class="line">        int nMid = (nBeg + nEnd) / 2;</span><br><span class="line">        nCmp = strcmp(pszWord, diction[nMid].szWord);</span><br><span class="line">        <span class="keyword">if</span> (nCmp == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            return nMid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nCmp &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            nEnd = nMid - 1;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            nBeg = nMid + 1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char szStr[30];</span><br><span class="line">    char szWord[MAX_WORD_LEN];</span><br><span class="line">    int nCount = 0;</span><br><span class="line">    int nAnsItem = 0;</span><br><span class="line"></span><br><span class="line">    while (fgets(szStr, <span class="number">29</span>, stdin), szStr[<span class="number">0</span>] != <span class="string">'\n'</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sscanf(szStr, "%s%s", diction[nCount].szEnglish, diction[nCount].szWord);</span><br><span class="line">        ++nCount;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(diction, diction + nCount, CmpDictionItem);</span><br><span class="line">    while (scanf(<span class="string">"%s"</span>, szWord) == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> ((nAnsItem = FindEnglish(szWord, nCount)) != -<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            printf("%s\n", diction[nAnsItem].szEnglish);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            printf("eh\n"); </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>其实我的主要目的是为了指出二分的写法,大家看我的FindEnglish函数,传递的是数组的地址和数组的长度,<br>然后我写函数体的时候用的是[]的形式,就是下确界,上确界,这样最重要的是需要考虑循环的条件是&lt;还是<br>&lt;=,其实这也很好判断,因为上界和下界都能够取到,所以=是成立的…而且修改right的时候,必须将right = mid - 1,<br>原因也是因为这是上确界,<br>但是如果是上不确界了,那么等号就必须去掉,而且right也只能修改为mid,因为mid-1就是确界了,而mid才是上不确界…<br>想到这个程度的话,以后写只有唯一解二分就应该不会出错了…但是写查找满足条件的最大或者最小解的二分还需要其它技巧…</p>
 
     </div>
@@ -430,20 +429,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -500,7 +499,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -602,6 +601,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

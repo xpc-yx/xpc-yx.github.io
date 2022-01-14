@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、思维导图 二、模型空间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渲染管线中的坐标空间和相关变换">
+<meta property="og:url" content="http://xiaopengcheng.top/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="一、思维导图 二、模型空间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4.png">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1.jpg">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E6%AD%A3%E4%BA%A4%E6%8A%95%E5%BD%B1.jpg">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E9%80%8F%E8%A7%86%E9%99%A4%E6%B3%95.jpg">
+<meta property="article:published_time" content="2021-07-19T13:20:00.000Z">
+<meta property="article:modified_time" content="2022-01-14T11:28:53.184Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="渲染管线">
+<meta property="article:tag" content="坐标空间">
+<meta property="article:tag" content="坐标变换">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>渲染管线中的坐标空间和相关变换 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          渲染管线中的坐标空间和相关变换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-19 21:20:00" itemprop="dateCreated datePublished" datetime="2021-07-19T21:20:00+08:00">2021-07-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B2%E6%9F%93/" itemprop="url" rel="index">
+                    <span itemprop="name">渲染</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/" class="post-meta-item leancloud_visitors" data-flag-title="渲染管线中的坐标空间和相关变换" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、思维导图"><a href="#一、思维导图" class="headerlink" title="一、思维导图"></a>一、思维导图</h1><p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/坐标空间.png"></p>
+<h1 id="二、模型空间"><a href="#二、模型空间" class="headerlink" title="二、模型空间"></a>二、模型空间</h1><p>这里的模型空间指的是建模出来的空间，也就是用建模软件输出的数据所在的坐标空间。比如，3D Max用的是右手系，输出的模型数据所在的空间就叫模型空间；由于Unity的模型空间是左手系，所以通常需要旋转90度才能对应上。</p>
+<h1 id="三、切线空间"><a href="#三、切线空间" class="headerlink" title="三、切线空间"></a>三、切线空间</h1><p>切线空间又可以叫做纹理空间。假如纹理坐标uv构成一个二维空间，加上垂直于这个二维空间的法线，那么就是一个三维的切线空间。</p>
+<h2 id="3-1-法线贴图的切线空间"><a href="#3-1-法线贴图的切线空间" class="headerlink" title="3.1 法线贴图的切线空间"></a>3.1 法线贴图的切线空间</h2><p>切线空间有什么应用了？我们在计算光照模型的时候，通常会有更精细表示法线的数据，比如法线贴图，法线贴图通常是建模软件用高模计算出来的。不过，法线贴图是原始切线空间下的数据。因此，法线贴图中的法线数据通常是(0,0,1)，所以法线贴图表现出大部分是蓝色。我们在读取这个法线数据后，需要将其变换到计算光照模型所在的空间，比如世界空间。</p>
+<h2 id="3-2-模型空间下的切线空间"><a href="#3-2-模型空间下的切线空间" class="headerlink" title="3.2 模型空间下的切线空间"></a>3.2 模型空间下的切线空间</h2><p>顶点上除了位置数据外，还可以有法线、切线数据。注意，这些数据都是在模型空间的。因此，法线、切线、副切线（法线和切线叉积计算出来）自然可以构成一个模型空间下的切线空间。</p>
+<h2 id="3-3-切线变换"><a href="#3-3-切线变换" class="headerlink" title="3.3 切线变换"></a>3.3 切线变换</h2><p>假如我们想将切线空间下的法线变换到世界空间，该如何做了？我们需要得到一个世界空间下的切线空间。首先将<strong>模型空间下的切线空间变换到世界空间</strong>，这样我们就得到了一个世界空间下的切线子空间，然后用这个切线子空间构成一个切线变换，再对切线空间下的法线数据应用这个切线变换就能变换到世界空间。<br>用公式来表示这个变换是，$NormalWS=TangentMatrix*NormalTS$。当然也可以将切线变换到其它的空间，比如摄像机空间，区别是构造不同的TangentMatrix。</p>
+<h1 id="四、关节空间"><a href="#四、关节空间" class="headerlink" title="四、关节空间"></a>四、关节空间</h1><h2 id="4-1-关节空间"><a href="#4-1-关节空间" class="headerlink" title="4.1 关节空间"></a>4.1 关节空间</h2><p><strong>这里的关节空间，指的是带骨骼的模型中，骨骼或者关节所定义的局部空间。</strong><br>以人体手指为假设，手指会受到腕关节、肘关节、肩关节影响，对应三个骨骼。那么，手指会依次受到这三个关节的牵扯影响。我们知道，虚拟的根骨骼Root所在的是模型空间，同时每个关节也定义了自己的局部空间，比如腕关节是最终的局部空间，我们把这个关节定义的局部空间叫做关节空间。</p>
+<h2 id="4-2-关节姿势"><a href="#4-2-关节姿势" class="headerlink" title="4.2 关节姿势"></a>4.2 关节姿势</h2><p>所谓关节姿势，存储的是子关节到父关节的变换，包括旋转、缩放、平移，这个也可以叫做局部关节姿势。全局关节姿势是，将所有的局部关节姿势结合起来。<br>比如公式，$P_{2\to M} = P_{2\to 1} P_{1\to 0} P_{0\to M}$表示的是将顶点从子关节2的局部空间变换到模型空间。全局关节姿势可以表示为$P_{j\to M} = \prod _{i=j}^{0} P_{i\to p(i)}$，其中p(i)是关节i的父关节。</p>
+<h2 id="4-3-绑定关节姿势"><a href="#4-3-绑定关节姿势" class="headerlink" title="4.3 绑定关节姿势"></a>4.3 绑定关节姿势</h2><p>我们知道，默认情况下，蒙皮骨骼都有一个T-Pose，即绑定姿势，也可以理解为初始姿势。模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。</p>
+<h2 id="4-4-蒙皮矩阵"><a href="#4-4-蒙皮矩阵" class="headerlink" title="4.4 蒙皮矩阵"></a>4.4 蒙皮矩阵</h2><p>模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。关键点来了，这个时候再乘以骨骼的当前全局姿势矩阵，就又变换回了模型空间。所谓的蒙皮矩阵，就是这两个变换的结合。可以用公式表示骨骼i的蒙皮矩阵，$K_{j} = (B_{j\to M})^{-1}  C_{j \to M}$，B代表绑定姿势，C代表当前姿势。多个蒙皮矩阵的加权，就能得到蒙皮动画。</p>
+<h2 id="4-5-蒙皮动画"><a href="#4-5-蒙皮动画" class="headerlink" title="4.5 蒙皮动画"></a>4.5 蒙皮动画</h2><p>顶点会受到多个骨骼影响，这些骨骼的影响加权和为1，这个就是蒙皮动画。可以用公式来表示，$p’ = \sum_{i=1}^{n}W_i(p)K_ip$。其中，p是模型空间的顶点，Wi是骨骼i影响的权重，Ki是骨骼i的蒙皮矩阵。蒙皮矩阵的计算如上所示。</p>
+<h2 id="4-6-总结"><a href="#4-6-总结" class="headerlink" title="4.6 总结"></a>4.6 总结</h2><p>根据以上五步的推导，蒙皮动画需要存储的数据是，</p>
+<ul>
+<li>绑定姿势下的的模型空间顶点</li>
+<li>绑定关节姿势的逆矩阵</li>
+<li>当前姿势数据（实时计算当前姿势矩阵）</li>
+<li>蒙皮矩阵的权重</li>
+</ul>
+<h1 id="五、世界空间"><a href="#五、世界空间" class="headerlink" title="五、世界空间"></a>五、世界空间</h1><p>所谓世界空间，不需要解释了吧。放在游戏场景里面，指的是规定了场景坐标系的空间。模型空间，则指的是场景内的单个模型自身数据所在的空间。</p>
+<h2 id="5-1-模型变换"><a href="#5-1-模型变换" class="headerlink" title="5.1 模型变换"></a>5.1 模型变换</h2><p>模型变换就是将模型空间的顶点数据变换到世界空间，通常包括对模型的平移、旋转和缩放。但是，一般要求的变换顺序是先缩放、再旋转、最后平移，如果反过来会造成平移受到前面的变换影响，与直观印象不符合。<br>所以，$ModelMatrix=TranslateMatrix*RotateMatrix*ScaleMatrix$。特别说明平移矩阵指的是，将模型从原点移动到其在世界空间的位置。</p>
+<h1 id="六、摄像机空间"><a href="#六、摄像机空间" class="headerlink" title="六、摄像机空间"></a>六、摄像机空间</h1><p>摄像机空间也叫做观察空间。摄像机可以理解为世界空间的一个位置和朝向，比如在坐标(1,1,1)看向原点，那么射线的位置就是坐标(1,1,1)，前向就是看向的方向（-1，-1，-1）。这个时候再定义一个垂直于forward的Up方向，就可以根据叉积找到垂直forward和up方向的right方向。这三个方向就可以构成一个摄像机空间。</p>
+<h2 id="6-1-观察变换"><a href="#6-1-观察变换" class="headerlink" title="6.1 观察变换"></a>6.1 观察变换</h2><p>观察变换是将顶点从世界空间变换到新的摄像机空间。首先，需要将顶点平移，比如上述情况下的原点在观察空间下是(-1，-1，-1)；然后，需要旋转顶点以匹配观察空间的坐标轴。由于观察空间的坐标轴是世界空间下的单位正交基，因此将三个轴放入矩阵即可得到旋转矩阵的逆矩阵（等于旋转矩阵的转置矩阵）。</p>
+<h1 id="七、裁剪空间"><a href="#七、裁剪空间" class="headerlink" title="七、裁剪空间"></a>七、裁剪空间</h1><p>裁剪空间指的是观察空间下的顶点经过投影变换后所处的空间。我们知道，可视区域是摄像机前面的一个平截头体（透视投影）或者一个长方体（正交投影）。裁剪空间的用途是将可视区域外的物体裁剪，同时计算物体的二维坐标。</p>
+<h2 id="7-1-投影变换"><a href="#7-1-投影变换" class="headerlink" title="7.1 投影变换"></a>7.1 投影变换</h2><p>投影分为透视投影和正交投影两种，透视投影会造成近大远小的效果，符合视觉效应，三维游戏一般使用透视投影，正交投影则远近一样大，通常只用于建模软件。</p>
+<h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3><p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/透视投影.jpg"><br>从图可以看出，透视投影后w是有值的，并不是1，结果还是一个平截头体。具体的矩阵推动，请参考相关资料。</p>
+<h3 id="正交投影"><a href="#正交投影" class="headerlink" title="正交投影"></a>正交投影</h3><p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/正交投影.jpg"><br>从图可以看出，正交投影实际上就是缩放和平移的结合，得到的结果是一个-1到1范围的立方体。</p>
+<h2 id="7-2-透视除法和图元裁剪"><a href="#7-2-透视除法和图元裁剪" class="headerlink" title="7.2 透视除法和图元裁剪"></a>7.2 透视除法和图元裁剪</h2><p>由于透视投影后齐次坐标的w非1，需要进行透视除法，这个是图形硬件自动进行的。如图所示：<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/透视除法.jpg"><br>透视除法后，可以得到和正交投影结果一样的规范化立方体，也叫做NDC（规范化设备坐标系）。<br>到了NDC后，就可以方便的进行图元裁剪，毕竟坐标都是-1到1了（DirectX下Z坐标是0到1）。</p>
+<h2 id="7-3-顶点着色器的输出"><a href="#7-3-顶点着色器的输出" class="headerlink" title="7.3 顶点着色器的输出"></a>7.3 顶点着色器的输出</h2><p>顶点着色器必须输出裁剪空间下的坐标。由于DirectX的NDC的Z范围是0到1，与OpenGL的-1到1有一定区别。因此，这2者的投影矩阵在Z坐标上有一定的平移和缩放区别。</p>
+<h1 id="八、屏幕空间"><a href="#八、屏幕空间" class="headerlink" title="八、屏幕空间"></a>八、屏幕空间</h1><p>投影变换后得到的顶点范围是-1到1。现在还需要将NDC下的顶点映射到屏幕空间。屏幕空间也可以叫做窗口空间，即窗口定义的坐标空间。</p>
+<h2 id="8-1-视口变换"><a href="#8-1-视口变换" class="headerlink" title="8.1 视口变换"></a>8.1 视口变换</h2><p>假设，窗口坐标原点在左下角（OpenGL的原点在左下角，但是DirectX的在左上角），窗口大小为Width和Height。视口变换就是把-1到1的x和y坐标范围映射到（0，width）和（0，height），对应DirectX的话，y还需要取反。这就是一个平移和缩放的过程。</p>
+<p>实际上，透视除法和视口变换（屏幕空间映射）都是硬件自动进行的。</p>
+<h1 id="九、参考资料"><a href="#九、参考资料" class="headerlink" title="九、参考资料"></a>九、参考资料</h1><blockquote>
+<p><a href="https://book.douban.com/subject/26821639/" target="_blank" rel="noopener">Unity Shader入门精要</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\12\22\游戏引擎渲染管线的总结\" rel="bookmark">游戏引擎渲染管线的总结</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2021/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/" title="渲染管线中的坐标空间和相关变换">http://xiaopengcheng.top/2021/07/19/渲染管线中的坐标空间和相关变换/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" rel="tag"><i class="fa fa-tag"></i> 渲染管线</a>
+              <a href="/tags/%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4/" rel="tag"><i class="fa fa-tag"></i> 坐标空间</a>
+              <a href="/tags/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/" rel="tag"><i class="fa fa-tag"></i> 坐标变换</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" rel="prev" title="左右手坐标系和相关定则的总结">
+      <i class="fa fa-chevron-left"></i> 左右手坐标系和相关定则的总结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/15/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" rel="next" title="Urp下自定义特效管线和后处理特效实现">
+      Urp下自定义特效管线和后处理特效实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、思维导图"><span class="nav-number">1.</span> <span class="nav-text">一、思维导图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、模型空间"><span class="nav-number">2.</span> <span class="nav-text">二、模型空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、切线空间"><span class="nav-number">3.</span> <span class="nav-text">三、切线空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-法线贴图的切线空间"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 法线贴图的切线空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-模型空间下的切线空间"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 模型空间下的切线空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-切线变换"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 切线变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、关节空间"><span class="nav-number">4.</span> <span class="nav-text">四、关节空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-关节空间"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 关节空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-关节姿势"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 关节姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-绑定关节姿势"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 绑定关节姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-蒙皮矩阵"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 蒙皮矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-蒙皮动画"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 蒙皮动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-总结"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、世界空间"><span class="nav-number">5.</span> <span class="nav-text">五、世界空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-模型变换"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 模型变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、摄像机空间"><span class="nav-number">6.</span> <span class="nav-text">六、摄像机空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-观察变换"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 观察变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、裁剪空间"><span class="nav-number">7.</span> <span class="nav-text">七、裁剪空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-投影变换"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 投影变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#透视投影"><span class="nav-number">7.1.1.</span> <span class="nav-text">透视投影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正交投影"><span class="nav-number">7.1.2.</span> <span class="nav-text">正交投影</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-透视除法和图元裁剪"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 透视除法和图元裁剪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-顶点着色器的输出"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 顶点着色器的输出</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、屏幕空间"><span class="nav-number">8.</span> <span class="nav-text">八、屏幕空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-视口变换"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 视口变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#九、参考资料"><span class="nav-number">9.</span> <span class="nav-text">九、参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">592k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:59</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

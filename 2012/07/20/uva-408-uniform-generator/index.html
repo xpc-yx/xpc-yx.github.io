@@ -292,7 +292,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>886</span>
+              <span>882</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -311,9 +311,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这是今天想通的一个数论题，还是挺有意思的，想出来的那一瞬间yeah了一下，可是我悲剧的粗心习惯，还是交了3次才过，nm数中间空格都错了，又忘记打空行，明明字符串从25列开始，中间是4个空格的，我nc的打了5个空格，就pe了，还有不仔细看输出要求，没有输出空行，最近真没状态啊。<br>其实，这个题想通了就很简单了，还是数论里面的群的概念，就是加法群的生成群啊，打着随机数的幌子而已。由于又没有限定种子，限定对答案也没有影响，假设种子是0，那么数列可以表示为a * step，数列要能够生成0 - mod-1中所有的数字，那么就有a * step = b % mod(0&lt;=b&lt;mod)。<br>哈哈，上面那个式子就是a * x = b % n这个线性同余方程了，只是有很多b了。要方程有解，不是需要满足条件gcd(a,n) | b么，意思b是gcd(a,n)的整数倍了。但是0 &lt;= b &lt; n啊，b会是1了，那么gcd(a,n)一定是1了哦。那么直接判断gcd(step,mod)是否为1就行了，哈哈。<br>关于线性同余方程a*x=b%n，要有解的条件gcd(a,n)|b的解释，还是参看算法导论或者其它资料吧。。。</p>
-<p>代码就非常简单了，如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int gcd(int <span class="selector-tag">a</span>, int b)</span><br><span class="line">&#123;</span><br><span class="line">    if (a &lt; b)swap(a, b);</span><br><span class="line">    while (b)</span><br><span class="line">    &#123;</span><br><span class="line">        int t = a;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t % b;</span><br><span class="line">    &#125;</span><br><span class="line">    return a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nStep, nMod;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nStep, &amp;nMod) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(<span class="string">"%10d%10d    %s\n\n"</span>, nStep, nMod,</span><br><span class="line">               gcd(nStep, nMod) == 1 ? "Good Choice" : "Bad Choice");</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>这是今天想通的一个数论题，还是挺有意思的，想出来的那一瞬间yeah了一下，可是我悲剧的粗心习惯，还是交了3次才过，nm数中间空格都错了，又忘记打空行，明明字符串从25列开始，中间是4个空格的，我nc的打了5个空格，就pe了，还有不仔细看输出要求，没有输出空行，最近真没状态啊。<br>其实，这个题想通了就很简单了，还是数论里面的群的概念，就是加法群的生成群啊，打着随机数的幌子而已。由于又没有限定种子，限定对答案也没有影响，假设种子是0，那么数列可以表示为a <em> step，数列要能够生成0 - mod-1中所有的数字，那么就有a </em> step = b % mod(0&lt;=b&lt;mod)。<br>哈哈，上面那个式子就是a <em> x = b % n这个线性同余方程了，只是有很多b了。要方程有解，不是需要满足条件gcd(a,n) | b么，意思b是gcd(a,n)的整数倍了。但是0 &lt;= b &lt; n啊，b会是1了，那么gcd(a,n)一定是1了哦。那么直接判断gcd(step,mod)是否为1就行了，哈哈。<br>关于线性同余方程a</em>x=b%n，要有解的条件gcd(a,n)|b的解释，还是参看算法导论或者其它资料吧。。。</p>
+<p>代码就非常简单了，如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int gcd(int <span class="selector-tag">a</span>, int b)</span><br><span class="line">&#123;</span><br><span class="line">    if (a &lt; b)swap(a, b);</span><br><span class="line">    while (b)</span><br><span class="line">    &#123;</span><br><span class="line">        int t = a;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t % b;</span><br><span class="line">    &#125;</span><br><span class="line">    return a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nStep, nMod;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nStep, &amp;nMod) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(<span class="string">"%10d%10d    %s\n\n"</span>, nStep, nMod,</span><br><span class="line">               gcd(nStep, nMod) == 1 ? "Good Choice" : "Bad Choice");</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
     </div>
 
     
@@ -429,20 +429,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -499,7 +499,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -601,6 +601,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

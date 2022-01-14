@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7 * 4 &#x3D; 7XXXXX，例子: 179487 * 4 &#x3D; 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上">
+  <meta name="description" content="这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7  4 &#x3D; 7XXXXX，例子: 179487  4 &#x3D; 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上去就">
 <meta property="og:type" content="article">
 <meta property="og:title" content="uva 550 - Multiplying by Rotation">
 <meta property="og:url" content="http://xiaopengcheng.top/2012/05/08/uva-550-multiplying-by-rotation/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7 * 4 &#x3D; 7XXXXX，例子: 179487 * 4 &#x3D; 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上">
+<meta property="og:description" content="这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7  4 &#x3D; 7XXXXX，例子: 179487  4 &#x3D; 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上去就">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2012-05-08T13:30:00.000Z">
 <meta property="article:modified_time" content="2021-12-26T08:21:44.969Z">
@@ -293,7 +293,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>855</span>
+              <span>851</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -312,7 +312,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。<br>题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7 * 4 = 7XXXXX，例子: 179487 * 4 = 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上去就行了。<br>貌似很难的样子，其实用笔在纸上求一下XXXXX7 * 4 = 7XXXXX就会发现。XXXXX7的每一位都是能够确定的，当然顺序是从最低位到最高位开始。因为知道最低位，所以次低位一定是最低位*第二个数%base。以此类推，递归下去即可。最终条件是，没有进位了，而且乘积+原来的进位==最低位。<br>我用的递归完全可以改成循环的形式，这样速度应该会快些。</p>
+        <p>这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。<br>题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7 <em> 4 = 7XXXXX，例子: 179487 </em> 4 = 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上去就行了。<br>貌似很难的样子，其实用笔在纸上求一下XXXXX7 <em> 4 = 7XXXXX就会发现。XXXXX7的每一位都是能够确定的，当然顺序是从最低位到最高位开始。因为知道最低位，所以次低位一定是最低位</em>第二个数%base。以此类推，递归下去即可。最终条件是，没有进位了，而且乘积+原来的进位==最低位。<br>我用的递归完全可以改成循环的形式，这样速度应该会快些。</p>
 <p>代码如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int nBase;</span><br><span class="line">int nTwo;</span><br><span class="line">int nOneLow;</span><br><span class="line"></span><br><span class="line">int GetMin(int nLow, int nCarry, int nNum)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//printf("nLow:%d, nCarry:%d, nNum:%d\n", nLow, nCarry, nNum);</span></span><br><span class="line">    int nTemp = nCarry + nLow * nTwo;</span><br><span class="line">    <span class="keyword">if</span> (nTemp == nOneLow)</span><br><span class="line">    &#123;</span><br><span class="line">        return nNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return GetMin(nTemp % nBase, nTemp / nBase, nNum + 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//freopen("out.txt", "w", stdout);</span></span><br><span class="line">    while (scanf(<span class="string">"%d%d%d"</span>, &amp;nBase, &amp;nOneLow, &amp;nTwo) == <span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("%d\n", GetMin(nOneLow, 0, 0) + 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
@@ -431,20 +431,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -501,7 +501,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -603,6 +603,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 

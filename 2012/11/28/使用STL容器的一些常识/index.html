@@ -327,9 +327,9 @@
 <p>set和map内部是用红黑树实现的。红黑树也就是一棵平衡查找树吧，大家都学过二叉平衡树，红黑树大概类似这种东西。算法导论里面有对红黑树的详细介绍，不过看得让我很头晕，而且我也不想去实现一个红黑树，光是二叉平衡树的旋转已经很无语了。反正红黑树类似二叉平衡查找树就行了。那么，红黑树的插入删除都可能改变原有结点的位置之间的关系，意思是不仅仅是破坏或者增加一个结点的位置。但是原有结点的地址肯定是没有变化的。增删查改的复杂度都是log(n)。还有，对set和map的查找要应用容器内部的成员函数find，而不是全局的stl函数find。前者是二分查找，而后者是顺序查找。</p>
 <p>下面我讲讲我对stl迭代器失效的理解。其实，大致知道了stl容器的实现，这个问题就很好理解了。</p>
 <p>vector是动态数组，那么插入和删除元素都会改变该元素后面元素的地址，那么先前获取的指向后面位置元素的迭代器就会失效了。而且即使你插入在最后，也可能使所有的迭代器失效，因为可能这个时候刚好vector必须增加容量来容纳你新插入的元素了。你再访问这些迭代器的话，不是访问到错误的内容就是内存错误了。</p>
-<p>list的话，由于结点是孤立的，是用指针把所有结点串起来的，那么原有结点的地址一直都不会改变。只要不对结点进行了删除，那么原来获取的迭代器就不会失效。但是，++和–的结果可能会和原来不一致的。</p>
+<p>list的话，由于结点是孤立的，是用指针把所有结点串起来的，那么原有结点的地址一直都不会改变。只要不对结点进行了删除，那么原来获取的迭代器就不会失效。但是，++和—的结果可能会和原来不一致的。</p>
 <p>deque类似于vector吧。不过，我还是不是很清楚。</p>
-<p>set和map的话，类似于list。<strong>它们的结点地址也一直不会变化，但是插入和删除会改变整棵树的布局，所以原来的迭代器++或者–之后可能就会指向乱七八糟的东西了</strong>。但是，你获取原来的元素还是可以的。</p>
+<p>set和map的话，类似于list。<strong>它们的结点地址也一直不会变化，但是插入和删除会改变整棵树的布局，所以原来的迭代器++或者—之后可能就会指向乱七八糟的东西了</strong>。但是，你获取原来的元素还是可以的。</p>
 <p>总之，对容器进行插入和删除之后一定要注意迭代器失效的情况，最好是从写法上避免这种可能性吧，而不是利用迭代器不失效的可能性。</p>
 
     </div>
@@ -425,20 +425,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">207</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -495,7 +495,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:58</span>
+    <span title="站点阅读时长">8:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
@@ -597,6 +597,8 @@ if (document.querySelectorAll('div.pdf').length) {
 
 
 
+
+  
 
   
 
