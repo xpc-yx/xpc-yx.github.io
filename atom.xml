@@ -27,10 +27,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能
-      
+      &lt;p&gt;需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。&lt;/p&gt;
+&lt;h1 id=&quot;一、渲染管线的思维导图&quot;&gt;&lt;a href=&quot;#一、渲染管线的思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、渲染管线的思维导图&quot;&gt;&lt;/a&gt;一、渲染管线的思维导图&lt;/h1&gt;&lt;p&gt;这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。&lt;br&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/渲染管线.png&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -49,16 +47,14 @@
     <link href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/"/>
     <id>http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/</id>
     <published>2021-10-22T04:15:00.000Z</published>
-    <updated>2022-01-07T11:05:31.914Z</updated>
+    <updated>2022-01-14T11:54:12.422Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="一、反射的实现原理分类"><a href="#一、反射的实现原理分类" class="headerlink" title="一、反射的实现原理分类"></a>一、反射的实现原理分类</h1><p>首先要说明下<strong>反射向量</strong>，指的是视线的镜面反射向量，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png"><br>实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。</p><h2 id="1-1-CubeMap"><a href="#1-1-CubeMap" class="headerlink" title="1.1 CubeMap"></a>1.1 CubeMap</h2><p>天空盒就是一个CubeMap，我们可以假定天空盒是一个环境反射来源，也可以指定另外的CubeMap，用反射向量采样这个CubeMap就能得到反射颜色。CubeMap虽然比较简单，但是也能出很好的效果，而且不需要实时计算反射信息，性能很好。<br>优点：实现简单，效率高，只需要额外的CubeMap存储反射信息；适用于多种情况，不仅仅限于平面反射。<br>缺点：反射信息固定，没有变化。</p><h2 id="1-2-反射探针"><a href="#1-2-反射探针" class="headerlink" title="1.2 反射探针"></a>1.2 反射探针</h2><p>这种方式需要在场景内布置反射探针，用来采集反射信息。渲染时候，在Shader内根据反射探针来获得反射信息。反射探针如果是实时的，性能就会很差，这个时候可以考虑降低反射探针的更新频率或者使用烘焙模式的反射探针。因为反射探针的输出就是CubeMap，因此烘焙模式的反射探针，本质上和CubeMap没有区别。<br>优点：直接利用引擎计算反射信息，不需要额外工作；适用于多种情况，不仅仅限于平面反射。<br>缺点：实时反射探针性能差，计算一次反射探针需要朝着6个方向渲染场景，Drawcall增加6倍，性能太差；烘焙反射探针无法变化。</p><h2 id="1-3-平面反射"><a href="#1-3-平面反射" class="headerlink" title="1.3 平面反射"></a>1.3 平面反射</h2><p>这种方式限制于只能在平面上做反射。如果要求在凹凸不平的表面上实现反射效果，则不太适合。基本思路是将场景根据平面对称镜像一次，具体实现上是将生成的反射矩阵乘以到原场景摄像机的世界到相机空间的矩阵，然后用新的相机再渲染一次场景生成RT。然后在屏幕空间内采样这个RT，得到的像素值作为反射信息。<br>其实，使用反射探针也能实现平面反射的效果，原理是将探针的位置放在摄像机在平面的对称位置。可以参考大佬的这篇文章，<a href="https://baddogzz.github.io/2020/04/22/Probe-Reflection/" target="_blank" rel="noopener">关于反射探头的实时反射</a>。实现难度相对平面反射低很多，不过实时探针比平面反射性能差6倍，优化起来难度太大。<br>优点：反射效果最好，最真实接近平面反射。<br>缺点：需要额外渲染一次场景，DrawCall翻倍。</p><h2 id="1-4-屏幕空间反射（SSR）"><a href="#1-4-屏幕空间反射（SSR）" class="headerlink" title="1.4 屏幕空间反射（SSR）"></a>1.4 屏幕空间反射（SSR）</h2><p>屏幕空间反射的基本原理比较简单，也就是在屏幕空间内通过深度法线纹理恢复世界空间坐标。然后，沿着反射向量方向做步进，也就是所谓的RayMarching，检查当前深度是否已经超过深度纹理对应的值，如果超过，表面已经碰到物体了，那么取当前步进到的颜色值作为反射结果即可。<br>优点：适用于多种情况，不仅仅限于平面反射；DrawCall不变。<br>缺点：需要额外的深度和法线纹理，在前向渲染中这不是免费的，需要多渲染一次场景得到深度和法线纹理；效果一般；无法反射屏幕之外的信息；实现比较复杂，移动平台下性能差（步进相交的计算量大），很可能跑不起来；带宽增加。</p><p>SSR应该是更适合于延迟渲染的一个反射效果实现方案，毕竟可以免费得到深度和法线纹理。</p><h2 id="1-5-屏幕空间平面反射"><a href="#1-5-屏幕空间平面反射" class="headerlink" title="1.5 屏幕空间平面反射"></a>1.5 屏幕空间平面反射</h2><p>这个是平面反射在屏幕空间下的一个实现。<br>SSPR大体的实现思路如下，<br>1、用当前屏幕UV从深度图重建当前世界坐标，将世界坐标以反射平面进行对称翻转<br>2、使用翻转后的世界坐标的计算屏幕UV<br>3、对当前屏幕纹理进行采样得到ReflectColor保存到一张新的ColorRT中，保存位置是翻转后的世界坐标的屏幕UV<br>4、在反射平面的Shader中用屏幕UV对ColorRT进行采样得到反射颜。<br>5、在反射平面的Shader中将反射颜色和着色结果进行组合得到最终颜色。</p><p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/SSPR.jpg"><br>如上大佬的图能够基本说明SSPR的实现思路。UAV write即是3的输出。关键点和难点是要得到步骤三的ColorRT，并且要正确高效。网上有不少博客说的是如何正确高效实现前三步，基本上要使用Computer Shader，图形接口要求是vulkan/metal。具体实现比较复杂，不在此详细说明。</p><p>优点：效果较高；性能比SSR好；DrawCall不变。<br>缺点：对硬件要求高；需要额外的ColorRT，带宽和内存增加；只适用于平面反射。</p><h1 id="二、Unity对反射效果支持"><a href="#二、Unity对反射效果支持" class="headerlink" title="二、Unity对反射效果支持"></a>二、Unity对反射效果支持</h1><h2 id="2-1-CubeMap"><a href="#2-1-CubeMap" class="headerlink" title="2.1 CubeMap"></a>2.1 CubeMap</h2><p>Unity自带的Shader或许有支持，实现起来也很简单，关键代码如下：</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">half3 reflectVector = reflect(-viewDirectionWS, normalWS);</span><br><span class="line">half3 reflectColor = SAMPLE_TEXTURECUBE(_Cubemap, sampler_Cubemap, reflectVector).rgb;</span><br></pre></td></tr></table></figure><h2 id="2-2-反射探针"><a href="#2-2-反射探针" class="headerlink" title="2.2 反射探针"></a>2.2 反射探针</h2><p>目前，Unity内置管线和Urp支持<a href="https://docs.unity3d.com/cn/2019.4/Manual/class-ReflectionProbe.html" target="_blank" rel="noopener">反射探针</a>，HDRP管线还支持一种特殊的<a href="https://docs.unity3d.com/cn/Packages/com.unity.render-pipelines.high-definition@10.4/manual/Planar-Reflection-Probe.html" target="_blank" rel="noopener">平面反射探针</a>，平面反射探针猜测是针对平面反射这种特殊情况的一种优化手段。<br>场景内布置了反射探针后，Urp管线中反射信息是存储在叫做unity_SpecCube0的内置CubeMap中。Shader中需要采样该CubeMap获得反射信息，Urp代码中搜索函数GlossyEnvironmentReflection，可以得到如下代码：</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">half3 <span class="title">GlossyEnvironmentReflection</span>(<span class="params">half3 reflectVector, half perceptualRoughness, half occlusion</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined(_ENVIRONMENTREFLECTIONS_OFF)</span></span><br><span class="line">    half mip = PerceptualRoughnessToMipmapLevel(perceptualRoughness);</span><br><span class="line">    half4 encodedIrradiance = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);</span><br><span class="line"></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span>DOTS - we need to port probes to live in c# so we can manage this manually.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(UNITY_USE_NATIVE_HDR) || defined(UNITY_DOTS_INSTANCING_ENABLED)</span></span><br><span class="line">    half3 irradiance = encodedIrradiance.rgb;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    half3 irradiance = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> irradiance * occlusion;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> // GLOSSY_REFLECTIONS</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _GlossyEnvironmentColor.rgb * occlusion;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上述函数三个关键点，根据粗糙度计算mipmap，采样光照探针，解析HDR贴图。我们重点关注的是mipmap计算，mipmap大家都知道，越远的地方，贴图采样率越低效果才好，看起来越模糊，没有锐利的毛刺感觉；同时粗糙度刚好可以表示这个概率，粗糙度越低越接近镜面，那么反射效果更接近光滑镜子的效果，粗糙度越高，反射效果越模糊。<br><strong>计算Mipmap的概念可以应用到所有的反射效果实现中，不仅仅反射探针</strong>。</p><h2 id="2-3-平面反射"><a href="#2-3-平面反射" class="headerlink" title="2.3 平面反射"></a>2.3 平面反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p><h2 id="2-4-屏幕空间反射"><a href="#2-4-屏幕空间反射" class="headerlink" title="2.4 屏幕空间反射"></a>2.4 屏幕空间反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p><h2 id="2-5-屏幕空间平面反射"><a href="#2-5-屏幕空间平面反射" class="headerlink" title="2.5 屏幕空间平面反射"></a>2.5 屏幕空间平面反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p><h1 id="三、UE4对反射效果支持"><a href="#三、UE4对反射效果支持" class="headerlink" title="三、UE4对反射效果支持"></a>三、UE4对反射效果支持</h1><h2 id="3-1-CubeMap"><a href="#3-1-CubeMap" class="headerlink" title="3.1 CubeMap"></a>3.1 CubeMap</h2><p>UE4的材质编辑器可以实现。</p><h2 id="3-2-反射探针"><a href="#3-2-反射探针" class="headerlink" title="3.2 反射探针"></a>3.2 反射探针</h2><p><a href="https://docs.unrealengine.com/4.27/zh-CN/BuildingWorlds/LightingAndShadows/ReflectionEnvironment/" target="_blank" rel="noopener">UE4有盒子和球形的反射探针</a>。</p><h2 id="3-3-平面反射"><a href="#3-3-平面反射" class="headerlink" title="3.3 平面反射"></a>3.3 平面反射</h2><p>UE4有<a href="https://docs.unrealengine.com/4.27/zh-CN/BuildingWorlds/LightingAndShadows/PlanarReflections/" target="_blank" rel="noopener">Planar Reflection Actor</a>，放入场景中即可。不过先要在工程设置中开启平面反射。</p><h2 id="3-4-屏幕空间反射"><a href="#3-4-屏幕空间反射" class="headerlink" title="3.4 屏幕空间反射"></a>3.4 屏幕空间反射</h2><p>UE4默认是启用<a href="https://docs.unrealengine.com/4.27/zh-CN/RenderingAndGraphics/PostProcessEffects/ScreenSpaceReflection/" target="_blank" rel="noopener">屏幕空间反射</a>的。不过是可以在工程设置或者配置文件中关闭的。</p><h2 id="3-5-屏幕空间平面反射"><a href="#3-5-屏幕空间平面反射" class="headerlink" title="3.5 屏幕空间平面反射"></a>3.5 屏幕空间平面反射</h2><p>目前没有发现UE4支持这个特性。</p><h1 id="四、反射颜色与物体颜色的组合"><a href="#四、反射颜色与物体颜色的组合" class="headerlink" title="四、反射颜色与物体颜色的组合"></a>四、反射颜色与物体颜色的组合</h1><h2 id="4-1-Mipmap"><a href="#4-1-Mipmap" class="headerlink" title="4.1 Mipmap"></a>4.1 Mipmap</h2><p>计算Mipmap，模拟粗糙度的效果，这个在反射探针中已经有说明。</p><h2 id="4-2-菲涅尔效果"><a href="#4-2-菲涅尔效果" class="headerlink" title="4.2 菲涅尔效果"></a>4.2 菲涅尔效果</h2><p>获得反射颜色后，可以根据菲涅尔定律与物体本身的着色结果进行一定的组合即可。不过，不一定完全照搬菲涅尔定律的公式。关键在于NdotV或者HdotV，也就是反射强弱基本是跟视线相关的。当NdotV为1的时候，说明视线垂直平面，为0的时候说明视线跟平面平行。因此，可以根据NdotV在反射颜色和物体颜色之间进行某种插值，来得到想要的效果。</p><p>以下是一个同时应用了粗糙度计算Mipmap和菲涅尔效果的反射平面，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射.jpg"></p><h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote><p>1、<a href="https://blog.csdn.net/puppet_master/article/details/80808486" target="_blank" rel="noopener">Unity Shader-反射效果（CubeMap，Reflection Probe，Planar Reflection，Screen Space Reflection）</a><br>2、<a href="https://baddogzz.github.io/2020/04/22/Probe-Reflection/" target="_blank" rel="noopener">关于反射探头的实时反射</a><br>3、<a href="https://zhuanlan.zhihu.com/p/150890059" target="_blank" rel="noopener">Unity URP 移动平台的屏幕空间平面反射（SSPR）趟坑记</a><br>4、<a href="https://www.lfzxb.top/screen-space-plana-reflection-in-urp-study/" target="_blank" rel="noopener">URP下屏幕空间平面反射（ScreenSpacePlanarReflection）学习笔记</a></p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="一、反射的实现原理分类"><a href="#一、反射的实现原理分类" class="headerlink" title="一、反射的实现原理分类"></a>一、反射的实现原理分类</h1><p>首先要说明下<strong>反射向量</strong>，指的是视线的镜面反射向量，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png"><br>实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。</p><h2 id="1-1-CubeMap"><a href="#1-1-CubeMap" class="headerlink" title="1.1 CubeMap"></a>1.1 CubeMap</h2><p>天空盒就是一个CubeMap，我们可以假定天空盒是一个环境反射来源，也可以指定另外的CubeMap，用反射向量采样这个CubeMap就能得到反射颜色。CubeMap虽然比较简单，但是也能出很好的效果，而且不需要实时计算反射信息，性能很好。<br>优点：实现简单，效率高，只需要额外的CubeMap存储反射信息；适用于多种情况，不仅仅限于平面反射。<br>缺点：反射信息固定，没有变化。</p><h2 id="1-2-反射探针"><a href="#1-2-反射探针" class="headerlink" title="1.2 反射探针"></a>1.2 反射探针</h2><p>这种方式需要在场景内布置反射探针，用来采集反射信息。渲染时候，在Shader内根据反射探针来获得反射信息。反射探针如果是实时的，性能就会很差，这个时候可以考虑降低反射探针的更新频率或者使用烘焙模式的反射探针。因为反射探针的输出就是CubeMap，因此烘焙模式的反射探针，本质上和CubeMap没有区别。<br>优点：直接利用引擎计算反射信息，不需要额外工作；适用于多种情况，不仅仅限于平面反射。<br>缺点：实时反射探针性能差，计算一次反射探针需要朝着6个方向渲染场景，Drawcall增加6倍，性能太差；烘焙反射探针无法变化。</p><h2 id="1-3-平面反射"><a href="#1-3-平面反射" class="headerlink" title="1.3 平面反射"></a>1.3 平面反射</h2><p>这种方式限制于只能在平面上做反射。如果要求在凹凸不平的表面上实现反射效果，则不太适合。基本思路是将场景根据平面对称镜像一次，具体实现上是将生成的反射矩阵乘以到原场景摄像机的世界到相机空间的矩阵，然后用新的相机再渲染一次场景生成RT。然后在屏幕空间内采样这个RT，得到的像素值作为反射信息。<br>其实，使用反射探针也能实现平面反射的效果，原理是将探针的位置放在摄像机在平面的对称位置。可以参考大佬的这篇文章，<a href="https://baddogzz.github.io/2020/04/22/Probe-Reflection/" target="_blank" rel="noopener">关于反射探头的实时反射</a>。实现难度相对平面反射低很多，不过实时探针比平面反射性能差6倍，优化起来难度太大。<br>优点：反射效果最好，最真实接近平面反射。<br>缺点：需要额外渲染一次场景，DrawCall翻倍。</p><h2 id="1-4-屏幕空间反射（SSR）"><a href="#1-4-屏幕空间反射（SSR）" class="headerlink" title="1.4 屏幕空间反射（SSR）"></a>1.4 屏幕空间反射（SSR）</h2><p>屏幕空间反射的基本原理比较简单，也就是在屏幕空间内通过深度法线纹理恢复世界空间坐标。然后，沿着反射向量方向做步进，也就是所谓的RayMarching，检查当前深度是否已经超过深度纹理对应的值，如果超过，表面已经碰到物体了，那么取当前步进到的颜色值作为反射结果即可。<br>优点：适用于多种情况，不仅仅限于平面反射；DrawCall不变。<br>缺点：需要额外的深度和法线纹理，在前向渲染中这不是免费的，需要多渲染一次场景得到深度和法线纹理；效果一般；无法反射屏幕之外的信息；实现比较复杂，移动平台下性能差（步进相交的计算量大），很可能跑不起来；带宽增加。</p><p>SSR应该是更适合于延迟渲染的一个反射效果实现方案，毕竟可以免费得到深度和法线纹理。</p><h2 id="1-5-屏幕空间平面反射"><a href="#1-5-屏幕空间平面反射" class="headerlink" title="1.5 屏幕空间平面反射"></a>1.5 屏幕空间平面反射</h2><p>这个是平面反射在屏幕空间下的一个实现。<br>SSPR大体的实现思路如下，<br>1、用当前屏幕UV从深度图重建当前世界坐标，将世界坐标以反射平面进行对称翻转<br>2、使用翻转后的世界坐标的计算屏幕UV<br>3、对当前屏幕纹理进行采样得到ReflectColor保存到一张新的ColorRT中，保存位置是翻转后的世界坐标的屏幕UV<br>4、在反射平面的Shader中用屏幕UV对ColorRT进行采样得到反射颜。<br>5、在反射平面的Shader中将反射颜色和着色结果进行组合得到最终颜色。</p><p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/SSPR.jpg"><br>如上大佬的图能够基本说明SSPR的实现思路。UAV write即是3的输出。关键点和难点是要得到步骤三的ColorRT，并且要正确高效。网上有不少博客说的是如何正确高效实现前三步，基本上要使用Computer Shader，图形接口要求是vulkan/metal。具体实现比较复杂，不在此详细说明。</p><p>优点：效果较高；性能比SSR好；DrawCall不变。<br>缺点：对硬件要求高；需要额外的ColorRT，带宽和内存增加；只适用于平面反射。</p><h1 id="二、Unity对反射效果支持"><a href="#二、Unity对反射效果支持" class="headerlink" title="二、Unity对反射效果支持"></a>二、Unity对反射效果支持</h1><h2 id="2-1-CubeMap"><a href="#2-1-CubeMap" class="headerlink" title="2.1 CubeMap"></a>2.1 CubeMap</h2><p>Unity自带的Shader或许有支持，实现起来也很简单，关键代码如下：</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">half3 reflectVector = reflect(-viewDirectionWS, normalWS);</span><br><span class="line">half3 reflectColor = SAMPLE_TEXTURECUBE(_Cubemap, sampler_Cubemap, reflectVector).rgb;</span><br></pre></td></tr></table></figure><h2 id="2-2-反射探针"><a href="#2-2-反射探针" class="headerlink" title="2.2 反射探针"></a>2.2 反射探针</h2><p>目前，Unity内置管线和Urp支持<a href="https://docs.unity3d.com/cn/2019.4/Manual/class-ReflectionProbe.html" target="_blank" rel="noopener">反射探针</a>，HDRP管线还支持一种特殊的<a href="https://docs.unity3d.com/cn/Packages/com.unity.render-pipelines.high-definition@10.4/manual/Planar-Reflection-Probe.html" target="_blank" rel="noopener">平面反射探针</a>，平面反射探针猜测是针对平面反射这种特殊情况的一种优化手段。<br>场景内布置了反射探针后，Urp管线中反射信息是存储在叫做unity_SpecCube0的内置CubeMap中。Shader中需要采样该CubeMap获得反射信息，Urp代码中搜索函数GlossyEnvironmentReflection，可以得到如下代码：</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">half3 <span class="title">GlossyEnvironmentReflection</span>(<span class="params">half3 reflectVector, half perceptualRoughness, half occlusion</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined(_ENVIRONMENTREFLECTIONS_OFF)</span></span><br><span class="line">    half mip = PerceptualRoughnessToMipmapLevel(perceptualRoughness);</span><br><span class="line">    half4 encodedIrradiance = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);</span><br><span class="line"></span><br><span class="line"><span class="comment">//<span class="doctag">TODO:</span>DOTS - we need to port probes to live in c# so we can manage this manually.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(UNITY_USE_NATIVE_HDR) || defined(UNITY_DOTS_INSTANCING_ENABLED)</span></span><br><span class="line">    half3 irradiance = encodedIrradiance.rgb;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    half3 irradiance = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> irradiance * occlusion;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> // GLOSSY_REFLECTIONS</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _GlossyEnvironmentColor.rgb * occlusion;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上述函数三个关键点，根据粗糙度计算mipmap，采样光照探针，解析HDR贴图。我们重点关注的是mipmap计算，mipmap大家都知道，越远的地方，贴图采样率越低效果才好，看起来越模糊，没有锐利的毛刺感觉；同时粗糙度刚好可以表示这个概率，粗糙度越低越接近镜面，那么反射效果更接近光滑镜子的效果，粗糙度越高，反射效果越模糊。<br><strong>计算Mipmap的概念可以应用到所有的反射效果实现中，不仅仅反射探针</strong>。</p><h2 id="2-3-平面反射"><a href="#2-3-平面反射" class="headerlink" title="2.3 平面反射"></a>2.3 平面反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p><h2 id="2-4-屏幕空间反射"><a href="#2-4-屏幕空间反射" class="headerlink" title="2.4 屏幕空间反射"></a>2.4 屏幕空间反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p><h2 id="2-5-屏幕空间平面反射"><a href="#2-5-屏幕空间平面反射" class="headerlink" title="2.5 屏幕空间平面反射"></a>2.5 屏幕空间平面反射</h2><p>Unity没有发现支持，需要自己实现或者找第三方实现。后续会写文章介绍如何实现。</p><h1 id="三、UE4对反射效果支持"><a href="#三、UE4对反射效果支持" class="headerlink" title="三、UE4对反射效果支持"></a>三、UE4对反射效果支持</h1><h2 id="3-1-CubeMap"><a href="#3-1-CubeMap" class="headerlink" title="3.1 CubeMap"></a>3.1 CubeMap</h2><p>UE4的材质编辑器可以实现。</p><h2 id="3-2-反射探针"><a href="#3-2-反射探针" class="headerlink" title="3.2 反射探针"></a>3.2 反射探针</h2><p><a href="https://docs.unrealengine.com/4.27/zh-CN/BuildingWorlds/LightingAndShadows/ReflectionEnvironment/" target="_blank" rel="noopener">UE4有盒子和球形的反射探针</a>。</p><h2 id="3-3-平面反射"><a href="#3-3-平面反射" class="headerlink" title="3.3 平面反射"></a>3.3 平面反射</h2><p>UE4有<a href="https://docs.unrealengine.com/4.27/zh-CN/BuildingWorlds/LightingAndShadows/PlanarReflections/" target="_blank" rel="noopener">Planar Reflection Actor</a>，放入场景中即可。不过先要在工程设置中开启平面反射。</p><h2 id="3-4-屏幕空间反射"><a href="#3-4-屏幕空间反射" class="headerlink" title="3.4 屏幕空间反射"></a>3.4 屏幕空间反射</h2><p>UE4默认是启用<a href="https://docs.unrealengine.com/4.27/zh-CN/RenderingAndGraphics/PostProcessEffects/ScreenSpaceReflection/" target="_blank" rel="noopener">屏幕空间反射</a>的。不过是可以在工程设置或者配置文件中关闭的。</p><h2 id="3-5-屏幕空间平面反射"><a href="#3-5-屏幕空间平面反射" class="headerlink" title="3.5 屏幕空间平面反射"></a>3.5 屏幕空间平面反射</h2><p>目前没有发现UE4支持这个特性。</p><h1 id="四、反射颜色与物体颜色的组合"><a href="#四、反射颜色与物体颜色的组合" class="headerlink" title="四、反射颜色与物体颜色的组合"></a>四、反射颜色与物体颜色的组合</h1><h2 id="4-1-Mipmap"><a href="#4-1-Mipmap" class="headerlink" title="4.1 Mipmap"></a>4.1 Mipmap</h2><p>计算Mipmap，模拟粗糙度的效果，这个在反射探针中已经有说明。</p><h2 id="4-2-菲涅尔效果"><a href="#4-2-菲涅尔效果" class="headerlink" title="4.2 菲涅尔效果"></a>4.2 菲涅尔效果</h2><p>获得反射颜色后，可以根据菲涅尔定律与物体本身的着色结果进行一定的组合即可。不过，不一定完全照搬菲涅尔效果的近似公式，比如Schlick菲涅耳近似等式。关键在于NdotV或者HdotV，也就是反射强弱基本是跟视线相关的。当NdotV为1的时候，说明视线垂直平面，为0的时候说明视线跟平面平行。因此，可以根据NdotV在反射颜色和物体颜色之间进行某种插值，来得到想要的效果。</p><p>以下是一个同时应用了粗糙度计算Mipmap和菲涅尔效果的反射平面，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射.jpg"></p><h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote><p>1、<a href="https://blog.csdn.net/puppet_master/article/details/80808486" target="_blank" rel="noopener">Unity Shader-反射效果（CubeMap，Reflection Probe，Planar Reflection，Screen Space Reflection）</a><br>2、<a href="https://baddogzz.github.io/2020/04/22/Probe-Reflection/" target="_blank" rel="noopener">关于反射探头的实时反射</a><br>3、<a href="https://zhuanlan.zhihu.com/p/150890059" target="_blank" rel="noopener">Unity URP 移动平台的屏幕空间平面反射（SSPR）趟坑记</a><br>4、<a href="https://www.lfzxb.top/screen-space-plana-reflection-in-urp-study/" target="_blank" rel="noopener">URP下屏幕空间平面反射（ScreenSpacePlanarReflection）学习笔记</a></p></blockquote>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、反射的实现原理分类&quot;&gt;&lt;a href=&quot;#一、反射的实现原理分类&quot; class=&quot;headerlink&quot; title=&quot;一、反射的实现原理分类&quot;&gt;&lt;/a&gt;一、反射的实现原理分类&lt;/h1&gt;&lt;p&gt;首先要说明下&lt;strong&gt;反射向量&lt;/strong&gt;，指的是视线的
-      
+      &lt;h1 id=&quot;一、反射的实现原理分类&quot;&gt;&lt;a href=&quot;#一、反射的实现原理分类&quot; class=&quot;headerlink&quot; title=&quot;一、反射的实现原理分类&quot;&gt;&lt;/a&gt;一、反射的实现原理分类&lt;/h1&gt;&lt;p&gt;首先要说明下&lt;strong&gt;反射向量&lt;/strong&gt;，指的是视线的镜面反射向量，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png&quot;&gt;&lt;br&gt;实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-CubeMap&quot;&gt;&lt;a href=&quot;#1-1-CubeMap&quot; class=&quot;headerlink&quot; title=&quot;1.1 CubeMap&quot;&gt;&lt;/a&gt;1.1 CubeMap&lt;/h2&gt;
     
     </summary>
     
@@ -83,10 +79,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;a href=&quot;#一、如何获得颜色缓冲&quot; class=&quot;headerlink&quot; title=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;/a&gt;一、如何获得颜色缓冲&lt;/h1&gt;&lt;p&gt;网上搜索Unity的后处理或者获得屏幕缓冲，大部分会提到用grabpass到
-      
+      &lt;h1 id=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;a href=&quot;#一、如何获得颜色缓冲&quot; class=&quot;headerlink&quot; title=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;/a&gt;一、如何获得颜色缓冲&lt;/h1&gt;&lt;p&gt;网上搜索Unity的后处理或者获得屏幕缓冲，大部分会提到用grabpass到一张指定纹理上或者写一个后处理脚本挂在摄像机上。但是这种方式在Urp管线下已经不生效了。urp取消了默认管线抓取颜色缓冲的grabpass，同时也取消了&lt;a href=&quot;https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnRenderImage.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MonoBehaviour.OnRenderImage&lt;/a&gt;，需要使用&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/api/UnityEngine.Rendering.Universal.ScriptableRenderPass.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ScriptableRenderPass&lt;/a&gt; 来完成类似的功能。ScriptableRenderPass是urp中的pass基类，urp预定义的pass都继承自该类，我们自定义的pass也需要继承自该类。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-Urp的渲染顺序&quot;&gt;&lt;a href=&quot;#1-1-Urp的渲染顺序&quot; class=&quot;headerlink&quot; title=&quot;1.1 Urp的渲染顺序&quot;&gt;&lt;/a&gt;1.1 Urp的渲染顺序&lt;/h2&gt;
     
     </summary>
     
@@ -115,10 +109,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、思维导图&quot;&gt;&lt;a href=&quot;#一、思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、思维导图&quot;&gt;&lt;/a&gt;一、思维导图&lt;/h1&gt;&lt;p&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/m
-      
+      &lt;h1 id=&quot;一、思维导图&quot;&gt;&lt;a href=&quot;#一、思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、思维导图&quot;&gt;&lt;/a&gt;一、思维导图&lt;/h1&gt;&lt;p&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/坐标空间.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;二、模型空间&quot;&gt;&lt;a href=&quot;#二、模型空间&quot; class=&quot;headerlink&quot; title=&quot;二、模型空间&quot;&gt;&lt;/a&gt;二、模型空间&lt;/h1&gt;
     
     </summary>
     
@@ -145,10 +137,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。&lt;br&gt;首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。&lt;/p&gt;
-      
+      &lt;p&gt;左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。&lt;br&gt;首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。&lt;/p&gt;
+&lt;h1 id=&quot;一、左手坐标系&quot;&gt;&lt;a href=&quot;#一、左手坐标系&quot; class=&quot;headerlink&quot; title=&quot;一、左手坐标系&quot;&gt;&lt;/a&gt;一、左手坐标系&lt;/h1&gt;&lt;p&gt;所谓左手坐标系，指的是通过左手来确定的一个三维空间坐标系。&lt;/p&gt;
     
     </summary>
     
@@ -175,10 +165,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、命名法&quot;&gt;&lt;a href=&quot;#一、命名法&quot; class=&quot;headerlink&quot; title=&quot;一、命名法&quot;&gt;&lt;/a&gt;一、命名法&lt;/h1&gt;&lt;p&gt;Pascal命名法：每个单词首字母大写。&lt;br&gt;Camel命名法：第一个单词首字母小写，其余单词首字母大写。&lt;br&gt;
-      
+      &lt;h1 id=&quot;一、命名法&quot;&gt;&lt;a href=&quot;#一、命名法&quot; class=&quot;headerlink&quot; title=&quot;一、命名法&quot;&gt;&lt;/a&gt;一、命名法&lt;/h1&gt;&lt;p&gt;Pascal命名法：每个单词首字母大写。&lt;br&gt;Camel命名法：第一个单词首字母小写，其余单词首字母大写。&lt;br&gt;C++标准库命名法：全小写，单词用下划线分割。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-C&quot;&gt;&lt;a href=&quot;#1-1-C&quot; class=&quot;headerlink&quot; title=&quot;1.1 C&quot;&gt;&lt;/a&gt;1.1 C&lt;/h2&gt;
     
     </summary>
     
@@ -205,10 +193,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、内存对齐&quot;&gt;&lt;a href=&quot;#一、内存对齐&quot; class=&quot;headerlink&quot; title=&quot;一、内存对齐&quot;&gt;&lt;/a&gt;一、内存对齐&lt;/h1&gt;&lt;p&gt;C++的对象都会进行内存对齐，所谓内存对齐，指的是对象的地址和大小都会对齐到n的倍数上。比如按照4对齐，那么
-      
+      &lt;h1 id=&quot;一、内存对齐&quot;&gt;&lt;a href=&quot;#一、内存对齐&quot; class=&quot;headerlink&quot; title=&quot;一、内存对齐&quot;&gt;&lt;/a&gt;一、内存对齐&lt;/h1&gt;&lt;p&gt;C++的对象都会进行内存对齐，所谓内存对齐，指的是对象的地址和大小都会对齐到n的倍数上。比如按照4对齐，那么对象的地址会是4的倍数，对象的大小也是4的倍数。究其原因是，机器在内存对齐的地址上访问数据更快，可以一起取出数据；如果数据存在在不对齐的地址上，需要换成2次对齐地址上的取数据，再组合出原始数据；而且，部分机器根本没有取非对齐的数据。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-默认对齐&quot;&gt;&lt;a href=&quot;#1-1-默认对齐&quot; class=&quot;headerlink&quot; title=&quot;1.1 默认对齐&quot;&gt;&lt;/a&gt;1.1 默认对齐&lt;/h2&gt;
     
     </summary>
     
@@ -233,10 +219,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI
-      
+      &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循&lt;a href=&quot;https://en.wikipedia.org/wiki/KISS_principle&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Kiss准则&lt;/a&gt;，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/?page_id=140&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方网址&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/forum/index.php?board=12.0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方文档地址&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;NGUI下载&quot;&gt;&lt;a href=&quot;#NGUI下载&quot; class=&quot;headerlink&quot; title=&quot;NGUI下载&quot;&gt;&lt;/a&gt;NGUI下载&lt;/h2&gt;
     
     </summary>
     
@@ -263,11 +247,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
-&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h
-      
+      &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h2&gt;&lt;p&gt;默认情况下，一个动态网页程序只包括HTML和JavaScript两种语言。&lt;br&gt;而在WebGL程序中，还包括了第三种语言：GLSL ES。&lt;/p&gt;
     
     </summary>
     
@@ -292,10 +273,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的
-      
+      &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。&lt;/p&gt;
+&lt;h2 id=&quot;控制台命令&quot;&gt;&lt;a href=&quot;#控制台命令&quot; class=&quot;headerlink&quot; title=&quot;控制台命令&quot;&gt;&lt;/a&gt;控制台命令&lt;/h2&gt;
     
     </summary>
     
@@ -320,11 +299,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
-&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数
-      
+      &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
+&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。&lt;/p&gt;
     
     </summary>
     
@@ -349,10 +325,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系
-      
+      &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。&lt;br&gt;这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。&lt;/p&gt;
+&lt;h2 id=&quot;安装DebugView&quot;&gt;&lt;a href=&quot;#安装DebugView&quot; class=&quot;headerlink&quot; title=&quot;安装DebugView&quot;&gt;&lt;/a&gt;安装DebugView&lt;/h2&gt;
     
     </summary>
     
@@ -377,10 +351,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL
-      
+      &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL的接口移植到浏览器中使用。具体的可以参考&lt;a href=&quot;https://zh.wikipedia.org/wiki/WebGL&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;WebGL的维基百科&lt;/a&gt;。&lt;br&gt;使用WebGL可以通过编写网页代码在浏览器中渲染三维图像，而且不需要任何的插件，比如Adobe Flash Player等。&lt;br&gt;WebGL在最新的浏览器中得到了广泛支持。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL与HTML5的关系&quot;&gt;&lt;a href=&quot;#WebGL与HTML5的关系&quot; class=&quot;headerlink&quot; title=&quot;WebGL与HTML5的关系&quot;&gt;&lt;/a&gt;WebGL与HTML5的关系&lt;/h2&gt;
     
     </summary>
     
@@ -405,11 +377,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。&lt;/p&gt;
-&lt;h2 id=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;a href=&quot;#第一步，在资源文件r
-      
+      &lt;p&gt;上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。&lt;/p&gt;
+&lt;h2 id=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;a href=&quot;#第一步，在资源文件rc中设置对话框的属性&quot; class=&quot;headerlink&quot; title=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;/a&gt;&lt;strong&gt;第一步，在资源文件rc中设置对话框的属性&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;Border：None&lt;/p&gt;
     
     </summary>
     
@@ -432,11 +401,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。&lt;/p&gt;
-&lt;p&gt;本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中
-      
+      &lt;p&gt;在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。&lt;/p&gt;
+&lt;p&gt;本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中，下面Show一下这个自带萌妹子的弹窗吧。&lt;/p&gt;
+&lt;p&gt;&lt;img alt data-src=&quot;https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -459,11 +426,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。&lt;/p&gt;
-&lt;p&gt;这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹
-      
+      &lt;p&gt;这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。&lt;/p&gt;
+&lt;p&gt;这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹理），就可以用鼠标在模型上刷三维纹理了。&lt;/p&gt;
+&lt;p&gt;看起来挺好玩的，实际上整个系统的实现过程非常繁杂。这个系统主要用了两个算法，一个是扩展指数映射计算笔画的局部参数化，另外一个是根据样本纹理动态合成新的大纹理（要贴到笔画区域），这个用了并行可控制纹理合成算法，在约束条件下做了特殊实现。由于扩展指数映射用的是他人的实现代码，严重影响了整个系统的速度，也影响了我后面做实验的效果，非常恶心，所以不到无奈时候，千万不要用所谓的牛人的资源。&lt;/p&gt;
     
     </summary>
     
@@ -490,11 +455,28 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。&lt;/p&gt;
-&lt;p&gt;那么，默认情况下，我们使用VC编写的应用程序
-      
+      &lt;p&gt;记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。&lt;/p&gt;
+&lt;p&gt;那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？&lt;/p&gt;
+&lt;div class=&quot;table-container&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;默认&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;mainCRTStartup&lt;/strong&gt; (or &lt;strong&gt;wmainCRTStartup&lt;/strong&gt;)&lt;/td&gt;
+&lt;td&gt;An application using /SUBSYSTEM:&lt;strong&gt;CONSOLE&lt;/strong&gt;; calls &lt;strong&gt;main&lt;/strong&gt; (or &lt;strong&gt;wmain&lt;/strong&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;WinMainCRTStartup&lt;/strong&gt; (or &lt;strong&gt;wWinMainCRTStartup&lt;/strong&gt;)&lt;/td&gt;
+&lt;td&gt;An application using /SUBSYSTEM:&lt;strong&gt;WINDOWS&lt;/strong&gt;; calls &lt;strong&gt;WinMain&lt;/strong&gt; (or &lt;strong&gt;wWinMain&lt;/strong&gt;), which must be defined with &lt;strong&gt;__stdcall&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
     
     </summary>
     
@@ -519,10 +501,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;1.发布博客软件：Windows Live Write，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A
-      
+      &lt;p&gt;1.发布博客软件：Windows Live Write，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的WindowsLiveWrite博文&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;2.Windows7/Xp上显示TGA图片的缩略图：MysticThumbs，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/10/12/%E5%A6%82%E4%BD%95%E8%AE%A9tga%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的MysticThumbs博文&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;3.记笔记：印象笔记（Evernote），不用介绍了，任何设备上都可以用（电脑，手机，ipad…)。&lt;/p&gt;
     
     </summary>
     
@@ -545,11 +526,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。&lt;/p&gt;
-&lt;p&gt;我在尝试beamer的过程中，发现网上
-      
+      &lt;p&gt;我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。&lt;/p&gt;
+&lt;p&gt;我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。&lt;br&gt; 下面给出这个模板的设置。  &lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;\documentclass&amp;#123;beamer&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usetheme&amp;#123;Warsaw&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;fontspec,xunicode,xltxtra&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[slantfont,boldfont]&amp;#123;xeCJK&amp;#125; % 允许斜体和粗体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setbeamercovered&amp;#123;transparent&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[english]&amp;#123;babel&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% or whatever&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;hyperref&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[T1]&amp;#123;fontenc&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% or whatever&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usefonttheme&amp;#123;professionalfonts&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;times&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;mathptmx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;tabularx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% Or whatever. Note that the encoding and the font should match. If T1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% does not look nice, try deleting the line with the fontenc.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;xcolor&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;booktabs, multirow, enumerate&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;animate&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;multimedia&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% ... or whatever. Note that the encoding and the font should match.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% If T1 does not look nice, try deleting the line with the fontenc.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;lmodern&amp;#125; %optional&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;listings&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% Delete this, if you do not want the table of contents to pop up at&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the beginning of each subsection:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\AtBeginSection[]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \begin&amp;#123;frame&amp;#125;&amp;lt;beamer&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \frametitle&amp;#123;内容大纲&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \tableofcontents[currentsection]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setCJKmainfont&amp;#123;Microsoft YaHei&amp;#125;   % 设置缺省中文字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setCJKmonofont&amp;#123;SimSun&amp;#125;   % 设置等宽字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setmainfont&amp;#123;TeX Gyre Pagella&amp;#125; % 英文衬线字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setmonofont&amp;#123;Microsoft YaHei&amp;#125; % 英文等宽字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setsansfont&amp;#123;Trebuchet MS&amp;#125; % 英文无衬线字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;document&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\title[***纹理***]% optional, use only with long paper titles&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123; ***纹理***\\[&lt;span class=&quot;number&quot;&gt;2ex&lt;/span&gt;]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%\subtitle[malloc] %optional&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%&amp;#123;malloc\ 实现&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\author[yx] % optional, use only with lots of authors&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\textcolor[rgb]&amp;#123;&lt;span class=&quot;number&quot;&gt;0.00&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.41&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.66&lt;/span&gt;&amp;#125;&amp;#123;yx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the titlepage&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the plain option removes the sidebar and header from the title page&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;[plain]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \titlepage&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \frametitle&amp;#123;内容大纲&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \tableofcontents&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\section&amp;#123;研究背景和意义&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;&amp;#123;纹理的作用&amp;#125;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \begin&amp;#123;block&amp;#125;&amp;lt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;-&amp;gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    纹理是图形学中增强真实性的重要手段。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \end&amp;#123;block&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \begin&amp;#123;block&amp;#125;&amp;lt;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;-&amp;gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \end&amp;#123;block&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;document&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -572,12 +551,9 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;今天逆战发布新版了。我做的新军衔系统和转生系统在这次上线了。哈哈，好有成就感。第一次写的代码能够影响这么多人的生活。听说玩家都挤在主城转生NPC处了。&lt;/p&gt;
+      &lt;p&gt;今天逆战发布新版了。我做的新军衔系统和转生系统在这次上线了。哈哈，好有成就感。第一次写的代码能够影响这么多人的生活。听说玩家都挤在主城转生NPC处了。&lt;/p&gt;
 &lt;p&gt;新军衔系统：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/8/7
-      
+&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/8/7669/27417989086_57309c8dcd_o.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;img alt data-src=&quot;https://c7.staticflickr.com/8/7669/27417989086_57309c8dcd_o.jpg&quot;&gt;&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
