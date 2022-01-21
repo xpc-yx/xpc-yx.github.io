@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/31/allocator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/07/31/allocator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">allocator的一些理解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-07-31 10:52:54" itemprop="dateCreated datePublished" datetime="2014-07-31T10:52:54+08:00">2014-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/07/31/allocator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="allocator的一些理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/07/31/allocator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/07/31/allocator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>83</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>相信大家都用过vector，而且用多了之后会发现怎么还有一个我们基本上不会使用的模版参数Allocator。查阅msdn能够看到，vector的类型是template <class type, class allocator="allocator<Type"> &gt;class vector。那么这个Allocator到底是用来做什么的了。实际上，Allocator是stl里面用到的内存管理工具，因为这个时候new和delete已经不能满足要求了。<br>比如说，vector需要预分配内存，需要添加元素。如果使用new分配内存的话，那么在预分配内存的时候就会调用一次构造函数，添加元素的时候会调用一次赋值操作符。其实，这些操作都是冗余的，会降低效率。这也是stl和手写容器的最大区别。如果使用allocator，那么可以把<strong>分配内存和构造操作分开</strong>，在预分配内存的时候单纯分配空间，不构造，而在添加新元素的时候，调用复制构造函数。<br>要达到这样的要求，需要allocator提供对应的接口。实际上，std::allocator有allocate和deallocate负责内存申请释放，construct和destroy负责对象构造和析构。下面来解析相关模拟的代码。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;memory&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">class Vector</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Vector() : elements(0), first_free(0), end(0) &#123;&#125;</span><br><span class="line">    ~Vector()</span><br><span class="line">    &#123;</span><br><span class="line">        for (T* p = first_free; p != elements;)</span><br><span class="line">        &#123;</span><br><span class="line">            allocator.destroy(--p);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (elements)</span><br><span class="line">        &#123;</span><br><span class="line">            allocator.deallocate(elements, end - elements);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void push_back(const T t)</span><br><span class="line">    &#123;</span><br><span class="line">        if (first_free == end)</span><br><span class="line">        &#123;</span><br><span class="line">            reallocate();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        allocator.construct(first_free, t);//复制构造新对象</span><br><span class="line">        ++first_free;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void pop_back()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (first_free != elements)</span><br><span class="line">        &#123;</span><br><span class="line">            allocator.destroy(--first_free);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    static std::allocator&lt;T&gt; allocator;</span><br><span class="line">    void reallocate()</span><br><span class="line">    &#123;</span><br><span class="line">        std::ptrdiff_t size = first_free - elements;</span><br><span class="line">        std::ptrdiff_t newcapacity = 2 * std::max(size, 1);</span><br><span class="line"></span><br><span class="line">        T* newelements = allocator.allocate(newcapacity);//申请新内存</span><br><span class="line">        <span class="comment">//newelements处直接复制构造</span></span><br><span class="line">        std::uninitialized_copy(elements, first_free, newelements);</span><br><span class="line"></span><br><span class="line">        for (T* p = first_free; p != elements;)</span><br><span class="line">        &#123;</span><br><span class="line">            allocator.destroy(--p);//析构原对象</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (elements)</span><br><span class="line">        &#123;</span><br><span class="line">            allocator.deallocate(elements, end - elements);//释放内存</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        elements = newelements;</span><br><span class="line">        first_free = elements + size;</span><br><span class="line">        end = elements + newcapacity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    T* elements;</span><br><span class="line">    T* first_free;</span><br><span class="line">    T* end;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; std::allocator&lt;T&gt; Vector&lt;T&gt;::allocator;</span><br></pre></td></tr></table></figure><br>在push_back里面，使用allocator.construct(first_free, t)初始化内容，相当于调用复制构造函数。如果空间已满，调用reallocate。在这里面用allocator.allocate(newcapacity)申请原来2倍大小的空间，这个操作不会调用构造函数。有意思的是接下来调用uninitialized_copy，这个函数直接在新地址上面使用原来的值构造对象，而不是赋值。然后，循环析构原来对象，释放原来内存。如果清楚了解复制构造函数和赋值操作的区别，那么理解allocator的意义是很容易的。关于这个，可以阅读我<a href="http://www.xpc-yx.com/2013/12/19/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%90%86%E8%A7%A3%E9%94%99%E8%AF%AF/" target="_blank" rel="noopener" title="拷贝构造函数的理解错误">另外一篇文章</a>。<br>另外一个关于模版类静态成员的初始化，大家可以看到我直接写在<strong>头文件</strong>的最后一句了。如果写在源文件里面，那么特例化模版才能定义静态成员。而这样直接包含头文件就可以使用了，不信大家可以试试。我的环境是vs2013。</class></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1259,125 +1369,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/" class="post-title-link" itemprop="url">继承MFC的CWnd类渲染OpenGL</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-02-15 11:12:31" itemprop="dateCreated datePublished" datetime="2014-02-15T11:12:31+08:00">2014-02-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/" class="post-meta-item leancloud_visitors" data-flag-title="继承MFC的CWnd类渲染OpenGL" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>18k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>17 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我以前使用过glut的窗口环境，以及在CView中渲染OpenGL的类。但是这些都不怎么方便。首先，在windows下，MFC比glut，glui作为界面框架要方便很多，其次，CView类没有单独的CWnd类方便，自定义的窗口类可以<strong>嵌入</strong>到任意窗口内部，这样就可以脱离框架，方便移植了。<br>我的思路是实现一个COglWnd类。该类可以负责构建OpenGL渲染环境，并且调用模型类渲染，另外负责响应鼠标旋转放缩移动模型等，也可以添加一些额外的操作。<br>该类需要提供的外部接口，创建窗口和渲染模型。<br>COglWnd使用方法：在容器类（比如CView）的OnCreate函数内调用COglWnd的Create函数创建窗口，在容器类的OnSize函数类内调用COglWnd类的<strong>SetWindowPos</strong>移动窗口位置。<br>COglWnd的实现：<br>1.构建OpenGL渲染环境。这个必须在COglWnd的OnCreate函数类实现。具体实现我写在了SetupGLContext函数内部。该函数主要是依次调用了ChoosePixelFormat，SetPixelFormat，wglCreateContext，wglMakeCurrent函数而已。基本上就是设置下OpenGL的一些参数，然后构造下渲染环境的意思，非常好理解。具体可以google。<br>2.渲染。这里需要屏蔽<strong>OnEraseBkgnd</strong>函数，还有OnPaint内调用实际的渲染函数RenderScene而已。这里需要注意的是，我们屏蔽了CWnd的背景擦除函数，这样能够避免一定程度的闪烁。还有，当我们需要更新显示的时候，可以直接调用RenderScene而不是调用MFC的Invalidate函数。这样可以略去MFC的消息传递等。<br>3.鼠标响应。这里旋转我使用了<strong>轨迹球</strong>类。其余的直接调用OpenGL函数即可实现。<br>下面是我的COglWnd类，内部使用了一个vertex模版类存储数据和渲染球类来实现鼠标响应。上面所述，均可参照我的实现细节。我这个类就是嵌入在CView内作为子窗口使用的。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/vertex.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/trackball.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Mesh/TriMesh.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Mesh/Texture.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="comment">// COglWnd</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	class COglWnd : public CWnd</span><br><span class="line">	&#123;</span><br><span class="line">		DECLARE_DYNAMIC(COglWnd)</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		COglWnd();</span><br><span class="line">		virtual ~COglWnd();</span><br><span class="line">		enum CURSOR_TYPE</span><br><span class="line">		&#123;</span><br><span class="line">			CURSOR_HAND = <span class="number">0</span>, CURSOR_PEN = <span class="number">1</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		enum MOUSE_STATE</span><br><span class="line">		&#123;</span><br><span class="line">			MOUSE_NONE = <span class="number">0</span>,</span><br><span class="line">			MOUSE_LEFTBUTTON_DOWN = <span class="number">1</span>, MOUSE_LEFTBUTTON_UP = <span class="number">2</span>,</span><br><span class="line">			MOUSE_MIDDLEBUTTON_DOWN = <span class="number">3</span>, MOUSE_MIDDLEBUTTON_UP = <span class="number">4</span>,</span><br><span class="line">			MOUSE_RIGHTBUTTON_DOWN = <span class="number">5</span>, MOUSE_RIGHTBUTTON_UP = <span class="number">6</span></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//外部接口</span></span><br><span class="line">	public:</span><br><span class="line">		void Create(CRect rect, CWnd *parent);</span><br><span class="line">		CString LoadModel();</span><br><span class="line">		CString SaveModel();</span><br><span class="line">		bool ChooseDrawColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		bool ChooseStrokeColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		CString ChooseDrawTexture();</span><br><span class="line">		bool ChooseBackColor(v4f <span class="attribute">color</span>);</span><br><span class="line">		void RenderScene();//渲染函数</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		void SetCursorType(int nType) &#123; m_cursorType = nType; &#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//消息处理函数</span></span><br><span class="line">	protected:</span><br><span class="line">		DECLARE_MESSAGE_MAP()</span><br><span class="line">		afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);</span><br><span class="line">		afx_msg void OnSize(UINT nType, int cx, int cy);</span><br><span class="line">		afx_msg void OnDestroy();</span><br><span class="line">		afx_msg void OnPaint();</span><br><span class="line">		afx_msg BOOL OnEraseBkgnd(CDC* pDC);</span><br><span class="line">		afx_msg void OnLButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnLButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnRButtonDown(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnRButtonUp(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg void OnMouseMove(UINT nFlags, CPoint point);</span><br><span class="line">		afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);</span><br><span class="line">		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//OpenGL函数</span></span><br><span class="line">	private:</span><br><span class="line">		BOOL SetupGLContext();</span><br><span class="line">		BOOL DetachGLContext();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void SetGLViewFrustum(int <span class="attribute">left</span>, int top, int right, int bottom, float DepthMin, float DepthMax, float Fov);</span><br><span class="line">		void SetGLViewFrustum(int <span class="attribute">left</span>, int top, int right, int bottom);</span><br><span class="line">		void SetGLFOV(<span class="attribute">float</span> Fov);</span><br><span class="line">		void ResizeGLViewport(int <span class="attribute">width</span>, int height);</span><br><span class="line">		void SetEye(v3f pos, v3f dest, v3f up);</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void InitColor();</span><br><span class="line">		void InitLight();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void InitialScene();</span><br><span class="line">		void ReleaseScene();</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		void RenderBackGround();</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		CTriMesh m_mesh;</span><br><span class="line">		CTexture m_backTexture;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		CRect m_rect;</span><br><span class="line">		CWnd* m_parent;</span><br><span class="line">		int		m_nWinWidth;</span><br><span class="line">		int		m_nWinHeight;</span><br><span class="line">		HDC		m_hDC;</span><br><span class="line">		HGLRC	m_hGLRC;</span><br><span class="line">		<span class="attribute">float</span> m_fGLDepthMin;</span><br><span class="line">		<span class="attribute">float</span> m_fGLDepthMax;</span><br><span class="line">		<span class="attribute">float</span> m_fGLFov;</span><br><span class="line">		BOOL m_bGLSetup;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		v4f	m_backColor;</span><br><span class="line">		v4f m_diffuseLight;</span><br><span class="line">		v4f m_specularLight;</span><br><span class="line">		v4f	m_ambientLight;</span><br><span class="line">		v4f m_emissionLight;</span><br><span class="line">		v4f m_gloabalAmbientLight;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		v3f m_eye;</span><br><span class="line">		v3f m_dest;</span><br><span class="line">		v3f m_up;</span><br><span class="line">		Trackball m_trackball;</span><br><span class="line"></span><br><span class="line">	private:</span><br><span class="line">		int m_cursorType;</span><br><span class="line">		int m_mouseState;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>GlWnd.cpp : 实现文件</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1428,7 +1419,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1441,7 +1432,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1493,12 +1484,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">592k</span>
+    <span title="站点总字数">594k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:59</span>
+    <span title="站点阅读时长">9:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

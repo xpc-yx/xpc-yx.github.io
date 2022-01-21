@@ -222,6 +222,122 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/" class="post-title-link" itemprop="url">stl源码剖析之priority_queue</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-12-29 10:59:24" itemprop="dateCreated datePublished" datetime="2014-12-29T10:59:24+08:00">2014-12-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之priority_queue" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>暑假时候好好阅读过，stl源码剖析这本书，之后又看了c++标准程序库，effective c++，more<br>effecttive c++。虽然每次都如醍醐灌顶般，明白了很多知识概念，有种拨开迷雾的感觉，但是终究抵不过<br>遗忘，所以了还是随便写写吧。<br>首先从实现代码差不多最短的优先队列开始，虽然简单的代码后面依赖很庞大的东西，比如泛型<br>迭代器，还有泛型二叉堆算法。我是这样理解优先队列的。首先，数据是存在一个泛型序列容器(线性容器)，<br>这个可以指定，默认是vector，当然指定list和deque也是可以的。另外还需要给数据类型提供个小于比较仿<br>函数，有些类型有默认的less泛型仿函数。所以了，对模版比较熟悉的同学，很自然就猜到了，priority_queue<br>的外观-&gt;一个模版（类型，线性容器，less仿函数）。<br>优先队列支持哪些操作了？什么empty，size，top，直接转交给底层容器就行了，所谓的适配器模式。<br>只需要思考，如何实现push和pop操作。对算法熟悉的同学，都知道底层数据的组织是用二叉堆的，而且是最大<br>堆。问题是，我们还需不需要实现个堆操作了。不需要了，stl做了所有的事情。push_heap就是将输入范围的最<br>后一个元素作为在原堆后面加入的新元素，再重构堆。pop_heap则是将堆首元素交换到堆末，再重构缩小之后的堆。<br>至于二叉堆的原理，就不仔细介绍了。其实也比较简单，如果不去思考一些复杂度的证明。<br>到最后，priority_queue的代码可以很清爽的出来了。尤其注意下面的那些typedef，可以说是模版<br>trick的常见手法，习惯了就好。这种写法还有个用法是为了使内嵌模版声明可见，记得effect c++提到过。以下<br>源码基本来自stl源码剖析随书奉送代码，做了些修改。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T, typename Sequence = vector&lt;T&gt;,</span><br><span class="line">    typename Compare = less&lt;typename Sequence::value_type &gt;&gt;</span><br><span class="line">class  priority_queue</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    typedef typename Sequence::value_type value_type;</span><br><span class="line">    typedef typename Sequence::size_type size_type;</span><br><span class="line">    typedef typename Sequence::reference reference;</span><br><span class="line">    typedef typename Sequence::const_reference const_reference; //为了使内嵌模版声明可见</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    Sequence c; // 底层容器</span><br><span class="line">    Compare comp;   // 元素大小比较仿函数</span><br><span class="line"></span><br><span class="line">    priority_queue() : c() &#123;&#125;</span><br><span class="line">    explicit priority_queue(const Compare x) : c(), comp(x) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    priority_queue(InputIterator first, InputIterator last, const Compare x)</span><br><span class="line">        : c(first, last), comp(x) &#123;</span><br><span class="line">        make_heap(c.begin(), c.end(), comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    priority_queue(InputIterator first, InputIterator last)</span><br><span class="line">        : c(first, last) &#123;</span><br><span class="line">        make_heap(c.begin(), c.end(), comp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool empty() const &#123; return c.empty(); &#125;</span><br><span class="line">    size_type size() const &#123; return c.size(); &#125;</span><br><span class="line">    const_reference top() const &#123; return c.front(); &#125;</span><br><span class="line"></span><br><span class="line">    void push(const value_type x)</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            c.push_back(x);</span><br><span class="line">            push_heap(c.begin(), c.end(), comp);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (...)</span><br><span class="line">        &#123;</span><br><span class="line">            c.<span class="attribute">clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void pop()</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            pop_heap(c.begin(), c.end(), comp);</span><br><span class="line">            c.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        catch (...)</span><br><span class="line">        &#123;</span><br><span class="line">            c.<span class="attribute">clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>再啰嗦几句，刚看源码剖析的时候，对某些模版写法很头疼，但是看完书之后，另外看了几本其它的书，<br>就对这些写法习以为常了，觉得不这么写才怪了。有点艺术的感觉。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1221,116 +1337,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/" class="post-title-link" itemprop="url">main函数返回,exit,abort</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-10-31 16:39:05" itemprop="dateCreated datePublished" datetime="2014-10-31T16:39:05+08:00">2014-10-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/" class="post-meta-item leancloud_visitors" data-flag-title="main函数返回,exit,abort" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>360</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近在看C++标准程序库，看到介绍这两个函数的地方，记起来刚上大学的时候用exit结束<br>程序。那个时候什么都不懂，程序能运行就行了。不过，也好奇过这些东西，到底有什么区别了。<br>书上说的很简单，exit会释放static对象(当然包括全局对象，函数static对象，类的static对象)，<br>清空缓冲区，关闭io，然后终止程序（如果atexit有登记函数，那么执行这些函数）。<br>abort则真的是什么都不干，就退出来了。<br>以上两者都没有解栈(stack unwinding），也就是栈里面的变量没有析构。这个只有从main函数返回才会正常解栈。<br>那么，考虑这样的一个问题，既然程序都要结束了，这些操作到底有没有区别了。进程介绍了，<br>所有的资源都是还给操作系统了吧。只是从程序设计角度来说，资源还是应该由申请者释放的，个人是从这个角度看的。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1381,7 +1387,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1394,7 +1400,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1446,12 +1452,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">592k</span>
+    <span title="站点总字数">594k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:59</span>
+    <span title="站点阅读时长">9:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

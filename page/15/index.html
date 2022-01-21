@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/16/poj%203468%20A%20Simple%20Problem%20with%20Integers%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%88%90%E6%AE%B5%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/09/16/poj%203468%20A%20Simple%20Problem%20with%20Integers%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%88%90%E6%AE%B5%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0/" class="post-title-link" itemprop="url">poj 3468 A Simple Problem with Integers 线段树成段延迟更新</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-09-16 11:00:00" itemprop="dateCreated datePublished" datetime="2012-09-16T11:00:00+08:00">2012-09-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/09/16/poj%203468%20A%20Simple%20Problem%20with%20Integers%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%88%90%E6%AE%B5%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3468 A Simple Problem with Integers 线段树成段延迟更新" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/09/16/poj%203468%20A%20Simple%20Problem%20with%20Integers%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%88%90%E6%AE%B5%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/16/poj%203468%20A%20Simple%20Problem%20with%20Integers%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%88%90%E6%AE%B5%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>用线段树成段更新不能立即全部更新，必须搞延迟操作。其实，就是针对每个节点，另外搞一个域表示延迟<br>更新的数目。然后，在更新操作和查找操作的时候都把父亲节点的延迟域往2个儿子走。<br>这个题是要成段增加值，所以在写PushDown函数的时候要注意，只能给儿子节点加上父亲节点压过来的值乘以儿子区间的长度。这题貌似用树状数组也可以做，不过解法肯定意思不是那么直白的。不过速度肯定会快。<br>树状数组解法：<a href="http://kenby.iteye.com/blog/962159" target="_blank" rel="noopener">http://kenby.iteye.com/blog/962159</a><br>线段树网上流行的解法都是开最多节点数目4倍的数组。以位置1作为根，每个位置其实代表的是一个区间。某人位置1代表1-N或者0-(N-1)区间，具体看题目了。那么2就代表区间1-(1+N)/2，3就代表区间(1+N)/2+1 - N了。<br>至于lazy标记还是搞个大数组，意义和线段树数组一样，搞清楚之后写起来都比较简单，最重要的是变形来解决一些要求奇怪的题目。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long INT;</span><br><span class="line"></span><br><span class="line">const INT MAX_N = 100010;</span><br><span class="line">const INT INF = 0x7ffffffffffffffLL;</span><br><span class="line">INT nTree[MAX_N &lt;&lt; 2];</span><br><span class="line">INT nAdd[MAX_N &lt;&lt; 2];</span><br><span class="line">INT nN, nQ;</span><br><span class="line"></span><br><span class="line">void PushUp(INT nRt)</span><br><span class="line">&#123;</span><br><span class="line">    nTree[nRt] = nTree[nRt &lt;&lt; 1] + nTree[nRt &lt;&lt; 1 | 1];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void BuildTree(INT nL, INT nR, INT nRt)</span><br><span class="line">&#123;</span><br><span class="line">    nAdd[nRt] = 0;</span><br><span class="line">    <span class="keyword">if</span> (nL == nR)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf("%I64d", nTree[nRt]);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    INT nMid = (nL + nR) &gt;&gt; 1;</span><br><span class="line">    BuildTree(nL, nMid, nRt &lt;&lt; 1);</span><br><span class="line">    BuildTree(nMid + 1, nR, nRt &lt;&lt; 1 | 1);</span><br><span class="line">    PushUp(nRt);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void PushDown(INT nL, INT nR, INT nRt)</span><br><span class="line">&#123;</span><br><span class="line">    INT nMid = (nL + nR) &gt;&gt; 1;</span><br><span class="line">    INT nLs = nRt &lt;&lt; 1;</span><br><span class="line">    INT nRs = nLs | 1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (nAdd[nRt])</span><br><span class="line">    &#123;</span><br><span class="line">        nAdd[nLs] += nAdd[nRt];</span><br><span class="line">        nAdd[nRs] += nAdd[nRt];</span><br><span class="line">        nTree[nLs] += (nMid - nL + 1) * nAdd[nRt];</span><br><span class="line">        nTree[nRs] += (nR - nMid) * nAdd[nRt];</span><br><span class="line">        nAdd[nRt] = 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Update(INT nL, INT nR, INT nRt, INT nX, INT nY, INT nV)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nL &gt;= nX &amp;&amp; nR &lt;= nY)</span><br><span class="line">    &#123;</span><br><span class="line">        nTree[nRt] += nV * (nR - nL + 1);</span><br><span class="line">        nAdd[nRt] += nV;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PushDown(nL, nR, nRt);</span><br><span class="line">    INT nMid = (nL + nR) &gt;&gt; 1;</span><br><span class="line">    if (nX &lt;= nMid) Update(nL, nMid, nRt &lt;&lt; 1, nX, nY, nV);</span><br><span class="line">    if (nY &gt; nMid) Update(nMid + 1, nR, nRt &lt;&lt; 1 | 1, nX, nY, nV);</span><br><span class="line">    PushUp(nRt);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">INT Query(INT nL, INT nR, INT nRt, INT nX, INT nY)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nL &gt;= nX &amp;&amp; nR &lt;= nY)</span><br><span class="line">    &#123;</span><br><span class="line">        return nTree[nRt];</span><br><span class="line">    &#125;</span><br><span class="line">    PushDown(nL, nR, nRt);</span><br><span class="line">    INT nAns = 0;</span><br><span class="line">    INT nMid = (nL + nR) &gt;&gt; 1;</span><br><span class="line">    if (nX &lt;= nMid) nAns += Query(nL, nMid, nRt &lt;&lt; 1, nX, nY);</span><br><span class="line">    if (nY &gt; nMid) nAns += Query(nMid + 1, nR, nRt &lt;&lt; 1 | 1, nX, nY);</span><br><span class="line">    return nAns;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    INT nTemp;</span><br><span class="line">    while (scanf(<span class="string">"%I64d%I64d"</span>, &amp;nN, &amp;nQ) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        BuildTree(1, nN, 1);</span><br><span class="line"></span><br><span class="line">        while (nQ--)</span><br><span class="line">        &#123;</span><br><span class="line">            char szCmd[10];</span><br><span class="line">            INT nX, nY, nV;</span><br><span class="line">            scanf("%s", szCmd);</span><br><span class="line">            <span class="keyword">if</span> (szCmd[<span class="number">0</span>] == <span class="string">'Q'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                scanf("%I64d%I64d", &amp;nX, &amp;nY);</span><br><span class="line">                printf("%I64d\n", Query(1, nN, 1, nX, nY));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                scanf("%I64d%I64d%I64d", &amp;nX, &amp;nY, &amp;nV);</span><br><span class="line">                Update(1, nN, 1, nX, nY, nV);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/14/poj%202886%20Who%20Gets%20the%20Most%20Candies%20%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%92%8C%E5%8F%8D%E7%B4%A0%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1233,125 +1343,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/02/poj-3696-the-luckiest-number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/08/02/poj-3696-the-luckiest-number/" class="post-title-link" itemprop="url">poj 3696 The Luckiest number</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-08-02 21:00:00" itemprop="dateCreated datePublished" datetime="2012-08-02T21:00:00+08:00">2012-08-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/08/02/poj-3696-the-luckiest-number/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3696 The Luckiest number" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/08/02/poj-3696-the-luckiest-number/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/08/02/poj-3696-the-luckiest-number/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个题很奇葩了。题意是给出个数字L，假如存在一个数K使得L <em> K = 888…，求888…的最小长度，如果不存在这样的K，那么输出0。我是什么思路也没有了，拖了几天了，数论搞死我了，只能找答案了。<br>我看到个比较靠谱的推法。首先，888… = 111… </em> 8=(10^0+10^1+…+10^m-1) <em> 8=(10^m - 1) / 9 </em> 8，PS：m代表888…的长度。<br>好吧，终于化成指数了，现在有8 <em> (10^m-1)/9=K </em> L，最小的m就是我们要求的答案啦。</p>
-<p>方式1：<br>=&gt; 8 <em> (10^m-1) = 9 </em> k <em> L<br>=&gt; 8 / d </em> (10^m-1) = 9 <em> k </em> L / d，d=gcd(8,9L)<br>=&gt; 10^m-1 = 0 % 9 <em> L / gcd(8, 9L) = 0 % 9 </em> L/gcd(8,L)，(由于gcd(8/d,9L/d)=1，那么10^m-1必然是9 <em> L / d的倍数了)。<br>=&gt; 10^m = 1 % 9 </em> L / gcd(8,L)<br>方式2：<br>=&gt; 8 <em> (10^m-1)/9 = 0 % L<br>=&gt; 8 </em> (10^m-1) = 0 % 9 <em> L(这步的推出，比如x/9 = k </em> n，那么x = 9 <em> k </em> n了，显然成立)<br>=&gt; 10^m-1 = 0 % 9 <em> L / gcd(9 </em> L,8)，假如，d = gcd(9 <em> L,8)，那么有8 / d </em> (10^m - 1) = k <em> 9 </em> L/d，因为8/d不可能是9 <em> L / d的倍数，所以10^m-1必定是9 </em> L / d的倍数，所以10^m-1 = 0 % 9 <em> L / gcd(9 </em> L,8))，=&gt;，10^m - 1 = 0 % 9 <em> L / gcd(L, 8),<br>(因为gcd(9,8)=1)。<br>=&gt; 10^m = 1 % 9 </em> L/gcd(8, L)</p>
-<p>至此，2种方式都推出了，10^m = 1 % 9 <em> L / gcd(8,L) 。<br>那么怎么解答这个问题了，这个就用到了欧拉定理了。令p = 9 </em> L / gcd(8,L)，那么有10^m = 1 % p。由欧拉定理知,Z <em> p中所有的数字a均满足a^euler(p) = 1 % p。那么，10只要是p的乘法群中就肯定有解了。如果，10不在Z </em> p中了，肯定是无解的。证明如下：<br>由a^x = 1%p，可以得到a^(x-1) <em> a=1%p，要a^(x-1)存在，那么gcd(a,p)|1，那么gcd(a,p)必须是1。综上所述，要满足式子a^m=1%p，必须gcd(p,a)=1，即a必须是p的乘法群中的数字。现在的问题是求最小的m，由欧拉定理知道a^euler(p)=1%p，m再大就开始循环了。但是m可能会更小。比如，我们现在知道最小的m是min，那么有a^min=1%p，因为要满足a^euler(p)=1%p，那么a^euler(p)肯定能变换成(a^min)^k,至于k是多少就不知道了，当然也可以求出来。那么min就是euler(p)的一个因子，而且是最小的一个满足a^min=1%p的因子了。<br>现在就可以通过枚举euler(p)的因子，找到最小的因子min满足式子a^min = 1 % p就能解决本问题了。注意求a^m%p肯定是通过算法导论上面那种方法的,O(32)或者O(64)的复杂度，还有a </em> b%m也需要自己模拟，因为可能a * b就溢出了。<br>代码如下，貌似代码还可以通过其它的改进加快速度。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/08/02/poj-3696-the-luckiest-number/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1402,7 +1393,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1415,7 +1406,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1467,12 +1458,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">592k</span>
+    <span title="站点总字数">594k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:59</span>
+    <span title="站点阅读时长">9:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
