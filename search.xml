@@ -182,7 +182,7 @@
   </entry>
   <entry>
     <title>伽马校正和颜色空间</title>
-    <url>/2021/06/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</url>
+    <url>/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</url>
     <content><![CDATA[<h1 id="一、伽马校正"><a href="#一、伽马校正" class="headerlink" title="一、伽马校正"></a>一、伽马校正</h1><p>所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。</p>
 <h2 id="1-1-人眼的非线性视觉效应"><a href="#1-1-人眼的非线性视觉效应" class="headerlink" title="1.1 人眼的非线性视觉效应"></a>1.1 人眼的非线性视觉效应</h2><p>为什么要有gamma校正了。一言以蔽之，人眼的生理效应。如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/gamma_correction_brightness.png"><br>第一行是人眼感受到的线性亮度变化，第二行是真实的非线性亮度变化。可以得出结论，首尾两端是一致的，但是中间值变化不一致；真实的中间亮度值必须更大，才能得到人眼感知的线性亮度变化。我们的目的是让人眼感受到线性的亮度变化曲线，因此输入亮度必须是第二行这种非线性的亮度变化曲线。<br>第二行的亮度变化曲线，就是<strong>伽马校正曲线</strong>。</p>
 <h2 id="1-2-非线性显示器"><a href="#1-2-非线性显示器" class="headerlink" title="1.2 非线性显示器"></a>1.2 非线性显示器</h2><p>显示器为了应对人眼的这种非线性视觉效应，采用的也是类似的机制（也可能是历史原因，总之认为当今的显示器都是如此设计就行）。假设我们输入的颜色值，即输入给显示器的电压，那么这个电压对应的是1.1的第二行（Gamma校正曲线）；人眼感受到的显示器的真实输出对应的是1.1的第一行（线性颜色输出）。<br>如下图所示，<br><img alt="gamma_correction_gamma_curves" data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/gamma_correction_gamma_curves.png"></p>
@@ -3870,8 +3870,8 @@ XX***
         <category>算法题</category>
       </categories>
       <tags>
-        <tag>递归</tag>
         <tag>数学</tag>
+        <tag>递归</tag>
       </tags>
   </entry>
   <entry>
