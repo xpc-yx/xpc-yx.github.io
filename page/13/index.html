@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/25/poj%203264%20Balanced%20Lineup%20St%E7%AE%97%E6%B3%95%E5%BB%BA%E7%AB%8BRmq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/10/25/poj%203264%20Balanced%20Lineup%20St%E7%AE%97%E6%B3%95%E5%BB%BA%E7%AB%8BRmq/" class="post-title-link" itemprop="url">poj 3264 Balanced Lineup St算法建立Rmq</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-10-25 18:30:00" itemprop="dateCreated datePublished" datetime="2012-10-25T18:30:00+08:00">2012-10-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/10/25/poj%203264%20Balanced%20Lineup%20St%E7%AE%97%E6%B3%95%E5%BB%BA%E7%AB%8BRmq/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3264 Balanced Lineup St算法建立Rmq" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/10/25/poj%203264%20Balanced%20Lineup%20St%E7%AE%97%E6%B3%95%E5%BB%BA%E7%AB%8BRmq/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/25/poj%203264%20Balanced%20Lineup%20St%E7%AE%97%E6%B3%95%E5%BB%BA%E7%AB%8BRmq/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>ST算法可以说就是个二维的动态规划，黑书上有解释。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX_I = 50010;</span><br><span class="line">const int MAX_J = 20;</span><br><span class="line"></span><br><span class="line">int nMax[MAX_I][MAX_J];</span><br><span class="line">int nMin[MAX_I][MAX_J];</span><br><span class="line">int nArr[MAX_I];</span><br><span class="line">int nN, nQ;</span><br><span class="line"></span><br><span class="line">void InitRmq(int nN)</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 1; i &lt;= nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        nMax[i][0] = nMin[i][0] = nArr[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (int j = 1; (1 &lt;&lt; j) &lt;= nN; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 1; i + (1 &lt;&lt; j) - 1 &lt;= nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            nMax[i][j] = max(nMax[i][j - <span class="number">1</span>],</span><br><span class="line">                             nMax[i + (1 &lt;&lt; (j - 1))][j - 1]);</span><br><span class="line">            nMin[i][j] = min(nMin[i][j - <span class="number">1</span>],</span><br><span class="line">                             nMin[i + (1 &lt;&lt; (j - 1))][j - 1]);                </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Query(int nA, int nB)</span><br><span class="line">&#123;</span><br><span class="line">    int k = (int)(log(1.0 * nB - nA + 1) / log(2.0));</span><br><span class="line">    int nBig = max(nMax[nA][k], nMax[nB - (1 &lt;&lt; k) + 1][k]);</span><br><span class="line">    int nSml = min(nMin[nA][k], nMin[nB - (1 &lt;&lt; k) + 1][k]);</span><br><span class="line">    return nBig - nSml;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nN, &amp;nQ) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 1; i &lt;= nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%d", &amp;nArr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        InitRmq(nN);</span><br><span class="line">        for (int i = 0; i &lt; nQ; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            int nA, nB;</span><br><span class="line">            scanf("%d%d", &amp;nA, &amp;nB);</span><br><span class="line">            printf("%d\n", Query(nA, nB));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/24/hdu%203068%20%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%20Manacher%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1232,117 +1342,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/12/poj%203764%20The%20xor-longest%20Path%20%E5%AD%97%E5%85%B8%E6%A0%91%20+%20Xor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/10/12/poj%203764%20The%20xor-longest%20Path%20%E5%AD%97%E5%85%B8%E6%A0%91%20+%20Xor/" class="post-title-link" itemprop="url">poj 3764 The xor-longest Path 字典树 + Xor</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-10-12 10:30:00" itemprop="dateCreated datePublished" datetime="2012-10-12T10:30:00+08:00">2012-10-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/10/12/poj%203764%20The%20xor-longest%20Path%20%E5%AD%97%E5%85%B8%E6%A0%91%20+%20Xor/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3764 The xor-longest Path 字典树 + Xor" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/10/12/poj%203764%20The%20xor-longest%20Path%20%E5%AD%97%E5%85%B8%E6%A0%91%20+%20Xor/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/12/poj%203764%20The%20xor-longest%20Path%20%E5%AD%97%E5%85%B8%E6%A0%91%20+%20Xor/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这题意思很简单。求一棵树里面的一条路径，使得其异或权(就是将路径里面所有边的权值异或起来)最大。<br>这个题有两步。第一步是假定根为节点0，求出根到其它节点的异或距离，保存在数组xor里面，这个dfs一下即可。然后，用xor[i]^xor[j]就能代表节点i到节点j的路径。这个结论可以这么看。如果，i和j之间的路径经过根节点，那么上面的结论肯定是正确的。如果，该路径不经过根，那么xor[i]和xor[j]必定保护从根到某个节点的相同的一段子路径，根据异或的性质，这段子路径会被消掉，所以这个结论也是这确的。。。<br>第二步就是枚举，xor[i]^xor[j]使得结果最大了。如果直接暴力，平方的算法肯定会超时的。<br>由于每个值可以表示成2进制，如果把其它xor值都保存在字典树里面，用当前的xor[i]去字典树<br>里面，一遍就可以找到异或最大值。<br>另外，由于树的点数太多，只能用邻接表，用vector模拟邻接表果断超时了。。。改成静态链表才过。。。</p>
-<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX = 100010;</span><br><span class="line">int nXor[MAX];</span><br><span class="line">bool bVis[MAX];</span><br><span class="line">int nFirst[MAX];</span><br><span class="line">struct Edge</span><br><span class="line">&#123;</span><br><span class="line">    int nE;</span><br><span class="line">    int nW;</span><br><span class="line">    int nNext;</span><br><span class="line">&#125;;</span><br><span class="line">Edge egs[MAX * 2];</span><br><span class="line"></span><br><span class="line">struct Node</span><br><span class="line">&#123;</span><br><span class="line">    Node* pSons[2];</span><br><span class="line">&#125;;</span><br><span class="line">Node nodes[MAX * 32];</span><br><span class="line">Node* pRoot = nodes[0];</span><br><span class="line">int nNew;</span><br><span class="line"></span><br><span class="line">void GetBCode(int nL, int* nBCode, int nLen)</span><br><span class="line">&#123;</span><br><span class="line">    nLen = 0;</span><br><span class="line">    while (nLen &lt;= <span class="number">30</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        nBCode[nLen++] = nL % 2;</span><br><span class="line">        nL &gt;&gt;= 1;</span><br><span class="line">    &#125;</span><br><span class="line">    reverse(nBCode, nBCode + nLen);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Insert(int nL)</span><br><span class="line">&#123;</span><br><span class="line">    int nLen = 0;</span><br><span class="line">    int i = 0;</span><br><span class="line">    int nBCode[32];</span><br><span class="line"></span><br><span class="line">    GetBCode(nL, nBCode, nLen);</span><br><span class="line">    Node* pNode = pRoot;</span><br><span class="line"></span><br><span class="line">    while (<span class="selector-tag">i</span> &lt; nLen)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;pSons[nBCode[i]])</span><br><span class="line">        &#123;</span><br><span class="line">            pNode = pNode-&gt;pSons[nBCode[i]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            memset(nodes + nNew, 0, sizeof(nodes[nNew]));</span><br><span class="line">            pNode-&gt;pSons[nBCode[i]] = nodes + nNew;</span><br><span class="line">            pNode = nodes + nNew;</span><br><span class="line">            ++nNew;</span><br><span class="line">        &#125;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int FindMax(int nL)</span><br><span class="line">&#123;</span><br><span class="line">    int nLen = 0;</span><br><span class="line">    int nAns = 0;</span><br><span class="line">    int i = 0;</span><br><span class="line">    int nBCode[32];</span><br><span class="line">    Node* pNode = pRoot;</span><br><span class="line"></span><br><span class="line">    GetBCode(nL, nBCode, nLen);</span><br><span class="line">    while (<span class="selector-tag">i</span> &lt; nLen)</span><br><span class="line">    &#123;</span><br><span class="line">        int nBest = (nBCode[i] == 0 ? 1 : 0);</span><br><span class="line">        int nBad = (nBCode[i] == 0 ? 0 : 1);</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;pSons[nBest])</span><br><span class="line">        &#123;</span><br><span class="line">            nAns = 2 * nAns + nBest;</span><br><span class="line">            pNode = pNode-&gt;pSons[nBest];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (pNode-&gt;pSons[nBad])</span><br><span class="line">        &#123;</span><br><span class="line">            nAns = 2 * nAns + nBad;</span><br><span class="line">            pNode = pNode-&gt;pSons[nBad];</span><br><span class="line">        &#125;</span><br><span class="line">        else break;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return nAns ^ nL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Dfs(int nV, int nL)</span><br><span class="line">&#123;</span><br><span class="line">    nXor[nV] = nL;</span><br><span class="line">    bVis[nV] = true;</span><br><span class="line">    for (int e = nFirst[nV]; e != -1; e = egs[e].nNext)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!bVis[egs[e].nE])</span><br><span class="line">        &#123;</span><br><span class="line">            Dfs(egs[e].nE, nL ^ egs[e].nW);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nN;</span><br><span class="line">    int nU, nV, nW;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d"</span>, &amp;nN) == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i) nFirst[i] = -1;</span><br><span class="line">        for (int i = 1, j = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%d%d%d", &amp;nU, &amp;nV, &amp;nW);</span><br><span class="line">            egs[j].nE = nV;</span><br><span class="line">            egs[j].nW = nW;</span><br><span class="line">            egs[j].nNext = nFirst[nU];</span><br><span class="line">            nFirst[nU] = j++;</span><br><span class="line">            egs[j].nE = nU;</span><br><span class="line">            egs[j].nW = nW;</span><br><span class="line">            egs[j].nNext = nFirst[nV];</span><br><span class="line">            nFirst[nV] = j++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        memset(bVis, false, sizeof(bool) * nN);</span><br><span class="line">        Dfs(0, 0);</span><br><span class="line"></span><br><span class="line">        memset(nodes[0], 0, sizeof(Node));</span><br><span class="line">        nNew = 1;</span><br><span class="line">        int nAns = 0;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            nAns = max(nAns, FindMax(nXor[i]));</span><br><span class="line">            Insert(nXor[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        printf("%d\n", nAns);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1393,7 +1392,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">208</span>
+          <span class="site-state-item-count">209</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1458,12 +1457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">594k</span>
+    <span title="站点总字数">597k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:01</span>
+    <span title="站点阅读时长">9:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

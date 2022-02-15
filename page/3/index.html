@@ -222,6 +222,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" class="post-title-link" itemprop="url">CTex下如何使Beamer支持中文</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-11-28 19:17:05" itemprop="dateCreated datePublished" datetime="2015-11-28T19:17:05+08:00">2015-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" class="post-meta-item leancloud_visitors" data-flag-title="CTex下如何使Beamer支持中文" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。</p>
+<p>我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。<br> 下面给出这个模板的设置。  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">\documentclass&#123;beamer&#125;</span><br><span class="line">\usetheme&#123;Warsaw&#125;</span><br><span class="line">\usepackage&#123;fontspec,xunicode,xltxtra&#125;</span><br><span class="line">\usepackage[slantfont,boldfont]&#123;xeCJK&#125; % 允许斜体和粗体</span><br><span class="line">\setbeamercovered&#123;transparent&#125;</span><br><span class="line">\usepackage[english]&#123;babel&#125;</span><br><span class="line">% or whatever</span><br><span class="line">\usepackage&#123;hyperref&#125;</span><br><span class="line">\usepackage[T1]&#123;fontenc&#125;</span><br><span class="line">% or whatever</span><br><span class="line">\usefonttheme&#123;professionalfonts&#125;</span><br><span class="line">\usepackage&#123;times&#125;</span><br><span class="line">\usepackage&#123;mathptmx&#125;</span><br><span class="line">\usepackage&#123;tabularx&#125;</span><br><span class="line">% Or whatever. Note that the encoding and the font should match. If T1</span><br><span class="line">% does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage&#123;xcolor&#125;</span><br><span class="line">\usepackage&#123;booktabs, multirow, enumerate&#125;</span><br><span class="line">\usepackage&#123;animate&#125;</span><br><span class="line">\usepackage&#123;multimedia&#125;</span><br><span class="line"></span><br><span class="line">% ... or whatever. Note that the encoding and the font should match.</span><br><span class="line">% If T1 does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage&#123;lmodern&#125; %optional</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line"></span><br><span class="line">% Delete this, if you do not want the table of contents to pop up at</span><br><span class="line">% the beginning of each subsection:</span><br><span class="line">\AtBeginSection[]</span><br><span class="line">&#123;</span><br><span class="line">    \begin&#123;frame&#125;&lt;beamer&gt;</span><br><span class="line">        \frametitle&#123;内容大纲&#125;</span><br><span class="line">        \tableofcontents[currentsection]</span><br><span class="line">    \end&#123;frame&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">\setCJKmainfont&#123;Microsoft YaHei&#125;   % 设置缺省中文字体</span><br><span class="line">\setCJKmonofont&#123;SimSun&#125;   % 设置等宽字体</span><br><span class="line">\setmainfont&#123;TeX Gyre Pagella&#125; % 英文衬线字体</span><br><span class="line">\setmonofont&#123;Microsoft YaHei&#125; % 英文等宽字体</span><br><span class="line">\setsansfont&#123;Trebuchet MS&#125; % 英文无衬线字体</span><br><span class="line"></span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line"></span><br><span class="line">\title[***纹理***]% optional, use only with long paper titles</span><br><span class="line">&#123; ***纹理***\\[<span class="number">2ex</span>]&#125;</span><br><span class="line"></span><br><span class="line">%\subtitle[malloc] %optional</span><br><span class="line">%&#123;malloc\ 实现&#125;</span><br><span class="line"></span><br><span class="line">\author[yx] % optional, use only with lots of authors</span><br><span class="line">&#123;</span><br><span class="line">\textcolor[rgb]&#123;<span class="number">0.00</span>, <span class="number">0.41</span>, <span class="number">0.66</span>&#125;&#123;yx&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">% the titlepage</span><br><span class="line">% the plain option removes the sidebar and header from the title page</span><br><span class="line">\begin&#123;frame&#125;[plain]</span><br><span class="line">  \titlepage</span><br><span class="line">\end&#123;frame&#125;</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line"></span><br><span class="line">\begin&#123;frame&#125;</span><br><span class="line">        \frametitle&#123;内容大纲&#125;</span><br><span class="line">        \tableofcontents</span><br><span class="line">\end&#123;frame&#125;</span><br><span class="line"></span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\section&#123;研究背景和意义&#125;</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">\begin&#123;frame&#125;&#123;纹理的作用&#125;&#123;&#125;</span><br><span class="line">  \begin&#123;block&#125;&lt;<span class="number">1</span>-&gt;&#123;&#125;</span><br><span class="line">    纹理是图形学中增强真实性的重要手段。</span><br><span class="line">  \end&#123;block&#125;</span><br><span class="line">  \begin&#123;block&#125;&lt;<span class="number">2</span>-&gt;&#123;&#125;</span><br><span class="line">    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。</span><br><span class="line">  \end&#123;block&#125;</span><br><span class="line">\end&#123;frame&#125;</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1277,125 +1390,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" class="post-title-link" itemprop="url">C++调用MATLAB引擎求解线性方程组</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-04-12 13:13:45" itemprop="dateCreated datePublished" datetime="2015-04-12T13:13:45+08:00">2015-04-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" class="post-meta-item leancloud_visitors" data-flag-title="C++调用MATLAB引擎求解线性方程组" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>以前写过一篇<a href="http://www.xpc-yx.com/2015/01/20/%E4%BD%BF%E7%94%A8c%E8%B0%83%E7%94%A8matlab%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" target="_blank" rel="noopener" title="C++调用MATLAB引擎计算特征向量">C++调用MATLAB引擎计算特征向量</a>，里面讲了如何配置环境等等。现在又有一个新的需求，求解线性系统。又想起了MATLAB这个工具，于是又写了个小类。这里要求解的是AX=B。其中，A是m*n的矩阵，X是n维行向量，B是m维列向量。MATLAB里面求解很简单X=A\B。</p>
-<p>该类的头文件如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求解线性系统AX = B.</span></span><br><span class="line">    <span class="comment">//A是Row*Column的矩阵,B是Row*1的列向量</span></span><br><span class="line">    class CLinearSystem</span><br><span class="line">    &#123;</span><br><span class="line">    public:</span><br><span class="line">        CLinearSystem() &#123;&#125;</span><br><span class="line">        CLinearSystem(double* pMatrixA, int nRow, int nColumn, double* pColumnB);</span><br><span class="line">        ~CLinearSystem() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        void GetResult(double* pX);//pX保证能输出m_nColumn个元素</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        double* m_pMatrixA;</span><br><span class="line">        double* m_pColumnB;</span><br><span class="line">        int m_nRow;</span><br><span class="line">        int m_nColumn;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1446,7 +1440,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">208</span>
+          <span class="site-state-item-count">209</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1511,12 +1505,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">594k</span>
+    <span title="站点总字数">597k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:01</span>
+    <span title="站点阅读时长">9:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

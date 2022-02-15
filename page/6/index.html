@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/" class="post-title-link" itemprop="url">vs2013下设置cuda高亮</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-11-03 17:12:40" itemprop="dateCreated datePublished" datetime="2014-11-03T17:12:40+08:00">2014-11-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/CUDA/" itemprop="url" rel="index">
+                    <span itemprop="name">CUDA</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/" class="post-meta-item leancloud_visitors" data-flag-title="vs2013下设置cuda高亮" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>574</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>因为是最近才接触cuda，安装的是6.5版本，所以网上的教程都不是完全适用了。<br>总之，设置高亮大致分为四步，不限于vs2013，其他平台下也类似。<br>第一步，是在vs2013里面设置vc++文件支持.cu;cuh;文件。方法：工具-&gt;选项-&gt;文本编辑器-&gt;文件扩展名。<br>得到如图所示的界面：注意，在右侧可以添加vc++类型的文件扩展名，这是我的设置效果，操作就不用细说了。<br><img alt data-src="https://c2.staticflickr.com/8/7108/27175378080_ea4f90c9db_o.png"><br>第二步，是设置visual assist的目录。在va的c/c++directory里面，选择custom选项，然后包含你的cuda的sdk目录，效果如图：<br><img alt data-src="https://c2.staticflickr.com/8/7376/27175377940_b07f4d0af3_o.png"><br>第三步，是设置va的支持文件类型，类似于第一步。但是，这次是修改注册表的值。注册表目录：<br>HKEY_CURRENT_USER/Software/Whole Tomato/Visual Assist X/VANet12，修改属性ExtSource的值为：.c;.cpp;.cc;.cxx;.tli;.cu;.cuh;<br>意思就是添加上cuda的头文件和源文件类型，vs2010的改法类似。<br>第四步，完成以上步骤之后，还可能会发现一些内置变量下面是有波浪线的。怎么办了？<br>加上这句：#include “device_launch_parameters.h”，就行了。cuda 6.5估计把内置变量的声明放在该头文件下面了吧。<br>最终的效果：<br><img alt data-src="https://c2.staticflickr.com/8/7543/26844573893_3f74990273_o.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/10/31/main%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E,exit,abort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1226,116 +1336,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">operator new 和placement new表达式</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-07-31 20:24:26" itemprop="dateCreated datePublished" datetime="2014-07-31T20:24:26+08:00">2014-07-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="operator new 和placement new表达式" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>上一篇文章里面讲到用allocator预分配空间已经在需要的时候才构造对象，其实还有其它的办法实现这一功能。operator new表达式也可以只分配内存而不初始化，但是返回的是void指针，因此没有allocator类型化的优点。同样placement new表达式只负责调用指定的构造函数初始化内存，不申请内存，与allocator的construct相比，这个表达式更加方便，可以使用任意类型的构造函数参数列表。但是，construct只能使用复制构造函数。<br>同样的，可以使用operator delete代替allocator的deallocate释放内存。使用析构函数代替allocator的destroy清理对象。下面我把原来使用allocator的代码改写成使用这些表达式的。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;memory&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">class Vector</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Vector() : elements(0), first_free(0), end(0) &#123;&#125;</span><br><span class="line">    ~Vector()</span><br><span class="line">    &#123;</span><br><span class="line">        for (T* p = first_free; p != elements;)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//allocator.destroy(--p);</span></span><br><span class="line">            --p;</span><br><span class="line">            p-&gt;~T();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (elements)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//allocator.deallocate(elements, end - elements);</span></span><br><span class="line">            operator delete[](elements);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void push_back(const T t)</span><br><span class="line">    &#123;</span><br><span class="line">        if (first_free == end)</span><br><span class="line">        &#123;</span><br><span class="line">            reallocate();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//allocator.construct(first_free, t);//复制构造新对象</span></span><br><span class="line">        new (first_free) T(t);</span><br><span class="line">        ++first_free;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void pop_back()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (first_free != elements)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//allocator.destroy(--first_free);</span></span><br><span class="line">            --first_free;</span><br><span class="line">            first_free-&gt;~T();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//std::allocator&lt;T&gt; allocator;</span></span><br><span class="line">    void reallocate()</span><br><span class="line">    &#123;</span><br><span class="line">        std::ptrdiff_t size = first_free - elements;</span><br><span class="line">        std::ptrdiff_t newcapacity = 2 * std::max(size, 1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//T* newelements = allocator.allocate(newcapacity);//申请新内存</span></span><br><span class="line">        T* newelements = static_cast&lt;T*&gt;(operator new[](newcapacity * sizeof(T)));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//newelements处直接复制构造</span></span><br><span class="line">        std::uninitialized_copy(elements, first_free, newelements);</span><br><span class="line"></span><br><span class="line">        for (T* p = first_free; p != elements;)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//allocator.destroy(--p);//析构原对象</span></span><br><span class="line">            --p;</span><br><span class="line">            p-&gt;~T();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (elements)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//allocator.deallocate(elements, end - elements);//释放内存</span></span><br><span class="line">            operator delete[](elements);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        elements = newelements;</span><br><span class="line">        first_free = elements + size;</span><br><span class="line">        end = elements + newcapacity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    T* elements;</span><br><span class="line">    T* first_free;</span><br><span class="line">    T* end;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//template &lt;typename T&gt; std::allocator&lt;T&gt; Vector&lt;T&gt;::allocator;</span></span><br></pre></td></tr></table></figure><br>placement new表达式的一般形式是new (地址) 类型名(初始化列表)，由于使用初始化列表直接构造对象，因此不用拷贝。而且比只能用复制构造函数构造的allocator的construct函数更方便。<br>比如，allocator<t> alloc;string* sp = alloc.allocate(2);如果用定位new表达式，new (sp) string(b, e);(b,e是用2个迭代器构造string类型)。但是，用construct的话，则是alloc.construct(sp+1,string(b,e));可以清楚的看到，需要用迭代器构造个临时的string对象，再用这个临时对象调用复制构造函数。因此，会有细微的性能损失。最终要的是，有些类根本没有可以调用的复制构造函数，比如该函数是私有的，那么就必须使用placement new表达式了。<br>operator new和operator delete的使用方式类似于new和delete，具体的可以参看代码。</t></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1386,7 +1386,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">208</span>
+          <span class="site-state-item-count">209</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1451,12 +1451,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">594k</span>
+    <span title="站点总字数">597k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:01</span>
+    <span title="站点阅读时长">9:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

@@ -27,8 +27,10 @@
     
     <summary type="html">
     
-      &lt;p&gt;需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。&lt;/p&gt;
-&lt;h1 id=&quot;一、渲染管线的思维导图&quot;&gt;&lt;a href=&quot;#一、渲染管线的思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、渲染管线的思维导图&quot;&gt;&lt;/a&gt;一、渲染管线的思维导图&lt;/h1&gt;&lt;p&gt;这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。&lt;br&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/渲染管线.png&quot;&gt;&lt;/p&gt;
+      
+      
+        &lt;p&gt;需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能
+      
     
     </summary>
     
@@ -53,8 +55,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、反射的实现原理分类&quot;&gt;&lt;a href=&quot;#一、反射的实现原理分类&quot; class=&quot;headerlink&quot; title=&quot;一、反射的实现原理分类&quot;&gt;&lt;/a&gt;一、反射的实现原理分类&lt;/h1&gt;&lt;p&gt;首先要说明下&lt;strong&gt;反射向量&lt;/strong&gt;，指的是视线的镜面反射向量，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png&quot;&gt;&lt;br&gt;实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。&lt;/p&gt;
-&lt;h2 id=&quot;1-1-CubeMap&quot;&gt;&lt;a href=&quot;#1-1-CubeMap&quot; class=&quot;headerlink&quot; title=&quot;1.1 CubeMap&quot;&gt;&lt;/a&gt;1.1 CubeMap&lt;/h2&gt;
+      
+      
+        &lt;h1 id=&quot;一、反射的实现原理分类&quot;&gt;&lt;a href=&quot;#一、反射的实现原理分类&quot; class=&quot;headerlink&quot; title=&quot;一、反射的实现原理分类&quot;&gt;&lt;/a&gt;一、反射的实现原理分类&lt;/h1&gt;&lt;p&gt;首先要说明下&lt;strong&gt;反射向量&lt;/strong&gt;，指的是视线的
+      
     
     </summary>
     
@@ -79,8 +83,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;a href=&quot;#一、如何获得颜色缓冲&quot; class=&quot;headerlink&quot; title=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;/a&gt;一、如何获得颜色缓冲&lt;/h1&gt;&lt;p&gt;网上搜索Unity的后处理或者获得屏幕缓冲，大部分会提到用grabpass到一张指定纹理上或者写一个后处理脚本挂在摄像机上。但是这种方式在Urp管线下已经不生效了。urp取消了默认管线抓取颜色缓冲的grabpass，同时也取消了&lt;a href=&quot;https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnRenderImage.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MonoBehaviour.OnRenderImage&lt;/a&gt;，需要使用&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/api/UnityEngine.Rendering.Universal.ScriptableRenderPass.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ScriptableRenderPass&lt;/a&gt; 来完成类似的功能。ScriptableRenderPass是urp中的pass基类，urp预定义的pass都继承自该类，我们自定义的pass也需要继承自该类。&lt;/p&gt;
-&lt;h2 id=&quot;1-1-Urp的渲染顺序&quot;&gt;&lt;a href=&quot;#1-1-Urp的渲染顺序&quot; class=&quot;headerlink&quot; title=&quot;1.1 Urp的渲染顺序&quot;&gt;&lt;/a&gt;1.1 Urp的渲染顺序&lt;/h2&gt;
+      
+      
+        &lt;h1 id=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;a href=&quot;#一、如何获得颜色缓冲&quot; class=&quot;headerlink&quot; title=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;/a&gt;一、如何获得颜色缓冲&lt;/h1&gt;&lt;p&gt;网上搜索Unity的后处理或者获得屏幕缓冲，大部分会提到用grabpass到
+      
     
     </summary>
     
@@ -99,6 +105,34 @@
   </entry>
   
   <entry>
+    <title>Unity下平面反射实现</title>
+    <link href="http://xiaopengcheng.top/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://xiaopengcheng.top/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/</id>
+    <published>2021-06-15T13:15:00.000Z</published>
+    <updated>2022-02-15T02:13:42.274Z</updated>
+    
+    <content type="html"><![CDATA[<p>平面反射通常指的是在镜子或者光滑地面的反射效果上，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射示意图.jpg"><br>上图是一个光滑的平面，平面上的物体在平面上有对称的投影。</p><h1 id="一、平面反射的原理"><a href="#一、平面反射的原理" class="headerlink" title="一、平面反射的原理"></a>一、平面反射的原理</h1><p>对于光照射到物体表面然后发生完美镜面反射的示意图，如下所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/镜面反射.png"><br>对于平面反射，假设平面上任意一点都会发生完美的镜面反射。因此，眼睛看到物体的一点的反射信息是从反射向量处得到的，这个可以用下图来表示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png"><br>这个实际上相当于，眼睛从平面的下面看向反射向量，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射原理.png"><br>因此，如上图所示，我们可以把摄像机根据平面对称变换到A点所示的位置，然后再渲染一遍场景到RenderTexture中。当我们渲染点O的反射信息时候，就可以到这张RT中去采样了。那么如何去采样反射信息了？使用点O的屏幕空间坐标。因为，RT是从A点看到的场景，视线和平面的交点O是当前渲染的像素点，因此用O的屏幕空间坐标去采样RT就可以得到其反射信息。</p><h2 id="1-1-平面反射矩阵"><a href="#1-1-平面反射矩阵" class="headerlink" title="1.1 平面反射矩阵"></a>1.1 平面反射矩阵</h2><h3 id="平面方程的计算"><a href="#平面方程的计算" class="headerlink" title="平面方程的计算"></a>平面方程的计算</h3><p>我们现在来推导一下把摄像机关于平面对称的反射矩阵。<br>我们知道一个平面可以表示为$P*N+d=0$。P是平面上任意一点，N是平面的法向量，d是一个常数。我们首先需要求出平面方程。对于平面，其世界空间的法向量就是N。用平面的世界空间位置带入P即可求出d的值。<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plane = <span class="keyword">new</span> Vector4(planeNormal.x, planeNormal.y, planeNormal.z, -Vector3.Dot(planeNormal, planePosition) - Offset);</span><br></pre></td></tr></table></figure><br>我们可以用以上的一个Vector4表示一个平面，前三个分量表示normal，第四个分量表示d。</p><h3 id="平面反射矩阵的计算"><a href="#平面反射矩阵的计算" class="headerlink" title="平面反射矩阵的计算"></a>平面反射矩阵的计算</h3><p><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射矩阵推导.jpg"><br>如上图所示，我们需要计算点A关于平面的对称点A’。关键在于计算出点A到平面的距离AO的大小。那么$A’=A-2<em>n</em>|AO|$，负号是因为方向和法线相反。所以，关键是求出|AO|。因为AO实际上是AP在法线相反方向的投影向量，那么$|AO|=dot(AP,n)=dot(A-P,n)=dot(A,n)-dot(P,n)$。由于P满足平面方程，因此$dot(P,n)=d$，因此$|AO|=dot(A,n)+d$，因此$A’=A-2<em>n</em>(dot(A,n)+d)$。</p><p>假设n为(nx，ny，nz)，已知d的值，A是(x，y，z)点作为我们要变换的点，A’为(x’，y’，z‘)，那么我们可以得到：<br>$x’ = x - 2(x <em> nx + y </em> ny + z <em> nz + d)</em> nx = (1 - 2nx <em> nx)x +(-2nx </em> ny)y + (-2nx <em> nz)z + (-2dnx)$<br>$y’ = y - 2(x </em> nx + y <em> ny + z </em> nz + d)<em> ny = (-2nx </em> ny)x + (1 - 2ny <em> ny)y + (-2ny </em> nz)z + (-2dny)$<br>$z’ = z - 2(x <em> nx + y </em> ny + z <em> nz + d)</em> nz = (-2nx <em> nz)x  + (-2ny </em> nz)y + (1 - 2nz * nz)z + (-2dnz)$<br>改写成矩阵形式可以得到平面反射的矩阵为：<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射矩阵.jpg"></p><h2 id="1-2-斜裁剪矩阵"><a href="#1-2-斜裁剪矩阵" class="headerlink" title="1.2 斜裁剪矩阵"></a>1.2 斜裁剪矩阵</h2><p>上面我们已经推导出平面反射矩阵，不过还有一种特殊情况需要处理。<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/斜裁剪矩阵.jpg"><br>如上图所示，我们的平面是P，将摄像机从C点对称到C’点。从C’可以看到的区域包括A和B，但是B是在平面P的下部，我们从C是无法看到的。因此，从C’点渲染场景RT的时候必须排除B区域，也就是需要将平面P作为裁剪平面，裁剪掉区域B。<br>这个东西叫做斜裁剪矩阵，我们可以推导出具体的斜裁剪矩阵或者使用Unity提供的接口直接计算出来。<br>计算斜裁剪矩阵需要两个步骤，第一步是计算出摄像机空间下的平面表示，第二步是用摄像机空间下的平面和原投影矩阵一起计算斜投影矩阵。<br>具体推导可以参考文章，<a href="https://blog.csdn.net/mobilebbki399/article/details/79491825" target="_blank" rel="noopener">【图形与渲染】相机平面镜反射与斜裁剪矩阵（上）-镜像矩阵</a>。<br>第二步也可以使用Unity的camera中的接口CalculateObliqueMatrix来计算，参数就是第一步得到的平面。</p><h1 id="二、平面反射的实现"><a href="#二、平面反射的实现" class="headerlink" title="二、平面反射的实现"></a>二、平面反射的实现</h1><h2 id="2-1-平面反射的脚本"><a href="#2-1-平面反射的脚本" class="headerlink" title="2.1 平面反射的脚本"></a>2.1 平面反射的脚本</h2><p>这里的脚本指的是生成RenderTexture需要的脚本，脚本继承自MonoBehaviour。</p><h3 id="2-1-1-默认管线下的实现"><a href="#2-1-1-默认管线下的实现" class="headerlink" title="2.1.1 默认管线下的实现"></a>2.1.1 默认管线下的实现</h3><p>默认管线下需要在函数OnWillRenderObject中，基本步骤是先计算反射平面，然后计算反射矩阵和斜投影矩阵，设置反射相机的斜投影矩阵，然后将反射相机变换到平面对面，调用相机的Render函数渲染RT。需要注意的是，渲染的时候需要修改物体正反旋向，即GL.invertCulling设置为true。</p><h3 id="2-1-2-Urp管线下的实现"><a href="#2-1-2-Urp管线下的实现" class="headerlink" title="2.1.2 Urp管线下的实现"></a>2.1.2 Urp管线下的实现</h3><p>Urp管线下，需要绑定 RenderPipelineManager.beginCameraRendering的回调，然后在回调中实现。回调中会接收到当前渲染的相机，反射相机就是该相机关于平面的镜像。同时，渲染RT的函数需要改成UniversalRenderPipeline.RenderSingleCamera，传入context和反射相机。其余步骤，跟默认管线的区别不大。</p><h2 id="2-2-平面反射的Shader"><a href="#2-2-平面反射的Shader" class="headerlink" title="2.2 平面反射的Shader"></a>2.2 平面反射的Shader</h2><p>平面反射的shader可以使用普通的场景shader做修改。关键在于如何采样平面反射信息和平面反射强度以及模糊等。</p><h3 id="2-2-1-平面反射信息的采样"><a href="#2-2-1-平面反射信息的采样" class="headerlink" title="2.2.1 平面反射信息的采样"></a>2.2.1 平面反射信息的采样</h3><p>这个之前已经解释过用屏幕空间坐标来采样RT。</p><h3 id="2-2-1-平面反射强度"><a href="#2-2-1-平面反射强度" class="headerlink" title="2.2.1 平面反射强度"></a>2.2.1 平面反射强度</h3><p>这个可以用菲涅尔定律计算，不过关键点在于强度必须是NdotV的函数，最简单的方式是计算出NdotV，同时提供一个最大最小值来限制强度范围。</p><h3 id="2-2-1-模糊和Mipmap"><a href="#2-2-1-模糊和Mipmap" class="headerlink" title="2.2.1 模糊和Mipmap"></a>2.2.1 模糊和Mipmap</h3><p>可以采样周围多个像素然后做平均模糊或者高斯模糊。不过，最简单的方式是对RT强制生成Mipmap，采样RT的时候指定Mipmap级别。那么，mipmap级别如何计算了。我们可以根据shader的粗糙度来转行为mipmap级别，这个参考unity的urp内置shader函数PerceptualRoughnessToMipmapLevel的实现。</p><p>最终得到的反射效果如图，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射.jpg"></p><h1 id="三、平面反射的优化"><a href="#三、平面反射的优化" class="headerlink" title="三、平面反射的优化"></a>三、平面反射的优化</h1><p>平面反射由于需要对场景镜像渲染一遍， DrawCall会翻倍，而且由于原理限制，没有有效的优化手段，因此平面反射通常是应用在特定的场合下。<br>优化的手段，主要是降低生成反射RT的消耗。</p><h2 id="3-1-控制反射层级"><a href="#3-1-控制反射层级" class="headerlink" title="3.1 控制反射层级"></a>3.1 控制反射层级</h2><p>我们可以在反射脚本中增加层级控制，然后设置反射相机的cullingMask，指定层级的物体才会被渲染到RT中。</p><h2 id="3-2-控制反射RT的尺寸"><a href="#3-2-控制反射RT的尺寸" class="headerlink" title="3.2 控制反射RT的尺寸"></a>3.2 控制反射RT的尺寸</h2><p>可以根据反射平面的大小来调整RT的尺寸，同样我们可以在脚本中开放这个尺寸设置来方便美术来调整RT大小。</p><h2 id="3-3-降低RT的shader复杂度"><a href="#3-3-降低RT的shader复杂度" class="headerlink" title="3.3 降低RT的shader复杂度"></a>3.3 降低RT的shader复杂度</h2><p>我们可以使用Unity的shader replacement将生成RT的shader都替换为一个简单的shader，然后再渲染生成RT，这样可以大幅度降低shader计算复杂度。不过，DrawCall是无法降低的。</p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><blockquote><p><a href="https://blog.csdn.net/puppet_master/article/details/80808486" target="_blank" rel="noopener">Unity Shader-反射效果（CubeMap，Reflection Probe，Planar Reflection，Screen Space Reflection）</a><br><a href="https://blog.csdn.net/mobilebbki399/article/details/79491863" target="_blank" rel="noopener">图形与渲染】相机平面镜反射与斜裁剪矩阵（下）-斜裁剪矩阵</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;平面反射通常指的是在镜子或者光滑地面的反射效果上，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/平面反射示意图.jpg&quot;&gt;&lt;br&gt;上图是一
+      
+    
+    </summary>
+    
+    
+      <category term="图形学" scheme="http://xiaopengcheng.top/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+      <category term="Rendering" scheme="http://xiaopengcheng.top/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/"/>
+    
+    
+      <category term="反射效果" scheme="http://xiaopengcheng.top/tags/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>伽马校正和颜色空间</title>
     <link href="http://xiaopengcheng.top/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/"/>
     <id>http://xiaopengcheng.top/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</id>
@@ -109,8 +143,11 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、伽马校正&quot;&gt;&lt;a href=&quot;#一、伽马校正&quot; class=&quot;headerlink&quot; title=&quot;一、伽马校正&quot;&gt;&lt;/a&gt;一、伽马校正&lt;/h1&gt;&lt;p&gt;所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。&lt;/p&gt;
-&lt;h2 id=&quot;1-1-人眼的非线性视觉效应&quot;&gt;&lt;a href=&quot;#1-1-人眼的非线性视觉效应&quot; class=&quot;headerlink&quot; title=&quot;1.1 人眼的非线性视觉效应&quot;&gt;&lt;/a&gt;1.1 人眼的非线性视觉效应&lt;/h2&gt;
+      
+      
+        &lt;h1 id=&quot;一、伽马校正&quot;&gt;&lt;a href=&quot;#一、伽马校正&quot; class=&quot;headerlink&quot; title=&quot;一、伽马校正&quot;&gt;&lt;/a&gt;一、伽马校正&lt;/h1&gt;&lt;p&gt;所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。&lt;/p&gt;
+&lt;h2 id=
+      
     
     </summary>
     
@@ -139,8 +176,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、思维导图&quot;&gt;&lt;a href=&quot;#一、思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、思维导图&quot;&gt;&lt;/a&gt;一、思维导图&lt;/h1&gt;&lt;p&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/坐标空间.png&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;二、模型空间&quot;&gt;&lt;a href=&quot;#二、模型空间&quot; class=&quot;headerlink&quot; title=&quot;二、模型空间&quot;&gt;&lt;/a&gt;二、模型空间&lt;/h1&gt;
+      
+      
+        &lt;h1 id=&quot;一、思维导图&quot;&gt;&lt;a href=&quot;#一、思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、思维导图&quot;&gt;&lt;/a&gt;一、思维导图&lt;/h1&gt;&lt;p&gt;&lt;img alt data-src=&quot;https://gitee.com/xiao_peng_cheng/m
+      
     
     </summary>
     
@@ -167,8 +206,10 @@
     
     <summary type="html">
     
-      &lt;p&gt;左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。&lt;br&gt;首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。&lt;/p&gt;
-&lt;h1 id=&quot;一、左手坐标系&quot;&gt;&lt;a href=&quot;#一、左手坐标系&quot; class=&quot;headerlink&quot; title=&quot;一、左手坐标系&quot;&gt;&lt;/a&gt;一、左手坐标系&lt;/h1&gt;&lt;p&gt;所谓左手坐标系，指的是通过左手来确定的一个三维空间坐标系。&lt;/p&gt;
+      
+      
+        &lt;p&gt;左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。&lt;br&gt;首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。&lt;/p&gt;
+      
     
     </summary>
     
@@ -195,8 +236,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、命名法&quot;&gt;&lt;a href=&quot;#一、命名法&quot; class=&quot;headerlink&quot; title=&quot;一、命名法&quot;&gt;&lt;/a&gt;一、命名法&lt;/h1&gt;&lt;p&gt;Pascal命名法：每个单词首字母大写。&lt;br&gt;Camel命名法：第一个单词首字母小写，其余单词首字母大写。&lt;br&gt;C++标准库命名法：全小写，单词用下划线分割。&lt;/p&gt;
-&lt;h2 id=&quot;1-1-C&quot;&gt;&lt;a href=&quot;#1-1-C&quot; class=&quot;headerlink&quot; title=&quot;1.1 C&quot;&gt;&lt;/a&gt;1.1 C&lt;/h2&gt;
+      
+      
+        &lt;h1 id=&quot;一、命名法&quot;&gt;&lt;a href=&quot;#一、命名法&quot; class=&quot;headerlink&quot; title=&quot;一、命名法&quot;&gt;&lt;/a&gt;一、命名法&lt;/h1&gt;&lt;p&gt;Pascal命名法：每个单词首字母大写。&lt;br&gt;Camel命名法：第一个单词首字母小写，其余单词首字母大写。&lt;br&gt;
+      
     
     </summary>
     
@@ -223,8 +266,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、内存对齐&quot;&gt;&lt;a href=&quot;#一、内存对齐&quot; class=&quot;headerlink&quot; title=&quot;一、内存对齐&quot;&gt;&lt;/a&gt;一、内存对齐&lt;/h1&gt;&lt;p&gt;C++的对象都会进行内存对齐，所谓内存对齐，指的是对象的地址和大小都会对齐到n的倍数上。比如按照4对齐，那么对象的地址会是4的倍数，对象的大小也是4的倍数。究其原因是，机器在内存对齐的地址上访问数据更快，可以一起取出数据；如果数据存在在不对齐的地址上，需要换成2次对齐地址上的取数据，再组合出原始数据；而且，部分机器根本没有取非对齐的数据。&lt;/p&gt;
-&lt;h2 id=&quot;1-1-默认对齐&quot;&gt;&lt;a href=&quot;#1-1-默认对齐&quot; class=&quot;headerlink&quot; title=&quot;1.1 默认对齐&quot;&gt;&lt;/a&gt;1.1 默认对齐&lt;/h2&gt;
+      
+      
+        &lt;h1 id=&quot;一、内存对齐&quot;&gt;&lt;a href=&quot;#一、内存对齐&quot; class=&quot;headerlink&quot; title=&quot;一、内存对齐&quot;&gt;&lt;/a&gt;一、内存对齐&lt;/h1&gt;&lt;p&gt;C++的对象都会进行内存对齐，所谓内存对齐，指的是对象的地址和大小都会对齐到n的倍数上。比如按照4对齐，那么
+      
     
     </summary>
     
@@ -249,8 +294,10 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循&lt;a href=&quot;https://en.wikipedia.org/wiki/KISS_principle&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Kiss准则&lt;/a&gt;，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/?page_id=140&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方网址&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/forum/index.php?board=12.0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方文档地址&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;NGUI下载&quot;&gt;&lt;a href=&quot;#NGUI下载&quot; class=&quot;headerlink&quot; title=&quot;NGUI下载&quot;&gt;&lt;/a&gt;NGUI下载&lt;/h2&gt;
+      
+      
+        &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI
+      
     
     </summary>
     
@@ -277,8 +324,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
-&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h2&gt;&lt;p&gt;默认情况下，一个动态网页程序只包括HTML和JavaScript两种语言。&lt;br&gt;而在WebGL程序中，还包括了第三种语言：GLSL ES。&lt;/p&gt;
+      
+      
+        &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h
+      
     
     </summary>
     
@@ -303,8 +353,10 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。&lt;/p&gt;
-&lt;h2 id=&quot;控制台命令&quot;&gt;&lt;a href=&quot;#控制台命令&quot; class=&quot;headerlink&quot; title=&quot;控制台命令&quot;&gt;&lt;/a&gt;控制台命令&lt;/h2&gt;
+      
+      
+        &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的
+      
     
     </summary>
     
@@ -329,8 +381,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
-&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。&lt;/p&gt;
+      
+      
+        &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
+&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数
+      
     
     </summary>
     
@@ -355,8 +410,10 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。&lt;br&gt;这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。&lt;/p&gt;
-&lt;h2 id=&quot;安装DebugView&quot;&gt;&lt;a href=&quot;#安装DebugView&quot; class=&quot;headerlink&quot; title=&quot;安装DebugView&quot;&gt;&lt;/a&gt;安装DebugView&lt;/h2&gt;
+      
+      
+        &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系
+      
     
     </summary>
     
@@ -381,8 +438,10 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL的接口移植到浏览器中使用。具体的可以参考&lt;a href=&quot;https://zh.wikipedia.org/wiki/WebGL&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;WebGL的维基百科&lt;/a&gt;。&lt;br&gt;使用WebGL可以通过编写网页代码在浏览器中渲染三维图像，而且不需要任何的插件，比如Adobe Flash Player等。&lt;br&gt;WebGL在最新的浏览器中得到了广泛支持。&lt;/p&gt;
-&lt;h2 id=&quot;WebGL与HTML5的关系&quot;&gt;&lt;a href=&quot;#WebGL与HTML5的关系&quot; class=&quot;headerlink&quot; title=&quot;WebGL与HTML5的关系&quot;&gt;&lt;/a&gt;WebGL与HTML5的关系&lt;/h2&gt;
+      
+      
+        &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL
+      
     
     </summary>
     
@@ -407,8 +466,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。&lt;/p&gt;
-&lt;h2 id=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;a href=&quot;#第一步，在资源文件rc中设置对话框的属性&quot; class=&quot;headerlink&quot; title=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;/a&gt;&lt;strong&gt;第一步，在资源文件rc中设置对话框的属性&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;Border：None&lt;/p&gt;
+      
+      
+        &lt;p&gt;上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。&lt;/p&gt;
+&lt;h2 id=&quot;第一步，在资源文件rc中设置对话框的属性&quot;&gt;&lt;a href=&quot;#第一步，在资源文件r
+      
     
     </summary>
     
@@ -431,9 +493,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。&lt;/p&gt;
-&lt;p&gt;本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中，下面Show一下这个自带萌妹子的弹窗吧。&lt;/p&gt;
-&lt;p&gt;&lt;img alt data-src=&quot;https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png&quot;&gt;&lt;/p&gt;
+      
+      
+        &lt;p&gt;在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。&lt;/p&gt;
+&lt;p&gt;本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中
+      
     
     </summary>
     
@@ -456,9 +520,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。&lt;/p&gt;
-&lt;p&gt;这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹理），就可以用鼠标在模型上刷三维纹理了。&lt;/p&gt;
-&lt;p&gt;看起来挺好玩的，实际上整个系统的实现过程非常繁杂。这个系统主要用了两个算法，一个是扩展指数映射计算笔画的局部参数化，另外一个是根据样本纹理动态合成新的大纹理（要贴到笔画区域），这个用了并行可控制纹理合成算法，在约束条件下做了特殊实现。由于扩展指数映射用的是他人的实现代码，严重影响了整个系统的速度，也影响了我后面做实验的效果，非常恶心，所以不到无奈时候，千万不要用所谓的牛人的资源。&lt;/p&gt;
+      
+      
+        &lt;p&gt;这是我的毕业论文题目，两年前的东西了，来出来纪念下吧。后面附演讲pdf。&lt;/p&gt;
+&lt;p&gt;这讲的是在一个三维模型上手绘纹理的故事，纹理是用户选择的样本纹理。因此，实际上我的毕业论文就是做了一个上纹理的工具。用户选择不同的模型，同时选择不同的样本纹理（符合马尔科夫随机场的样本纹
+      
     
     </summary>
     
@@ -485,28 +551,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。&lt;/p&gt;
-&lt;p&gt;那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？&lt;/p&gt;
-&lt;div class=&quot;table-container&quot;&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;函数&lt;/th&gt;
-&lt;th&gt;默认&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;mainCRTStartup&lt;/strong&gt; (or &lt;strong&gt;wmainCRTStartup&lt;/strong&gt;)&lt;/td&gt;
-&lt;td&gt;An application using /SUBSYSTEM:&lt;strong&gt;CONSOLE&lt;/strong&gt;; calls &lt;strong&gt;main&lt;/strong&gt; (or &lt;strong&gt;wmain&lt;/strong&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;WinMainCRTStartup&lt;/strong&gt; (or &lt;strong&gt;wWinMainCRTStartup&lt;/strong&gt;)&lt;/td&gt;
-&lt;td&gt;An application using /SUBSYSTEM:&lt;strong&gt;WINDOWS&lt;/strong&gt;; calls &lt;strong&gt;WinMain&lt;/strong&gt; (or &lt;strong&gt;wWinMain&lt;/strong&gt;), which must be defined with &lt;strong&gt;__stdcall&lt;/strong&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
+      
+      
+        &lt;p&gt;记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C/C++中使用链接命令/entry:function可以修改默认设置。&lt;/p&gt;
+&lt;p&gt;那么，默认情况下，我们使用VC编写的应用程序
+      
     
     </summary>
     
@@ -531,9 +580,10 @@
     
     <summary type="html">
     
-      &lt;p&gt;1.发布博客软件：Windows Live Write，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的WindowsLiveWrite博文&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;2.Windows7/Xp上显示TGA图片的缩略图：MysticThumbs，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/10/12/%E5%A6%82%E4%BD%95%E8%AE%A9tga%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的MysticThumbs博文&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;3.记笔记：印象笔记（Evernote），不用介绍了，任何设备上都可以用（电脑，手机，ipad…)。&lt;/p&gt;
+      
+      
+        &lt;p&gt;1.发布博客软件：Windows Live Write，可以参考&lt;a href=&quot;http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A
+      
     
     </summary>
     
@@ -542,31 +592,6 @@
     
     
       <category term="推荐" scheme="http://xiaopengcheng.top/tags/%E6%8E%A8%E8%8D%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CTex下如何使Beamer支持中文</title>
-    <link href="http://xiaopengcheng.top/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/"/>
-    <id>http://xiaopengcheng.top/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/</id>
-    <published>2015-11-28T11:17:05.000Z</published>
-    <updated>2019-12-19T16:22:33.195Z</updated>
-    
-    <content type="html"><![CDATA[<p>我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。</p><p>我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。<br> 下面给出这个模板的设置。  </p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">\documentclass&#123;beamer&#125;</span><br><span class="line">\usetheme&#123;Warsaw&#125;</span><br><span class="line">\usepackage&#123;fontspec,xunicode,xltxtra&#125;</span><br><span class="line">\usepackage[slantfont,boldfont]&#123;xeCJK&#125; % 允许斜体和粗体</span><br><span class="line">\setbeamercovered&#123;transparent&#125;</span><br><span class="line">\usepackage[english]&#123;babel&#125;</span><br><span class="line">% or whatever</span><br><span class="line">\usepackage&#123;hyperref&#125;</span><br><span class="line">\usepackage[T1]&#123;fontenc&#125;</span><br><span class="line">% or whatever</span><br><span class="line">\usefonttheme&#123;professionalfonts&#125;</span><br><span class="line">\usepackage&#123;times&#125;</span><br><span class="line">\usepackage&#123;mathptmx&#125;</span><br><span class="line">\usepackage&#123;tabularx&#125;</span><br><span class="line">% Or whatever. Note that the encoding and the font should match. If T1</span><br><span class="line">% does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage&#123;xcolor&#125;</span><br><span class="line">\usepackage&#123;booktabs, multirow, enumerate&#125;</span><br><span class="line">\usepackage&#123;animate&#125;</span><br><span class="line">\usepackage&#123;multimedia&#125;</span><br><span class="line"></span><br><span class="line">% ... or whatever. Note that the encoding and the font should match.</span><br><span class="line">% If T1 does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage&#123;lmodern&#125; %optional</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line"></span><br><span class="line">% Delete this, if you do not want the table of contents to pop up at</span><br><span class="line">% the beginning of each subsection:</span><br><span class="line">\AtBeginSection[]</span><br><span class="line">&#123;</span><br><span class="line">    \begin&#123;frame&#125;&lt;beamer&gt;</span><br><span class="line">        \frametitle&#123;内容大纲&#125;</span><br><span class="line">        \tableofcontents[currentsection]</span><br><span class="line">    \end&#123;frame&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">\setCJKmainfont&#123;Microsoft YaHei&#125;   % 设置缺省中文字体</span><br><span class="line">\setCJKmonofont&#123;SimSun&#125;   % 设置等宽字体</span><br><span class="line">\setmainfont&#123;TeX Gyre Pagella&#125; % 英文衬线字体</span><br><span class="line">\setmonofont&#123;Microsoft YaHei&#125; % 英文等宽字体</span><br><span class="line">\setsansfont&#123;Trebuchet MS&#125; % 英文无衬线字体</span><br><span class="line"></span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line"></span><br><span class="line">\title[***纹理***]% optional, use only with long paper titles</span><br><span class="line">&#123; ***纹理***\\[<span class="number">2ex</span>]&#125;</span><br><span class="line"></span><br><span class="line">%\subtitle[malloc] %optional</span><br><span class="line">%&#123;malloc\ 实现&#125;</span><br><span class="line"></span><br><span class="line">\author[yx] % optional, use only with lots of authors</span><br><span class="line">&#123;</span><br><span class="line">\textcolor[rgb]&#123;<span class="number">0.00</span>, <span class="number">0.41</span>, <span class="number">0.66</span>&#125;&#123;yx&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">% the titlepage</span><br><span class="line">% the plain option removes the sidebar and header from the title page</span><br><span class="line">\begin&#123;frame&#125;[plain]</span><br><span class="line">  \titlepage</span><br><span class="line">\end&#123;frame&#125;</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line"></span><br><span class="line">\begin&#123;frame&#125;</span><br><span class="line">        \frametitle&#123;内容大纲&#125;</span><br><span class="line">        \tableofcontents</span><br><span class="line">\end&#123;frame&#125;</span><br><span class="line"></span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\section&#123;研究背景和意义&#125;</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">\begin&#123;frame&#125;&#123;纹理的作用&#125;&#123;&#125;</span><br><span class="line">  \begin&#123;block&#125;&lt;<span class="number">1</span>-&gt;&#123;&#125;</span><br><span class="line">    纹理是图形学中增强真实性的重要手段。</span><br><span class="line">  \end&#123;block&#125;</span><br><span class="line">  \begin&#123;block&#125;&lt;<span class="number">2</span>-&gt;&#123;&#125;</span><br><span class="line">    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。</span><br><span class="line">  \end&#123;block&#125;</span><br><span class="line">\end&#123;frame&#125;</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure><p>值得注意的是，请用utf8来保存该文档，并且在WinEdit中用utf8来打开，否则还是可能看到乱码的。<br>boats against the current, borne back ceaselessly into the past.</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。&lt;/p&gt;
-&lt;p&gt;我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。&lt;br&gt; 下面给出这个模板的设置。  &lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;65&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;66&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;67&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;68&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;69&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;70&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;71&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;72&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;73&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;74&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;75&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;77&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;78&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;81&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;\documentclass&amp;#123;beamer&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usetheme&amp;#123;Warsaw&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;fontspec,xunicode,xltxtra&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[slantfont,boldfont]&amp;#123;xeCJK&amp;#125; % 允许斜体和粗体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setbeamercovered&amp;#123;transparent&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[english]&amp;#123;babel&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% or whatever&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;hyperref&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage[T1]&amp;#123;fontenc&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% or whatever&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usefonttheme&amp;#123;professionalfonts&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;times&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;mathptmx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;tabularx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% Or whatever. Note that the encoding and the font should match. If T1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% does not look nice, try deleting the line with the fontenc.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;xcolor&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;booktabs, multirow, enumerate&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;animate&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;multimedia&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% ... or whatever. Note that the encoding and the font should match.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% If T1 does not look nice, try deleting the line with the fontenc.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;lmodern&amp;#125; %optional&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\usepackage&amp;#123;listings&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% Delete this, if you do not want the table of contents to pop up at&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the beginning of each subsection:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\AtBeginSection[]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \begin&amp;#123;frame&amp;#125;&amp;lt;beamer&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \frametitle&amp;#123;内容大纲&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \tableofcontents[currentsection]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    \end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setCJKmainfont&amp;#123;Microsoft YaHei&amp;#125;   % 设置缺省中文字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setCJKmonofont&amp;#123;SimSun&amp;#125;   % 设置等宽字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setmainfont&amp;#123;TeX Gyre Pagella&amp;#125; % 英文衬线字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setmonofont&amp;#123;Microsoft YaHei&amp;#125; % 英文等宽字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\setsansfont&amp;#123;Trebuchet MS&amp;#125; % 英文无衬线字体&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;document&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\title[***纹理***]% optional, use only with long paper titles&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123; ***纹理***\\[&lt;span class=&quot;number&quot;&gt;2ex&lt;/span&gt;]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%\subtitle[malloc] %optional&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%&amp;#123;malloc\ 实现&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\author[yx] % optional, use only with lots of authors&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\textcolor[rgb]&amp;#123;&lt;span class=&quot;number&quot;&gt;0.00&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.41&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.66&lt;/span&gt;&amp;#125;&amp;#123;yx&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the titlepage&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;% the plain option removes the sidebar and header from the title page&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;[plain]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \titlepage&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \frametitle&amp;#123;内容大纲&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        \tableofcontents&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\section&amp;#123;研究背景和意义&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\begin&amp;#123;frame&amp;#125;&amp;#123;纹理的作用&amp;#125;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \begin&amp;#123;block&amp;#125;&amp;lt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;-&amp;gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    纹理是图形学中增强真实性的重要手段。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \end&amp;#123;block&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \begin&amp;#123;block&amp;#125;&amp;lt;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;-&amp;gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \end&amp;#123;block&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;frame&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\end&amp;#123;document&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="生活" scheme="http://xiaopengcheng.top/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="CTex" scheme="http://xiaopengcheng.top/tags/CTex/"/>
     
   </entry>
   
