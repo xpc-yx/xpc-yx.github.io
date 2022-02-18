@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">模块、进程、线程的概念</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-08-07 16:22:35" itemprop="dateCreated datePublished" datetime="2014-08-07T16:22:35+08:00">2014-08-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/" class="post-meta-item leancloud_visitors" data-flag-title="模块、进程、线程的概念" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>558</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>通常，我们知道，一个程序执行起来就是一个进程，一个进程里面至少包含一个线程。那么什么是模块了，被加载内存中的dll或者exe都是模块。<br>据说，windows有个数据结构叫做Module Database(MDB)，专门代表模块。可执行程序（exe或者dll)，包括其代码、资源等被加载到内存中，windows大概就用这个结果管理它吧。这个数据结构其实代表的就是一个PE文件的表头。<br>那么进程了，代表的又是什么了，既然模块表示的是加载到内存的pe文件。进程应该代表的是资源拥有者吧。比如说，地址空间、申请的内存、打开的文件、所有的线程、以及模块(加载的dll，本身的exe）。windows也有一个叫做Process Database(PDB)的数据结构负责管理它。这样看，进程是各种所有权的集合吧。<br>那么线程了。执行的线程表示的是模块中一段正在被执行的代码吧。线程是被cpu调度的基本单位，因此真正占有cpu时间片的是线程，而不是进程。也有一个叫做Thread Database（TDB）的数据结构来代表线程，里面会记录执行线程区域储存空间（Thread Local Storage，TLS）、讯息队列、handle表格等等。其实，只有在多cpu的机器上面才能实现真正的并行。在单cpu上面，只是在硬件计时器的通知下不断的切换线程。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1250,116 +1360,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/24/OpenGL%E6%B8%B2%E6%9F%93%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96(%E4%B8%80)------%E9%99%8D%E4%BD%8E%E6%9D%90%E8%B4%A8%E7%9A%84%E5%88%87%E6%8D%A2%E9%A2%91%E7%8E%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/24/OpenGL%E6%B8%B2%E6%9F%93%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96(%E4%B8%80)------%E9%99%8D%E4%BD%8E%E6%9D%90%E8%B4%A8%E7%9A%84%E5%88%87%E6%8D%A2%E9%A2%91%E7%8E%87/" class="post-title-link" itemprop="url">OpenGL渲染速度优化(一)------降低材质的切换频率</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-02-24 17:27:23" itemprop="dateCreated datePublished" datetime="2014-02-24T17:27:23+08:00">2014-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/02/24/OpenGL%E6%B8%B2%E6%9F%93%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96(%E4%B8%80)------%E9%99%8D%E4%BD%8E%E6%9D%90%E8%B4%A8%E7%9A%84%E5%88%87%E6%8D%A2%E9%A2%91%E7%8E%87/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL渲染速度优化(一)------降低材质的切换频率" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/02/24/OpenGL%E6%B8%B2%E6%9F%93%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96(%E4%B8%80)------%E9%99%8D%E4%BD%8E%E6%9D%90%E8%B4%A8%E7%9A%84%E5%88%87%E6%8D%A2%E9%A2%91%E7%8E%87/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/02/24/OpenGL%E6%B8%B2%E6%9F%93%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96(%E4%B8%80)------%E9%99%8D%E4%BD%8E%E6%9D%90%E8%B4%A8%E7%9A%84%E5%88%87%E6%8D%A2%E9%A2%91%E7%8E%87/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>863</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在这里我只写我遇到过的一种情况。因为以前没有发现原因，好几个月的我的代码渲染速度都很慢，以至于最后被老师狠狠得说了一顿。最后，没办法了，我才通过仔细对比，一步步排查，发现了最终的原因。<br>说到渲染速度优化，大家肯定会说用<strong>显示列表</strong>啊。这个我知道，书上都有。我尝试过显示列表，但是还是解决不了我的问题。再一个，假如你写的是一个模型编辑的软件，<strong>也就是渲染数据会发生变化的，那么用显示列表好像不太方便</strong>。当然，肯定也能使用显示列表，数据改变的时候重新生成一次显示列表呗。<br>我用的界面框架是MFC，刚开始我以为是用MFC的原因导致渲染速度大幅度下降。但是，我对比过别人的MFC渲染程序，发现不存这样的事情。毕竟windows下的glut肯定是用windows api实现的，MFC只是多了层封装而已。那么原因在哪里了。<br>大家都知道我们在贴纹理的时候，需要在每个顶点处指定纹理坐标，但是这样做渲染速度也很快。假如把纹理换成颜色怎么样了。假设不同的顶点有各自的颜色，这种情况下，我们必须开启光照，然后不断设置不同顶点的材质。那么，这个速度和设置纹理坐标的速度相比怎么样了？<br>结果是慢得不行，基本上50w左右的顶点，连旋转都延迟了。谁让我以前都使用以k为数量级的模型了，一直没面对这个问题。<br>也许是纹理的实现比光照的实现要快很多。毕竟贴纹理得到最终像素的颜色，差不多就是双线性差值之类的方法。当然纹理的具体实现肯定要复杂很多，内容多很多。但是，光照的实现需要更复杂的计算公式。但是这就是真正的原因么？<br>我只是在一直切换顶点的材质而已，为什么比切换顶点的纹理坐标慢了至少10倍了。我针对这种情况修改了代码，将材质切换进行了判断，使材质切换大大减少了，渲染速度果断达到了要求，可以顺畅渲染<strong>100w</strong>以上的数据。<br>现在，我只能经验性的知道不能<strong>频繁切换材质</strong>，但是能频繁切换纹理坐标。具体原因，我就不深入探究了。也许得从渲染片段的顺序之类的讨论起吧。<br>另外谈一下优化代码速度的关键，别磨磨蹭蹭想其它的原因了，直接去找一直在哪里<strong>循环执行</strong>的东西吧。优化循环或者循环被调用的东西吧。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1410,20 +1410,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">210</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1475,12 +1475,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">597k</span>
+    <span title="站点总字数">601k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:03</span>
+    <span title="站点阅读时长">9:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

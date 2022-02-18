@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/03/cuda%E5%92%8Copencv%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/03/cuda%E5%92%8Copencv%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">cuda和opencv混合使用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-11-03 17:29:29" itemprop="dateCreated datePublished" datetime="2014-11-03T17:29:29+08:00">2014-11-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/CUDA/" itemprop="url" rel="index">
+                    <span itemprop="name">CUDA</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/11/03/cuda%E5%92%8Copencv%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/" class="post-meta-item leancloud_visitors" data-flag-title="cuda和opencv混合使用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/11/03/cuda%E5%92%8Copencv%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/03/cuda%E5%92%8Copencv%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这里我既不介绍opencv的基本使用，也更加不会介绍cuda的使用。推荐下cuda的一本书：GPU高性能编程CUDA实战。<br>opencv这么强大的工具不用肯定是浪费了，opencv也有gpu的部分，据说也是用cuda实现的，但是灵活性肯定不如直接用cuda吧。<br>所以，我觉得只需要使用opencv负责cpu的部分，比如加载图片，gui之类的，而cuda负责并行的处理。还有，本着方便的原则，<br>opencv使用cpp的版本，不想再去管内存分配释放了。虽然，Mat相对来说更难使用。<br>下面是一个简短的交换rb通道的cuda和opencv混合的程序。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;opencv/cv.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;opencv/highgui.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;opencv2/opencv.hpp&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"cuda_runtime.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"device_launch_parameters.h"</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> _DEBUG</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opencv_core247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opencv_imgproc247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opencv_highgui247d.lib"</span>)</span><br><span class="line">#<span class="keyword">else</span></span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opencv_core247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opencv_imgproc247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> comment(lib, <span class="string">"opencv_highgui247.lib"</span>)</span><br><span class="line"><span class="selector-id">#endif</span> <span class="comment">// DEBUG</span></span><br><span class="line"></span><br><span class="line">__global__ void swap_rb_kernel(const uchar3* src, uchar3* dst, int width, int height)</span><br><span class="line">&#123;</span><br><span class="line">    int x = threadIdx.x + blockIdx.x * blockDim.x;</span><br><span class="line">    int y = threadIdx.y + blockIdx.y * blockDim.y;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(x &lt; <span class="attribute">width</span>  y &lt; height)</span><br><span class="line">    &#123;</span><br><span class="line">        int offset = x + y * width;</span><br><span class="line">        uchar3 v = src[offset];</span><br><span class="line">        dst[offset].x = v.z;</span><br><span class="line">        dst[offset].y = v.y;</span><br><span class="line">        dst[offset].z = v.x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void swap_rb_caller(const uchar3* src, uchar3* dst, int width, int height)</span><br><span class="line">&#123;</span><br><span class="line">    dim3 threads(16, 16);</span><br><span class="line">    dim3 grids((width + threads.x - 1) / threads.x, (height + threads.y - 1) / threads.y);</span><br><span class="line"></span><br><span class="line">    swap_rb_kernel&lt;&lt;&lt;grids, threads&gt;&gt;&gt;(src, dst, <span class="attribute">width</span>, height);</span><br><span class="line">    cudaThreadSynchronize();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    cv::Mat image = cv::imread("lena_1.jpg");</span><br><span class="line">    cv::imshow("src", image);</span><br><span class="line"></span><br><span class="line">    size_t memSize = image.step * image.rows;</span><br><span class="line">    uchar3* d_src = NULL;</span><br><span class="line">    uchar3* d_dst = NULL;</span><br><span class="line">    cudaMalloc((void**)d_src, memSize);</span><br><span class="line">    cudaMalloc((void**)d_dst, memSize);</span><br><span class="line">    cudaMemcpy(d_src, image.data, memSize, cudaMemcpyHostToDevice);</span><br><span class="line"></span><br><span class="line">    swap_rb_caller(d_src, d_dst, image.cols, image.rows);</span><br><span class="line"></span><br><span class="line">    cudaMemcpy(image.data, d_dst, memSize, cudaMemcpyDeviceToHost);</span><br><span class="line">    cv::imshow("gpu", image);</span><br><span class="line">    cv::waitKey(0);</span><br><span class="line"></span><br><span class="line">    cudaFree(d_src);</span><br><span class="line">    cudaFree(d_dst);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行效果：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2014/11/03/cuda%E5%92%8Copencv%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/03/vs2013%E4%B8%8B%E8%AE%BE%E7%BD%AEcuda%E9%AB%98%E4%BA%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1226,116 +1345,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">模块、进程、线程的概念</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-08-07 16:22:35" itemprop="dateCreated datePublished" datetime="2014-08-07T16:22:35+08:00">2014-08-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/" class="post-meta-item leancloud_visitors" data-flag-title="模块、进程、线程的概念" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/08/07/%E6%A8%A1%E5%9D%97%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>558</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>通常，我们知道，一个程序执行起来就是一个进程，一个进程里面至少包含一个线程。那么什么是模块了，被加载内存中的dll或者exe都是模块。<br>据说，windows有个数据结构叫做Module Database(MDB)，专门代表模块。可执行程序（exe或者dll)，包括其代码、资源等被加载到内存中，windows大概就用这个结果管理它吧。这个数据结构其实代表的就是一个PE文件的表头。<br>那么进程了，代表的又是什么了，既然模块表示的是加载到内存的pe文件。进程应该代表的是资源拥有者吧。比如说，地址空间、申请的内存、打开的文件、所有的线程、以及模块(加载的dll，本身的exe）。windows也有一个叫做Process Database(PDB)的数据结构负责管理它。这样看，进程是各种所有权的集合吧。<br>那么线程了。执行的线程表示的是模块中一段正在被执行的代码吧。线程是被cpu调度的基本单位，因此真正占有cpu时间片的是线程，而不是进程。也有一个叫做Thread Database（TDB）的数据结构来代表线程，里面会记录执行线程区域储存空间（Thread Local Storage，TLS）、讯息队列、handle表格等等。其实，只有在多cpu的机器上面才能实现真正的并行。在单cpu上面，只是在硬件计时器的通知下不断的切换线程。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1386,20 +1395,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">210</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1451,12 +1460,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">597k</span>
+    <span title="站点总字数">601k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:03</span>
+    <span title="站点阅读时长">9:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

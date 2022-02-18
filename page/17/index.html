@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/15/poj%202407%20Relatives%20%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/07/15/poj%202407%20Relatives%20%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">poj 2407 Relatives 欧拉函数</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-07-15 19:00:00" itemprop="dateCreated datePublished" datetime="2012-07-15T19:00:00+08:00">2012-07-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/07/15/poj%202407%20Relatives%20%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="poj 2407 Relatives 欧拉函数" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/07/15/poj%202407%20Relatives%20%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/07/15/poj%202407%20Relatives%20%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这个题一看就知道是求欧拉函数。欧拉函数描述的正式题意。欧拉函数的理解可以按照算法导论上面的说法，对0-N-1进行筛选素数。那么公式n∏(1-1/p)，其中p是n的素数因子，就可以得到直观的理解了。但是计算的时候，会将这个式子变形下，得到另外一个形式。<br>如图所示：<br><img alt data-src="https://c7.staticflickr.com/8/7391/27312399622_2da18641db_o.jpg"><br>但是这个题，需要考虑下，有可能n是个大素数，直接进行因子分解的话会超时的。怎么办了，只能在分解的时候判断n是不是已经成为素数了，如果是素数，答案再乘以n-1就行了。为了加快判断，我用5mb的空间搞了个素数表，大于5000000的数字只能循环判断了。</p>
+<p>代码如下，注意求欧拉函数的代码部分：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="number">#def</span>ine MAX (<span class="number">5000000</span>)</span><br><span class="line">bool bPrime[MAX];//false表示素数</span><br><span class="line"></span><br><span class="line">void InitPrime()</span><br><span class="line">&#123;</span><br><span class="line">    bPrime[0] = bPrime[1] = true;</span><br><span class="line">    int nMax = sqrt((double)MAX) + 1;</span><br><span class="line">    for (int i = 2; i &lt;= nMax; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!bPrime[i])</span><br><span class="line">            for (int j = i * 2; j &lt; MAX; j += i)</span><br><span class="line">            &#123;</span><br><span class="line">                bPrime[j] = true;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool IsPrime(int nN)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nN &lt; MAX)</span><br><span class="line">    &#123;</span><br><span class="line">        return !bPrime[nN];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        int nMax = sqrt((double)nN) + 1;</span><br><span class="line">        for (int i = 2; i &lt;= nMax; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            if (nN % i == 0)</span><br><span class="line">            &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nN;</span><br><span class="line"></span><br><span class="line">    InitPrime();</span><br><span class="line">    while (scanf(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (nN == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            printf("0\n");</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        int nAns = 1;</span><br><span class="line">        for (int i = 2; i &lt;= nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (IsPrime(nN))</span><br><span class="line">            &#123;</span><br><span class="line">                nAns *= nN - 1;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            if (nN % i == 0)</span><br><span class="line">            &#123;</span><br><span class="line">                nAns *= i - 1;</span><br><span class="line">                nN /= i;</span><br><span class="line">                while (nN % i == 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    nAns *= i;</span><br><span class="line">                    nN /= i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        printf("%d\n", nAns);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/13/poj-1730-perfect-pth-powers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1241,117 +1352,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/24/poj-3348-cows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/06/24/poj-3348-cows/" class="post-title-link" itemprop="url">poj 3348 Cows</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-06-24 19:00:00" itemprop="dateCreated datePublished" datetime="2012-06-24T19:00:00+08:00">2012-06-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/06/24/poj-3348-cows/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3348 Cows" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/06/24/poj-3348-cows/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/24/poj-3348-cows/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个题用到2个计算几何算法。求解凸包和简单多边形面积。凸包算法详细解释见算法导论。求解多边形面积的思想是将多边形分解为三角形，一般是假设按顺序取多边形上面连续的2点与原点组合成一个三角形，依次下去用叉积求有向面积之和，最后取绝对值即可。注意，这些点必须是在多边形上逆时针或者顺时针给出的，而求出凸包刚好给了这样的一系列点。<br>凸包代码，其实先找出一个y坐标最小的点，再对剩下的所有点按极角排序。然后对排序后的点进行一个二维循环即可。二维循环的解释是当加入新的点进入凸包集合时候，如果与以前加入的点形成的偏转方向不一致，那么前面那些点都需要弹出集合。</p>
-<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="number">#def</span>ine MAX_N (<span class="number">10000</span> + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x, y;</span><br><span class="line">    bool operator &lt;(const Point p) const</span><br><span class="line">    &#123;</span><br><span class="line">        return y &lt; p.y || y == p.y  x &lt; p.x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Point pts[MAX_N];</span><br><span class="line">int nN;</span><br><span class="line">Point ans[MAX_N];</span><br><span class="line">int nM;</span><br><span class="line"></span><br><span class="line">double Det(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">&#123;</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Cross(Point <span class="selector-tag">a</span>, Point <span class="selector-tag">b</span>, Point c)</span><br><span class="line">&#123;</span><br><span class="line">    return Det(b.x - a.x, b.y - a.y, c.x - a.x, c.y - a.y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool CrossCmp(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    double cs = Cross(pts[0], a, b);</span><br><span class="line">    return cs &gt; 0 || cs == 0  a.x &lt; b.x; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Scan()</span><br><span class="line">&#123;</span><br><span class="line">    nM = 0;</span><br><span class="line">    sort(pts + 1, pts + nN, CrossCmp);//对所有点按极角排序,逆时针偏转</span><br><span class="line"></span><br><span class="line">    <span class="comment">//第0-2个点，其实不会进入第二重循环的</span></span><br><span class="line">    <span class="comment">//从第3个点开始，就依次检查与凸包中前面点形成的边的偏转方向</span></span><br><span class="line">    <span class="comment">//如果不是逆时针偏转，则弹出该点</span></span><br><span class="line">    for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        while (nM &gt;= <span class="number">2</span>  Cross(ans[nM - <span class="number">2</span>], ans[nM - <span class="number">1</span>], pts[i]) &lt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            nM--;</span><br><span class="line">        &#125;</span><br><span class="line">        ans[nM++] = pts[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double GetArea()</span><br><span class="line">&#123;</span><br><span class="line">    double fAns = 0.0;</span><br><span class="line">    Point ori = &#123;0.0, 0.0&#125;;</span><br><span class="line">    for (int i = 0; i &lt; nM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        fAns += Cross(ori, ans[i], ans[(i + 1) % nM]);</span><br><span class="line">    &#125;</span><br><span class="line">    return fabs(fAns) * 0.5;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    while (scanf(<span class="string">"%d"</span>, &amp;nN) == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;pts[i].x, &amp;pts[i].y);</span><br><span class="line">            <span class="keyword">if</span> (pts[i] &lt; pts[<span class="number">0</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                swap(pts[i], pts[0]);//pts[0]是y坐标最小的点</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Scan();//扫描出凸包</span><br><span class="line">        double fArea = GetArea();</span><br><span class="line">        printf("%d\n", (int)(fArea / 50));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1402,20 +1402,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">210</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1467,12 +1467,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">597k</span>
+    <span title="站点总字数">601k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:03</span>
+    <span title="站点阅读时长">9:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-title-link" itemprop="url">单线程环境中对象大小可变的内存池</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-18 22:11:45" itemprop="dateCreated datePublished" datetime="2012-11-18T22:11:45+08:00">2012-11-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="单线程环境中对象大小可变的内存池" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>很多系统中申请的内存大小都不是固定的，而是变化的，比如一个http服务器。http服务器获得的请求不同，不同的请求需要不同大小的内存块。那么如何构造一个可以申请不同大小内存的内存池了。其实，构造方法类似vs2008下面的debug模式中的全局new和delete的实现。思路大致是申请很多不同大小的内存块，链接起来，根据需求从内存块链的头部申请指定大小内存。<br>注意，本文代码中的内存池只<strong>在内存块链的头部申请内存，而且从不进行内存释放，一直到内存池使用完毕</strong>。这样的设计确实可以尽可能得提高全局的速度，只要能保证系统的使用过程中不会把内存耗光就行了。不过，我觉得如果耗光内存的可能性还是太大了。但是，你想想实现一个允许对象大小可变的内存池本来就不那么容易，而且得在充分考虑效率的前提下了。如果效率太差了，为什么不直接使用默认的new和delete表达式了。<br>不过，其实有一个更好的办法，我们只使用内存池一段时间，就马上删除这个内存池，再重新申请一次内存池。也就是我们不能一次使用内存池的时间太长了。困难的是我们如何确定一次使用内存池的时间，什么需要删除内存池，时间太久了也许内存会耗光的，删除频繁了点又得不到想要的效率。这些也许就需要具体情况具体对待了，也许这个内存池的实现根本不能用。</p>
+<p>内存池代码如下，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">class MemoryChunk</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    MemoryChunk(MemoryChunk* nextChunk, size_t reqSize)</span><br><span class="line">    &#123;</span><br><span class="line">        chunkSize = reqSize &gt; DEFAULT_CHUNK_SIZE ? reqSize :</span><br><span class="line">                    DEFAULT_CHUNK_SIZE;</span><br><span class="line">        next = nextChunk;</span><br><span class="line">        byteAlreadyAllocated = 0;</span><br><span class="line">        mem = new char[chunkSize];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~MemoryChunk()</span><br><span class="line">    &#123;</span><br><span class="line">        delete [] mem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void* alloc(size_t size)</span><br><span class="line">    &#123;</span><br><span class="line">        void* addr = (void*)(mem + byteAlreadyAllocated);</span><br><span class="line">        byteAlreadyAllocated += size;</span><br><span class="line">        return addr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//不需要释放内存块</span></span><br><span class="line">    void free(void* doomed)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MemoryChunk* nextMemChunk() &#123; return next; &#125;</span><br><span class="line">    size_t spaceAvailable()</span><br><span class="line">    &#123;</span><br><span class="line">        return chunkSize - byteAlreadyAllocated;</span><br><span class="line">    &#125;</span><br><span class="line">    enum &#123;DEFAULT_CHUNK_SIZE = 4096&#125;;</span><br><span class="line">private:</span><br><span class="line">    MemoryChunk* next;//下一个内存块</span><br><span class="line">    char* mem;//该内存块地址</span><br><span class="line">    size_t chunkSize; //该内存块的大小</span><br><span class="line">    size_t byteAlreadyAllocated;//该内存块被申请使用的大小</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class ByteMemoryPool</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ByteMemoryPool(size_t initSize = MemoryChunk::DEFAULT_CHUNK_SIZE)</span><br><span class="line">    &#123;</span><br><span class="line">        expandStorage(initSize);</span><br><span class="line">    &#125;</span><br><span class="line">    ~ByteMemoryPool();</span><br><span class="line"></span><br><span class="line">    void* alloc(size_t reqSize)</span><br><span class="line">    &#123;</span><br><span class="line">        size_t space = listOfMemoryChunks-&gt;spaceAvailable();</span><br><span class="line">        <span class="keyword">if</span> (space &lt; reqSize)</span><br><span class="line">        &#123;</span><br><span class="line">            expandStorage(reqSize);</span><br><span class="line">        &#125;</span><br><span class="line">        return listOfMemoryChunks-&gt;alloc(reqSize);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void free(void* doomed)</span><br><span class="line">    &#123;</span><br><span class="line">        listOfMemoryChunks-&gt;free(doomed);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    void expandStorage(size_t reqSize)</span><br><span class="line">    &#123;</span><br><span class="line">        listOfMemoryChunks = new MemoryChunk(listOfMemoryChunks, reqSize);</span><br><span class="line">    &#125;</span><br><span class="line">    MemoryChunk* listOfMemoryChunks;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ByteMemoryPool::~ByteMemoryPool()</span><br><span class="line">&#123;</span><br><span class="line">    MemoryChunk* memChunk = listOfMemoryChunks;</span><br><span class="line">    while (memChunk)</span><br><span class="line">    &#123;</span><br><span class="line">        listOfMemoryChunks = memChunk-&gt;nextMemChunk();</span><br><span class="line">        delete memChunk;</span><br><span class="line">        memChunk = listOfMemoryChunks;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Rational(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : n(a), d(b) &#123;&#125;</span><br><span class="line">    void* operator new(size_t size) &#123;return memPool-&gt;alloc(size);&#125;</span><br><span class="line">    void operator delete(void* doomed, size_t size) &#123;/*memPool-&gt;free(doomed);*/&#125;</span><br><span class="line">    static void newMemPool() &#123;memPool = new ByteMemoryPool;&#125;</span><br><span class="line">    static void deleteMemPool() &#123;delete memPool;&#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static ByteMemoryPool* memPool;</span><br><span class="line">&#125;;</span><br><span class="line">ByteMemoryPool* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const int ARRAY_SIZE = 1000;</span><br><span class="line">    const int LOOP_TIMES = 5000;</span><br><span class="line"></span><br><span class="line">    Rational* array[ARRAY_SIZE];</span><br><span class="line">    clock_t beg = clock();</span><br><span class="line">    Rational::newMemPool();</span><br><span class="line">    for (int i = 0; i &lt; LOOP_TIMES; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            array[j] = new Rational(j);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int j = 0; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            delete array[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    clock_t end = clock();</span><br><span class="line">    printf("use %f second(s).\n", 1.0 * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    system("pause");</span><br><span class="line">    Rational::deleteMemPool();</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1275,125 +1394,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/04/Begin%20Graphics%20With%20OpenGL(%E5%9C%A8vc6%E5%92%8Cvs2008%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A8%8B)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/11/04/Begin%20Graphics%20With%20OpenGL(%E5%9C%A8vc6%E5%92%8Cvs2008%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A8%8B)/" class="post-title-link" itemprop="url">Begin Graphics With OpenGL(在vc6和vs2008下使用OpenGL进行编程)</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-11-04 23:12:00" itemprop="dateCreated datePublished" datetime="2012-11-04T23:12:00+08:00">2012-11-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/11/04/Begin%20Graphics%20With%20OpenGL(%E5%9C%A8vc6%E5%92%8Cvs2008%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A8%8B)/" class="post-meta-item leancloud_visitors" data-flag-title="Begin Graphics With OpenGL(在vc6和vs2008下使用OpenGL进行编程)" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/11/04/Begin%20Graphics%20With%20OpenGL(%E5%9C%A8vc6%E5%92%8Cvs2008%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A8%8B)/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/04/Begin%20Graphics%20With%20OpenGL(%E5%9C%A8vc6%E5%92%8Cvs2008%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A8%8B)/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>首先，我们需要安装好VC6或者VS2008，然后获取OpenGL的开发包。剩下的一件麻烦事情就是配置了。</p>
-<p>如果你找不到合适的开发包，可以从我这里下载，里面开发包和查询手册，可是我辛苦收集好的哦。地址：<a href="https://pan.baidu.com/s/1bpp181T" target="_blank" rel="noopener">OpenGL SDK</a></p>
-<p>在你下载好的开发包里面，会出现三个目录，分别是include和lib,system32。include里面当然是OpenGL的头文件了，那么lib则是动态链接时候的导入库了，system32里面是几个dll，dll你知道该放在哪里吧，放在你的程序同一个目录下，或者干脆放在系统目录下，即c盘下面的system32目录。开发包里面有个txt文件简要说明了如何设置include和lib，下面我要用图示详细说明vc6和vs2008下的设置方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/11/04/Begin%20Graphics%20With%20OpenGL(%E5%9C%A8vc6%E5%92%8Cvs2008%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A8%8B)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1444,20 +1444,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">210</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1509,12 +1509,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">597k</span>
+    <span title="站点总字数">601k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:03</span>
+    <span title="站点阅读时长">9:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

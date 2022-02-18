@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/09/12/%E4%BD%BF%E7%94%A8GDI+%E5%8A%A0%E8%BD%BD%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%BA%B9%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/09/12/%E4%BD%BF%E7%94%A8GDI+%E5%8A%A0%E8%BD%BD%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%BA%B9%E7%90%86/" class="post-title-link" itemprop="url">使用GDI+加载多种格式的纹理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-09-12 12:16:45" itemprop="dateCreated datePublished" datetime="2013-09-12T12:16:45+08:00">2013-09-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/09/12/%E4%BD%BF%E7%94%A8GDI+%E5%8A%A0%E8%BD%BD%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%BA%B9%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="使用GDI+加载多种格式的纹理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/09/12/%E4%BD%BF%E7%94%A8GDI+%E5%8A%A0%E8%BD%BD%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%BA%B9%E7%90%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/09/12/%E4%BD%BF%E7%94%A8GDI+%E5%8A%A0%E8%BD%BD%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%BA%B9%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天在做一个缩略图的控件的时候发现，CXImage库在VS2010的debug模型下有内存泄露，这可是我查错查了几个小时最后得出的结论。瞬间觉得很不爽，就不用CxImage了。觉得加载不同种格式的需求，GDI+应该能够满足我的要求。那么久果断改为GDI+了。GDI+我也没使用过，果断只能搜索其用法了。<br>后面发现只需要使用Gdiplus::Bitmap就可以处理多种格式的图片。虽然该类叫做位图，实际上可以处理多种格式，据说从Gdiplus::Image继承而来。<br>nsp; 使用GDI+据说在vs2010下也不需要初始化该库，vc6和vs2008下面需要初始化。初始化也很简单，在App里面包含个成员ULONG_PTR m_gdiplusToken，在InitInstance里面加上Gdiplus::GdiplusStartupInput gdiplusStartupInput;Gdiplus::GdiplusStartup(m_gdiplusToken, gdiplusStartupInput, NULL);在ExitInstance里面加上Gdiplus::GdiplusShutdown(m_gdiplusToken);就行了。<br>由于GDI+使用的是Unicode，而我一般用的是多字节工程，所以还需要将图片名字转换为Unicode。具体过程是先把图片名字转换为Unicode，再用Gdiplus::Bitmap类的对象bitmap加载图片，然后锁定图片数据，申请一块数据从bitmap内部提取出像素数据，然后释放图片数据，剩下的就是ogl的操作了。<br>代码如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> XPC_YX_TEXTURE_H</span><br><span class="line"><span class="number">#def</span>ine XPC_YX_TEXTURE_H</span><br><span class="line"></span><br><span class="line">class CxImage;</span><br><span class="line"></span><br><span class="line">class CTexture</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CTexture() &#123; m_byData = NULL; m_szTexName[0] = 0; &#125;</span><br><span class="line">    CTexture(const char* pcszFileName) &#123; m_byData = 0; LoadFromFile(pcszFileName); &#125;</span><br><span class="line">  ~CTexture();</span><br><span class="line">    int LoadFromFile(const char* pcszFileName);</span><br><span class="line">  void Init2DTex();</span><br><span class="line">  void Init1DVertTex();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">  int m_nWidth;</span><br><span class="line">  int m_nHeight;</span><br><span class="line">    BYTE* m_byData;</span><br><span class="line">    char m_szTexName[MAX_PATH];</span><br><span class="line">  WCHAR m_char16ImgName[MAX_PATH];</span><br><span class="line">    unsigned m_uTexName;</span><br><span class="line">  double m_fTexScaleX;</span><br><span class="line">    double m_fTexScaleY;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Texture.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"CxImage/ximage.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数只处理了没有压缩的格式</span></span><br><span class="line"><span class="comment">/*int CTexture::LoadFromFile(const char* pcszFileName)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  if (pcszFileName != NULL)</span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">    strcpy(m_szTexName, pcszFileName);</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment">  CxImage image;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  image.Load(pcszFileName);</span></span><br><span class="line"><span class="comment">  if (image.IsValid() == false)</span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">    return 0;</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  m_nWidth = image.GetWidth();</span></span><br><span class="line"><span class="comment">  m_nHeight = image.GetHeight();</span></span><br><span class="line"><span class="comment">  if (m_byData)</span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">    delete m_byData;</span></span><br><span class="line"><span class="comment">    m_byData = NULL;</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment">  m_byData = new BYTE[m_nWidth * m_nHeight * 3];</span></span><br><span class="line"><span class="comment">  for (int i = 0; i &lt; m_nHeight; ++i)</span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">    for (int j = 0; j &lt; m_nWidth; ++j)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">      RGBQUAD rgb = image.GetPixelColor(j, i);</span></span><br><span class="line"><span class="comment">      m_byData[(i * m_nWidth + j) * 3] = rgb.rgbRed;</span></span><br><span class="line"><span class="comment">      m_byData[(i * m_nWidth + j) * 3 + 1] = rgb.rgbGreen;</span></span><br><span class="line"><span class="comment">      m_byData[(i * m_nWidth + j) * 3 + 2] = rgb.rgbBlue;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  for (int i = 0; i &lt; m_nHeight; i += 5)</span></span><br><span class="line"><span class="comment">  &#123;</span></span><br><span class="line"><span class="comment">    for (int j = 0; j &lt; m_nWidth; ++j)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">      m_byData[(i * m_nWidth + j) * 3] = 0;</span></span><br><span class="line"><span class="comment">      m_byData[(i * m_nWidth + j) * 3 + 1] = 0;</span></span><br><span class="line"><span class="comment">      m_byData[(i * m_nWidth + j) * 3 + 2] = 0;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">  &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  return 1;</span></span><br><span class="line"><span class="comment">&#125;*/</span></span><br><span class="line"></span><br><span class="line">int CTexture::LoadFromFile(const char* pcszFileName)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (pcszFileName != NULL)</span><br><span class="line">  &#123;</span><br><span class="line">    strcpy(m_szTexName, pcszFileName);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  int nStrLen = strlen(pcszFileName);</span><br><span class="line">  int nLen = MultiByteToWideChar(CP_ACP, 0, pcszFileName, nStrLen, NULL, 0);</span><br><span class="line">  MultiByteToWideChar(CP_ACP, 0, pcszFileName, nStrLen, m_char16ImgName, nLen);</span><br><span class="line">  m_char16ImgName[nLen] = '\0'; //添加字符串结尾，注意不是len+1*/</span><br><span class="line"></span><br><span class="line">  Gdiplus::Bitmap image(m_char16ImgName);</span><br><span class="line"></span><br><span class="line">  m_nWidth = image.GetWidth();</span><br><span class="line">  m_nHeight = image.GetHeight();</span><br><span class="line">  Gdiplus::Rect rect(0, 0, m_nWidth, m_nHeight);</span><br><span class="line">  Gdiplus::BitmapData bitmapData;</span><br><span class="line">  image.LockBits(rect, Gdiplus::ImageLockModeRead | Gdiplus::ImageLockModeWrite,</span><br><span class="line">    PixelFormat24bppRGB,  bitmapData);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (m_byData)</span><br><span class="line">  &#123;</span><br><span class="line">    delete m_byData;</span><br><span class="line">    m_byData = NULL;</span><br><span class="line">  &#125;</span><br><span class="line">  m_byData = new BYTE[m_nWidth * m_nHeight * 3];</span><br><span class="line"></span><br><span class="line">  BYTE* pByte = (BYTE*)bitmapData.Scan0;</span><br><span class="line">  int nOffset = bitmapData.Stride - m_nWidth * 3;</span><br><span class="line">  for (int i = 0; i &lt; m_nHeight; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    for (int j = 0; j &lt; m_nWidth; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">      m_byData[(i * m_nWidth + j) * 3] = pByte[0];</span><br><span class="line">      m_byData[(i * m_nWidth + j) * 3 + 1] = pByte[1];</span><br><span class="line">      m_byData[(i * m_nWidth + j) * 3 + 2] = pByte[2];</span><br><span class="line">      pByte += 3;</span><br><span class="line">    &#125;</span><br><span class="line">    pByte += nOffset;</span><br><span class="line">  &#125;</span><br><span class="line">  image.UnlockBits(bitmapData);</span><br><span class="line"></span><br><span class="line">  return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void CTexture::Init2DTex()</span><br><span class="line">&#123;</span><br><span class="line">  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);</span><br><span class="line">  glGenTextures(1, m_uTexName);</span><br><span class="line">  glBindTexture(GL_TEXTURE_2D, m_uTexName);</span><br><span class="line"></span><br><span class="line">  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);</span><br><span class="line">  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);</span><br><span class="line"></span><br><span class="line">  int nRet = gluBuild2DMipmaps(GL_TEXTURE_2D, <span class="number">3</span>, m_nWidth, m_nHeight, GL_RGB, GL_UNSIGNED_BYTE,</span><br><span class="line">    m_byData);</span><br><span class="line">  <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    AfxMessageBox("加载纹理失败");</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void CTexture::Init1DVertTex()</span><br><span class="line">&#123;</span><br><span class="line">  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);</span><br><span class="line">  glGenTextures(1, m_uTexName);</span><br><span class="line">  glBindTexture(GL_TEXTURE_1D, m_uTexName);</span><br><span class="line"></span><br><span class="line">  glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">  glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">  glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">  glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);</span><br><span class="line">  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);</span><br><span class="line"></span><br><span class="line">  BYTE* pbyData = new BYTE[m_nHeight * 3];</span><br><span class="line">  int nAdd = m_nWidth / 2;</span><br><span class="line">  for (int i = 0; i &lt; m_nHeight; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    pbyData[i * 3] = m_byData[(i * m_nWidth + nAdd) * 3];</span><br><span class="line">    pbyData[i * 3 + 1] = m_byData[(i * m_nWidth + nAdd) * 3 + 1];</span><br><span class="line">    pbyData[i * 3 + 2] = m_byData[(i * m_nWidth + nAdd) * 3 + 2];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  int nRet = gluBuild1DMipmaps(GL_TEXTURE_1D, <span class="number">3</span>, m_nHeight, GL_RGB, GL_UNSIGNED_BYTE,</span><br><span class="line">    pbyData);</span><br><span class="line">  <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    AfxMessageBox("加载纹理失败");</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  delete pbyData;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CTexture::~CTexture()</span><br><span class="line">&#123; </span><br><span class="line">  <span class="keyword">if</span> (m_byData) </span><br><span class="line">    delete m_byData;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/09/12/%E4%BD%BF%E7%94%A8GDI+%E5%8A%A0%E8%BD%BD%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%BA%B9%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/31/OpenGL%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%92%8C%E4%BB%BB%E6%84%8F%E5%B0%BA%E5%AF%B8%E7%9A%84%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BA%E7%BA%B9%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1257,111 +1376,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/" class="post-title-link" itemprop="url">vc内嵌wmplayer播放器(屏蔽右键，全屏，播放信息等）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-04-03 14:06:18" itemprop="dateCreated datePublished" datetime="2013-04-03T14:06:18+08:00">2013-04-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="vc内嵌wmplayer播放器(屏蔽右键，全屏，播放信息等）" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>764</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这应该是用vc在程序中添加视频音频播放器最方便的方法了。但是，你如果只是用vs2010或者其它版本工具插入activex控件，然后生成代码，那就不一定能够得到你想要的全部功能。<br>wmplayer貌似还有个对应的wm sdk。这个可以用com接口的形式更加底层的控制播放器。<strong>但是，如果我们能够得到相关的实现播放器功能的代码，我们也能够得到相同程度的控制。</strong>前段时间，在网上找了很久，终于找到一大堆有个wmplayer的类代码。用其中的CWMPPlayer4类绑定播放器就能够得到很强大的控制了，用这个类的成员函数可以得到其他控制和设置类的接口等。<br>用这个东西最大的缺陷是<strong>无法播放内存数据</strong>，如果是内存数据，必须生成临时文件。最大的优点是简单方便，功能强大，还可以在<strong>不同版本的windows平台兼容</strong>，只要上面有默认的wmplayer播放器。这个东西还可以<strong>播放网络数据</strong>，因为文件其实是通过url索引的。因此，在要求简单的时候，还可以用这个东西快速实现一个<strong>网络播放器</strong>。<br>下面提供wmplayer相关类的代码，<a href="https://pan.baidu.com/s/1cunwJW" target="_blank" rel="noopener">WMP</a>。</p>
-<p>屏蔽右键和全屏都可以在PreTranslateMessage这个虚函数里面处理，比如if (pMsg-&gt;message == WM_LBUTTONDBLCLK)<br>return TRUE;返回TRUE就不会对这个消息进行处理了。屏蔽右键也可以通过调用m_mediaPlayer.put_enableContextMenu(FALSE);处理。<br>最奇葩的是屏蔽当前播放的是哪个文件的信息，居然有人奇葩到提出这样的需求。找来找去都没有这样的接口，我都直接看wmsdk的文档了，最后想出了个奇葩的办法，就是用一个static控件遮住。<br>到现在觉得，最好的操作wmplayer的方式是下载微软的<strong>wmsdk</strong>，从而直接用接口操作，可以提供最大限度的控制。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1412,20 +1426,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">210</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1477,12 +1491,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">597k</span>
+    <span title="站点总字数">601k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:03</span>
+    <span title="站点阅读时长">9:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
