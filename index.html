@@ -222,7 +222,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -236,7 +236,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">游戏引擎渲染管线的总结</a>
+            <a href="/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">Urp下自定义特效管线和后处理特效实现</a>
         </h1>
 
         <div class="post-meta">
@@ -246,7 +246,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-12-22 20:15:00" itemprop="dateCreated datePublished" datetime="2021-12-22T20:15:00+08:00">2021-12-22</time>
+              <time title="创建时间：2021-10-12 17:15:51" itemprop="dateCreated datePublished" datetime="2021-10-12T17:15:51+08:00">2021-10-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
             </span>
 
           
-            <span id="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="游戏引擎渲染管线的总结" title="阅读次数">
+            <span id="/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Urp下自定义特效管线和后处理特效实现" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -282,244 +282,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。</p>
-<h1 id="一、渲染管线的思维导图"><a href="#一、渲染管线的思维导图" class="headerlink" title="一、渲染管线的思维导图"></a>一、渲染管线的思维导图</h1><p>这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/渲染管线.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">反射效果的实现总结</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-22 12:15:00" itemprop="dateCreated datePublished" datetime="2021-10-22T12:15:00+08:00">2021-10-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
-                    <span itemprop="name">Rendering</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="反射效果的实现总结" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一、反射的实现原理分类"><a href="#一、反射的实现原理分类" class="headerlink" title="一、反射的实现原理分类"></a>一、反射的实现原理分类</h1><p>首先要说明下<strong>反射向量</strong>，指的是视线的镜面反射向量，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png"><br>实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。</p>
-<h2 id="1-1-CubeMap"><a href="#1-1-CubeMap" class="headerlink" title="1.1 CubeMap"></a>1.1 CubeMap</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">Urp下自定义特效管线和后处理特效实现</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-10 17:15:51" itemprop="dateCreated datePublished" datetime="2021-08-10T17:15:51+08:00">2021-08-10</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
-                    <span itemprop="name">Rendering</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Urp下自定义特效管线和后处理特效实现" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -552,7 +316,125 @@
 <h2 id="1-1-Urp的渲染顺序"><a href="#1-1-Urp的渲染顺序" class="headerlink" title="1.1 Urp的渲染顺序"></a>1.1 Urp的渲染顺序</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+              <a class="btn" href="/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">反射效果的实现总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-22 12:15:00" itemprop="dateCreated datePublished" datetime="2021-08-22T12:15:00+08:00">2021-08-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="反射效果的实现总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、反射的实现原理分类"><a href="#一、反射的实现原理分类" class="headerlink" title="一、反射的实现原理分类"></a>一、反射的实现原理分类</h1><p>首先要说明下<strong>反射向量</strong>，指的是视线的镜面反射向量，如下图所示，<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/视线反射方向.png"><br>实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。</p>
+<h2 id="1-1-CubeMap"><a href="#1-1-CubeMap" class="headerlink" title="1.1 CubeMap"></a>1.1 CubeMap</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -789,6 +671,124 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/04/08/DrawCall%E3%80%81Batches%E3%80%81SetPassCalls%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">游戏引擎渲染管线的总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-22 20:15:00" itemprop="dateCreated datePublished" datetime="2020-12-22T20:15:00+08:00">2020-12-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="游戏引擎渲染管线的总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。</p>
+<h1 id="一、渲染管线的思维导图"><a href="#一、渲染管线的思维导图" class="headerlink" title="一、渲染管线的思维导图"></a>一、渲染管线的思维导图</h1><p>这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/渲染管线.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

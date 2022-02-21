@@ -51,21 +51,21 @@
   <meta name="description" content="一、反射的实现原理分类首先要说明下反射向量，指的是视线的镜面反射向量，如下图所示，实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。 1.1 CubeMap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反射效果的实现总结">
-<meta property="og:url" content="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:url" content="http://xiaopengcheng.top/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
 <meta property="og:description" content="一、反射的实现原理分类首先要说明下反射向量，指的是视线的镜面反射向量，如下图所示，实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。 1.1 CubeMap">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E8%A7%86%E7%BA%BF%E5%8F%8D%E5%B0%84%E6%96%B9%E5%90%91.png">
 <meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/SSPR.jpg">
 <meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84.jpg">
-<meta property="article:published_time" content="2021-10-22T04:15:00.000Z">
-<meta property="article:modified_time" content="2022-01-14T11:54:12.422Z">
+<meta property="article:published_time" content="2021-08-22T04:15:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T02:58:50.171Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="反射效果">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E8%A7%86%E7%BA%BF%E5%8F%8D%E5%B0%84%E6%96%B9%E5%90%91.png">
 
-<link rel="canonical" href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
+<link rel="canonical" href="http://xiaopengcheng.top/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
 
 
 <script id="page-configurations">
@@ -226,7 +226,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -249,7 +249,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-10-22 12:15:00" itemprop="dateCreated datePublished" datetime="2021-10-22T12:15:00+08:00">2021-10-22</time>
+              <time title="创建时间：2021-08-22 12:15:00" itemprop="dateCreated datePublished" datetime="2021-08-22T12:15:00+08:00">2021-08-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,7 +270,7 @@
             </span>
 
           
-            <span id="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="反射效果的实现总结" title="阅读次数">
+            <span id="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="反射效果的实现总结" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -285,8 +285,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -366,7 +366,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xiaopengcheng.top/2021/10/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" title="反射效果的实现总结">http://xiaopengcheng.top/2021/10/22/反射效果的实现总结/</a>
+    <a href="http://xiaopengcheng.top/2021/08/22/%E5%8F%8D%E5%B0%84%E6%95%88%E6%9E%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93/" title="反射效果的实现总结">http://xiaopengcheng.top/2021/08/22/反射效果的实现总结/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -387,12 +387,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/10/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" rel="prev" title="Urp下自定义特效管线和后处理特效实现">
-      <i class="fa fa-chevron-left"></i> Urp下自定义特效管线和后处理特效实现
+    <a href="/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/" rel="prev" title="Unity下平面反射实现">
+      <i class="fa fa-chevron-left"></i> Unity下平面反射实现
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" rel="next" title="游戏引擎渲染管线的总结">
-      游戏引擎渲染管线的总结 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/10/12/Urp%E4%B8%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%B9%E6%95%88%E7%AE%A1%E7%BA%BF%E5%92%8C%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88%E5%AE%9E%E7%8E%B0/" rel="next" title="Urp下自定义特效管线和后处理特效实现">
+      Urp下自定义特效管线和后处理特效实现 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
