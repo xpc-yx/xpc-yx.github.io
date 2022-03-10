@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/07/uva-107-the-cat-in-the-hat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/05/07/uva-107-the-cat-in-the-hat/" class="post-title-link" itemprop="url">uva 107 - The Cat in the Hat</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-05-07 19:00:00" itemprop="dateCreated datePublished" datetime="2012-05-07T19:00:00+08:00">2012-05-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/05/07/uva-107-the-cat-in-the-hat/" class="post-meta-item leancloud_visitors" data-flag-title="uva 107 - The Cat in the Hat" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/05/07/uva-107-the-cat-in-the-hat/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/07/uva-107-the-cat-in-the-hat/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一个很神的数学题吧。基本上过这个题的很多都会wa10多次，而且这个题好像简单的枚举其中的一个指数值都能过，可能是数据量比较小。<br>但是，这个题还是有数学的解法的。但是，即使找到了这个正确的解法，过题的话，也是一件很困难的事情。题意大致如下：一只猫，高度为H，戴了一个帽子，帽子里面有N只猫（N是常数，且未知），同样帽子里面的猫也戴了帽子，但是这些猫的高度变成了H / (N + 1)，会向下取整。以此递归下去，直到最后的猫的高度都为1为止。现在，给出H和高度为1的猫的数量。要求的是高度大于1的猫的数量，以及所有猫的高度之和。<br>很别扭吧。通过上面的信息，得出2个式子。假设one代表为高度为1的猫的数量。one = N的n次。H &gt;= (N + 1)的n次。注意第二个式子不一定取等号，因为很多时候都是不能整除的。现在要求N和n。2个方程解2个未知数，应该能解出来。但是，注意的是其中一个还是不等式。。。<br>指数关系很多时候会转换为对数的关系。所以，继续求对数，有lgH &gt;= n <em> lg(N + 1)。其中，由第一个式子可以得到n = lg(one) / lg(N)。那么最终转换为：lgH &gt;= (lg(one) / lgN) </em> lg(N + 1)。换个形式就是lgH / lg(One) &gt;= lg(N + 1) / lgN。现在，已经很清晰了。因为，函数lg(N + 1) / lg(N) 是单调递减的。看到单调的函数，马上就会知道可以二分了。意思是，我们可以二分出一个N让lg(N + 1) / lgN 最接近lgH/lg(One)，而且是小于lgH / lg(One)的。剩下的工作就只是求和而已了。<br>写二分的时候，有一个地方可以注意一下。因为 lg(N + 1) / lgN 可能会出现除数为0的情况，所以可以进一步转换为lgH <em> lgN &gt;=lg(N + 1) </em> lg(one)。 也是求一个N让上面那个不等式2边的值最接近，而且右边小于左边。能很快写对这个题真不是件容易的事情。。。<br>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nInitH, nOnes;</span><br><span class="line">    int nN, n;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nInitH, &amp;nOnes), nInitH + nOnes)</span><br><span class="line">    &#123;</span><br><span class="line">        int nBeg = 1;</span><br><span class="line">        int nEnd = nOnes;</span><br><span class="line">        int nMid;</span><br><span class="line"></span><br><span class="line">        while (nBeg &lt;= nEnd)</span><br><span class="line">        &#123;</span><br><span class="line">            nMid = (nBeg + nEnd) / 2;</span><br><span class="line"></span><br><span class="line">            double fRes = log10(nInitH) * log10(nMid);</span><br><span class="line">            double fTemp = log10(nMid + 1) * log10(nOnes);</span><br><span class="line">            <span class="keyword">if</span> (fabs(fRes - fTemp) &lt; <span class="number">1</span>e-<span class="number">10</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//printf("Find nN:%d\n", nMid);</span></span><br><span class="line">                nN = nMid;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (fTemp &gt; fRes)</span><br><span class="line">            &#123;</span><br><span class="line">                nBeg = nMid + 1;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                nEnd = nMid - 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        n = floor(log10(nInitH) / log10(nN + 1) + 1e-9);</span><br><span class="line">        <span class="comment">//printf("nN:%d, n:%d\n", nN, n);</span></span><br><span class="line"></span><br><span class="line">        int nSum = 0;</span><br><span class="line">        int nLazy = 0;</span><br><span class="line">        int nNum = 1;</span><br><span class="line">        for (int i = 0; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            nSum += nNum * nInitH;</span><br><span class="line">            nLazy += nNum;</span><br><span class="line">            nNum *= nN;</span><br><span class="line">            nInitH /= (nN + 1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        printf("%d %d\n", nLazy - nOnes, nSum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/07/uva-10112-myacm-triangles/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1216,122 +1326,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/03/19/CSU%20OJ%20-%201183%20%E8%AE%A1%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/03/19/CSU%20OJ%20-%201183%20%E8%AE%A1%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC/" class="post-title-link" itemprop="url">CSU OJ - 1183: 计算表达式的值</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-03-19 10:00:00" itemprop="dateCreated datePublished" datetime="2012-03-19T10:00:00+08:00">2012-03-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/03/19/CSU%20OJ%20-%201183%20%E8%AE%A1%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC/" class="post-meta-item leancloud_visitors" data-flag-title="CSU OJ - 1183: 计算表达式的值" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/03/19/CSU%20OJ%20-%201183%20%E8%AE%A1%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/03/19/CSU%20OJ%20-%201183%20%E8%AE%A1%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>题目意思很简单就是计算含括号的四则运算表达式的值。这个题目很坑爹，刚做的时候，题目描述里面只说里面会有空格，后面居然把题目描述改了。所以，这个题无论怎么改，都是不对。因为，不知道是哪个坑爹的出题人，把数据里面加了\t，难道出题人以为\t也是空格。估计，后面修改题目描述，也是发现这个问题后才改的。这可是还是哥了，改了无数多遍，不处理非法数据就超时，略过非常数据当然直接WA了。好坑爹。<br>计算表达式的值，以前严蔚敏书上就说用栈构造出来后缀表达式后再计算值。但是这个方法未免太那个了，首先太麻烦了，虽然算法思路不麻烦。我的做法是直接递归计算即可。碰到左括号递归计算新的表达式，<strong>右括号作为函数终止条件</strong>。否则，按照四则运算的优先级计算当前的表达式。递归算法中需要记录前一个运算符合的优先级，<strong>如果前一个运算符的优先级比现在碰到的运算符的优先级高，那么就应该直接返回答案了</strong>，当前碰到的运算符的计算交给下一次循环好了。</p>
-<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="number">#def</span>ine MAX (<span class="number">100</span> + <span class="number">10</span>)</span><br><span class="line">char szData[MAX];</span><br><span class="line"></span><br><span class="line">void TrimSpace(char* pszData)</span><br><span class="line">&#123;</span><br><span class="line">    char* pszRead = pszData;</span><br><span class="line">    char* pszWrite = pszData;</span><br><span class="line">    while (*pszRead)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//由于数据中有\t,与先前题目描述不符合,不处理掉就直接超时了</span></span><br><span class="line">        <span class="keyword">if</span> (*pszRead != <span class="string">' '</span> &amp;&amp; *pszRead != <span class="string">'\t'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            *pszWrite++ = *pszRead;</span><br><span class="line">        &#125;</span><br><span class="line">        ++pszRead;</span><br><span class="line">    &#125;</span><br><span class="line">    *pszWrite = '\0';</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//nKind代表前一个运算符合的优先级,开始时是0,+-是1,*/是2</span></span><br><span class="line">double Cal(char*&amp; pszData, int nKind)</span><br><span class="line">&#123;</span><br><span class="line">    double fAns = 0.0;</span><br><span class="line">    while (*pszData &amp;&amp; *pszData != <span class="string">')'</span>)<span class="comment">//表达式终止的条件是到达'\0'或者碰到右括号</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (*pszData &gt;= <span class="string">'0'</span> &amp;&amp; *pszData &lt;= <span class="string">'9'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            fAns = 10 * fAns + *pszData - '0';</span><br><span class="line">            ++pszData;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (*pszData == <span class="string">'+'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nKind &gt;= <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                return fAns;</span><br><span class="line">            &#125;</span><br><span class="line">            ++pszData;</span><br><span class="line">            fAns += Cal(pszData, 1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (*pszData == <span class="string">'-'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nKind &gt;= <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                return fAns;</span><br><span class="line">            &#125;</span><br><span class="line">            ++pszData;</span><br><span class="line">            fAns -= Cal(pszData, 1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (*pszData == <span class="string">'*'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nKind &gt;= <span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                return fAns;</span><br><span class="line">            &#125;</span><br><span class="line">            ++pszData;</span><br><span class="line">            fAns *= Cal(pszData, 2);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (*pszData == <span class="string">'/'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nKind &gt;= <span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                return fAns;</span><br><span class="line">            &#125;</span><br><span class="line">            ++pszData;</span><br><span class="line">            fAns /= Cal(pszData, 2);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (*pszData == <span class="string">'('</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ++pszData;</span><br><span class="line">            fAns = Cal(pszData, 0);</span><br><span class="line">            ++pszData;//移到')'后面</span><br><span class="line">            return fAns;//一个括号内的是一个完整的表达式,因此直接返回</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return fAns;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    while (gets(szData))</span><br><span class="line">    &#123;</span><br><span class="line">        TrimSpace(szData);</span><br><span class="line">        char* pszData = szData;</span><br><span class="line">        printf("%.4f\n", Cal(pszData, 0));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>一个递归函数能计算出表达式的值，而且能处理优先级和括号，如果是以前的话，我应该是写不出来的。再把算法的实现细节改改，应该也能计算出浮点数的表达式了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1377,20 +1376,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1442,12 +1441,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">602k</span>
+    <span title="站点总字数">605k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:07</span>
+    <span title="站点阅读时长">9:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

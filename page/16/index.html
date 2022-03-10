@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/30/poj-3093-margaritas-on-the-river-walk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/08/30/poj-3093-margaritas-on-the-river-walk/" class="post-title-link" itemprop="url">poj 3093 Margaritas on the River Walk</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-08-30 22:30:00" itemprop="dateCreated datePublished" datetime="2012-08-30T22:30:00+08:00">2012-08-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/08/30/poj-3093-margaritas-on-the-river-walk/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3093 Margaritas on the River Walk" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/08/30/poj-3093-margaritas-on-the-river-walk/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/08/30/poj-3093-margaritas-on-the-river-walk/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一个动态规划题，据说是背包问题的变形。我动态规划做得很少，解法一直按照算法导论的思想分解重叠子问题。<br>题意是用钱尽可能多的买物品，每种物品买一个，问有多少种买法。<br>我也想不出这是什么背包问题的变形，没做过几个背包问题，也没看过背包九讲。还是坚持认为正确的用状态描述成子问题就一定能解题的。今天和队友在做专题时候做到这个题，我一直做了一上午都没出来。<br>后面发现了个性质就可以直接转换为类似最简单的背包问题了。排序物品价值，从最大物品开始分解子问题，用剩余物品数和钱描述问题的状态。<strong>当前物品是否必须取，是根据当前的钱把剩下的物品全买了之后剩下的钱还是否大于当前物品的价值，如果大于就必须买，否则可以买或者不买。</strong><br><strong>为了正确描述问题的状态，必须事先排序价值数组，因为排序之后可以保证不能买当前物品的时候一定不能买前面的物品，那么我们对前面物品的处理就是正确的了。</strong>至此可以进行最简单的子问题分解了。到最后物品处理完之后（物品数为0），如果钱一点都没减少，那么(0, M) = 0，否则(0, M) = 1。注意这个边界处理，否则会wa。所以，需要先对价值数组排序，并计算出表示前N个物品价值和的数组。<br>做不出来的时候，翻了下别人的解法，一头雾水。看来还是算法导论的思想指导意义大多了。。。</p>
+<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt; </span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long INT;</span><br><span class="line">INT nAns[40][1010];</span><br><span class="line">INT nValue[100];</span><br><span class="line">INT nSum[100];</span><br><span class="line">INT nN, nM;</span><br><span class="line"></span><br><span class="line">INT GetAns(INT nNum, INT nMoney)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nAns[nNum][nMoney] == -<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (nNum == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            nAns[nNum][nMoney] = 1;</span><br><span class="line">            <span class="keyword">if</span> (nMoney == nM)</span><br><span class="line">            &#123;</span><br><span class="line">                nAns[nNum][nMoney] = 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            INT nRet = 0;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (nMoney - nSum[nNum - <span class="number">1</span>] &gt;= nValue[nNum])</span><br><span class="line">            &#123;</span><br><span class="line">                nRet = GetAns(nNum - 1, nMoney - nValue[nNum]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nMoney &gt;= nValue[nNum])</span><br><span class="line">                &#123;</span><br><span class="line">                    nRet += GetAns(nNum - 1, nMoney - nValue[nNum]);</span><br><span class="line">                &#125;</span><br><span class="line">                nRet += GetAns(nNum - 1, nMoney);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            nAns[nNum][nMoney] = nRet;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return nAns[nNum][nMoney];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    INT nT;</span><br><span class="line"></span><br><span class="line">    scanf("%I64d", &amp;nT);</span><br><span class="line">    for (INT i = 1; i &lt;= nT; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf("%I64d%I64d", &amp;nN, &amp;nM);</span><br><span class="line">        for (INT j = 1; j &lt;= nN; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%I64d", nValue[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        memset(nAns, -1, sizeof(nAns));</span><br><span class="line">        sort(nValue + 1, nValue + nN + 1);</span><br><span class="line">        nSum[0] = 0;</span><br><span class="line">        for (INT j = 1; j &lt;= nN; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            nSum[j] = nSum[j - 1] + nValue[j];</span><br><span class="line">        &#125;</span><br><span class="line">        printf("%I64d %I64d\n", i, GetAns(nN, nM));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/06/poj-2065-seti/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1231,122 +1342,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/16/poj-1401-factorial/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/07/16/poj-1401-factorial/" class="post-title-link" itemprop="url">poj 1401 Factorial</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-07-16 21:30:00" itemprop="dateCreated datePublished" datetime="2012-07-16T21:30:00+08:00">2012-07-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/07/16/poj-1401-factorial/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1401 Factorial" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/07/16/poj-1401-factorial/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/07/16/poj-1401-factorial/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>683</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个题目是求N！后面有多少个0，注意N可能最大到10的9次。哈哈，直接枚举1-N有多少个2和5的因子，然后取小的值肯定会超时的。但是，我还是试了下，果断超时了。<br>那就只有想数学结论了，果断想到1-N中能被2整除的数字有N / 2。哈哈，再往后思考下，发现1-N中能被4整除的数字有N / 4个，再往后就是N / 8，一直到N 除以2的某个次方为0为止，那么把所有的值加起来就是2的因子的个数了。求5的因子的个数也是这样的方法了。<br>很明显，5的因子的个数一定会小于等于2的因子的个数。那么直接求5的因子的个数就行了。由于，N / 5的时候用到了向下取整，所以不能用等比数列求和公式，怎么把答案弄成一个公式，还不知道了。<br>PS：其实我这种思路的灵感来自于筛选素数的方法了。</p>
-<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int GetAns(int nN)</span><br><span class="line">&#123;</span><br><span class="line">    int nAns = 0;</span><br><span class="line">    while (nN)</span><br><span class="line">    &#123;</span><br><span class="line">        nAns += nN / 5;</span><br><span class="line">        nN /= 5;</span><br><span class="line">    &#125;</span><br><span class="line">    return nAns;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nT;</span><br><span class="line"></span><br><span class="line">    scanf("%d", &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    &#123;</span><br><span class="line">        int nN;</span><br><span class="line">        scanf("%d", &amp;nN);</span><br><span class="line">        printf("%d\n", GetAns(nN));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1392,20 +1392,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1457,12 +1457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">602k</span>
+    <span title="站点总字数">605k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:07</span>
+    <span title="站点阅读时长">9:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
