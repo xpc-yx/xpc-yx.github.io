@@ -287,14 +287,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -306,7 +306,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="一、问题起源和影响"><a href="#一、问题起源和影响" class="headerlink" title="一、问题起源和影响"></a>一、问题起源和影响</h1><h2 id="1-1-Base相机切换导致切换场景时候闪烁"><a href="#1-1-Base相机切换导致切换场景时候闪烁" class="headerlink" title="1.1 Base相机切换导致切换场景时候闪烁"></a>1.1 Base相机切换导致切换场景时候闪烁</h2><p>问题是这样的，项目之前一直用场景相机作为Base相机，UI相机作为Overlay相机。渲染顺序是先渲染场景Base相机，然后渲染UI相机。不过，最近打包发现，在部分机器上，一切换场景时候，比如loading界面打开时候，屏幕会出现明显的闪烁，甚至还会花屏。<br>尝试解决：并没有上FrameDebug或者RenderDoc去抓帧分析，比较麻烦。首先，尝试在切换场景之前就隐藏场景相机，发现花屏现象消失了，闪烁问题也大幅度减弱。猜测，是场景切换时候场景相机销毁， 导致必须切换Base相机导致整个相机堆栈都要重建的原因。<br>解决办法：固定一个空的Base相机，不渲染任何层，场景相机作为Overlay相机挂在Base相机上，然后是UI相机。<br>结果：原先loading界面闪烁的几个机器都不再闪烁。</p>
+          <h1 id="一、问题起源和影响"><a href="#一、问题起源和影响" class="headerlink" title="一、问题起源和影响"></a>一、问题起源和影响</h1><h2 id="1-1-Base相机切换导致切换场景时候闪烁"><a href="#1-1-Base相机切换导致切换场景时候闪烁" class="headerlink" title="1.1 Base相机切换导致切换场景时候闪烁"></a>1.1 Base相机切换导致切换场景时候闪烁</h2><p>问题是这样的，项目之前一直用场景相机作为Base相机，UI相机作为Overlay相机。渲染顺序是先渲染场景Base相机，然后渲染UI相机。不过，最近打包发现，在部分机器上，一切换场景时候，比如loading界面打开时候，屏幕会出现明显的闪烁，甚至还会花屏。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/12/28/Urp%E7%9B%B8%E6%9C%BA%E5%A0%86%E6%A0%88%E5%85%B3%E4%BA%8E%E5%90%8E%E5%A4%84%E7%90%86%E6%8A%97%E9%94%AF%E9%BD%BF%E8%AE%BE%E7%BD%AE%E7%9A%84%E9%97%AE%E9%A2%98/#more" rel="contents">
@@ -1506,12 +1506,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">605k</span>
+    <span title="站点总字数">606k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:10</span>
+    <span title="站点阅读时长">9:11</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
