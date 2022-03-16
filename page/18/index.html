@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/28/poj-1265-area/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/06/28/poj-1265-area/" class="post-title-link" itemprop="url">poj 1265 Area</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-28 16:00:00" itemprop="dateCreated datePublished" datetime="2012-06-28T16:00:00+08:00">2012-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/28/poj-1265-area/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1265 Area" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/28/poj-1265-area/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/28/poj-1265-area/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>此题用到了几个知识，一个是求多边形面积的公式。然后是，根据顶点都在整点上求多边形边界上的顶点数目的方法。最后一个是pick定理。根据前面2个信息和pick定理算出在多边形内部的整点的个数。<br>求多边形面积的方法还是叉积代表有向面积的原理，把原点看做另外的一个点去分割原来的多边形为N个三角形，然后把它们的有向面积加起来。<br>判断边界上点的个数是根据Gcd（dx,dy)代表当前边上整数点的个数的结论。这个结论的证明其实也比较简单，假设dx = a，dy = b。初始点是x0，y0，假设d = Gcd（a，b）。那么边上的点可以被表示为（x0 + k <em> (a / d)，y0 + k </em> （b / d))。为了使点是整数点，k必须是整数，而且0 求多边形内部点的个数用的是pick定理。面积 = 内部点 + 边界点 / 2 - 1。</p>
+<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="number">#def</span>ine MAX (<span class="number">100</span> + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x, y;</span><br><span class="line">&#125;;</span><br><span class="line">Point pts[MAX];</span><br><span class="line"></span><br><span class="line">int nN;</span><br><span class="line">const int IN = 1;</span><br><span class="line">const int EAGE = 2;</span><br><span class="line">const int OUT = 3;</span><br><span class="line">const double fPre = 1e-8;</span><br><span class="line"></span><br><span class="line">double Det(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">&#123;</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Cross(Point <span class="selector-tag">a</span>, Point <span class="selector-tag">b</span>, Point c)</span><br><span class="line">&#123;</span><br><span class="line">    return Det(b.x - a.x, b.y - a.y, c.x - a.x, c.y - a.y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double GetArea()</span><br><span class="line">&#123;</span><br><span class="line">    double fArea = 0.0;</span><br><span class="line">    Point ori = &#123;0.0, 0.0&#125;;</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        fArea += Cross(ori, pts[i], pts[(i + 1) % nN]);</span><br><span class="line">    &#125;</span><br><span class="line">    return fabs(fArea) * 0.5;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int gcd(int nX, int nY)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nX &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        nX = -nX;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (nY &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        nY = -nY;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (nX &lt; nY)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(nX, nY);</span><br><span class="line">    &#125;</span><br><span class="line">    while (nY)</span><br><span class="line">    &#123;</span><br><span class="line">        int nT = nY;</span><br><span class="line">        nY = nX % nY;</span><br><span class="line">        nX = nT;</span><br><span class="line">    &#125;</span><br><span class="line">    return nX;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nT;</span><br><span class="line">    int nI, nE;</span><br><span class="line">    double fArea;</span><br><span class="line"></span><br><span class="line">    scanf("%d", &amp;nT);</span><br><span class="line">    int dx ,dy;</span><br><span class="line"></span><br><span class="line">    for (int i = 1; i &lt;= nT; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf("%d", &amp;nN);</span><br><span class="line">        nI = nE = 0;</span><br><span class="line">        pts[0].x = pts[0].y = 0;</span><br><span class="line">        for (int j = 1; j &lt;= nN; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%d%d", &amp;dx, &amp;dy);</span><br><span class="line">            pts[j].x = pts[j - 1].x + dx;</span><br><span class="line">            pts[j].y = pts[j - 1].y + dy;</span><br><span class="line">            nE += gcd(dx, dy);</span><br><span class="line">        &#125;</span><br><span class="line">        fArea = GetArea();</span><br><span class="line">        nI = (fArea + 1) - nE / 2;</span><br><span class="line">        printf("Scenario #%d:\n%d %d %.1f\n\n", i, nI, nE, fArea);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1246,117 +1357,6 @@ XX***
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/08/uva-550-multiplying-by-rotation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/05/08/uva-550-multiplying-by-rotation/" class="post-title-link" itemprop="url">uva 550 - Multiplying by Rotation</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-05-08 21:30:00" itemprop="dateCreated datePublished" datetime="2012-05-08T21:30:00+08:00">2012-05-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/05/08/uva-550-multiplying-by-rotation/" class="post-meta-item leancloud_visitors" data-flag-title="uva 550 - Multiplying by Rotation" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/05/08/uva-550-multiplying-by-rotation/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/08/uva-550-multiplying-by-rotation/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>851</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。<br>题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7 <em> 4 = 7XXXXX，例子: 179487 </em> 4 = 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上去就行了。<br>貌似很难的样子，其实用笔在纸上求一下XXXXX7 <em> 4 = 7XXXXX就会发现。XXXXX7的每一位都是能够确定的，当然顺序是从最低位到最高位开始。因为知道最低位，所以次低位一定是最低位</em>第二个数%base。以此类推，递归下去即可。最终条件是，没有进位了，而且乘积+原来的进位==最低位。<br>我用的递归完全可以改成循环的形式，这样速度应该会快些。</p>
-<p>代码如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int nBase;</span><br><span class="line">int nTwo;</span><br><span class="line">int nOneLow;</span><br><span class="line"></span><br><span class="line">int GetMin(int nLow, int nCarry, int nNum)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//printf("nLow:%d, nCarry:%d, nNum:%d\n", nLow, nCarry, nNum);</span></span><br><span class="line">    int nTemp = nCarry + nLow * nTwo;</span><br><span class="line">    <span class="keyword">if</span> (nTemp == nOneLow)</span><br><span class="line">    &#123;</span><br><span class="line">        return nNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return GetMin(nTemp % nBase, nTemp / nBase, nNum + 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//freopen("out.txt", "w", stdout);</span></span><br><span class="line">    while (scanf(<span class="string">"%d%d%d"</span>, &amp;nBase, &amp;nOneLow, &amp;nTwo) == <span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("%d\n", GetMin(nOneLow, 0, 0) + 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1407,7 +1407,7 @@ XX***
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">211</span>
+          <span class="site-state-item-count">212</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1420,7 +1420,7 @@ XX***
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">101</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1472,12 +1472,12 @@ XX***
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">606k</span>
+    <span title="站点总字数">608k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:11</span>
+    <span title="站点阅读时长">9:13</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
