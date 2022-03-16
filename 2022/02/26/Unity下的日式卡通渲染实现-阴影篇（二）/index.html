@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="这边文章讲述的是项目中用到的一些卡通渲染阴影相关技术。 一、SDF面部阴影SDF这个概念具体是什么意思了？可以去观看闫令琪在B站上的101课程，有一节专门讲述了SDF的定义和混合SDF能够产生什么效果。其实SDF面部阴影基本的思想就是混合面部的SDF得到一张阴影阈值图，然后利用这张阴影阈值图实现二维的阴影渲染。比较详细的解释可以参考这篇文章，卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity下的日式卡通渲染实现-阴影篇（二）">
+<meta property="og:url" content="http://xiaopengcheng.top/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="这边文章讲述的是项目中用到的一些卡通渲染阴影相关技术。 一、SDF面部阴影SDF这个概念具体是什么意思了？可以去观看闫令琪在B站上的101课程，有一节专门讲述了SDF的定义和混合SDF能够产生什么效果。其实SDF面部阴影基本的思想就是混合面部的SDF得到一张阴影阈值图，然后利用这张阴影阈值图实现二维的阴影渲染。比较详细的解释可以参考这篇文章，卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E7%89%B9%E5%AE%9A%E8%A7%92%E5%BA%A6%E7%9A%84SDF%E9%98%B4%E5%BD%B1%E5%9B%BE.png">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/SDF%E9%98%B4%E5%BD%B1%E5%8A%A8%E7%94%BB.gif">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E8%87%AA%E9%98%B4%E5%BD%B1.jpg">
+<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%B7%B1%E5%BA%A6%E9%98%B4%E5%BD%B1.jpg">
+<meta property="article:published_time" content="2022-02-26T10:20:00.000Z">
+<meta property="article:modified_time" content="2022-03-16T06:29:09.463Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="日式卡通渲染">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E7%89%B9%E5%AE%9A%E8%A7%92%E5%BA%A6%E7%9A%84SDF%E9%98%B4%E5%BD%B1%E5%9B%BE.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Unity下的日式卡通渲染实现-阴影篇（二） | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity下的日式卡通渲染实现-阴影篇（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-26 18:20:00" itemprop="dateCreated datePublished" datetime="2022-02-26T18:20:00+08:00">2022-02-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="Unity下的日式卡通渲染实现-阴影篇（二）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这边文章讲述的是项目中用到的一些卡通渲染阴影相关技术。</p>
+<h1 id="一、SDF面部阴影"><a href="#一、SDF面部阴影" class="headerlink" title="一、SDF面部阴影"></a>一、SDF面部阴影</h1><p>SDF这个概念具体是什么意思了？可以去观看闫令琪在B站上的101课程，有一节专门讲述了SDF的定义和混合SDF能够产生什么效果。其实SDF面部阴影基本的思想就是混合面部的SDF得到一张阴影阈值图，然后利用这张阴影阈值图实现二维的阴影渲染。<br>比较详细的解释可以参考这篇文章，<a href="https://zhuanlan.zhihu.com/p/361716315" target="_blank" rel="noopener">卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）</a>。</p>
+<h2 id="1-1-如何计算SDF"><a href="#1-1-如何计算SDF" class="headerlink" title="1.1 如何计算SDF"></a>1.1 如何计算SDF</h2><p>根据SDF的定义（到边界的最短有符号距离，形状内部为负，外部为正），计算二维的SDF其实很容易，可以使用C++写程序离线处理图片得到对应的SDF图。不过，我们现在需要的是更进一步的阴影阈值图。</p>
+<h2 id="1-2-如何计算阴影阈值图"><a href="#1-2-如何计算阴影阈值图" class="headerlink" title="1.2 如何计算阴影阈值图"></a>1.2 如何计算阴影阈值图</h2><p><img alt="特定角度的SDF阴影图" data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/特定角度的SDF阴影图.png"><br>阴影阈值图实际上是根据上述的多个角度的阴影图，首先计算每个阴影图的SDF图；然后将所有的SDF图递归混合起来，最终的输出就是阴影阈值图。<br>如何混合SDF图了？根据前后2个SDF图的在对应像素点的差异值来插值前后2个SDF图。<br>不过这些阴影图是有一定的要求的：图片必须连续且后一张必须可以覆盖前一张（可以是暗部覆盖也可以是亮部覆盖，但只能是一种）。<br>这个离线计算阴影阈值图的程序网上已经有人给出来了：<a href="https://zhuanlan.zhihu.com/p/356185096" target="_blank" rel="noopener">如何快速生成混合卡通光照图</a>。</p>
+<h2 id="1-3-如何渲染SDF面部阴影"><a href="#1-3-如何渲染SDF面部阴影" class="headerlink" title="1.3 如何渲染SDF面部阴影"></a>1.3 如何渲染SDF面部阴影</h2><p>文章<a href="https://zhuanlan.zhihu.com/p/361716315" target="_blank" rel="noopener">卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）</a>给出的Shader代码基本上问题不大，不过有2个比较明显的问题。<br><strong>朝向问题</strong>：美术出的资源坐标系以及顶点位置不一定是朝着Unity局部坐标系的正Y轴，最好使用脚本传入正Y轴，否则有些模型的阴影就会反了。<br><strong>左右判断问题</strong>：经过验证应该用right去判断还不是left，同样最好是用脚本传入，否则阴影过渡可能出现问题。<br>最后的if判断可以省略：直接用smoothstep计算bias即可达到效果。<br>最终的效果如下：<br><img alt="SDF阴影动画" data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/SDF阴影动画.gif"></p>
+<h1 id="二、自阴影"><a href="#二、自阴影" class="headerlink" title="二、自阴影"></a>二、自阴影</h1><p>自阴影实际上是一种ShadowMap的变形，默认的ShadowMap会应用到所有开启了阴影投射的问题上。如果角色还使用这个ShadowMap可能会造成分辨率不够，比如阴影不够清晰、阴影锯齿严重等。因此，对所有的角色重新投影到一个新的ShadowMap上，然后利用这个新的ShadowMap计算自阴影。</p>
+<h2 id="2-1-收集所有激活的角色"><a href="#2-1-收集所有激活的角色" class="headerlink" title="2.1 收集所有激活的角色"></a>2.1 收集所有激活的角色</h2><p>给每个角色增加一个MonoBehavior脚本，该脚本激活的时候收集角色的包围盒，角色删除时候取消<br>对应的包围盒。对所有的角色包围盒计算一个并集，将该并集作为正交相机的渲染范围去渲染下一步的阴影Pass。</p>
+<h2 id="2-2-自定义ShadowCastPass"><a href="#2-2-自定义ShadowCastPass" class="headerlink" title="2.2 自定义ShadowCastPass"></a>2.2 自定义ShadowCastPass</h2><p>增加Urp的自定义Pass，该Pass的渲染模板是额外的ShadowMap对应的RT。在该Pass执行的时候去收集上述的角色包围盒并集，同时将并集作为正交相机的渲染范围，然后去渲染自定义ShadowTag的Pass。<br>Shader内的阴影Pass实现跟Urp默认的阴影Pass基本一致。</p>
+<h2 id="2-3-渲染自阴影"><a href="#2-3-渲染自阴影" class="headerlink" title="2.3 渲染自阴影"></a>2.3 渲染自阴影</h2><p>自阴影的渲染基本与传统的ShadowMap一致。不过，需要注意的是阴影投影矩阵已经变化了，需要从脚本中传入Shader。同时，采样阴影贴图的z值需要增加偏移参数去调整，以获得好的效果。美术可能还需要去控制特定区域的阴影强弱，比如可以使用顶点色来控制阴影强度。<br>效果如下图：<br><img alt="卡通渲染自阴影" data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/卡通渲染自阴影.jpg"></p>
+<h1 id="三、深度边缘阴影"><a href="#三、深度边缘阴影" class="headerlink" title="三、深度边缘阴影"></a>三、深度边缘阴影</h1><p>深度边缘阴影和上一篇讲的深度边缘光的原理类似，都必须利用深度贴图来判断当前像素处于边缘<br>的程度。同样，角色Shader中需要增加DepthOnly来输出深度到深度贴图了。<br>效果如下图：<br><img alt="卡通渲染深度阴影" data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/卡通渲染深度阴影.jpg"><br>对比自阴影的效果图，可以看到在细节的遮挡区域阴影效果得到了进一步的增强。</p>
+<h1 id="四、默认ShadowMap阴影"><a href="#四、默认ShadowMap阴影" class="headerlink" title="四、默认ShadowMap阴影"></a>四、默认ShadowMap阴影</h1><p>默认的ShadowMap阴影决定的是主灯的阴影效果，比如角色走入主方向光形成的阴影区域内，那么角色的亮度是否需要做一定的调整了？<br>在urp的shader源码中，这个阴影体现为mainlight的shadowAttenuation大小，该值会去缩放主灯的颜色亮度。如果直接使用该值去缩放灯光，那么会出现一定的自遮挡的阴影，而且这个阴影很丑。因此，可以使用这个shadowAttenuation去缩放卡通着色后的结果，从而体现出角色在不同光照区域有一定的表现差异。</p>
+<h1 id="五、阴影如何跟着色结合？"><a href="#五、阴影如何跟着色结合？" class="headerlink" title="五、阴影如何跟着色结合？"></a>五、阴影如何跟着色结合？</h1><p>对于每种阴影可以指定一个阴影颜色，上述的各种算法只是计算对应的阴影强度。最终，使用阴影强度插值卡通着色结果和阴影颜色，就可以得到应用阴影后的效果。</p>
+<h1 id="六、参考资料"><a href="#六、参考资料" class="headerlink" title="六、参考资料"></a>六、参考资料</h1><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/361716315" target="_blank" rel="noopener">卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）</a><br><a href="https://zhuanlan.zhihu.com/p/356185096" target="_blank" rel="noopener">如何快速生成混合卡通光照图</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\02\12\Unity下的日式卡通渲染实现-着色篇（一）\" rel="bookmark">Unity下的日式卡通渲染实现-着色篇（一）</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Unity下的日式卡通渲染实现-阴影篇（二）">http://xiaopengcheng.top/2022/02/26/Unity下的日式卡通渲染实现-阴影篇（二）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93/" rel="tag"><i class="fa fa-tag"></i> 日式卡通渲染</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E7%9D%80%E8%89%B2%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="Unity下的日式卡通渲染实现-着色篇（一）">
+      <i class="fa fa-chevron-left"></i> Unity下的日式卡通渲染实现-着色篇（一）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、SDF面部阴影"><span class="nav-number">1.</span> <span class="nav-text">一、SDF面部阴影</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-如何计算SDF"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 如何计算SDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-如何计算阴影阈值图"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 如何计算阴影阈值图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-如何渲染SDF面部阴影"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 如何渲染SDF面部阴影</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、自阴影"><span class="nav-number">2.</span> <span class="nav-text">二、自阴影</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-收集所有激活的角色"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 收集所有激活的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-自定义ShadowCastPass"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 自定义ShadowCastPass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-渲染自阴影"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 渲染自阴影</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、深度边缘阴影"><span class="nav-number">3.</span> <span class="nav-text">三、深度边缘阴影</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、默认ShadowMap阴影"><span class="nav-number">4.</span> <span class="nav-text">四、默认ShadowMap阴影</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、阴影如何跟着色结合？"><span class="nav-number">5.</span> <span class="nav-text">五、阴影如何跟着色结合？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、参考资料"><span class="nav-number">6.</span> <span class="nav-text">六、参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">610k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:15</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

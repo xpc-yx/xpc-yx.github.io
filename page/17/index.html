@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/20/uva-408-uniform-generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/07/20/uva-408-uniform-generator/" class="post-title-link" itemprop="url">uva 408 - Uniform Generator</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-07-20 11:00:00" itemprop="dateCreated datePublished" datetime="2012-07-20T11:00:00+08:00">2012-07-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/07/20/uva-408-uniform-generator/" class="post-meta-item leancloud_visitors" data-flag-title="uva 408 - Uniform Generator" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/07/20/uva-408-uniform-generator/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/07/20/uva-408-uniform-generator/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>882</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是今天想通的一个数论题，还是挺有意思的，想出来的那一瞬间yeah了一下，可是我悲剧的粗心习惯，还是交了3次才过，nm数中间空格都错了，又忘记打空行，明明字符串从25列开始，中间是4个空格的，我nc的打了5个空格，就pe了，还有不仔细看输出要求，没有输出空行，最近真没状态啊。<br>其实，这个题想通了就很简单了，还是数论里面的群的概念，就是加法群的生成群啊，打着随机数的幌子而已。由于又没有限定种子，限定对答案也没有影响，假设种子是0，那么数列可以表示为a <em> step，数列要能够生成0 - mod-1中所有的数字，那么就有a </em> step = b % mod(0&lt;=b&lt;mod)。<br>哈哈，上面那个式子就是a <em> x = b % n这个线性同余方程了，只是有很多b了。要方程有解，不是需要满足条件gcd(a,n) | b么，意思b是gcd(a,n)的整数倍了。但是0 &lt;= b &lt; n啊，b会是1了，那么gcd(a,n)一定是1了哦。那么直接判断gcd(step,mod)是否为1就行了，哈哈。<br>关于线性同余方程a</em>x=b%n，要有解的条件gcd(a,n)|b的解释，还是参看算法导论或者其它资料吧。。。</p>
+<p>代码就非常简单了，如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int gcd(int <span class="selector-tag">a</span>, int b)</span><br><span class="line">&#123;</span><br><span class="line">    if (a &lt; b)swap(a, b);</span><br><span class="line">    while (b)</span><br><span class="line">    &#123;</span><br><span class="line">        int t = a;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t % b;</span><br><span class="line">    &#125;</span><br><span class="line">    return a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nStep, nMod;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%d"</span>, &amp;nStep, &amp;nMod) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(<span class="string">"%10d%10d    %s\n\n"</span>, nStep, nMod,</span><br><span class="line">               gcd(nStep, nMod) == 1 ? "Good Choice" : "Bad Choice");</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/18/poj%202115%20C%20Looooops%20%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1233,117 +1344,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/30/poj-1584-a-round-peg-in-a-ground-hole/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/06/30/poj-1584-a-round-peg-in-a-ground-hole/" class="post-title-link" itemprop="url">poj 1584 A Round Peg in a Ground Hole</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-06-30 20:00:00" itemprop="dateCreated datePublished" datetime="2012-06-30T20:00:00+08:00">2012-06-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/06/30/poj-1584-a-round-peg-in-a-ground-hole/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1584 A Round Peg in a Ground Hole" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/06/30/poj-1584-a-round-peg-in-a-ground-hole/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/30/poj-1584-a-round-peg-in-a-ground-hole/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个题需要多个计算几何算法。第一个是判断一系列点是否能够构成凸多边形，第二个是判断一个点是否在一个简单多边形内部，第三个是求一个点到一条线段（或者说直线）的距离，第四个是判断一个圆是否则一个凸多边形内部。<br>其实，我是要判断一个圆是否则一个凸多边形内部而用到算法二和三。其实，有不需要判断圆心是否则多边形内部的算法。算法一的思想，求所有边的偏转方向，必须都是逆时针或者顺时针偏转。算法二则是我前面发的那篇改进弧长法判断点和多边形的关系，算法三尤其简单，直线上面取2点，用叉积求出这三点构成的三角形面积的2倍，再除以底边。算法四则是先判断圆心在多边形内部，然后判断圆心到所有边的距离要大于圆的半径。<br>贴出代码，纯粹为了以后作为模版使用等，防止遗忘，方便查找，其实现在也能手敲出来了。</p>
-<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const double fPre = 1e-8;</span><br><span class="line">int DblCmp(double fD)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (fabs(fD) &lt; fPre)</span><br><span class="line">    &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        return fD &gt; 0 ? 1 : -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x, y;</span><br><span class="line">    bool operator == (const Point p)</span><br><span class="line">    &#123;</span><br><span class="line">        return DblCmp(x - p.x) == 0  DblCmp(y - p.y) == 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Point operator-(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    Point p;</span><br><span class="line">    p.x = a.x - b.x;</span><br><span class="line">    p.y = a.y - b.y;</span><br><span class="line">    return p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Det(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">&#123;</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Cross(Point <span class="selector-tag">a</span>, Point <span class="selector-tag">b</span>, Point c)</span><br><span class="line">&#123;</span><br><span class="line">    return Det(b.x - a.x, b.y - a.y, c.x - a.x, c.y - a.y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool IsConvexPolygon(vector&lt;Point&gt; vp)</span><br><span class="line">&#123;</span><br><span class="line">    int nN = vp.size();</span><br><span class="line">    int nDirection = 0;</span><br><span class="line">    bool bLine = true;//避免所有点共线</span><br><span class="line">    for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int nTemp = DblCmp(Cross(vp[i], vp[(i + 1) % nN], vp[(i + 2) % nN]));</span><br><span class="line">        <span class="keyword">if</span> (nTemp)</span><br><span class="line">        &#123;</span><br><span class="line">            bLine = false;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//这次的方向和上次的方向必须是相同的或者是3点和3点以上共线的情况</span></span><br><span class="line">        if (nDirection * nTemp &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        nDirection = nTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    return bLine == false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int GetQuadrant(Point p)</span><br><span class="line">&#123;</span><br><span class="line">    return p.x &gt;= 0 ? (p.y &gt;= 0 ? 0 : 3) : (p.y &gt;= 0 ? 1 : 2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool IsPtInPolygon(vector&lt;Point&gt; vp, Point p)</span><br><span class="line">&#123;</span><br><span class="line">    int nN = vp.size();</span><br><span class="line">    int nA1, nA2, nSum = 0;</span><br><span class="line">    int i;</span><br><span class="line"></span><br><span class="line">    nA1 = GetQuadrant(vp[0] - p);</span><br><span class="line">    for (i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int j = (i + 1) % nN;</span><br><span class="line">        <span class="keyword">if</span> (vp[i] == p)</span><br><span class="line">        &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        int nC = DblCmp(Cross(p, vp[i], vp[j]));</span><br><span class="line">        int nT1 = DblCmp((vp[i].x - p.x) * (vp[j].x - p.x));</span><br><span class="line">        int nT2 = DblCmp((vp[i].y - p.y) * (vp[j].y - p.y));</span><br><span class="line">        <span class="keyword">if</span> (!nC  nT1 &lt;= <span class="number">0</span>  nT2 &lt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        nA2 = GetQuadrant(vp[j] - p);</span><br><span class="line">        switch ((nA2 - nA1 + 4) % 4)</span><br><span class="line">        &#123;</span><br><span class="line">        case <span class="number">1</span>:</span><br><span class="line">            nSum++;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">if</span> (nC &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                nSum += 2;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                nSum -= 2;</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">3</span>:</span><br><span class="line">            nSum--;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        nA1 = nA2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (i &lt; nN || nSum)</span><br><span class="line">    &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double PtDis(Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return sqrt((a.x - b.x) * (a.x - b.x) + (b.y - a.y) * (b.y - a.y));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//点p到直线ab的距离</span></span><br><span class="line"><span class="comment">//h = (2 * Spab) / |ab|</span></span><br><span class="line">double GetDis(Point <span class="selector-tag">a</span>, Point <span class="selector-tag">b</span>, Point p)</span><br><span class="line">&#123;</span><br><span class="line">    return fabs(Cross(a, b, p)) / PtDis(a, b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool IsCircleInPolygon(vector&lt;Point&gt; vp, Point <span class="selector-tag">p</span>, double fR)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!IsPtInPolygon(vp, p))</span><br><span class="line">    &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int nN = vp.size();</span><br><span class="line">    for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if (GetDis(vp[i], vp[(i + 1) % nN], p) &lt; fR)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nN;</span><br><span class="line">    double fR, fPx, fPy;</span><br><span class="line">    vector&lt;Point&gt; vp;</span><br><span class="line">    Point p;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%lf%lf%lf"</span>, &amp;nN, &amp;fR, &amp;fPx, &amp;fPy), nN &gt;= <span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        vp.<span class="attribute">clear</span>();</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;p.x, &amp;p.y);</span><br><span class="line">            vp.push_back(p);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (IsConvexPolygon(vp))</span><br><span class="line">        &#123;</span><br><span class="line">            p.x = fPx;</span><br><span class="line">            p.y = fPy;</span><br><span class="line">            <span class="keyword">if</span> (IsCircleInPolygon(vp, <span class="selector-tag">p</span>, fR))</span><br><span class="line">            &#123;</span><br><span class="line">                printf("PEG WILL FIT\n");</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                printf("PEG WILL NOT FIT\n");</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            printf("HOLE IS ILL-FORMED\n");</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1394,7 +1394,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">212</span>
+          <span class="site-state-item-count">213</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1459,12 +1459,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">608k</span>
+    <span title="站点总字数">610k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:13</span>
+    <span title="站点阅读时长">9:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
