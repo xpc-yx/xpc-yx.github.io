@@ -222,6 +222,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/" class="post-title-link" itemprop="url">top k算法和partial_sort</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-10-08 11:04:40" itemprop="dateCreated datePublished" datetime="2014-10-08T11:04:40+08:00">2014-10-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/" class="post-meta-item leancloud_visitors" data-flag-title="top k算法和partial_sort" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近因为准备找工作的东西，看了不少书，感悟也挺多的。stl源码剖析，effective c++，面试宝典，剑指offer，大话设计模式，编程精粹，还有很多想看的还没看完了。。。这段时间，看完这些书后，真的发现，看书是一件很棒的事情，不仅仅是知识的学习，查漏补缺，思维的体验也是一件让人觉得满心愉悦的事情。有点明白古人雪夜读书的感觉，那时候没有电脑可以玩，没有那么多娱乐的游戏，读书确实是一件让人愉悦的事情。<br>很久没有更新博客了，随便扯扯吧。<br>所谓的top k算法，意思就是求n个数字的最大k个或者最小k个，大概也是个比较常见的面试题了。一般有两种思路，第一种是利用快排里面的partion函数，不断用轴元素分割数组，直到分割出前k个或者后k个，迭代或者递归都是很方便的；stl里面有个nth_element泛函做的就是这件事情。第二种思路，则是假定有一个容量为k的容器，存储了当前的top k元素，当处理下一个元素的时候，判断当前处理元素是否可能是top k元素，比如如果求最大的k个元素，则判断当前处理元素是否比容器里面最小元素大，如果大的话，则需要加入当前元素，并且删除容器里面最小的元素，反之亦然。现在的问题是，如何选取一个很好的容器了。能够使得这些操作尽可能快。其实大家知道的容器也就那几种类型，基本上是stl里面已经实现了的。线性？搜索树？hash？<br>hash的话，没法快速查找极值，线性结构的话，插入新元素，保持有序结构的话，也需要O(n)。那么，搜索树结构了，查找和删除都是log(n)，stl里面有现成的红黑树实现set容器。另外，还有个更奇葩的用数组表示的完全二叉树结构，最大堆和最小堆。可以满足O(1)查找极值元素和log(n)插入删除操作，最终还可以排序元素。综上所说，堆结构是在时间和空间上最佳的满足要求的容器了。<br>刚好stl里面有个partial_sort函数也是用这个思路实现的，而且最后还排了一个序，所以，实际开发的时候多了解下标准库是值得投入的一件事情。<br>下面是用stl的heap操作实现的top k算法。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;cstdlib&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; vi;</span><br><span class="line">    const int NUM = 100;</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        vi.push_back(rand() % NUM);</span><br><span class="line">        printf("%d ", vi[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    <span class="comment">//求最小k个数字</span></span><br><span class="line">    const int K = 10;</span><br><span class="line"></span><br><span class="line">    make_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">    for (int i = K; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (vi[i] &lt; vi[<span class="number">0</span>])</span><br><span class="line">        &#123;</span><br><span class="line">            pop_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">            vi[K - 1] = vi[i];</span><br><span class="line">            push_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sort_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">    for (int i = 0; i &lt; K; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("%d ", vi[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/08/17/%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1238,143 +1342,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/" class="post-title-link" itemprop="url">OpenGL视口点投影到视角空间及反投影</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-03-13 16:02:41" itemprop="dateCreated datePublished" datetime="2014-03-13T16:02:41+08:00">2014-03-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL视口点投影到视角空间及反投影" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>有些时候，我们想知道鼠标点中了哪个物体或者哪个部分，更详细的是最靠近模型的哪个顶点或者哪条线，或者哪个面。这些选取问题有不同的解决办法。如果只是针对<strong>图元</strong>的选取，可以直接用OpenGL的<strong>选取模式</strong>实现。但是有的时候，情况更加复杂，比如我们想通过鼠标在模型上面绘制一条线，然后对模型进行剖分等。这就需要把鼠标点变换到三维顶点，再进一步的操作。<br>我在这里贴出2个我自己使用的函数，针对鼠标点投影视角空间和反投影。<br>投影：``` stylus<br>void CMesh::ScreenToModel(v2f point, v3f point3d)<br>{<br>        float fWinX, fWinY, fWinZ;<br>        int nX, nY;<br>        GLdouble fX, fY, fZ;</p>
-<pre><code>    nX = point[0];
-    nY = point[1];
-    glReadBuffer(GL_BACK);
-    glReadPixels(nX, nY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);
-    if (fabs(fWinZ - 1.0) &gt; 1e-8)
-    {
-        fWinX = nX;
-        fWinY = nY;
-        gluUnProject(fWinX, fWinY, fWinZ, m_pMatMV, m_pMatProj, m_pViewport,
-            fX, fY, fZ);
-        point3d[0] = fX;
-        point3d[1] = fY;
-        point3d[2] = fZ;
-    }
-    else
-    {
-        point3d[0] = point3d[1] = 0.0;
-        point3d[2] = 1.0;
-    }
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">使用该函数必须注意的是，point必须已经转换为**视口点**，即point[1] &#x3D; window_height - point[1] - 1。</span><br><span class="line">反投影:&#96;&#96;&#96; stylus</span><br><span class="line">void CMesh::ModelToScreen(v3f point3d, v2f point)</span><br><span class="line">&#123;</span><br><span class="line">        double fWinX, fWinY, fWinZ;</span><br><span class="line">        gluProject(point3d[0], point3d[1], point3d[2], m_pMatMV, m_pMatProj, m_pViewport,</span><br><span class="line">            fWinX, fWinY, fWinZ);</span><br><span class="line"></span><br><span class="line">        point[0] &#x3D; (float)fWinX;</span><br><span class="line">        point[1] &#x3D; (float)fWinY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>反投影得到的2维点同样是基于<strong>左下角</strong>为原点的视口点，要转换为鼠标点的话还得变换y值，即point[1] = window_height - point[1] - 1。<br>至于其它的实现方法，当然可以自己直接操作投影矩阵和模型矩阵，视口信息，进行转换，不过也是重复造轮子，但对于理解原理有帮助。<br>鼠标点投影到三维之后，就可以找到<strong>最近</strong>的模型点，或者通过射线之类求相交面。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1425,7 +1392,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1490,12 +1457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">610k</span>
+    <span title="站点总字数">612k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:15</span>
+    <span title="站点阅读时长">9:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

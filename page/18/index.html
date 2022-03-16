@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/03/poj-3130-how-i-mathematician-wonder-what-you-are/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/07/03/poj-3130-how-i-mathematician-wonder-what-you-are/" class="post-title-link" itemprop="url">poj 3130 How I Mathematician Wonder What You Are!</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-07-03 12:30:00" itemprop="dateCreated datePublished" datetime="2012-07-03T12:30:00+08:00">2012-07-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/07/03/poj-3130-how-i-mathematician-wonder-what-you-are/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3130 How I Mathematician Wonder What You Are!" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/07/03/poj-3130-how-i-mathematician-wonder-what-you-are/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/07/03/poj-3130-how-i-mathematician-wonder-what-you-are/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>半平面交的一个题，也是求多边形的核心。求出这个好像也可以用于解决一些线性规划问题。我用的是N * N的基本算法，每加入一条直线，就对原来求出的半平面交进行处理，产生新的核心。<br>代码参照台湾的一个网站演算法笔记上的内容和代码。表示这个网站巨不错，求凸包的算法也参照了这个网站上的内容和代码。半平面交的地址：<a href="http://www.csie.ntnu.edu.tw/~u91029/Half-planeIntersection.html#a4" target="_blank" rel="noopener">http://www.csie.ntnu.edu.tw/~u91029/Half-planeIntersection.html#a4</a></p>
+<p>代码思路主要是：先读入所有的多边形顶点，放入一个vector（vp）里面，然后对多边形的每条边求一个半平面。刚开始的时候，用一个vector（Polygon）保存代表上下左右四个无限远角的四个点，表示原始的半平面。然后，用读入的多边形的每条边去切割原来的半平面。<br>切割的过程是，如果原来（Polygon）中的点在当前直线的指定一侧，那么原来的点还是有效的。如果原来的点和它相邻的下一个点与当前直线相交，那么还需要把交点加入Polygon集合。<br>还有求交点的方法比较奇葩，类似于黑书上面的那种根据面积等分的方法。</p>
+<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">double fPre = 1e-8;</span><br><span class="line">struct Point</span><br><span class="line">&#123;</span><br><span class="line">    double x;</span><br><span class="line">    double y;</span><br><span class="line">    Point() &#123;&#125;</span><br><span class="line">    Point(double fX, double fY)</span><br><span class="line">    &#123;</span><br><span class="line">        x = fX, y = fY;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">typedef vector&lt;Point&gt; Polygon;</span><br><span class="line">typedef pair&lt;Point, Point&gt; Line;</span><br><span class="line">Point operator+(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    Point t;</span><br><span class="line">    t.x = a.x + b.x;</span><br><span class="line">    t.y = a.y + b.y;</span><br><span class="line">    return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Point operator-(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">&#123;</span><br><span class="line">    Point t;</span><br><span class="line">    t.x = a.x - b.x;</span><br><span class="line">    t.y = a.y - b.y;</span><br><span class="line">    return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Point operator*(Point <span class="selector-tag">a</span>, double fD)</span><br><span class="line">&#123;</span><br><span class="line">    Point t;</span><br><span class="line">    t.x = a.x * fD;</span><br><span class="line">    t.y = a.y * fD;</span><br><span class="line">    return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int DblCmp(double fD)</span><br><span class="line">&#123;</span><br><span class="line">    return fabs(fD) &lt; fPre ? 0 : (fD &gt; 0 ? 1 : -1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double Det(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">&#123;</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//3点叉积</span></span><br><span class="line">double Cross(Point <span class="selector-tag">a</span>, Point <span class="selector-tag">b</span>, Point c)</span><br><span class="line">&#123;</span><br><span class="line">    return Det(b.x - a.x, b.y - a.y, c.x - a.x, c.y - a.y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//向量叉积</span></span><br><span class="line">double Cross(Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">&#123;</span><br><span class="line">    return a.x * b.y - a.y * b.x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//求直线交点的一种简便方法</span></span><br><span class="line"><span class="comment">//平行四边形面积的比例等于高的比例</span></span><br><span class="line">Point Intersection(Point a1, Point a2, Point b1, Point b2)</span><br><span class="line">&#123;</span><br><span class="line">    Point a = a2 - a1;</span><br><span class="line">    Point b = b2 - b1;</span><br><span class="line">    Point s = b1 - a1;</span><br><span class="line"></span><br><span class="line">    return a1 + a * (Cross(b, s) / Cross(b, a));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Polygon HalfPlane(Polygon pg, Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">&#123;</span><br><span class="line">    Polygon pgTmp;</span><br><span class="line">    int nN = pg.size();</span><br><span class="line">    for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        double fC = Cross(a, b, pg[i]);</span><br><span class="line">        double fD = Cross(a, b, pg[(i + 1) % nN]);</span><br><span class="line">        <span class="keyword">if</span> (DblCmp(fC) &gt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            pgTmp.push_back(pg[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        if (fC * fD &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            pgTmp.push_back(Intersection(a, b, pg[i], pg[(i + 1) % nN]));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return pgTmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nN;</span><br><span class="line">    Point p;</span><br><span class="line">    vector&lt;Point&gt; vp;</span><br><span class="line">    Polygon pg;</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    &#123;</span><br><span class="line">        vp.<span class="attribute">clear</span>();</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%lf%lf", &amp;p.x, &amp;p.y);</span><br><span class="line">            vp.push_back(p);</span><br><span class="line">        &#125;</span><br><span class="line">        pg.<span class="attribute">clear</span>();</span><br><span class="line">        pg.push_back(Point(-1e9, 1e9));</span><br><span class="line">        pg.push_back(Point(-1e9, -1e9));</span><br><span class="line">        pg.push_back(Point(1e9, -1e9));</span><br><span class="line">        pg.push_back(Point(1e9, 1e9));</span><br><span class="line">        for (int i = 0; i &lt; nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            pg = HalfPlane(pg, vp[i], vp[(i + 1) % nN]);</span><br><span class="line">            <span class="keyword">if</span> (pg.size() == <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                printf("0\n");</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pg.size())</span><br><span class="line">        &#123;</span><br><span class="line">            printf("1\n");</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/07/03/poj-3130-how-i-mathematician-wonder-what-you-are/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/30/poj-1584-a-round-peg-in-a-ground-hole/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1246,117 +1365,6 @@ XX***
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/10/uva-327-evaluating-simple-c-expressions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/06/10/uva-327-evaluating-simple-c-expressions/" class="post-title-link" itemprop="url">uva 327 - Evaluating Simple C Expressions</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-06-10 22:00:00" itemprop="dateCreated datePublished" datetime="2012-06-10T22:00:00+08:00">2012-06-10</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/06/10/uva-327-evaluating-simple-c-expressions/" class="post-meta-item leancloud_visitors" data-flag-title="uva 327 - Evaluating Simple C Expressions" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/06/10/uva-327-evaluating-simple-c-expressions/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/10/uva-327-evaluating-simple-c-expressions/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个题目的意思是要计算一些c语言表达式的值。这些表达式有+-还有++，—操作符与a-z这些变量组合而成。a-z的权值是1-26。比如，表达式 c+f—+—a，得出值是9，其它变量的值也需要计算出来。<br>这个题目感觉比较麻烦，刚开始一点思路也没有，还写了个错误的方法，浪费了时间。后面我的思路是 （+，-） （—，++）（变量）（—，++），这个匹配式子的意思是先处理二元操作符，然后处理前置，再处理变量，再处理后置，如果发现没有后置操作符，则把读取的数据重新写回数据流里面，下次再处理。</p>
-<p>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;sstream&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct INFO</span><br><span class="line">&#123;</span><br><span class="line">    char ch;</span><br><span class="line">    int nValue;</span><br><span class="line">    char chAdd;</span><br><span class="line">    bool operator &lt; (const INFO info) const</span><br><span class="line">    &#123;</span><br><span class="line">        return ch &lt; info.ch;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">INFO infos[200];</span><br><span class="line">char szLine[200];</span><br><span class="line"></span><br><span class="line">bool GetNextChar(stringstream ss, char ch)</span><br><span class="line">&#123;</span><br><span class="line">    while (ss &gt;&gt; ch)</span><br><span class="line">    &#123;</span><br><span class="line">        if (ch != ' ');</span><br><span class="line">        &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    while (gets(szLine))</span><br><span class="line">    &#123;</span><br><span class="line">        printf("Expression: %s\n", szLine);</span><br><span class="line">        memset(infos, 0, sizeof(infos));</span><br><span class="line">        stringstream ss(szLine);</span><br><span class="line">        char ch;</span><br><span class="line">        int nNum = 0;</span><br><span class="line">        int nValue = 0;</span><br><span class="line">        char chOper;</span><br><span class="line">        bool bOk = true;</span><br><span class="line">        bool bFirst = true;</span><br><span class="line">        while (<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (bFirst)</span><br><span class="line">            &#123;</span><br><span class="line">                chOper = '+';</span><br><span class="line">                bFirst = false;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                bOk = GetNextChar(ss, ch);</span><br><span class="line">                if (!bOk) break;</span><br><span class="line">                chOper = ch;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            bOk = GetNextChar(ss, ch);</span><br><span class="line">            if (!bOk) break;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (ch == <span class="string">'-'</span>)<span class="comment">//前置--</span></span><br><span class="line">            &#123;</span><br><span class="line">                bOk = GetNextChar(ss, ch);</span><br><span class="line">                if (!bOk) break;//-</span><br><span class="line">                bOk = GetNextChar(ss, ch);</span><br><span class="line">                if (!bOk) break;//读取字母</span><br><span class="line"></span><br><span class="line">                infos[nNum].ch = ch;</span><br><span class="line">                infos[nNum].nValue = ch - 'a';</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (chOper == <span class="string">'+'</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    nValue += infos[nNum].nValue;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    nValue -= infos[nNum].nValue;</span><br><span class="line">                &#125;</span><br><span class="line">                ++nNum;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'+'</span>)<span class="comment">//前置++</span></span><br><span class="line">            &#123;</span><br><span class="line">                bOk = GetNextChar(ss, ch);</span><br><span class="line">                if (!bOk) break;//+</span><br><span class="line">                bOk = GetNextChar(ss, ch);</span><br><span class="line">                if (!bOk) break;//读取字母</span><br><span class="line"></span><br><span class="line">                infos[nNum].ch = ch;</span><br><span class="line">                infos[nNum].nValue = ch - 'a' + 2;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (chOper == <span class="string">'+'</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    nValue += infos[nNum].nValue;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    nValue -= infos[nNum].nValue;</span><br><span class="line">                &#125;</span><br><span class="line">                ++nNum;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                infos[nNum].ch = ch;</span><br><span class="line">                infos[nNum].nValue = ch - 'a' + 1;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (chOper == <span class="string">'+'</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    nValue += infos[nNum].nValue;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    nValue -= infos[nNum].nValue;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//读取后置操作符</span></span><br><span class="line">                char chOne;</span><br><span class="line">                char chTwo;</span><br><span class="line">                bOk = GetNextChar(ss, chOne);</span><br><span class="line">                <span class="keyword">if</span> (!bOk)</span><br><span class="line">                &#123;</span><br><span class="line">                    ++nNum;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                bOk = GetNextChar(ss, chTwo);</span><br><span class="line">                <span class="keyword">if</span> (!bOk)</span><br><span class="line">                &#123;</span><br><span class="line">                    ++nNum;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (chOne == chTwo)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (chOne == <span class="string">'+'</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        infos[nNum].chAdd = '+';</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        infos[nNum].chAdd = '-';</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    ss.putback(chTwo);</span><br><span class="line">                    ss.putback(chOne);</span><br><span class="line">                &#125;</span><br><span class="line">                ++nNum;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        printf("    value = %d\n", nValue);</span><br><span class="line">        sort(infos, infos + nNum);</span><br><span class="line">        for (int i = 0; i &lt; nNum; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (infos[i]<span class="selector-class">.chAdd</span> == <span class="string">'+'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                infos[i].nValue++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (infos[i]<span class="selector-class">.chAdd</span> == <span class="string">'-'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                infos[i].nValue--;</span><br><span class="line">            &#125;</span><br><span class="line">            printf("    %c = %d\n", infos[i].ch, infos[i].nValue);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1407,7 +1415,7 @@ XX***
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1472,12 +1480,12 @@ XX***
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">610k</span>
+    <span title="站点总字数">612k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:15</span>
+    <span title="站点阅读时长">9:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

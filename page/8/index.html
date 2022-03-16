@@ -222,6 +222,143 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/" class="post-title-link" itemprop="url">OpenGL视口点投影到视角空间及反投影</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-03-13 16:02:41" itemprop="dateCreated datePublished" datetime="2014-03-13T16:02:41+08:00">2014-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL视口点投影到视角空间及反投影" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有些时候，我们想知道鼠标点中了哪个物体或者哪个部分，更详细的是最靠近模型的哪个顶点或者哪条线，或者哪个面。这些选取问题有不同的解决办法。如果只是针对<strong>图元</strong>的选取，可以直接用OpenGL的<strong>选取模式</strong>实现。但是有的时候，情况更加复杂，比如我们想通过鼠标在模型上面绘制一条线，然后对模型进行剖分等。这就需要把鼠标点变换到三维顶点，再进一步的操作。<br>我在这里贴出2个我自己使用的函数，针对鼠标点投影视角空间和反投影。<br>投影：``` stylus<br>void CMesh::ScreenToModel(v2f point, v3f point3d)<br>{<br>        float fWinX, fWinY, fWinZ;<br>        int nX, nY;<br>        GLdouble fX, fY, fZ;</p>
+<pre><code>    nX = point[0];
+    nY = point[1];
+    glReadBuffer(GL_BACK);
+    glReadPixels(nX, nY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);
+    if (fabs(fWinZ - 1.0) &gt; 1e-8)
+    {
+        fWinX = nX;
+        fWinY = nY;
+        gluUnProject(fWinX, fWinY, fWinZ, m_pMatMV, m_pMatProj, m_pViewport,
+            fX, fY, fZ);
+        point3d[0] = fX;
+        point3d[1] = fY;
+        point3d[2] = fZ;
+    }
+    else
+    {
+        point3d[0] = point3d[1] = 0.0;
+        point3d[2] = 1.0;
+    }
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">使用该函数必须注意的是，point必须已经转换为**视口点**，即point[1] &#x3D; window_height - point[1] - 1。</span><br><span class="line">反投影:&#96;&#96;&#96; stylus</span><br><span class="line">void CMesh::ModelToScreen(v3f point3d, v2f point)</span><br><span class="line">&#123;</span><br><span class="line">        double fWinX, fWinY, fWinZ;</span><br><span class="line">        gluProject(point3d[0], point3d[1], point3d[2], m_pMatMV, m_pMatProj, m_pViewport,</span><br><span class="line">            fWinX, fWinY, fWinZ);</span><br><span class="line"></span><br><span class="line">        point[0] &#x3D; (float)fWinX;</span><br><span class="line">        point[1] &#x3D; (float)fWinY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>反投影得到的2维点同样是基于<strong>左下角</strong>为原点的视口点，要转换为鼠标点的话还得变换y值，即point[1] = window_height - point[1] - 1。<br>至于其它的实现方法，当然可以自己直接操作投影矩阵和模型矩阵，视口信息，进行转换，不过也是重复造轮子，但对于理解原理有帮助。<br>鼠标点投影到三维之后，就可以找到<strong>最近</strong>的模型点，或者通过射线之类求相交面。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2014/03/13/OpenGL%E8%A7%86%E5%8F%A3%E7%82%B9%E6%8A%95%E5%BD%B1%E5%88%B0%E8%A7%86%E8%A7%92%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%8F%8D%E6%8A%95%E5%BD%B1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/03/10/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%A4%9A%E9%87%8D%E9%87%87%E6%A0%B7%E7%9A%84bug/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1250,125 +1387,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/11/15/Assimp%E4%B8%8ECGAL%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/11/15/Assimp%E4%B8%8ECGAL%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Assimp与CGAL的联合使用问题</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-11-15 10:44:03" itemprop="dateCreated datePublished" datetime="2013-11-15T10:44:03+08:00">2013-11-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
-                    <span itemprop="name">CGAL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/11/15/Assimp%E4%B8%8ECGAL%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="Assimp与CGAL的联合使用问题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/11/15/Assimp%E4%B8%8ECGAL%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/11/15/Assimp%E4%B8%8ECGAL%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> 昨天一直在尝试使用assimp导入obj模型，再把数据导入到cgal的Polyhedron_3中。结果发现，所有的模型都是平滑着色的。好奇怪的现象。。。我尝试了很多次修改着色模式，一点反应都没有。我去掉assimp显示就是对的。后面，怀疑到我在cgal中计算顶点法线的过程。果然是这里出问题了。计算顶点法线的过程中基本上只使用了一个邻接面。也就是cgal里面已经没有原有obj模型的拓扑性质了。所以，顶点法线基本上等于面法线了，效果就成了flat着色了。</p>
-<p> 这有什么办法了。难道在assimp中计算法线。即使这样，我能够得到正确的顶点法线，但是cgal里面已经没有原有模型的拓扑性质了。我的数据结构还是加载失败的。所以，我不能使用assimp。而且，assimp还不能导入.m模型。虽然，它能导入格式麻烦的obj模型已经很不错了。</p>
-<p> 下面是我用assimp加载模型，并且导入到cgal中的代码。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2013/11/15/Assimp%E4%B8%8ECGAL%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1419,7 +1437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1484,12 +1502,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">610k</span>
+    <span title="站点总字数">612k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:15</span>
+    <span title="站点阅读时长">9:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">opencv gpu或者cuda加速第一次调用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-11-11 15:29:48" itemprop="dateCreated datePublished" datetime="2014-11-11T15:29:48+08:00">2014-11-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/CUDA/" itemprop="url" rel="index">
+                    <span itemprop="name">CUDA</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/" class="post-meta-item leancloud_visitors" data-flag-title="opencv gpu或者cuda加速第一次调用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>450</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>经测试，第一次gpu调用，无论是用opencv的gpu模块或者cuda都会比较耗时，可能将近1s。<br>额，这也不是我一个人碰到的问题，确实有这回事。stackoverflow上面有个帖子就是关于这个的。<br>帖子地址：<a href="http://stackoverflow.com/questions/12074281/why-opencv-gpu-codes-is-slower-than-cpu" target="_blank" rel="noopener">关于速度慢</a>，<a href="https://stackoverflow.com/questions/10415204/how-to-create-a-cuda-context" target="_blank" rel="noopener">关于解决办法</a>。<br>如果，看了上面的帖子话，这篇文章也不用看下去了。因为我要讲的就是这件事情。<br>我的观点也是，在第一次调用之前先建立cuda context。为什么需要做这样的事情了？额，假如，<br>你只调用一次gpu处理，总不能太慢了吧。那样就看不到速度了，所以先调用次垃圾操作初始化cuda环境。<br>方法是调用cudaFree(0)，在这之前最好调用先调用cudaSetDevice(0)。记住包含cuda的头文件，<br>如果只有opencv的头文件，这2个函数是找不到的。还有，建立的工程是cuda runtime模版。<br>在我的L0Smooth代码里，这样的处理之后，初次L0Smooth调用能减少1s左右，从3s变成了2s。<br>其余的耗时，基本都在gpu版本的dft和idft，还得继续寻找加快速度的办法。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/10/opencv%E7%9A%84gpu%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0dft/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1232,110 +1342,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/" class="post-title-link" itemprop="url">top k算法和partial_sort</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-10-08 11:04:40" itemprop="dateCreated datePublished" datetime="2014-10-08T11:04:40+08:00">2014-10-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/" class="post-meta-item leancloud_visitors" data-flag-title="top k算法和partial_sort" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/10/08/top%20k%E7%AE%97%E6%B3%95%E5%92%8Cpartial_sort/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近因为准备找工作的东西，看了不少书，感悟也挺多的。stl源码剖析，effective c++，面试宝典，剑指offer，大话设计模式，编程精粹，还有很多想看的还没看完了。。。这段时间，看完这些书后，真的发现，看书是一件很棒的事情，不仅仅是知识的学习，查漏补缺，思维的体验也是一件让人觉得满心愉悦的事情。有点明白古人雪夜读书的感觉，那时候没有电脑可以玩，没有那么多娱乐的游戏，读书确实是一件让人愉悦的事情。<br>很久没有更新博客了，随便扯扯吧。<br>所谓的top k算法，意思就是求n个数字的最大k个或者最小k个，大概也是个比较常见的面试题了。一般有两种思路，第一种是利用快排里面的partion函数，不断用轴元素分割数组，直到分割出前k个或者后k个，迭代或者递归都是很方便的；stl里面有个nth_element泛函做的就是这件事情。第二种思路，则是假定有一个容量为k的容器，存储了当前的top k元素，当处理下一个元素的时候，判断当前处理元素是否可能是top k元素，比如如果求最大的k个元素，则判断当前处理元素是否比容器里面最小元素大，如果大的话，则需要加入当前元素，并且删除容器里面最小的元素，反之亦然。现在的问题是，如何选取一个很好的容器了。能够使得这些操作尽可能快。其实大家知道的容器也就那几种类型，基本上是stl里面已经实现了的。线性？搜索树？hash？<br>hash的话，没法快速查找极值，线性结构的话，插入新元素，保持有序结构的话，也需要O(n)。那么，搜索树结构了，查找和删除都是log(n)，stl里面有现成的红黑树实现set容器。另外，还有个更奇葩的用数组表示的完全二叉树结构，最大堆和最小堆。可以满足O(1)查找极值元素和log(n)插入删除操作，最终还可以排序元素。综上所说，堆结构是在时间和空间上最佳的满足要求的容器了。<br>刚好stl里面有个partial_sort函数也是用这个思路实现的，而且最后还排了一个序，所以，实际开发的时候多了解下标准库是值得投入的一件事情。<br>下面是用stl的heap操作实现的top k算法。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;cstdlib&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; vi;</span><br><span class="line">    const int NUM = 100;</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        vi.push_back(rand() % NUM);</span><br><span class="line">        printf("%d ", vi[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    <span class="comment">//求最小k个数字</span></span><br><span class="line">    const int K = 10;</span><br><span class="line"></span><br><span class="line">    make_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">    for (int i = K; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (vi[i] &lt; vi[<span class="number">0</span>])</span><br><span class="line">        &#123;</span><br><span class="line">            pop_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">            vi[K - 1] = vi[i];</span><br><span class="line">            push_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sort_heap(vi.begin(), vi.begin() + K);</span><br><span class="line">    for (int i = 0; i &lt; K; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        printf("%d ", vi[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf("\n");</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1386,7 +1392,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1451,12 +1457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">610k</span>
+    <span title="站点总字数">612k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:15</span>
+    <span title="站点阅读时长">9:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
