@@ -284,7 +284,7 @@
 </li>
 </ol>
 <h1 id="四、参考资料"><a href="#四、参考资料" class="headerlink" title="四、参考资料"></a>四、参考资料</h1><blockquote>
-<p><a href="https://blog.csdn.net/qq_30259857/article/details/110062397" target="_blank" rel="noopener">DrawCall，Batches，SetPass calls是什么？原理？【匠】</a><br><a href="https://docs.unity.cn/cn/2022.1/Manual/RenderingStatistics.html" target="_blank" rel="noopener">The Rendering Statistics window</a><br><a href="https://blog.csdn.net/yudianxia/article/details/79398590" target="_blank" rel="noopener">Unity Profiler中常见的WaitForTargetFPS、Gfx.WaitForPresent 和 Graphics.PresentAndSync</a><br><a href="https://docs.unity3d.com/2021.2/Documentation/Manual/DrawCallBatching.html" target="_blank" rel="noopener">Draw call batching</a></p>
+<p><a href="https://blog.csdn.net/qq_30259857/article/details/110062397" target="_blank" rel="noopener">DrawCall，Batches，SetPass calls是什么？原理？【匠】</a><br><a href="https://docs.unity.cn/cn/2022.1/Manual/RenderingStatistics.html" target="_blank" rel="noopener">The Rendering Statistics window</a><br><a href="https://blog.csdn.net/yudianxia/article/details/79398590" target="_blank" rel="noopener">Unity Profiler中常见的WaitForTargetFPS、Gfx.WaitForPresent 和 Graphics.PresentAndSync</a><br><a href="https://docs.unity3d.com/2021.2/Documentation/Manual/DrawCallBatching.html" target="_blank" rel="noopener">Draw call batching</a><br><a href="https://docs.unity3d.com/2021.2/Documentation/Manual/optimizing-draw-calls.html" target="_blank" rel="noopener">Optimizing draw calls</a></p>
 </blockquote>
 ]]></content>
       <categories>
