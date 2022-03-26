@@ -378,7 +378,7 @@
   </entry>
   <entry>
     <title>伽马校正和颜色空间</title>
-    <url>/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</url>
+    <url>/2020/09/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</url>
     <content><![CDATA[<h1 id="一、伽马校正"><a href="#一、伽马校正" class="headerlink" title="一、伽马校正"></a>一、伽马校正</h1><p>所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。</p>
 <h2 id="1-1-人眼的非线性视觉效应"><a href="#1-1-人眼的非线性视觉效应" class="headerlink" title="1.1 人眼的非线性视觉效应"></a>1.1 人眼的非线性视觉效应</h2><p>为什么要有gamma校正了。一言以蔽之，人眼的生理效应。如下图所示，<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/gamma_correction_brightness.png"></p>
 <p>第一行是人眼感受到的线性亮度变化，第二行是真实的非线性亮度变化。可以得出结论，首尾两端是一致的，但是中间值变化不一致；真实的中间亮度值必须更大，才能得到人眼感知的线性亮度变化。我们的目的是让人眼感受到线性的亮度变化曲线，因此输入亮度必须是第二行这种非线性的亮度变化曲线。<br>第二行的亮度变化曲线，就是<strong>伽马校正曲线</strong>。</p>
@@ -415,7 +415,7 @@
   </entry>
   <entry>
     <title>渲染管线中的坐标空间和相关变换</title>
-    <url>/2020/07/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/</url>
+    <url>/2020/06/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/</url>
     <content><![CDATA[<h1 id="一、思维导图"><a href="#一、思维导图" class="headerlink" title="一、思维导图"></a>一、思维导图</h1><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/坐标空间.png"></p>
 <h1 id="二、模型空间"><a href="#二、模型空间" class="headerlink" title="二、模型空间"></a>二、模型空间</h1><p>这里的模型空间指的是建模出来的空间，也就是用建模软件输出的数据所在的坐标空间。比如，3D Max用的是右手系，输出的模型数据所在的空间就叫模型空间；由于Unity的模型空间是左手系，所以通常需要旋转90度才能对应上。</p>
 <h1 id="三、切线空间"><a href="#三、切线空间" class="headerlink" title="三、切线空间"></a>三、切线空间</h1><p>切线空间又可以叫做纹理空间。假如纹理坐标uv构成一个二维空间，加上垂直于这个二维空间的法线，那么就是一个三维的切线空间。</p>
