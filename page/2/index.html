@@ -458,124 +458,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">左右手坐标系和相关定则的总结</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-06 20:15:30" itemprop="dateCreated datePublished" datetime="2020-03-06T20:15:30+08:00">2020-03-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
-                    <span itemprop="name">Rendering</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="左右手坐标系和相关定则的总结" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。<br>首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。</p>
-<h1 id="一、左手坐标系"><a href="#一、左手坐标系" class="headerlink" title="一、左手坐标系"></a>一、左手坐标系</h1><p>所谓左手坐标系，指的是通过左手来确定的一个三维空间坐标系。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1392,6 +1274,124 @@
   
   
 
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">WebGL介绍</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-07-09 22:22:43" itemprop="dateCreated datePublished" datetime="2016-07-09T22:22:43+08:00">2016-07-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/WebGL/" itemprop="url" rel="index">
+                    <span itemprop="name">WebGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/" class="post-meta-item leancloud_visitors" data-flag-title="WebGL介绍" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>842</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="WebGL概述"><a href="#WebGL概述" class="headerlink" title="WebGL概述"></a>WebGL概述</h2><p>什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL的接口移植到浏览器中使用。具体的可以参考<a href="https://zh.wikipedia.org/wiki/WebGL" target="_blank" rel="noopener">WebGL的维基百科</a>。<br>使用WebGL可以通过编写网页代码在浏览器中渲染三维图像，而且不需要任何的插件，比如Adobe Flash Player等。<br>WebGL在最新的浏览器中得到了广泛支持。</p>
+<h2 id="WebGL与HTML5的关系"><a href="#WebGL与HTML5的关系" class="headerlink" title="WebGL与HTML5的关系"></a>WebGL与HTML5的关系</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/07/09/WebGL%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -1442,7 +1442,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1507,12 +1507,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">615k</span>
+    <span title="站点总字数">613k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:19</span>
+    <span title="站点阅读时长">9:17</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
