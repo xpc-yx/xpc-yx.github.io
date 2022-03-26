@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/04/12/uva-10790-how-many-points-of-intersection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/04/12/uva-10790-how-many-points-of-intersection/" class="post-title-link" itemprop="url">uva 10790 - How Many Points of Intersection?</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-04-12 10:00:00" itemprop="dateCreated datePublished" datetime="2012-04-12T10:00:00+08:00">2012-04-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/04/12/uva-10790-how-many-points-of-intersection/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10790 - How Many Points of Intersection?" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/04/12/uva-10790-how-many-points-of-intersection/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/04/12/uva-10790-how-many-points-of-intersection/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>940</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一个数学题，比较有意思。题意大致是：有2条平行的直线，第一条上面有m个点，第二条上面有n个点。那么连接这写点能产生m<em>n条直线(不包括和原来的执行平行的直线)。问这m</em>n直线最多有多少个内交点(意思是不属于原来m,n个点的交点)…<br>想来想去，推理了1个多小时才出来正式结果。感觉比较有意思，写篇博文记录下。我先是从反面排除，想了试了好久到最后还是发现无法排除干净。。。最后只能从正面开始求证了。我这样定义一条执行(i，j)，其中i代表在第一条直线中的端点，j代表在第二条直线中的端点。显然1 现在的话只要求出和直线(i，j)相加的直线有多少条，然后对i，j进行累加求和。再对和除以2就能得到答案了。<br>那么有多少条直线能和直线(i，j）相交了。很显然，和(i,j)相交的直线的端点必须在其两侧。意思是在第一条直线中的端点范围为[1, i - 1],在第二条直线中的端点范围为[j + 1, n]，总结(i - 1) <em> (n - j) 条直线。但是还有第二种情况,在第一条直线中的端点范围为[i + 1, m], 在第二条直线中的端点范围为[1, j - 1]，总计(m - i) </em> (j - 1) 条直线。总计sum = i <em> n + i - m -n + j (m - 2 </em> i + 1) 条直线。<br>再求Σsum（j从1到n)得到和式(m<em>n</em>n - m<em>n - n</em>n + n) / 2，再对这个式子进行i从1到m的累加。因为没有i了，其效果就是乘以m。然后最终的和除以2，所以最后的表达式是(m<em>m</em>n<em>n - m</em>m<em>n - m</em>n<em>n + m</em>n) / 4。这个式子显然是关于m,n对称的。这一点也可以验证这个式子的正确性。</p>
+<p>程序写起来就很简单了，代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    long long m, n;</span><br><span class="line">    int nCases = 0;</span><br><span class="line"></span><br><span class="line">    while (cin &gt;&gt; m &gt;&gt; n, m + n != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        long long a = m * m;</span><br><span class="line">        long long b = n * n;</span><br><span class="line">        cout &lt;&lt; ";Case "; &lt;&lt; ++nCases &lt;&lt; ";: ";</span><br><span class="line">             &lt;&lt; (a * b - a * n - b * m + m * n) / 4 &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/04/03/uva-465-overflow/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1231,119 +1342,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/02/26/%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%88%97(%E7%AD%89%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E6%8E%92%E5%88%97)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/02/26/%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%88%97(%E7%AD%89%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E6%8E%92%E5%88%97)/" class="post-title-link" itemprop="url">如何生成均匀随机排列(等概率生成排列)</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-02-26 12:00:00" itemprop="dateCreated datePublished" datetime="2012-02-26T12:00:00+08:00">2012-02-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/02/26/%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%88%97(%E7%AD%89%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E6%8E%92%E5%88%97)/" class="post-meta-item leancloud_visitors" data-flag-title="如何生成均匀随机排列(等概率生成排列)" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/02/26/%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%88%97(%E7%AD%89%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E6%8E%92%E5%88%97)/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/02/26/%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%88%97(%E7%AD%89%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E6%8E%92%E5%88%97)/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个算法的应用，比如洗牌，这个大家都非常熟悉。很久以前用的是最原始的方法，就是一直rand()未出现的牌，直至生成所有的牌。这当然是一个while(1)循环，很烂的算法吧。后面听说直接交换牌，打乱即可了。但是打乱后生成的排列是随机的么，是等可能随机的么。<br>其实，这个问题上算法导论上早已经有了答案了，看过算法导论之后觉得没看之前真的是算法修养太差了。<br>算法的伪代码如下图所示：<br><img alt data-src="https://c6.staticflickr.com/8/7645/27410389005_f5ea860442_o.jpg"></p>
-<p>具体c++实现如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;assert.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="comment">// void Swap(int&amp; nOne, int&amp; nTwo)</span></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//  nOne = nOne + nTwo;</span></span><br><span class="line"><span class="comment">//  nTwo = nOne – nTwo;</span></span><br><span class="line"><span class="comment">//  nOne = nOne – nTwo;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line">void Swap(int&amp;  nOne, int&amp;  nTwo)</span><br><span class="line">&#123;</span><br><span class="line">    int nTemp;</span><br><span class="line">    nTemp = nOne;</span><br><span class="line">    nOne = nTwo;</span><br><span class="line">    nTwo = nTemp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//返回一个在区间[nBeg, nEnd]内的随机数</span></span><br><span class="line">int Random(int nBeg, int nEnd)</span><br><span class="line">&#123;</span><br><span class="line">    assert(nEnd &gt;= nBeg);</span><br><span class="line">    <span class="keyword">if</span> (nBeg == nEnd)</span><br><span class="line">    &#123;</span><br><span class="line">        return nBeg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        return rand() % (nEnd – nBeg + 1) + nBeg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void RandomizeInPlace(int* pnA, int nLen)</span><br><span class="line">&#123;</span><br><span class="line">    static bool s_bFirst = false;</span><br><span class="line">    <span class="keyword">if</span> (!s_bFirst)</span><br><span class="line">    &#123;</span><br><span class="line">        srand(time(NULL));</span><br><span class="line">        s_bFirst = true;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 0; i &lt; nLen; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        Swap(pnA[i], pnA[Random(i, nLen - 1)]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nArray[20];</span><br><span class="line">    int i, j;</span><br><span class="line">    for (i = 1; i &lt;= 20; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int nCnt = i;</span><br><span class="line">        while (nCnt–)</span><br><span class="line">        &#123;</span><br><span class="line">            for (j = 0; j &lt; i; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                nArray[j] = j;</span><br><span class="line">            &#125;</span><br><span class="line">            RandomizeInPlace(nArray, i);</span><br><span class="line">            for (j = 0; j &lt; i; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                printf("%d", nArray[j]);</span><br><span class="line">            &#125;</span><br><span class="line">            printf("\n");</span><br><span class="line">        &#125;</span><br><span class="line">        printf("\n");</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/02/26/%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E6%8E%92%E5%88%97(%E7%AD%89%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E6%8E%92%E5%88%97)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1394,14 +1392,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">214</span>
+          <span class="site-state-item-count">215</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1459,12 +1457,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">613k</span>
+    <span title="站点总字数">615k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:17</span>
+    <span title="站点阅读时长">9:19</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
