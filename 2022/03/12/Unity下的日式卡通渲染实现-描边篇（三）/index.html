@@ -55,16 +55,16 @@
 <meta property="og:site_name" content="远行&#39;s Blog">
 <meta property="og:description" content="这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。 一、Back Face外扩描边背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%8F%8F%E8%BE%B9%E6%96%AD%E8%A3%82.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%8F%8F%E8%BE%B9%E6%96%AD%E8%A3%82.png">
 <meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%A4%96%E6%89%A9%E6%8F%8F%E8%BE%B9.jpg">
 <meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E6%9C%AC%E6%9D%91%E7%BA%BF%E6%8F%8F%E8%BE%B9.jpg">
 <meta property="og:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E4%BA%8C%E4%B9%8B%E5%9B%BD%E5%90%8E%E5%A4%84%E7%90%86%E5%86%85%E6%8F%8F%E8%BE%B9.jpg">
 <meta property="article:published_time" content="2022-03-12T12:18:30.000Z">
-<meta property="article:modified_time" content="2022-03-25T10:00:34.881Z">
+<meta property="article:modified_time" content="2022-03-26T04:35:26.709Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="日式卡通渲染">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%8F%8F%E8%BE%B9%E6%96%AD%E8%A3%82.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%8F%8F%E8%BE%B9%E6%96%AD%E8%A3%82.png">
 
 <link rel="canonical" href="http://xiaopengcheng.top/2022/03/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E6%8F%8F%E8%BE%B9%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89/">
 
@@ -313,7 +313,7 @@
         <p>这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。</p>
 <h1 id="一、Back-Face外扩描边"><a href="#一、Back-Face外扩描边" class="headerlink" title="一、Back Face外扩描边"></a>一、Back Face外扩描边</h1><p>背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。</p>
 <h2 id="1-1-实现原理"><a href="#1-1-实现原理" class="headerlink" title="1.1 实现原理"></a>1.1 实现原理</h2><p>第一个Pass正常渲染物体。第二个Pass只渲染背面，同时顶点沿着法线方向偏移，开启深度测试。<br>第二个Pass开启深度测试的用处一个是重叠部分不会显示出来，另外可以利用Early-Z减少需要处理的片元数量。</p>
-<h2 id="1-2-描边的法线优化"><a href="#1-2-描边的法线优化" class="headerlink" title="1.2 描边的法线优化"></a>1.2 描边的法线优化</h2><p>由于我们是沿着法线偏移顶点，那么最终的描边结果对法线的依赖很大。如果法线分布有问题，可能造成描边断裂的情况。如下图所示：<br><img alt data-src="https://gitee.com/xiao_peng_cheng/markdown_img/raw/master/小书匠/卡通渲染描边断裂.png"><br>这是因为四个面的法线都是垂直于面的，在角的地方没有连续性。一种比较好的解决方式是计算平均法线存储在不使用的uv通道内，比如uv8，然后使用这个平均法线去计算描边。<br>何谓平均法线？即顶点周围面法线的平均或者加权平均。<br>如何计算这个平均法线了？这个可以编写外部工具对fbx直接离线修改；或者编写Unity的脚本修改uv8，不过在Unity内已经修改不了Fbx文件了，所以去修改Mesh的uv8数据，实际上这个修改是存储在工程的缓存数据内的，因此需要给Mesh新增一个Tag，如果有这个Tag导入Mesh的时候就需要就需要计算平滑法线。</p>
+<h2 id="1-2-描边的法线优化"><a href="#1-2-描边的法线优化" class="headerlink" title="1.2 描边的法线优化"></a>1.2 描边的法线优化</h2><p>由于我们是沿着法线偏移顶点，那么最终的描边结果对法线的依赖很大。如果法线分布有问题，可能造成描边断裂的情况。如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/卡通渲染描边断裂.png"><br>这是因为四个面的法线都是垂直于面的，在角的地方没有连续性。一种比较好的解决方式是计算平均法线存储在不使用的uv通道内，比如uv8，然后使用这个平均法线去计算描边。<br>何谓平均法线？即顶点周围面法线的平均或者加权平均。<br>如何计算这个平均法线了？这个可以编写外部工具对fbx直接离线修改；或者编写Unity的脚本修改uv8，不过在Unity内已经修改不了Fbx文件了，所以去修改Mesh的uv8数据，实际上这个修改是存储在工程的缓存数据内的，因此需要给Mesh新增一个Tag，如果有这个Tag导入Mesh的时候就需要就需要计算平滑法线。</p>
 <h2 id="1-3-根据摄像机修正描边宽度"><a href="#1-3-根据摄像机修正描边宽度" class="headerlink" title="1.3 根据摄像机修正描边宽度"></a>1.3 根据摄像机修正描边宽度</h2><p>一个是距离摄像机的距离，理论上来说应该是距离摄像机越远描边应该越小，这个可以用摄像机空间的z值来表示。另外一个是Fov，Fov越大描边应该越小。<br>加入这2个修正因子后，描边的粗细会看起来自然很多。</p>
 <h2 id="1-4-描边深度偏移控制消隐"><a href="#1-4-描边深度偏移控制消隐" class="headerlink" title="1.4 描边深度偏移控制消隐"></a>1.4 描边深度偏移控制消隐</h2><p>有些地方美术实际上不希望出现描边。比如，头发的中间部位，美术只希望头发的边缘能看到描边。但是，正对着角色的时候，头发的中间部分实际上也是外扩的边缘，同样会看到描边。<br>这种情况可以通过使用深度偏移来修改顶点着色器的裁剪坐标，从而消隐描边。实际上，就是把不需要看到的描边往里推，从而被角色本身覆盖，就看不到描边了。<br>那么，哪些描边需要消隐了？就是下面要说的顶点色。</p>
 <h2 id="1-5-顶点色控制描边宽度和深度偏移"><a href="#1-5-顶点色控制描边宽度和深度偏移" class="headerlink" title="1.5 顶点色控制描边宽度和深度偏移"></a>1.5 顶点色控制描边宽度和深度偏移</h2><p>我们提供了顶点色的两个通道来分别控制描边的粗细和深度偏移。粗细很好理解，就是有些部位描边宽有些更窄。深度偏移就是上面说的消隐问题，有些地方的描边希望看不到就可以增加一定的深度偏移使其被角色挡住。<br>顶点色需要美术使用DCC工具去涂色，或者也可以在Unity中使用编辑器去涂，然后保存下来。还是类似的问题，在Unity中不能修改原始的Fbx文件，因此涂色后的网格数据只能保存为.asset。<br>当前项目中使用的是这篇文章：<a href="https://zhuanlan.zhihu.com/p/139318012" target="_blank" rel="noopener">在Unity中写一个简单的顶点颜色编辑器</a>的顶点色工具，基本需求能够满足。</p>
