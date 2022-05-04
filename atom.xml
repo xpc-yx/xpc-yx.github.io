@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaopengcheng.top/"/>
-  <updated>2022-03-26T10:00:09.421Z</updated>
+  <updated>2022-05-04T07:03:08.734Z</updated>
   <id>http://xiaopengcheng.top/</id>
   
   <author>
@@ -21,17 +21,14 @@
     <link href="http://xiaopengcheng.top/2022/03/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E6%8F%8F%E8%BE%B9%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89/"/>
     <id>http://xiaopengcheng.top/2022/03/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E6%8F%8F%E8%BE%B9%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89/</id>
     <published>2022-03-12T12:18:30.000Z</published>
-    <updated>2022-03-26T10:00:09.421Z</updated>
+    <updated>2022-05-04T07:03:08.734Z</updated>
     
-    <content type="html"><![CDATA[<p>这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。</p><h1 id="一、Back-Face外扩描边"><a href="#一、Back-Face外扩描边" class="headerlink" title="一、Back Face外扩描边"></a>一、Back Face外扩描边</h1><p>背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。</p><h2 id="1-1-实现原理"><a href="#1-1-实现原理" class="headerlink" title="1.1 实现原理"></a>1.1 实现原理</h2><p>第一个Pass正常渲染物体。第二个Pass只渲染背面，同时顶点沿着法线方向偏移，开启深度测试。<br>第二个Pass开启深度测试的用处一个是重叠部分不会显示出来，另外可以利用Early-Z减少需要处理的片元数量。</p><h2 id="1-2-描边的法线优化"><a href="#1-2-描边的法线优化" class="headerlink" title="1.2 描边的法线优化"></a>1.2 描边的法线优化</h2><p>由于我们是沿着法线偏移顶点，那么最终的描边结果对法线的依赖很大。如果法线分布有问题，可能造成描边断裂的情况。如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780687.png"></p><p>这是因为四个面的法线都是垂直于面的，在角的地方没有连续性。一种比较好的解决方式是计算平均法线存储在不使用的uv通道内，比如uv8，然后使用这个平均法线去计算描边。<br>何谓平均法线？即顶点周围面法线的平均或者加权平均。<br>如何计算这个平均法线了？这个可以编写外部工具对fbx直接离线修改；或者编写Unity的脚本修改uv8，不过在Unity内已经修改不了Fbx文件了，所以去修改Mesh的uv8数据，实际上这个修改是存储在工程的缓存数据内的，因此需要给Mesh新增一个Tag，如果有这个Tag导入Mesh的时候就需要就需要计算平滑法线。</p><h2 id="1-3-根据摄像机修正描边宽度"><a href="#1-3-根据摄像机修正描边宽度" class="headerlink" title="1.3 根据摄像机修正描边宽度"></a>1.3 根据摄像机修正描边宽度</h2><p>一个是距离摄像机的距离，理论上来说应该是距离摄像机越远描边应该越小，这个可以用摄像机空间的z值来表示。另外一个是Fov，Fov越大描边应该越小。<br>加入这2个修正因子后，描边的粗细会看起来自然很多。</p><h2 id="1-4-描边深度偏移控制消隐"><a href="#1-4-描边深度偏移控制消隐" class="headerlink" title="1.4 描边深度偏移控制消隐"></a>1.4 描边深度偏移控制消隐</h2><p>有些地方美术实际上不希望出现描边。比如，头发的中间部位，美术只希望头发的边缘能看到描边。但是，正对着角色的时候，头发的中间部分实际上也是外扩的边缘，同样会看到描边。<br>这种情况可以通过使用深度偏移来修改顶点着色器的裁剪坐标，从而消隐描边。实际上，就是把不需要看到的描边往里推，从而被角色本身覆盖，就看不到描边了。<br>那么，哪些描边需要消隐了？就是下面要说的顶点色。</p><h2 id="1-5-顶点色控制描边宽度和深度偏移"><a href="#1-5-顶点色控制描边宽度和深度偏移" class="headerlink" title="1.5 顶点色控制描边宽度和深度偏移"></a>1.5 顶点色控制描边宽度和深度偏移</h2><p>我们提供了顶点色的两个通道来分别控制描边的粗细和深度偏移。粗细很好理解，就是有些部位描边宽有些更窄。深度偏移就是上面说的消隐问题，有些地方的描边希望看不到就可以增加一定的深度偏移使其被角色挡住。<br>顶点色需要美术使用DCC工具去涂色，或者也可以在Unity中使用编辑器去涂，然后保存下来。还是类似的问题，在Unity中不能修改原始的Fbx文件，因此涂色后的网格数据只能保存为.asset。<br>当前项目中使用的是这篇文章：<a href="https://zhuanlan.zhihu.com/p/139318012" target="_blank" rel="noopener">在Unity中写一个简单的顶点颜色编辑器</a>的顶点色工具，基本需求能够满足。</p><p>最终的描边效果如下所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780708.jpg"><br>可以看到头顶的头发通过顶点色深度偏移控制了消隐，头发的描边粗细也是通过另一个顶点色通道控制的。</p><h1 id="二、-后处理描边"><a href="#二、-后处理描边" class="headerlink" title="二、 后处理描边"></a>二、 后处理描边</h1><p>后处理描边是在图像空间使用边缘检测因子得到边缘信息，通常是检测深度图或者法线图，比颜色图效果更好。因为，深度或者法线在角色边缘有明显的不连续性。但是，后处理描边的缺点是无法控制描边或者说很难像外扩描边一样精细的控制描边效果，同时还会把内描边也检测出来。<br>对于头发的描边，后处理描边这些缺点就是非常致命的，因为我们主要用的还是外扩描边。</p><h1 id="三、其它描边方式"><a href="#三、其它描边方式" class="headerlink" title="三、其它描边方式"></a>三、其它描边方式</h1><h2 id="3-1-NdotV"><a href="#3-1-NdotV" class="headerlink" title="3.1 NdotV"></a>3.1 NdotV</h2><p>类似简单的边缘光实现方式，也可以用来做描边，但是效果和控制力度肯定是达不到需求的。</p><h2 id="3-2-深度贴图描边"><a href="#3-2-深度贴图描边" class="headerlink" title="3.2 深度贴图描边"></a>3.2 深度贴图描边</h2><p>之前说的深度贴图边缘光和阴影同样可以用来做描边，也能使用顶点颜色提供一定的控制粒度，比如控制粗细，但是也无法做深度偏移消隐等。</p><h1 id="四、内描边"><a href="#四、内描边" class="headerlink" title="四、内描边"></a>四、内描边</h1><p>所谓内描边，指的是物体内部的描边，非物体边缘看到的描边。之前说的技术基本上都是针对外描边的。</p><h2 id="4-1-本村线"><a href="#4-1-本村线" class="headerlink" title="4.1 本村线"></a>4.1 本村线</h2><p>简单来说，是直接在贴图上画描边，同时这些描边基本是跟轴对齐的。不过工作量很大，而且很大细节需要控制，很少有美术愿意采用这种方式，因此不做过多的讨论。<br>如下图：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780709.jpg"></p><h2 id="4-2-后处理内描边"><a href="#4-2-后处理内描边" class="headerlink" title="4.2 后处理内描边"></a>4.2 后处理内描边</h2><p>网上有文章提到二之国中的做法是在顶点属性通道中记录边缘程度，然后在后处理中来进行绘制内描边。<br>如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780719.jpg"><br>猜测是类似于顶点色的方式，让美术使用工具在顶点色中涂色边缘程度，<br>然后需要一个Pass将顶点色上的边缘程度属性输出到一个RT上，最终在后处理Pass中检测这个RT对应像素的边缘程度完成内描边。<br>至于如何将边缘程度转换为描边，需要参考相关资料才能弄清楚了，这里的日文看不懂啊。</p><h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote><p><a href="https://zhuanlan.zhihu.com/p/109101851" target="_blank" rel="noopener">【01】从零开始的卡通渲染-描边篇</a><br><a href="https://zhuanlan.zhihu.com/p/163791090" target="_blank" rel="noopener">卡通渲染学习总结</a></p></blockquote>]]></content>
+    <content type="html"><![CDATA[<p>这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。</p><h1 id="一、Back-Face外扩描边"><a href="#一、Back-Face外扩描边" class="headerlink" title="一、Back Face外扩描边"></a>一、Back Face外扩描边</h1><p>背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。</p><h2 id="1-1-实现原理"><a href="#1-1-实现原理" class="headerlink" title="1.1 实现原理"></a>1.1 实现原理</h2><p>第一个Pass正常渲染物体。第二个Pass只渲染背面，同时顶点沿着法线方向偏移，开启深度测试。<br>第二个Pass开启深度测试的用处一个是重叠部分不会显示出来，另外可以利用Early-Z减少需要处理的片元数量。</p><h2 id="1-2-描边的法线优化"><a href="#1-2-描边的法线优化" class="headerlink" title="1.2 描边的法线优化"></a>1.2 描边的法线优化</h2><p>由于我们是沿着法线偏移顶点，那么最终的描边结果对法线的依赖很大。如果法线分布有问题，可能造成描边断裂的情况。如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780687.png"></p><p>这是因为四个面的法线都是垂直于面的，在角的地方没有连续性。一种比较好的解决方式是计算平均法线存储在不使用的uv通道内，比如uv8，然后使用这个平均法线去计算描边。<br>何谓平均法线？即顶点周围面法线的平均或者加权平均。<br>如何计算这个平均法线了？这个可以编写外部工具对fbx直接离线修改；或者编写Unity的脚本修改uv8，不过在Unity内已经修改不了Fbx文件了，所以去修改Mesh的uv8数据，实际上这个修改是存储在工程的缓存数据内的，因此需要给Mesh新增一个Tag，如果有这个Tag导入Mesh的时候就需要就需要计算平滑法线。</p><h2 id="1-3-根据摄像机修正描边宽度"><a href="#1-3-根据摄像机修正描边宽度" class="headerlink" title="1.3 根据摄像机修正描边宽度"></a>1.3 根据摄像机修正描边宽度</h2><p>一个是距离摄像机的距离，理论上来说应该是距离摄像机越远描边应该越小，这个可以用摄像机空间的z值来表示。另外一个是Fov，Fov越大描边应该越小。<br>加入这2个修正因子后，描边的粗细会看起来自然很多。</p><h2 id="1-4-描边深度偏移控制消隐"><a href="#1-4-描边深度偏移控制消隐" class="headerlink" title="1.4 描边深度偏移控制消隐"></a>1.4 描边深度偏移控制消隐</h2><p>有些地方美术实际上不希望出现描边。比如，头发的中间部位，美术只希望头发的边缘能看到描边。但是，正对着角色的时候，头发的中间部分实际上也是外扩的边缘，同样会看到描边。<br>这种情况可以通过使用深度偏移来修改顶点着色器的裁剪坐标，从而消隐描边。实际上，就是把不需要看到的描边往里推，从而被角色本身覆盖，就看不到描边了。<br>那么，哪些描边需要消隐了？就是下面要说的顶点色。</p><h2 id="1-5-顶点色控制描边宽度和深度偏移"><a href="#1-5-顶点色控制描边宽度和深度偏移" class="headerlink" title="1.5 顶点色控制描边宽度和深度偏移"></a>1.5 顶点色控制描边宽度和深度偏移</h2><p>我们提供了顶点色的两个通道来分别控制描边的粗细和深度偏移。粗细很好理解，就是有些部位描边宽有些更窄。深度偏移就是上面说的消隐问题，有些地方的描边希望看不到就可以增加一定的深度偏移使其被角色挡住。<br>顶点色需要美术使用DCC工具去涂色，或者也可以在Unity中使用编辑器去涂，然后保存下来。还是类似的问题，在Unity中不能修改原始的Fbx文件，因此涂色后的网格数据只能保存为.asset。<br>当前项目中使用的是这篇文章：<a href="https://zhuanlan.zhihu.com/p/139318012" target="_blank" rel="noopener">在Unity中写一个简单的顶点颜色编辑器</a>的顶点色工具，基本需求能够满足。</p><p>最终的描边效果如下所示：<br><img alt="卡通渲染外扩描边" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/卡通渲染外扩描边.jpg"><br>可以看到头顶的头发通过顶点色深度偏移控制了消隐，头发的描边粗细也是通过另一个顶点色通道控制的。</p><h1 id="二、-后处理描边"><a href="#二、-后处理描边" class="headerlink" title="二、 后处理描边"></a>二、 后处理描边</h1><p>后处理描边是在图像空间使用边缘检测因子得到边缘信息，通常是检测深度图或者法线图，比颜色图效果更好。因为，深度或者法线在角色边缘有明显的不连续性。但是，后处理描边的缺点是无法控制描边或者说很难像外扩描边一样精细的控制描边效果，同时还会把内描边也检测出来。<br>对于头发的描边，后处理描边这些缺点就是非常致命的，因为我们主要用的还是外扩描边。</p><h1 id="三、其它描边方式"><a href="#三、其它描边方式" class="headerlink" title="三、其它描边方式"></a>三、其它描边方式</h1><h2 id="3-1-NdotV"><a href="#3-1-NdotV" class="headerlink" title="3.1 NdotV"></a>3.1 NdotV</h2><p>类似简单的边缘光实现方式，也可以用来做描边，但是效果和控制力度肯定是达不到需求的。</p><h2 id="3-2-深度贴图描边"><a href="#3-2-深度贴图描边" class="headerlink" title="3.2 深度贴图描边"></a>3.2 深度贴图描边</h2><p>之前说的深度贴图边缘光和阴影同样可以用来做描边，也能使用顶点颜色提供一定的控制粒度，比如控制粗细，但是也无法做深度偏移消隐等。</p><h1 id="四、内描边"><a href="#四、内描边" class="headerlink" title="四、内描边"></a>四、内描边</h1><p>所谓内描边，指的是物体内部的描边，非物体边缘看到的描边。之前说的技术基本上都是针对外描边的。</p><h2 id="4-1-本村线"><a href="#4-1-本村线" class="headerlink" title="4.1 本村线"></a>4.1 本村线</h2><p>简单来说，是直接在贴图上画描边，同时这些描边基本是跟轴对齐的。不过工作量很大，而且很大细节需要控制，很少有美术愿意采用这种方式，因此不做过多的讨论。<br>如下图：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780709.jpg"></p><h2 id="4-2-后处理内描边"><a href="#4-2-后处理内描边" class="headerlink" title="4.2 后处理内描边"></a>4.2 后处理内描边</h2><p>网上有文章提到二之国中的做法是在顶点属性通道中记录边缘程度，然后在后处理中来进行绘制内描边。<br>如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780719.jpg"><br>猜测是类似于顶点色的方式，让美术使用工具在顶点色中涂色边缘程度，<br>然后需要一个Pass将顶点色上的边缘程度属性输出到一个RT上，最终在后处理Pass中检测这个RT对应像素的边缘程度完成内描边。<br>至于如何将边缘程度转换为描边，需要参考相关资料才能弄清楚了，这里的日文看不懂啊。</p><h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote><p><a href="https://zhuanlan.zhihu.com/p/109101851" target="_blank" rel="noopener">【01】从零开始的卡通渲染-描边篇</a><br><a href="https://zhuanlan.zhihu.com/p/163791090" target="_blank" rel="noopener">卡通渲染学习总结</a></p></blockquote>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。&lt;/p&gt;
-&lt;h1 id=&quot;一、Back-Face外扩描边&quot;&gt;&lt;a href=&quot;#一、Back-Face外扩描边&quot; class=&quot;headerlink&quot; title=&quot;一、Back Face外扩描边&quot;&gt;&lt;/a&gt;一、Back
-      
+      &lt;p&gt;这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。&lt;/p&gt;
+&lt;h1 id=&quot;一、Back-Face外扩描边&quot;&gt;&lt;a href=&quot;#一、Back-Face外扩描边&quot; class=&quot;headerlink&quot; title=&quot;一、Back Face外扩描边&quot;&gt;&lt;/a&gt;一、Back Face外扩描边&lt;/h1&gt;&lt;p&gt;背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。&lt;/p&gt;
     
     </summary>
     
@@ -54,11 +51,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;这边文章讲述的是项目中用到的一些卡通渲染阴影相关技术。&lt;/p&gt;
-&lt;h1 id=&quot;一、SDF面部阴影&quot;&gt;&lt;a href=&quot;#一、SDF面部阴影&quot; class=&quot;headerlink&quot; title=&quot;一、SDF面部阴影&quot;&gt;&lt;/a&gt;一、SDF面部阴影&lt;/h1&gt;&lt;p&gt;SDF这个概念
-      
+      &lt;p&gt;这边文章讲述的是项目中用到的一些卡通渲染阴影相关技术。&lt;/p&gt;
+&lt;h1 id=&quot;一、SDF面部阴影&quot;&gt;&lt;a href=&quot;#一、SDF面部阴影&quot; class=&quot;headerlink&quot; title=&quot;一、SDF面部阴影&quot;&gt;&lt;/a&gt;一、SDF面部阴影&lt;/h1&gt;&lt;p&gt;SDF这个概念具体是什么意思了？可以去观看闫令琪在B站上的101课程，有一节专门讲述了SDF的定义和混合SDF能够产生什么效果。其实SDF面部阴影基本的思想就是混合面部的SDF得到一张阴影阈值图，然后利用这张阴影阈值图实现二维的阴影渲染。&lt;br&gt;比较详细的解释可以参考这篇文章，&lt;a href=&quot;https://zhuanlan.zhihu.com/p/361716315&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）&lt;/a&gt;。&lt;/p&gt;
     
     </summary>
     
@@ -81,11 +75,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;这篇文章讲述的是项目中二次元日式卡通着色渲染用到的一些跟着色相关的技术点。&lt;/p&gt;
-&lt;h1 id=&quot;一、卡通着色&quot;&gt;&lt;a href=&quot;#一、卡通着色&quot; class=&quot;headerlink&quot; title=&quot;一、卡通着色&quot;&gt;&lt;/a&gt;一、卡通着色&lt;/h1&gt;&lt;p&gt;何谓卡通着色？大概
-      
+      &lt;p&gt;这篇文章讲述的是项目中二次元日式卡通着色渲染用到的一些跟着色相关的技术点。&lt;/p&gt;
+&lt;h1 id=&quot;一、卡通着色&quot;&gt;&lt;a href=&quot;#一、卡通着色&quot; class=&quot;headerlink&quot; title=&quot;一、卡通着色&quot;&gt;&lt;/a&gt;一、卡通着色&lt;/h1&gt;&lt;p&gt;何谓卡通着色？大概是让角色看起来卡通的角色吧。这里说的卡通着色，实际上指的是色阶着色。即根据光照和法线计算出当前像素处于哪个色阶，色阶之间有平缓过渡。&lt;/p&gt;
     
     </summary>
     
@@ -108,10 +99,7 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、问题起源和影响&quot;&gt;&lt;a href=&quot;#一、问题起源和影响&quot; class=&quot;headerlink&quot; title=&quot;一、问题起源和影响&quot;&gt;&lt;/a&gt;一、问题起源和影响&lt;/h1&gt;&lt;h2 id=&quot;1-1-Base相机切换导致切换场景时候闪烁&quot;&gt;&lt;a href=&quot;#1-1
-      
+      &lt;h1 id=&quot;一、问题起源和影响&quot;&gt;&lt;a href=&quot;#一、问题起源和影响&quot; class=&quot;headerlink&quot; title=&quot;一、问题起源和影响&quot;&gt;&lt;/a&gt;一、问题起源和影响&lt;/h1&gt;&lt;h2 id=&quot;1-1-Base相机切换导致切换场景时候闪烁&quot;&gt;&lt;a href=&quot;#1-1-Base相机切换导致切换场景时候闪烁&quot; class=&quot;headerlink&quot; title=&quot;1.1 Base相机切换导致切换场景时候闪烁&quot;&gt;&lt;/a&gt;1.1 Base相机切换导致切换场景时候闪烁&lt;/h2&gt;&lt;p&gt;问题是这样的，项目之前一直用场景相机作为Base相机，UI相机作为Overlay相机。渲染顺序是先渲染场景Base相机，然后渲染UI相机。不过，最近打包发现，在部分机器上，一切换场景时候，比如loading界面打开时候，屏幕会出现明显的闪烁，甚至还会花屏。&lt;/p&gt;
     
     </summary>
     
@@ -138,10 +126,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;a href=&quot;#一、如何获得颜色缓冲&quot; class=&quot;headerlink&quot; title=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;/a&gt;一、如何获得颜色缓冲&lt;/h1&gt;&lt;p&gt;网上搜索Unity的后处理或者获得屏幕缓冲，大部分会提到用grabpass到
-      
+      &lt;h1 id=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;a href=&quot;#一、如何获得颜色缓冲&quot; class=&quot;headerlink&quot; title=&quot;一、如何获得颜色缓冲&quot;&gt;&lt;/a&gt;一、如何获得颜色缓冲&lt;/h1&gt;&lt;p&gt;网上搜索Unity的后处理或者获得屏幕缓冲，大部分会提到用grabpass到一张指定纹理上或者写一个后处理脚本挂在摄像机上。但是这种方式在Urp管线下已经不生效了。urp取消了默认管线抓取颜色缓冲的grabpass，同时也取消了&lt;a href=&quot;https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnRenderImage.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MonoBehaviour.OnRenderImage&lt;/a&gt;，需要使用&lt;a href=&quot;https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@12.1/api/UnityEngine.Rendering.Universal.ScriptableRenderPass.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ScriptableRenderPass&lt;/a&gt; 来完成类似的功能。ScriptableRenderPass是urp中的pass基类，urp预定义的pass都继承自该类，我们自定义的pass也需要继承自该类。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-Urp的渲染顺序&quot;&gt;&lt;a href=&quot;#1-1-Urp的渲染顺序&quot; class=&quot;headerlink&quot; title=&quot;1.1 Urp的渲染顺序&quot;&gt;&lt;/a&gt;1.1 Urp的渲染顺序&lt;/h2&gt;
     
     </summary>
     
@@ -170,10 +156,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、反射的实现原理分类&quot;&gt;&lt;a href=&quot;#一、反射的实现原理分类&quot; class=&quot;headerlink&quot; title=&quot;一、反射的实现原理分类&quot;&gt;&lt;/a&gt;一、反射的实现原理分类&lt;/h1&gt;&lt;p&gt;首先要说明下&lt;strong&gt;反射向量&lt;/strong&gt;，指的是视线的
-      
+      &lt;h1 id=&quot;一、反射的实现原理分类&quot;&gt;&lt;a href=&quot;#一、反射的实现原理分类&quot; class=&quot;headerlink&quot; title=&quot;一、反射的实现原理分类&quot;&gt;&lt;/a&gt;一、反射的实现原理分类&lt;/h1&gt;&lt;p&gt;首先要说明下&lt;strong&gt;反射向量&lt;/strong&gt;，指的是视线的镜面反射向量，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/视线反射方向.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;实际上，人眼看向一个物体表面的时候，在该位置（上图O点）的反射信息，来自于视线的反射方向，因为光线会从该反射方向打到物体表面，最终进入人眼。一般情况下，我们假定反射角和入射角相等。以下所有涉及到的反射向量， 都是指的视线反射向量，不是光线反射向量。&lt;/p&gt;
     
     </summary>
     
@@ -198,10 +182,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;平面反射通常指的是在镜子或者光滑地面的反射效果上，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射示意图.jpg&quot;&gt;&lt;br&gt;上
-      
+      &lt;p&gt;平面反射通常指的是在镜子或者光滑地面的反射效果上，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射示意图.jpg&quot;&gt;&lt;br&gt;上图是一个光滑的平面，平面上的物体在平面上有对称的投影。&lt;/p&gt;
+&lt;h1 id=&quot;一、平面反射的原理&quot;&gt;&lt;a href=&quot;#一、平面反射的原理&quot; class=&quot;headerlink&quot; title=&quot;一、平面反射的原理&quot;&gt;&lt;/a&gt;一、平面反射的原理&lt;/h1&gt;&lt;p&gt;对于光照射到物体表面然后发生完美镜面反射的示意图，如下所示，&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/镜面反射.png&quot;&gt;&lt;br&gt;对于平面反射，假设平面上任意一点都会发生完美的镜面反射。因此，眼睛看到物体的一点的反射信息是从反射向量处得到的，这个可以用下图来表示，&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/视线反射方向.png&quot;&gt;&lt;br&gt;这个实际上相当于，眼睛从平面的下面看向反射向量，如下图所示，&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射原理.png&quot;&gt;&lt;br&gt;因此，如上图所示，我们可以把摄像机根据平面对称变换到A点所示的位置，然后再渲染一遍场景到RenderTexture中。当我们渲染点O的反射信息时候，就可以到这张RT中去采样了。那么如何去采样反射信息了？使用点O的屏幕空间坐标。因为，RT是从A点看到的场景，视线和平面的交点O是当前渲染的像素点，因此用O的屏幕空间坐标去采样RT就可以得到其反射信息。&lt;/p&gt;
     
     </summary>
     
@@ -228,10 +210,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能
-      
+      &lt;p&gt;需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。&lt;/p&gt;
+&lt;h1 id=&quot;一、渲染管线的思维导图&quot;&gt;&lt;a href=&quot;#一、渲染管线的思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、渲染管线的思维导图&quot;&gt;&lt;/a&gt;一、渲染管线的思维导图&lt;/h1&gt;&lt;p&gt;这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。&lt;br&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/渲染管线.png&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -256,10 +236,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、思维导图&quot;&gt;&lt;a href=&quot;#一、思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、思维导图&quot;&gt;&lt;/a&gt;一、思维导图&lt;/h1&gt;&lt;p&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/x
-      
+      &lt;h1 id=&quot;一、思维导图&quot;&gt;&lt;a href=&quot;#一、思维导图&quot; class=&quot;headerlink&quot; title=&quot;一、思维导图&quot;&gt;&lt;/a&gt;一、思维导图&lt;/h1&gt;&lt;p&gt;&lt;img alt data-src=&quot;https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/坐标空间.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;二、模型空间&quot;&gt;&lt;a href=&quot;#二、模型空间&quot; class=&quot;headerlink&quot; title=&quot;二、模型空间&quot;&gt;&lt;/a&gt;二、模型空间&lt;/h1&gt;
     
     </summary>
     
@@ -286,11 +264,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、伽马校正&quot;&gt;&lt;a href=&quot;#一、伽马校正&quot; class=&quot;headerlink&quot; title=&quot;一、伽马校正&quot;&gt;&lt;/a&gt;一、伽马校正&lt;/h1&gt;&lt;p&gt;所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。&lt;/p&gt;
-&lt;h2 id=
-      
+      &lt;h1 id=&quot;一、伽马校正&quot;&gt;&lt;a href=&quot;#一、伽马校正&quot; class=&quot;headerlink&quot; title=&quot;一、伽马校正&quot;&gt;&lt;/a&gt;一、伽马校正&lt;/h1&gt;&lt;p&gt;所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-人眼的非线性视觉效应&quot;&gt;&lt;a href=&quot;#1-1-人眼的非线性视觉效应&quot; class=&quot;headerlink&quot; title=&quot;1.1 人眼的非线性视觉效应&quot;&gt;&lt;/a&gt;1.1 人眼的非线性视觉效应&lt;/h2&gt;
     
     </summary>
     
@@ -319,10 +294,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、DrawCall、Batches、SetPassCalls的基本理解&quot;&gt;&lt;a href=&quot;#一、DrawCall、Batches、SetPassCalls的基本理解&quot; class=&quot;headerlink&quot; title=&quot;一、DrawCall、Batches、S
-      
+      &lt;h1 id=&quot;一、DrawCall、Batches、SetPassCalls的基本理解&quot;&gt;&lt;a href=&quot;#一、DrawCall、Batches、SetPassCalls的基本理解&quot; class=&quot;headerlink&quot; title=&quot;一、DrawCall、Batches、SetPassCalls的基本理解&quot;&gt;&lt;/a&gt;一、DrawCall、Batches、SetPassCalls的基本理解&lt;/h1&gt;&lt;p&gt;我们先从图形渲染的角度对这些概念做一个基本的理解。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-DrawCall&quot;&gt;&lt;a href=&quot;#1-1-DrawCall&quot; class=&quot;headerlink&quot; title=&quot;1.1 DrawCall&quot;&gt;&lt;/a&gt;1.1 DrawCall&lt;/h2&gt;
     
     </summary>
     
@@ -353,10 +326,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。&lt;br&gt;首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。&lt;/p&gt;
-      
+      &lt;p&gt;左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。&lt;br&gt;首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。&lt;/p&gt;
+&lt;h1 id=&quot;一、左手坐标系&quot;&gt;&lt;a href=&quot;#一、左手坐标系&quot; class=&quot;headerlink&quot; title=&quot;一、左手坐标系&quot;&gt;&lt;/a&gt;一、左手坐标系&lt;/h1&gt;&lt;p&gt;所谓左手坐标系，指的是通过左手来确定的一个三维空间坐标系。&lt;/p&gt;
     
     </summary>
     
@@ -383,10 +354,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、命名法&quot;&gt;&lt;a href=&quot;#一、命名法&quot; class=&quot;headerlink&quot; title=&quot;一、命名法&quot;&gt;&lt;/a&gt;一、命名法&lt;/h1&gt;&lt;p&gt;Pascal命名法：每个单词首字母大写。&lt;br&gt;Camel命名法：第一个单词首字母小写，其余单词首字母大写。&lt;br&gt;
-      
+      &lt;h1 id=&quot;一、命名法&quot;&gt;&lt;a href=&quot;#一、命名法&quot; class=&quot;headerlink&quot; title=&quot;一、命名法&quot;&gt;&lt;/a&gt;一、命名法&lt;/h1&gt;&lt;p&gt;Pascal命名法：每个单词首字母大写。&lt;br&gt;Camel命名法：第一个单词首字母小写，其余单词首字母大写。&lt;br&gt;C++标准库命名法：全小写，单词用下划线分割。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-CSharp&quot;&gt;&lt;a href=&quot;#1-1-CSharp&quot; class=&quot;headerlink&quot; title=&quot;1.1 CSharp&quot;&gt;&lt;/a&gt;1.1 CSharp&lt;/h2&gt;
     
     </summary>
     
@@ -413,10 +382,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;一、内存对齐&quot;&gt;&lt;a href=&quot;#一、内存对齐&quot; class=&quot;headerlink&quot; title=&quot;一、内存对齐&quot;&gt;&lt;/a&gt;一、内存对齐&lt;/h1&gt;&lt;p&gt;C++的对象都会进行内存对齐，所谓内存对齐，指的是对象的地址和大小都会对齐到n的倍数上。比如按照4对齐，那么
-      
+      &lt;h1 id=&quot;一、内存对齐&quot;&gt;&lt;a href=&quot;#一、内存对齐&quot; class=&quot;headerlink&quot; title=&quot;一、内存对齐&quot;&gt;&lt;/a&gt;一、内存对齐&lt;/h1&gt;&lt;p&gt;C++的对象都会进行内存对齐，所谓内存对齐，指的是对象的地址和大小都会对齐到n的倍数上。比如按照4对齐，那么对象的地址会是4的倍数，对象的大小也是4的倍数。究其原因是，机器在内存对齐的地址上访问数据更快，可以一起取出数据；如果数据存在在不对齐的地址上，需要换成2次对齐地址上的取数据，再组合出原始数据；而且，部分机器根本没有取非对齐的数据。&lt;/p&gt;
+&lt;h2 id=&quot;1-1-默认对齐&quot;&gt;&lt;a href=&quot;#1-1-默认对齐&quot; class=&quot;headerlink&quot; title=&quot;1.1 默认对齐&quot;&gt;&lt;/a&gt;1.1 默认对齐&lt;/h2&gt;
     
     </summary>
     
@@ -441,10 +408,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI
-      
+      &lt;h2 id=&quot;NGUI介绍&quot;&gt;&lt;a href=&quot;#NGUI介绍&quot; class=&quot;headerlink&quot; title=&quot;NGUI介绍&quot;&gt;&lt;/a&gt;NGUI介绍&lt;/h2&gt;&lt;p&gt;NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。&lt;br&gt;NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循&lt;a href=&quot;https://en.wikipedia.org/wiki/KISS_principle&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Kiss准则&lt;/a&gt;，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/?page_id=140&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方网址&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.tasharen.com/forum/index.php?board=12.0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NGUI官方文档地址&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;NGUI下载&quot;&gt;&lt;a href=&quot;#NGUI下载&quot; class=&quot;headerlink&quot; title=&quot;NGUI下载&quot;&gt;&lt;/a&gt;NGUI下载&lt;/h2&gt;
     
     </summary>
     
@@ -471,11 +436,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
-&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h
-      
+      &lt;p&gt;本文主要介绍编写一个原生的WebGL程序需要哪些步骤。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL程序的软件结构&quot;&gt;&lt;a href=&quot;#WebGL程序的软件结构&quot; class=&quot;headerlink&quot; title=&quot;WebGL程序的软件结构&quot;&gt;&lt;/a&gt;WebGL程序的软件结构&lt;/h2&gt;&lt;p&gt;默认情况下，一个动态网页程序只包括HTML和JavaScript两种语言。&lt;br&gt;而在WebGL程序中，还包括了第三种语言：GLSL ES。&lt;/p&gt;
     
     </summary>
     
@@ -500,10 +462,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的
-      
+      &lt;h2 id=&quot;命令行参数和控制台命令&quot;&gt;&lt;a href=&quot;#命令行参数和控制台命令&quot; class=&quot;headerlink&quot; title=&quot;命令行参数和控制台命令&quot;&gt;&lt;/a&gt;命令行参数和控制台命令&lt;/h2&gt;&lt;p&gt;游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。&lt;/p&gt;
+&lt;h2 id=&quot;控制台命令&quot;&gt;&lt;a href=&quot;#控制台命令&quot; class=&quot;headerlink&quot; title=&quot;控制台命令&quot;&gt;&lt;/a&gt;控制台命令&lt;/h2&gt;
     
     </summary>
     
@@ -528,11 +488,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
-&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数
-      
+      &lt;p&gt;命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。&lt;/p&gt;
+&lt;h2 id=&quot;命令行参数&quot;&gt;&lt;a href=&quot;#命令行参数&quot; class=&quot;headerlink&quot; title=&quot;命令行参数&quot;&gt;&lt;/a&gt;命令行参数&lt;/h2&gt;&lt;p&gt;命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。&lt;/p&gt;
     
     </summary>
     
@@ -557,10 +514,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系
-      
+      &lt;h3 id=&quot;DebugView简介&quot;&gt;&lt;a href=&quot;#DebugView简介&quot; class=&quot;headerlink&quot; title=&quot;DebugView简介&quot;&gt;&lt;/a&gt;DebugView简介&lt;/h3&gt;&lt;p&gt;DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。&lt;br&gt;这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。&lt;/p&gt;
+&lt;h2 id=&quot;安装DebugView&quot;&gt;&lt;a href=&quot;#安装DebugView&quot; class=&quot;headerlink&quot; title=&quot;安装DebugView&quot;&gt;&lt;/a&gt;安装DebugView&lt;/h2&gt;
     
     </summary>
     
@@ -585,10 +540,8 @@
     
     <summary type="html">
     
-      
-      
-        &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL
-      
+      &lt;h2 id=&quot;WebGL概述&quot;&gt;&lt;a href=&quot;#WebGL概述&quot; class=&quot;headerlink&quot; title=&quot;WebGL概述&quot;&gt;&lt;/a&gt;WebGL概述&lt;/h2&gt;&lt;p&gt;什么是WebGL？WebGL简单的说就是在Web中渲染OpenGL的技术，也可以理解为把OpenGL的接口移植到浏览器中使用。具体的可以参考&lt;a href=&quot;https://zh.wikipedia.org/wiki/WebGL&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;WebGL的维基百科&lt;/a&gt;。&lt;br&gt;使用WebGL可以通过编写网页代码在浏览器中渲染三维图像，而且不需要任何的插件，比如Adobe Flash Player等。&lt;br&gt;WebGL在最新的浏览器中得到了广泛支持。&lt;/p&gt;
+&lt;h2 id=&quot;WebGL与HTML5的关系&quot;&gt;&lt;a href=&quot;#WebGL与HTML5的关系&quot; class=&quot;headerlink&quot; title=&quot;WebGL与HTML5的关系&quot;&gt;&lt;/a&gt;WebGL与HTML5的关系&lt;/h2&gt;
     
     </summary>
     
