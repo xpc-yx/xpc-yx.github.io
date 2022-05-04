@@ -55,16 +55,15 @@
 <meta property="og:site_name" content="远行&#39;s Blog">
 <meta property="og:description" content="这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。 一、Back Face外扩描边背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/1648278780687.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%8F%8F%E8%BE%B9%E6%96%AD%E8%A3%82.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%A4%96%E6%89%A9%E6%8F%8F%E8%BE%B9.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/1648278780709.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/1648278780719.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E4%BA%8C%E4%B9%8B%E5%9B%BD%E5%90%8E%E5%A4%84%E7%90%86%E5%86%85%E6%8F%8F%E8%BE%B9.jpg">
 <meta property="article:published_time" content="2022-03-12T12:18:30.000Z">
-<meta property="article:modified_time" content="2022-05-04T07:03:08.734Z">
+<meta property="article:modified_time" content="2022-05-04T07:07:09.296Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="日式卡通渲染">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/1648278780687.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E6%8F%8F%E8%BE%B9%E6%96%AD%E8%A3%82.png">
 
 <link rel="canonical" href="http://xiaopengcheng.top/2022/03/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E6%8F%8F%E8%BE%B9%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89/">
 
@@ -291,7 +290,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -313,7 +312,7 @@
         <p>这边文章讲述的是项目中用到的一些卡通渲染描边相关技术。</p>
 <h1 id="一、Back-Face外扩描边"><a href="#一、Back-Face外扩描边" class="headerlink" title="一、Back Face外扩描边"></a>一、Back Face外扩描边</h1><p>背面外扩描边和后处理描边是卡通渲染中主要应用到的描边方式。</p>
 <h2 id="1-1-实现原理"><a href="#1-1-实现原理" class="headerlink" title="1.1 实现原理"></a>1.1 实现原理</h2><p>第一个Pass正常渲染物体。第二个Pass只渲染背面，同时顶点沿着法线方向偏移，开启深度测试。<br>第二个Pass开启深度测试的用处一个是重叠部分不会显示出来，另外可以利用Early-Z减少需要处理的片元数量。</p>
-<h2 id="1-2-描边的法线优化"><a href="#1-2-描边的法线优化" class="headerlink" title="1.2 描边的法线优化"></a>1.2 描边的法线优化</h2><p>由于我们是沿着法线偏移顶点，那么最终的描边结果对法线的依赖很大。如果法线分布有问题，可能造成描边断裂的情况。如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780687.png"></p>
+<h2 id="1-2-描边的法线优化"><a href="#1-2-描边的法线优化" class="headerlink" title="1.2 描边的法线优化"></a>1.2 描边的法线优化</h2><p>由于我们是沿着法线偏移顶点，那么最终的描边结果对法线的依赖很大。如果法线分布有问题，可能造成描边断裂的情况。如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/卡通渲染描边断裂.png"></p>
 <p>这是因为四个面的法线都是垂直于面的，在角的地方没有连续性。一种比较好的解决方式是计算平均法线存储在不使用的uv通道内，比如uv8，然后使用这个平均法线去计算描边。<br>何谓平均法线？即顶点周围面法线的平均或者加权平均。<br>如何计算这个平均法线了？这个可以编写外部工具对fbx直接离线修改；或者编写Unity的脚本修改uv8，不过在Unity内已经修改不了Fbx文件了，所以去修改Mesh的uv8数据，实际上这个修改是存储在工程的缓存数据内的，因此需要给Mesh新增一个Tag，如果有这个Tag导入Mesh的时候就需要就需要计算平滑法线。</p>
 <h2 id="1-3-根据摄像机修正描边宽度"><a href="#1-3-根据摄像机修正描边宽度" class="headerlink" title="1.3 根据摄像机修正描边宽度"></a>1.3 根据摄像机修正描边宽度</h2><p>一个是距离摄像机的距离，理论上来说应该是距离摄像机越远描边应该越小，这个可以用摄像机空间的z值来表示。另外一个是Fov，Fov越大描边应该越小。<br>加入这2个修正因子后，描边的粗细会看起来自然很多。</p>
 <h2 id="1-4-描边深度偏移控制消隐"><a href="#1-4-描边深度偏移控制消隐" class="headerlink" title="1.4 描边深度偏移控制消隐"></a>1.4 描边深度偏移控制消隐</h2><p>有些地方美术实际上不希望出现描边。比如，头发的中间部位，美术只希望头发的边缘能看到描边。但是，正对着角色的时候，头发的中间部分实际上也是外扩的边缘，同样会看到描边。<br>这种情况可以通过使用深度偏移来修改顶点着色器的裁剪坐标，从而消隐描边。实际上，就是把不需要看到的描边往里推，从而被角色本身覆盖，就看不到描边了。<br>那么，哪些描边需要消隐了？就是下面要说的顶点色。</p>
@@ -323,8 +322,8 @@
 <h1 id="三、其它描边方式"><a href="#三、其它描边方式" class="headerlink" title="三、其它描边方式"></a>三、其它描边方式</h1><h2 id="3-1-NdotV"><a href="#3-1-NdotV" class="headerlink" title="3.1 NdotV"></a>3.1 NdotV</h2><p>类似简单的边缘光实现方式，也可以用来做描边，但是效果和控制力度肯定是达不到需求的。</p>
 <h2 id="3-2-深度贴图描边"><a href="#3-2-深度贴图描边" class="headerlink" title="3.2 深度贴图描边"></a>3.2 深度贴图描边</h2><p>之前说的深度贴图边缘光和阴影同样可以用来做描边，也能使用顶点颜色提供一定的控制粒度，比如控制粗细，但是也无法做深度偏移消隐等。</p>
 <h1 id="四、内描边"><a href="#四、内描边" class="headerlink" title="四、内描边"></a>四、内描边</h1><p>所谓内描边，指的是物体内部的描边，非物体边缘看到的描边。之前说的技术基本上都是针对外描边的。</p>
-<h2 id="4-1-本村线"><a href="#4-1-本村线" class="headerlink" title="4.1 本村线"></a>4.1 本村线</h2><p>简单来说，是直接在贴图上画描边，同时这些描边基本是跟轴对齐的。不过工作量很大，而且很大细节需要控制，很少有美术愿意采用这种方式，因此不做过多的讨论。<br>如下图：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780709.jpg"></p>
-<h2 id="4-2-后处理内描边"><a href="#4-2-后处理内描边" class="headerlink" title="4.2 后处理内描边"></a>4.2 后处理内描边</h2><p>网上有文章提到二之国中的做法是在顶点属性通道中记录边缘程度，然后在后处理中来进行绘制内描边。<br>如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/1648278780719.jpg"><br>猜测是类似于顶点色的方式，让美术使用工具在顶点色中涂色边缘程度，<br>然后需要一个Pass将顶点色上的边缘程度属性输出到一个RT上，最终在后处理Pass中检测这个RT对应像素的边缘程度完成内描边。<br>至于如何将边缘程度转换为描边，需要参考相关资料才能弄清楚了，这里的日文看不懂啊。</p>
+<h2 id="4-1-本村线"><a href="#4-1-本村线" class="headerlink" title="4.1 本村线"></a>4.1 本村线</h2><p>简单来说，是直接在贴图上画描边，同时这些描边基本是跟轴对齐的。不过工作量很大，而且很大细节需要控制，很少有美术愿意采用这种方式，因此不做过多的讨论。<br>如下图：<br>!](<a href="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/本村线描边.jpg" target="_blank" rel="noopener">https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/本村线描边.jpg</a>)</p>
+<h2 id="4-2-后处理内描边"><a href="#4-2-后处理内描边" class="headerlink" title="4.2 后处理内描边"></a>4.2 后处理内描边</h2><p>网上有文章提到二之国中的做法是在顶点属性通道中记录边缘程度，然后在后处理中来进行绘制内描边。<br>如下图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/二之国后处理内描边.jpg"><br>猜测是类似于顶点色的方式，让美术使用工具在顶点色中涂色边缘程度，<br>然后需要一个Pass将顶点色上的边缘程度属性输出到一个RT上，最终在后处理Pass中检测这个RT对应像素的边缘程度完成内描边。<br>至于如何将边缘程度转换为描边，需要参考相关资料才能弄清楚了，这里的日文看不懂啊。</p>
 <h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote>
 <p><a href="https://zhuanlan.zhihu.com/p/109101851" target="_blank" rel="noopener">【01】从零开始的卡通渲染-描边篇</a><br><a href="https://zhuanlan.zhihu.com/p/163791090" target="_blank" rel="noopener">卡通渲染学习总结</a></p>
 </blockquote>
