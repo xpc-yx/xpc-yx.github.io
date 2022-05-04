@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E6%96%9C%E8%A3%81%E5%89%AA%E7%9F%A9%E9%98%B5.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84.jpg">
 <meta property="article:published_time" content="2021-06-15T13:15:00.000Z">
-<meta property="article:modified_time" content="2022-03-26T10:00:09.421Z">
+<meta property="article:modified_time" content="2022-05-04T08:51:04.945Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="反射效果">
 <meta property="article:tag" content="平面反射">
@@ -332,7 +332,7 @@
 <h3 id="2-1-2-Urp管线下的实现"><a href="#2-1-2-Urp管线下的实现" class="headerlink" title="2.1.2 Urp管线下的实现"></a>2.1.2 Urp管线下的实现</h3><p>Urp管线下，需要绑定 RenderPipelineManager.beginCameraRendering的回调，然后在回调中实现。回调中会接收到当前渲染的相机，反射相机就是该相机关于平面的镜像。同时，渲染RT的函数需要改成UniversalRenderPipeline.RenderSingleCamera，传入context和反射相机。其余步骤，跟默认管线的区别不大。</p>
 <h2 id="2-2-平面反射的Shader"><a href="#2-2-平面反射的Shader" class="headerlink" title="2.2 平面反射的Shader"></a>2.2 平面反射的Shader</h2><p>平面反射的shader可以使用普通的场景shader做修改。关键在于如何采样平面反射信息和平面反射强度以及模糊等。</p>
 <h3 id="2-2-1-平面反射信息的采样"><a href="#2-2-1-平面反射信息的采样" class="headerlink" title="2.2.1 平面反射信息的采样"></a>2.2.1 平面反射信息的采样</h3><p>这个之前已经解释过用屏幕空间坐标来采样RT。</p>
-<h3 id="2-2-1-平面反射强度"><a href="#2-2-1-平面反射强度" class="headerlink" title="2.2.1 平面反射强度"></a>2.2.1 平面反射强度</h3><p>这个可以用菲涅尔定律计算，不过关键点在于强度必须是NdotV的函数，最简单的方式是计算出NdotV，同时提供一个最大最小值来限制强度范围。</p>
+<h3 id="2-2-1-平面反射强度"><a href="#2-2-1-平面反射强度" class="headerlink" title="2.2.1 平面反射强度"></a>2.2.1 平面反射强度</h3><p>这个可以用菲涅尔效应计算，不过关键点在于强度必须是NdotV的函数，最简单的方式是计算出NdotV，对NdotV取反或者1-NdotV，因为入射角越大反射光越强，同时提供一个最大最小值来限制强度范围。</p>
 <h3 id="2-2-1-模糊和Mipmap"><a href="#2-2-1-模糊和Mipmap" class="headerlink" title="2.2.1 模糊和Mipmap"></a>2.2.1 模糊和Mipmap</h3><p>可以采样周围多个像素然后做平均模糊或者高斯模糊。不过，最简单的方式是对RT强制生成Mipmap，采样RT的时候指定Mipmap级别。那么，mipmap级别如何计算了。我们可以根据shader的粗糙度来转行为mipmap级别，这个参考unity的urp内置shader函数PerceptualRoughnessToMipmapLevel的实现。</p>
 <p>最终得到的反射效果如图，<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射.jpg"></p>
 <h1 id="三、平面反射的优化"><a href="#三、平面反射的优化" class="headerlink" title="三、平面反射的优化"></a>三、平面反射的优化</h1><p>平面反射由于需要对场景镜像渲染一遍， DrawCall会翻倍，而且由于原理限制，没有有效的优化手段，因此平面反射通常是应用在特定的场合下。<br>优化的手段，主要是降低生成反射RT的消耗。</p>
