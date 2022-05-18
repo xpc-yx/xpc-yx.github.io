@@ -51,20 +51,20 @@
   <meta name="description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity手游性能优化的经验总结">
-<meta property="og:url" content="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:url" content="http://xiaopengcheng.top/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
 <meta property="og:description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/singlethreaded_rendering_0.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/multithreaded_rendering_0.png">
-<meta property="article:published_time" content="2022-05-04T09:10:00.000Z">
-<meta property="article:modified_time" content="2022-05-18T03:06:41.881Z">
+<meta property="article:published_time" content="2022-05-18T03:10:00.000Z">
+<meta property="article:modified_time" content="2022-05-18T03:10:45.011Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="性能优化">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/singlethreaded_rendering_0.png">
 
-<link rel="canonical" href="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+<link rel="canonical" href="http://xiaopengcheng.top/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
 
 
 <script id="page-configurations">
@@ -225,7 +225,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -248,7 +248,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-05-04 17:10:00" itemprop="dateCreated datePublished" datetime="2022-05-04T17:10:00+08:00">2022-05-04</time>
+              <time title="创建时间：2022-05-18 11:10:00" itemprop="dateCreated datePublished" datetime="2022-05-18T11:10:00+08:00">2022-05-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -269,7 +269,7 @@
             </span>
 
           
-            <span id="/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="Unity手游性能优化的经验总结" title="阅读次数">
+            <span id="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="Unity手游性能优化的经验总结" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -284,8 +284,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -477,7 +477,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Unity手游性能优化的经验总结">http://xiaopengcheng.top/2022/05/04/Unity手游性能优化的经验总结/</a>
+    <a href="http://xiaopengcheng.top/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Unity手游性能优化的经验总结">http://xiaopengcheng.top/2022/05/18/Unity手游性能优化的经验总结/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -498,13 +498,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E6%8F%8F%E8%BE%B9%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="Unity下的日式卡通渲染实现-描边篇（三）">
-      <i class="fa fa-chevron-left"></i> Unity下的日式卡通渲染实现-描边篇（三）
+    <a href="/2022/05/04/Urp%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8B%E7%9A%84%E5%8D%A1%E9%80%9A%E5%86%B0%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/" rel="prev" title="Urp渲染管线下的卡通冰效果实现">
+      <i class="fa fa-chevron-left"></i> Urp渲染管线下的卡通冰效果实现
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/05/04/Urp%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8B%E7%9A%84%E5%8D%A1%E9%80%9A%E5%86%B0%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/" rel="next" title="Urp渲染管线下的卡通冰效果实现">
-      Urp渲染管线下的卡通冰效果实现 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
