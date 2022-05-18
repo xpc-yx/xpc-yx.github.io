@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/" class="post-title-link" itemprop="url">uva 10177 - (2/3/4)-D Sqr/Rects/Cubes/Boxes?</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-04-14 10:00:00" itemprop="dateCreated datePublished" datetime="2012-04-14T10:00:00+08:00">2012-04-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10177 - (2/3/4)-D Sqr/Rects/Cubes/Boxes?" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这是一道数学题吧。想清楚之后就发现就是求累加和。<br>问题是给定一个正方形(体,超体)，求其中的所有的正方形(体,超体),长方形(体,超体)。 比如，4 <em> 4的正方形中，有14个正方形，22个长方形，4 </em> 4 <em> 4的立方体中有36个正方体，180个长方体。依次类推，超正方体指的是四维空间。<br>观察一下一个4</em>4正方形中，仔细验证一下就会发现，正方形的个数是 Σ(4 - i + 1) <em> (4 - i + 1)(其中i从1到4)，长方形的个数是Σ(4 - i + 1) (其中j从1到4) </em> Σ(4 - j + 1)(其中j从1到4)。如果变成3维的就多一层k，k也从1变化到4。如果变成4维的就再多一层l，l也从1变化到4。<br>然后变换一下，就可以得到s2(n) = 1^1 + 2^2 + … + n^n，s3(n)则是对立方的累加和，s4(n)则是对四次方的累加和。<br>再计算r2(n)。可以先把正方形包括在内计算出所有的和。那么r2(n) = Σ(n - i + 1) <em> Σ(n - j + 1) - s2(n)。如果直接进行这个式子的求和话很复杂。再观察一下这个式子，因为n - i + 1的变化范围就是1到n，那么上面的式子可以变化为 r2(n) = ΣΣi </em> j - s2(n)。意思是求i<em>j的和，i和j都是从1变化到n。很简单就可以得到r2(n) = pow(n </em> (n + 1) / 2, 2) - s2(n)。同样的求和可以得到，r3(n) = pow(n <em> (n + 1) / 2, 3) - s3(n)。r4(n) = pow(n </em> (n + 1) / 2, 4) - s4(n)。<br>另外如果不知道平方和，立方和，四次方和的公式，也可以迭代计算，复杂度也是O(100)。这样的话，根本不需要使用这些难记忆的公式了。</p>
+<p>代码如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt; </span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">unsigned long long s2[101];</span><br><span class="line">unsigned long long r2[101];</span><br><span class="line">unsigned long long s3[101];</span><br><span class="line">unsigned long long r3[101];</span><br><span class="line">unsigned long long s4[101];</span><br><span class="line">unsigned long long r4[101];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    unsigned long long i = 0;</span><br><span class="line">    while (<span class="selector-tag">i</span> &lt;= <span class="number">100</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        s2[i] = i * (i + 1) * (2 * i + 1) / 6;//平方和</span><br><span class="line">        s3[i] = i * i * (i + 1) * (i + 1) / 4;//立方和</span><br><span class="line">        s4[i] = i * (i + 1) * (6 * i * i * i + 9 * i * i + i - 1) / 30;//四次方和</span><br><span class="line">        r2[i] = pow(i * (i + 1) / 2, 2) - s2[i];</span><br><span class="line">        r3[i] = pow(i * (i + 1) / 2, 3) - s3[i];</span><br><span class="line">        r4[i] = pow(i * (i + 1) / 2, 4) - s4[i];</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int nN;</span><br><span class="line">    while (scanf(";%d";, nN) != EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//printf(";%I64u %I64u %I64u %I64u %I64u %I64u\n";, s2[nN], r2[nN], s3[nN], r3[nN], s4[nN], r4[nN]);</span></span><br><span class="line">        printf(";%llu %llu %llu %llu %llu %llu\n";, s2[nN], r2[nN], s3[nN], r3[nN], s4[nN], r4[nN]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/04/12/uva-10790-how-many-points-of-intersection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1229,119 +1340,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/03/03/%E5%BF%AB%E6%8E%92%E7%9A%84%E4%B8%80%E7%A7%8D%E7%AE%80%E6%98%93%E5%86%99%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/03/03/%E5%BF%AB%E6%8E%92%E7%9A%84%E4%B8%80%E7%A7%8D%E7%AE%80%E6%98%93%E5%86%99%E6%B3%95/" class="post-title-link" itemprop="url">快排的一种简易写法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-03-03 10:00:00" itemprop="dateCreated datePublished" datetime="2012-03-03T10:00:00+08:00">2012-03-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/03/03/%E5%BF%AB%E6%8E%92%E7%9A%84%E4%B8%80%E7%A7%8D%E7%AE%80%E6%98%93%E5%86%99%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="快排的一种简易写法" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/03/03/%E5%BF%AB%E6%8E%92%E7%9A%84%E4%B8%80%E7%A7%8D%E7%AE%80%E6%98%93%E5%86%99%E6%B3%95/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/03/03/%E5%BF%AB%E6%8E%92%E7%9A%84%E4%B8%80%E7%A7%8D%E7%AE%80%E6%98%93%E5%86%99%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>虽然简易二字，因人而异。不过，写一个快排确实并不需要过20行，超过几分钟时间的代码。面试的时候，面试官确实会经常问起快排什么的。但是，大家上的入门课基本是使用严蔚敏老奶奶的教材，上面对于快排的讲解我是不敢恭维的。至少上面关于快排的写法，我是写过好几次之后都是没掌握好的。后面，应该是看K&amp;R的c语言程序设计时候，发现一种更简便的partion方法，但是当时我也没怎么掌握。这一切直到，寒假认真阅读算法导论的时候。</p>
-<p>不用算法牛人，算法学得好或者对快排理解深刻的，不用把这篇文章看完了，相信你们都能在10分钟之内写一个正确的快排了。<br>废话少说，还是来讲讲如何保证10分钟之内写一个正确的快排，而且以后都能10分钟之内写出来，而不是此刻看了我说的这些胡言之后。</p>
-<p>快排的主函数大家都会，现在我给个简易点的样子：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/03/03/%E5%BF%AB%E6%8E%92%E7%9A%84%E4%B8%80%E7%A7%8D%E7%AE%80%E6%98%93%E5%86%99%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1392,7 +1390,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1405,7 +1403,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1457,12 +1455,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">614k</span>
+    <span title="站点总字数">622k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:18</span>
+    <span title="站点阅读时长">9:25</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

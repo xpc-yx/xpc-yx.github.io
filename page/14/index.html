@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/23/poj%201226%20Substrings%20%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/10/23/poj%201226%20Substrings%20%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">poj 1226 Substrings 后缀数组</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-10-23 12:30:00" itemprop="dateCreated datePublished" datetime="2012-10-23T12:30:00+08:00">2012-10-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/10/23/poj%201226%20Substrings%20%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1226 Substrings 后缀数组" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/10/23/poj%201226%20Substrings%20%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/23/poj%201226%20Substrings%20%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>求N个字符串最长的公共子串。这题数据比较水，暴力第一个字符串的子串也可以过。初学后缀数组，有很多不明白的东西，此题后缀数组的代码在网上也是一把抓。<br>说实话我确实还不懂后缀数组，但是后缀数组太强大了，只能硬着头皮照着葫芦画瓢了。贴下代码方便以后查阅吧。。。<br>感觉后缀数组的应用最主要的还是height数组，看懂倍增算法排序后缀已经非常困难了。然后再理解height数组怎么用也不是一件容易的事情。然后貌似height数组最关键的用法是枚举某一个长度的子串时候，比如长度为k，能够用这个k对height数组进行分组，这个罗穗骞的论文里面有个求不重叠最长重复子串的例子说明了这个height数组分组的思路，不过我现在还是不怎么理解。。。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX_N = 110;</span><br><span class="line">const int MAX_L = MAX_N * MAX_N;</span><br><span class="line">char szStr[MAX_N];</span><br><span class="line">int nNum[MAX_L];</span><br><span class="line">int nLoc[MAX_L];</span><br><span class="line">bool bVisit[MAX_N];</span><br><span class="line">int sa[MAX_L], rank[MAX_L], <span class="attribute">height</span>[MAX_L];</span><br><span class="line">int wa[MAX_L], wb[MAX_L], wv[MAX_L], wd[MAX_L];</span><br><span class="line"></span><br><span class="line">int cmp(int* r, int a, int b, int l)</span><br><span class="line">&#123;</span><br><span class="line">    return r[a] == r[b]  r[a + l] == r[b + l];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//倍增算法,r为待匹配数组,n为总长度,m为字符串范围</span></span><br><span class="line">void da(int* r, int n, int m)</span><br><span class="line">&#123;</span><br><span class="line">    int i, j, p, *x = wa, *y = wb;</span><br><span class="line"></span><br><span class="line">    for (i = 0; i &lt; m; ++i) wd[i] = 0;</span><br><span class="line">    for (i = 0; i &lt; n; ++i) wd[x[i] = r[i]]++;</span><br><span class="line">    for (i = 1; i &lt; m; ++i) wd[i] += wd[i - 1];</span><br><span class="line">    for (i = n - 1; i &gt;= 0; --i) sa[--wd[x[i]]] = i;</span><br><span class="line"></span><br><span class="line">    for (j = 1, p = 1; p &lt; n; j *= 2, m = p)</span><br><span class="line">    &#123;</span><br><span class="line">        for (p = 0, i = n - j; i &lt; n; ++i) y[p++] = i;</span><br><span class="line">        for (i = 0; i &lt; n; ++i) if (sa[i] &gt;= j) y[p++] = sa[i] - j;</span><br><span class="line"></span><br><span class="line">        for (i = 0; i &lt; n; ++i) wv[i] = x[y[i]];</span><br><span class="line">        for (i = 0; i &lt; m; ++i) wd[i] = 0;</span><br><span class="line">        for (i = 0; i &lt; n; ++i) wd[wv[i]]++;</span><br><span class="line">        for (i = 1; i &lt; m; ++i) wd[i] += wd[i - 1];</span><br><span class="line">        for (i = n - 1; i &gt;= 0; --i) sa[--wd[wv[i]]] = y[i];</span><br><span class="line"></span><br><span class="line">        swap(x, y);</span><br><span class="line">        for (p = 1, x[sa[0]] = 0, i = 1; i &lt; n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            x[sa[i]] = cmp(y, sa[i - 1], sa[i], j)? p - 1 : p++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//求height数组</span></span><br><span class="line">void calHeight(int* r, int n)</span><br><span class="line">&#123;</span><br><span class="line">    int i, j, k = 0;</span><br><span class="line">    for (i = 1; i &lt;= n; ++i) rank[sa[i]] = i;</span><br><span class="line">    for (i = 0; i &lt; n; height[rank[i++]] = k)</span><br><span class="line">    &#123;</span><br><span class="line">        if (k) --k;</span><br><span class="line">        for(j = sa[rank[i] - 1]; r[i + k] == r[j + k]; k++);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool Check(int nMid, int nLen, int nN)</span><br><span class="line">&#123;</span><br><span class="line">    int nCnt = 0;</span><br><span class="line"></span><br><span class="line">    memset(bVisit, false, sizeof(bVisit));</span><br><span class="line">    for (int i = 2; i &lt;= nLen; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (nMid &gt; <span class="attribute">height</span>[i])</span><br><span class="line">        &#123;</span><br><span class="line">            nCnt = 0;</span><br><span class="line">            memset(bVisit, false, sizeof(bVisit));</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!bVisit[nLoc[sa[<span class="selector-tag">i</span> - <span class="number">1</span>]]])</span><br><span class="line">        &#123;</span><br><span class="line">            bVisit[nLoc[sa[i - 1]]] = true;</span><br><span class="line">            ++nCnt;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!bVisit[nLoc[sa[i]]])</span><br><span class="line">        &#123;</span><br><span class="line">            bVisit[nLoc[sa[i]]] = true;</span><br><span class="line">            ++nCnt;</span><br><span class="line">        &#125;</span><br><span class="line">        if (nCnt == nN) return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nT;</span><br><span class="line"></span><br><span class="line">    scanf("%d", &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    &#123;</span><br><span class="line">        int nN;</span><br><span class="line">        int nEnd = 300;</span><br><span class="line">        int nP = 0;</span><br><span class="line">        scanf("%d", nN);</span><br><span class="line">        for (int i = 1; i &lt;= nN; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%s", szStr);</span><br><span class="line">            char* pszStr;</span><br><span class="line">            for (pszStr = szStr; *pszStr; ++pszStr)</span><br><span class="line">            &#123;</span><br><span class="line">                nLoc[nP] = i;</span><br><span class="line">                nNum[nP++] = *pszStr;</span><br><span class="line">            &#125;</span><br><span class="line">            nLoc[nP] = nEnd;</span><br><span class="line">            nNum[nP++] = nEnd++;</span><br><span class="line"></span><br><span class="line">            reverse(szStr, szStr + strlen(szStr));</span><br><span class="line">            for (pszStr = szStr; *pszStr; ++pszStr)</span><br><span class="line">            &#123;</span><br><span class="line">                nLoc[nP] = i;</span><br><span class="line">                nNum[nP++] = *pszStr;</span><br><span class="line">            &#125;</span><br><span class="line">            nLoc[nP] = nEnd;</span><br><span class="line">            nNum[nP++] = nEnd++;</span><br><span class="line">        &#125;</span><br><span class="line">        nNum[nP] = 0;</span><br><span class="line"></span><br><span class="line">        da(nNum, nP + 1, nEnd);</span><br><span class="line">        calHeight(nNum, nP);</span><br><span class="line"></span><br><span class="line">        int nLeft = 1, nRight = strlen(szStr), nMid;</span><br><span class="line">        int nAns = 0;</span><br><span class="line">        while (nLeft &lt;= nRight)</span><br><span class="line">        &#123;</span><br><span class="line">            nMid = (nLeft + nRight) / 2;</span><br><span class="line">            <span class="keyword">if</span> (Check(nMid, nP, nN))</span><br><span class="line">            &#123;</span><br><span class="line">                nLeft = nMid + 1;</span><br><span class="line">                nAns = nMid;</span><br><span class="line">            &#125;</span><br><span class="line">            else nRight = nMid - 1;</span><br><span class="line">        &#125;</span><br><span class="line">        printf("%d\n", nAns);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/21/poj%203691%20DNA%20repair%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20dp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1225,116 +1335,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/09/poj%201984%20Navigation%20Nightmare%20%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/10/09/poj%201984%20Navigation%20Nightmare%20%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">poj 1984 Navigation Nightmare 并查集</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-10-09 14:00:00" itemprop="dateCreated datePublished" datetime="2012-10-09T14:00:00+08:00">2012-10-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/10/09/poj%201984%20Navigation%20Nightmare%20%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1984 Navigation Nightmare 并查集" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/10/09/poj%201984%20Navigation%20Nightmare%20%E5%B9%B6%E6%9F%A5%E9%9B%86/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/09/poj%201984%20Navigation%20Nightmare%20%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>并查集应用的变形。题目意思是一个图中，只有上下左右四个方向的边。给出这样的一些边，求任意指定的2个节点之间的距离。<br>有可能当前给出的信息，没有涉及到要求的2个节点，或者只涉及到了1个节点，那么肯定无法确定它们的距离。或者根据已经给出的边只知道这2个节点在不同的联通分量里面，那么其距离也是无法确定的，根据题目要求，输出-1。<br>问题是如果能够确定它们在一个联通分量里面，如何确定它们的距离了。这个题的关键在于，只有上下左右四个方向的边，假设每个节点都有一个坐标的话，那么它们相对于代表该联通分量节点的坐标肯定是固定的，那么就不需要考虑图里面有环之类的情况了。这样就可以很方便的应用并查集来解了。<br>利用并查集，给每个节点附加其它信息，即相对于代表该并查集的节点的坐标（x，y）。在FindSet里面求出坐标，在UnionSet里面修改合并后新加入的另外一个集合的根节点的坐标即可。<br>代码如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX_N = 40010;</span><br><span class="line">int nN, nM;</span><br><span class="line">int nSets[MAX_N];</span><br><span class="line">int nX[MAX_N];</span><br><span class="line">int nY[MAX_N];</span><br><span class="line">char szInput[MAX_N][100];</span><br><span class="line"></span><br><span class="line">void MakeSets(int nNum)</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 0; i &lt; nNum; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        nSets[i] = i;</span><br><span class="line">        nX[i] = nY[i] = 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int FindSets(int nI)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (nSets[nI] != nI)</span><br><span class="line">    &#123;</span><br><span class="line">        int nPre = nSets[nI];</span><br><span class="line">        nSets[nI] = FindSets(nSets[nI]);</span><br><span class="line">        nX[nI] += nX[nPre];</span><br><span class="line">        nY[nI] += nY[nPre];</span><br><span class="line">    &#125;</span><br><span class="line">    return nSets[nI];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnionSets(int nBeg, int nEnd, int dx, int dy)</span><br><span class="line">&#123;</span><br><span class="line">    int nA = FindSets(nBeg);</span><br><span class="line">    int nB = FindSets(nEnd);</span><br><span class="line">    <span class="keyword">if</span> (nA != nB)</span><br><span class="line">    &#123;</span><br><span class="line">        nSets[nB] = nA;//把集合B合并到集合A中</span><br><span class="line">        nX[nB] = nX[nBeg] + dx - nX[nEnd];//因为方向逆过来了,所以是减去</span><br><span class="line">        nY[nB] = nY[nBeg] + dy - nY[nEnd];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int nBeg, nEnd, nL;</span><br><span class="line">    char szDir[10];</span><br><span class="line"></span><br><span class="line">    while (scanf(<span class="string">"%d%d%*c"</span>, &amp;nN, &amp;nM) == <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        MakeSets(nN);</span><br><span class="line">        for (int i = 0; i &lt; nM; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            fgets(szInput[i], 100, stdin);</span><br><span class="line">        &#125;</span><br><span class="line">        int nK;</span><br><span class="line">        int nF1, nF2, nI;</span><br><span class="line">        scanf("%d", nK);</span><br><span class="line">        int nCur = 0;</span><br><span class="line">        while (nK--)</span><br><span class="line">        &#123;</span><br><span class="line">            scanf("%d%d%d", nF1, nF2, nI);</span><br><span class="line">            for (int i = nCur; i &lt; nI; ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                sscanf(szInput[i], <span class="string">"%d%d%d%s"</span>, &amp;nBeg,</span><br><span class="line">                       &amp;nEnd, &amp;nL, szDir);</span><br><span class="line">                int dx = 0, dy = 0;</span><br><span class="line">                switch (szDir[<span class="number">0</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                case <span class="string">'N'</span>:</span><br><span class="line">                    dy += nL;</span><br><span class="line">                    break;</span><br><span class="line">                case <span class="string">'S'</span>:</span><br><span class="line">                    dy -= nL;</span><br><span class="line">                    break;</span><br><span class="line">                case <span class="string">'E'</span>:</span><br><span class="line">                    dx += nL;</span><br><span class="line">                    break;</span><br><span class="line">                case <span class="string">'W'</span>:</span><br><span class="line">                    dx -= nL;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                UnionSets(nBeg, nEnd, dx, dy);</span><br><span class="line">            &#125;</span><br><span class="line">            nCur = nI;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (FindSets(nF1) != FindSets(nF2))</span><br><span class="line">            &#123;</span><br><span class="line">                printf("-1\n");</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                printf(<span class="string">"%d\n"</span>, abs(nX[nF1] - nX[nF2])</span><br><span class="line">                       + abs(nY[nF1] - nY[nF2]));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1385,7 +1385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1398,7 +1398,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1450,12 +1450,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">614k</span>
+    <span title="站点总字数">622k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:18</span>
+    <span title="站点阅读时长">9:25</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity手游性能优化的经验总结">
+<meta property="og:url" content="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/singlethreaded_rendering_0.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/multithreaded_rendering_0.png">
+<meta property="article:published_time" content="2022-05-04T09:10:00.000Z">
+<meta property="article:modified_time" content="2022-05-18T03:06:41.881Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="性能优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/singlethreaded_rendering_0.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Unity手游性能优化的经验总结 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity手游性能优化的经验总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-04 17:10:00" itemprop="dateCreated datePublished" datetime="2022-05-04T17:10:00+08:00">2022-05-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏开发</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="Unity手游性能优化的经验总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、定位游戏性能瓶颈"><a href="#一、定位游戏性能瓶颈" class="headerlink" title="一、定位游戏性能瓶颈"></a>一、定位游戏性能瓶颈</h1><h2 id="1-1-游戏循环"><a href="#1-1-游戏循环" class="headerlink" title="1.1 游戏循环"></a>1.1 游戏循环</h2><p>基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。<br>基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。</p>
+<h3 id="1-1-1-单线程渲染"><a href="#1-1-1-单线程渲染" class="headerlink" title="1.1.1 单线程渲染"></a>1.1.1 单线程渲染</h3><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/singlethreaded_rendering_0.png"><br>上图可以看到主线程直接提交渲染命令GCMD给渲染设备。主线程需要等待图形设备渲染完成。</p>
+<h3 id="1-1-2-多线程渲染"><a href="#1-1-2-多线程渲染" class="headerlink" title="1.1.2 多线程渲染"></a>1.1.2 多线程渲染</h3><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/multithreaded_rendering_0.png"><br>主线程：游戏逻辑-提交渲染到渲染线程-等待渲染完成。<br>渲染线程：提交渲染命令给GPU-等待渲染完成。<br>GPU：等待渲染命令-执行渲染。</p>
+<p>从上图可以看到，主线程将渲染命令封装后提交给渲染线程，渲染再提交给图形设备渲染画面。因此，渲染线程会比主线程延迟一帧。虽然新增了渲染线程来减少CPU等待渲染完成的时间，但是每一帧主线程还是会等待渲染线程完成上一帧的渲染。因此，还是可以按照基本的游戏循环来分析每一帧的运行过程。</p>
+<h2 id="1-2-利用工具确定执行时间"><a href="#1-2-利用工具确定执行时间" class="headerlink" title="1.2 利用工具确定执行时间"></a>1.2 利用工具确定执行时间</h2><p>我们需要使用工具，比如UWA分析报告或者Unity的Profile等来确定主线程的游戏逻辑、渲染提交、渲染等待，这三个部分的整体执行时间。</p>
+<ol>
+<li>或者利用工具获得GPU每帧耗时是多少，是否超过帧率的要求，比如30帧的话，那么一帧是33.3ms，GPU的每帧耗时就不能就不能超过33.3ms，或者不能比CPU的耗时多，否则就是GPU的性能瓶颈。</li>
+<li>如果GPU不存在瓶颈，那么问题就在CPU上，这个时候要进一步分析CPU的瓶颈是游戏逻辑还是渲染提交上，这个UWA的性能分析报告和Unity的Profile都可以查看。</li>
+<li>如果渲染等待时间过长，说明渲染指令过多，这个时候就需要减少渲染指令的提交，一般就是采样各种合批策略，比如SRP合批、静态合批等，或者是合并网格、减少摄像机距离或者层级Culling等。</li>
+<li>如果渲染等待时间比较小，而游戏逻辑占用时间过长，那么要去分析CPU的耗时，具体是哪一块耗时过多，比如物理、动作、逻辑等。</li>
+</ol>
+<h1 id="二、GPU性能优化"><a href="#二、GPU性能优化" class="headerlink" title="二、GPU性能优化"></a>二、GPU性能优化</h1><p>当GPU遇到性能瓶颈时候就要着重进行GPU的性能优化，下面介绍一些常用的优化策略。</p>
+<h2 id="2-1-减少OverDraw"><a href="#2-1-减少OverDraw" class="headerlink" title="2.1 减少OverDraw"></a>2.1 减少OverDraw</h2><p>OverDraw的意思是一个像素被重复绘制的次数，也就是该像素位置重复执行像素着色器(片元着色器)的次数。我们可以利用工具，比如固定管线的Unity编辑器是可以显示场景的OverDraw的，Urp的需要做一些扩展支持，来可视化游戏的OverDraw。对OverDraw特别高的部分要想办法优化，下面介绍一些Urp管线下的优化策略。</p>
+<h3 id="2-1-1-渲染Pass"><a href="#2-1-1-渲染Pass" class="headerlink" title="2.1.1 渲染Pass"></a>2.1.1 渲染Pass</h3><p>Urp的渲染Pass是渲染顺序中优先级最高的，因此同一个Pass对应的物体都会在一起按照一定的顺序渲染。那么，为了减少OverDraw或者提高合批的命中，要合理的设计相关的渲染Pass。比如，天空盒是最远的物体，会一直被遮挡，这种就没必要在场景或者角色之前渲染，否则会有没必要的OverDraw。那么，就可以对天空盒单独一个Pass，在场景和角色之后执行。同理，如果角色一直靠近摄像机，也可以强制角色在场景之前的Pass渲染。</p>
+<h3 id="2-1-2-渲染队列"><a href="#2-1-2-渲染队列" class="headerlink" title="2.1.2 渲染队列"></a>2.1.2 渲染队列</h3><p>渲染队列是在Shader中设置的，属于同一个Pass内的渲染顺序微调。同样的，还可以设置Render的sortingOrder等。类似的，在默认管线下，通常会调整天空盒的渲染队列为不透明物体之后来避免OverDraw。</p>
+<h3 id="2-1-3-合理的渲染顺序"><a href="#2-1-3-合理的渲染顺序" class="headerlink" title="2.1.3 合理的渲染顺序"></a>2.1.3 合理的渲染顺序</h3><p>Urp渲染管线对不透明物体会按照从前到后渲染（不支持GPU隐藏面消除），透明物体按照从后到前渲染。Shader的RenderType定义是半透明还是不透明物体。另外前述的渲染Pass和渲染队列等也会影响渲染顺序。合理的渲染顺序能够提高Early-Z的命中率，减少OverDraw。</p>
+<h3 id="2-1-3-减少大范围或者全屏特效"><a href="#2-1-3-减少大范围或者全屏特效" class="headerlink" title="2.1.3 减少大范围或者全屏特效"></a>2.1.3 减少大范围或者全屏特效</h3><p>大范围的特效是OverDraw的杀手，尤其特效反复重叠的情况，项目中最好从设计层面规避这种情况的出现，实在没办法的再想办法优化特效本身的执行效率，比如特效的粒子数或者面片数、Shader复杂度等。</p>
+<h3 id="2-1-4-减少UI的重叠层数"><a href="#2-1-4-减少UI的重叠层数" class="headerlink" title="2.1.4 减少UI的重叠层数"></a>2.1.4 减少UI的重叠层数</h3><p>由于UI是按照半透明物体渲染的，因此要尽可能减少UI的重叠。下面的UI要隐藏而不是被覆盖。不过，这一点通常要在UI框架中做好解决，因为不仅仅是有OverDraw，UI的网格计算等CPU消耗也很大。</p>
+<h2 id="2-2-提高Early-Z-Test的命中率"><a href="#2-2-提高Early-Z-Test的命中率" class="headerlink" title="2.2 提高Early-Z Test的命中率"></a>2.2 提高Early-Z Test的命中率</h2><p>理论上来说，从前到后渲染就是尽可能的提高Early-Z的命中率，从而降低OverDraw。所以，这一项优化通常是和优化OverDraw是一起进行的。</p>
+<h3 id="2-2-1-减少Alpha测试"><a href="#2-2-1-减少Alpha测试" class="headerlink" title="2.2.1 减少Alpha测试"></a>2.2.1 减少Alpha测试</h3><p>但是Alpha-Test，也就是在Shader中丢弃像素，即在片元着色器中执行Discard指令，可能会破坏Early-Z Test，因为硬件不执行片元着色器就无法预测最终的深度。因此，要尽量避免大范围的Early-Z Test，除非特殊的渲染要求，比如溶解、植物、头发等，不要使用Alpha-Test。</p>
+<h2 id="2-3-减少半透明物体"><a href="#2-3-减少半透明物体" class="headerlink" title="2.3 减少半透明物体"></a>2.3 减少半透明物体</h2><p>半透明物体一个是渲染顺序必须从后到前，因此OverDraw严重，性能肯定比不上不透明物体。<a href="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/PerformanceAndProfiling/Guidelines/" target="_blank" rel="noopener">按照虚幻的官方文档</a>，不透明最快，蒙版（Alpha测试）其次，半透明最慢(OverDraw严重)。</p>
+<h2 id="2-4-降低GPU带宽"><a href="#2-4-降低GPU带宽" class="headerlink" title="2.4 降低GPU带宽"></a>2.4 降低GPU带宽</h2><h3 id="2-4-1-压缩纹理"><a href="#2-4-1-压缩纹理" class="headerlink" title="2.4.1 压缩纹理"></a>2.4.1 压缩纹理</h3><ol>
+<li>纹理压缩格式：比如现今基本都支持ASTC纹理压缩，通过合理设置不同资源的压缩率，尽可能压缩纹理大小。</li>
+<li>纹理大小：一些贴图根本不需要过大的尺寸，但是美术导入的原始资源通常过大，因此可以在资源导入脚本中强制压缩到一定的尺寸或者写工具扫描压缩一遍。</li>
+<li>去除不必要的纹理通道：比如Alpha通道或者灰度图改成单通道</li>
+</ol>
+<h3 id="2-4-2-减少纹理采样次数"><a href="#2-4-2-减少纹理采样次数" class="headerlink" title="2.4.2 减少纹理采样次数"></a>2.4.2 减少纹理采样次数</h3><ol>
+<li>尽可能关闭各向异性纹理</li>
+<li>降低纹理质量</li>
+<li>UI或者角色展示场景关闭Mipmap</li>
+</ol>
+<p>其中1和2都可以在工程设置的Quality中选择，可以根据不同的设备等级来选择不同的设置。3的话需要在贴图中设置，可以通过贴图导入脚本来设置。</p>
+<h3 id="2-4-3-提高纹理缓存命中率"><a href="#2-4-3-提高纹理缓存命中率" class="headerlink" title="2.4.3 提高纹理缓存命中率"></a>2.4.3 提高纹理缓存命中率</h3><ol>
+<li>减少贴图尺寸</li>
+<li>开启Mipmap<br>GPU的片内缓冲大小是有限的，因此尽可能小的贴图或者Mipmap才更可能被缓存命中。纹理被缓存命中，那么读取速度会比从内存中读取快一个数量级。</li>
+</ol>
+<h3 id="2-4-4-压缩网格"><a href="#2-4-4-压缩网格" class="headerlink" title="2.4.4 压缩网格"></a>2.4.4 压缩网格</h3><ol>
+<li>尽可能减少网格大小：比如限制面数、顶点数</li>
+<li>开启顶点压缩<br>网格的大小也会影响带宽，但是更多的是会影响渲染面数，从而增大GPU的负担。</li>
+</ol>
+<h3 id="2-4-5-减少全屏Blit"><a href="#2-4-5-减少全屏Blit" class="headerlink" title="2.4.5 减少全屏Blit"></a>2.4.5 减少全屏Blit</h3><p>尽可能减少全屏特效，或者合并全屏特效的计算，减少全屏Blit的次数。</p>
+<h2 id="2-5-Shader优化"><a href="#2-5-Shader优化" class="headerlink" title="2.5 Shader优化"></a>2.5 Shader优化</h2><h3 id="2-5-1-降低Shader中的数值精度"><a href="#2-5-1-降低Shader中的数值精度" class="headerlink" title="2.5.1 降低Shader中的数值精度"></a>2.5.1 降低Shader中的数值精度</h3><p>现在版本的Shader中已经不需要使用fixed类型，实际上Urp的Shader中也会编译失败。尽可能使用half类型，减少float类型的使用，float类型主要是用在postion和uv上，对应颜色等属性值尽量都用half。精度更大的话，计算时间就更多。</p>
+<h3 id="2-5-2-减少Shader中的分支和循环"><a href="#2-5-2-减少Shader中的分支和循环" class="headerlink" title="2.5.2 减少Shader中的分支和循环"></a>2.5.2 减少Shader中的分支和循环</h3><p>尽可能避免分支出现，尽量不要使用循环。分支会破坏Shader的并行，严重影响Shader的执行效率。尽可能用其它方式替换，比如条件操作符、乘法等。</p>
+<h3 id="2-5-3-降低Shader的计算复杂度"><a href="#2-5-3-降低Shader的计算复杂度" class="headerlink" title="2.5.3 降低Shader的计算复杂度"></a>2.5.3 降低Shader的计算复杂度</h3><p>分析一些OverDraw高或者屏幕占比高的Shader，尽可能或者根据项目要求来简化其计算复杂度，或者利用Shader LOD，写几个简化版本的Shader来对应中低端机器。</p>
+<h3 id="2-5-4-减少纹理的读取次数"><a href="#2-5-4-减少纹理的读取次数" class="headerlink" title="2.5.4 减少纹理的读取次数"></a>2.5.4 减少纹理的读取次数</h3><p>在Shader中尽量减少纹理的读取次数，比如控制贴图对应的纹元可以一次性读取到变量中，不要反复读取。</p>
+<h2 id="2-6-尽可能剔除不必要的物体渲染"><a href="#2-6-尽可能剔除不必要的物体渲染" class="headerlink" title="2.6 尽可能剔除不必要的物体渲染"></a>2.6 尽可能剔除不必要的物体渲染</h2><ol>
+<li>合理设置摄像机远平面距离，不渲染远处的物体</li>
+<li>给物体设置不同的Layer，给不同的Layer设置不同的摄像机裁剪距离</li>
+<li>使用Unity自带的遮挡剔除（要烘焙数据，占用额外的包体和内存，可能占用额外的CPU，一般不建议使用）</li>
+<li>自定义的剔除算法，比如检测到物体超过摄像机多远，不渲染或者只渲染部分效果（可以参考项目内的WorldCullingManager，这个是利用Unity自带的CullingGroup来检测角色的距离变化，从而缩放角色的渲染效果）。</li>
+</ol>
+<h1 id="三、CPU性能优化"><a href="#三、CPU性能优化" class="headerlink" title="三、CPU性能优化"></a>三、CPU性能优化</h1><p>按照第一节的游戏循环的说法，CPU的性能优化主要包括：游戏逻辑和渲染提交。或者更准确的说，应该把CPU性能优化分为渲染优化和其它的优化；其它的优化，主要指的是游戏逻辑相关的优化，具体包括：物体、动画、粒子、UI、资源加载、游戏逻辑（游戏层脚本）、GC等。下面，我们来一个个的做一些经验介绍。</p>
+<h2 id="3-1-渲染优化"><a href="#3-1-渲染优化" class="headerlink" title="3.1 渲染优化"></a>3.1 渲染优化</h2><p>CPU上的渲染主要包括两个部分，一个是计算需要渲染的物体，另一个是提交渲染和等待渲染完成。</p>
+<h3 id="3-1-1-Culling优化"><a href="#3-1-1-Culling优化" class="headerlink" title="3.1.1 Culling优化"></a>3.1.1 Culling优化</h3><p>Culling也可以叫做裁剪，实质上裁剪有很多种算法或者方式。从现今的游戏引擎来说，一般是使用层次包围盒(Bounding Volume Hierarchy)，来粗略的和摄像机的可视范围做交集来进行裁剪。这一部分通常是在游戏引擎内的，因此我们不能控制。但是，SRP渲染管线提供了一些可能性来做优化。</p>
+<ol>
+<li>隔帧Culling：如果游戏场景更新不频繁，那么可以隔帧或者过几帧才计算一次Culling。</li>
+<li>修改Urp的Renderer中的SetupCullingParameters：该函数控制渲染引擎的裁剪参数，可以尝试修改该函数以提高特定项目的裁剪效率。</li>
+<li>在主线程中自定义Culling逻辑：和2.6的第四点意思一样。</li>
+</ol>
+<h3 id="3-1-2-渲染批次优化"><a href="#3-1-2-渲染批次优化" class="headerlink" title="3.1.2 渲染批次优化"></a>3.1.2 渲染批次优化</h3><p>本质上是优化主线程提交给渲染线程的指令数目，从而减少渲染线程提交给图形接口的渲染指令数目。对应到Unity上则是各种合批策略的体现。</p>
+<ol>
+<li>自定义Pass：对于要合批的物体，尤其是动态物体，比如特效，最好是定义一个专门的Pass，就不会被其它不相干物体打断动态合批（对于SRP Batcher没发现这种限制）。</li>
+<li>SRP Batcher：尽可能所有的Shader兼容SRP Batcher，除非特别低端的机器，这种合批方式对性能的提高很大。</li>
+<li>静态合批：静态合批通常用于场景（SRP Batcher实际上也兼容静态合批），不过静态合批需要打开网格读写，静态合批只合并材质一样的物体，因此静态合批需要美术那边尽量提高材质的重用度后使用的意义才大；同时因为静态合批会合并网格（比如，同样的网格和材质出现多次，会将网格复制多次合并成一个更大的网格）可能会导致包体和内存显著增长；因此，静态合批最适合材质重复度高，网格重复很少的场景。</li>
+<li>动态合批：静态合批的运行时版本，因为有运行时的CPU消耗，类似静态合批也可能会增大内存消耗；有限制，比如要求顶点属性之和不超过900等；适合于动态的小物体的合批，比如粒子特效、小道具等。</li>
+<li>Draw Instancing：也叫实例化渲染，适合的场景是网格重复多次（只是朝向、缩放等不一样），材质一样（或者材质属性基本一致的）的情况，比如大规模渲染树木和草地。</li>
+<li>手动合并网格和材质：用软件来离线合并场景内的模型和材质；理论上来说，最自由但是最繁琐，如果场景小的话可以这样试试；合理控制的话，不会显著增大内存和包体，也没有运行时消耗，美术乐意的话，何乐而不为？</li>
+</ol>
+<h2 id="3-2-物理优化"><a href="#3-2-物理优化" class="headerlink" title="3.2 物理优化"></a>3.2 物理优化</h2><h3 id="3-2-1-降低Unity的物理更新频率"><a href="#3-2-1-降低Unity的物理更新频率" class="headerlink" title="3.2.1 降低Unity的物理更新频率"></a>3.2.1 降低Unity的物理更新频率</h3><p>可以在工程设置的Physics选项中关闭Auto Simulation，然后选择在框架更新的时候降低频率（比如2倍的Fixed Timestep）来调用Physics.Simulate来更新物理。同样可以直接设置Fixed Timestep来降低更新频率。</p>
+<h3 id="3-2-2-少用或者不用MeshCollider"><a href="#3-2-2-少用或者不用MeshCollider" class="headerlink" title="3.2.2 少用或者不用MeshCollider"></a>3.2.2 少用或者不用MeshCollider</h3><h3 id="3-2-3-减少频繁射线检测的使用"><a href="#3-2-3-减少频繁射线检测的使用" class="headerlink" title="3.2.3 减少频繁射线检测的使用"></a>3.2.3 减少频繁射线检测的使用</h3><p>可以缓存计算结果或者用更快速的检测方式替代，比如boxcast。</p>
+<h3 id="3-2-4-关闭碰撞矩阵中没必要的部分"><a href="#3-2-4-关闭碰撞矩阵中没必要的部分" class="headerlink" title="3.2.4 关闭碰撞矩阵中没必要的部分"></a>3.2.4 关闭碰撞矩阵中没必要的部分</h3><h2 id="3-3-动画优化"><a href="#3-3-动画优化" class="headerlink" title="3.3 动画优化"></a>3.3 动画优化</h2><h3 id="3-3-1-限制骨骼数目"><a href="#3-3-1-限制骨骼数目" class="headerlink" title="3.3.1 限制骨骼数目"></a>3.3.1 限制骨骼数目</h3><p>要求美术制作时候在规定的骨骼数目范围内，骨骼数目会影响动画大小也会影响执行效率。通常80-100已经非常足够了。</p>
+<h3 id="3-3-3-动画的CPU性能优化"><a href="#3-3-3-动画的CPU性能优化" class="headerlink" title="3.3.3 动画的CPU性能优化"></a>3.3.3 动画的CPU性能优化</h3><p>参考UWA的文章：<a href="https://zhuanlan.zhihu.com/p/382656748" target="_blank" rel="noopener">Unity性能优化 — 动画模块</a><br>参考Unity文档：<a href="https://docs.unity3d.com/cn/current/Manual/MecanimPeformanceandOptimization.html" target="_blank" rel="noopener">性能和优化</a></p>
+<h2 id="3-4-粒子优化"><a href="#3-4-粒子优化" class="headerlink" title="3.4 粒子优化"></a>3.4 粒子优化</h2><p>可以参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule3.html" target="_blank" rel="noopener">粒子系统优化——如何优化你的技能特效</a><br>特效的优化一般在项目的中后期，快上线的时候，针对性的对战斗这种特效集中度很高的场景进行测试和优化。</p>
+<h3 id="3-4-1-限制特效的最大粒子数"><a href="#3-4-1-限制特效的最大粒子数" class="headerlink" title="3.4.1 限制特效的最大粒子数"></a>3.4.1 限制特效的最大粒子数</h3><p>通常会限制普通特效只能有5-10个粒子或者更小。</p>
+<h3 id="3-4-2-限制特效的批次"><a href="#3-4-2-限制特效的批次" class="headerlink" title="3.4.2 限制特效的批次"></a>3.4.2 限制特效的批次</h3><p>最好是一个特效能在几个批次或者1个批次内渲染完成。</p>
+<h3 id="3-4-3-限制特效使用的贴图尺寸"><a href="#3-4-3-限制特效使用的贴图尺寸" class="headerlink" title="3.4.3 限制特效使用的贴图尺寸"></a>3.4.3 限制特效使用的贴图尺寸</h3><p>特效尽量使用小贴图，比如不超256或者512的，尽量都是128或者更细的贴图或者贴图合集。</p>
+<h3 id="3-4-3-限制特效的重叠层数和范围"><a href="#3-4-3-限制特效的重叠层数和范围" class="headerlink" title="3.4.3 限制特效的重叠层数和范围"></a>3.4.3 限制特效的重叠层数和范围</h3><p>这一部分应该算GPU的优化，可以减少OverDraw和GPU的计算。</p>
+<h2 id="3-5-UI优化"><a href="#3-5-UI优化" class="headerlink" title="3.5 UI优化"></a>3.5 UI优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule8.html" target="_blank" rel="noopener">Unity性能优化 — UI模块</a><br>优化UI的基本原则是：</p>
+<ol>
+<li>减少UI变化重新生成网格：因为UI本质上也是网格加贴图绘制出来的，因此要避免各种操作或者设置到UI频繁变化导致网格重复生成。</li>
+<li>减少UI的射线检测</li>
+<li>UI的图集控制：比如一个界面最多2个图集等</li>
+<li>战斗这种3D场景可以不使用UGUI来绘制3D的UI，而是直接用3D网格来绘制，避免UGUI的各种性能消耗。</li>
+</ol>
+<h2 id="3-6-资源加载优化"><a href="#3-6-资源加载优化" class="headerlink" title="3.6 资源加载优化"></a>3.6 资源加载优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule2.html" target="_blank" rel="noopener">Unity性能优化系列—加载与资源管理</a></p>
+<h3 id="3-6-1-Shader变体的预热"><a href="#3-6-1-Shader变体的预热" class="headerlink" title="3.6.1 Shader变体的预热"></a>3.6.1 Shader变体的预热</h3><p>Shader变体的预热比较耗时，可能需要拆分处理。Shader需要优化关键字数目，尤其是全局关键字数目，这个会显著影响Shader的包体和加载进来的内存。</p>
+<h3 id="3-6-2-游戏对象池"><a href="#3-6-2-游戏对象池" class="headerlink" title="3.6.2 游戏对象池"></a>3.6.2 游戏对象池</h3><p>尽量使用对象池，对象池回收时候可以隐藏GO，也可以选择移动到远处（关闭组件）。</p>
+<h3 id="3-6-3-资源管理方案推荐YooAsset"><a href="#3-6-3-资源管理方案推荐YooAsset" class="headerlink" title="3.6.3 资源管理方案推荐YooAsset"></a>3.6.3 资源管理方案推荐YooAsset</h3><h2 id="3-7-游戏脚本优化"><a href="#3-7-游戏脚本优化" class="headerlink" title="3.7 游戏脚本优化"></a>3.7 游戏脚本优化</h2><p>这里主要讲的是游戏框架和游戏逻辑的代码优化，包括C#和Lua。</p>
+<h3 id="3-7-1-游戏框架优化"><a href="#3-7-1-游戏框架优化" class="headerlink" title="3.7.1 游戏框架优化"></a>3.7.1 游戏框架优化</h3><p>框架应该尽可能优化，尽可能减少对使用者（游戏逻辑层）带来的性能损耗。</p>
+<ol>
+<li>框架代码尽量不要有GC</li>
+<li>框架代码尽量不要占用额外的大内存</li>
+<li>框架代码尽量不要消耗过多的CPU，使用者不用担心性能消耗<h3 id="3-7-2-游戏逻辑优化"><a href="#3-7-2-游戏逻辑优化" class="headerlink" title="3.7.2 游戏逻辑优化"></a>3.7.2 游戏逻辑优化</h3>具体的游戏逻辑优化，跟实际的游戏类型有关，需要针对性优化。</li>
+</ol>
+<h3 id="3-7-3-常见的脚本优化策略"><a href="#3-7-3-常见的脚本优化策略" class="headerlink" title="3.7.3 常见的脚本优化策略"></a>3.7.3 常见的脚本优化策略</h3><ol>
+<li>缓存计算结果：中间结果或者初始参数尽量预计算好</li>
+<li>不产生GC：任何引用类型的对象都尽量使用缓存池内的</li>
+<li>对缓存友好的存储方式：比如尽量使用小数组存储数据，而不用链表或者字典</li>
+<li>限帧法：限制部分逻辑的更新频率，比如2-3帧更新一次</li>
+<li>多线程：部分独立性很强的逻辑，可以考虑多线程处理</li>
+<li>主次法：比如非关键的角色或者物体，使用更少的计算逻辑</li>
+<li>减少项目的MonoBehavior的更新函数入口，游戏逻辑尽量保持一个更新入口。</li>
+</ol>
+<h3 id="3-7-4-Lua代码优化"><a href="#3-7-4-Lua代码优化" class="headerlink" title="3.7.4 Lua代码优化"></a>3.7.4 Lua代码优化</h3><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule4.html" target="_blank" rel="noopener">Unity性能优化系列—Lua代码优化</a></p>
+<h2 id="3-8-GC优化"><a href="#3-8-GC优化" class="headerlink" title="3.8 GC优化"></a>3.8 GC优化</h2><p>由于Unity的Mono堆在超过最大值或者一定数值后会自动扩容，而且扩容后无法往回缩，因此必须非常关注Mono堆的峰值。</p>
+<ol>
+<li>降低Mono堆的峰值：这样可以避免Mono堆一直增长或者过大</li>
+<li>降低GC的频率：减少不必要的CPU消耗，尽量使用缓存池中的引用对象</li>
+</ol>
+<h1 id="四、资源优化"><a href="#四、资源优化" class="headerlink" title="四、资源优化"></a>四、资源优化</h1><h2 id="4-1-纹理优化"><a href="#4-1-纹理优化" class="headerlink" title="4.1 纹理优化"></a>4.1 纹理优化</h2><p>这个在优化GPU代码有提到。</p>
+<ol>
+<li>合理降低纹理大小</li>
+<li>尽量使用更高的压缩格式（ASTC更高压缩率）</li>
+<li>UI或立绘关闭Mipmap</li>
+<li>减少纹理通道</li>
+<li>提高纹理复用（单色图复用，重复图案复用）</li>
+</ol>
+<h2 id="4-2-网格优化"><a href="#4-2-网格优化" class="headerlink" title="4.2 网格优化"></a>4.2 网格优化</h2><ol>
+<li>关闭网格读写：除了特效外的网格关闭读写</li>
+<li>开启项目的顶点压缩：会降低内存和GPU消耗，应该不会影响资源大小</li>
+<li>MeshCompression：开启据说会降低网格的资源占用，但是不影响内存占用</li>
+<li>尽量减少面数和顶点数：和美术制作规范，正式资源要符合要求</li>
+</ol>
+<h2 id="4-3-动画优化"><a href="#4-3-动画优化" class="headerlink" title="4.3 动画优化"></a>4.3 动画优化</h2><ol>
+<li>压缩方式选择Optimal：官方推荐的方式</li>
+<li>如果没有缩放，去除Scale曲线。</li>
+<li>网上的一些剔除动画原始数据的方法以实测为准，可能剔除后动画文件变小，包体变小了，但是内存中大小不变。</li>
+</ol>
+<h1 id="五、内存优化"><a href="#五、内存优化" class="headerlink" title="五、内存优化"></a>五、内存优化</h1><h2 id="5-1-优化资源"><a href="#5-1-优化资源" class="headerlink" title="5.1 优化资源"></a>5.1 优化资源</h2><p>资源本身都会加载进入内存，因此优化资源本身大小对优化内存大小非常关键，第四节已经讲到。</p>
+<h2 id="5-2-优化打包和资源管理"><a href="#5-2-优化打包和资源管理" class="headerlink" title="5.2 优化打包和资源管理"></a>5.2 优化打包和资源管理</h2><p>减少打AB包时候的重复，以及智能的资源加载管理方案，可以减少AB包加载后的内存占用，以及去除没必要的资源常驻现象，同时也可以优化资源加载的CPU消耗。</p>
+<h2 id="5-3-优化Mono堆"><a href="#5-3-优化Mono堆" class="headerlink" title="5.3 优化Mono堆"></a>5.3 优化Mono堆</h2><p>前述已经提到Mono堆只增不涨，因此优化C#的Mono堆内存非常必要。</p>
+<h2 id="5-4-优化Native内存"><a href="#5-4-优化Native内存" class="headerlink" title="5.4 优化Native内存"></a>5.4 优化Native内存</h2><p>一些插件包括引擎都会占用Native的内存，因此合理使用插件或者检测插件占用的Native内存在某些时候也有意义。如果插件造成的Native内存占用过多，是否可以考虑更换插件？比如音频插件等。</p>
+<h2 id="5-5-优化Lua内存"><a href="#5-5-优化Lua内存" class="headerlink" title="5.5 优化Lua内存"></a>5.5 优化Lua内存</h2><p>Lua同样有虚拟机有自己管理的堆内存，同样是不能无限增长的。因此，Lua代码也要避免频繁创建新的对象造成GC严重或者导致堆内存一直上升。<br>UWA和UPR都有检测Lua内存的选项，可以试试。</p>
+<h2 id="5-6-减少包体二进制大小"><a href="#5-6-减少包体二进制大小" class="headerlink" title="5.6 减少包体二进制大小"></a>5.6 减少包体二进制大小</h2><p>应用都会加载到内存中才会运行，因此更小的二进制包体自然会占用更小的内存。可以尝试剔除一些没有使用的代码（引擎代码或者C#脚本代码），这个Unity打包时候有相关设置。</p>
+<h2 id="5-7-配置优化"><a href="#5-7-配置优化" class="headerlink" title="5.7 配置优化"></a>5.7 配置优化</h2><p>游戏项目到中后期配置可能会增大非常严重，如果一次性加载可能会造成加载时间过长，同时造成Mono内存增长过大。</p>
+<ol>
+<li>避免一次性加载全部配置到C#中</li>
+<li>如果内存占用过高，考虑其它压缩存储方式，比如二进制存储，不要使用Json</li>
+<li>Lua加载配置速度更快，但是配置过大同样内存占用高</li>
+<li>实在占用过高，可以考虑小型数据库存储配置</li>
+<li>是不是该让策划清理或者使用工具清理重复配置，配置本身是否严重冗余？</li>
+</ol>
+<h1 id="六、二进制包体优化"><a href="#六、二进制包体优化" class="headerlink" title="六、二进制包体优化"></a>六、二进制包体优化</h1><h2 id="6-1-代码裁剪"><a href="#6-1-代码裁剪" class="headerlink" title="6.1 代码裁剪"></a>6.1 代码裁剪</h2><p>Unity可以设置裁剪引擎代码，和脚本层代码。经过测试开启引擎代码裁剪问题不大，但是脚本层代码裁剪设置过高可能引起代码丢失问题，可能可以通过link.xml中的设置解决。</p>
+<h2 id="6-2-安卓架构"><a href="#6-2-安卓架构" class="headerlink" title="6.2 安卓架构"></a>6.2 安卓架构</h2><p>通常ARMv7和ARM64只需要打一个架构，当前ARM64的性能更好但是兼容性不够，关闭一个架构能减少包体。</p>
+<h2 id="6-3-其它跟App打包相关的方法"><a href="#6-3-其它跟App打包相关的方法" class="headerlink" title="6.3 其它跟App打包相关的方法"></a>6.3 其它跟App打包相关的方法</h2><p>具体请查阅相关文档，参考并且实验是否有效。</p>
+<h1 id="七、其它"><a href="#七、其它" class="headerlink" title="七、其它"></a>七、其它</h1><p>性能优化是一个迭代的长期工作，关键是底子打好，后期优化压力就小很多；或者明白优化的思路，能够快速定位关键的性能瓶颈。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2022/05/04/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Unity手游性能优化的经验总结">http://xiaopengcheng.top/2022/05/04/Unity手游性能优化的经验总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 性能优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/12/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E6%8F%8F%E8%BE%B9%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="Unity下的日式卡通渲染实现-描边篇（三）">
+      <i class="fa fa-chevron-left"></i> Unity下的日式卡通渲染实现-描边篇（三）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/04/Urp%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8B%E7%9A%84%E5%8D%A1%E9%80%9A%E5%86%B0%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/" rel="next" title="Urp渲染管线下的卡通冰效果实现">
+      Urp渲染管线下的卡通冰效果实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、定位游戏性能瓶颈"><span class="nav-number">1.</span> <span class="nav-text">一、定位游戏性能瓶颈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-游戏循环"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 游戏循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-单线程渲染"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 单线程渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-多线程渲染"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 多线程渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-利用工具确定执行时间"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 利用工具确定执行时间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、GPU性能优化"><span class="nav-number">2.</span> <span class="nav-text">二、GPU性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-减少OverDraw"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 减少OverDraw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-渲染Pass"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 渲染Pass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-渲染队列"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 渲染队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-合理的渲染顺序"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 合理的渲染顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-减少大范围或者全屏特效"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.3 减少大范围或者全屏特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-减少UI的重叠层数"><span class="nav-number">2.1.5.</span> <span class="nav-text">2.1.4 减少UI的重叠层数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-提高Early-Z-Test的命中率"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 提高Early-Z Test的命中率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-减少Alpha测试"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 减少Alpha测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-减少半透明物体"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 减少半透明物体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-降低GPU带宽"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 降低GPU带宽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-压缩纹理"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 压缩纹理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-减少纹理采样次数"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 减少纹理采样次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-提高纹理缓存命中率"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3 提高纹理缓存命中率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-4-压缩网格"><span class="nav-number">2.4.4.</span> <span class="nav-text">2.4.4 压缩网格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-5-减少全屏Blit"><span class="nav-number">2.4.5.</span> <span class="nav-text">2.4.5 减少全屏Blit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-Shader优化"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 Shader优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-降低Shader中的数值精度"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1 降低Shader中的数值精度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-减少Shader中的分支和循环"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2 减少Shader中的分支和循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-降低Shader的计算复杂度"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3 降低Shader的计算复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-4-减少纹理的读取次数"><span class="nav-number">2.5.4.</span> <span class="nav-text">2.5.4 减少纹理的读取次数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-尽可能剔除不必要的物体渲染"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 尽可能剔除不必要的物体渲染</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、CPU性能优化"><span class="nav-number">3.</span> <span class="nav-text">三、CPU性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-渲染优化"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 渲染优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-Culling优化"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 Culling优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-渲染批次优化"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 渲染批次优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-物理优化"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 物理优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-降低Unity的物理更新频率"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 降低Unity的物理更新频率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-少用或者不用MeshCollider"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 少用或者不用MeshCollider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-减少频繁射线检测的使用"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 减少频繁射线检测的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-关闭碰撞矩阵中没必要的部分"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 关闭碰撞矩阵中没必要的部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-动画优化"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 动画优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-限制骨骼数目"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 限制骨骼数目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-动画的CPU性能优化"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.3 动画的CPU性能优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-粒子优化"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 粒子优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-限制特效的最大粒子数"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 限制特效的最大粒子数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-限制特效的批次"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 限制特效的批次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-3-限制特效使用的贴图尺寸"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 限制特效使用的贴图尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-3-限制特效的重叠层数和范围"><span class="nav-number">3.4.4.</span> <span class="nav-text">3.4.3 限制特效的重叠层数和范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-UI优化"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 UI优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-资源加载优化"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 资源加载优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-1-Shader变体的预热"><span class="nav-number">3.6.1.</span> <span class="nav-text">3.6.1 Shader变体的预热</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-2-游戏对象池"><span class="nav-number">3.6.2.</span> <span class="nav-text">3.6.2 游戏对象池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-3-资源管理方案推荐YooAsset"><span class="nav-number">3.6.3.</span> <span class="nav-text">3.6.3 资源管理方案推荐YooAsset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-游戏脚本优化"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 游戏脚本优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-1-游戏框架优化"><span class="nav-number">3.7.1.</span> <span class="nav-text">3.7.1 游戏框架优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-2-游戏逻辑优化"><span class="nav-number">3.7.2.</span> <span class="nav-text">3.7.2 游戏逻辑优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-3-常见的脚本优化策略"><span class="nav-number">3.7.3.</span> <span class="nav-text">3.7.3 常见的脚本优化策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-4-Lua代码优化"><span class="nav-number">3.7.4.</span> <span class="nav-text">3.7.4 Lua代码优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-GC优化"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 GC优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、资源优化"><span class="nav-number">4.</span> <span class="nav-text">四、资源优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-纹理优化"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 纹理优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-网格优化"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 网格优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-动画优化"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 动画优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、内存优化"><span class="nav-number">5.</span> <span class="nav-text">五、内存优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-优化资源"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 优化资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-优化打包和资源管理"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 优化打包和资源管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-优化Mono堆"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 优化Mono堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-优化Native内存"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 优化Native内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-优化Lua内存"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 优化Lua内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-6-减少包体二进制大小"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 减少包体二进制大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-7-配置优化"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 配置优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、二进制包体优化"><span class="nav-number">6.</span> <span class="nav-text">六、二进制包体优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-代码裁剪"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 代码裁剪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-安卓架构"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 安卓架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-其它跟App打包相关的方法"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 其它跟App打包相关的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、其它"><span class="nav-number">7.</span> <span class="nav-text">七、其它</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">622k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:25</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
