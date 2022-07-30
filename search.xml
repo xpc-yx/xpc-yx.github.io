@@ -23,7 +23,7 @@
 <h2 id="妆容通道贴图合并"><a href="#妆容通道贴图合并" class="headerlink" title="妆容通道贴图合并"></a>妆容通道贴图合并</h2><p>其实根本没必要一个妆容模块一个贴图，完全可以做贴图合并，比如不需要使用rgb的妆容模块，那么一个贴图可以对应四个妆容模块了。实际上，跟美术沟通后发现，妆容的效果主要是依赖妆容的通道掩码和妆容颜色，所以基本上不需要使用妆容贴图的rgb。</p>
 <h2 id="妆容颜色渲染到基础贴图"><a href="#妆容颜色渲染到基础贴图" class="headerlink" title="妆容颜色渲染到基础贴图"></a>妆容颜色渲染到基础贴图</h2><p>这个理论上来说算是终极优化吧。妆容会暴露很多参数给美术或者用户，用户调整这些参数后会得到一个化妆后的效果。关键的地方是，调整完成之后，可以理解为妹子化妆完成后，效果已经固定了。那么实际上，我们不需要每次再去计算妆容颜色，而是可以将妆容颜色渲染到一张单独的贴图上或者直接覆盖原本的BaseMap。以后的渲染，就不需要使用妆容模块了。</p>
 <h3 id="具体实现思路"><a href="#具体实现思路" class="headerlink" title="具体实现思路"></a>具体实现思路</h3><p>可以新建一个Pass，将妆容颜色的计算结果单独走一遍Pass，同时结合原本的BaseMap作为基础颜色，渲染目标是一个RT，比如是BaseMap。这个Pass的开关可以提供接口供业务代码控制，在化妆完成后调用来覆盖原本的BaseMap。</p>
-<h1 id="妆容效果"><a href="#妆容效果" class="headerlink" title="妆容效果"></a>妆容效果</h1><p>最后上一点效果图吧，从美术大佬那边要来的图，凑合看看吧。<br><img alt="妆容效果0" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果0.jpg"><br><img alt="妆容效果2" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果2.jpg"><br><img alt="妆容效果3" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果3.jpg"></p>
+<h1 id="妆容效果"><a href="#妆容效果" class="headerlink" title="妆容效果"></a>妆容效果</h1><p>最后上一点效果图吧，从美术大佬那边要来的图，凑合看看吧。<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果0.jpg"><br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果2.jpg"><br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果3.jpg"></p>
 ]]></content>
       <categories>
         <category>Rendering</category>
