@@ -306,8 +306,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>前段时间做了下角色妆容的实现，想写个文章记录一下这个事情。妆容看起来很复杂，实际上整理实现思路很简单，主要是两个方面的内容，改变基础色和改变高光（金粉效果）。<br>没有开启妆容的情况下，基础色就是从颜色贴图和基础颜色中获得；开启妆容后，要根据各个状态模块的模板和比例来插值妆容颜色和基本颜色；金粉则是改变特定区域的高光，金粉的浓淡可以用滑块控制，最好同时结合妆容色的浓淡；额外可能需要改变特定妆容区域的光滑度，比如唇彩。</p>
-<h1 id="妆容界面"><a href="#妆容界面" class="headerlink" title="妆容界面"></a>妆容界面</h1><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容0.png"><br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容1.png"></p>
+          <p>前段时间做了下角色妆容的实现，想写个文章记录一下这个事情。妆容看起来很复杂，实际上整理实现思路很简单，主要是两个方面的内容，改变基础色和改变高光（金粉效果）。<br>先贴一个妆容效果：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果1.jpg"></p>
+<p>没有开启妆容的情况下，基础色就是从颜色贴图和基础颜色中获得；开启妆容后，要根据各个状态模块的模板和比例来插值妆容颜色和基本颜色；金粉则是改变特定区域的高光，金粉的浓淡可以用滑块控制，最好同时结合妆容色的浓淡；额外可能需要改变特定妆容区域的光滑度，比如唇彩。</p>
+<h1 id="妆容界面"><a href="#妆容界面" class="headerlink" title="妆容界面"></a>妆容界面</h1>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/#more" rel="contents">
