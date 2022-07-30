@@ -62,7 +62,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C2.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C3.jpg">
 <meta property="article:published_time" content="2022-07-30T03:10:00.000Z">
-<meta property="article:modified_time" content="2022-07-30T14:12:42.344Z">
+<meta property="article:modified_time" content="2022-07-30T14:16:58.818Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="妆容">
 <meta name="twitter:card" content="summary">
@@ -324,7 +324,7 @@
 <p>从代码可以看到妆容色makeup是基础颜色和妆容颜色的插值结果。妆容颜色是从通道贴图读取的rgb和腮红颜色的结合，同样插值比例是通道贴图的a和腮红比例的结合。不过大部分妆容模块的妆容颜色不需要通道贴图的rgb，这种通道贴图实际上可以做合并处理。</p>
 <h3 id="妆容模块的结合"><a href="#妆容模块的结合" class="headerlink" title="妆容模块的结合"></a>妆容模块的结合</h3><p>妆容模块有一定的叠加顺序，最底部的是基础色，然后是按照顺序叠加的妆容模块，比如界面上的妆容模块顺序。那么，计算的时候，首先也是一个个按照顺序插值过来，比如先插值基础颜色和腮红，然后用插值结果继续和下一个妆容模块做插值，这样得到的最终妆容颜色就是多个妆容模块的结合。</p>
 <h2 id="妆容金粉-1"><a href="#妆容金粉-1" class="headerlink" title="妆容金粉"></a>妆容金粉</h2><p>金粉实际上改变的是高光。没有金粉的话，高光就是默认的情况，比如pbr的金属流高光或者Bling-Phong的高光。有金粉的话，根据金粉计算出一个高光，同时与默认高光进行插值，插值的因子同具体妆容模块的颜色计算。<br>可以参考以下代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">half3 specular &#x3D; (half3)0;</span><br><span class="line"></span><br><span class="line">half3 golddustUV0 &#x3D; SAMPLE_TEXTURE2D(_GolddustMap, sampler_GolddustMap, _GolddustUVTile * uv0 + _GolddustUVSpeed * _Time.x).rgb;</span><br><span class="line"></span><br><span class="line">half4 blush &#x3D; SAMPLE_TEXTURE2D(_BlushMap, sampler_BlushMap, uv0);</span><br><span class="line">specular &#x3D; lerp(specular, _BlusGolddustColor * golddustUV0 * _BlusGolddustIntensity, blush.a * _BlusIntensity);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">half3 golddustUV0 &#x3D; SAMPLE_TEXTURE2D(_GolddustMap, sampler_GolddustMap, _GolddustUVTile * uv0 + _GolddustUVSpeed * _Time.x).rgb;</span><br><span class="line">half4 blush &#x3D; SAMPLE_TEXTURE2D(_BlushMap, sampler_BlushMap, uv0);</span><br><span class="line">half3 specular &#x3D; lerp((half3)0, _BlusGolddustColor * golddustUV0 * _BlusGolddustIntensity, blush.a * _BlusIntensity);</span><br></pre></td></tr></table></figure>
 <p>对于Pbr的金属流，默认的高光是0，所以金粉是为了增加额外的高光。关键的一句是在默认的高光和金粉高光之间做插值，插值比例是金粉浓度和妆容的比例。金粉高光是从金粉贴图读取出来同时应用金粉颜色和强度。</p>
 <h2 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h2><p>比如唇彩模块可以改变光滑度，这个改变的前提是唇彩的通道贴图a通道是大于0的；另外还有面纹的一些UV变化，实际上这个是简单模仿贴花的功能。</p>
 <h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><p>下面介绍一些妆容性能相关的优化策略。</p>
