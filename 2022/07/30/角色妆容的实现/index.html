@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前段时间做了下角色妆容的实现，想写个文章记录一下这个事情。妆容看起来很复杂，实际上整理实现思路很简单，主要是两个方面的内容，改变基础色和改变高光（金粉效果）。没有开启妆容的情况下，基础色就是从颜色贴图和基础颜色中获得；开启妆容后，要根据各个状态模块的模板和比例来插值妆容颜色和基本颜色；金粉则是改变特定区域的高光，金粉的浓淡可以用滑块控制，最好同时结合妆容色的浓淡；额外可能需要改变特定妆容区域的光滑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="角色妆容的实现">
+<meta property="og:url" content="http://xiaopengcheng.top/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="前段时间做了下角色妆容的实现，想写个文章记录一下这个事情。妆容看起来很复杂，实际上整理实现思路很简单，主要是两个方面的内容，改变基础色和改变高光（金粉效果）。没有开启妆容的情况下，基础色就是从颜色贴图和基础颜色中获得；开启妆容后，要根据各个状态模块的模板和比例来插值妆容颜色和基本颜色；金粉则是改变特定区域的高光，金粉的浓淡可以用滑块控制，最好同时结合妆容色的浓淡；额外可能需要改变特定妆容区域的光滑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B90.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B91.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C0.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C1.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C3.jpg">
+<meta property="article:published_time" content="2022-07-30T03:10:00.000Z">
+<meta property="article:modified_time" content="2022-07-30T14:04:02.705Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="妆容">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%A6%86%E5%AE%B90.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>角色妆容的实现 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          角色妆容的实现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-30 11:10:00" itemprop="dateCreated datePublished" datetime="2022-07-30T11:10:00+08:00">2022-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="角色妆容的实现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前段时间做了下角色妆容的实现，想写个文章记录一下这个事情。妆容看起来很复杂，实际上整理实现思路很简单，主要是两个方面的内容，改变基础色和改变高光（金粉效果）。<br>没有开启妆容的情况下，基础色就是从颜色贴图和基础颜色中获得；开启妆容后，要根据各个状态模块的模板和比例来插值妆容颜色和基本颜色；金粉则是改变特定区域的高光，金粉的浓淡可以用滑块控制，最好同时结合妆容色的浓淡；额外可能需要改变特定妆容区域的光滑度，比如唇彩。</p>
+<h1 id="妆容界面"><a href="#妆容界面" class="headerlink" title="妆容界面"></a>妆容界面</h1><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容0.png"><br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容1.png"></p>
+<h2 id="妆容开关"><a href="#妆容开关" class="headerlink" title="妆容开关"></a>妆容开关</h2><p>最上面有一个Toggle来开关妆容模块，可以使用shader_feature_local的关键字，比如_MAKEUP来区分。</p>
+<h2 id="妆容金粉"><a href="#妆容金粉" class="headerlink" title="妆容金粉"></a>妆容金粉</h2><p>最上面的界面是指定金粉贴图贴图和相应的缩放，使用同样的UV缩放和位移的好处是避免重复读取金粉贴图，提高性能，避免每个妆容模块都要去读一次贴图。毕竟贴图是存储在内存中，要读取到GPU内的话，如果没有Cache中，则速度相比一个计算来说要慢一个数量级的可能。</p>
+<h2 id="妆容模块"><a href="#妆容模块" class="headerlink" title="妆容模块"></a>妆容模块</h2><p>接下来是具体的妆容模块，虽然模块比较多，实际上大同小异。功能都是通过通道贴图去改变指定位置的基础颜色，有些通道贴图还有图案的作用。有一些模块有额外的功能，比如唇彩的光滑度滑块、面纹的UV变化。</p>
+<h1 id="妆容的实现原理"><a href="#妆容的实现原理" class="headerlink" title="妆容的实现原理"></a>妆容的实现原理</h1><p>下面介绍妆容的具体实现原理。</p>
+<h2 id="妆容颜色"><a href="#妆容颜色" class="headerlink" title="妆容颜色"></a>妆容颜色</h2><p>这里的妆容颜色实际上对应的就是界面上具体的妆容模块。以第一个腮红为例子来说明，参考如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">half3 makeup &#x3D; baseColor;</span><br><span class="line">half4 blush &#x3D; SAMPLE_TEXTURE2D(_BlushMap, sampler_BlushMap, uv0);</span><br><span class="line">makeup &#x3D; lerp(makeup, blush.rgb * _BlushColor, blush.a * _BlusIntensity);</span><br></pre></td></tr></table></figure>
+<p>从代码可以看到妆容色makeup是基础颜色和妆容颜色的插值结果。妆容颜色是从通道贴图读取的rgb和腮红颜色的结合，同样插值比例是通道贴图的a和腮红比例的结合。不过大部分妆容模块的妆容颜色不需要通道贴图的rgb，这种通道贴图实际上可以做合并处理。</p>
+<h3 id="妆容模块的结合"><a href="#妆容模块的结合" class="headerlink" title="妆容模块的结合"></a>妆容模块的结合</h3><p>妆容模块有一定的叠加顺序，最底部的是基础色，然后是按照顺序叠加的妆容模块，比如界面上的妆容模块顺序。那么，计算的时候，首先也是一个个按照顺序插值过来，比如先插值基础颜色和腮红，然后用插值结果继续和下一个妆容模块做插值，这样得到的最终妆容颜色就是多个妆容模块的结合。</p>
+<h2 id="妆容金粉-1"><a href="#妆容金粉-1" class="headerlink" title="妆容金粉"></a>妆容金粉</h2><p>金粉实际上改变的是高光。没有金粉的话，高光就是默认的情况，比如pbr的金属流高光或者Bling-Phong的高光。有金粉的话，根据金粉计算出一个高光，同时与默认高光进行插值，插值的因子同具体妆容模块的颜色计算。<br>可以参考以下代码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">half3 specular &#x3D; (half3)0;</span><br><span class="line"></span><br><span class="line">half3 golddustUV0 &#x3D; SAMPLE_TEXTURE2D(_GolddustMap, sampler_GolddustMap, _GolddustUVTile * uv0 + _GolddustUVSpeed * _Time.x).rgb;</span><br><span class="line"></span><br><span class="line">half4 blush &#x3D; SAMPLE_TEXTURE2D(_BlushMap, sampler_BlushMap, uv0);</span><br><span class="line">specular &#x3D; lerp(specular, _BlusGolddustColor * golddustUV0 * _BlusGolddustIntensity, blush.a * _BlusIntensity);</span><br></pre></td></tr></table></figure>
+<p>对于Pbr的金属流，默认的高光是0，所以金粉是为了增加额外的高光。关键的一句是在默认的高光和金粉高光之间做插值，插值比例是金粉浓度和妆容的比例。金粉高光是从金粉贴图读取出来同时应用金粉颜色和强度。</p>
+<h2 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h2><p>比如唇彩模块可以改变光滑度，这个改变的前提是唇彩的通道贴图a通道是大于0的；另外还有面纹的一些UV变化，实际上这个是简单模仿贴花的功能。</p>
+<h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><p>下面介绍一些妆容性能相关的优化策略。</p>
+<h2 id="妆容通道贴图采样器的合并"><a href="#妆容通道贴图采样器的合并" class="headerlink" title="妆容通道贴图采样器的合并"></a>妆容通道贴图采样器的合并</h2><p>上述界面的妆容模块过多，如果每个妆容通道贴图一个采样器，肯定会超过限制。方式是所有妆容模块共用一个或者几个采样器。不过，理解上来说，一个贴图采样器对应一个贴图设置，所以去改变贴图的设置会不会有一些影响这个待验证。</p>
+<h2 id="妆容通道贴图合并"><a href="#妆容通道贴图合并" class="headerlink" title="妆容通道贴图合并"></a>妆容通道贴图合并</h2><p>其实根本没必要一个妆容模块一个贴图，完全可以做贴图合并，比如不需要使用rgb的妆容模块，那么一个贴图可以对应四个妆容模块了。实际上，跟美术沟通后发现，妆容的效果主要是依赖妆容的通道掩码和妆容颜色，所以基本上不需要使用妆容贴图的rgb。</p>
+<h2 id="妆容颜色渲染到基础贴图"><a href="#妆容颜色渲染到基础贴图" class="headerlink" title="妆容颜色渲染到基础贴图"></a>妆容颜色渲染到基础贴图</h2><p>这个理论上来说算是终极优化吧。妆容会暴露很多参数给美术或者用户，用户调整这些参数后会得到一个化妆后的效果。关键的地方是，调整完成之后，可以理解为妹子化妆完成后，效果已经固定了。那么实际上，我们不需要每次再去计算妆容颜色，而是可以将妆容颜色渲染到一张单独的贴图上或者直接覆盖原本的BaseMap。以后的渲染，就不需要使用妆容模块了。</p>
+<h3 id="具体实现思路"><a href="#具体实现思路" class="headerlink" title="具体实现思路"></a>具体实现思路</h3><p>可以新建一个Pass，将妆容颜色的计算结果单独走一遍Pass，同时结合原本的BaseMap作为基础颜色，渲染目标是一个RT，比如是BaseMap。这个Pass的开关可以提供接口供业务代码控制，在化妆完成后调用来覆盖原本的BaseMap。</p>
+<h1 id="妆容效果"><a href="#妆容效果" class="headerlink" title="妆容效果"></a>妆容效果</h1><p>最后上一点效果图吧，从美术大佬那边要来的图，凑合看看吧。<br><img alt="妆容效果0" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果0.jpg"><br><img alt="妆容效果1" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果1.jpg"><br><img alt="妆容效果2" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果2.jpg"><br><img alt="妆容效果3" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果3.jpg"></p>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" title="角色妆容的实现">http://xiaopengcheng.top/2022/07/30/角色妆容的实现/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%A6%86%E5%AE%B9/" rel="tag"><i class="fa fa-tag"></i> 妆容</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" rel="prev" title="Unity手游性能优化的经验总结">
+      <i class="fa fa-chevron-left"></i> Unity手游性能优化的经验总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#妆容界面"><span class="nav-number">1.</span> <span class="nav-text">妆容界面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容开关"><span class="nav-number">1.1.</span> <span class="nav-text">妆容开关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容金粉"><span class="nav-number">1.2.</span> <span class="nav-text">妆容金粉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容模块"><span class="nav-number">1.3.</span> <span class="nav-text">妆容模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#妆容的实现原理"><span class="nav-number">2.</span> <span class="nav-text">妆容的实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容颜色"><span class="nav-number">2.1.</span> <span class="nav-text">妆容颜色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#妆容模块的结合"><span class="nav-number">2.1.1.</span> <span class="nav-text">妆容模块的结合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容金粉-1"><span class="nav-number">2.2.</span> <span class="nav-text">妆容金粉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它功能"><span class="nav-number">2.3.</span> <span class="nav-text">其它功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能优化"><span class="nav-number">3.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容通道贴图采样器的合并"><span class="nav-number">3.1.</span> <span class="nav-text">妆容通道贴图采样器的合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容通道贴图合并"><span class="nav-number">3.2.</span> <span class="nav-text">妆容通道贴图合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#妆容颜色渲染到基础贴图"><span class="nav-number">3.3.</span> <span class="nav-text">妆容颜色渲染到基础贴图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体实现思路"><span class="nav-number">3.3.1.</span> <span class="nav-text">具体实现思路</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#妆容效果"><span class="nav-number">4.</span> <span class="nav-text">妆容效果</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">624k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:28</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

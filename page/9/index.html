@@ -222,6 +222,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-title-link" itemprop="url">CMFCToolBar上添加组合框的bug</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-12-21 20:04:29" itemprop="dateCreated datePublished" datetime="2013-12-21T20:04:29+08:00">2013-12-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-meta-item leancloud_visitors" data-flag-title="CMFCToolBar上添加组合框的bug" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>说实话，这几天为了CMFCToolBarComboBoxButton上的莫名其妙自动切换选择的bug烦死了，浪费了很多时间。也是过其它替代方法，发现都实现不了需要的界面效果。<br>我也不知道为什么自己对界面效果这么纠结。伤不起啊。本来我就没用过vs2008更新版本的MFC，也没打算用这个。由于上一次做的东西用到了切分视图，但是发现FormView自适应控件大小的实现非常麻烦，老是出现些不爽的bug，而且添加新的控件还得编辑界面，非常不爽。所以，打算使用新版本MFC里面的属性窗口。<br>刚好发现vs2010的项目导航可以生成这样的工程，果断试验之。虽然过程无比艰辛，总算可以使用这些自适应的DockPane窗口了。而且还发现这样的结构非常合适添加子窗口，以后的项目都可以采用这样的界面了，只要平台在windows下。<br>但是，美中最不足的是CFrameWndEx(使用CDockablePane必须使用扩展的框架窗口)，<strong>只能使用恶心的CMFCToolBar</strong>，因为CFrameWndEx的菜单和工具栏都是可以DockPane的子类。我只能说CMFCToolBar的使用太TMD的讲究了，一个不注意效果就不对。因为使用这个东西的人少，网上资料也很少。只能一直google，还有查看类定义的源码，慢慢尝试了。<br>现在，我这里说的只是添加组合框。<br>首先，在资源编辑器中新建工具栏IDR_BUILD，留下一个<strong>空位</strong>，如ID_BUILD_CHOOSE。如下图，第二个就是我预留的ID_BUILD_CHOOSE的空位。<img alt data-src="https://c8.staticflickr.com/8/7637/27379836511_65ae3047e4_o.jpg"><br>然后，在CMainFrame::OnCreate中创建两个工具栏，代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">   if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER</span><br><span class="line">| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC)</span><br><span class="line">	|| !m_wndToolBar.LoadToolBar(IDR_MAINFRAME))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建工具栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (!m_wndToolBarBuild.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_TOOLTIPS | CBRS_FLYBY</span><br><span class="line">	| CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC| CBRS_GRIPPER | CBRS_BORDER_3D, IDC_MFCTOOLBAR_BUILD)</span><br><span class="line">	|| !m_wndToolBarBuild.LoadToolBar(IDR_BUILD))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建build工具栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndStatusBar.Create(this))</span><br><span class="line">&#123;</span><br><span class="line">	TRACE0("未能创建状态栏\n");</span><br><span class="line">	return -1;      // 未能创建</span><br><span class="line">&#125;</span><br><span class="line">m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));</span><br><span class="line"></span><br><span class="line">m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBarBuild.EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line"></span><br><span class="line">EnableDocking(CBRS_ALIGN_ANY);</span><br><span class="line">DockPane(m_wndMenuBar);</span><br><span class="line">DockPane(m_wndToolBarBuild);</span><br><span class="line">DockPaneLeftOf(m_wndToolBar, m_wndToolBarBuild);</span><br></pre></td></tr></table></figure>
+<p>注意，创建第二个工具栏的时候需要使用<strong>Create</strong>而不是CreateEx，如果使用CreateEx就不能使用后面的ID参数。<br>现在需要实现三个消息。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1253,125 +1366,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" class="post-title-link" itemprop="url">使用CGAL实现简单的模型分割</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-08-05 22:00:43" itemprop="dateCreated datePublished" datetime="2013-08-05T22:00:43+08:00">2013-08-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
-                    <span itemprop="name">CGAL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL实现简单的模型分割" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>第一步，先把鼠标轨迹点<strong>逆投影</strong>到三维世界的观察坐标系。<br>第二步，把第一步获得的三维坐标点集合<strong>投射到模型上面</strong>，获得笔画，就是模型内部的一些相互连接的边。<br>第三步，沿着第二步获得那些相互连接的边进行<strong>欧拉操作分裂边</strong>。可能需要多分割几次才会分割出模型的一部分。<br>第四步，<strong>搜索整个模型，对不同的部分进行标记</strong>。</p>
-<p>下面是实现的一些效果。绿色线是鼠标轨迹，红色线是投影到模型上面的边的连接线。</p>
-<p><img alt data-src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1422,7 +1416,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">217</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1435,7 +1429,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1487,12 +1481,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">622k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:26</span>
+    <span title="站点阅读时长">9:28</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>

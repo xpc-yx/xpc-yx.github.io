@@ -222,6 +222,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/" class="post-title-link" itemprop="url">如何提高多线程程序的cpu利用率</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-12-18 19:54:13" itemprop="dateCreated datePublished" datetime="2012-12-18T19:54:13+08:00">2012-12-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/" class="post-meta-item leancloud_visitors" data-flag-title="如何提高多线程程序的cpu利用率" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>正如大家所知道的那样，多核多cpu越来越普遍了，而且编写多线程程序也是件很简单的事情。在Windows下面，调用CreateThread函数一次就能够以你想要的函数地址新建一个子线程运行。然后，事情确实你发现创建多线程根本没有让程序快多少，也没有提高多少cpu利用率，甚至可能让cpu利用率下降。唯一能够确定的是多线程能够避免界面假死。为什么会是这样的了。本文将举一些例子和讲述一些原因。</p>
+<p>首先，我来讲一下多处理的一些知识。如下图所示，<br><img alt data-src="https://c2.staticflickr.com/8/7602/26843192743_1a58643141_o.png"><br>多处理器系统也只有一个待运行的线程队列，内存中也只有一个操作系统拷贝，而且也只有一个内存系统，但是会有多个cpu同时运行不同的线程。一个cpu运行一个线程，那么上图中的系统最多能在同一时间运行2个线程。其实，多处理系统需要掌握的知识不是这些，而是<strong>缓存一致性</strong>。<br>现在来解释下什么是缓存一致性。由于，还是只有一个内存系统。所有cpu都要和这个内存系统通信，但是只有一条总线，那么这无疑会造成总线紧张，限制整体的速度了。那么，你多个cpu也没多少意义了。解决这个问题的办法还是利用cpu的缓存机制，学过组成原理的同学都知道，cpu的缓存命中率还是很高的，有90%以上吧。那么，我继续利用缓存机制还是可以降低总线的频繁使用的。但是，每个cpu都有自己的缓存。如果有2个cpu的缓存存储的是同一内存数据的内容，其中一个cpu的缓存更新了，另外一个cpu的缓存也必须更新，这就是所谓的缓存一致性。编程多线程程序的一个很重要的一点就是避免因为缓存一致性引起的缓存更新风暴。<br>现在我举一个<strong>缓存更新风暴</strong>的例子。<br>如图所示的类定义，<br><a href="http://www.xpc-yx.com/2012/12/%e5%a6%82%e4%bd%95%e6%8f%90%e9%ab%98%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%a8%8b%e5%ba%8f%e7%9a%84cpu%e5%88%a9%e7%94%a8%e7%8e%87/%e7%bc%93%e5%ad%98%e4%b8%80%e8%87%b4%e6%80%a7%e9%a3%8e%e6%9a%b4/" target="_blank" rel="noopener"><img alt="缓存一致性风暴" data-src="http://www.xpc-yx.com/wp-content/uploads/2012/12/缓存一致性风暴.png"></a><br>锁lockHttp和lockSsl中间只有8个字节，而绝大部分系统上一个缓存行是128个字节，那么这2个锁很可能就处在同一个缓存行上面。那么，最坏的情况会发生什么事情了。假设处理器P1在运行一个处理http请求的线程T1，处理器P2在运行一个处理ssl请求的线程T2，那么当T1获得锁lockHttp的时候，锁的内容就会改变，为了保持缓存一致性，就会更新P2的缓存。那么，T2要获得锁lockssl的时候，发现缓存已经失效了，就必须从内存中重新加载缓存之类。总之，这会将缓存命中率降低到90%以下，引起性能的严重降低。而且发生这种事情的原因是因为我们不了解硬件的体系结构。</p>
+<p>多cpu不能成倍提高速度的原因是任务的某些部分是必须串行处理的。比如，矩阵乘法可以分为三个部分，初始化矩阵，相乘，返回结果。这三部分第二部分可以用多线程来处理，第一部分和第三部分则是不可以的。而且第二部分必须在第一部分完成之后，第三部分必须在第一部分完成之后。那么，无论你添加多少个处理器，最快的时间都至少是第一部分和第二部分的时间之和。这个事实好像叫做Amdahl法则。<br>如果使用多线程，那么就必须考虑线程同步，而线程同步又是导致速度降低的关键。所以下面就讲述一些方法来加快多线程程序的吞吐速度。<br><strong>方法一，把一个任务分解为多个可以子任务。</strong><br>因为总有些子任务是可以并发的，多个子任务并发执行了很可能就能够避免cpu需要io操作的完成了，而且能够提高系统的吞吐量。<br><strong>方法二，缓存多线程的共享数据。</strong><br>当你已经在使用多线程了，很多时候必须使用共享数据。如果，数据是只读的，那么可以在第一次获取后保存起来，以后就可以重复使用了。但是，第一次的获取还是无法避免的需要线程同步操作的。<br><strong>方法三，如果线程数目有限，就不要共享数据。</strong><br>做法是为每一个线程实例化一个单独的数据，其实就是为每一个线程分配一块数据使用。这样没有线程同步操作了，速度可以尽可能的提示。<br><strong>方法四，如果没办法确定线程数目到底有多少，那么使用部分共享吧。</strong><br>部分共享其实就是使用多个资源池代替一个资源池，资源池的数目得更加经验来确定。如下图所示，<br><img alt data-src="https://c2.staticflickr.com/8/7661/26843193313_87aceb0b9a_o.png"><br>最后在提一个叫做<strong>Thundering Herd的问题</strong>，该问题维基百科有定义<a href="http://en.wikipedia.org/wiki/Thundering_herd_problem" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Thundering_herd_problem</a>。大意是，当多个线程在等待一个资源的时候，如果事件等待到了，操作系统是唤醒所有等待的线程让它们自己去竞争资源了还是选择一个线程把资源给它。当然唤醒所有的线程肯定开销要大，而且所有没有抢到资源的线程还得重新进入等待状态，这无疑造成很多没必要的操作，浪费了没必要的线程上下文切换。总之，会不会存在Thundering Herd还是跟不同的操作系统有关的。万一存在Thundering Herd了，多线程可能就没那么好办了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/12/18/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E7%9A%84cpu%E5%88%A9%E7%94%A8%E7%8E%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/17/C++%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1295,125 +1414,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">计算机图形学OpenGL版第五章代码汇总</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-11-12 21:13:34" itemprop="dateCreated datePublished" datetime="2012-11-12T21:13:34+08:00">2012-11-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" class="post-meta-item leancloud_visitors" data-flag-title="计算机图形学OpenGL版第五章代码汇总" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>5.6.2 网格场景</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> comment(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>)</span><br><span class="line"></span><br><span class="line">const int WINDOW_WIDTH = 640;</span><br><span class="line">const int WINDOW_HEIGHT = 480;</span><br><span class="line">const int WINDOW_POS_X = 300;</span><br><span class="line">const int WINDOW_POS_Y = 150;</span><br><span class="line"></span><br><span class="line">void myInit()</span><br><span class="line">&#123;</span><br><span class="line">    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);</span><br><span class="line">    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw a z-axis, with cone at end</span></span><br><span class="line">void axis(double length)</span><br><span class="line">&#123;</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glBegin(GL_LINES);</span><br><span class="line">    glVertex3d(0, 0, 0);</span><br><span class="line">    glVertex3d(0, 0, length);</span><br><span class="line">    glEnd();</span><br><span class="line">    glTranslated(0, 0, length - 0.2);//平移</span><br><span class="line">    glutWireCone(0.04, 0.2, 12, 9);</span><br><span class="line">    glPopMatrix();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void displayWire()</span><br><span class="line">&#123;</span><br><span class="line">    glMatrixMode(GL_PROJECTION);//设置视景体</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    glOrtho(-2.0 * 64 / 48, 2.0 * 64 / 48, -2.0, 2.0, 0.1, 100);</span><br><span class="line"></span><br><span class="line">    glMatrixMode(GL_MODELVIEW);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    gluLookAt(1.0, 1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);</span><br><span class="line"></span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">    glColor3d(0, 0, 0);</span><br><span class="line"></span><br><span class="line">    axis(0.5);//z-axis</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glRotated(-90, 1.0, 0, 0);</span><br><span class="line">    axis(0.5);//y-axis</span><br><span class="line">    glRotated(90.0, 0, 1.0, 0);</span><br><span class="line">    axis(0.5);//x-axis</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0.5, 0.5, 0.5);</span><br><span class="line">    glutWireCube(1.0);//线框立方体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(1.0, 0, 0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 1.0, 0);</span><br><span class="line">    glutWireSphere(0.25, 10, 8);//线框球体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0, 1.0, 0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 0, 1.0);</span><br><span class="line">    glutWireCone(0.2, 0.5, 10, 8);//线框圆锥体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0, 0, 1.0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 1.0, 1.0);</span><br><span class="line">    glutWireTeapot(0.2);//线框茶壶</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(1.0, 0, 1.00);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 1.0, 0);</span><br><span class="line">    glutWireTorus(0.1, 0.3, 10, 10);//线框花环</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0, 1.0, 1.0);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(1.0, 0, 0);</span><br><span class="line">    glScaled(0.15, 0.15, 0.15);</span><br><span class="line">    glutWireDodecahedron();//线框12面体</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glColor3d(0.1, 0.5, 0.2);</span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 1.0, 1.0);</span><br><span class="line">    glutWireCube(0.25);</span><br><span class="line">    glPopMatrix();</span><br><span class="line"></span><br><span class="line">    glPushMatrix();</span><br><span class="line">    glTranslated(0, 0, 1.0);</span><br><span class="line">    GLUquadricObj* qobj = gluNewQuadric();//创建二次曲面对象</span><br><span class="line">    gluQuadricDrawStyle(qobj, GLU_LINE);</span><br><span class="line">    glColor3d(0.3, 0.5, 0.4);</span><br><span class="line">    gluCylinder(qobj, 0.2, 0.2, 0.4, 8, 8);//圆柱体</span><br><span class="line">    glPopMatrix();</span><br><span class="line">    glFlush();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    glutInit(argc, argv);</span><br><span class="line">    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);</span><br><span class="line">    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    glutCreateWindow("Transformation Test -Wireframes");</span><br><span class="line">    glutDisplayFunc(displayWire);</span><br><span class="line">    myInit();</span><br><span class="line">    glutMainLoop();//进入消息循环</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>5.6.3 着色三维场景绘制</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/11/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6OpenGL%E7%89%88%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1464,7 +1464,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">217</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1477,7 +1477,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1529,12 +1529,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">622k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:26</span>
+    <span title="站点阅读时长">9:28</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
   </div>
