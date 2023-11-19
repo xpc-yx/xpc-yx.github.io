@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.1.1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -459,7 +459,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、如何获得颜色缓冲"><span class="nav-number">1.</span> <span class="nav-text">一、如何获得颜色缓冲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Urp的渲染顺序"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Urp的渲染顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Urp内置的CameraOpaqueTexture"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Urp内置的CameraOpaqueTexture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、特效渲染管线"><span class="nav-number">2.</span> <span class="nav-text">二、特效渲染管线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-EffectRenderFeature"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 EffectRenderFeature</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-兼容UI特效穿插UI的解决方案"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 兼容UI特效穿插UI的解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-EffectRenderPass"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 EffectRenderPass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-UberEffectPostRenderPass"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 UberEffectPostRenderPass</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、后处理特效"><span class="nav-number">3.</span> <span class="nav-text">三、后处理特效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-屏幕扭曲"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 屏幕扭曲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-色散"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 色散</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-黑白屏"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 黑白屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-径向模糊"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 径向模糊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-色散和径向模糊的结合"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 色散和径向模糊的结合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-黑白屏和其它后处理效果的结合"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 黑白屏和其它后处理效果的结合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-UberEffectPost超级Shader"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 UberEffectPost超级Shader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-UberEffectPost脚本"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 UberEffectPost脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考资料"><span class="nav-number">4.</span> <span class="nav-text">四、参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%A6%82%E4%BD%95%E8%8E%B7%E5%BE%97%E9%A2%9C%E8%89%B2%E7%BC%93%E5%86%B2"><span class="nav-number">1.</span> <span class="nav-text">一、如何获得颜色缓冲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Urp%E7%9A%84%E6%B8%B2%E6%9F%93%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Urp的渲染顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Urp%E5%86%85%E7%BD%AE%E7%9A%84CameraOpaqueTexture"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Urp内置的CameraOpaqueTexture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%89%B9%E6%95%88%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">二、特效渲染管线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-EffectRenderFeature"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 EffectRenderFeature</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%85%BC%E5%AE%B9UI%E7%89%B9%E6%95%88%E7%A9%BF%E6%8F%92UI%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 兼容UI特效穿插UI的解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-EffectRenderPass"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 EffectRenderPass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-UberEffectPostRenderPass"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 UberEffectPostRenderPass</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88"><span class="nav-number">3.</span> <span class="nav-text">三、后处理特效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%B1%8F%E5%B9%95%E6%89%AD%E6%9B%B2"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 屏幕扭曲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E8%89%B2%E6%95%A3"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 色散</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E9%BB%91%E7%99%BD%E5%B1%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 黑白屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%BE%84%E5%90%91%E6%A8%A1%E7%B3%8A"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 径向模糊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-%E8%89%B2%E6%95%A3%E5%92%8C%E5%BE%84%E5%90%91%E6%A8%A1%E7%B3%8A%E7%9A%84%E7%BB%93%E5%90%88"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 色散和径向模糊的结合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-%E9%BB%91%E7%99%BD%E5%B1%8F%E5%92%8C%E5%85%B6%E5%AE%83%E5%90%8E%E5%A4%84%E7%90%86%E6%95%88%E6%9E%9C%E7%9A%84%E7%BB%93%E5%90%88"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 黑白屏和其它后处理效果的结合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-UberEffectPost%E8%B6%85%E7%BA%A7Shader"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 UberEffectPost超级Shader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-UberEffectPost%E8%84%9A%E6%9C%AC"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 UberEffectPost脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">四、参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -488,7 +488,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -531,7 +531,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -547,7 +547,7 @@
     </span>
     <span title="站点阅读时长">9:28</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0

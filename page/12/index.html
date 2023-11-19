@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.1.1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -552,7 +552,7 @@
       
           <p>代码优化这种东西，肯定是经验之谈，即使你对代码的执行细节理解的很清楚，没有实际的经验体会也不会对之有多大的感觉。看书本人虽然觉得是揠苗助长，但是这估计就类似于打疫苗吧。要是艾滋有疫苗现在估计就没有世界艾滋日了。所以，看看书打打疫苗还是很有好处的。<br>代码优化很多就是些避免冗余计算，但是场合不同，有些可能你都从没有考虑过需要这样的优化。我打算把我从提高c++性能的编程技术上面看到的代码优化总结一下，随便扯几下。</p>
 <p><strong>例子一，用缓存计算结果优化循环。</strong></p>
-<p>原始代码，<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for (...; !done; ...) done = patternMatch(pat1, pat2, isCaseSenstive());</span><br></pre></td></tr></table></figure><br>优化代码,<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bool isSenstive = isCaseSenstive();</span><br><span class="line">for (...; !done; ...) done = patternMatch(pat1, pat2, isSenstive);</span><br></pre></td></tr></table></figure><br>这个例子比较简单，一般情况大家都能优化循环，去掉循环内部的重复的函数调用和计算等。</p>
+<p>原始代码，<br></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2012/12/13/C++%E7%9A%84%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/#more" rel="contents">
@@ -1477,7 +1477,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1520,7 +1520,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1536,7 +1536,7 @@
     </span>
     <span title="站点阅读时长">9:28</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0

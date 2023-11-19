@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.1.1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="我们经常会看到头文件里面会有下列的结构。1234567#ifdef __cplusplusextern &quot;C&quot; &amp;#123;#endif    &#x2F;*...*&#x2F;#ifdef __cplusplus&amp;#125;#endif而且我们也大都知道这是为了和C语言兼容。但是更具体的事情了？实际上，这段代码是为了保证用C语言调用C++函数或者用C++调用C语言实现的函数，都能够顺利进行。不仅仅是单向的左右。如果">
+  <meta name="description" content="我们经常会看到头文件里面会有下列的结构。1234567#ifdef __cplusplusextern &quot;C&quot; &#123;#endif    &#x2F;*...*&#x2F;#ifdef __cplusplus&#125;#endif">
 <meta property="og:type" content="article">
 <meta property="og:title" content="extern &quot;C&quot;的理解">
 <meta property="og:url" content="http://xiaopengcheng.top/2014/08/15/extern%20C%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="我们经常会看到头文件里面会有下列的结构。1234567#ifdef __cplusplusextern &quot;C&quot; &amp;#123;#endif    &#x2F;*...*&#x2F;#ifdef __cplusplus&amp;#125;#endif而且我们也大都知道这是为了和C语言兼容。但是更具体的事情了？实际上，这段代码是为了保证用C语言调用C++函数或者用C++调用C语言实现的函数，都能够顺利进行。不仅仅是单向的左右。如果">
+<meta property="og:description" content="我们经常会看到头文件里面会有下列的结构。1234567#ifdef __cplusplusextern &quot;C&quot; &#123;#endif    &#x2F;*...*&#x2F;#ifdef __cplusplus&#125;#endif">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2014-08-15T12:55:40.000Z">
 <meta property="article:modified_time" content="2021-12-26T12:46:56.885Z">
@@ -423,7 +423,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -466,7 +466,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -482,7 +482,7 @@
     </span>
     <span title="站点阅读时长">9:28</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0

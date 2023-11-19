@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.1.1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -312,8 +312,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>也许在某些显卡上面，直接用glTexImage2D是可以使用非2次方纹理的。但是在我的机子上，直接用出现<strong>运行错误</strong>了。有没有办法让我们的程序<strong>同时支持2次方纹理和非二次方纹理了，并且我们还不需要改变纹理坐标</strong>了。<br>有，我们可以判断纹理的宽和高是不是都为2次方的。如果都是，那么直接使用就行了。如果不是，我们先用<strong>glTexImage2D申请2次方的纹理</strong>，然后用<strong>glTexSubImage2D</strong>把我们的数据放进去，再计算<strong>纹理坐标的变化因子</strong>，最后用glMatrixMode进入<strong>纹理堆栈</strong>操作，用<strong>glScaled</strong>设置坐标变化因子，这一切做完之后就可以按照非二次方纹理使用了。<br>下面提供部分代码，大致可以看出操作方法。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">3</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nFormat = GL_BGR_EXT;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">4</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nFormat = GL_BGRA_EXT;//bitmap内部数据是bgra格式,所以输入格式必须变化下</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (nWidthPowerOfTwo == m_nWidth  nHeightPowerOfTwo == m_nHeight)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//输出格式必须是GL_RGB,写成GL_BGR_EXT会出现空白</span></span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, nWidthPowerOfTwo, nHeightPowerOfTwo, </span><br><span class="line">        0, nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, nWidthPowerOfTwo, nHeightPowerOfTwo,</span><br><span class="line">    0, nFormat, GL_UNSIGNED_BYTE, NULL);</span><br><span class="line">    glTexSubImage2D(GL_TEXTURE_2D, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, m_nWidth, m_nHeight,</span><br><span class="line">    nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">    fTexScaleX = 1.0 * m_nWidth / nWidthPowerOfTwo;</span><br><span class="line">    fTexScaleY = 1.0 * m_nHeight / nHeightPowerOfTwo;</span><br><span class="line">    <span class="comment">//设置纹理堆栈</span></span><br><span class="line">    glMatrixMode(GL_TEXTURE);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    glScaled(fTexScaleX, fTexScaleY, 1.0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
+          <p>也许在某些显卡上面，直接用glTexImage2D是可以使用非2次方纹理的。但是在我的机子上，直接用出现<strong>运行错误</strong>了。有没有办法让我们的程序<strong>同时支持2次方纹理和非二次方纹理了，并且我们还不需要改变纹理坐标</strong>了。<br>有，我们可以判断纹理的宽和高是不是都为2次方的。如果都是，那么直接使用就行了。如果不是，我们先用<strong>glTexImage2D申请2次方的纹理</strong>，然后用<strong>glTexSubImage2D</strong>把我们的数据放进去，再计算<strong>纹理坐标的变化因子</strong>，最后用glMatrixMode进入<strong>纹理堆栈</strong>操作，用<strong>glScaled</strong>设置坐标变化因子，这一切做完之后就可以按照非二次方纹理使用了。<br>下面提供部分代码，大致可以看出操作方法。<br></p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">3</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nFormat = GL_BGR_EXT;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">4</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nFormat = GL_BGRA_EXT;//bitmap内部数据是bgra格式,所以输入格式必须变化下</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (nWidthPowerOfTwo == m_nWidth  nHeightPowerOfTwo == m_nHeight)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//输出格式必须是GL_RGB,写成GL_BGR_EXT会出现空白</span></span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, nWidthPowerOfTwo, nHeightPowerOfTwo, </span><br><span class="line">        0, nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, nWidthPowerOfTwo, nHeightPowerOfTwo,</span><br><span class="line">    0, nFormat, GL_UNSIGNED_BYTE, NULL);</span><br><span class="line">    glTexSubImage2D(GL_TEXTURE_2D, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, m_nWidth, m_nHeight,</span><br><span class="line">    nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">    fTexScaleX = 1.0 * m_nWidth / nWidthPowerOfTwo;</span><br><span class="line">    fTexScaleY = 1.0 * m_nHeight / nHeightPowerOfTwo;</span><br><span class="line">    <span class="comment">//设置纹理堆栈</span></span><br><span class="line">    glMatrixMode(GL_TEXTURE);</span><br><span class="line">    glLoadIdentity();</span><br><span class="line">    glScaled(fTexScaleX, fTexScaleY, 1.0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1426,7 +1433,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1469,7 +1476,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1485,7 +1492,7 @@
     </span>
     <span title="站点阅读时长">9:28</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.1.1
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
