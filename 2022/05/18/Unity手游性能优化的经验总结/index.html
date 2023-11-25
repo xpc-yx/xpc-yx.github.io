@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。">
+  <meta name="description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。 1.1.1 单线程渲染上图可以看到主线程直接提交渲染命令GCMD给渲染设备。主线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity手游性能优化的经验总结">
 <meta property="og:url" content="http://xiaopengcheng.top/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。">
+<meta property="og:description" content="一、定位游戏性能瓶颈1.1 游戏循环基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。 1.1.1 单线程渲染上图可以看到主线程直接提交渲染命令GCMD给渲染设备。主线程">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/singlethreaded_rendering_0.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/multithreaded_rendering_0.png">
@@ -314,9 +314,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="一、定位游戏性能瓶颈"><a href="#一、定位游戏性能瓶颈" class="headerlink" title="一、定位游戏性能瓶颈"></a>一、定位游戏性能瓶颈</h1><h2 id="1-1-游戏循环"><a href="#1-1-游戏循环" class="headerlink" title="1.1 游戏循环"></a>1.1 游戏循环</h2><p>基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。<br>基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。</p>
-<h3 id="1-1-1-单线程渲染"><a href="#1-1-1-单线程渲染" class="headerlink" title="1.1.1 单线程渲染"></a>1.1.1 单线程渲染</h3><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/singlethreaded_rendering_0.png"><br>上图可以看到主线程直接提交渲染命令GCMD给渲染设备。主线程需要等待图形设备渲染完成。</p>
-<h3 id="1-1-2-多线程渲染"><a href="#1-1-2-多线程渲染" class="headerlink" title="1.1.2 多线程渲染"></a>1.1.2 多线程渲染</h3><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/multithreaded_rendering_0.png"><br>主线程：游戏逻辑-提交渲染到渲染线程-等待渲染完成。<br>渲染线程：提交渲染命令给GPU-等待渲染完成。<br>GPU：等待渲染命令-执行渲染。</p>
+        <html><head></head><body><h1 id="一、定位游戏性能瓶颈"><a href="#一、定位游戏性能瓶颈" class="headerlink" title="一、定位游戏性能瓶颈"></a>一、定位游戏性能瓶颈</h1><h2 id="1-1-游戏循环"><a href="#1-1-游戏循环" class="headerlink" title="1.1 游戏循环"></a>1.1 游戏循环</h2><p>基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。<br>基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。</p>
+<h3 id="1-1-1-单线程渲染"><a href="#1-1-1-单线程渲染" class="headerlink" title="1.1.1 单线程渲染"></a>1.1.1 单线程渲染</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/singlethreaded_rendering_0.png"><br>上图可以看到主线程直接提交渲染命令GCMD给渲染设备。主线程需要等待图形设备渲染完成。</p>
+<h3 id="1-1-2-多线程渲染"><a href="#1-1-2-多线程渲染" class="headerlink" title="1.1.2 多线程渲染"></a>1.1.2 多线程渲染</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/multithreaded_rendering_0.png"><br>主线程：游戏逻辑-提交渲染到渲染线程-等待渲染完成。<br>渲染线程：提交渲染命令给GPU-等待渲染完成。<br>GPU：等待渲染命令-执行渲染。</p>
 <p>从上图可以看到，主线程将渲染命令封装后提交给渲染线程，渲染再提交给图形设备渲染画面。因此，渲染线程会比主线程延迟一帧。虽然新增了渲染线程来减少CPU等待渲染完成的时间，但是每一帧主线程还是会等待渲染线程完成上一帧的渲染。因此，还是可以按照基本的游戏循环来分析每一帧的运行过程。</p>
 <h2 id="1-2-利用工具确定执行时间"><a href="#1-2-利用工具确定执行时间" class="headerlink" title="1.2 利用工具确定执行时间"></a>1.2 利用工具确定执行时间</h2><p>我们需要使用工具，比如UWA分析报告或者Unity的Profile等来确定主线程的游戏逻辑、渲染提交、渲染等待，这三个部分的整体执行时间。</p>
 <ol>
@@ -335,7 +335,7 @@
 <h3 id="2-2-5-减少UI的重叠层数"><a href="#2-2-5-减少UI的重叠层数" class="headerlink" title="2.2.5 减少UI的重叠层数"></a>2.2.5 减少UI的重叠层数</h3><p>由于UI是按照半透明物体渲染的，因此要尽可能减少UI的重叠。下面的UI要隐藏而不是被覆盖。不过，这一点通常要在UI框架中做好解决，因为不仅仅是有OverDraw，UI的网格计算等CPU消耗也很大。</p>
 <h2 id="2-3-提高Early-Z-Test的命中率"><a href="#2-3-提高Early-Z-Test的命中率" class="headerlink" title="2.3 提高Early-Z Test的命中率"></a>2.3 提高Early-Z Test的命中率</h2><p>理论上来说，从前到后渲染就是尽可能的提高Early-Z的命中率，从而降低OverDraw。所以，这一项优化通常是和优化OverDraw是一起进行的。</p>
 <h3 id="2-3-1-减少Alpha测试"><a href="#2-3-1-减少Alpha测试" class="headerlink" title="2.3.1 减少Alpha测试"></a>2.3.1 减少Alpha测试</h3><p>但是Alpha-Test，也就是在Shader中丢弃像素，即在片元着色器中执行Discard指令，可能会破坏Early-Z Test，因为硬件不执行片元着色器就无法预测最终的深度。因此，要尽量避免大范围的Early-Z Test，除非特殊的渲染要求，比如溶解、植物、头发等，不要使用Alpha-Test。</p>
-<h2 id="2-4-减少半透明物体"><a href="#2-4-减少半透明物体" class="headerlink" title="2.4 减少半透明物体"></a>2.4 减少半透明物体</h2><p>半透明物体一个是渲染顺序必须从后到前，因此OverDraw严重，性能肯定比不上不透明物体。<a href="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/PerformanceAndProfiling/Guidelines/" target="_blank" rel="noopener">按照虚幻的官方文档</a>，不透明最快，蒙版（Alpha测试）其次，半透明最慢(OverDraw严重)。</p>
+<h2 id="2-4-减少半透明物体"><a href="#2-4-减少半透明物体" class="headerlink" title="2.4 减少半透明物体"></a>2.4 减少半透明物体</h2><p>半透明物体一个是渲染顺序必须从后到前，因此OverDraw严重，性能肯定比不上不透明物体。<a href="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/PerformanceAndProfiling/Guidelines/">按照虚幻的官方文档</a>，不透明最快，蒙版（Alpha测试）其次，半透明最慢(OverDraw严重)。</p>
 <h2 id="2-5-降低GPU带宽"><a href="#2-5-降低GPU带宽" class="headerlink" title="2.5 降低GPU带宽"></a>2.5 降低GPU带宽</h2><h3 id="2-5-1-压缩纹理"><a href="#2-5-1-压缩纹理" class="headerlink" title="2.5.1 压缩纹理"></a>2.5.1 压缩纹理</h3><ol>
 <li>纹理压缩格式：比如现今基本都支持ASTC纹理压缩，通过合理设置不同资源的压缩率，尽可能压缩纹理大小。</li>
 <li>纹理大小：一些贴图根本不需要过大的尺寸，但是美术导入的原始资源通常过大，因此可以在资源导入脚本中强制压缩到一定的尺寸或者写工具扫描压缩一遍。</li>
@@ -397,20 +397,20 @@
 <h2 id="3-2-物理优化"><a href="#3-2-物理优化" class="headerlink" title="3.2 物理优化"></a>3.2 物理优化</h2><h3 id="3-2-1-降低Unity的物理更新频率"><a href="#3-2-1-降低Unity的物理更新频率" class="headerlink" title="3.2.1 降低Unity的物理更新频率"></a>3.2.1 降低Unity的物理更新频率</h3><p>可以在工程设置的Physics选项中关闭Auto Simulation，然后选择在框架更新的时候降低频率（比如2倍的Fixed Timestep）来调用Physics.Simulate来更新物理。同样可以直接设置Fixed Timestep来降低更新频率。</p>
 <h3 id="3-2-2-少用或者不用MeshCollider"><a href="#3-2-2-少用或者不用MeshCollider" class="headerlink" title="3.2.2 少用或者不用MeshCollider"></a>3.2.2 少用或者不用MeshCollider</h3><h3 id="3-2-3-减少频繁射线检测的使用"><a href="#3-2-3-减少频繁射线检测的使用" class="headerlink" title="3.2.3 减少频繁射线检测的使用"></a>3.2.3 减少频繁射线检测的使用</h3><p>可以缓存计算结果或者用更快速的检测方式替代，比如boxcast。</p>
 <h3 id="3-2-4-关闭碰撞矩阵中没必要的部分"><a href="#3-2-4-关闭碰撞矩阵中没必要的部分" class="headerlink" title="3.2.4 关闭碰撞矩阵中没必要的部分"></a>3.2.4 关闭碰撞矩阵中没必要的部分</h3><h2 id="3-3-动画优化"><a href="#3-3-动画优化" class="headerlink" title="3.3 动画优化"></a>3.3 动画优化</h2><h3 id="3-3-1-限制骨骼数目"><a href="#3-3-1-限制骨骼数目" class="headerlink" title="3.3.1 限制骨骼数目"></a>3.3.1 限制骨骼数目</h3><p>要求美术制作时候在规定的骨骼数目范围内，骨骼数目会影响动画大小也会影响执行效率。通常80-100已经非常足够了。</p>
-<h3 id="3-3-3-动画的CPU性能优化"><a href="#3-3-3-动画的CPU性能优化" class="headerlink" title="3.3.3 动画的CPU性能优化"></a>3.3.3 动画的CPU性能优化</h3><p>参考UWA的文章：<a href="https://zhuanlan.zhihu.com/p/382656748" target="_blank" rel="noopener">Unity性能优化 — 动画模块</a><br>参考Unity文档：<a href="https://docs.unity3d.com/cn/current/Manual/MecanimPeformanceandOptimization.html" target="_blank" rel="noopener">性能和优化</a></p>
-<h2 id="3-4-粒子优化"><a href="#3-4-粒子优化" class="headerlink" title="3.4 粒子优化"></a>3.4 粒子优化</h2><p>可以参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule3.html" target="_blank" rel="noopener">粒子系统优化——如何优化你的技能特效</a><br>特效的优化一般在项目的中后期，快上线的时候，针对性的对战斗这种特效集中度很高的场景进行测试和优化。</p>
+<h3 id="3-3-3-动画的CPU性能优化"><a href="#3-3-3-动画的CPU性能优化" class="headerlink" title="3.3.3 动画的CPU性能优化"></a>3.3.3 动画的CPU性能优化</h3><p>参考UWA的文章：<a href="https://zhuanlan.zhihu.com/p/382656748">Unity性能优化 — 动画模块</a><br>参考Unity文档：<a href="https://docs.unity3d.com/cn/current/Manual/MecanimPeformanceandOptimization.html">性能和优化</a></p>
+<h2 id="3-4-粒子优化"><a href="#3-4-粒子优化" class="headerlink" title="3.4 粒子优化"></a>3.4 粒子优化</h2><p>可以参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule3.html">粒子系统优化——如何优化你的技能特效</a><br>特效的优化一般在项目的中后期，快上线的时候，针对性的对战斗这种特效集中度很高的场景进行测试和优化。</p>
 <h3 id="3-4-1-限制特效的最大粒子数"><a href="#3-4-1-限制特效的最大粒子数" class="headerlink" title="3.4.1 限制特效的最大粒子数"></a>3.4.1 限制特效的最大粒子数</h3><p>通常会限制普通特效只能有5-10个粒子或者更小。</p>
 <h3 id="3-4-2-限制特效的批次"><a href="#3-4-2-限制特效的批次" class="headerlink" title="3.4.2 限制特效的批次"></a>3.4.2 限制特效的批次</h3><p>最好是一个特效能在几个批次或者1个批次内渲染完成。</p>
 <h3 id="3-4-3-限制特效使用的贴图尺寸"><a href="#3-4-3-限制特效使用的贴图尺寸" class="headerlink" title="3.4.3 限制特效使用的贴图尺寸"></a>3.4.3 限制特效使用的贴图尺寸</h3><p>特效尽量使用小贴图，比如不超256或者512的，尽量都是128或者更细的贴图或者贴图合集。</p>
 <h3 id="3-4-3-限制特效的重叠层数和范围"><a href="#3-4-3-限制特效的重叠层数和范围" class="headerlink" title="3.4.3 限制特效的重叠层数和范围"></a>3.4.3 限制特效的重叠层数和范围</h3><p>这一部分应该算GPU的优化，可以减少OverDraw和GPU的计算。</p>
-<h2 id="3-5-UI优化"><a href="#3-5-UI优化" class="headerlink" title="3.5 UI优化"></a>3.5 UI优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule8.html" target="_blank" rel="noopener">Unity性能优化 — UI模块</a><br>优化UI的基本原则是：</p>
+<h2 id="3-5-UI优化"><a href="#3-5-UI优化" class="headerlink" title="3.5 UI优化"></a>3.5 UI优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule8.html">Unity性能优化 — UI模块</a><br>优化UI的基本原则是：</p>
 <ol>
 <li>减少UI变化重新生成网格：因为UI本质上也是网格加贴图绘制出来的，因此要避免各种操作或者设置到UI频繁变化导致网格重复生成。</li>
 <li>减少UI的射线检测</li>
 <li>UI的图集控制：比如一个界面最多2个图集等</li>
 <li>战斗这种3D场景可以不使用UGUI来绘制3D的UI，而是直接用3D网格来绘制，避免UGUI的各种性能消耗。</li>
 </ol>
-<h2 id="3-6-资源加载优化"><a href="#3-6-资源加载优化" class="headerlink" title="3.6 资源加载优化"></a>3.6 资源加载优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule2.html" target="_blank" rel="noopener">Unity性能优化系列—加载与资源管理</a></p>
+<h2 id="3-6-资源加载优化"><a href="#3-6-资源加载优化" class="headerlink" title="3.6 资源加载优化"></a>3.6 资源加载优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule2.html">Unity性能优化系列—加载与资源管理</a></p>
 <h3 id="3-6-1-Shader变体的预热"><a href="#3-6-1-Shader变体的预热" class="headerlink" title="3.6.1 Shader变体的预热"></a>3.6.1 Shader变体的预热</h3><p>Shader变体的预热比较耗时，可能需要拆分处理。Shader需要优化关键字数目，尤其是全局关键字数目，这个会显著影响Shader的包体和加载进来的内存。</p>
 <h3 id="3-6-2-游戏对象池"><a href="#3-6-2-游戏对象池" class="headerlink" title="3.6.2 游戏对象池"></a>3.6.2 游戏对象池</h3><p>尽量使用对象池，对象池回收时候可以隐藏GO，也可以选择移动到远处（关闭组件）。</p>
 <h3 id="3-6-3-资源管理方案推荐YooAsset"><a href="#3-6-3-资源管理方案推荐YooAsset" class="headerlink" title="3.6.3 资源管理方案推荐YooAsset"></a>3.6.3 资源管理方案推荐YooAsset</h3><h2 id="3-7-游戏脚本优化"><a href="#3-7-游戏脚本优化" class="headerlink" title="3.7 游戏脚本优化"></a>3.7 游戏脚本优化</h2><p>这里主要讲的是游戏框架和游戏逻辑的代码优化，包括C#和Lua。</p>
@@ -429,7 +429,7 @@
 <li>主次法：比如非关键的角色或者物体，使用更少的计算逻辑</li>
 <li>减少项目的MonoBehavior的更新函数入口，游戏逻辑尽量保持一个更新入口。</li>
 </ol>
-<h3 id="3-7-4-Lua代码优化"><a href="#3-7-4-Lua代码优化" class="headerlink" title="3.7.4 Lua代码优化"></a>3.7.4 Lua代码优化</h3><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule4.html" target="_blank" rel="noopener">Unity性能优化系列—Lua代码优化</a></p>
+<h3 id="3-7-4-Lua代码优化"><a href="#3-7-4-Lua代码优化" class="headerlink" title="3.7.4 Lua代码优化"></a>3.7.4 Lua代码优化</h3><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule4.html">Unity性能优化系列—Lua代码优化</a></p>
 <h2 id="3-8-GC优化"><a href="#3-8-GC优化" class="headerlink" title="3.8 GC优化"></a>3.8 GC优化</h2><p>由于Unity的Mono堆在超过最大值或者一定数值后会自动扩容，而且扩容后无法往回缩，因此必须非常关注Mono堆的峰值。</p>
 <ol>
 <li>降低Mono堆的峰值：这样可以避免Mono堆一直增长或者过大</li>
@@ -472,7 +472,7 @@
 <h2 id="6-2-安卓架构"><a href="#6-2-安卓架构" class="headerlink" title="6.2 安卓架构"></a>6.2 安卓架构</h2><p>通常ARMv7和ARM64只需要打一个架构，当前ARM64的性能更好但是兼容性不够，关闭一个架构能减少包体。</p>
 <h2 id="6-3-其它跟App打包相关的方法"><a href="#6-3-其它跟App打包相关的方法" class="headerlink" title="6.3 其它跟App打包相关的方法"></a>6.3 其它跟App打包相关的方法</h2><p>具体请查阅相关文档，参考并且实验是否有效。</p>
 <h1 id="七、其它"><a href="#七、其它" class="headerlink" title="七、其它"></a>七、其它</h1><p>性能优化是一个迭代的长期工作，关键是底子打好，后期优化压力就小很多；或者明白优化的思路，能够快速定位关键的性能瓶颈。</p>
-
+</body></html>
     </div>
 
     
@@ -578,13 +578,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -636,12 +636,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

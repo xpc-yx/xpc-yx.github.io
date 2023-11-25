@@ -306,7 +306,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>首先，说明下为什么要用MATLAB。原因是，支持稀疏矩阵的矩阵库比较少，即使支持去学习使用时间也更多。所以，就用MATLAB了。目的是使用MATLAB计算稀疏矩阵的特征向量，再用C++调用MATLAB代码。</p>
+        <html><head></head><body><p>首先，说明下为什么要用MATLAB。原因是，支持稀疏矩阵的矩阵库比较少，即使支持去学习使用时间也更多。所以，就用MATLAB了。目的是使用MATLAB计算稀疏矩阵的特征向量，再用C++调用MATLAB代码。</p>
 <p>问题1：如何定义稀疏矩阵。MATLAB使用sparse函数创建稀疏矩阵。如下调用：S = sparse(i,j,s,m,n)，根据参数创建稀疏矩阵。i和j代表不为0元素的行和列值，s则是对应的值，m和n是矩阵的大小。当然还有其它接口，具体查阅MATLAB文档。</p>
 <p>问题2：怎么计算稀疏矩阵的特征向量？MATLAB提供了eigs函数。其实，还有个eig函数，经本人实验，在使用C++调用MATLAB引擎的过程中，该函数失败了。那么，就只能使用eigs函数了。eigs函数有几种形式。下面说下我用到的几种形式。</p>
 <p>形式1：d = eigs(A)，返回的是稀疏矩阵A的特征值（所有的特征值构成一个向量d，本人的理解是没有保证d是有序的）。</p>
@@ -314,9 +314,9 @@
 <p>形式3：[V,D] = eigs(A)，V是特征向量构成的矩阵，每列是一个特征矩阵，D则是一个对角矩阵，对角线上的值是和V对应的特征值。不过，V和D的大小都固定为6。</p>
 <p>形式4：[V,D] = eigs(A，k)，则可以返回最大的k个特征向量和对应的特征值，但是也没有排序，需要根据D排序V，以方便使用。</p>
 <p>问题3：如何实现返回k个根据特征值排序后的特征向量？这是最有价值的问题了。直接提供代码吧。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[V,D] = eigs(sm,k);</span><br><span class="line">[newD,IX] = sort(diag(D)));;</span><br><span class="line">newV=V(:,IX);</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[V,D]</span> = <span class="built_in">eigs</span>(sm,k);</span><br><span class="line"><span class="selector-attr">[newD,IX]</span> = <span class="built_in">sort</span>(<span class="built_in">diag</span>(D)));;</span><br><span class="line">newV=<span class="built_in">V</span>(:,IX);</span><br></pre></td></tr></tbody></table></figure>
 <p>newV就是根据特征值排序后的特征向量，sm当然需要先建立了。<br>写在最后的话，之所以使用MATLAB计算稀疏矩阵的特征向量，是因为可以用C++调用。所以，关于这篇文章这些知识就够了，也算是我为自己做的整理吧。</p>
-
+</body></html>
     </div>
 
     
@@ -431,13 +431,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -489,12 +489,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

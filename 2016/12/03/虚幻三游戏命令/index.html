@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="命令行参数和控制台命令游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。 控制台命令">
+  <meta name="description" content="命令行参数和控制台命令游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。 控制台命令对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。下面根据用途统一总结，不进行区分。 常用命令exit(quit)退出游戏 pause暂停游戏，按pa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="虚幻三引擎游戏命令">
 <meta property="og:url" content="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="命令行参数和控制台命令游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。 控制台命令">
+<meta property="og:description" content="命令行参数和控制台命令游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。 控制台命令对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。下面根据用途统一总结，不进行区分。 常用命令exit(quit)退出游戏 pause暂停游戏，按pa">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-12-03T14:06:24.000Z">
 <meta property="article:modified_time" content="2021-12-26T07:51:47.921Z">
@@ -311,7 +311,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="命令行参数和控制台命令"><a href="#命令行参数和控制台命令" class="headerlink" title="命令行参数和控制台命令"></a>命令行参数和控制台命令</h2><p>游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。</p>
+        <html><head></head><body><h2 id="命令行参数和控制台命令"><a href="#命令行参数和控制台命令" class="headerlink" title="命令行参数和控制台命令"></a>命令行参数和控制台命令</h2><p>游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。</p>
 <h2 id="控制台命令"><a href="#控制台命令" class="headerlink" title="控制台命令"></a>控制台命令</h2><p>对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。<br>下面根据用途统一总结，不进行区分。</p>
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h4 id="exit-quit"><a href="#exit-quit" class="headerlink" title="exit(quit)"></a>exit(quit)</h4><p>退出游戏</p>
 <h4 id="pause"><a href="#pause" class="headerlink" title="pause"></a>pause</h4><p>暂停游戏，按pause break键也可以。</p>
@@ -612,8 +612,8 @@
 <p>注意：UObkect::ScriptConsoleExec，处理的是当前类中自定义脚本命令（执行带exec前缀的脚本函数）。<br>因此，流程中带有ScriptConsoleExec函数执行的类（以及子类）都可以定exec脚本函数来执行控制台命令。只有在处理流程中的命令才有效，处理流程外的命令无法被处理。</p>
 <h3 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h3><h4 id="Native命令"><a href="#Native命令" class="headerlink" title="Native命令"></a>Native命令</h4><p>在控制台命令调用流程中涉及到的C++类的Exec函数中添加对新命令的处理逻辑。</p>
 <h4 id="脚本命令"><a href="#脚本命令" class="headerlink" title="脚本命令"></a>脚本命令</h4><p>在处理流程中的有ScriptConsoleExec调用的类(Interaction、UISceneClient、GameViewportClient、PlayerInput、PlayerController、Pawn、InvManager、Weapon、HUD、GameInfo、CheatManager)<br>中添加exec前缀的脚本函数。</p>
-<p>更多的游戏命令可以参考文档：<a href="https://wiki.beyondunreal.com/Legacy:Console_Commands" target="_blank" rel="noopener">Console Commands</a>。</p>
-<h3 id="虚幻引擎游戏命令"><a href="#虚幻引擎游戏命令" class="headerlink" title="虚幻引擎游戏命令"></a>虚幻引擎游戏命令</h3><div class="video-container"><iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&resid=4330CD349D9ADD44%21723&authkey=AFSrpMCVspcze0g&em=2" width="800" height="700" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+<p>更多的游戏命令可以参考文档：<a href="https://wiki.beyondunreal.com/Legacy:Console_Commands">Console Commands</a>。</p>
+<h3 id="虚幻引擎游戏命令"><a href="#虚幻引擎游戏命令" class="headerlink" title="虚幻引擎游戏命令"></a>虚幻引擎游戏命令</h3><div class="video-container"><iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&amp;resid=4330CD349D9ADD44%21723&amp;authkey=AFSrpMCVspcze0g&amp;em=2" width="800" height="700" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div></body></html>
     </div>
 
     
@@ -725,13 +725,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -783,12 +783,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

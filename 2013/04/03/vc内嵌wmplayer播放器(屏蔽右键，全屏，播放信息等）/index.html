@@ -305,9 +305,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这应该是用vc在程序中添加视频音频播放器最方便的方法了。但是，你如果只是用vs2010或者其它版本工具插入activex控件，然后生成代码，那就不一定能够得到你想要的全部功能。<br>wmplayer貌似还有个对应的wm sdk。这个可以用com接口的形式更加底层的控制播放器。<strong>但是，如果我们能够得到相关的实现播放器功能的代码，我们也能够得到相同程度的控制。</strong>前段时间，在网上找了很久，终于找到一大堆有个wmplayer的类代码。用其中的CWMPPlayer4类绑定播放器就能够得到很强大的控制了，用这个类的成员函数可以得到其他控制和设置类的接口等。<br>用这个东西最大的缺陷是<strong>无法播放内存数据</strong>，如果是内存数据，必须生成临时文件。最大的优点是简单方便，功能强大，还可以在<strong>不同版本的windows平台兼容</strong>，只要上面有默认的wmplayer播放器。这个东西还可以<strong>播放网络数据</strong>，因为文件其实是通过url索引的。因此，在要求简单的时候，还可以用这个东西快速实现一个<strong>网络播放器</strong>。<br>下面提供wmplayer相关类的代码，<a href="https://pan.baidu.com/s/1cunwJW" target="_blank" rel="noopener">WMP</a>。</p>
+        <html><head></head><body><p>这应该是用vc在程序中添加视频音频播放器最方便的方法了。但是，你如果只是用vs2010或者其它版本工具插入activex控件，然后生成代码，那就不一定能够得到你想要的全部功能。<br>wmplayer貌似还有个对应的wm sdk。这个可以用com接口的形式更加底层的控制播放器。<strong>但是，如果我们能够得到相关的实现播放器功能的代码，我们也能够得到相同程度的控制。</strong>前段时间，在网上找了很久，终于找到一大堆有个wmplayer的类代码。用其中的CWMPPlayer4类绑定播放器就能够得到很强大的控制了，用这个类的成员函数可以得到其他控制和设置类的接口等。<br>用这个东西最大的缺陷是<strong>无法播放内存数据</strong>，如果是内存数据，必须生成临时文件。最大的优点是简单方便，功能强大，还可以在<strong>不同版本的windows平台兼容</strong>，只要上面有默认的wmplayer播放器。这个东西还可以<strong>播放网络数据</strong>，因为文件其实是通过url索引的。因此，在要求简单的时候，还可以用这个东西快速实现一个<strong>网络播放器</strong>。<br>下面提供wmplayer相关类的代码，<a href="https://pan.baidu.com/s/1cunwJW">WMP</a>。</p>
 <p>屏蔽右键和全屏都可以在PreTranslateMessage这个虚函数里面处理，比如if (pMsg-&gt;message == WM_LBUTTONDBLCLK)<br>return TRUE;返回TRUE就不会对这个消息进行处理了。屏蔽右键也可以通过调用m_mediaPlayer.put_enableContextMenu(FALSE);处理。<br>最奇葩的是屏蔽当前播放的是哪个文件的信息，居然有人奇葩到提出这样的需求。找来找去都没有这样的接口，我都直接看wmsdk的文档了，最后想出了个奇葩的办法，就是用一个static控件遮住。<br>到现在觉得，最好的操作wmplayer的方式是下载微软的<strong>wmsdk</strong>，从而直接用接口操作，可以提供最大限度的控制。</p>
-
+</body></html>
     </div>
 
     
@@ -320,10 +320,10 @@
       <div class="popular-posts-title"><a href="\2016\04\23\使用MFC创建基于图片的不规则窗口程序\" rel="bookmark">使用MFC创建基于图片的不规则窗口程序</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2012\12\26\如何将内存中的位图数据绘制在DC上\" rel="bookmark">如何将内存中的位图数据绘制在DC上</a></div>
+      <div class="popular-posts-title"><a href="\2014\04\27\如何在MFC的OpenGL窗口中使用AntTweakBar\" rel="bookmark">如何在MFC中使用AntTweakBar</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\04\27\如何在MFC的OpenGL窗口中使用AntTweakBar\" rel="bookmark">如何在MFC中使用AntTweakBar</a></div>
+      <div class="popular-posts-title"><a href="\2012\12\26\如何将内存中的位图数据绘制在DC上\" rel="bookmark">如何将内存中的位图数据绘制在DC上</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2012\01\03\自定义可变参数函数BatchDelFile, 调用cmd批量删除指定格式文件, Windows界面下不回显Console窗口\" rel="bookmark">自定义可变参数函数BatchDelFile, 调用cmd批量删除指定格式文件, Windows界面下不回显Console窗口</a></div>
@@ -427,13 +427,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -485,12 +485,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

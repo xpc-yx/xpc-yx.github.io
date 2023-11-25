@@ -311,7 +311,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>有些时候，我们想知道鼠标点中了哪个物体或者哪个部分，更详细的是最靠近模型的哪个顶点或者哪条线，或者哪个面。这些选取问题有不同的解决办法。如果只是针对<strong>图元</strong>的选取，可以直接用OpenGL的<strong>选取模式</strong>实现。但是有的时候，情况更加复杂，比如我们想通过鼠标在模型上面绘制一条线，然后对模型进行剖分等。这就需要把鼠标点变换到三维顶点，再进一步的操作。<br>我在这里贴出2个我自己使用的函数，针对鼠标点投影视角空间和反投影。<br>投影：``` stylus<br>void CMesh::ScreenToModel(v2f point, v3f point3d)<br>{<br>        float fWinX, fWinY, fWinZ;<br>        int nX, nY;<br>        GLdouble fX, fY, fZ;</p>
+        <html><head></head><body><p>有些时候，我们想知道鼠标点中了哪个物体或者哪个部分，更详细的是最靠近模型的哪个顶点或者哪条线，或者哪个面。这些选取问题有不同的解决办法。如果只是针对<strong>图元</strong>的选取，可以直接用OpenGL的<strong>选取模式</strong>实现。但是有的时候，情况更加复杂，比如我们想通过鼠标在模型上面绘制一条线，然后对模型进行剖分等。这就需要把鼠标点变换到三维顶点，再进一步的操作。<br>我在这里贴出2个我自己使用的函数，针对鼠标点投影视角空间和反投影。<br>投影：``` stylus<br>void CMesh::ScreenToModel(v2f point, v3f point3d)<br>{<br>        float fWinX, fWinY, fWinZ;<br>        int nX, nY;<br>        GLdouble fX, fY, fZ;</p>
 <pre><code>    nX = point[0];
     nY = point[1];
     glReadBuffer(GL_BACK);
@@ -331,8 +331,8 @@
         point3d[0] = point3d[1] = 0.0;
         point3d[2] = 1.0;
     }
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">使用该函数必须注意的是，point必须已经转换为**视口点**，即point[1] &#x3D; window_height - point[1] - 1。</span><br><span class="line">反投影:&#96;&#96;&#96; stylus</span><br><span class="line">void CMesh::ModelToScreen(v3f point3d, v2f point)</span><br><span class="line">&#123;</span><br><span class="line">        double fWinX, fWinY, fWinZ;</span><br><span class="line">        gluProject(point3d[0], point3d[1], point3d[2], m_pMatMV, m_pMatProj, m_pViewport,</span><br><span class="line">            fWinX, fWinY, fWinZ);</span><br><span class="line"></span><br><span class="line">        point[0] &#x3D; (float)fWinX;</span><br><span class="line">        point[1] &#x3D; (float)fWinY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>反投影得到的2维点同样是基于<strong>左下角</strong>为原点的视口点，要转换为鼠标点的话还得变换y值，即point[1] = window_height - point[1] - 1。<br>至于其它的实现方法，当然可以自己直接操作投影矩阵和模型矩阵，视口信息，进行转换，不过也是重复造轮子，但对于理解原理有帮助。<br>鼠标点投影到三维之后，就可以找到<strong>最近</strong>的模型点，或者通过射线之类求相交面。</p>
-
+</code></pre><p>}<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">使用该函数必须注意的是，point必须已经转换为**视口点**，即point[1] = window_height - point[1] - 1。</span><br><span class="line">反投影:``` stylus</span><br><span class="line">void CMesh::ModelToScreen(v3f point3d, v2f point)</span><br><span class="line">{</span><br><span class="line">        double fWinX, fWinY, fWinZ;</span><br><span class="line">        gluProject(point3d[0], point3d[1], point3d[2], m_pMatMV, m_pMatProj, m_pViewport,</span><br><span class="line">            fWinX, fWinY, fWinZ);</span><br><span class="line"></span><br><span class="line">        point[0] = (float)fWinX;</span><br><span class="line">        point[1] = (float)fWinY;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>反投影得到的2维点同样是基于<strong>左下角</strong>为原点的视口点，要转换为鼠标点的话还得变换y值，即point[1] = window_height - point[1] - 1。<br>至于其它的实现方法，当然可以自己直接操作投影矩阵和模型矩阵，视口信息，进行转换，不过也是重复造轮子，但对于理解原理有帮助。<br>鼠标点投影到三维之后，就可以找到<strong>最近</strong>的模型点，或者通过射线之类求相交面。<p></p>
+</body></html>
     </div>
 
     
@@ -351,10 +351,10 @@
       <div class="popular-posts-title"><a href="\2013\09\12\使用GDI+加载多种格式的纹理\" rel="bookmark">使用GDI+加载多种格式的纹理</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2013\05\06\使用OpenGL绘制太阳系\" rel="bookmark">使用OpenGL绘制太阳系</a></div>
+      <div class="popular-posts-title"><a href="\2014\03\03\使用OpenGL渲染到图片\" rel="bookmark">使用OpenGL渲染到图片</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2014\03\03\使用OpenGL渲染到图片\" rel="bookmark">使用OpenGL渲染到图片</a></div>
+      <div class="popular-posts-title"><a href="\2013\05\06\使用OpenGL绘制太阳系\" rel="bookmark">使用OpenGL绘制太阳系</a></div>
     </li>
   </ul>
 
@@ -455,13 +455,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -513,12 +513,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

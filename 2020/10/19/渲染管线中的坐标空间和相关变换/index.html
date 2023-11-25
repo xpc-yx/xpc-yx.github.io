@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="一、思维导图 二、模型空间">
+  <meta name="description" content="一、思维导图 二、模型空间这里的模型空间指的是建模出来的空间，也就是用建模软件输出的数据所在的坐标空间。比如，3D Max用的是右手系，输出的模型数据所在的空间就叫模型空间；由于Unity的模型空间是左手系，所以通常需要旋转90度才能对应上。 三、切线空间切线空间又可以叫做纹理空间。假如纹理坐标uv构成一个二维空间，加上垂直于这个二维空间的法线，那么就是一个三维的切线空间。 3.1 法线贴图的切线">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渲染管线中的坐标空间和相关变换">
 <meta property="og:url" content="http://xiaopengcheng.top/2020/10/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
-<meta property="og:description" content="一、思维导图 二、模型空间">
+<meta property="og:description" content="一、思维导图 二、模型空间这里的模型空间指的是建模出来的空间，也就是用建模软件输出的数据所在的坐标空间。比如，3D Max用的是右手系，输出的模型数据所在的空间就叫模型空间；由于Unity的模型空间是左手系，所以通常需要旋转90度才能对应上。 三、切线空间切线空间又可以叫做纹理空间。假如纹理坐标uv构成一个二维空间，加上垂直于这个二维空间的法线，那么就是一个三维的切线空间。 3.1 法线贴图的切线">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1.jpg">
@@ -312,16 +312,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="一、思维导图"><a href="#一、思维导图" class="headerlink" title="一、思维导图"></a>一、思维导图</h1><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/坐标空间.png"></p>
+        <html><head></head><body><h1 id="一、思维导图"><a href="#一、思维导图" class="headerlink" title="一、思维导图"></a>一、思维导图</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/坐标空间.png"></p>
 <h1 id="二、模型空间"><a href="#二、模型空间" class="headerlink" title="二、模型空间"></a>二、模型空间</h1><p>这里的模型空间指的是建模出来的空间，也就是用建模软件输出的数据所在的坐标空间。比如，3D Max用的是右手系，输出的模型数据所在的空间就叫模型空间；由于Unity的模型空间是左手系，所以通常需要旋转90度才能对应上。</p>
 <h1 id="三、切线空间"><a href="#三、切线空间" class="headerlink" title="三、切线空间"></a>三、切线空间</h1><p>切线空间又可以叫做纹理空间。假如纹理坐标uv构成一个二维空间，加上垂直于这个二维空间的法线，那么就是一个三维的切线空间。</p>
 <h2 id="3-1-法线贴图的切线空间"><a href="#3-1-法线贴图的切线空间" class="headerlink" title="3.1 法线贴图的切线空间"></a>3.1 法线贴图的切线空间</h2><p>切线空间有什么应用了？我们在计算光照模型的时候，通常会有更精细表示法线的数据，比如法线贴图，法线贴图通常是建模软件用高模计算出来的。不过，法线贴图是原始切线空间下的数据。因此，法线贴图中的法线数据通常是(0,0,1)，所以法线贴图表现出大部分是蓝色。我们在读取这个法线数据后，需要将其变换到计算光照模型所在的空间，比如世界空间。</p>
 <h2 id="3-2-模型空间下的切线空间"><a href="#3-2-模型空间下的切线空间" class="headerlink" title="3.2 模型空间下的切线空间"></a>3.2 模型空间下的切线空间</h2><p>顶点上除了位置数据外，还可以有法线、切线数据。注意，这些数据都是在模型空间的。因此，法线、切线、副切线（法线和切线叉积计算出来）自然可以构成一个模型空间下的切线空间。</p>
 <h2 id="3-3-切线变换"><a href="#3-3-切线变换" class="headerlink" title="3.3 切线变换"></a>3.3 切线变换</h2><p>假如我们想将切线空间下的法线变换到世界空间，该如何做了？我们需要得到一个世界空间下的切线空间。首先将<strong>模型空间下的切线空间变换到世界空间</strong>，这样我们就得到了一个世界空间下的切线子空间，然后用这个切线子空间构成一个切线变换，再对切线空间下的法线数据应用这个切线变换就能变换到世界空间。<br>用公式来表示这个变换是，$NormalWS=TangentMatrix*NormalTS$。当然也可以将切线变换到其它的空间，比如摄像机空间，区别是构造不同的TangentMatrix。</p>
 <h1 id="四、关节空间"><a href="#四、关节空间" class="headerlink" title="四、关节空间"></a>四、关节空间</h1><h2 id="4-1-关节空间"><a href="#4-1-关节空间" class="headerlink" title="4.1 关节空间"></a>4.1 关节空间</h2><p><strong>这里的关节空间，指的是带骨骼的模型中，骨骼或者关节所定义的局部空间。</strong><br>以人体手指为假设，手指会受到腕关节、肘关节、肩关节影响，对应三个骨骼。那么，手指会依次受到这三个关节的牵扯影响。我们知道，虚拟的根骨骼Root所在的是模型空间，同时每个关节也定义了自己的局部空间，比如腕关节是最终的局部空间，我们把这个关节定义的局部空间叫做关节空间。</p>
-<h2 id="4-2-关节姿势"><a href="#4-2-关节姿势" class="headerlink" title="4.2 关节姿势"></a>4.2 关节姿势</h2><p>所谓关节姿势，存储的是子关节到父关节的变换，包括旋转、缩放、平移，这个也可以叫做局部关节姿势。全局关节姿势是，将所有的局部关节姿势结合起来。<br>比如公式，$P_{2\to M} = P_{2\to 1} P_{1\to 0} P_{0\to M}$表示的是将顶点从子关节2的局部空间变换到模型空间。全局关节姿势可以表示为$P_{j\to M} = \prod _{i=j}^{0} P_{i\to p(i)}$，其中p(i)是关节i的父关节。</p>
+<h2 id="4-2-关节姿势"><a href="#4-2-关节姿势" class="headerlink" title="4.2 关节姿势"></a>4.2 关节姿势</h2><p>所谓关节姿势，存储的是子关节到父关节的变换，包括旋转、缩放、平移，这个也可以叫做局部关节姿势。全局关节姿势是，将所有的局部关节姿势结合起来。<br>比如公式，$P<em>{2\to M} = P</em>{2\to 1} P<em>{1\to 0} P</em>{0\to M}$表示的是将顶点从子关节2的局部空间变换到模型空间。全局关节姿势可以表示为$P<em>{j\to M} = \prod </em>{i=j}^{0} P_{i\to p(i)}$，其中p(i)是关节i的父关节。</p>
 <h2 id="4-3-绑定关节姿势"><a href="#4-3-绑定关节姿势" class="headerlink" title="4.3 绑定关节姿势"></a>4.3 绑定关节姿势</h2><p>我们知道，默认情况下，蒙皮骨骼都有一个T-Pose，即绑定姿势，也可以理解为初始姿势。模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。</p>
-<h2 id="4-4-蒙皮矩阵"><a href="#4-4-蒙皮矩阵" class="headerlink" title="4.4 蒙皮矩阵"></a>4.4 蒙皮矩阵</h2><p>模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。关键点来了，这个时候再乘以骨骼的当前全局姿势矩阵，就又变换回了模型空间。所谓的蒙皮矩阵，就是这两个变换的结合。可以用公式表示骨骼i的蒙皮矩阵，$K_{j} = (B_{j\to M})^{-1}  C_{j \to M}$，B代表绑定姿势，C代表当前姿势。多个蒙皮矩阵的加权，就能得到蒙皮动画。</p>
+<h2 id="4-4-蒙皮矩阵"><a href="#4-4-蒙皮矩阵" class="headerlink" title="4.4 蒙皮矩阵"></a>4.4 蒙皮矩阵</h2><p>模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。关键点来了，这个时候再乘以骨骼的当前全局姿势矩阵，就又变换回了模型空间。所谓的蒙皮矩阵，就是这两个变换的结合。可以用公式表示骨骼i的蒙皮矩阵，$K<em>{j} = (B</em>{j\to M})^{-1}  C_{j \to M}$，B代表绑定姿势，C代表当前姿势。多个蒙皮矩阵的加权，就能得到蒙皮动画。</p>
 <h2 id="4-5-蒙皮动画"><a href="#4-5-蒙皮动画" class="headerlink" title="4.5 蒙皮动画"></a>4.5 蒙皮动画</h2><p>顶点会受到多个骨骼影响，这些骨骼的影响加权和为1，这个就是蒙皮动画。可以用公式来表示，$p’ = \sum_{i=1}^{n}W_i(p)K_ip$。其中，p是模型空间的顶点，Wi是骨骼i影响的权重，Ki是骨骼i的蒙皮矩阵。蒙皮矩阵的计算如上所示。</p>
 <h2 id="4-6-总结"><a href="#4-6-总结" class="headerlink" title="4.6 总结"></a>4.6 总结</h2><p>根据以上五步的推导，蒙皮动画需要存储的数据是，</p>
 <ul>
@@ -336,17 +336,17 @@
 <h2 id="6-1-观察变换"><a href="#6-1-观察变换" class="headerlink" title="6.1 观察变换"></a>6.1 观察变换</h2><p>观察变换是将顶点从世界空间变换到新的摄像机空间。首先，需要将顶点平移，比如上述情况下的原点在观察空间下是(-1，-1，-1)；然后，需要旋转顶点以匹配观察空间的坐标轴。由于观察空间的坐标轴是世界空间下的单位正交基，因此将三个轴放入矩阵即可得到旋转矩阵的逆矩阵（等于旋转矩阵的转置矩阵）。</p>
 <h1 id="七、裁剪空间"><a href="#七、裁剪空间" class="headerlink" title="七、裁剪空间"></a>七、裁剪空间</h1><p>裁剪空间指的是观察空间下的顶点经过投影变换后所处的空间。我们知道，可视区域是摄像机前面的一个平截头体（透视投影）或者一个长方体（正交投影）。裁剪空间的用途是将可视区域外的物体裁剪，同时计算物体的二维坐标。</p>
 <h2 id="7-1-投影变换"><a href="#7-1-投影变换" class="headerlink" title="7.1 投影变换"></a>7.1 投影变换</h2><p>投影分为透视投影和正交投影两种，透视投影会造成近大远小的效果，符合视觉效应，三维游戏一般使用透视投影，正交投影则远近一样大，通常只用于建模软件。</p>
-<h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/透视投影.jpg"><br>从图可以看出，透视投影后w是有值的，并不是1，结果还是一个平截头体。具体的矩阵推动，请参考相关资料。</p>
-<h3 id="正交投影"><a href="#正交投影" class="headerlink" title="正交投影"></a>正交投影</h3><p><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/正交投影.jpg"><br>从图可以看出，正交投影实际上就是缩放和平移的结合，得到的结果是一个-1到1范围的立方体。</p>
-<h2 id="7-2-透视除法和图元裁剪"><a href="#7-2-透视除法和图元裁剪" class="headerlink" title="7.2 透视除法和图元裁剪"></a>7.2 透视除法和图元裁剪</h2><p>由于透视投影后齐次坐标的w非1，需要进行透视除法，这个是图形硬件自动进行的。如图所示：<br><img alt data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/透视除法.jpg"><br>透视除法后，可以得到和正交投影结果一样的规范化立方体，也叫做NDC（规范化设备坐标系）。<br>到了NDC后，就可以方便的进行图元裁剪，毕竟坐标都是-1到1了（DirectX下Z坐标是0到1）。</p>
+<h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/透视投影.jpg"><br>从图可以看出，透视投影后w是有值的，并不是1，结果还是一个平截头体。具体的矩阵推动，请参考相关资料。</p>
+<h3 id="正交投影"><a href="#正交投影" class="headerlink" title="正交投影"></a>正交投影</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/正交投影.jpg"><br>从图可以看出，正交投影实际上就是缩放和平移的结合，得到的结果是一个-1到1范围的立方体。</p>
+<h2 id="7-2-透视除法和图元裁剪"><a href="#7-2-透视除法和图元裁剪" class="headerlink" title="7.2 透视除法和图元裁剪"></a>7.2 透视除法和图元裁剪</h2><p>由于透视投影后齐次坐标的w非1，需要进行透视除法，这个是图形硬件自动进行的。如图所示：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/透视除法.jpg"><br>透视除法后，可以得到和正交投影结果一样的规范化立方体，也叫做NDC（规范化设备坐标系）。<br>到了NDC后，就可以方便的进行图元裁剪，毕竟坐标都是-1到1了（DirectX下Z坐标是0到1）。</p>
 <h2 id="7-3-顶点着色器的输出"><a href="#7-3-顶点着色器的输出" class="headerlink" title="7.3 顶点着色器的输出"></a>7.3 顶点着色器的输出</h2><p>顶点着色器必须输出裁剪空间下的坐标。由于DirectX的NDC的Z范围是0到1，与OpenGL的-1到1有一定区别。因此，这2者的投影矩阵在Z坐标上有一定的平移和缩放区别。</p>
 <h1 id="八、屏幕空间"><a href="#八、屏幕空间" class="headerlink" title="八、屏幕空间"></a>八、屏幕空间</h1><p>投影变换后得到的顶点范围是-1到1。现在还需要将NDC下的顶点映射到屏幕空间。屏幕空间也可以叫做窗口空间，即窗口定义的坐标空间。</p>
 <h2 id="8-1-视口变换"><a href="#8-1-视口变换" class="headerlink" title="8.1 视口变换"></a>8.1 视口变换</h2><p>假设，窗口坐标原点在左下角（OpenGL的原点在左下角，但是DirectX的在左上角），窗口大小为Width和Height。视口变换就是把-1到1的x和y坐标范围映射到（0，width）和（0，height），对应DirectX的话，y还需要取反。这就是一个平移和缩放的过程。</p>
 <p>实际上，透视除法和视口变换（屏幕空间映射）都是硬件自动进行的。</p>
 <h1 id="九、参考资料"><a href="#九、参考资料" class="headerlink" title="九、参考资料"></a>九、参考资料</h1><blockquote>
-<p><a href="https://book.douban.com/subject/26821639/" target="_blank" rel="noopener">Unity Shader入门精要</a></p>
+<p><a href="https://book.douban.com/subject/26821639/">Unity Shader入门精要</a></p>
 </blockquote>
-
+</body></html>
     </div>
 
     
@@ -460,13 +460,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -518,12 +518,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

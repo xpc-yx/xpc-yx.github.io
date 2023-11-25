@@ -293,7 +293,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.5k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -312,17 +312,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在逆战的界面开发中，一般只需要从uc往flash中单向传输数据，因此这里只总结从uc-&gt;flash的数据流动方法。flash-&gt;uc的数据流动，其实有相对应的方式，比如SetVariableBool函数有对应的GetVariableBool函数。</p>
+          <html><head></head><body><p>在逆战的界面开发中，一般只需要从uc往flash中单向传输数据，因此这里只总结从uc-&gt;flash的数据流动方法。flash-&gt;uc的数据流动，其实有相对应的方式，比如SetVariableBool函数有对应的GetVariableBool函数。</p>
 <p>在unrealscript中，使用scaleform的界面类，都继承自GfxMoviePlayer。</p>
 <p>一、传输变量</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>native function SetVariableString(string path, string s);</p>
+<p>native function SetVariableBool(string path, bool b);</p>
+<p>native function SetVariableNumber(string path, float f);</p>
+<p>我在GfxUIMovie中没找到专门设置int的函数，估计可以用SetVariableNumber替代。关键是理解path的设置，比如对应flash文件的名称是ReBornGuide。那么path可能是ReBornGuide.str或者_root.ReBornGuide.str，具体跟ue3项目的一些设置有关。</p>
+<p>这几个函数对应的cpp声明如下：</p>
+<p>String：SetVariableString(const FString path, const FString s);</p>
+<p>Bool：SetVariableBool(const FString path, UBool b);</p>
+<p>Float：SetVariableNumber(const FString path, float f);</p>
+<p>有趣的是，这几个函数的字符串参数都是引用，这样恰恰说明了在uc中，字符串是引用类型。</p>
+<p>例子：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">String strTest = <span class="string">"测试"</span>;</span><br><span class="line">String path = <span class="string">"_root.TestFlash.strTest"</span>;</span><br><span class="line"><span class="function"><span class="title">SetVariableString</span><span class="params">(path，strTest)</span></span>;</span><br><span class="line">TestFlash.as中：</span><br><span class="line"><span class="selector-tag">var</span>&nbsp;strTest:String;</span><br></pre></td></tr></tbody></table></figure>
+<p>二、传输数组</p>
+<p>native function bool SetVariableStringArray(string path, int index, array<string> Arg);</string></p>
+<p>native function bool SetVariableFloatArray(string path, int index, array<float> Arg);</float></p>
+<p>native function bool SetVariableIntArray(string path, int index, array<int> Arg);</int></p>
+<p>其对应的cpp实现</p>
+<p>String：SetVariableStringArray(const FString path,  INT Index，const TArray<fstring> arg);</fstring></p>
+<p>Float：SetVariableFloatArray(const FString path, INT Index，const TArray<float> arg);</float></p>
+<p>Int：SetVariableFloatArray(const FString path, INT Index，const TArray<int> arg);</int></p>
+<p>这里Index表示从数组的第几个元素开始，0表示传输全部，arg是要传输的数组。</p>
+<p>例子：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">local array&lt;String&gt; strArray;</span><br><span class="line">strArray<span class="selector-class">.AddItem</span>(<span class="string">"0"</span>);</span><br><span class="line">strArray<span class="selector-class">.AddItem</span>(<span class="string">"1"</span>);</span><br><span class="line">String path = <span class="string">"_root.TestFlash.strTest"</span>;</span><br><span class="line"><span class="function"><span class="title">SetVariableStringArray</span><span class="params">(path，strArray)</span></span>;</span><br><span class="line">TestFlash.as中：</span><br><span class="line"><span class="selector-tag">var</span>&nbsp;strArray:Array = new <span class="built_in">Array</span>();</span><br></pre></td></tr></tbody></table></figure>
+<p>三、传输复合对象（结构体）</p>
+<p>当需要传输整体的数据，或者传输多个数据的时候，可以将数据组合成一个结构体。假设在uc中定义了如下结构体，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct RankData</span><br><span class="line">{</span><br><span class="line">   <span class="selector-tag">var</span> string Name;</span><br><span class="line">   <span class="selector-tag">var</span> int Rank;</span><br><span class="line">   <span class="selector-tag">var</span> double d;</span><br><span class="line">   <span class="selector-tag">var</span> <span class="attribute">float</span> f;</span><br><span class="line">   <span class="selector-tag">var</span> bool b;</span><br><span class="line">};</span><br><span class="line">RankData RD;</span><br></pre></td></tr></tbody></table></figure>
+<p>我们想将其一次性传入as中定义的Object对象,var RD:Object。这里我们可以使用SetVariableObject函数。其定义如下：</p>
+<p>native function SetVariableObject(string path, GFxObject Object);</p>
+<p>下面的例子很好说明了如何使用该函数。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">uc中:</span><br><span class="line">struct RankData</span><br><span class="line">{</span><br><span class="line">   <span class="selector-tag">var</span> string Name;</span><br><span class="line">   <span class="selector-tag">var</span> int Rank;</span><br><span class="line">   <span class="selector-tag">var</span> double d;</span><br><span class="line">   <span class="selector-tag">var</span> <span class="attribute">float</span> f;</span><br><span class="line">   <span class="selector-tag">var</span> bool b;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">function <span class="built_in">SetFlashVariables</span>()</span><br><span class="line">{</span><br><span class="line">    local GFxObject GfxObj;</span><br><span class="line">    local RankData RD;</span><br><span class="line">    local string path;</span><br><span class="line"></span><br><span class="line">    RD<span class="selector-class">.Name</span> = <span class="string">"test"</span>;</span><br><span class="line">    RD<span class="selector-class">.Rank</span> = <span class="number">1</span>;</span><br><span class="line">    RD<span class="selector-class">.d</span> = <span class="number">1.0</span>;</span><br><span class="line">    RD<span class="selector-class">.f</span> = <span class="number">1.0</span>;</span><br><span class="line">    RD<span class="selector-class">.b</span> = True;</span><br><span class="line">    GfxObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">    GfxObj<span class="selector-class">.SetString</span>(<span class="string">"Name"</span>, RD.Name);</span><br><span class="line">    GfxObj<span class="selector-class">.SetInt</span>(<span class="string">"Rank"</span>, RD.Rank);</span><br><span class="line">    GfxObj<span class="selector-class">.SetDouble</span>(<span class="string">"d"</span>, RD.d);</span><br><span class="line">    GfxObj<span class="selector-class">.SetFloat</span>(<span class="string">"f"</span>, RD.f);</span><br><span class="line">    GfxObj<span class="selector-class">.SetBool</span>(<span class="string">"b"</span>, RD.b);</span><br><span class="line"></span><br><span class="line">    path = <span class="string">"_root.TestFlash.RD"</span></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxObj);</span><br><span class="line">    GfxObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">TestFlash.as中:</span><br><span class="line"><span class="selector-tag">var</span> RD:Object = new <span class="built_in">Object</span>();</span><br><span class="line"><span class="comment">//在uc中调用了SetFlashVariables函数后，as中就能获得RD的值。</span></span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.Name)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.Name)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.f)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.d)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.b)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面代表可以看出，GFxObject可以代表一个符号变量，可以设置一个GFxObject的多个属性，然后一次性将这个对象传入flash。GFxObject.uc中有如下Set变量的函数：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">native final function <span class="built_in">SetBool</span>(string Member, bool b);</span><br><span class="line">native final function <span class="built_in">SetFloat</span>(string Member, <span class="attribute">float</span> f);</span><br><span class="line">native final function <span class="built_in">SetDouble</span>(string Member,double d);</span><br><span class="line">native final function <span class="built_in">SetInt</span>(string Member,int i);</span><br><span class="line">native final function <span class="built_in">SetString</span>(string Member, string s);</span><br><span class="line">native final function <span class="built_in">SetObject</span>(string Member, GFxObject val);</span><br></pre></td></tr></tbody></table></figure>
+<p>因此，可以看出可以设置GFxObject各种类型的属性。关键的是还可以设置其GFxObject类型的属性，从而可以嵌套定义。比如结构体中定义另一结构体成员。当需要将多次传输组合为一次时候，也可以使用这种方式，并不需要一定定义结构体。</p>
+<p>四、传输结构体数组</p>
+<p>假设as中定义如下数组，var RankListDatas:Array = new Array();那么可以用下面代码传输：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//军衔列表每项的数据</span></span><br><span class="line">struct RankListData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> int Level;<span class="comment">//等级</span></span><br><span class="line">    <span class="selector-tag">var</span> string Name;<span class="comment">//军衔名</span></span><br><span class="line">};</span><br><span class="line"><span class="selector-tag">var</span> array&lt;RankListData&gt; RankListDatas;</span><br><span class="line"><span class="selector-tag">var</span> string path;</span><br><span class="line">function <span class="built_in">SetFlashRankListDatas</span>()</span><br><span class="line">{</span><br><span class="line">    local int Index;</span><br><span class="line">    local GFxObject GfxRankListDatas;</span><br><span class="line">    local GFxObject GfxTempObj;</span><br><span class="line"></span><br><span class="line">    GfxRankListDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">    <span class="keyword">for</span> (Index = <span class="number">0</span>; Index &lt; RankDatas.Length; Index++)<span class="comment">//第0项是多余的</span></span><br><span class="line">    {        </span><br><span class="line">        GfxTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetInt</span>(<span class="string">"Level"</span>, RankListDatas<span class="selector-attr">[Index]</span>.Level);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetString</span>(<span class="string">"Name"</span>, RankListDatas<span class="selector-attr">[Index]</span>.Name);</span><br><span class="line">        GfxRankListDatas<span class="selector-class">.SetElementObject</span>(Index, GfxTempObj);</span><br><span class="line">        GfxTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxRankListDatas);</span><br><span class="line">    GfxRankListDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从代码里面可以看到，还是用SetVariableObject传输数据。不过，需要用CreateArray()创建GFxObject对象。在as代码中RankListDatas[0].Name就可以访问第一个元素的Name属性了。</p>
+<p>GfxRankListDatas.SetElementObject(Index, GfxTempObj)则是将GfxTempObj设置为GfxRankListDatas代表的数组的第Index个元素。</p>
+<p>五、传输结构体数组的数组（结构体内部复合结构体数组）</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">struct AwardData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> string IconSource;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">struct RankAwardData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> string RankAwardTitle;</span><br><span class="line">    <span class="selector-tag">var</span> array&lt;AwardData&gt; AwardDatas;</span><br><span class="line">};</span><br><span class="line"><span class="selector-tag">var</span> array&lt;RankAwardData&gt; RankAwardDatas;</span><br><span class="line"><span class="selector-tag">var</span> string path;</span><br><span class="line"></span><br><span class="line">function <span class="built_in">SetFlashRankAwardDatas</span>()</span><br><span class="line">{</span><br><span class="line">    local int Index;</span><br><span class="line">    local int i;</span><br><span class="line">    local GFxObject GfxRankAwardDatas;</span><br><span class="line">    local GFxObject GfxTempObj;</span><br><span class="line">    local GFxObject GfxAwardDatas;</span><br><span class="line">    local GFxObject GfxAwardTempObj;</span><br><span class="line"></span><br><span class="line">    GfxRankAwardDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">    <span class="keyword">for</span> (Index = <span class="number">0</span>; Index &lt; RankAwardDatas.Length; Index++)</span><br><span class="line">    {        </span><br><span class="line">        GfxTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetString</span>(<span class="string">"RankAwardTitle"</span>, RankAwardDatas<span class="selector-attr">[Index]</span>.RankAwardTitle);</span><br><span class="line"></span><br><span class="line">        GfxAwardDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; RankAwardDatas<span class="selector-attr">[Index]</span><span class="selector-class">.AwardDatas</span>.Length; ++i)</span><br><span class="line">        {</span><br><span class="line">            GfxAwardTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">            GfxAwardTempObj<span class="selector-class">.SetString</span>(<span class="string">"IconSource"</span>, RankAwardDatas<span class="selector-attr">[Index]</span><span class="selector-class">.AwardDatas</span><span class="selector-attr">[i]</span>.IconSource);</span><br><span class="line">            GfxAwardDatas<span class="selector-class">.SetElementObject</span>(<span class="selector-tag">i</span>, GfxAwardTempObj);</span><br><span class="line">            GfxAwardTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">        }</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetObject</span>(<span class="string">"RankAward"</span>, GfxAwardDatas);</span><br><span class="line">        GfxRankAwardDatas<span class="selector-class">.SetElementObject</span>(Index, GfxTempObj);</span><br><span class="line">        GfxAwardDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">        GfxTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxRankAwardDatas);</span><br><span class="line">    GfxRankAwardDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面代码可以看出，调用GfxTempObj.SetObject(“RankAward”, GfxAwardDatas)可以设置GFxObject对象的GFxObject属性，从而能够传输复合结构体类型的数组。假设as中对应的数组定义为var RankAwardDatas:Array=new Array();那么，在as代码中RankAwardDatas[0].RankAward.IconSource则能访问该数组第一个元素的结构体成员的IconSource属性。</p>
+</body></html>
       
     </div>
 
@@ -425,17 +458,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我不知道现在的win8和win10系统上是不是自动显示tga格式的缩略图的。我的win7系统确实有时候显示不了。为什么有这样的需求了，因为我现在的工作是开发游戏，虽然这几个月在写界面。在网上搜到有一个这样的软件MysticThumbs。这显然是外国友人做的东西，肯定是要注册的，官网上面下载的肯定是的，要交钱的。伟大的天朝人民肯定有破解版本了。</p>
-<p>下面分享下我下载到的破解版本，里面有使用说明，<a href="https://pan.baidu.com/s/1geCdSxP" target="_blank" rel="noopener">MysticThumbs破解版本</a>。虽然说里面有破解说明，既然写了这篇文章，我就是想更简略的说明下如何使用。</p>
+          <html><head></head><body><p>我不知道现在的win8和win10系统上是不是自动显示tga格式的缩略图的。我的win7系统确实有时候显示不了。为什么有这样的需求了，因为我现在的工作是开发游戏，虽然这几个月在写界面。在网上搜到有一个这样的软件MysticThumbs。这显然是外国友人做的东西，肯定是要注册的，官网上面下载的肯定是的，要交钱的。伟大的天朝人民肯定有破解版本了。</p>
+<p>下面分享下我下载到的破解版本，里面有使用说明，<a href="https://pan.baidu.com/s/1geCdSxP">MysticThumbs破解版本</a>。虽然说里面有破解说明，既然写了这篇文章，我就是想更简略的说明下如何使用。</p>
 <p>1.打开之后，直接运行MysticThumbs3.0.0.Multi+Pt FULL。假设安装到默认路径。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/10/12/windows7%E4%B8%8A%E9%9D%A2%E7%AD%89%E5%A6%82%E4%BD%95%E8%AE%A9tga%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>2.打开安装路径C:\Program Files\MysticCoder\MysticThumbs，你会看到里面有几个dll。</p>
+<p>3.把安装文件里面的patch目录下的文件，复制到2所在的目录即可。</p>
+<p>破解完毕，现在不用担心使用一个月后失效了。</p>
+<p>这个破解版本在2个多月后失效了，慎用。</p>
+</body></html>
       
     </div>
 
@@ -538,17 +568,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>7月26号封闭培训，到部门来已经是8月10号了。刚开始懵懵懂懂的，不知道干啥。部门上课的那几天，把新人手册的步骤做了一遍。悲伤的是，做完之后不少忘记了。编译脚本的addin插件至今没有显示出来，虽然有几天它显示过。除此之外，还有不少纠结过的问题。让我一一道来吧。配置vs字体和颜色，va快捷键，查找快捷键无效，F12查看定义无效，uc断点无效，调试uc时候游戏进程掉了。。。下面来说说成功解决掉的几个问题吧，非常感谢jerry哥和vivin姐的帮忙。</p>
-<p>1.vs的字体和颜色。默认字体是新宋体，这个字体据说不是很好，推荐consolas字体。颜色的话，有个网站叫做<a href="https://studiostyl.es/" target="_blank" rel="noopener">https://studiostyl.es/</a>，<br>可以去里面选自己喜欢的风格，设置好就行。值得注意的是，安装nfringe后，字体颜色设置面板里面会出现unrealscript相关的设置，注意修改。<br>如图所示，<br><img alt data-src="https://c2.staticflickr.com/8/7317/26842778024_ed21d0f0b6_o.png"></p>
+          <html><head></head><body><p>7月26号封闭培训，到部门来已经是8月10号了。刚开始懵懵懂懂的，不知道干啥。部门上课的那几天，把新人手册的步骤做了一遍。悲伤的是，做完之后不少忘记了。编译脚本的addin插件至今没有显示出来，虽然有几天它显示过。除此之外，还有不少纠结过的问题。让我一一道来吧。配置vs字体和颜色，va快捷键，查找快捷键无效，F12查看定义无效，uc断点无效，调试uc时候游戏进程掉了。。。下面来说说成功解决掉的几个问题吧，非常感谢jerry哥和vivin姐的帮忙。</p>
+<p>1.vs的字体和颜色。默认字体是新宋体，这个字体据说不是很好，推荐consolas字体。颜色的话，有个网站叫做<a href="https://studiostyl.es/">https://studiostyl.es/</a>，<br>可以去里面选自己喜欢的风格，设置好就行。值得注意的是，安装nfringe后，字体颜色设置面板里面会出现unrealscript相关的设置，注意修改。<br>如图所示，<br><img alt="" data-src="https://c2.staticflickr.com/8/7317/26842778024_ed21d0f0b6_o.png"></p>
 <p>另一个需要注意的地方是，与.uc文件不同，.cpp中的代码颜色是在visual assist x中修改的，这个我找了半天才反应过来。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/08/19/%E5%B7%A5%E4%BD%9C%E4%B8%80%E5%91%A8%E5%A4%9A%E8%A7%A3%E5%86%B3%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>2.visaul assist x的open file in solution快捷键shift+alt+o没掉了，按这个快捷键打开的一个网页模板窗口。方式是配置一个新的快捷键。tools-&gt;options-&gt;environment-&gt;keyboard，打开面板后选中VAssistX.OpenFileInSolutionDialog。再将鼠标焦点切换到Press shortcut keys下面的输入框里面，按下shift+alt+o，就添加一个全局快捷键，点击assign按钮即可。如图，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7241/27452123005_d26555f3d8_o.png"></p>
+<p>3.vs的查找文件快捷键，shift+ctrl+f无效。这是因为安装了搜狗输入法造成了。搜狗输入法在更上层截断了这个快捷键，设置下搜狗输入法取消这个快捷键即可。如图，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7032/27175666250_9f465482a9_o.png"></p>
+<p>4.调试uc时候游戏进程脱离vs。这个debug-&gt;attach to process即可。注意最上面的tansport可以筛选unrealscript，筛选后再用下面的refresh按钮刷新一下就出来了。</p>
+<p>5.f12查找代码定义的问题并没有彻底解决。在uc文件中，只能用f12查找定义。对于f12失效的情况下，使用3在整个解决方案搜索，不过比较麻烦，但是能解决问题。在cpp文件中，就能够使用va的快捷键alt+g查找定义了。我居然忘记了这茬，以前从没接触过脚本编写，现在项目里面cpp和uc都有，所以混淆了。</p>
+<p>6.uc断点无效，据说是nfringe的bug。</p>
+<p>7.另外项目组的addin插件一直点击没反应，也不知道原因。不过，我在解决问题3之后，addin插件按钮点击后不会造成vs崩溃，但是还是无效的，也就是彻底没反应，我是服了。。。不过，今天前辈在我机子上面调试那个插件的代码，修复了bug，可以使用了，开心。。。</p>
+<p>早上悲催的被发现昨晚上传代码没传全，差点请全组喝饮料了。。。</p>
+</body></html>
       
     </div>
 
@@ -784,17 +816,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>很久没更新博客了。额，一直想写这个来着。记得以前写过绘制三维标量场的文章，方法是找的渐变颜色纹理图片，然后用一维纹理坐标映射贴上去的。后面发现根本不需要去找图片，这种渐变色本来就是一种颜色空间的定义。<a href="http://baike.baidu.com/link?url=RUroPPZprWlPOJx8JaodE2Je0wql6wHv0N3LigWMqsRjCxxVDAT_yWwGYL4myeEkHTKIeBxFbC9qjwvrzD2XlzgyxW-2lUZ25TyUePioufQBbhhZSTRB5VUApB0gCfgsJPG-CtbbTBBs3DacsTvMAFk5YzmyeD5uius5R5vTr3sPZbGsfmiL-6ovaPXrncfqk0vcp8KhirUnmKEEZdR_0q" target="_blank" rel="noopener">请看hsv颜色模型</a>，这种颜色模型类似于rgb，也是三个分量h（色调），s（饱和度），v（亮度）。h表示的绕圆锥的一周，也就是纯颜色的渐变，正是我们需要的东西。s表示从圆心到圆边缘的半径，0-1的范围，表示颜色纯度。v则是垂直的轴，表示亮度。如下图，我们要的就是绕圈一周的颜色渐变。</p>
-<p><img alt data-src="https://c2.staticflickr.com/8/7213/27452089865_0225e3c1e8_o.png"></p>
+          <html><head></head><body><p>很久没更新博客了。额，一直想写这个来着。记得以前写过绘制三维标量场的文章，方法是找的渐变颜色纹理图片，然后用一维纹理坐标映射贴上去的。后面发现根本不需要去找图片，这种渐变色本来就是一种颜色空间的定义。<a href="http://baike.baidu.com/link?url=RUroPPZprWlPOJx8JaodE2Je0wql6wHv0N3LigWMqsRjCxxVDAT_yWwGYL4myeEkHTKIeBxFbC9qjwvrzD2XlzgyxW-2lUZ25TyUePioufQBbhhZSTRB5VUApB0gCfgsJPG-CtbbTBBs3DacsTvMAFk5YzmyeD5uius5R5vTr3sPZbGsfmiL-6ovaPXrncfqk0vcp8KhirUnmKEEZdR_0q">请看hsv颜色模型</a>，这种颜色模型类似于rgb，也是三个分量h（色调），s（饱和度），v（亮度）。h表示的绕圆锥的一周，也就是纯颜色的渐变，正是我们需要的东西。s表示从圆心到圆边缘的半径，0-1的范围，表示颜色纯度。v则是垂直的轴，表示亮度。如下图，我们要的就是绕圈一周的颜色渐变。</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7213/27452089865_0225e3c1e8_o.png"></p>
 <p>总体思路就是数值0-1，映射到hsv颜色空间的（0-360,1,255）。实现标量场的方法是，首先，将hsv的（0-360,1,255）转换为rgb，保存为一维数组。以该数组为数据，生成一维纹理，数值0-1作为纹理坐标，再贴图即可生成标量场。下面是用该方法生成标量场的相关代码。首先是构造一维纹理数组，然后用其生成1d纹理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">int CTexture::<span class="built_in">BuildColorMapTexture</span>()</span><br><span class="line">{</span><br><span class="line">        const int COLOR_SIZE = <span class="number">240</span>;<span class="comment">//红到蓝</span></span><br><span class="line">        ImageRGBA <span class="built_in">colorMap</span>(COLOR_SIZE, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; COLOR_SIZE; ++i)</span><br><span class="line">        {</span><br><span class="line">            colorMap<span class="selector-class">.pixel</span>(<span class="selector-tag">i</span>, <span class="number">0</span>) = <span class="built_in">Hsv2Rgb</span>(<span class="selector-tag">i</span>, <span class="number">1</span>, <span class="number">255</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">glPixelStorei</span>(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">glGenTextures</span>(<span class="number">1</span>, m_uTexName);</span><br><span class="line">        <span class="built_in">glBindTexture</span>(GL_TEXTURE_1D, m_uTexName);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);</span><br><span class="line">        <span class="built_in">glTexEnvf</span>(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//生成2d的Mipmap纹理</span></span><br><span class="line">        int nRet = <span class="built_in">gluBuild1DMipmaps</span>(GL_TEXTURE_1D, <span class="number">4</span>, COLOR_SIZE, GL_RGBA, GL_UNSIGNED_BYTE,</span><br><span class="line">            colorMap<span class="selector-class">.raw</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return <span class="number">0</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>hsv2rgb的代码如下，从网上可以随便找个修改。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">PixelRGBA <span class="built_in">Hsv2Rgb</span>(<span class="attribute">float</span> H, float S, float V)</span><br><span class="line">{</span><br><span class="line">        <span class="attribute">float</span> R, G, B;</span><br><span class="line"></span><br><span class="line">        int i;</span><br><span class="line">        <span class="attribute">float</span> f, p, q, t;</span><br><span class="line">        <span class="built_in">if</span>(S == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">// achromatic (grey)</span></span><br><span class="line">            R = G = B = V;</span><br><span class="line">            return <span class="built_in">V4B</span>(R, G, B, <span class="number">255</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        H /= <span class="number">60</span>; <span class="comment">// sector 0 to 5</span></span><br><span class="line">        <span class="selector-tag">i</span> = <span class="built_in">floor</span>( H );</span><br><span class="line">        f = H - i; <span class="comment">// factorial part of h</span></span><br><span class="line">        <span class="selector-tag">p</span> = V * ( <span class="number">1</span> - S );</span><br><span class="line">        <span class="selector-tag">q</span> = V * ( <span class="number">1</span> - S * f );</span><br><span class="line">        t = V * ( <span class="number">1</span> - S * ( <span class="number">1</span> - f ) );</span><br><span class="line"></span><br><span class="line">        <span class="built_in">switch</span>( <span class="selector-tag">i</span> )</span><br><span class="line">        {</span><br><span class="line">        case <span class="number">0</span>:</span><br><span class="line">            R = V;</span><br><span class="line">            G = t;</span><br><span class="line">            B = p;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">1</span>:</span><br><span class="line">            R = q;</span><br><span class="line">            G = V;</span><br><span class="line">            B = p;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">2</span>:</span><br><span class="line">            R = p;</span><br><span class="line">            G = V;</span><br><span class="line">            B = t;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">3</span>:</span><br><span class="line">            R = p;</span><br><span class="line">            G = q;</span><br><span class="line">            B = V;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">4</span>:</span><br><span class="line">            R = t;</span><br><span class="line">            G = p;</span><br><span class="line">            B = V;</span><br><span class="line">            break;</span><br><span class="line">        default: <span class="comment">// case 5:</span></span><br><span class="line">            R = V;</span><br><span class="line">            G = p;</span><br><span class="line">            B = q;</span><br><span class="line">            break;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return <span class="built_in">V4B</span>(R, G, B, <span class="number">255</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>剩下的事情就是使用BuildColorMapTexture生成1d纹理，然后将数值作为1d纹理坐标设置好就行了。下面是相关的效果图：</p>
+<p>颜色空间转换生成纹理：</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7138/26844818173_cb7558cfc0_o.png"></p>
+<p>渐变纹理贴图：</p>
+<p><img alt="" data-src="https://c8.staticflickr.com/8/7638/27452089775_9fe5365f97_o.jpg"><img alt="" data-src="https://c2.staticflickr.com/8/7365/27175625310_f7f44d74d5_o.png"></p>
+<p>不同的方法效果有区别，原因可能是贴图的数据更精细，而且同一范围比如0-0.3对应的颜色就可能不一致。马上要毕业了，工作内容是游戏开发，以后估计不会再更新读研期间类似的文章的了。</p>
+</body></html>
       
     </div>
 
@@ -897,17 +931,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>很久没骑这么远了。第一次骑三天都不知道是怎么坚持过来的。总的感觉，身体比去年好太多了。虽然脚累，但是呼吸完全不乱，完全不会心累。中午吃错东西了，一开始就来个闹肚子、过敏。我对某种食物强过敏，当时就在为自己生命安全思考了。本打算骑到附近的梅溪湖算了，但是吹了下风，觉得过敏消散了，就坚持走走看吧。</p>
+          <html><head></head><body><p>很久没骑这么远了。第一次骑三天都不知道是怎么坚持过来的。总的感觉，身体比去年好太多了。虽然脚累，但是呼吸完全不乱，完全不会心累。中午吃错东西了，一开始就来个闹肚子、过敏。我对某种食物强过敏，当时就在为自己生命安全思考了。本打算骑到附近的梅溪湖算了，但是吹了下风，觉得过敏消散了，就坚持走走看吧。</p>
 <p>雷锋大道真的好远，从河西走完整个望城。经过去年的洗心禅寺，发现好近额。为啥去年我走这么点距离会觉得好累了。有些改变确实在不知不觉。不管是身，还是心。永远健康充满活力的身体，是追寻幸福的必要条件。</p>
 <p>最后，附图一张。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/05/25/%E9%AA%91%E8%A1%8C%E9%9D%96%E6%B8%AF%E5%8F%A4%E9%95%87/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p><img alt="" data-src="https://c6.staticflickr.com/8/7623/27380509141_e028f6958d_o.jpg"></p>
+</body></html>
       
     </div>
 
@@ -1472,13 +1500,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1530,12 +1558,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">635k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
