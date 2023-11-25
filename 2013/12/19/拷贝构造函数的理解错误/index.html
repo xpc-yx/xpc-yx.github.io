@@ -56,7 +56,7 @@
 <meta property="og:description" content="事情的经过是这样的，我在实现一个基于OpenCv的CImage类。我需要实现它的拷贝构造函数，因为我要把它push_back到vector里面去。我过去的一直做法是在赋值操作符中实现真正的操作，在拷贝构造函数中调用。但是在这里却出现了内存错误。  好歹我还写过几年程序，那我就开始了艰辛的调试。经过调试我发现，我的程序一直只进入拷贝构造函数，然后进去赋值操作符，在赋值操作符中我释放了对象原有的内存">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-12-19T01:49:59.000Z">
-<meta property="article:modified_time" content="2021-12-26T12:45:36.593Z">
+<meta property="article:modified_time" content="2023-11-25T14:39:33.834Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="构造函数">
 <meta name="twitter:card" content="summary">
@@ -259,8 +259,8 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
                   </a>
                 </span>
             </span>
@@ -311,12 +311,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p> 事情的经过是这样的，我在实现一个基于OpenCv的CImage类。我需要实现它的拷贝构造函数，因为我要把它push_back到vector里面去。我过去的一直做法是在赋值操作符中实现真正的操作，在拷贝构造函数中调用。但是在这里却出现了内存错误。</p>
+        <html><head></head><body><p> 事情的经过是这样的，我在实现一个基于OpenCv的CImage类。我需要实现它的拷贝构造函数，因为我要把它push_back到vector里面去。我过去的一直做法是在赋值操作符中实现真正的操作，在拷贝构造函数中调用。但是在这里却出现了内存错误。</p>
 <p> 好歹我还写过几年程序，那我就开始了艰辛的调试。经过调试我发现，我的程序一直只进入拷贝构造函数，然后进去赋值操作符，在赋值操作符中我释放了对象原有的内存。错误就出现在了这里。按照我这种写法的理解，push_back是先用默认构造函数构造对象加入vector，然后再用原有拷贝构造函数初始化内容，或者说用赋值操作符初始化内容。</p>
 <p> 事实上，完全不是这样的。<strong>push_back直接添加新的内存，然后对这块新的内存用拷贝构造函数初始化而已。</strong>既然这样的话，拷贝构造函数是不能够直接调用赋值操作符的。应该再重新写一个真正的赋值子函数，拷贝构造函数和赋值操作符都调用这个子函数。赋值操作符中多了一个先检查是否同一个对象，如果不是同一个则释放原有内存的过程而已。</p>
 <p> 具体的可以看，CImage的部分代码。</p>
-<pre class="brush:cpp;first-line:1;pad-line-numbers:true;highlight:null;collapse:false;">
-class CImage
+<pre class="brush:cpp;first-line:1;pad-line-numbers:true;highlight:null;collapse:false;">class CImage
 {
 public:
     CImage();
@@ -329,8 +328,7 @@ private:
     void CopyData(const CImage yxImage);
 };
 </pre>
-<pre class="brush:cpp;first-line:1;pad-line-numbers:true;highlight:null;collapse:false;">
-CImage::CImage(void)
+<pre class="brush:cpp;first-line:1;pad-line-numbers:true;highlight:null;collapse:false;">CImage::CImage(void)
 {
     m_pImg = NULL;
     m_ppfData = NULL;
@@ -353,12 +351,12 @@ CImage::~CImage(void)
 void CImage::CopyData(const CImage yxImage)
 {
     m_pImg = cvCloneImage(yxImage.m_pImg);
-    m_nRows = m_pImg->height;
-    m_nCols = m_pImg->width * m_pImg->nChannels;
+    m_nRows = m_pImg-&gt;height;
+    m_nCols = m_pImg-&gt;width * m_pImg-&gt;nChannels;
     int nLineSize = m_nCols * sizeof(double);
     m_ppfData = new double*[m_nRows];
     m_pfData = new double[m_nRows * m_nCols];
-    for (int i = 0; i < m_pImg->height; ++i)
+    for (int i = 0; i &lt; m_pImg-&gt;height; ++i)
     {
         m_ppfData[i] = m_pfData[i * m_nCols];
         memcpy(m_ppfData[i], yxImage[i], nLineSize);
@@ -385,7 +383,7 @@ CImage CImage::operator=(const CImage yxImage)
 
     return *this;
 }
-</pre>
+</pre></body></html>
     </div>
 
     
@@ -490,7 +488,7 @@ CImage CImage::operator=(const CImage yxImage)
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -548,12 +546,12 @@ CImage CImage::operator=(const CImage yxImage)
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">624k</span>
+    <span title="站点总字数">626k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:28</span>
+    <span title="站点阅读时长">9:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

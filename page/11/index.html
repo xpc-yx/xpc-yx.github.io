@@ -1180,8 +1180,8 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
                   </a>
                 </span>
             </span>
@@ -1232,17 +1232,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>区别一：引用必须要指代一个对象，所以<strong>引用必须初始化</strong>，但是指针不需要。</p>
+          <html><head></head><body><p>区别一：引用必须要指代一个对象，所以<strong>引用必须初始化</strong>，但是指针不需要。</p>
 <p>区别二：存在空指针，但是<strong>不存在空引用</strong>，引用必须要指代某个对象。</p>
 <p>区别三：由于不存在空引用，使用引用时候<strong>不需要测试是否有效</strong>，但是使用指针则需要保证其是有效的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>区别四：指针可以改变其指向的对象，但是引用不可以，<strong>引用一被初始化后就不能改变</strong>。</p>
+<p>区别五：重载[]操作符的时候，由于语法需要，应该<strong>返回引用</strong>而不是指针。</p>
+<p>区别六：从概念上看，指针是一个变量，而<strong>引用则是其它变量的别名</strong>。</p>
+<p>区别七：指针是占据内存的，但是<strong>引用则不一定会分配内存</strong>，引用只是一个别名。</p>
+<p>区别八：对指针使用操作符和对引用使用操作符效果不同，对引用使用操作符得到的都是<strong>对所指代的对象使用操作符的结果</strong>。</p>
+</body></html>
       
     </div>
 
@@ -1427,7 +1425,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1485,12 +1483,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">624k</span>
+    <span title="站点总字数">626k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:28</span>
+    <span title="站点阅读时长">9:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

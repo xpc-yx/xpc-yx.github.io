@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png">
 <meta property="og:image" content="https://c2.staticflickr.com/8/7672/27396028106_085b740b99_o.png">
 <meta property="article:published_time" content="2012-11-10T07:44:59.000Z">
-<meta property="article:modified_time" content="2021-12-26T12:46:09.099Z">
+<meta property="article:modified_time" content="2023-11-25T14:39:33.829Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="析构函数">
 <meta property="article:tag" content="虚函数">
@@ -263,8 +263,8 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
                   </a>
                 </span>
             </span>
@@ -296,7 +296,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>1.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -315,18 +315,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>如标题所示，如果该类没有父类也没有任何子类，把析构函数还定义成虚的，确实没多大必要吧。对象的构建和析构完全是一个入栈和出栈的过程，也就是说肯定会从父类构造到子类，也肯定会从子类析构到父类，这些都是毋容置疑的。</p>
+        <html><head></head><body><p>如标题所示，如果该类没有父类也没有任何子类，把析构函数还定义成虚的，确实没多大必要吧。对象的构建和析构完全是一个入栈和出栈的过程，也就是说肯定会从父类构造到子类，也肯定会从子类析构到父类，这些都是毋容置疑的。</p>
 <p>那么把析构函数定义成virtual有个什么意义了。确实没有多大意义，至少对于一个非delete造成的析构。无论是析构一个堆栈对象还是全局对象，编译器肯定能在编译时就做出决策了。但是，假如有人一时兴起，new了一个子类对象并且将地址存储在基类指针中。那么，你该怎么删除这个对象了，只能delete父类指针了。</p>
 <p>问题就出在这里了。<strong>你既然delete父类指针，假如是在编译层次决策的话，编译器只能帮你调用父类的析构函数了。</strong>但是，事实上你是一个子类对象，那么子类的析构函数没有调用，假如你在子类的析构函数做了些什么释放，结果就是那个释放永远不会执行，这样就造成内存泄漏或者资源重复申请之类的。</p>
 <p>其实，上面的这种写法就是利用多态的性质，既然要利用多态，肯定得把析构函数定义成virtual的，那么调用哪个析构函数的决策就能到运行时候再决定。如果基类的析构函数定义成virtual的话，其所有子类的析构函数当然也是virtual的，那么我们删除基类指针的时候，就能通过多态机制决定该调用子类的析构函数，也就是从子类的析构函数开始往基类的析构函数调用释放整个对象。这样就不会造成任何资源泄漏了。</p>
 <p>以下的代码展示了这样的一种情况，注意Class CA作为基类，就需要把析构函数定义成virtual的。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">class CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CA(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nA = new int[nSize];</span><br><span class="line">            printf("构造CA\n");</span><br><span class="line">        &#125;</span><br><span class="line">        virtual ~CA()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nA;</span><br><span class="line">            printf("析构CA\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nA;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class CB : public CA</span><br><span class="line">&#123;</span><br><span class="line">    public:</span><br><span class="line">        CB(int nS = <span class="number">100</span>): nSize(nS)</span><br><span class="line">        &#123;</span><br><span class="line">            nB = new int[nSize];</span><br><span class="line">            printf("构造CB\n");</span><br><span class="line">        &#125;</span><br><span class="line">        ~CB()</span><br><span class="line">        &#123;</span><br><span class="line">            delete [] nB;</span><br><span class="line">            printf("析构CB\n");</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nB;</span><br><span class="line">        int nSize;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CA* pCA = new CB();</span><br><span class="line">    delete pCA;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">class CA</span><br><span class="line">{</span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">CA</span>(int nS = <span class="number">100</span>): <span class="built_in">nSize</span>(nS)</span><br><span class="line">        {</span><br><span class="line">            nA = new int<span class="selector-attr">[nSize]</span>;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"构造CA\n"</span>);</span><br><span class="line">        }</span><br><span class="line">        virtual ~<span class="built_in">CA</span>()</span><br><span class="line">        {</span><br><span class="line">            delete <span class="selector-attr">[]</span> nA;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"析构CA\n"</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nA;</span><br><span class="line">        int nSize;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class CB : public CA</span><br><span class="line">{</span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">CB</span>(int nS = <span class="number">100</span>): <span class="built_in">nSize</span>(nS)</span><br><span class="line">        {</span><br><span class="line">            nB = new int<span class="selector-attr">[nSize]</span>;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"构造CB\n"</span>);</span><br><span class="line">        }</span><br><span class="line">        ~<span class="built_in">CB</span>()</span><br><span class="line">        {</span><br><span class="line">            delete <span class="selector-attr">[]</span> nB;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"析构CB\n"</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        int* nB;</span><br><span class="line">        int nSize;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    CA* pCA = new <span class="built_in">CB</span>();</span><br><span class="line">    delete pCA;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>效果如图:</p>
-<p><img alt data-src="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png">，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7152/27396027096_47abe363cc_o.png">，</p>
 <p>如果删掉CA析构函数前面的virtual，效果如图，</p>
-<p><img alt data-src="https://c2.staticflickr.com/8/7672/27396028106_085b740b99_o.png"></p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7672/27396028106_085b740b99_o.png"></p>
 <p>你也可以实验在主函数里面定义些栈变量的CA和CB的对象，无论构造函数是否是virtual的，都能够正确的析构。</p>
-
+</body></html>
     </div>
 
     
@@ -438,7 +438,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -496,12 +496,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">624k</span>
+    <span title="站点总字数">626k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:28</span>
+    <span title="站点阅读时长">9:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
