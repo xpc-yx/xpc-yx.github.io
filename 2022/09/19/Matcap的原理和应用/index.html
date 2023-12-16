@@ -63,10 +63,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E5%9F%BA%E7%A1%80%E8%89%B2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E6%B3%95%E7%BA%BF.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E9%AB%98%E5%85%89.png">
-<meta property="og:image" content="https://markdown.xiaoshujiang.com/img/spinner.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E5%8F%8D%E5%B0%84.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E6%8A%98%E5%B0%84.png">
 <meta property="article:published_time" content="2022-09-19T09:15:51.000Z">
-<meta property="article:modified_time" content="2023-12-16T16:14:31.269Z">
+<meta property="article:modified_time" content="2023-12-16T16:17:35.672Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="Matcap">
 <meta name="twitter:card" content="summary">
@@ -354,7 +354,7 @@
 <h2 id="4-2-法线贴图"><a href="#4-2-法线贴图" class="headerlink" title="4.2 法线贴图"></a>4.2 法线贴图</h2><p>既然matcap需要用到法线，那么可以额外提供法线贴图去修改像素的法线。<br><img alt="matcap法线" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap法线.png"><br>从上图可以看出，法线对最终的渲染结果影响显著。</p>
 <h2 id="4-3-自发光"><a href="#4-3-自发光" class="headerlink" title="4.3 自发光"></a>4.3 自发光</h2><p>类似正常的光照计算，可以在matcap的结果之上，再叠加自发光。</p>
 <h2 id="4-4-模拟高光"><a href="#4-4-模拟高光" class="headerlink" title="4.4 模拟高光"></a>4.4 模拟高光</h2><p>matcap本身已经是光照计算的结果，因此理论上贴图内带有了漫反射、高光、反射的信息。但是，通常情况下，matcap主要包括的还是漫反射信息，或者说表现不出明显的高光信息。<br>有一种简单模拟高光的方式，提供一个高光阈值，使用matcap减去该颜色阈值，然后除以1-阈值。最终结果再用原matcap颜色相乘避免过曝。<br><img alt="matcap高光" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap高光.png"></p>
-<h2 id="4-5-Cubemap反射"><a href="#4-5-Cubemap反射" class="headerlink" title="4.5 Cubemap反射"></a>4.5 Cubemap反射</h2><p>同时，可以额外利用cubemap计算静态反射结果叠加到最终着色上。<br><img alt="matcap反射" title="[[[1702742384881]]]" data-src="https://markdown.xiaoshujiang.com/img/spinner.gif"></p>
+<h2 id="4-5-Cubemap反射"><a href="#4-5-Cubemap反射" class="headerlink" title="4.5 Cubemap反射"></a>4.5 Cubemap反射</h2><p>同时，可以额外利用cubemap计算静态反射结果叠加到最终着色上。<br><img alt="matcap反射" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap反射.png"></p>
 <h2 id="4-6-模拟边缘光"><a href="#4-6-模拟边缘光" class="headerlink" title="4.6 模拟边缘光"></a>4.6 模拟边缘光</h2><p>利用dot(normalWS, viewDirWS)计算出边缘光的强度，再将边缘光颜色与强度相乘叠加到最终着色结果上即可。</p>
 <h2 id="4-7-模拟折射"><a href="#4-7-模拟折射" class="headerlink" title="4.7 模拟折射"></a>4.7 模拟折射</h2><p>折射一种扭曲的效果，因此我们可以通过扭曲matcap的采样位置和反射的采样位置来模拟折射。同时，可以乘以边缘光的强度来模拟菲尼尔效应，也就是边缘光强的地方折射更强。然后，利用这个扭曲强度去偏移matcap的uv和反射向量，即可在一定程度上模拟折射的效果。<br><img alt="matcap折射" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap折射.png"><br>如上图所示，边缘的红色是边缘光；同时，噪声贴图作为折射扭曲强度贴图让边缘光看起来比较细碎，用来模拟折射效果。</p>
 <h2 id="4-8-光照强度"><a href="#4-8-光照强度" class="headerlink" title="4.8 光照强度"></a>4.8 光照强度</h2><p>同时，也可以计算出真实的光照强度，将光照强度乘以matcap颜色，让matcap的着色结果受到灯光影响。不过，这跟matcap的初衷不太一致。</p>
