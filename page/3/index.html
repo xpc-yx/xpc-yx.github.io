@@ -222,174 +222,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">WebGL编程模型</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-12-25 18:16:11" itemprop="dateCreated datePublished" datetime="2016-12-25T18:16:11+08:00">2016-12-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/WebGL/" itemprop="url" rel="index">
-                    <span itemprop="name">WebGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="WebGL编程模型" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>本文主要介绍编写一个原生的WebGL程序需要哪些步骤。</p>
-<h2 id="WebGL程序的软件结构"><a href="#WebGL程序的软件结构" class="headerlink" title="WebGL程序的软件结构"></a>WebGL程序的软件结构</h2><p>默认情况下，一个动态网页程序只包括HTML和JavaScript两种语言。<br>而在WebGL程序中，还包括了第三种语言：GLSL ES。</p>
-<p><img alt="enter description here" data-src="https://c1.staticflickr.com/1/417/31743655591_e5815e1579_o.png"></p>
-<h2 id="WebGL编程模型"><a href="#WebGL编程模型" class="headerlink" title="WebGL编程模型"></a>WebGL编程模型</h2><p><img alt="enter description here" data-src="https://c1.staticflickr.com/1/502/31050538443_ca9377f3a2_o.png"><br>上图表示一个WebGL程序运行的主要流程。主要分为3个阶段，应用程序阶段、着色器阶段、片元后处理阶段。<br>本文接下来按照一定的规律介绍编写一个原生WebGL程序主要的步骤。</p>
-<h3 id="获得WebGL渲染环境"><a href="#获得WebGL渲染环境" class="headerlink" title="获得WebGL渲染环境"></a>获得WebGL渲染环境</h3><h4 id="在Html中定义canvas标签"><a href="#在Html中定义canvas标签" class="headerlink" title="在Html中定义canvas标签"></a>在Html中定义canvas标签</h4><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">canvas</span> id=<span class="string">"webgl"</span> <span class="attribute">width</span>=<span class="string">"400"</span> height=<span class="string">"400"</span>&gt; &lt;/canvas&gt;</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="在JS代码中获得canvas对象"><a href="#在JS代码中获得canvas对象" class="headerlink" title="在JS代码中获得canvas对象"></a>在JS代码中获得canvas对象</h4><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">var</span> <span class="selector-tag">canvas</span> = document<span class="selector-class">.getElementById</span>(<span class="string">'webgl'</span>);</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="通过canvas对象获得WebGL渲染环境"><a href="#通过canvas对象获得WebGL渲染环境" class="headerlink" title="通过canvas对象获得WebGL渲染环境"></a>通过canvas对象获得WebGL渲染环境</h4><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">var</span> gl = <span class="built_in">getWebGLContext</span>(canvas);</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="编写着色器"><a href="#编写着色器" class="headerlink" title="编写着色器"></a>编写着色器</h3><h4 id="编写顶点着色器"><a href="#编写顶点着色器" class="headerlink" title="编写顶点着色器"></a>编写顶点着色器</h4><p>顶点着色器是用来描述顶点属性（比如位置、颜色、纹理坐标等的程序）<br><img alt="enter description here" data-src="https://c1.staticflickr.com/1/441/31822594876_583f762171_o.png"></p>
-<h4 id="编写片元着色器"><a href="#编写片元着色器" class="headerlink" title="编写片元着色器"></a>编写片元着色器</h4><p>片元着色器处理光栅后的数据，可以片元将其理解为像素。<br>片元着色器的输出构成了最终的像素值（开启多重采样的话只构成了某个像素的一部分值）<br><img alt="enter description here" data-src="https://c1.staticflickr.com/1/771/31822601086_e8b7848d25_o.png"></p>
-<h3 id="初始化着色器"><a href="#初始化着色器" class="headerlink" title="初始化着色器"></a>初始化着色器</h3><p>初始化着色器基本上是一个固定的流程，主要分为以下几个步骤。</p>
-<h4 id="创建shader"><a href="#创建shader" class="headerlink" title="创建shader"></a>创建shader</h4><h4 id="加载shader源码"><a href="#加载shader源码" class="headerlink" title="加载shader源码"></a>加载shader源码</h4><h4 id="编译shader"><a href="#编译shader" class="headerlink" title="编译shader"></a>编译shader</h4><h4 id="创建程序"><a href="#创建程序" class="headerlink" title="创建程序"></a>创建程序</h4><h4 id="附加编译好的shader"><a href="#附加编译好的shader" class="headerlink" title="附加编译好的shader"></a>附加编译好的shader</h4><h4 id="链接程序"><a href="#链接程序" class="headerlink" title="链接程序"></a>链接程序</h4><h4 id="使用程序"><a href="#使用程序" class="headerlink" title="使用程序"></a>使用程序</h4><h3 id="获得顶点属性"><a href="#获得顶点属性" class="headerlink" title="获得顶点属性"></a>获得顶点属性</h3><p>顶点上有各种属性，比如空间坐标、纹理坐标、材质等，一个顶点就是一个属性集合。<br>如下图所示的立方体，顶点上有2个属性，坐标和颜色。<br><img alt="enter description here" data-src="https://c1.staticflickr.com/1/280/31487505630_7c7a69ed2f_o.png"><br>顶点属性可以通过读取模型文件，比如obj文件等获得，或者简单写在代码定义中，比如上图的立方体。</p>
-<h3 id="创建顶点缓冲区"><a href="#创建顶点缓冲区" class="headerlink" title="创建顶点缓冲区"></a>创建顶点缓冲区</h3><p>缓冲区存在于显存中，能够被显卡直接用来进行渲染，不需要进行数据传输。<br>在WebGL中，通过以下调用获得一个缓冲区对象。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var vertexColorBuffer = gl.<span class="built_in">createBuffer</span>();</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="写入顶点数据到顶点缓冲区对象"><a href="#写入顶点数据到顶点缓冲区对象" class="headerlink" title="写入顶点数据到顶点缓冲区对象"></a>写入顶点数据到顶点缓冲区对象</h3><p>这个步骤分为两个操作。</p>
-<h4 id="首先，绑定创建的缓冲区"><a href="#首先，绑定创建的缓冲区" class="headerlink" title="首先，绑定创建的缓冲区"></a>首先，绑定创建的缓冲区</h4><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">bindBuffer</span>(gl.ARRAY_BUFFER, vertexColorBuffer);</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="然后，传输系统内存中上的顶点数据到缓冲区（显存中）"><a href="#然后，传输系统内存中上的顶点数据到缓冲区（显存中）" class="headerlink" title="然后，传输系统内存中上的顶点数据到缓冲区（显存中）"></a>然后，传输系统内存中上的顶点数据到缓冲区（显存中）</h4><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">bufferData</span>(gl.ARRAY_BUFFER, verticesColors, gl.STATIC_DRAW);</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="传输数据的标志"><a href="#传输数据的标志" class="headerlink" title="传输数据的标志"></a>传输数据的标志</h4><p>gl.bufferData的第三个参数表示数据的使用标志，表示三种不同的应用场景。<br>1. gl.STATIC_DRAW ：表示数据不会经常改变，通常用于静态物体，比如地形、墙体等。<br>2. gl.STREAM_DRAW：表示数据使用一次后就会被丢弃。<br>3. gl.DYNAMIC_DRAW：表示数据会被多次修改，也会被使用多次。</p>
-<p>系统会根据usage标示符为缓冲区对象分配最佳的存储位置。<br>STATIC_DRAW和STREAM_DRAW分配在显存上，DYNAMIC_DRAW可能分配在AGP中。</p>
-<h3 id="将顶点数据传输到顶点着色器"><a href="#将顶点数据传输到顶点着色器" class="headerlink" title="将顶点数据传输到顶点着色器"></a>将顶点数据传输到顶点着色器</h3><p>目前，我们已经准会了WebGL渲染环境，并且数据已经从系统内存传输到显存中的缓冲区对象中。现在，我们要将缓存区对象中的数据指定给顶点着色器中对应的变量。<br>顶点着色器中的attribute变量对象顶点的属性。我们的顶点着色器中定义了2个变量，a_Position，a_Color。下面我们分为三步为这其指定数据。</p>
-<ol>
-<li>获得着色器中attribute变量位置<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var a_Position = gl.<span class="built_in">getAttribLocation</span>(gl.program, <span class="string">'a_Position'</span>);</span><br></pre></td></tr></tbody></table></figure></li>
-<li><p>根据变量位置传入缓冲区中的顶点属性数组</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">vertexAttribPointer</span>(a_Position, <span class="number">3</span>, gl.FLOAT, <span class="literal">false</span>, FSIZE * <span class="number">6</span>, <span class="number">0</span>);</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>启用该attribute变量的属性数组</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">enableVertexAttribArray</span>(a_Position);</span><br></pre></td></tr></tbody></table></figure>
-</li>
-</ol>
-<p>对于a_Color，我们在系统内存中定义在坐标的后面，因此在第2步中需要进行<strong>偏移</strong>，gl.vertexAttribPointer的最后一个参数可以指定数据的偏移位置，因此第2步修改为：<br></p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">vertexAttribPointer</span>(a_Position, <span class="number">3</span>, gl.FLOAT, <span class="literal">false</span>, FSIZE * <span class="number">6</span>, FSIZE * <span class="number">3</span>);</span><br></pre></td></tr></tbody></table></figure><br>FSIZE表示float的大小。<p></p>
-<h3 id="传入uniform变量到着色器"><a href="#传入uniform变量到着色器" class="headerlink" title="传入uniform变量到着色器"></a>传入uniform变量到着色器</h3><p>着色器中还存在一种uniform变量，这种变量对于所有顶点来说都是一样的。<br>比如，mvp矩阵就应该定义为uniform变量。一般情况，我们在js代码中计算好mvp矩阵，然后传输到着色器中的uniform变量中。主要步骤如下：<br>1. 获取uniform变量的在着色中的位置<br></p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var u_MvpMatrix = gl.<span class="built_in">getUniformLocation</span>(gl.program, <span class="string">'u_MvpMatrix'</span>);</span><br></pre></td></tr></tbody></table></figure><p></p>
-<ol>
-<li>计算uniform变量（比如mvp矩阵）的值</li>
-</ol>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var mvpMatrix = <span class="keyword">new</span> <span class="built_in">Matrix4</span>();</span><br><span class="line">mvpMatrix.<span class="built_in">setPerspective</span>(<span class="number">30</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">100</span>);</span><br><span class="line">mvpMatrix.<span class="built_in">lookAt</span>(<span class="number">3</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br></pre></td></tr></tbody></table></figure>
-<ol>
-<li>传入uniform变量</li>
-</ol>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">uniformMatrix4fv</span>(u_MvpMatrix, <span class="literal">false</span>, mvpMatrix.elements);</span><br></pre></td></tr></tbody></table></figure>
-<p>目前，顶点着色器已经有了每个顶点的属性，以及用uniform变量表示的mvp矩阵，因此可以变换顶点属性后传入片元着色器中进一步处理。</p>
-<h3 id="定义面片索引"><a href="#定义面片索引" class="headerlink" title="定义面片索引"></a>定义面片索引</h3><p>上面我们处理的数据都是顶点属性，但是我们实际要绘制的图元是面片，比如三角面片。<br>通常情况下，我们会用三个顶点索引表示一个三角面片。<br>如下所示：</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Indices of the vertices</span></span><br><span class="line">var indices = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([</span><br><span class="line"><span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="comment">// front</span></span><br><span class="line"><span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="comment">// right</span></span><br><span class="line"><span class="number">0</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="comment">// up</span></span><br><span class="line"><span class="number">1</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="comment">// left</span></span><br><span class="line"><span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="comment">// down</span></span><br><span class="line"><span class="number">4</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">5</span> <span class="comment">// back</span></span><br><span class="line">]);</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>indices表示一个立方体的面片索引。</p>
-<h3 id="创建索引缓冲区，写入索引"><a href="#创建索引缓冲区，写入索引" class="headerlink" title="创建索引缓冲区，写入索引"></a>创建索引缓冲区，写入索引</h3><p>接下来，我们要创建索引缓冲区，并将内存中的索引数据传入缓存区。<br>1. 创建索引缓冲区</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var indexBuffer = gl.<span class="built_in">createBuffer</span>();</span><br></pre></td></tr></tbody></table></figure>
-<ol>
-<li>绑定索引缓冲区</li>
-</ol>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">bindBuffer</span>(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);</span><br></pre></td></tr></tbody></table></figure>
-<ol>
-<li>将面片索引写入缓冲区对象</li>
-</ol>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">bufferData</span>(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="根据索引绘制图元"><a href="#根据索引绘制图元" class="headerlink" title="根据索引绘制图元"></a>根据索引绘制图元</h3><p>最后一步只需要根据面片索引绘制图元即可。<br>根据面片的顶点索引绘制图元节省内存，不需要存储重复的顶点数据。<br>我们只需要调用gl.drawElements即可。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gl.<span class="built_in">drawElements</span>(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, <span class="number">0</span>);</span><br></pre></td></tr></tbody></table></figure>
-<p>其中，第二个参数n表示要绘制的图元（三角形面片）个数。最后一个参数0表示使用已经绑定好的索引缓冲区对象。</p>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p>下面给出绘制一个彩色立方体的完整代码。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Vertex shader program</span></span><br><span class="line">var VSHADER_SOURCE =</span><br><span class="line"><span class="string">'attribute vec4 a_Position;\n'</span> +</span><br><span class="line"><span class="string">'attribute vec4 a_Color;\n'</span> +</span><br><span class="line"><span class="string">'uniform mat4 u_MvpMatrix;\n'</span> +</span><br><span class="line"><span class="string">'varying vec4 v_Color;\n'</span> +</span><br><span class="line"><span class="string">'void main() {\n'</span> +</span><br><span class="line"><span class="string">' gl_Position = u_MvpMatrix * a_Position;\n'</span> +</span><br><span class="line"><span class="string">' v_Color = a_Color;\n'</span> +</span><br><span class="line"><span class="string">'}\n'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fragment shader program</span></span><br><span class="line">var FSHADER_SOURCE =</span><br><span class="line"><span class="string">'#ifdef GL_ES\n'</span> +</span><br><span class="line"><span class="string">'precision mediump float;\n'</span> +</span><br><span class="line"><span class="string">'#endif\n'</span> +</span><br><span class="line"><span class="string">'varying vec4 v_Color;\n'</span> +</span><br><span class="line"><span class="string">'void main() {\n'</span> +</span><br><span class="line"><span class="string">' gl_FragColor = v_Color;\n'</span> +</span><br><span class="line"><span class="string">'}\n'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">function <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line"><span class="comment">// Retrieve &lt;canvas&gt; element</span></span><br><span class="line">var canvas = document.<span class="built_in">getElementById</span>(<span class="string">'webgl'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get the rendering context for WebGL</span></span><br><span class="line">var gl = <span class="built_in">getWebGLContext</span>(canvas);</span><br><span class="line"><span class="keyword">if</span> (!gl) {</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'Failed to get the rendering context for WebGL'</span>);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// Initialize shaders</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">initShaders</span>(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'Failed to intialize shaders.'</span>);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set the vertex coordinates and color</span></span><br><span class="line">var n = <span class="built_in">initVertexBuffers</span>(gl);</span><br><span class="line"><span class="keyword">if</span> (n &lt; <span class="number">0</span>) {</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'Failed to set the vertex information'</span>);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set clear color and enable hidden surface removal</span></span><br><span class="line">gl.<span class="built_in">clearColor</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">gl.<span class="built_in">enable</span>(gl.DEPTH_TEST);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get the storage location of u_MvpMatrix</span></span><br><span class="line">var u_MvpMatrix = gl.<span class="built_in">getUniformLocation</span>(gl.program, <span class="string">'u_MvpMatrix'</span>);</span><br><span class="line"><span class="keyword">if</span> (!u_MvpMatrix) {</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'Failed to get the storage location of u_MvpMatrix'</span>);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set the eye point and the viewing volume</span></span><br><span class="line">var mvpMatrix = <span class="keyword">new</span> <span class="built_in">Matrix4</span>();</span><br><span class="line">mvpMatrix.<span class="built_in">setPerspective</span>(<span class="number">30</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">100</span>);</span><br><span class="line">mvpMatrix.<span class="built_in">lookAt</span>(<span class="number">3</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pass the model view projection matrix to u_MvpMatrix</span></span><br><span class="line">gl.<span class="built_in">uniformMatrix4fv</span>(u_MvpMatrix, <span class="literal">false</span>, mvpMatrix.elements);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Clear color and depth buffer</span></span><br><span class="line">gl.<span class="built_in">clear</span>(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Draw the cube</span></span><br><span class="line">gl.<span class="built_in">drawElements</span>(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, <span class="number">0</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function">function <span class="title">initVertexBuffers</span><span class="params">(gl)</span> </span>{</span><br><span class="line"><span class="comment">// Create a cube</span></span><br><span class="line"><span class="comment">// v6----- v5</span></span><br><span class="line"><span class="comment">// /| /|</span></span><br><span class="line"><span class="comment">// v1------v0|</span></span><br><span class="line"><span class="comment">// | | | |</span></span><br><span class="line"><span class="comment">// | |v7---|-|v4</span></span><br><span class="line"><span class="comment">// |/ |/</span></span><br><span class="line"><span class="comment">// v2------v3</span></span><br><span class="line">var verticesColors = <span class="keyword">new</span> <span class="built_in">Float32Array</span>([</span><br><span class="line"><span class="comment">// Vertex coordinates and color</span></span><br><span class="line"><span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="comment">// v0 White</span></span><br><span class="line"><span class="number">-1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>, <span class="comment">// v1 Magenta</span></span><br><span class="line"><span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="comment">// v2 Red</span></span><br><span class="line"><span class="number">1.0</span>, <span class="number">-1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="comment">// v3 Yellow</span></span><br><span class="line"><span class="number">1.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="comment">// v4 Green</span></span><br><span class="line"><span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">-1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="comment">// v5 Cyan</span></span><br><span class="line"><span class="number">-1.0</span>, <span class="number">1.0</span>, <span class="number">-1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>, <span class="comment">// v6 Blue</span></span><br><span class="line"><span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span> <span class="comment">// v7 Black</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Indices of the vertices</span></span><br><span class="line">var indices = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([</span><br><span class="line"><span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="comment">// front</span></span><br><span class="line"><span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="comment">// right</span></span><br><span class="line"><span class="number">0</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="comment">// up</span></span><br><span class="line"><span class="number">1</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="comment">// left</span></span><br><span class="line"><span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="comment">// down</span></span><br><span class="line"><span class="number">4</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">5</span> <span class="comment">// back</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a buffer object</span></span><br><span class="line">var vertexColorBuffer = gl.<span class="built_in">createBuffer</span>();</span><br><span class="line">var indexBuffer = gl.<span class="built_in">createBuffer</span>();</span><br><span class="line"><span class="keyword">if</span> (!vertexColorBuffer || !indexBuffer) {</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// Write the vertex coordinates and color to the buffer object</span></span><br><span class="line">gl.<span class="built_in">bindBuffer</span>(gl.ARRAY_BUFFER, vertexColorBuffer);</span><br><span class="line">gl.<span class="built_in">bufferData</span>(gl.ARRAY_BUFFER, verticesColors, gl.STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">var FSIZE = verticesColors.BYTES_PER_ELEMENT;</span><br><span class="line"><span class="comment">// Assign the buffer object to a_Position and enable the assignment</span></span><br><span class="line">var a_Position = gl.<span class="built_in">getAttribLocation</span>(gl.program, <span class="string">'a_Position'</span>);</span><br><span class="line"><span class="keyword">if</span>(a_Position &lt; <span class="number">0</span>) {</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'Failed to get the storage location of a_Position'</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">}</span><br><span class="line">gl.<span class="built_in">vertexAttribPointer</span>(a_Position, <span class="number">3</span>, gl.FLOAT, <span class="literal">false</span>, FSIZE * <span class="number">6</span>, <span class="number">0</span>);</span><br><span class="line">gl.<span class="built_in">enableVertexAttribArray</span>(a_Position);</span><br><span class="line"><span class="comment">// Assign the buffer object to a_Color and enable the assignment</span></span><br><span class="line">var a_Color = gl.<span class="built_in">getAttribLocation</span>(gl.program, <span class="string">'a_Color'</span>);</span><br><span class="line"><span class="keyword">if</span>(a_Color &lt; <span class="number">0</span>) {</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'Failed to get the storage location of a_Color'</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">}</span><br><span class="line">gl.<span class="built_in">vertexAttribPointer</span>(a_Color, <span class="number">3</span>, gl.FLOAT, <span class="literal">false</span>, FSIZE * <span class="number">6</span>, FSIZE * <span class="number">3</span>);</span><br><span class="line">gl.<span class="built_in">enableVertexAttribArray</span>(a_Color);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Write the indices to the buffer object</span></span><br><span class="line">gl.<span class="built_in">bindBuffer</span>(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);</span><br><span class="line">gl.<span class="built_in">bufferData</span>(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> indices.length;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>上面代码中使用到的创建WebGL渲染环境、初始化着色器、创建矩阵的操作，读者可以自行找相应的代码库替代。<br>或者在下面的链接中下载：<br><a href="http://pan.baidu.com/s/1mhVH5Ba">WebGL Lib</a>， 密码：tncd。</p>
-<p>PPT文档如下：</p>
-<iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&amp;resid=4330CD349D9ADD44%21739&amp;authkey=AF3XGkUj4jdHiF8&amp;em=2" width="900" height="700" frameborder="0" scrolling="no"></iframe></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1817,6 +1649,113 @@
   
   
 
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" class="post-title-link" itemprop="url">CTex下如何使Beamer支持中文</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-11-28 19:17:05" itemprop="dateCreated datePublished" datetime="2015-11-28T19:17:05+08:00">2015-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" class="post-meta-item leancloud_visitors" data-flag-title="CTex下如何使Beamer支持中文" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。</p>
+<p>我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。<br> 下面给出这个模板的设置。  </p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">\documentclass{beamer}</span><br><span class="line">\usetheme{Warsaw}</span><br><span class="line">\usepackage{fontspec,xunicode,xltxtra}</span><br><span class="line">\usepackage<span class="selector-attr">[slantfont,boldfont]</span>{xeCJK} % 允许斜体和粗体</span><br><span class="line">\setbeamercovered{transparent}</span><br><span class="line">\usepackage<span class="selector-attr">[english]</span>{babel}</span><br><span class="line">% or whatever</span><br><span class="line">\usepackage{hyperref}</span><br><span class="line">\usepackage<span class="selector-attr">[T1]</span>{fontenc}</span><br><span class="line">% or whatever</span><br><span class="line">\usefonttheme{professionalfonts}</span><br><span class="line">\usepackage{times}</span><br><span class="line">\usepackage{mathptmx}</span><br><span class="line">\usepackage{tabularx}</span><br><span class="line">% Or whatever. Note that the encoding and the <span class="attribute">font</span> should match. If T1</span><br><span class="line">% does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage{xcolor}</span><br><span class="line">\usepackage{booktabs, multirow, enumerate}</span><br><span class="line">\usepackage{animate}</span><br><span class="line">\usepackage{multimedia}</span><br><span class="line"></span><br><span class="line">% ... or whatever. Note that the encoding and the <span class="attribute">font</span> should match.</span><br><span class="line">% If T1 does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage{lmodern} %optional</span><br><span class="line">\usepackage{listings}</span><br><span class="line"></span><br><span class="line">% Delete this, <span class="keyword">if</span> you do not want the <span class="selector-tag">table</span> of contents to pop up at</span><br><span class="line">% the beginning of each subsection:</span><br><span class="line">\AtBeginSection<span class="selector-attr">[]</span></span><br><span class="line">{</span><br><span class="line">    \begin{frame}&lt;beamer&gt;</span><br><span class="line">        \frametitle{内容大纲}</span><br><span class="line">        \tableofcontents<span class="selector-attr">[currentsection]</span></span><br><span class="line">    \end{frame}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">\setCJKmainfont{Microsoft YaHei}   % 设置缺省中文字体</span><br><span class="line">\setCJKmonofont{SimSun}   % 设置等宽字体</span><br><span class="line">\setmainfont{TeX Gyre Pagella} % 英文衬线字体</span><br><span class="line">\setmonofont{Microsoft YaHei} % 英文等宽字体</span><br><span class="line">\setsansfont{Trebuchet MS} % 英文无衬线字体</span><br><span class="line"></span><br><span class="line">\begin{document}</span><br><span class="line"></span><br><span class="line">\title<span class="selector-attr">[***纹理***]</span>% optional, use only with long paper titles</span><br><span class="line">{ ***纹理***\\<span class="selector-attr">[2ex]</span>}</span><br><span class="line"></span><br><span class="line">%\subtitle<span class="selector-attr">[malloc]</span> %optional</span><br><span class="line">%{malloc\ 实现}</span><br><span class="line"></span><br><span class="line">\author<span class="selector-attr">[yx]</span> % optional, use only with lots of authors</span><br><span class="line">{</span><br><span class="line">\textcolor<span class="selector-attr">[rgb]</span>{<span class="number">0.00</span>, <span class="number">0.41</span>, <span class="number">0.66</span>}{yx}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">% the titlepage</span><br><span class="line">% the plain option removes the sidebar and <span class="selector-tag">header</span> from the title page</span><br><span class="line">\begin{frame}<span class="selector-attr">[plain]</span></span><br><span class="line">  \titlepage</span><br><span class="line">\end{frame}</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line"></span><br><span class="line">\begin{frame}</span><br><span class="line">        \frametitle{内容大纲}</span><br><span class="line">        \tableofcontents</span><br><span class="line">\end{frame}</span><br><span class="line"></span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\section{研究背景和意义}</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">\begin{frame}{纹理的作用}{}</span><br><span class="line">  \begin{block}&lt;<span class="number">1</span>-&gt;{}</span><br><span class="line">    纹理是图形学中增强真实性的重要手段。</span><br><span class="line">  \end{block}</span><br><span class="line">  \begin{block}&lt;<span class="number">2</span>-&gt;{}</span><br><span class="line">    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。</span><br><span class="line">  \end{block}</span><br><span class="line">\end{frame}</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\end{document}</span><br></pre></td></tr></tbody></table></figure>
+<p>值得注意的是，请用utf8来保存该文档，并且在WinEdit中用utf8来打开，否则还是可能看到乱码的。<br>boats against the current, borne back ceaselessly into the past.</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -1867,7 +1806,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1932,12 +1871,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">641k</span>
+    <span title="站点总字数">638k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:43</span>
+    <span title="站点阅读时长">9:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
