@@ -222,6 +222,417 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">虚幻三引擎游戏命令</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-03 22:06:24" itemprop="dateCreated datePublished" datetime="2016-12-03T22:06:24+08:00">2016-12-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏开发</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/UnrealEngine/" itemprop="url" rel="index">
+                    <span itemprop="name">UnrealEngine</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" class="post-meta-item leancloud_visitors" data-flag-title="虚幻三引擎游戏命令" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E6%B8%B8%E6%88%8F%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h2 id="命令行参数和控制台命令"><a href="#命令行参数和控制台命令" class="headerlink" title="命令行参数和控制台命令"></a>命令行参数和控制台命令</h2><p>游戏命令包括两种，一种是运行游戏时候指定的命令行参数，另外一种则指的是进入游戏后输入的控制命令。</p>
+<h2 id="控制台命令"><a href="#控制台命令" class="headerlink" title="控制台命令"></a>控制台命令</h2><p>对于虚幻三来说，控制台命令分为两种，一种是引擎中已经支持的可执行命令，这些命令都是在C++类的Exec函数中进行处理的。另一种是带exec前缀的脚本函数，称为可执行函数。<br>下面根据用途统一总结，不进行区分。</p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h4 id="exit-quit"><a href="#exit-quit" class="headerlink" title="exit(quit)"></a>exit(quit)</h4><p>退出游戏</p>
+<h4 id="pause"><a href="#pause" class="headerlink" title="pause"></a>pause</h4><p>暂停游戏，按pause break键也可以。</p>
+<h4 id="open-url"><a href="#open-url" class="headerlink" title="open [url]"></a>open [url]</h4><p>打开地图，额外的参数同命令行参数的url部分。比如，在大厅中开始游戏就是用的该命令打开服务器下发的ip地址。</p>
+<h4 id="restartLevel"><a href="#restartLevel" class="headerlink" title="restartLevel"></a>restartLevel</h4><p>重启当前关卡</p>
+<h4 id="reconnect-disconnect-cancel"><a href="#reconnect-disconnect-cancel" class="headerlink" title="reconnect/disconnect/cancel"></a>reconnect/disconnect/cancel</h4><p>重新连接服务器，断开服务器连接，取消进行的服务器连接操作。</p>
+<h4 id="Kill系列"><a href="#Kill系列" class="headerlink" title="Kill系列"></a>Kill系列</h4><ol>
+<li>KillAll [class] - 销毁或破坏关卡中特定类的所有实例。</li>
+<li>KillPawns - 销毁关卡中的所有 pawn。</li>
+<li>KillBadGuys - 销毁所有不在同一个团队作为玩家的 pawns。</li>
+<li>Suicide -玩家自杀</li>
+</ol>
+<h4 id="god-fly-walk"><a href="#god-fly-walk" class="headerlink" title="god/fly/walk"></a>god/fly/walk</h4><p>幽灵模式（可以飞、穿墙）/飞行模式/正常模式</p>
+<h4 id="AllAmmo"><a href="#AllAmmo" class="headerlink" title="AllAmmo"></a>AllAmmo</h4><p>将弹药数目设置为所有武器的最大值</p>
+<h4 id="SetRes"><a href="#SetRes" class="headerlink" title="SetRes"></a>SetRes</h4><p>setres [width] [x|X] [height] [w|f]<br>改变分辨率（width为宽，height为高）<br>模式(w = 窗口; f = 全屏)，<br>比如 800x600w表示分辨率为800乘以600的窗口模式，<br>1024x768f表示分辨率为1024乘以768的全屏模式。</p>
+<h4 id="FreeCamera"><a href="#FreeCamera" class="headerlink" title="FreeCamera"></a>FreeCamera</h4><p>将玩家的相机设置为自由轨道相机模式（第三人称视角），FreeCamera false恢复。</p>
+<h4 id="Addbots"><a href="#Addbots" class="headerlink" title="Addbots"></a>Addbots</h4><ol>
+<li>AddBots [number] - 为了进行测试，会向关卡中添加指定机器人数.</li>
+<li>AddBlueBots [number] - 在团队游戏中为蓝队添加指定的机器人数。</li>
+<li>AddRedBots [number] - 在团队游戏中为红队添加指定的机器人数。</li>
+<li>AddNamedBot [name] [bUseTeamNum] [teamnum] - 添加一个使用指定名称的机器人。如果 bUseTeamNum 为真而且指定了团队数，那么将该机器人添加到指定的团队。</li>
+</ol>
+<h4 id="Shot"><a href="#Shot" class="headerlink" title="Shot"></a>Shot</h4><ol>
+<li>shot/screenshot 以当前的屏幕分辨率截取屏幕截图。</li>
+<li>tiledshot [factor] 以当前分辨率乘以指定因数为分辨率来获取屏幕截图。比如，tiledshot 2会得到2乘以2的shot截图，分辨率也是shot的2倍。</li>
+<li>SHOTNOHUD，不截屏hud。</li>
+</ol>
+<h3 id="渲染命令"><a href="#渲染命令" class="headerlink" title="渲染命令"></a>渲染命令</h3><h4 id="ViewMode"><a href="#ViewMode" class="headerlink" title="ViewMode"></a>ViewMode</h4><p>viewmode命令设置渲染模式<br>1. detaillight 默认模式，使用受到法线贴图的光照影响的中性色彩材质渲染场景<br>2. unlit 无光照<br>3. lightingonly 只使用光照<br>4. wireframe 线框模式<br>5. brushwireframe 线框模式，但是显示画刷边缘<br>6. lightcomplexity 显示光照复杂度<br>7. lightmapdensity 显示光照贴图密度<br>8. litlightmapdensity 显示光照贴图像素密度 6和7的结合<br>9. texturedensity 显示每个表面上漫反射通道上的贴图像素密度<br>10. shadercomplexity 显示每个表面上所应用的材质的复杂度</p>
+<h4 id="Show"><a href="#Show" class="headerlink" title="Show"></a>Show</h4><p>切换各种项目的显示(仅用于客户端)<br>1. bounds  切换actor边界的显示（包围盒和包围球）<br>2. volumes 切换体积的显示（体积盒）<br>3. collision 切换碰撞体的显示状态<br>4. bsp  切换bsp几何体的显示（用bsp画刷制作的物体，比如墙）<br>5. fog  切换雾actors的显示<br>6. particles 切换粒子几何体的显示（比如烟雾弹，特效做的门）<br>7. paths 切换路径或导航网格物体的显示<br>8. navnodes 切换和寻路相关的actors的显示<br>9. foliage 切换植被的显示<br>10. terrain 切换地形几何体的显示<br>11. terrainpatches 切换地形块的显示。在每个块的周围描画一个轮廓。<br>12. staticmeshes 切换静态网格物体几何体的显示<br>13. decal 切换decal actors的显示<br>14. decalinfo 切换decals（贴花）的调试开发信息的显示(平头截体、切线轴等)。<br>15. staticmeshes 切换静态网格物体几何体的显示。<br>16. postprocess  切换后期处理特效的显示<br>17. skelmeshes/skeletalmeshes 切换骨架网格物体几何体的显示<br>18. MISSINGCOLLISION  切换高亮显示启用了碰撞但是没有碰撞网格物体的静态网格物体</p>
+<h3 id="显示命令"><a href="#显示命令" class="headerlink" title="显示命令"></a>显示命令</h3><h4 id="display系列"><a href="#display系列" class="headerlink" title="display系列"></a>display系列</h4><h4 id="displayall-class-prop"><a href="#displayall-class-prop" class="headerlink" title="displayall class prop"></a>displayall class prop</h4><p>在屏幕上实时地显示类class所有实例的属性prop的值</p>
+<h4 id="display-obj-prop"><a href="#display-obj-prop" class="headerlink" title="display obj prop"></a>display obj prop</h4><p>在屏幕上实时地显示对象obj的属性prop的值。</p>
+<h4 id="displayallstate-class"><a href="#displayallstate-class" class="headerlink" title="displayallstate class"></a>displayallstate class</h4><p>在屏幕上实时地显示类class所有实例的当前处于的状态，比如行走，空闲，攻击等</p>
+<h4 id="displayclear"><a href="#displayclear" class="headerlink" title="displayclear"></a>displayclear</h4><p>清楚display系列命令所有的输出</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><p>set class/obj prop value<br>1. 设置给定类class（包括其子类）的所有对象的属性prop的值为value<br>2. 设置给定对象obj的属性prop的值为value</p>
+<p>可以用displayall实时显示出来这个属性，再用set设置后观察属性变化。</p>
+<h3 id="统计命令"><a href="#统计命令" class="headerlink" title="统计命令"></a>统计命令</h3><p>stat命令负责在游戏运行时在屏幕上启用显示统计数据功能。</p>
+<h3 id="none"><a href="#none" class="headerlink" title="none"></a>none</h3><p>关闭所有统计数据的显示</p>
+<h4 id="fps"><a href="#fps" class="headerlink" title="fps"></a>fps</h4><p>切换帧频率统计数据的显示</p>
+<h4 id="anim"><a href="#anim" class="headerlink" title="anim"></a>anim</h4><p>切换动画系统统计数据的显示状态</p>
+<h4 id="net"><a href="#net" class="headerlink" title="net"></a>net</h4><p>切换网络统计数据显示的 打开/关闭 状态</p>
+<h4 id="game"><a href="#game" class="headerlink" title="game"></a>game</h4><p>切换游戏统计数据的显示。(更新时间等)</p>
+<h4 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h4><p>切换UIScene统计数据的显示</p>
+<h4 id="collision"><a href="#collision" class="headerlink" title="collision"></a>collision</h4><p>切换碰撞统计数据的显示状态</p>
+<h4 id="octree"><a href="#octree" class="headerlink" title="octree"></a>octree</h4><p>切换八叉树相关统计数据的显示</p>
+<h4 id="physics"><a href="#physics" class="headerlink" title="physics"></a>physics</h4><p>切换一般物理统计数据的显示<br>1. physicscloth 切换关于布料仿真统计数据的显示。<br>2. physicsfields 切换关于物理域的统计数据的显示状态。<br>3. physicsfluids 切换关于PhysX流体仿真统计数据的显示。</p>
+<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><p>切换一般内存统计数据的显示</p>
+<h4 id="memorychurn"><a href="#memorychurn" class="headerlink" title="memorychurn"></a>memorychurn</h4><p>切换处理内存分配的统计数据的显示</p>
+<h4 id="scenerendering"><a href="#scenerendering" class="headerlink" title="scenerendering"></a>scenerendering</h4><p>切换场景渲染统计数据的显示</p>
+<h4 id="startfile-stopfile"><a href="#startfile-stopfile" class="headerlink" title="startfile/stopfile"></a>startfile/stopfile</h4><ol>
+<li>startfile开始捕获统计数据文件以便和StatsViewer结合使用。</li>
+<li>stopfile完成捕获统计数据文件。</li>
+<li>文件存储位置：UDKGame\Profiling\UE3Stats\xxx文件..ustats</li>
+<li>打开工具：Binaries\StatsViewer.exe</li>
+</ol>
+<h4 id="GameProfile-ProfileGame"><a href="#GameProfile-ProfileGame" class="headerlink" title="GameProfile/ProfileGame"></a>GameProfile/ProfileGame</h4><p>该命令在虚幻三和UDK中用于统计脚本函数的运行时间。<br>1. start 开始Profile<br>2. stop 结束Profile<br>3. 文件：UDKGame\Profiling\T-2016.11.29-19.26.55.gprof<br>4. 打开工具：Binaries\GameplayProfiler.exe<br>5. UObject::CallFunction中统计了每个函数的调用时间。</p>
+<h3 id="调试命令"><a href="#调试命令" class="headerlink" title="调试命令"></a>调试命令</h3><p>调试命令的结果是控制台形式的输出，并不是在游戏窗口中显示。在逆战中，需要按f8显示控制台窗口，再输入调试命令。其余类型的命令可以使用f7也可以使用f8。</p>
+<h4 id="obj"><a href="#obj" class="headerlink" title="obj"></a>obj</h4><h5 id="gc-garbage"><a href="#gc-garbage" class="headerlink" title="gc/garbage"></a>gc/garbage</h5><p>强制进行垃圾回收清理。</p>
+<h5 id="list"><a href="#list" class="headerlink" title="list"></a>list</h5><p>显示包中的一个类别的所有物体的列表。<br>1. obj list显示包中所有的物体列表。<br>2. obj list class=pawn 只显示指定的类的所有物体的对象列表，比如pawn。</p>
+<h5 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h5><p>dump objname<br>在控制台中输出某个对象的所有属性，可以先用displayall找到这个对象名。</p>
+<h3 id="物理命令"><a href="#物理命令" class="headerlink" title="物理命令"></a>物理命令</h3><h5 id="nxvis-collision…"><a href="#nxvis-collision…" class="headerlink" title="nxvis collision…"></a>nxvis collision…</h5><p>碰撞相关命令</p>
+<h5 id="nxvis-joint…"><a href="#nxvis-joint…" class="headerlink" title="nxvis joint…"></a>nxvis joint…</h5><p>关节相关命令</p>
+<h5 id="nxvis-cloth…"><a href="#nxvis-cloth…" class="headerlink" title="nxvis cloth…"></a>nxvis cloth…</h5><p>布料相关命令</p>
+<h5 id="nxvis-fluid…"><a href="#nxvis-fluid…" class="headerlink" title="nxvis fluid…"></a>nxvis fluid…</h5><p>流体相关命令</p>
+<h5 id="nxvis-softbody…"><a href="#nxvis-softbody…" class="headerlink" title="nxvis softbody…"></a>nxvis softbody…</h5><p>软体相关命令</p>
+<h3 id="内存命令"><a href="#内存命令" class="headerlink" title="内存命令"></a>内存命令</h3><h5 id="mem"><a href="#mem" class="headerlink" title="mem"></a>mem</h5><p>显示内存分配信息<br>1.  mem<br>2.  mem detailed<br>3.  mem stat</p>
+<h5 id="configmem"><a href="#configmem" class="headerlink" title="configmem"></a>configmem</h5><p>显示配置文件内存分配信息</p>
+<h5 id="particlememory"><a href="#particlememory" class="headerlink" title="particlememory"></a>particlememory</h5><p>粒子内存信息</p>
+<h5 id="memfragcheck"><a href="#memfragcheck" class="headerlink" title="memfragcheck"></a>memfragcheck</h5><p>内存碎片检测</p>
+<h5 id="memleakcheck"><a href="#memleakcheck" class="headerlink" title="memleakcheck"></a>memleakcheck</h5><p>内存泄漏检测</p>
+<h3 id="UI-GFX命令"><a href="#UI-GFX命令" class="headerlink" title="UI/GFX命令"></a>UI/GFX命令</h3><h3 id="ShowHUD"><a href="#ShowHUD" class="headerlink" title="ShowHUD"></a>ShowHUD</h3><p>显示(隐藏)所有的HUD</p>
+<h5 id="ShowScores"><a href="#ShowScores" class="headerlink" title="ShowScores"></a>ShowScores</h5><p>显示(隐藏)积分面板</p>
+<h5 id="Toggleui"><a href="#Toggleui" class="headerlink" title="Toggleui"></a>Toggleui</h5><p>切换UI的更新和显示</p>
+<h5 id="gfxinvoke"><a href="#gfxinvoke" class="headerlink" title="gfxinvoke"></a>gfxinvoke</h5><p>调用GfxMovie对应的flash文件的as函数</p>
+<h5 id="dumpsftextures"><a href="#dumpsftextures" class="headerlink" title="dumpsftextures"></a>dumpsftextures</h5><p>输出GFx Texture Usage到log文件中。</p>
+<h2 id="虚幻三控制台命令调用流程"><a href="#虚幻三控制台命令调用流程" class="headerlink" title="虚幻三控制台命令调用流程"></a>虚幻三控制台命令调用流程</h2><ul>
+<li>APlayerController::ConsoleCommand。</li>
+<li><ul>
+<li>ULocalPlayer::Exec，处理一部分命令。</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>UGameViewportClient::Exec，引擎自带的大部分命令在此函数中实现。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UGFxInteraction::Exec，执行gfx相关的命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUIInteraction::Exec，处理一部分命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUIInteraction::ScriptConsoleExec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UGameUISceneClient::Exec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUISceneClient::Exec.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UUISceneClient::ScriptConsoleExec.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UGameViewportClient::ScriptConsoleExec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UEngine::Exec，处理一部分命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>UPlayer::Exec，处理一部分命令。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>UWorld::Exec。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>APlayerInput::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>APlayerController::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>APawn::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AInvManager::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AWeapon::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AHUD::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AGameInfo::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>ACheatManager::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>AInteraction::ScriptConsoleExec</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回APlayerController::ConsoleCommand，命令未处理。</li>
+</ul>
+<p>注意：UObkect::ScriptConsoleExec，处理的是当前类中自定义脚本命令（执行带exec前缀的脚本函数）。<br>因此，流程中带有ScriptConsoleExec函数执行的类（以及子类）都可以定exec脚本函数来执行控制台命令。只有在处理流程中的命令才有效，处理流程外的命令无法被处理。</p>
+<h3 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h3><h4 id="Native命令"><a href="#Native命令" class="headerlink" title="Native命令"></a>Native命令</h4><p>在控制台命令调用流程中涉及到的C++类的Exec函数中添加对新命令的处理逻辑。</p>
+<h4 id="脚本命令"><a href="#脚本命令" class="headerlink" title="脚本命令"></a>脚本命令</h4><p>在处理流程中的有ScriptConsoleExec调用的类(Interaction、UISceneClient、GameViewportClient、PlayerInput、PlayerController、Pawn、InvManager、Weapon、HUD、GameInfo、CheatManager)<br>中添加exec前缀的脚本函数。</p>
+<p>更多的游戏命令可以参考文档：<a href="https://wiki.beyondunreal.com/Legacy:Console_Commands">Console Commands</a>。</p>
+<h3 id="虚幻引擎游戏命令"><a href="#虚幻引擎游戏命令" class="headerlink" title="虚幻引擎游戏命令"></a>虚幻引擎游戏命令</h3><div class="video-container"><iframe src="https://onedrive.live.com/embed?cid=4330CD349D9ADD44&amp;resid=4330CD349D9ADD44%21723&amp;authkey=AFSrpMCVspcze0g&amp;em=2" width="800" height="700" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1345,116 +1756,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/" class="post-title-link" itemprop="url">第一次看到自己的代码上线了</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-10-28 21:19:24" itemprop="dateCreated datePublished" datetime="2015-10-28T21:19:24+08:00">2015-10-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/" class="post-meta-item leancloud_visitors" data-flag-title="第一次看到自己的代码上线了" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>86</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>今天逆战发布新版了。我做的新军衔系统和转生系统在这次上线了。哈哈，好有成就感。第一次写的代码能够影响这么多人的生活。听说玩家都挤在主城转生NPC处了。</p>
-<p>新军衔系统：</p>
-<p><a href="https://c7.staticflickr.com/8/7669/27417989086_57309c8dcd_o.jpg"><img alt="" data-src="https://c7.staticflickr.com/8/7669/27417989086_57309c8dcd_o.jpg"></a></p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7029/27175748990_4be24a9ea9_o.png"></p>
-<p>转生系统：</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7286/27380691921_3e234978a3_o.jpg"></p>
-<p><img alt="" data-src="https://c7.staticflickr.com/8/7197/27352974822_d54441d79d_o.jpg"></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1505,7 +1806,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1518,7 +1819,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1570,12 +1871,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">635k</span>
+    <span title="站点总字数">638k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:38</span>
+    <span title="站点阅读时长">9:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

@@ -222,6 +222,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/" class="post-title-link" itemprop="url">OpenGL使用位图纹理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-03-24 16:47:34" itemprop="dateCreated datePublished" datetime="2013-03-24T16:47:34+08:00">2013-03-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL使用位图纹理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/24/OpenGL%E4%BD%BF%E7%94%A8%E4%BD%8D%E5%9B%BE%E7%BA%B9%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>使用位图纹理主要需要注意2个地方。1个是<strong>非二次方纹理的处理</strong>，这个可以参考我<a href="http://www.xpc-yx.com/2013/03/opengl%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/">上一篇文章</a>的。另外一个是需要注意<strong>位图数据的格式</strong>，24位的是BGR而不是RGB,32位的是BGRA，而不是RGBA，所以用glTexImage2D之类的函数需要注意把format改成<strong>GL_BGR_EXT</strong>或者<strong>GL_BGRA_EXT</strong>，但是internalformat必须是GL_RGB或者GL_RGBA，如果没有进行这个处理的话，颜色效果会变掉的。<br>下面我给出我的一个任务里面所实现的bitmap位图类，我加载数据的时候使用了以前实现的类CxBitmap，这个也可以从我的另一篇文章中得到。整个类还是比较简单的，你也可以修改加载文件的代码，从而不需要使用CxBitmap类。</p>
+<p>CBitmapTex类的定义如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> XPC_YX_BITMAPTEX_H</span><br><span class="line"><span class="selector-id">#define</span> XPC_YX_BITMAPTEX_H</span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> <span class="built_in">RGB16</span>(r,g,b)   ( ((r&gt;&gt;<span class="number">3</span>) &lt;&lt; <span class="number">10</span>) + ((g&gt;&gt;<span class="number">3</span>) &lt;&lt; <span class="number">5</span>) + (<span class="selector-tag">b</span> &gt;&gt; <span class="number">3</span>) )</span><br><span class="line"><span class="selector-id">#define</span> <span class="built_in">RGB24</span>(r,g,b)   ( ((r) &lt;&lt; <span class="number">16</span>) + ((g) &lt;&lt; <span class="number">8</span>) + (b) )</span><br><span class="line"></span><br><span class="line">class CBitmapTex</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CBitmapTex</span>() { m_byData = <span class="number">0</span>; m_szTexName<span class="selector-attr">[0]</span> = <span class="number">0</span>; }</span><br><span class="line">    <span class="built_in">CBitmapTex</span>(const char* pcszFileName) { m_byData = <span class="number">0</span>; <span class="built_in">LoadBitmapTex</span>(pcszFileName); }</span><br><span class="line">    ~<span class="built_in">CBitmapTex</span>() { <span class="keyword">if</span> (m_byData) <span class="built_in">free</span>(m_byData); }</span><br><span class="line">    int <span class="built_in">LoadBitmapTex</span>(const char* pcszFileName);</span><br><span class="line">    void <span class="built_in">InitTex</span>();</span><br><span class="line">    void <span class="built_in">SetTexture</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int m_nWidth;</span><br><span class="line">    int m_nHeight;</span><br><span class="line">    int m_nBytesPerPixel;</span><br><span class="line">    BYTE* m_byData;</span><br><span class="line">    char m_szTexName<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    unsigned m_uTexName;</span><br><span class="line">    double m_fTexScaleX;</span><br><span class="line">    double m_fTexScaleY;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>CBitmapTex的实现如下，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"bitmapTex.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"CxBitmap.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"tool.h"</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数只处理了没有压缩的格式</span></span><br><span class="line">int CBitmapTex::<span class="built_in">LoadBitmapTex</span>(const char* pcszFileName)</span><br><span class="line">{</span><br><span class="line">    CxBitmap* pBitmap = new CxBitmap;</span><br><span class="line">    int i;</span><br><span class="line">    int nBytesPerLine;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(m_szTexName, pcszFileName);</span><br><span class="line">    <span class="keyword">if</span> (pBitmap-&gt;<span class="built_in">LoadBitmap</span>(pcszFileName) == NULL)</span><br><span class="line">    {</span><br><span class="line">        return <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    m_nWidth = pBitmap-&gt;<span class="built_in">GetWidth</span>();</span><br><span class="line">    m_nHeight = pBitmap-&gt;<span class="built_in">GetHeight</span>();</span><br><span class="line">    m_nBytesPerPixel = pBitmap-&gt;<span class="built_in">GetBytesPerPixel</span>();</span><br><span class="line">    m_byData = (BYTE*)<span class="built_in">malloc</span>(m_nWidth * m_nHeight * m_nBytesPerPixel);</span><br><span class="line">    <span class="keyword">if</span> (m_byData == NULL)</span><br><span class="line">    {</span><br><span class="line">        return <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    nBytesPerLine = m_nWidth * m_nBytesPerPixel;</span><br><span class="line">    <span class="keyword">if</span> (pBitmap-&gt;<span class="built_in">GetBytesPerLine</span>() == nBytesPerLine)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//拷贝数据</span></span><br><span class="line">        <span class="built_in">memcpy</span>(m_byData, pBitmap-&gt;<span class="built_in">GetBuffer</span>(), m_nHeight * m_nWidth * m_nBytesPerPixel);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span><span class="comment">//注意文件内部的bitmap数据已经对齐,但是opengl纹理的数据不能对其,所以必须一行行拷贝</span></span><br><span class="line">    {   <span class="comment">//否则会出现纹理变形</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nHeight; ++i)         {           <span class="built_in">memcpy</span>(m_byData + <span class="selector-tag">i</span> * nBytesPerLine, pBitmap-&gt;<span class="built_in">GetBuffer</span>()</span><br><span class="line">                + <span class="selector-tag">i</span> * pBitmap-&gt;<span class="built_in">GetBytesPerLine</span>(), nBytesPerLine);<span class="comment">//拷贝数据</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    delete pBitmap;</span><br><span class="line"></span><br><span class="line">    return <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CBitmapTex::<span class="built_in">InitTex</span>()</span><br><span class="line">{</span><br><span class="line">    int nFormat;</span><br><span class="line">    int nWidthPowerOfTwo = ::<span class="built_in">Pow2Big</span>(m_nWidth);</span><br><span class="line">    int nHeightPowerOfTwo = ::<span class="built_in">Pow2Big</span>(m_nHeight);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glPixelStorei</span>(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">glGenTextures</span>(<span class="number">1</span>, m_uTexName);</span><br><span class="line">    <span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, m_uTexName);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);</span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</span><br><span class="line">    <span class="built_in">glTexEnvf</span>(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">3</span>)</span><br><span class="line">    {</span><br><span class="line">        nFormat = GL_BGR_EXT;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">4</span>)</span><br><span class="line">    {</span><br><span class="line">        nFormat = GL_BGRA_EXT;<span class="comment">//bitmap内部数据是bgra格式,所以输入格式必须变化下</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (nWidthPowerOfTwo == m_nWidth  nHeightPowerOfTwo == m_nHeight)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//输出格式必须是GL_RGB,写成GL_BGR_EXT会出现空白</span></span><br><span class="line">        <span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, nWidthPowerOfTwo, nHeightPowerOfTwo,</span><br><span class="line">            <span class="number">0</span>, nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">        m_fTexScaleX = m_fTexScaleY = <span class="number">1.0</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, nWidthPowerOfTwo, nHeightPowerOfTwo,</span><br><span class="line">        <span class="number">0</span>, nFormat, GL_UNSIGNED_BYTE, NULL);</span><br><span class="line">        <span class="built_in">glTexSubImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, m_nWidth, m_nHeight,</span><br><span class="line">        nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">        m_fTexScaleX = <span class="number">1.0</span> * m_nWidth / nWidthPowerOfTwo;</span><br><span class="line">        m_fTexScaleY = <span class="number">1.0</span> * m_nHeight / nHeightPowerOfTwo;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CBitmapTex::<span class="built_in">SetTexture</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, m_uTexName);</span><br><span class="line">    <span class="comment">//设置纹理堆栈</span></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_TEXTURE);</span><br><span class="line">    <span class="built_in">glLoadIdentity</span>();</span><br><span class="line">    <span class="built_in">glScaled</span>(m_fTexScaleX, m_fTexScaleY, <span class="number">1.0</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>注意到我的实现中使用了CxBitmap类，你可以从<a href="http://www.xpc-yx.com/2013/01/%E4%BD%8D%E5%9B%BE%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%B1%BBcxbitmap/">这篇文章</a>中得到。还使用tool.h中的一个函数Pow2Big，该然后是返回一个刚好比输入参数大的2的次方大小，实现很简单。<br>该类只需要先调用LoadBitmapTex读入数据之后，再调用InitTex初始化opengl的一些纹理设置，最后需要使用哪个纹理，就用哪个纹理对象调用SetTexture函数就行了，非常方便。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1239,116 +1354,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/" class="post-title-link" itemprop="url">SetWindowPos移动子窗口或占满桌面工作区域</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-12-20 17:06:42" itemprop="dateCreated datePublished" datetime="2012-12-20T17:06:42+08:00">2012-12-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/" class="post-meta-item leancloud_visitors" data-flag-title="SetWindowPos移动子窗口或占满桌面工作区域" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>该函数原型如下，<br>BOOL SetWindowPos(<br>HWND hWnd, // handle to window<br>HWND hWndInsertAfter, // placement-order handle<br>int X, // horizontal position<br>int Y, // vertical position<br>int cx, // width<br>int cy, // height<br>UINT uFlags // window-positioning options<br>);</p>
-<p>第一个参数是你要修改的窗口局部，第二个参数是用于修改Z order的，可以用这个参数把你的窗口弄成TopMost之类的窗口，后面四个参数很好理解，最后那个参数是一些标志，具体的请查看msdn。<br>基本上我觉得使用这个函数有些时候达不到你想要的效果原因是不知道这个函数使用的坐标系其实不是桌面坐标系，也不是当前窗口的客户区坐标系，<strong>而是父窗口的客户区坐标系</strong>。这个点可能在你移动非子窗口的时候没有什么影响，但是你想移动子窗口的时候就会出问题了，老是达不到你想要的效果那是非常烦人的，而你debug进去发现你的数据又都是对的。当你意识到该函数使用的坐标系的时候，对应的问题就都能够解决了。</p>
-<p>我列举2个例子，一个是设置窗口为顶级窗口同时修改为覆盖整个桌面工作区，另一个是移动子窗口对话框到主对话框的客户区左上角。2个例子都在我的代码内部，后面我会提供代码下载。</p>
-<p><strong>例子一，设置窗口为顶级窗口同时修改为覆盖整个桌面工作区。</strong><br>将下面的代码放在你的主对话框的OnInitDialog()函数内部就能够达到例子一的效果了。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RECT rect;</span><br><span class="line"><span class="function"><span class="title">SystemParametersInfo</span><span class="params">(SPI_GETWORKAREA, <span class="number">0</span>, (PVOID)</span><span class="title">rect</span></span>, <span class="number">0</span>);</span><br><span class="line">m_nScreenWidth = rect<span class="selector-class">.right</span> - rect.<span class="attribute">left</span>;</span><br><span class="line">m_nScreenHeight = rect<span class="selector-class">.bottom</span> - rect.<span class="attribute">top</span>;</span><br><span class="line"><span class="function"><span class="title">SetWindowPos</span><span class="params">(wndTop, rect.left, rect.top, m_nScreenWidth, m_nScreenHeight, SWP_SHOWWINDOW)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
-<p><strong>例子二，移动子窗口对话框到主对话框的客户区左上角。</strong><br>这个例子的实现比较麻烦，首先修改子对话框的资源文件里面的属性，一定改成child类型的对话框。其次，用非模式对话框创建出子对话框，同时注意把主对话框最为其父窗口。最后只需要在child对话框的OnInitDialog()函数里面调用SetWindowPos(wndTop, 0, 0, 0, 0, SWP_NOSIZE);//移动子窗口,则坐标是相对于父窗口客户区就能达到效果了。这三个操作是缺一不可的。</p>
-<p>代码下载地址，<a href="https://pan.baidu.com/s/1bpBgvi3">实验二</a>。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1399,7 +1404,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1412,7 +1417,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1464,12 +1469,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">635k</span>
+    <span title="站点总字数">638k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:38</span>
+    <span title="站点阅读时长">9:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

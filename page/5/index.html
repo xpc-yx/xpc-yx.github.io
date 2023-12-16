@@ -222,6 +222,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/11/C++%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/04/11/C++%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">C++实现反射机制</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-04-11 11:22:21" itemprop="dateCreated datePublished" datetime="2015-04-11T11:22:21+08:00">2015-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/04/11/C++%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" class="post-meta-item leancloud_visitors" data-flag-title="C++实现反射机制" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/04/11/C++%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/04/11/C++%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这是一个很老的话题了。所谓的反射机制，其实就是MFC里面的对象动态创建。比如说，给一个字符串代表类名，比如”CMesh”，根据这个字符串创建出一个CMesh对象。有不同的实现方法，在MFC里面是用一张巨大的链表网络把所有的类的信息链接起来，里面存储了类名和构造函数，动态创建的时候按照一定的顺序去里面搜索创建函数（构造函数）。</p>
+<p>与其用一张链表网，不如用一个字典保存起来，键是类名字符串，值是对应的构造函数。看起来很简单的样子，确实也很简单额。只是实现起来有些trick，比如字典一般是类的静态成员等。。。假设只有无参数的构造函数，首先定义上面所述的内容，类的字典。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件</span></span><br><span class="line">    typedef void* (*CreateFuntion)(void);</span><br><span class="line"></span><br><span class="line">    class CClassFactory</span><br><span class="line">    {</span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">CClassFactory</span>() {}</span><br><span class="line">        ~<span class="built_in">CClassFactory</span>() {}</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        static void* <span class="built_in">GetClassByName</span>(std::string name)</span><br><span class="line">        {</span><br><span class="line">            std::map&lt;std::string, CreateFuntion&gt;::const_iterator find;</span><br><span class="line">            find = m_clsMap<span class="selector-class">.find</span>(name);  </span><br><span class="line"></span><br><span class="line">            <span class="built_in">if</span>(find==m_clsMap<span class="selector-class">.end</span>())</span><br><span class="line">            {  </span><br><span class="line"></span><br><span class="line">                return NULL;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                return find-&gt;<span class="built_in">second</span>();</span><br><span class="line">            }  </span><br><span class="line"></span><br><span class="line">        }  </span><br><span class="line"></span><br><span class="line">        static void <span class="built_in">RegistClass</span>(std::string name, CreateFuntion method)</span><br><span class="line">        {</span><br><span class="line">            m_clsMap<span class="selector-class">.insert</span>(std::<span class="built_in">make_pair</span>(name,method));</span><br><span class="line">        }  </span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        static std::map&lt;std::string,CreateFuntion&gt; m_clsMap;</span><br><span class="line">    };</span><br><span class="line"><span class="comment">//源文件</span></span><br><span class="line">std::map&lt;std::string, CreateFuntion&gt; CClassFactory::m_clsMap;</span><br></pre></td></tr></tbody></table></figure>
+<p>到目前为止，使用CClassFactory即可完成工作了。代码实在过于简单，不用解释了。下面看看一些带trick的东西。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">    class RegistyClass</span><br><span class="line">    {  </span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">RegistyClass</span>(std::string name, CreateFuntion method)</span><br><span class="line">        {</span><br><span class="line">            CClassFactory::<span class="built_in">RegistClass</span>(name, method);</span><br><span class="line">        }</span><br><span class="line">    };  </span><br><span class="line"></span><br><span class="line">    template&lt;class T, const char* name&gt;</span><br><span class="line">    class Register</span><br><span class="line">    {</span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">Register</span>()</span><br><span class="line">        {</span><br><span class="line">            const RegistyClass tmp = rc;<span class="comment">//这一句不能删除，如果不使用rc，那么rc这个模板成员编译器不会生成代码</span></span><br><span class="line">        }  </span><br><span class="line"></span><br><span class="line">        static void* <span class="built_in">CreateInstance</span>()</span><br><span class="line">        {</span><br><span class="line">            return new T;</span><br><span class="line">        }  </span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        static const RegistyClass rc;</span><br><span class="line">    };  </span><br><span class="line"></span><br><span class="line">    template&lt;class T, const char* name&gt;</span><br><span class="line">    const RegistyClass Register&lt;T, name&gt;::<span class="built_in">rc</span>(name, Register&lt;T, name&gt;::CreateInstance);</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> <span class="built_in">REGISTRY_CLASS</span>(class_name) \</span><br><span class="line">extern char const array_#<span class="selector-id">#class_name</span><span class="selector-attr">[]</span> = #class_name;\</span><br><span class="line">Register&lt;class_name, array_##class_name&gt; register_class_name</span><br></pre></td></tr></tbody></table></figure>
+<p>RegistyClass不用说了，模板类Register是关键。模板T代表要注册的类类型，常量字符串模板name代表类名。其中的static成员rc用于注册当前类。注意CreateInstance的实现，说明只能调用无参数构造函数。至于Register构造函数里面的那句话也是不能省略的。</p>
+<p>最麻烦的是下面的那个REGISTRY<em>CLASS宏，其余代码都来自网络，这个宏确是我修改实现的。class_name代表类，比如CMesh，注意不是类名。这里有几个关键点，一个是extern。在vs2010中，不加extern修饰无法编译通过，具体原因估计是编译器支持不够吧。另一个是<code>#class_name</code>，是把CMesh转换为”CMesh”。最最关键的是`array</em>##class_name`，是生成array_CMesh的变量名。为什么要这么做了，这样注册不同的类就是不同的变量名，避免了变量重定义，否则会链接失败。使用方法是在要注册的类源文件中，包含ClassFactory.h头文件，再添加宏REGISTRY_CLASS(CMesh);即可。</p>
+<p>网上提供的代码，还定义了声明类的宏，表示继承Register模板类自动支持反射机制。相关代码经过修改如下所示，这个就没有去具体使用了，因为修改类定义比较麻烦，添加一句宏到现在代码中却是很方便的事情。这个反射机制已经用到我现在的项目中了，实现了一个从配置文件读取信息，选择创建不同的界面的功能。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#define</span> <span class="built_in">DEFINE_CLASS</span>(class_name)\</span><br><span class="line">extern char char array_#<span class="selector-id">#class_name</span><span class="selector-attr">[]</span>=#class_name;\</span><br><span class="line">class class_name:public Register&lt;class_name, NameArray&gt;  </span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> <span class="built_in">DEFINE_CLASS_EX</span>(class_name, father_class) \</span><br><span class="line">extern char char array_#<span class="selector-id">#class_name</span><span class="selector-attr">[]</span> = #class_name;\</span><br><span class="line">class class_name: public Register&lt;class_name, NameArray&gt;, public father_class</span><br></pre></td></tr></tbody></table></figure></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1282,122 +1399,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/" class="post-title-link" itemprop="url">stl源码剖析之priority_queue</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-12-29 10:59:24" itemprop="dateCreated datePublished" datetime="2014-12-29T10:59:24+08:00">2014-12-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/STL/" itemprop="url" rel="index">
-                    <span itemprop="name">STL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之priority_queue" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/12/29/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bpriority_queue/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>暑假时候好好阅读过，stl源码剖析这本书，之后又看了c++标准程序库，effective c++，more<br>effecttive c++。虽然每次都如醍醐灌顶般，明白了很多知识概念，有种拨开迷雾的感觉，但是终究抵不过<br>遗忘，所以了还是随便写写吧。<br>首先从实现代码差不多最短的优先队列开始，虽然简单的代码后面依赖很庞大的东西，比如泛型<br>迭代器，还有泛型二叉堆算法。我是这样理解优先队列的。首先，数据是存在一个泛型序列容器(线性容器)，<br>这个可以指定，默认是vector，当然指定list和deque也是可以的。另外还需要给数据类型提供个小于比较仿<br>函数，有些类型有默认的less泛型仿函数。所以了，对模版比较熟悉的同学，很自然就猜到了，priority_queue<br>的外观-&gt;一个模版（类型，线性容器，less仿函数）。<br>优先队列支持哪些操作了？什么empty，size，top，直接转交给底层容器就行了，所谓的适配器模式。<br>只需要思考，如何实现push和pop操作。对算法熟悉的同学，都知道底层数据的组织是用二叉堆的，而且是最大<br>堆。问题是，我们还需不需要实现个堆操作了。不需要了，stl做了所有的事情。push_heap就是将输入范围的最<br>后一个元素作为在原堆后面加入的新元素，再重构堆。pop_heap则是将堆首元素交换到堆末，再重构缩小之后的堆。<br>至于二叉堆的原理，就不仔细介绍了。其实也比较简单，如果不去思考一些复杂度的证明。<br>到最后，priority_queue的代码可以很清爽的出来了。尤其注意下面的那些typedef，可以说是模版<br>trick的常见手法，习惯了就好。这种写法还有个用法是为了使内嵌模版声明可见，记得effect c++提到过。以下<br>源码基本来自stl源码剖析随书奉送代码，做了些修改。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T, typename Sequence = vector&lt;T&gt;,</span><br><span class="line">    typename Compare = less&lt;typename Sequence::value_type &gt;&gt;</span><br><span class="line">class  priority_queue</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    typedef typename Sequence::value_type value_type;</span><br><span class="line">    typedef typename Sequence::size_type size_type;</span><br><span class="line">    typedef typename Sequence::reference reference;</span><br><span class="line">    typedef typename Sequence::const_reference const_reference; <span class="comment">//为了使内嵌模版声明可见</span></span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    Sequence c; <span class="comment">// 底层容器</span></span><br><span class="line">    Compare comp;   <span class="comment">// 元素大小比较仿函数</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">priority_queue</span>() : <span class="built_in">c</span>() {}</span><br><span class="line">    explicit <span class="built_in">priority_queue</span>(const Compare x) : <span class="built_in">c</span>(), <span class="built_in">comp</span>(x) {}</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    <span class="built_in">priority_queue</span>(InputIterator first, InputIterator last, const Compare x)</span><br><span class="line">        : <span class="built_in">c</span>(first, last), <span class="built_in">comp</span>(x) {</span><br><span class="line">        <span class="built_in">make_heap</span>(c<span class="selector-class">.begin</span>(), c<span class="selector-class">.end</span>(), comp);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    template &lt;class InputIterator&gt;</span><br><span class="line">    <span class="built_in">priority_queue</span>(InputIterator first, InputIterator last)</span><br><span class="line">        : <span class="built_in">c</span>(first, last) {</span><br><span class="line">        <span class="built_in">make_heap</span>(c<span class="selector-class">.begin</span>(), c<span class="selector-class">.end</span>(), comp);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    bool <span class="built_in">empty</span>() const { return c<span class="selector-class">.empty</span>(); }</span><br><span class="line">    size_type <span class="built_in">size</span>() const { return c<span class="selector-class">.size</span>(); }</span><br><span class="line">    const_reference <span class="attribute">top</span>() const { return c.<span class="built_in">front</span>(); }</span><br><span class="line"></span><br><span class="line">    void <span class="built_in">push</span>(const value_type x)</span><br><span class="line">    {</span><br><span class="line">        try</span><br><span class="line">        {</span><br><span class="line">            c<span class="selector-class">.push_back</span>(x);</span><br><span class="line">            <span class="built_in">push_heap</span>(c<span class="selector-class">.begin</span>(), c<span class="selector-class">.end</span>(), comp);</span><br><span class="line">        }</span><br><span class="line">        catch (...)</span><br><span class="line">        {</span><br><span class="line">            c<span class="selector-class">.clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void <span class="built_in">pop</span>()</span><br><span class="line">    {</span><br><span class="line">        try</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">pop_heap</span>(c<span class="selector-class">.begin</span>(), c<span class="selector-class">.end</span>(), comp);</span><br><span class="line">            c<span class="selector-class">.pop_back</span>();</span><br><span class="line">        }</span><br><span class="line">        catch (...)</span><br><span class="line">        {</span><br><span class="line">            c<span class="selector-class">.clear</span>();</span><br><span class="line">            throw;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure><br>再啰嗦几句，刚看源码剖析的时候，对某些模版写法很头疼，但是看完书之后，另外看了几本其它的书，<br>就对这些写法习以为常了，觉得不这么写才怪了。有点艺术的感觉。<p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1448,7 +1449,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1461,7 +1462,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1513,12 +1514,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">635k</span>
+    <span title="站点总字数">638k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:38</span>
+    <span title="站点阅读时长">9:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

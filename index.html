@@ -222,6 +222,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">Matcap的原理和应用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-19 17:15:51" itemprop="dateCreated datePublished" datetime="2022-09-19T17:15:51+08:00">2022-09-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/" class="post-meta-item leancloud_visitors" data-flag-title="Matcap的原理和应用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h1 id="一、概念和原理"><a href="#一、概念和原理" class="headerlink" title="一、概念和原理"></a>一、概念和原理</h1><h2 id="2-1-什么是Matcap"><a href="#2-1-什么是Matcap" class="headerlink" title="2.1 什么是Matcap"></a>2.1 什么是Matcap</h2><p>  什么是Matcap？Matcap实际上是Material Capture的缩写，即材质捕捉。实际上，这是一种离线渲染方案。类似光照烘焙，将光照或者其它更复杂环境下的渲染数据存储到一张2D贴图上， 再从这张2D贴图进行采样进行实时渲染。</p>
+<p><a href="https://help.sketchfab.com/hc/en-us/articles/115003065883-Materials-MatCap-">Materials (MatCap)</a><br>这篇文章对Matcap的定义是：<br>MatCap (Material Capture) shaders are complete materials, including lighting and reflections. They work by defining a color for every vertex normal direction relative to the camera. </p>
+<h2 id="2-2-如何理解Matcap"><a href="#2-2-如何理解Matcap" class="headerlink" title="2.2 如何理解Matcap"></a>2.2 如何理解Matcap</h2><p>Matcap是一种在视线空间下使用单位法线采样单位球的离线渲染算法。</p>
+<ul>
+<li>为什么是视线空间？因为视线空间下，相机变化就可以看到不同的渲染结果。</li>
+<li>为什么使用法线去采样了？法线是描述表面朝向的向量，与渲染结果强相关，法线跟物体的曲率强相关等，因此这种算法经常用于 sculpting上。</li>
+</ul>
+<h2 id="2-3-Matcap的特点"><a href="#2-3-Matcap的特点" class="headerlink" title="2.3 Matcap的特点"></a>2.3 Matcap的特点</h2><p>Matcap的特点总结如下：</p>
+<ul>
+<li>使用视线空间下的法线向量采样2D贴图，作为光照和反射结果。</li>
+<li>在缺乏光照烘焙的环境下，可以一定程度上替代或者模拟光图。</li>
+<li>但是，Matcap代表的2D贴图不局限于光照信息，也可以理解为某种环境下的最终渲染结果。</li>
+<li>由于是离线方案，因此计算非常廉价，很适合低端机器或者特定场合下使用。</li>
+</ul>
+<h1 id="二、如何实现Matcap"><a href="#二、如何实现Matcap" class="headerlink" title="二、如何实现Matcap"></a>二、如何实现Matcap</h1><h2 id="2-1-如何获得Matcap贴图"><a href="#2-1-如何获得Matcap贴图" class="headerlink" title="2.1 如何获得Matcap贴图"></a>2.1 如何获得Matcap贴图</h2><p>按照定义，matcap贴图是一张2D贴图，内部包含一个单位球，表示光照信息。如何获得这样的贴图了？</p>
+<ul>
+<li>从网上的材质库下载<br>比如，<a href="https://github.com/nidorx/matcaps">matcaps</a></li>
+<li>引擎预览材质球然后截图。<br><img alt="材质预览matcap" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/材质预览matcap.png"><br>如上图，可以把右边的预览结果紧贴着球体进行截图。<br>当然，如果严格按照定义，Matcap表示的是光照信息，不是所有材质预览的结果都可以当作Matcap贴图。</li>
+</ul>
+<h2 id="2-2-如何采样Matcap贴图"><a href="#2-2-如何采样Matcap贴图" class="headerlink" title="2.2 如何采样Matcap贴图"></a>2.2 如何采样Matcap贴图</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// -------------------------------</span><br><span class="line">// Vertex</span><br><span class="line">// -------------------------------</span><br><span class="line">VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);</span><br><span class="line">output.normalWS = normalInput.normalWS;</span><br><span class="line"></span><br><span class="line">// -------------------------------</span><br><span class="line">// Fragment</span><br><span class="line">// -------------------------------</span><br><span class="line">float3 viewNormal = mul((float3x3)GetWorldToViewMatrix(), normalWS);</span><br><span class="line">float2 matCapUV = viewNormal.xy * 0.5 + 0.5;</span><br><span class="line">half3 matcapColor = SAMPLE_TEXTURE2D(_Matcap, sampler_Matcap, matCapUV).rgb;</span><br></pre></td></tr></tbody></table></figure>
+<p>从上述glsl代码可以看出，需要把法线转换到视线空间，然后再将法线偏移到[0,1]的范围内，然后取xy分量作为uv，对matcap纹理进行采样。</p>
+<h1 id="三、Matcap的问题"><a href="#三、Matcap的问题" class="headerlink" title="三、Matcap的问题"></a>三、Matcap的问题</h1><h2 id="3-1-边缘瑕疵"><a href="#3-1-边缘瑕疵" class="headerlink" title="3.1 边缘瑕疵"></a>3.1 边缘瑕疵</h2><p>有时候使用Matcap渲染，模型上会出现一条线或者缝隙。可能的原因是采样到了贴图的边缘部分，而有些matcap贴图制作上不太好，边缘区域过大。<br><img alt="matcap边缘瑕疵" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap边缘瑕疵.png"><br>如上图所示：左边的matcap贴图就是一个非常不规范的matcap贴图，球没有紧贴边缘，而是出现大量空白部分，导致兔子的边缘出现大量的灰色边缘。<br>解决方式有两种，一种是强制采样内部的像素；另一种方式是修改采样算法，使得更合理避免出现边缘区域。</p>
+<h2 id="3-2-单点采样"><a href="#3-2-单点采样" class="headerlink" title="3.2 单点采样"></a>3.2 单点采样</h2><p>对于平面来说，其法线朝着同一个方向的，因此会出现整个平面获得的matcap颜色都是同一个像素点，与正常的光照结果相差很大。我们希望的是，即使是一个平面，不同的像素点也是有不同的光照结果。</p>
+<h2 id="3-3-解决办法"><a href="#3-3-解决办法" class="headerlink" title="3.3 解决办法"></a>3.3 解决办法</h2><h3 id="3-1-1-缩放uv"><a href="#3-1-1-缩放uv" class="headerlink" title="3.1.1 缩放uv"></a>3.1.1 缩放uv</h3><p>第一种方式是对matcapUV进行缩放，比如缩小uv可以使得避免采样边缘区域。</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float2 matCapUV = viewNormal.xy * <span class="number">0.5</span> * _MatcapUVScale + <span class="number">0.5</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>这种方式可以简单的解决边缘瑕疵问题，但是无法解决单点采样。</p>
+<h3 id="3-1-2-使用视线空间下单位球的法线"><a href="#3-1-2-使用视线空间下单位球的法线" class="headerlink" title="3.1.2 使用视线空间下单位球的法线"></a>3.1.2 使用视线空间下单位球的法线</h3><p><img alt="matcap优化" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap优化.png"><br>如上图所示，在Matcap的定义中，我们处于视线空间内，视线方向始终是（0，0，1）。我们最终要使用的是单位球的N方向。假设反射方向是R，可以计算得到N是(Rx，Ry，Rz+1)。那么问题转化为求反射向量R。我们可以用视线空间的顶点和法线求得视线空间下的R，然后用视线空间的R去代替单位球上的反射向量R即可，即使两个方向向量不能等价，也可以得到相应正确的结果。<br>这种算法可以显著优化平面的单点采样问题。<br><img alt="matcap优化对比" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap优化对比.png"><br>从上图可以看出，对于平面来说，两种算法的效果差异非常明显。</p>
+<h1 id="四、Matcap与其它效果的结合"><a href="#四、Matcap与其它效果的结合" class="headerlink" title="四、Matcap与其它效果的结合"></a>四、Matcap与其它效果的结合</h1><p>下面的测试均以如下Matcap贴图为例。<br><img alt="matcap输入" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap输入.png"></p>
+<h2 id="4-1-基础颜色"><a href="#4-1-基础颜色" class="headerlink" title="4.1 基础颜色"></a>4.1 基础颜色</h2><p>如果把Matcap当作光照的结果，那么可以额外提供基础颜色来控制最终结果。比如，提供基础颜色贴图和基础颜色，乘以到matcap上作为最终输出。<br><img alt="matcap基础色" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap基础色.png"></p>
+<h2 id="4-2-法线贴图"><a href="#4-2-法线贴图" class="headerlink" title="4.2 法线贴图"></a>4.2 法线贴图</h2><p>既然matcap需要用到法线，那么可以额外提供法线贴图去修改像素的法线。<br><img alt="matcap法线" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap法线.png"><br>从上图可以看出，法线对最终的渲染结果影响显著。</p>
+<h2 id="4-3-自发光"><a href="#4-3-自发光" class="headerlink" title="4.3 自发光"></a>4.3 自发光</h2><p>类似正常的光照计算，可以在matcap的结果之上，再叠加自发光。</p>
+<h2 id="4-4-模拟高光"><a href="#4-4-模拟高光" class="headerlink" title="4.4 模拟高光"></a>4.4 模拟高光</h2><p>matcap本身已经是光照计算的结果，因此理论上贴图内带有了漫反射、高光、反射的信息。但是，通常情况下，matcap主要包括的还是漫反射信息，或者说表现不出明显的高光信息。<br>有一种简单模拟高光的方式，提供一个高光阈值，使用matcap减去该颜色阈值，然后除以1-阈值。最终结果再用原matcap颜色相乘避免过曝。<br><img alt="matcap高光" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap高光.png"></p>
+<h2 id="4-5-Cubemap反射"><a href="#4-5-Cubemap反射" class="headerlink" title="4.5 Cubemap反射"></a>4.5 Cubemap反射</h2><p>同时，可以额外利用cubemap计算静态反射结果叠加到最终着色上。</p>
+<h2 id="4-6-模拟边缘光"><a href="#4-6-模拟边缘光" class="headerlink" title="4.6 模拟边缘光"></a>4.6 模拟边缘光</h2><p>利用dot(normalWS, viewDirWS)计算出边缘光的强度，再将边缘光颜色与强度相乘叠加到最终着色结果上即可。</p>
+<h2 id="4-7-模拟折射"><a href="#4-7-模拟折射" class="headerlink" title="4.7 模拟折射"></a>4.7 模拟折射</h2><p>折射一种扭曲的效果，因此我们可以通过扭曲matcap的采样位置和反射的采样位置来模拟折射。同时，可以乘以边缘光的强度来模拟菲尼尔效应，也就是边缘光强的地方折射更强。然后，利用这个扭曲强度去偏移matcap的uv和反射向量，即可在一定程度上模拟折射的效果。<br><img alt="matcap折射" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap折射.png"></p>
+<h2 id="4-8-光照强度"><a href="#4-8-光照强度" class="headerlink" title="4.8 光照强度"></a>4.8 光照强度</h2><p>同时，也可以计算出真实的光照强度，将光照强度乘以matcap颜色，让matcap的着色结果受到灯光影响。不过，这跟matcap的初衷不太一致。</p>
+<h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote>
+<p><a href="[Matcap的原理和应用](xsjapp://doc/b62819d2-d505-4107-8b34-5a176c25bc82#xsj_1702740535139">Materials (MatCap)</a>)<br><a href="https://github.com/nidorx/matcaps">https://github.com/nidorx/matcaps</a><br><a href="https://zhuanlan.zhihu.com/p/79040521">MatCap Shader 改进：解决平面渲染和环境反射问题</a></p>
+</blockquote>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1508,136 +1656,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">Unity下平面反射实现</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-15 21:15:00" itemprop="dateCreated datePublished" datetime="2021-06-15T21:15:00+08:00">2021-06-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
-                    <span itemprop="name">Rendering</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Unity下平面反射实现" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/15/Unity%E4%B8%8B%E5%B9%B3%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>平面反射通常指的是在镜子或者光滑地面的反射效果上，如下图所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射示意图.jpg"><br>上图是一个光滑的平面，平面上的物体在平面上有对称的投影。</p>
-<h1 id="一、平面反射的原理"><a href="#一、平面反射的原理" class="headerlink" title="一、平面反射的原理"></a>一、平面反射的原理</h1><p>对于光照射到物体表面然后发生完美镜面反射的示意图，如下所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/镜面反射.png"><br>对于平面反射，假设平面上任意一点都会发生完美的镜面反射。因此，眼睛看到物体的一点的反射信息是从反射向量处得到的，这个可以用下图来表示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/视线反射方向.png"><br>这个实际上相当于，眼睛从平面的下面看向反射向量，如下图所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射原理.png"><br>因此，如上图所示，我们可以把摄像机根据平面对称变换到A点所示的位置，然后再渲染一遍场景到RenderTexture中。当我们渲染点O的反射信息时候，就可以到这张RT中去采样了。那么如何去采样反射信息了？使用点O的屏幕空间坐标。因为，RT是从A点看到的场景，视线和平面的交点O是当前渲染的像素点，因此用O的屏幕空间坐标去采样RT就可以得到其反射信息。</p>
-<h2 id="1-1-平面反射矩阵"><a href="#1-1-平面反射矩阵" class="headerlink" title="1.1 平面反射矩阵"></a>1.1 平面反射矩阵</h2><h3 id="1-1-1-平面方程的计算"><a href="#1-1-1-平面方程的计算" class="headerlink" title="1.1.1 平面方程的计算"></a>1.1.1 平面方程的计算</h3><p>我们现在来推导一下把摄像机关于平面对称的反射矩阵。<br>我们知道一个平面可以表示为$P*N+d=0$。P是平面上任意一点，N是平面的法向量，d是一个常数。我们首先需要求出平面方程。对于平面，其世界空间的法向量就是N。用平面的世界空间位置带入P即可求出d的值。<br></p><figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plane = <span class="keyword">new</span> Vector4(planeNormal.x, planeNormal.y, planeNormal.z, -Vector3.Dot(planeNormal, planePosition) - Offset);</span><br></pre></td></tr></tbody></table></figure><br>我们可以用以上的一个Vector4表示一个平面，前三个分量表示normal，第四个分量表示d。<p></p>
-<h3 id="1-1-2-平面反射矩阵的计算"><a href="#1-1-2-平面反射矩阵的计算" class="headerlink" title="1.1.2 平面反射矩阵的计算"></a>1.1.2 平面反射矩阵的计算</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射矩阵推导.jpg"><br>如上图所示，我们需要计算点A关于平面的对称点A’。关键在于计算出点A到平面的距离AO的大小。那么$A’=A-2*n*|AO|$，负号是因为方向和法线相反。所以，关键是求出|AO|。因为AO实际上是AP在法线相反方向的投影向量，那么$|AO|=dot(AP,n)=dot(A-P,n)=dot(A,n)-dot(P,n)$。由于P满足平面方程，因此$dot(P,n)=d$，因此$|AO|=dot(A,n)+d$，因此$A’=A-2*n*(dot(A,n)+d)$。</p>
-<p>假设n为(nx，ny，nz)，已知d的值，A是(x，y，z)点作为我们要变换的点，A’为(x’，y’，z‘)，那么我们可以得到：<br>$x’ = x - 2(x * nx + y * ny + z * nz + d)* nx = (1 - 2nx * nx)x +(-2nx * ny)y + (-2nx * nz)z + (-2dnx)$，<br>$y’ = y - 2(x * nx + y * ny + z * nz + d)* ny = (-2nx * ny)x + (1 - 2ny * ny)y + (-2ny * nz)z + (-2dny)$，<br>$z’ = z - 2(x * nx + y * ny + z * nz + d)* nz = (-2nx * nz)x  + (-2ny * nz)y + (1 - 2nz * nz)z + (-2dnz)$，<br>改写成矩阵形式可以得到平面反射的矩阵为：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射矩阵.jpg"></p>
-<h2 id="1-2-斜裁剪矩阵"><a href="#1-2-斜裁剪矩阵" class="headerlink" title="1.2 斜裁剪矩阵"></a>1.2 斜裁剪矩阵</h2><p>上面我们已经推导出平面反射矩阵，不过还有一种特殊情况需要处理。<br><img alt="斜裁剪矩阵" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/斜裁剪矩阵.jpg"><br>如上图所示，我们的平面是P，将摄像机从C点对称到C’点。从C’可以看到的区域包括A和B，但是B是在平面P的下部，我们从C是无法看到的。因此，从C’点渲染场景RT的时候必须排除B区域，也就是需要将平面P作为裁剪平面，裁剪掉区域B。<br>这个东西叫做斜裁剪矩阵，我们可以推导出具体的斜裁剪矩阵或者使用Unity提供的接口直接计算出来。<br>计算斜裁剪矩阵需要两个步骤，第一步是计算出摄像机空间下的平面表示，第二步是用摄像机空间下的平面和原投影矩阵一起计算斜投影矩阵。<br>具体推导可以参考文章，<a href="https://blog.csdn.net/mobilebbki399/article/details/79491825">【图形与渲染】相机平面镜反射与斜裁剪矩阵（上）-镜像矩阵</a>。<br>第二步也可以使用Unity的camera中的接口CalculateObliqueMatrix来计算，参数就是第一步得到的平面。</p>
-<h1 id="二、平面反射的实现"><a href="#二、平面反射的实现" class="headerlink" title="二、平面反射的实现"></a>二、平面反射的实现</h1><h2 id="2-1-平面反射的脚本"><a href="#2-1-平面反射的脚本" class="headerlink" title="2.1 平面反射的脚本"></a>2.1 平面反射的脚本</h2><p>这里的脚本指的是生成RenderTexture需要的脚本，脚本继承自MonoBehaviour。</p>
-<h3 id="2-1-1-默认管线下的实现"><a href="#2-1-1-默认管线下的实现" class="headerlink" title="2.1.1 默认管线下的实现"></a>2.1.1 默认管线下的实现</h3><p>默认管线下需要在函数OnWillRenderObject中，基本步骤是先计算反射平面，然后计算反射矩阵和斜投影矩阵，设置反射相机的斜投影矩阵，然后将反射相机变换到平面对面，调用相机的Render函数渲染RT。需要注意的是，渲染的时候需要修改物体正反旋向，即GL.invertCulling设置为true。</p>
-<h3 id="2-1-2-Urp管线下的实现"><a href="#2-1-2-Urp管线下的实现" class="headerlink" title="2.1.2 Urp管线下的实现"></a>2.1.2 Urp管线下的实现</h3><p>Urp管线下，需要绑定 RenderPipelineManager.beginCameraRendering的回调，然后在回调中实现。回调中会接收到当前渲染的相机，反射相机就是该相机关于平面的镜像。同时，渲染RT的函数需要改成UniversalRenderPipeline.RenderSingleCamera，传入context和反射相机。其余步骤，跟默认管线的区别不大。</p>
-<h2 id="2-2-平面反射的Shader"><a href="#2-2-平面反射的Shader" class="headerlink" title="2.2 平面反射的Shader"></a>2.2 平面反射的Shader</h2><p>平面反射的shader可以使用普通的场景shader做修改。关键在于如何采样平面反射信息和平面反射强度以及模糊等。</p>
-<h3 id="2-2-1-平面反射信息的采样"><a href="#2-2-1-平面反射信息的采样" class="headerlink" title="2.2.1 平面反射信息的采样"></a>2.2.1 平面反射信息的采样</h3><p>这个之前已经解释过用屏幕空间坐标来采样RT。</p>
-<h3 id="2-2-1-平面反射强度"><a href="#2-2-1-平面反射强度" class="headerlink" title="2.2.1 平面反射强度"></a>2.2.1 平面反射强度</h3><p>这个可以用菲涅尔效应计算，不过关键点在于强度必须是NdotV的函数，最简单的方式是计算出NdotV，对NdotV取反或者1-NdotV，因为入射角越大反射光越强，同时提供一个最大最小值来限制强度范围。</p>
-<h3 id="2-2-1-模糊和Mipmap"><a href="#2-2-1-模糊和Mipmap" class="headerlink" title="2.2.1 模糊和Mipmap"></a>2.2.1 模糊和Mipmap</h3><p>可以采样周围多个像素然后做平均模糊或者高斯模糊。不过，最简单的方式是对RT强制生成Mipmap，采样RT的时候指定Mipmap级别。那么，mipmap级别如何计算了。我们可以根据shader的粗糙度来转行为mipmap级别，这个参考unity的urp内置shader函数PerceptualRoughnessToMipmapLevel的实现。</p>
-<p>最终得到的反射效果如图，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/平面反射.jpg"></p>
-<h1 id="三、平面反射的优化"><a href="#三、平面反射的优化" class="headerlink" title="三、平面反射的优化"></a>三、平面反射的优化</h1><p>平面反射由于需要对场景镜像渲染一遍， DrawCall会翻倍，而且由于原理限制，没有有效的优化手段，因此平面反射通常是应用在特定的场合下。<br>优化的手段，主要是降低生成反射RT的消耗。</p>
-<h2 id="3-1-控制反射层级"><a href="#3-1-控制反射层级" class="headerlink" title="3.1 控制反射层级"></a>3.1 控制反射层级</h2><p>我们可以在反射脚本中增加层级控制，然后设置反射相机的cullingMask，指定层级的物体才会被渲染到RT中。</p>
-<h2 id="3-2-控制反射RT的尺寸"><a href="#3-2-控制反射RT的尺寸" class="headerlink" title="3.2 控制反射RT的尺寸"></a>3.2 控制反射RT的尺寸</h2><p>可以根据反射平面的大小来调整RT的尺寸，同样我们可以在脚本中开放这个尺寸设置来方便美术来调整RT大小。</p>
-<h2 id="3-3-降低RT的shader复杂度"><a href="#3-3-降低RT的shader复杂度" class="headerlink" title="3.3 降低RT的shader复杂度"></a>3.3 降低RT的shader复杂度</h2><p>我们可以使用Unity的shader replacement将生成RT的shader都替换为一个简单的shader，然后再渲染生成RT，这样可以大幅度降低shader计算复杂度。不过，DrawCall是无法降低的。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><blockquote>
-<p><a href="https://blog.csdn.net/puppet_master/article/details/80808486">Unity Shader-反射效果（CubeMap，Reflection Probe，Planar Reflection，Screen Space Reflection）</a><br><a href="https://blog.csdn.net/mobilebbki399/article/details/79491863">图形与渲染】相机平面镜反射与斜裁剪矩阵（下）-斜裁剪矩阵</a></p>
-</blockquote>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1688,7 +1706,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1701,7 +1719,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1753,12 +1771,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">635k</span>
+    <span title="站点总字数">638k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:38</span>
+    <span title="站点阅读时长">9:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

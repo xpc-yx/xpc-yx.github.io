@@ -222,6 +222,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/03/11/%E9%82%AE%E5%B1%80%E4%BD%8D%E7%BD%AE%E9%97%AE%E9%A2%98%E5%92%8C%E5%B8%A6%E6%9D%83%E4%B8%AD%E4%BD%8D%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/03/11/%E9%82%AE%E5%B1%80%E4%BD%8D%E7%BD%AE%E9%97%AE%E9%A2%98%E5%92%8C%E5%B8%A6%E6%9D%83%E4%B8%AD%E4%BD%8D%E6%95%B0/" class="post-title-link" itemprop="url">邮局位置问题和带权中位数</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-03-11 10:00:00" itemprop="dateCreated datePublished" datetime="2012-03-11T10:00:00+08:00">2012-03-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/03/11/%E9%82%AE%E5%B1%80%E4%BD%8D%E7%BD%AE%E9%97%AE%E9%A2%98%E5%92%8C%E5%B8%A6%E6%9D%83%E4%B8%AD%E4%BD%8D%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="邮局位置问题和带权中位数" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/03/11/%E9%82%AE%E5%B1%80%E4%BD%8D%E7%BD%AE%E9%97%AE%E9%A2%98%E5%92%8C%E5%B8%A6%E6%9D%83%E4%B8%AD%E4%BD%8D%E6%95%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/03/11/%E9%82%AE%E5%B1%80%E4%BD%8D%E7%BD%AE%E9%97%AE%E9%A2%98%E5%92%8C%E5%B8%A6%E6%9D%83%E4%B8%AD%E4%BD%8D%E6%95%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>498</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>带权中位数定义如下：<br><img alt="" data-src="https://c3.staticflickr.com/8/7433/27312306842_c847ce5c27_o.jpg"></p>
+<p>邮局位置问题定义如下：<br><img alt="" data-src="https://c1.staticflickr.com/8/7123/27312315312_79d8c06f47_o.jpg"></p>
+<p>上一篇文章输油管道问题里面证明了，当权值Wi都为1的时候，中位数就是最佳的解。但是，现在Wi已经不一定是1了。所以，现在<br>需要证明在任意Wi的取值情况下，带权中位数能够成为邮局位置的最佳解。假设，所有Wi都是1的倍数，如果是小数的话，可以所有的<br>Wi都乘以一定的倍数。那么wi<em>d(p,pi) = Σ(p,pi)(i从1到wi)，这个意思是把距离乘以了wi倍。<br>但是，现在可以换一种看法，换成了pi位置有wi个重合的点，且每一个点的权值都是1，那么其和也是wi</em>d(p,pi)。<strong>那么对所有的pi<br>都这样分解，就把问题重新转换成了输油管道问题了</strong>。输油管道问题的最优解就是中位数，那么邮局问题的最优解就是<strong>转换之后的<br>这些点的中位数点</strong>。而这个点一定存在于<strong>带权中位数</strong>那个点分解出的一堆点中。<br>二维邮局问题的解法是把x和y分开求2次一维邮局问题，然后把解组和起来，得到答案。</p>
+<p>求带权中位数的算法比较简单，直接的做法是，先把n个点按照位置排序，然后按点的位置从小到大遍历，找到满足要求的点即可。<br>不算排序点位置的预处理，因为很多时候点应该就是按顺序给出的，所以其时间复杂度是O(n)。<br>要求：<img alt="" data-src="https://c6.staticflickr.com/8/7430/26803630933_bbf4ab1389_o.jpg"></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/03/09/%E8%BE%93%E6%B2%B9%E7%AE%A1%E9%81%93%E9%97%AE%E9%A2%98(POJ%20-%201723)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1237,118 +1344,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/11/22/POJ%E7%99%BE%E7%BB%83%20-%202797%E6%9C%80%E7%9F%AD%E5%89%8D%E7%BC%80(%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E5%85%B8%E6%A0%91%E5%81%9A)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2011/11/22/POJ%E7%99%BE%E7%BB%83%20-%202797%E6%9C%80%E7%9F%AD%E5%89%8D%E7%BC%80(%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E5%85%B8%E6%A0%91%E5%81%9A)/" class="post-title-link" itemprop="url">POJ百练 - 2797:最短前缀(可以使用字典树做)</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2011-11-22 10:00:00" itemprop="dateCreated datePublished" datetime="2011-11-22T10:00:00+08:00">2011-11-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2011/11/22/POJ%E7%99%BE%E7%BB%83%20-%202797%E6%9C%80%E7%9F%AD%E5%89%8D%E7%BC%80(%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E5%85%B8%E6%A0%91%E5%81%9A)/" class="post-meta-item leancloud_visitors" data-flag-title="POJ百练 - 2797:最短前缀(可以使用字典树做)" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2011/11/22/POJ%E7%99%BE%E7%BB%83%20-%202797%E6%9C%80%E7%9F%AD%E5%89%8D%E7%BC%80(%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E5%85%B8%E6%A0%91%E5%81%9A)/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2011/11/22/POJ%E7%99%BE%E7%BB%83%20-%202797%E6%9C%80%E7%9F%AD%E5%89%8D%E7%BC%80(%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E5%85%B8%E6%A0%91%E5%81%9A)/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>链接: <a href="http://poj.grids.cn/practice/2797/">http://poj.grids.cn/practice/2797/</a></p>
-<p>这题乍看之下确实没什么思路,后面终于明白题意了,然后突然想到可以用字典树做,速度当然会是非常快的…<br>但是其实还有一种更简单的方法,那就是对所有字符串排序之后,每个字符串的前缀长度其实就是由其前一个和后一个字符串共同决定,<br>nLen = max(nOne, nTwo), nOne 和 nTwo就分别代表当前字符串和前后字符串公告部分的长度+1后的值…<br>代码写出来写非常简单…同学这样实现了下,也轻松过了…</p>
-<p>然后我就辛苦的写了一棵字典树…可能我的写法不是很标准,因为我没参考什么模板,自己硬想出来怎么写的…<br>我的想法是开一个静态大数组,第一个结点作为根,不存储数据,从第二个结点开始作为自由空间分配…<br>其实,就是对26颗字典树虚拟了个无数据的根结点…<br>使用了虚拟的根结点后,代码比用26个根结点简洁很多…<br>刚开始我就假设1-26号结点分别为a-z,作为26颗树的根,<br>而且下26个结点的位置我用的是索引,没用指针,后面换成了指针,代码看起来更舒服了…</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#define</span> LETTER_NUM <span class="number">26</span></span><br><span class="line"><span class="selector-id">#define</span> WORD_LEN_MAX <span class="number">25</span></span><br><span class="line"><span class="selector-id">#define</span> WORD_NUM_MAX <span class="number">1030</span></span><br><span class="line"><span class="selector-id">#define</span> NODE_MAX (WORD_LEN_MAX * WORD_NUM_MAX + <span class="number">10</span>)</span><br><span class="line">struct WORD_TREE</span><br><span class="line">{</span><br><span class="line">    char ch;</span><br><span class="line">    WORD_TREE* next<span class="selector-attr">[LETTER_NUM]</span>;</span><br><span class="line">    int nTime;</span><br><span class="line">};</span><br><span class="line">WORD_TREE tree<span class="selector-attr">[NODE_MAX]</span>;</span><br><span class="line">WORD_TREE* pFreeNode = tree + <span class="number">1</span>;<span class="comment">//第一个结点作为头结点,不存储数据</span></span><br><span class="line">char szWords<span class="selector-attr">[WORD_NUM_MAX]</span><span class="selector-attr">[WORD_LEN_MAX]</span>;</span><br><span class="line">void <span class="built_in">AddToTree</span>(char* pszStr)</span><br><span class="line">{</span><br><span class="line">    WORD_TREE* pTree = tree;</span><br><span class="line">    while (*pszStr &amp;&amp; pTree-&gt;next<span class="selector-attr">[*pszStr - <span class="string">'a'</span>]</span>)</span><br><span class="line">    {</span><br><span class="line">        pTree = pTree-&gt;next<span class="selector-attr">[*pszStr - <span class="string">'a'</span>]</span>;</span><br><span class="line">        pTree-&gt;nTime++;</span><br><span class="line">        ++pszStr;</span><br><span class="line">    }</span><br><span class="line">    while (*pszStr)</span><br><span class="line">    {</span><br><span class="line">        pFreeNode-&gt;ch = *pszStr;</span><br><span class="line">        pFreeNode-&gt;nTime++;</span><br><span class="line">        pTree-&gt;next<span class="selector-attr">[*pszStr - <span class="string">'a'</span>]</span> = pFreeNode;</span><br><span class="line">        pTree = pFreeNode;</span><br><span class="line">        ++pszStr;</span><br><span class="line">        ++pFreeNode;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">int <span class="built_in">FindPrefix</span>(char* pszStr)</span><br><span class="line">{</span><br><span class="line">    WORD_TREE* pTree = tree;</span><br><span class="line">    int nLen = <span class="number">0</span>;</span><br><span class="line">    while (*pszStr)</span><br><span class="line">    {</span><br><span class="line">        ++nLen;</span><br><span class="line">        pTree = pTree-&gt;next<span class="selector-attr">[*pszStr - <span class="string">'a'</span>]</span>;</span><br><span class="line">        <span class="keyword">if</span> (pTree-&gt;nTime &lt;= <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            break;</span><br><span class="line">        }</span><br><span class="line">        ++pszStr;</span><br><span class="line">    }</span><br><span class="line">    return nLen;</span><br><span class="line">}</span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nCount = <span class="number">0</span>;</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%s"</span>, szWords<span class="selector-attr">[nCount]</span>) != EOF)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">AddToTree</span>(szWords<span class="selector-attr">[nCount]</span>);</span><br><span class="line">        nCount++;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nCount; ++i)</span><br><span class="line">    {</span><br><span class="line">        int nLen = <span class="built_in">FindPrefix</span>(szWords<span class="selector-attr">[i]</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s "</span>, szWords<span class="selector-attr">[i]</span>);</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nLen; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">putchar</span>(szWords<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">    }</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1399,7 +1394,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1412,7 +1407,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1464,12 +1459,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">635k</span>
+    <span title="站点总字数">638k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:38</span>
+    <span title="站点阅读时长">9:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
