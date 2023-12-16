@@ -222,6 +222,118 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/18/hdu%204294%20Multiple%20%E6%95%B0%E8%AE%BA%20+%20bfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/09/18/hdu%204294%20Multiple%20%E6%95%B0%E8%AE%BA%20+%20bfs/" class="post-title-link" itemprop="url">hdu 4294 Multiple 数论 + bfs</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-09-18 10:00:00" itemprop="dateCreated datePublished" datetime="2012-09-18T10:00:00+08:00">2012-09-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/09/18/hdu%204294%20Multiple%20%E6%95%B0%E8%AE%BA%20+%20bfs/" class="post-meta-item leancloud_visitors" data-flag-title="hdu 4294 Multiple 数论 + bfs" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/09/18/hdu%204294%20Multiple%20%E6%95%B0%E8%AE%BA%20+%20bfs/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/18/hdu%204294%20Multiple%20%E6%95%B0%E8%AE%BA%20+%20bfs/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这是前天成都网赛的题，比赛时候确实一点思路也没有。比完之后看了人家的解题报告，还是不会怎么搜出答案，太弱了。<br>题意是给出N,K，求M，使得M是N的正倍数，而且M用K进制表示后所需要的不同数字(0,1,2,3,…,k-1)最少，如果有多组这样的情况，求出最小的M。很数学的题意。<br>用到了一个结论，就是任意数字的正倍数均可以用不超过2个不同数字的数得到。<br>证明如下：<br>任意数M % N 总共有N种结果，假如有N+1个不同的M，那么肯定有2个M对N取模后的结果是相同，这个是所谓鸽巢原理。那么，我取a,aa,aaa,…,aaaaaaaaaa….，总共N+1个，同样满足上面的结论。那么我取那2个对N取模相同的数字相减得到数字aaaaa…000….，这个数字肯定是N的倍数。<br>综合上面的证明，只能得到2个数字肯定能表示N的倍数。但是不能说形式就是aaaaa…000….。</p>
+<p>到了这里我还是一点思路都没有，一点都不知道怎么搜索。。。<br>想了1个多小时，无头绪，问过了这题的同学，还是无头绪。看解题报告，他们的代码写得太牛了，完全看不懂，无头绪。也许也是我对bfs理解太浅，才看不懂他们的搜索代码。而且，我连可以搜索的地方都没有找到，都不知道搜什么了。<br>想了好久，昨天吃饭的时候，终于发现可以对余数进行搜索。<br>对于任意的N，其余数就是范围是[0, N -1]。这个其实就可以代表状态了，或者代表bfs中的点了。从当前余数转移到其它余数的是MOD <em> K +  A 或者 MOD </em> K + B，如果要转移到得余数以前没被搜过，那就可以转移过去。这个刚好就是一个优化了。也可以看成是子问题了。但是，dfs完全不行。刚开始用dfs，绝对的超时。<br>用dfs也是我对思路理解不深，侥幸认为能过。。。后面发现，这题完全和bfs吻合。[0, N -1]刚好代表N个点，我要通过从外面的一个点，最短的遍历到点0，可以bfs或者最短路算法。这题我觉得还有个难点就是保存答案，因为答案最长的长度可能是N(N&lt;=10000)，所以把答案直接放到节点里面肯定不行的。但是，我还仔细看过算法导论。因此想到了可以利用bfs搜索出来的那颗树或者最短路算法跑出来的那颗树，从目标节点逆序寻找答案，找到出发节点之后，再把答案reverse一下就行了。<br>这题还得注意0不能是N的倍数，所以注意bfs(0,i)这种情况的处理。</p>
+<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;queue&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX_N = <span class="number">10010</span>;</span><br><span class="line">int nOut<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nOLen;</span><br><span class="line">int nAns<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nALen;</span><br><span class="line">bool bMod<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nFather<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nChoose<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nN;</span><br><span class="line">int nK;</span><br><span class="line">bool bFind;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">Cmp</span>(int* A, int nLA, int* B, int nLB)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nLA != nLB)</span><br><span class="line">    {</span><br><span class="line">        return nLA - nLB;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nLA; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (A<span class="selector-attr">[i]</span> != B<span class="selector-attr">[i]</span>)</span><br><span class="line">        {</span><br><span class="line">            return A<span class="selector-attr">[i]</span> - B<span class="selector-attr">[i]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Bfs</span>(int nA, int nB)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(bMod, false, <span class="built_in">sizeof</span>(bMod));</span><br><span class="line">    queue&lt;int&gt; que;</span><br><span class="line">    que<span class="selector-class">.push</span>(<span class="number">0</span>);</span><br><span class="line">    int nTemp;</span><br><span class="line">    bool bFirst = true;</span><br><span class="line">    bFind = false;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (nA &gt; nB)<span class="built_in">swap</span>(nA, nB);</span><br><span class="line">    <span class="comment">//printf("nA:%d, nB:%d\n", nA, nB);</span></span><br><span class="line">    while (!que<span class="selector-class">.empty</span>())</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//printf("nMod:%d\n", que.front());</span></span><br><span class="line">        int nMod = que<span class="selector-class">.front</span>();</span><br><span class="line">        que<span class="selector-class">.pop</span>();</span><br><span class="line">        <span class="keyword">if</span> (nMod == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (bFirst)bFirst = false;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                bFind = true;</span><br><span class="line">                break;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        nTemp = (nMod * nK + nA) % nN;</span><br><span class="line">        <span class="keyword">if</span> (!(nMod == <span class="number">0</span>  nA == <span class="number">0</span>)  !bMod<span class="selector-attr">[nTemp]</span>)</span><br><span class="line">        {</span><br><span class="line">            nFather<span class="selector-attr">[nTemp]</span> = nMod;</span><br><span class="line">            nChoose<span class="selector-attr">[nTemp]</span> = nA;</span><br><span class="line">            que<span class="selector-class">.push</span>(nTemp);</span><br><span class="line">            bMod<span class="selector-attr">[nTemp]</span> = true;</span><br><span class="line">            <span class="comment">//printf("nTemp:%d\n", nTemp);</span></span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (nA == nB)continue;</span><br><span class="line">        nTemp = (nMod * nK + nB) % nN;</span><br><span class="line">        <span class="keyword">if</span> (!bMod<span class="selector-attr">[nTemp]</span>)</span><br><span class="line">        {</span><br><span class="line">            nFather<span class="selector-attr">[nTemp]</span> = nMod;</span><br><span class="line">            nChoose<span class="selector-attr">[nTemp]</span> = nB;</span><br><span class="line">            que<span class="selector-class">.push</span>(nTemp);</span><br><span class="line">            bMod<span class="selector-attr">[nTemp]</span> = true;</span><br><span class="line">            <span class="comment">//printf("nTemp:%d\n", nTemp);</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bFind)</span><br><span class="line">    {</span><br><span class="line">        int nF = <span class="number">0</span>;</span><br><span class="line">        nALen = <span class="number">0</span>;</span><br><span class="line">        do</span><br><span class="line">        {</span><br><span class="line">            nAns<span class="selector-attr">[nALen++]</span> = nChoose<span class="selector-attr">[nF]</span>;</span><br><span class="line">            nF = nFather<span class="selector-attr">[nF]</span>;</span><br><span class="line">        }</span><br><span class="line">        while (nF);</span><br><span class="line">        <span class="built_in">reverse</span>(nAns, nAns + nALen);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;nN, &amp;nK) == <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        bool bOk = false;</span><br><span class="line">        nOLen = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; nK; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">Bfs</span>(<span class="selector-tag">i</span>, i);</span><br><span class="line">            <span class="keyword">if</span> (bFind)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (nOLen == <span class="number">0</span> || <span class="built_in">Cmp</span>(nOut, nOLen, nAns, nALen) &gt; <span class="number">0</span>)</span><br><span class="line">                {</span><br><span class="line">                    nOLen = nALen;</span><br><span class="line">                    <span class="built_in">memcpy</span>(nOut, nAns, <span class="built_in">sizeof</span>(int) * nALen);</span><br><span class="line">                }</span><br><span class="line">                bOk = true;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (!bOk)</span><br><span class="line">            <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nK; ++i)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">for</span> (int j = <span class="selector-tag">i</span> + <span class="number">1</span>; j &lt; nK; ++j)</span><br><span class="line">                {</span><br><span class="line">                    <span class="built_in">Bfs</span>(<span class="selector-tag">i</span>, j);</span><br><span class="line">                    <span class="keyword">if</span> (bFind)</span><br><span class="line">                    {</span><br><span class="line">                        <span class="keyword">if</span> (nOLen == <span class="number">0</span> || <span class="built_in">Cmp</span>(nOut, nOLen, nAns, nALen) &gt; <span class="number">0</span>)</span><br><span class="line">                        {</span><br><span class="line">                            nOLen = nALen;</span><br><span class="line">                            <span class="built_in">memcpy</span>(nOut, nAns, <span class="built_in">sizeof</span>(int) * nALen);</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        <span class="keyword">for</span> (int k = <span class="number">0</span>; k &lt; nOLen; ++k)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d"</span>, nOut<span class="selector-attr">[k]</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/16/poj%203468%20A%20Simple%20Problem%20with%20Integers%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%88%90%E6%AE%B5%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1223,118 +1335,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/05/poj%203243%20Clever%20Y%20%E6%89%A9%E5%B1%95%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/08/05/poj%203243%20Clever%20Y%20%E6%89%A9%E5%B1%95%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/" class="post-title-link" itemprop="url">poj 3243 Clever Y 扩展离散对数</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-08-05 11:00:00" itemprop="dateCreated datePublished" datetime="2012-08-05T11:00:00+08:00">2012-08-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/08/05/poj%203243%20Clever%20Y%20%E6%89%A9%E5%B1%95%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3243 Clever Y 扩展离散对数" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/08/05/poj%203243%20Clever%20Y%20%E6%89%A9%E5%B1%95%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/08/05/poj%203243%20Clever%20Y%20%E6%89%A9%E5%B1%95%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这个是求扩展离散对数问题。<em>X<sup>Y</sup> mod Z = K，给出X，Z，K，求Y。
-</em>当Z是素数的时候直接用baby-step算法即可了。但是，模数不是素数的情况怎么办了。<br>方程a^X = b % c，可以进行一系列的转化。假设d = gcd(a,c)，由a^(x-1)  <em> a = b % c，知道a^(x-1)要存在必须满足gcd(a,c) | b，如果满足这个条件，那么我们可以在方程2边同时除以d，方程是不变的。因为a^x = b + k </em> c，再除以公约数d，得到方程a^(x-1) <em> a / d = b / d + k </em> c / d。根据以上推论，我们可以不断的除以d，直到gcd(a,c)=1。<br>假设我们除了k次，那么方程转化为a^(x-k) <em> a^k/d^k = b / d^k + k </em> c / d^k。令d = a^k/d^k，b’ = b / d^k，c’ = c / d^k，x’ = x - k，方程转化为a^x’ <em> d = b’ % c’，得到a^x’ = b’ </em> d^-1 % c’。<br>现在直接用baby-step解方程a^x’ = b’ * (d^-1) % c’即可。注意到x=x’+k，如果存在x小于k的解，那么x’小于0，但是由baby-step是不会求负的次数的，所以需要先枚举一下是否存在小于k的解，由于输入的数据不会超过10^9的，假设k不超过50进行枚举即可了。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long INT;</span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">1000000</span>)</span><br><span class="line">INT nData<span class="selector-attr">[MAX]</span>;</span><br><span class="line">INT nKey<span class="selector-attr">[MAX]</span>;</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">HashPos</span>(INT key)</span><br><span class="line">{</span><br><span class="line">    return ((unsigned)(key ^ <span class="number">0</span>xA5A5A5A5)) % MAX;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">HashAdd</span>(INT key, INT data)</span><br><span class="line">{</span><br><span class="line">    INT nPos = <span class="built_in">HashPos</span>(key);</span><br><span class="line">    while (nData<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    nData<span class="selector-attr">[nPos]</span> = data;</span><br><span class="line">    nKey<span class="selector-attr">[nPos]</span> = key;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">HashQuery</span>(INT key)</span><br><span class="line">{</span><br><span class="line">    INT nPos = <span class="built_in">HashPos</span>(key);</span><br><span class="line">    while (nData<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nKey<span class="selector-attr">[nPos]</span> == key)</span><br><span class="line">        {</span><br><span class="line">            return nData<span class="selector-attr">[nPos]</span>;</span><br><span class="line">        }</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">MultMod</span>(INT nA, INT nB, INT nC)</span><br><span class="line">{</span><br><span class="line">    INT nAns = <span class="number">0</span>;</span><br><span class="line">    while (nB)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nB  <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            nAns = (nAns + nA) % nC;</span><br><span class="line">        }</span><br><span class="line">        nA = (<span class="number">2</span> * nA) % nC;</span><br><span class="line">        nB &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    return nAns;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">PowerMod</span>(INT nA, INT nX, INT nC)</span><br><span class="line">{</span><br><span class="line">    INT nAns = <span class="number">1</span>;</span><br><span class="line">    nA %= nC;</span><br><span class="line">    while (nX)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nX  <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            nAns = <span class="built_in">MultMod</span>(nAns, nA, nC); </span><br><span class="line">        }</span><br><span class="line">        nA = <span class="built_in">MultMod</span>(nA, nA, nC);</span><br><span class="line">        nX &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    return nAns;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">gcd</span>(INT nA, INT nB)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nA &lt; nB)<span class="built_in">swap</span>(nA, nB);</span><br><span class="line">    while (nB)</span><br><span class="line">    {</span><br><span class="line">        INT nT = nA;</span><br><span class="line">        nA = nB;</span><br><span class="line">        nB = nT % nB;</span><br><span class="line">    }</span><br><span class="line">    return nA;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//d = nA * nX + nB * nY(nA &gt; nB, nA是模数)</span></span><br><span class="line">INT <span class="built_in">egcd</span>(INT nA, INT nB, INT nX, INT nY)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nA &lt; nB)<span class="built_in">swap</span>(nA, nB);</span><br><span class="line">    <span class="keyword">if</span> (nB == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        nX = <span class="number">1</span>;</span><br><span class="line">        nY = <span class="number">0</span>;</span><br><span class="line">        return nA;</span><br><span class="line">    }</span><br><span class="line">    INT nRet = <span class="built_in">egcd</span>(nB, nA % nB, nX, nY);</span><br><span class="line">    INT nT = nX;</span><br><span class="line">    nX = nY;</span><br><span class="line">    nY = nT - (nA / nB) * nY;</span><br><span class="line">    return nRet;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">GetAns</span>(INT nA, INT nB, INT nC)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nC == <span class="number">0</span>)return -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">//先枚举0-50,扩展baby-step的过程可能会漏掉这些解</span></span><br><span class="line">    INT nTemp = <span class="number">1</span>;</span><br><span class="line">    nB %= nC;</span><br><span class="line">    <span class="keyword">for</span> (INT <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt;= <span class="number">50</span>; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nTemp == nB)</span><br><span class="line">        {</span><br><span class="line">            return i;</span><br><span class="line">        }</span><br><span class="line">        nTemp = <span class="built_in">MultMod</span>(nTemp, nA, nC);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果nC不是素数,那么方程nA^x = nB + k*nC</span></span><br><span class="line">    <span class="comment">//可以不到除以gcd(nC,nA)</span></span><br><span class="line">    <span class="comment">//如果gcd(nC,nA)|nB不成立,方程无解，</span></span><br><span class="line">    <span class="comment">//这个由a*x=b%c有解必须满足gcd(a,c)|b一样</span></span><br><span class="line">    INT d;</span><br><span class="line">    INT nD = <span class="number">1</span>;<span class="comment">//nD最后是A^k次,k是nC中因子d的次数</span></span><br><span class="line">    INT k = <span class="number">0</span>;</span><br><span class="line">    while ((d = <span class="built_in">gcd</span>(nC, nA)) != <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        k++;</span><br><span class="line">        nC /= d;</span><br><span class="line">        <span class="keyword">if</span> (nB % d)return -<span class="number">1</span>;</span><br><span class="line">        nB /= d;</span><br><span class="line">        nD = <span class="built_in">MultMod</span>(nD, nA / d, nC);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//现在方程转化为nA^(x-k) * nA^k/d^k = nB/d^k % nC/d^k</span></span><br><span class="line">    <span class="comment">//其实就是方程2侧除以d^k次而已,这样的做法与原方程是等价的</span></span><br><span class="line">    <span class="comment">//令nD = nA^k/d^k,则nA^x'*nD = nB' % nC',</span></span><br><span class="line">    <span class="comment">//解该方程,那么x=x'+k</span></span><br><span class="line">    <span class="comment">//注意,如果x&lt;k,那么x'为负数,baby-step无法求出,故在函数开头进行枚举</span></span><br><span class="line">    <span class="built_in">memset</span>(nKey, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nKey));</span><br><span class="line">    <span class="built_in">memset</span>(nData, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nData));</span><br><span class="line">    INT nM = <span class="built_in">ceil</span>(<span class="built_in">sqrt</span>(<span class="number">1.0</span> * nC));</span><br><span class="line">    nTemp = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (INT j = <span class="number">0</span>; j &lt;= nM; ++j)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">HashAdd</span>(nTemp, j);</span><br><span class="line">        nTemp = <span class="built_in">MultMod</span>(nTemp, nA, nC);</span><br><span class="line">    }</span><br><span class="line">    INT nK = <span class="built_in">PowerMod</span>(nA, nM, nC);</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt;= nM; ++i)</span><br><span class="line">    {</span><br><span class="line">        INT x, y;</span><br><span class="line">        <span class="built_in">egcd</span>(nC, nD, x, y);<span class="comment">//y = nD^-1,nD = nD*(nA^m)^i</span></span><br><span class="line">        y = (y + nC) % nC;<span class="comment">//这句话是必须的,y很可能就是负数</span></span><br><span class="line">        INT nR = <span class="built_in">MultMod</span>(y, nB, nC);<span class="comment">//nR=nB*nD^-1</span></span><br><span class="line">        int j = <span class="built_in">HashQuery</span>(nR);</span><br><span class="line">        <span class="keyword">if</span> (j != -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            return nM * <span class="selector-tag">i</span> + j + k;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        nD = <span class="built_in">MultMod</span>(nD, nK, nC);</span><br><span class="line">    }</span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    INT nA, nB, nC;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%I64d%I64d%I64d"</span>, &amp;nA, &amp;nC, &amp;nB), nA + nB + nC)</span><br><span class="line">    {</span><br><span class="line">        INT nAns = <span class="built_in">GetAns</span>(nA, nB, nC);</span><br><span class="line">        <span class="keyword">if</span> (nAns == -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"No Solution\n"</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%I64d\n"</span>, nAns);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1385,7 +1385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1450,12 +1450,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">641k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

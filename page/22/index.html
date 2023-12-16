@@ -222,6 +222,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/11/24/POJ%E7%99%BE%E7%BB%83%20-%201183%E5%8F%8D%E6%AD%A3%E5%88%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2011/11/24/POJ%E7%99%BE%E7%BB%83%20-%201183%E5%8F%8D%E6%AD%A3%E5%88%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">POJ百练 - 1183:反正切函数的应用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2011-11-24 10:00:00" itemprop="dateCreated datePublished" datetime="2011-11-24T10:00:00+08:00">2011-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2011/11/24/POJ%E7%99%BE%E7%BB%83%20-%201183%E5%8F%8D%E6%AD%A3%E5%88%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/" class="post-meta-item leancloud_visitors" data-flag-title="POJ百练 - 1183:反正切函数的应用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2011/11/24/POJ%E7%99%BE%E7%BB%83%20-%201183%E5%8F%8D%E6%AD%A3%E5%88%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2011/11/24/POJ%E7%99%BE%E7%BB%83%20-%201183%E5%8F%8D%E6%AD%A3%E5%88%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>链接：<a href="http://poj.grids.cn/practice/1183/">http://poj.grids.cn/practice/1183/</a></p>
+<p>方法1:<br>本题很容易推断出 ,a = (b * c - 1) / (b + c), 由于需要求(b+c)的最小值,根据高中的函数思想,如果(b+c)能够转换为关于b或者c的函数就好办了,刚好这里已经有个b和c的关系式子了,可以推导出(b+c) = (c^2+1)/(c-a),这个时候只需要求f(c)的最小值,但是c必须取整数,对这个函数可以求导,也可以进行变形,变形后可以得到f(c) = (c-a) + 2 <em> a + (a^2+1)/(c-a)。<br>令x=c-a,那么可以得到(b+c)=f(x)=x + 2 </em> a+(a^2+1)/x, 其中x必须是整数,到现在为止就是一个用程序模拟高中时候学过的双曲线函数的求最值问题了,我们知道该函数的极值点是sqrt(a^2+1),但是由于x必须是整数,<br>我们必须从极值开始往下和往上找到一个最小值,然后取2者中的最小值…这样这个题就解出来了…</p>
+<p>代码:<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="comment">//b + c = (c^2 + 1) / (c - a) = (c-a) + (2 * a) + (a^2 + 1) / (c -a)</span></span><br><span class="line"><span class="comment">//令c-a = t, f(t) = t + 2*a + (a^2+1)/ t</span></span><br><span class="line"><span class="comment">//因为f(t)在sqrt(a^2+1)时取最小值,但是由于t只能取整数,</span></span><br><span class="line"><span class="comment">//所以,必须从极值点往下和往上寻找最小的值,然后取2者中最小的</span></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    long long a;</span><br><span class="line">    while (std::cin &gt;&gt; a)</span><br><span class="line">    {</span><br><span class="line">        long long nTemp = <span class="selector-tag">a</span> * <span class="selector-tag">a</span> + <span class="number">1</span>;</span><br><span class="line">        long long nDown =  <span class="built_in">sqrt</span>(nTemp);</span><br><span class="line">        long long nUp = nDown;</span><br><span class="line">        long long one, two;</span><br><span class="line"></span><br><span class="line">        while (nTemp % nDown )</span><br><span class="line">        {</span><br><span class="line">            nDown--;</span><br><span class="line">        }</span><br><span class="line">        one = <span class="number">2</span> * <span class="selector-tag">a</span> + nTemp / nDown + nDown;</span><br><span class="line"></span><br><span class="line">        while (nTemp % nUp )</span><br><span class="line">        {</span><br><span class="line">            nUp++;</span><br><span class="line">        }</span><br><span class="line">        two = <span class="number">2</span> * <span class="selector-tag">a</span> + nTemp / nUp + nUp;</span><br><span class="line"></span><br><span class="line">        std::cout &lt;&lt; (one &lt; two ? one : two) &lt;&lt; std::endl;</span><br><span class="line">    }</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>方法2:</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//a = (b*c-1)/(b+c)</span></span><br><span class="line"><span class="comment">//令b = a + m, c = a + n, c &gt;= b</span></span><br><span class="line"><span class="comment">//-&gt; a*(2*a+m+n) = (a+m)*(a+n)-1</span></span><br><span class="line"><span class="comment">//m*n = a^2 + 1  (n&gt;=m)</span></span><br><span class="line"><span class="comment">//所以,求出a^2+1所有因子对,取其中m+n最小的即可</span></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    long long a;</span><br><span class="line">    while (std::cin &gt;&gt; a)</span><br><span class="line">    {</span><br><span class="line">        long long m, n;</span><br><span class="line">        long long nTemp = <span class="selector-tag">a</span> * <span class="selector-tag">a</span> + <span class="number">1</span>;</span><br><span class="line">        long long nMax = <span class="built_in">sqrt</span>(nTemp);</span><br><span class="line">        long long nRes = <span class="number">1</span> + nTemp;</span><br><span class="line">        <span class="keyword">for</span> (m = <span class="number">2</span>; m &lt;= nMax; ++m)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (nTemp % m == <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                n = nTemp / m;</span><br><span class="line">                <span class="keyword">if</span> (m + n &lt; nRes)</span><br><span class="line">                {</span><br><span class="line">                    nRes = m + n;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        std::cout &lt;&lt; <span class="number">2</span> * <span class="selector-tag">a</span> + nRes &lt;&lt; std::endl;</span><br><span class="line">    }</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2011/11/22/POJ%E7%99%BE%E7%BB%83%20-%202797%E6%9C%80%E7%9F%AD%E5%89%8D%E7%BC%80(%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E5%85%B8%E6%A0%91%E5%81%9A)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1168,7 +1281,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1233,12 +1346,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">641k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

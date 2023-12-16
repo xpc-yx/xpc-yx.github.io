@@ -49,9 +49,9 @@
 </script>
 
   <meta name="description" content="一、概念和原理2.1 什么是Matcap  什么是Matcap？Matcap实际上是Material Capture的缩写，即材质捕捉。实际上，这是一种离线渲染方案。类似光照烘焙，将光照或者其它更复杂环境下的渲染数据存储到一张2D贴图上， 再从这张2D贴图进行采样进行实时渲染。 Materials (MatCap)这篇文章对Matcap的定义是：MatCap (Material Capture)">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Matcap的原理和应用">
-<meta property="og:url" content="http://xiaopengcheng.top/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8.html">
+<meta property="og:url" content="http://xiaopengcheng.top/2022/09/19/filename/index.html">
 <meta property="og:site_name" content="远行&#39;s Blog">
 <meta property="og:description" content="一、概念和原理2.1 什么是Matcap  什么是Matcap？Matcap实际上是Material Capture的缩写，即材质捕捉。实际上，这是一种离线渲染方案。类似光照烘焙，将光照或者其它更复杂环境下的渲染数据存储到一张2D贴图上， 再从这张2D贴图进行采样进行实时渲染。 Materials (MatCap)这篇文章对Matcap的定义是：MatCap (Material Capture)">
 <meta property="og:locale" content="zh_CN">
@@ -63,15 +63,16 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E5%9F%BA%E7%A1%80%E8%89%B2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E6%B3%95%E7%BA%BF.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E9%AB%98%E5%85%89.png">
+<meta property="og:image" content="https://markdown.xiaoshujiang.com/img/spinner.gif">
 <meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/matcap%E6%8A%98%E5%B0%84.png">
 <meta property="article:published_time" content="2022-09-19T09:15:51.000Z">
-<meta property="article:modified_time" content="2023-12-16T15:46:17.252Z">
+<meta property="article:modified_time" content="2023-12-16T16:00:10.465Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="Matcap">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/%E6%9D%90%E8%B4%A8%E9%A2%84%E8%A7%88matcap.png">
 
-<link rel="canonical" href="http://xiaopengcheng.top/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8">
+<link rel="canonical" href="http://xiaopengcheng.top/2022/09/19/filename/">
 
 
 <script id="page-configurations">
@@ -79,14 +80,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
-    isPage: true,
+    isPost: true,
+    isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Matcap的原理和应用 | 远行's Blog
-  </title>
+  <title>Matcap的原理和应用 | 远行's Blog</title>
   
 
 
@@ -224,34 +224,105 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
           <div class="content">
             
 
   <div class="posts-expand">
-    
-    
-    
-    <div class="post-block" lang="zh-CN">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">Matcap的原理和应用
-</h1>
-
-<div class="post-meta">
+      
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/09/19/filename/">
 
-</div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
 
-</header>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Matcap的原理和应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-19 17:15:51" itemprop="dateCreated datePublished" datetime="2022-09-19T17:15:51+08:00">2022-09-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/09/19/filename/" class="post-meta-item leancloud_visitors" data-flag-title="Matcap的原理和应用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/19/filename/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/19/filename/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      
-      
-      <div class="post-body">
-          <html><head></head><body><h1 id="一、概念和原理"><a href="#一、概念和原理" class="headerlink" title="一、概念和原理"></a>一、概念和原理</h1><h2 id="2-1-什么是Matcap"><a href="#2-1-什么是Matcap" class="headerlink" title="2.1 什么是Matcap"></a>2.1 什么是Matcap</h2><p>  什么是Matcap？Matcap实际上是Material Capture的缩写，即材质捕捉。实际上，这是一种离线渲染方案。类似光照烘焙，将光照或者其它更复杂环境下的渲染数据存储到一张2D贴图上， 再从这张2D贴图进行采样进行实时渲染。</p>
+        <html><head></head><body><h1 id="一、概念和原理"><a href="#一、概念和原理" class="headerlink" title="一、概念和原理"></a>一、概念和原理</h1><h2 id="2-1-什么是Matcap"><a href="#2-1-什么是Matcap" class="headerlink" title="2.1 什么是Matcap"></a>2.1 什么是Matcap</h2><p>  什么是Matcap？Matcap实际上是Material Capture的缩写，即材质捕捉。实际上，这是一种离线渲染方案。类似光照烘焙，将光照或者其它更复杂环境下的渲染数据存储到一张2D贴图上， 再从这张2D贴图进行采样进行实时渲染。</p>
 <p><a href="https://help.sketchfab.com/hc/en-us/articles/115003065883-Materials-MatCap-">Materials (MatCap)</a><br>这篇文章对Matcap的定义是：<br>MatCap (Material Capture) shaders are complete materials, including lighting and reflections. They work by defining a color for every vertex normal direction relative to the camera. </p>
 <h2 id="2-2-如何理解Matcap"><a href="#2-2-如何理解Matcap" class="headerlink" title="2.2 如何理解Matcap"></a>2.2 如何理解Matcap</h2><p>Matcap是一种在视线空间下使用单位法线采样单位球的离线渲染算法。</p>
 <ul>
@@ -283,24 +354,72 @@
 <h2 id="4-2-法线贴图"><a href="#4-2-法线贴图" class="headerlink" title="4.2 法线贴图"></a>4.2 法线贴图</h2><p>既然matcap需要用到法线，那么可以额外提供法线贴图去修改像素的法线。<br><img alt="matcap法线" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap法线.png"><br>从上图可以看出，法线对最终的渲染结果影响显著。</p>
 <h2 id="4-3-自发光"><a href="#4-3-自发光" class="headerlink" title="4.3 自发光"></a>4.3 自发光</h2><p>类似正常的光照计算，可以在matcap的结果之上，再叠加自发光。</p>
 <h2 id="4-4-模拟高光"><a href="#4-4-模拟高光" class="headerlink" title="4.4 模拟高光"></a>4.4 模拟高光</h2><p>matcap本身已经是光照计算的结果，因此理论上贴图内带有了漫反射、高光、反射的信息。但是，通常情况下，matcap主要包括的还是漫反射信息，或者说表现不出明显的高光信息。<br>有一种简单模拟高光的方式，提供一个高光阈值，使用matcap减去该颜色阈值，然后除以1-阈值。最终结果再用原matcap颜色相乘避免过曝。<br><img alt="matcap高光" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap高光.png"></p>
-<h2 id="4-5-Cubemap反射"><a href="#4-5-Cubemap反射" class="headerlink" title="4.5 Cubemap反射"></a>4.5 Cubemap反射</h2><p>同时，可以额外利用cubemap计算静态反射结果叠加到最终着色上。</p>
+<h2 id="4-5-Cubemap反射"><a href="#4-5-Cubemap反射" class="headerlink" title="4.5 Cubemap反射"></a>4.5 Cubemap反射</h2><p>同时，可以额外利用cubemap计算静态反射结果叠加到最终着色上。<br><img alt="matcap反射" title="[[[1702742384881]]]" data-src="https://markdown.xiaoshujiang.com/img/spinner.gif"></p>
 <h2 id="4-6-模拟边缘光"><a href="#4-6-模拟边缘光" class="headerlink" title="4.6 模拟边缘光"></a>4.6 模拟边缘光</h2><p>利用dot(normalWS, viewDirWS)计算出边缘光的强度，再将边缘光颜色与强度相乘叠加到最终着色结果上即可。</p>
-<h2 id="4-7-模拟折射"><a href="#4-7-模拟折射" class="headerlink" title="4.7 模拟折射"></a>4.7 模拟折射</h2><p>折射一种扭曲的效果，因此我们可以通过扭曲matcap的采样位置和反射的采样位置来模拟折射。同时，可以乘以边缘光的强度来模拟菲尼尔效应，也就是边缘光强的地方折射更强。然后，利用这个扭曲强度去偏移matcap的uv和反射向量，即可在一定程度上模拟折射的效果。<br><img alt="matcap折射" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap折射.png"></p>
+<h2 id="4-7-模拟折射"><a href="#4-7-模拟折射" class="headerlink" title="4.7 模拟折射"></a>4.7 模拟折射</h2><p>折射一种扭曲的效果，因此我们可以通过扭曲matcap的采样位置和反射的采样位置来模拟折射。同时，可以乘以边缘光的强度来模拟菲尼尔效应，也就是边缘光强的地方折射更强。然后，利用这个扭曲强度去偏移matcap的uv和反射向量，即可在一定程度上模拟折射的效果。<br><img alt="matcap折射" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap折射.png"><br>如上图所示，边缘的红色是边缘光；同时，噪声贴图作为折射扭曲强度贴图让边缘光看起来比较细碎，用来模拟折射效果。</p>
 <h2 id="4-8-光照强度"><a href="#4-8-光照强度" class="headerlink" title="4.8 光照强度"></a>4.8 光照强度</h2><p>同时，也可以计算出真实的光照强度，将光照强度乘以matcap颜色，让matcap的着色结果受到灯光影响。不过，这跟matcap的初衷不太一致。</p>
 <h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote>
 <p><a href="[Matcap的原理和应用](xsjapp://doc/b62819d2-d505-4107-8b34-5a176c25bc82#xsj_1702740535139">Materials (MatCap)</a>)<br><a href="https://github.com/nidorx/matcaps">https://github.com/nidorx/matcaps</a><br><a href="https://zhuanlan.zhihu.com/p/79040521">MatCap Shader 改进：解决平面渲染和环境反射问题</a></p>
 </blockquote>
 </body></html>
-      </div>
-      
-      
-      
     </div>
-    
 
     
     
     
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\09\19\Matcap的原理和应用\" rel="bookmark">Matcap的原理和应用</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2022/09/19/filename/" title="Matcap的原理和应用">http://xiaopengcheng.top/2022/09/19/filename/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Matcap/" rel="tag"><i class="fa fa-tag"></i> Matcap</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="prev" title="角色妆容的实现">
+      <i class="fa fa-chevron-left"></i> 角色妆容的实现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/" rel="next" title="Matcap的原理和应用">
+      Matcap的原理和应用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
 
 
@@ -347,7 +466,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -412,12 +531,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">641k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

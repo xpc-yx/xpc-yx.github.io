@@ -222,6 +222,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" class="post-title-link" itemprop="url">MFC框架下OpenGL全屏抗锯齿</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-02-24 11:08:21" itemprop="dateCreated datePublished" datetime="2014-02-24T11:08:21+08:00">2014-02-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" class="post-meta-item leancloud_visitors" data-flag-title="MFC框架下OpenGL全屏抗锯齿" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>其实OpenGL的全屏抗锯齿就是开启多重采样。在使用glut的时候，很方便就能实现。只要启用多重采样缓冲就行了。但是，在MFC窗口中的实现就很麻烦了。<br>首先，在MFC窗口中渲染OpenGL就需要比较麻烦的设置。所以，需要在设置OpenGL渲染环境的时候进一步处理。具体的来看下面一段代码吧。<br>这段代码就是MFC窗口创建的时候，设置OpenGL渲染环境的代码。<br>对于没有启用多重采样的情况，思路是先获取DC，然后调用ChoosePixelFormat获取最佳像素格式，再调用SetPixelFormat设置像素格式，接着调用wglCreateContext创建OpenGL渲染环境，最后调用wglMakeCurrent设置OpenGL渲染环境。<br>如果启用了多重采样，代码逻辑就更加复杂了。最恶心的一点是窗口必须创建2次。第一次按照常规思路设置好OpenGL渲染环境，然后调用函数InitMultisample判断是否支持多重采样，如果支持则销毁窗口，重新创建一次。第二次的思路是按照多重采样初始化得到的像素格式设置好OpenGL渲染环境的像素格式，其余的设置和常规的一样。具体参见下面的代码。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">BOOL COglWnd::<span class="built_in">SetupGLContext</span>()</span><br><span class="line"> {</span><br><span class="line">     DWORD dwFlags = (PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL);</span><br><span class="line"></span><br><span class="line">     PIXELFORMATDESCRIPTOR pfd =</span><br><span class="line">     {</span><br><span class="line">         <span class="built_in">sizeof</span>(PIXELFORMATDESCRIPTOR),  <span class="comment">// Structure size,</span></span><br><span class="line">         <span class="number">1</span>,              <span class="comment">// Structure version number</span></span><br><span class="line">         dwFlags,            <span class="comment">// Property flags</span></span><br><span class="line">         PFD_TYPE_RGBA,          <span class="comment">// RGBA mode</span></span><br><span class="line">         <span class="number">24</span>,             <span class="comment">// 24-bit color</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,       <span class="comment">// 8-bit each color</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,        <span class="comment">// No alpha or accum. buffer,</span></span><br><span class="line">         <span class="number">16</span>,             <span class="comment">// 32-bit z-buffer</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>,               <span class="comment">// No stencil or aux buffer</span></span><br><span class="line">         PFD_MAIN_PLANE,         <span class="comment">// Mainn layer type</span></span><br><span class="line">         <span class="number">0</span>,              <span class="comment">// Reserved</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,            <span class="comment">// Unsupported.</span></span><br><span class="line">     };</span><br><span class="line"></span><br><span class="line">     BOOL bOk = false;</span><br><span class="line">     m_hDC = <span class="built_in">GetDC</span>()-&gt;m_hDC;</span><br><span class="line">     int PixelFormat;</span><br><span class="line"></span><br><span class="line">     static bool bFirst = true;</span><br><span class="line">     <span class="keyword">if</span> (bFirst)</span><br><span class="line">     {</span><br><span class="line">         bFirst = false;</span><br><span class="line"></span><br><span class="line">         PixelFormat = <span class="built_in">ChoosePixelFormat</span>(m_hDC, pfd);</span><br><span class="line">         bOk = <span class="built_in">SetPixelFormat</span>(m_hDC, PixelFormat, pfd);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"GL set pixel format fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">         m_hGLRC = <span class="built_in">wglCreateContext</span>(m_hDC);</span><br><span class="line">         bOk = <span class="built_in">wglMakeCurrent</span>(m_hDC, m_hGLRC);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"Set up GL render context fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">         <span class="built_in">InitMultisample</span>(m_hWnd);</span><br><span class="line">         <span class="keyword">if</span> (arbMultisampleSupported)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">DestroyWindow</span>();</span><br><span class="line">             <span class="built_in">CreateEx</span>(<span class="number">0</span>, m_className, <span class="string">"OglWnd"</span>, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,</span><br><span class="line">                 m_rect, m_parent, <span class="number">0</span>);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">     {</span><br><span class="line">         PixelFormat = arbMultisampleFormat;<span class="comment">//第二次创建</span></span><br><span class="line">         bOk = <span class="built_in">SetPixelFormat</span>(m_hDC, PixelFormat, pfd);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"GL set pixel format fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">         m_hGLRC = <span class="built_in">wglCreateContext</span>(m_hDC);</span><br><span class="line">         bOk = <span class="built_in">wglMakeCurrent</span>(m_hDC, m_hGLRC);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"Set up GL render context fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line"></span><br><span class="line">     return bOk;</span><br><span class="line"> }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>那么函数InitMultisample是怎么来的了。NeHe刚好有一节课是讲这个的，我是从那里下载得到的。该函数代码如下。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// InitMultisample: Used To Query The Multisample Frequencies</span></span><br><span class="line">bool <span class="built_in">InitMultisample</span>(HWND hWnd)</span><br><span class="line">{  </span><br><span class="line">     <span class="comment">// See If The String Exists In WGL!</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">WGLisExtensionSupported</span>(<span class="string">"WGL_ARB_multisample"</span>))</span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported=false;</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get Our Pixel Format</span></span><br><span class="line">    PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)<span class="built_in">wglGetProcAddress</span>(<span class="string">"wglChoosePixelFormatARB"</span>);  </span><br><span class="line">    <span class="keyword">if</span> (!wglChoosePixelFormatARB) </span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported=false;</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get Our Current Device Context</span></span><br><span class="line">    HDC hDC = <span class="built_in">GetDC</span>(hWnd);</span><br><span class="line"></span><br><span class="line">    int     pixelFormat;</span><br><span class="line">    int     valid;</span><br><span class="line">    UINT    numFormats;</span><br><span class="line">    <span class="attribute">float</span>   fAttributes[] = {<span class="number">0</span>,<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These Attributes Are The Bits We Want To Test For In Our Sample</span></span><br><span class="line">    <span class="comment">// Everything Is Pretty Standard, The Only One We Want To </span></span><br><span class="line">    <span class="comment">// Really Focus On Is The SAMPLE BUFFERS ARB And WGL SAMPLES</span></span><br><span class="line">    <span class="comment">// These Two Are Going To Do The Main Testing For Whether Or Not</span></span><br><span class="line">    <span class="comment">// We Support Multisampling On This Hardware.</span></span><br><span class="line">    int iAttributes<span class="selector-attr">[]</span> =</span><br><span class="line">    {</span><br><span class="line">        WGL_DRAW_TO_WINDOW_ARB,GL_TRUE,</span><br><span class="line">        WGL_SUPPORT_OPENGL_ARB,GL_TRUE,</span><br><span class="line">        WGL_ACCELERATION_ARB,WGL_FULL_ACCELERATION_ARB,</span><br><span class="line">        WGL_COLOR_BITS_ARB,<span class="number">24</span>,</span><br><span class="line">        WGL_ALPHA_BITS_ARB,<span class="number">8</span>,</span><br><span class="line">        WGL_DEPTH_BITS_ARB,<span class="number">16</span>,</span><br><span class="line">        WGL_STENCIL_BITS_ARB,<span class="number">0</span>,</span><br><span class="line">        WGL_DOUBLE_BUFFER_ARB,GL_TRUE,</span><br><span class="line">        WGL_SAMPLE_BUFFERS_ARB,GL_TRUE,</span><br><span class="line">        WGL_SAMPLES_ARB,<span class="number">16</span>,<span class="comment">//16设置了抗锯齿的质量</span></span><br><span class="line">        <span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    <span class="comment">// First We Check To See If We Can Get A Pixel Format For 4 Samples</span></span><br><span class="line">    valid = <span class="built_in">wglChoosePixelFormatARB</span>(hDC,iAttributes,fAttributes,<span class="number">1</span>,pixelFormat,numFormats);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If We Returned True, And Our Format Count Is Greater Than 1</span></span><br><span class="line">    <span class="keyword">if</span> (valid  numFormats &gt;= <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported = true;</span><br><span class="line">        arbMultisampleFormat = pixelFormat; </span><br><span class="line">        return arbMultisampleSupported;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Our Pixel Format With 4 Samples Failed, Test For 2 Samples</span></span><br><span class="line">    iAttributes<span class="selector-attr">[19]</span> = <span class="number">2</span>;</span><br><span class="line">    valid = <span class="built_in">wglChoosePixelFormatARB</span>(hDC,iAttributes,fAttributes,<span class="number">1</span>,pixelFormat,numFormats);</span><br><span class="line">    <span class="keyword">if</span> (valid  numFormats &gt;= <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported = true;</span><br><span class="line">        arbMultisampleFormat = pixelFormat;  </span><br><span class="line">        return arbMultisampleSupported;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return The Valid Format</span></span><br><span class="line">    return  arbMultisampleSupported;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>该函数的使用还是很简单的，基本上是修改了2个全局变量，arbMultisampleSupported判断是否支持多重采样，arbMultisampleFormat则是对应的像素格式。我在代码中注释了一行：WGL_SAMPLES_ARB,16,//16设置了抗锯齿的质量。这里貌似可以修改数字的大小，据说一般显卡都支持到16，16的情况下，抗锯齿很好了，4的话效果一般般。这个函数相关的完整代码可以从NeHe下载。<br>至于完整代码，可以参考我上一篇文章，然后将这一篇文章的代码加进去即可。<br>未抗锯齿的效果：<img alt="" data-src="https://c2.staticflickr.com/8/7346/27417287776_bda4d8b386_o.png"><br>抗锯齿的效果：<img alt="" data-src="https://c2.staticflickr.com/8/7593/27417289466_6e1071be4d_o.png"></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/15/%E7%BB%A7%E6%89%BFMFC%E7%9A%84CWnd%E7%B1%BB%E6%B8%B2%E6%9F%93OpenGL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1288,119 +1402,6 @@ CImage CImage::operator=(const CImage yxImage)
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/31/OpenGL%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%92%8C%E4%BB%BB%E6%84%8F%E5%B0%BA%E5%AF%B8%E7%9A%84%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BA%E7%BA%B9%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/08/31/OpenGL%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%92%8C%E4%BB%BB%E6%84%8F%E5%B0%BA%E5%AF%B8%E7%9A%84%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BA%E7%BA%B9%E7%90%86/" class="post-title-link" itemprop="url">OpenGL使用多种格式和任意尺寸的图片作为纹理</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-08-31 22:09:07" itemprop="dateCreated datePublished" datetime="2013-08-31T22:09:07+08:00">2013-08-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/08/31/OpenGL%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%92%8C%E4%BB%BB%E6%84%8F%E5%B0%BA%E5%AF%B8%E7%9A%84%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BA%E7%BA%B9%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL使用多种格式和任意尺寸的图片作为纹理" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/08/31/OpenGL%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%92%8C%E4%BB%BB%E6%84%8F%E5%B0%BA%E5%AF%B8%E7%9A%84%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BA%E7%BA%B9%E7%90%86/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/08/31/OpenGL%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%92%8C%E4%BB%BB%E6%84%8F%E5%B0%BA%E5%AF%B8%E7%9A%84%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BA%E7%BA%B9%E7%90%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>处理多种格式本身就是件麻烦的事情。但是使用cximage的话，就可以完美解决这个问题了。cximage可以处理多种常见格式的图片，比如bmp，png，jpg等。<br>那么如何使用任意尺寸的图片了。glTexImage2D必须使用长宽二次方的图片，使用非二次方的图片，必须用glTexSubImage2D进行处理，具体方法，可以参考 OpenGL使用长宽非二次方纹理 。<br>那么如何避免使用glTexSubImage2D了。我们可以使用函数gluBuild2DMipmaps来完成以上两个函数完成的工作，还不需要对纹理坐标进行放缩。这是一件非常方便的事情。<br>下面提供我的纹理类。使用方法很简单。先调用加载图片函数，再调用初始化纹理函数，可以选择二维和一维垂直方向的。然后，在绘制的时候使用纹理就行了。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> XPC_YX_TEXTURE_H</span><br><span class="line"><span class="selector-id">#define</span> XPC_YX_TEXTURE_H</span><br><span class="line"></span><br><span class="line">class CTexture</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CTexture</span>() { m_byData = NULL; m_szTexName<span class="selector-attr">[0]</span> = <span class="number">0</span>; }</span><br><span class="line">    <span class="built_in">CTexture</span>(const char* pcszFileName) { m_byData = <span class="number">0</span>; <span class="built_in">LoadFromFile</span>(pcszFileName); }</span><br><span class="line">  ~<span class="built_in">CTexture</span>();</span><br><span class="line">    int <span class="built_in">LoadFromFile</span>(const char* pcszFileName);</span><br><span class="line">  void <span class="built_in">Init2DTex</span>();</span><br><span class="line">  void <span class="built_in">Init1DVertTex</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">  int m_nWidth;</span><br><span class="line">  int m_nHeight;</span><br><span class="line">    BYTE* m_byData;</span><br><span class="line">    char m_szTexName<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    unsigned m_uTexName;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"Texture.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"../CxImage/ximage.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"cximage.lib"</span>)</span><br><span class="line"></span><br><span class="line">int CTexture::<span class="built_in">LoadFromFile</span>(const char* pcszFileName)</span><br><span class="line">{</span><br><span class="line">  <span class="keyword">if</span> (pcszFileName != NULL)</span><br><span class="line">  {</span><br><span class="line">    <span class="built_in">strcpy</span>(m_szTexName, pcszFileName);</span><br><span class="line">  }</span><br><span class="line">  CxImage image;</span><br><span class="line">  image<span class="selector-class">.Load</span>(pcszFileName);</span><br><span class="line">  <span class="keyword">if</span> (image<span class="selector-class">.IsValid</span>() == false)</span><br><span class="line">  {</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  m_nWidth = image<span class="selector-class">.GetWidth</span>();</span><br><span class="line">  m_nHeight = image<span class="selector-class">.GetHeight</span>();</span><br><span class="line">  <span class="keyword">if</span> (m_byData)</span><br><span class="line">  {</span><br><span class="line">    delete m_byData;</span><br><span class="line">  }</span><br><span class="line">  m_byData = new BYTE<span class="selector-attr">[m_nWidth * m_nHeight * 3]</span>;</span><br><span class="line">  <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nHeight; ++i)</span><br><span class="line">  {</span><br><span class="line">    <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; m_nWidth; ++j)</span><br><span class="line">    {</span><br><span class="line">      RGBQUAD rgb = image<span class="selector-class">.GetPixelColor</span>(j, i);</span><br><span class="line">      m_byData<span class="selector-attr">[(i * m_nWidth + j) * 3]</span> = rgb.rgbRed;</span><br><span class="line">      m_byData<span class="selector-attr">[(i * m_nWidth + j) * 3 + 1]</span> = rgb.rgbGreen;</span><br><span class="line">      m_byData<span class="selector-attr">[(i * m_nWidth + j) * 3 + 2]</span> = rgb.rgbBlue;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">    return <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CTexture::<span class="built_in">Init2DTex</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glPixelStorei</span>(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">glGenTextures</span>(<span class="number">1</span>, m_uTexName);</span><br><span class="line">  <span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, m_uTexName);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);</span><br><span class="line">    <span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</span><br><span class="line">    <span class="built_in">glTexEnvf</span>(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);</span><br><span class="line"></span><br><span class="line">  int nRet = <span class="built_in">gluBuild2DMipmaps</span>(GL_TEXTURE_2D, <span class="number">3</span>, m_nWidth, m_nHeight, GL_RGB, GL_UNSIGNED_BYTE,</span><br><span class="line">    m_byData);</span><br><span class="line">  <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">  {</span><br><span class="line">    <span class="built_in">AfxMessageBox</span>(<span class="string">"加载纹理失败"</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CTexture::<span class="built_in">Init1DVertTex</span>()</span><br><span class="line">{</span><br><span class="line">  <span class="built_in">glPixelStorei</span>(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">glGenTextures</span>(<span class="number">1</span>, m_uTexName);</span><br><span class="line">  <span class="built_in">glBindTexture</span>(GL_TEXTURE_1D, m_uTexName);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">  <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">  <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);</span><br><span class="line">  <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</span><br><span class="line">  <span class="built_in">glTexEnvf</span>(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);</span><br><span class="line"></span><br><span class="line">  BYTE* pbyData = new BYTE<span class="selector-attr">[m_nHeight * 3]</span>;</span><br><span class="line">  int nAdd = m_nWidth / <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nHeight; ++i)</span><br><span class="line">  {</span><br><span class="line">    pbyData<span class="selector-attr">[i * 3]</span> = m_byData<span class="selector-attr">[(i * m_nWidth + nAdd) * 3]</span>;</span><br><span class="line">    pbyData<span class="selector-attr">[i * 3 + 1]</span> = m_byData<span class="selector-attr">[(i * m_nWidth + nAdd) * 3 + 1]</span>;</span><br><span class="line">    pbyData<span class="selector-attr">[i * 3 + 2]</span> = m_byData<span class="selector-attr">[(i * m_nWidth + nAdd) * 3 + 2]</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  int nRet = <span class="built_in">gluBuild1DMipmaps</span>(GL_TEXTURE_1D, <span class="number">3</span>, m_nHeight, GL_RGB, GL_UNSIGNED_BYTE,</span><br><span class="line">    pbyData);</span><br><span class="line">  <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">  {</span><br><span class="line">    <span class="built_in">AfxMessageBox</span>(<span class="string">"加载纹理失败"</span>);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  delete pbyData;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">CTexture::~<span class="built_in">CTexture</span>()</span><br><span class="line">{ </span><br><span class="line">  <span class="keyword">if</span> (m_byData) </span><br><span class="line">  delete m_byData;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>要使用该类，还得配置CxImage。下面这张图片是使用一维垂直纹理的效果。<br><img alt="" data-src="https://c2.staticflickr.com/8/7635/27451191995_e448a2f0bc_o.png"></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1451,7 +1452,7 @@ CImage CImage::operator=(const CImage yxImage)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1516,12 +1517,12 @@ CImage CImage::operator=(const CImage yxImage)
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">641k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

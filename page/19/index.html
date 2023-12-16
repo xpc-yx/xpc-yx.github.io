@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/" class="post-title-link" itemprop="url">poj 3714 Raid and hdu 1007 Quoit Design</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-22 20:30:00" itemprop="dateCreated datePublished" datetime="2012-06-22T20:30:00+08:00">2012-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3714 Raid and hdu 1007 Quoit Design" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>典型的最近点对算法的应用，不过这个题多了个限制条件，就是点分为2类，最短距离必须在不同的类之间。为了满足这个限制，只需要把同类别点直接的距离都当作INF处理即可。<br>最近点对的算法，算导上面说是nlogn的。但是这个复杂度实现起来略微麻烦点，有一种实现方法是n<em>logn</em>logn的，其只对x坐标进行了排序。n<em>logn的算法需要对x和y分量分别进行排序，还需要用到其它的辅助数组。<br>第一个题我用了n</em>logn算法实现了，第二个题则用了n<em>logn</em>logn算法实现了。但是时间上相差不大，因为第一个算法每次进行分治时候消耗的O(n)时间也有几次。第二个算法分治时候，需要再次排序的时间也不一定很多，因为可能数据量不够大。<br>算法的本质就是二分按照X排序好的点数组，n<em>logn</em>logn变成n*logn的关键是预先对y也排序好一个点数组，因为按y排序好的点数组，在分治后的合并中要用到。算法更详细的解释请参照算法导论。<br>poj 3714 代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="selector-id">#define</span> MAX_N (<span class="number">100000</span> * <span class="number">2</span> + <span class="number">10</span>)</span><br><span class="line">const double FINF = <span class="number">1</span>LL &lt;&lt; <span class="number">60</span>;</span><br><span class="line">struct Point</span><br><span class="line">{</span><br><span class="line">    double x, y;</span><br><span class="line">    int nKind;</span><br><span class="line">};</span><br><span class="line">Point pts<span class="selector-attr">[MAX_N]</span>, ptsY<span class="selector-attr">[MAX_N]</span>, ptsTemp<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">Point ptsSave<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nNum;</span><br><span class="line">bool <span class="built_in">CmpX</span>(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">{</span><br><span class="line">    return <span class="selector-tag">a</span><span class="selector-class">.x</span> &lt; <span class="selector-tag">b</span>.x;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">CmpY</span>(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">{</span><br><span class="line">    return <span class="selector-tag">a</span><span class="selector-class">.y</span> &lt; <span class="selector-tag">b</span>.y;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Dis</span>(Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">a</span><span class="selector-class">.nKind</span> == <span class="selector-tag">b</span>.nKind)</span><br><span class="line">    {</span><br><span class="line">        return FINF;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        return <span class="built_in">sqrt</span>((<span class="selector-tag">a</span><span class="selector-class">.x</span> - <span class="selector-tag">b</span>.x) * (<span class="selector-tag">a</span><span class="selector-class">.x</span> - <span class="selector-tag">b</span>.x) + (<span class="selector-tag">a</span><span class="selector-class">.y</span> - <span class="selector-tag">b</span>.y) * (<span class="selector-tag">a</span><span class="selector-class">.y</span> - <span class="selector-tag">b</span>.y));</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">FindMinDis</span>(Point pts<span class="selector-attr">[]</span>, Point ptsY<span class="selector-attr">[]</span>, Point ptsTemp<span class="selector-attr">[]</span>, int nBeg, int nEnd)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nBeg == nEnd)</span><br><span class="line">    {</span><br><span class="line">        return FINF;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nBeg + <span class="number">1</span> == nEnd)</span><br><span class="line">    {</span><br><span class="line">        return <span class="built_in">Dis</span>(pts<span class="selector-attr">[nBeg]</span>, pts<span class="selector-attr">[nEnd]</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nBeg + <span class="number">2</span> == nEnd)</span><br><span class="line">    {</span><br><span class="line">        return <span class="built_in">min</span>(<span class="built_in">min</span>(<span class="built_in">Dis</span>(pts<span class="selector-attr">[nBeg]</span>, pts<span class="selector-attr">[nBeg + 1]</span>), <span class="built_in">Dis</span>(pts<span class="selector-attr">[nBeg]</span>, pts<span class="selector-attr">[nEnd]</span>)),</span><br><span class="line">                   <span class="built_in">Dis</span>(pts<span class="selector-attr">[nBeg + 1]</span>, pts<span class="selector-attr">[nEnd]</span>));</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">memcpy</span>(ptsSave + nBeg, ptsY + nBeg, <span class="built_in">sizeof</span>(Point) * (nEnd - nBeg + <span class="number">1</span>));<span class="comment">//保存当前的Y坐标顺序</span></span><br><span class="line">        int nMid = (nBeg + nEnd) / <span class="number">2</span>;</span><br><span class="line">        int nL = nBeg;</span><br><span class="line">        int nR = nMid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nBeg; <span class="selector-tag">i</span> &lt;= nEnd; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (ptsY<span class="selector-attr">[i]</span><span class="selector-class">.x</span> - pts<span class="selector-attr">[nMid]</span><span class="selector-class">.x</span> &lt;= <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                ptsTemp<span class="selector-attr">[nL++]</span> = ptsY<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                ptsTemp<span class="selector-attr">[nR++]</span> = ptsY<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        double fAns = <span class="built_in">min</span>(<span class="built_in">FindMinDis</span>(pts, ptsTemp, ptsY, nBeg, nMid),</span><br><span class="line">                          <span class="built_in">FindMinDis</span>(pts, ptsTemp, ptsY, nMid + <span class="number">1</span>, nEnd));</span><br><span class="line">        int nK = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nBeg; <span class="selector-tag">i</span> &lt;= nEnd; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">fabs</span>(ptsSave<span class="selector-attr">[i]</span><span class="selector-class">.x</span> - pts<span class="selector-attr">[nMid]</span>.x) &lt;= fAns)</span><br><span class="line">            {</span><br><span class="line">                ptsTemp<span class="selector-attr">[nK++]</span> = ptsSave<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; nK; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="selector-tag">i</span> + <span class="number">1</span>; j &lt; nK; ++j)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (ptsTemp<span class="selector-attr">[j]</span><span class="selector-class">.y</span> - ptsTemp<span class="selector-attr">[i]</span><span class="selector-class">.y</span> &gt; fAns)</span><br><span class="line">                {</span><br><span class="line">                    break;</span><br><span class="line">                }</span><br><span class="line">                fAns = <span class="built_in">min</span>(fAns, <span class="built_in">Dis</span>(ptsTemp<span class="selector-attr">[i]</span>, ptsTemp<span class="selector-attr">[j]</span>));</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return fAns;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nT;</span><br><span class="line">    int nN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//printf("%f", FINF);</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN);</span><br><span class="line">        nNum = nN * <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, &amp;pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, &amp;pts<span class="selector-attr">[i]</span>.y);</span><br><span class="line">            pts<span class="selector-attr">[i]</span><span class="selector-class">.nKind</span> = <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nN; <span class="selector-tag">i</span> &lt; nNum; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, &amp;pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, &amp;pts<span class="selector-attr">[i]</span>.y);</span><br><span class="line">            pts<span class="selector-attr">[i]</span><span class="selector-class">.nKind</span> = <span class="number">2</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">memcpy</span>(ptsY, pts, <span class="built_in">sizeof</span>(Point) * nNum);</span><br><span class="line">        <span class="built_in">sort</span>(pts, pts + nNum, CmpX);</span><br><span class="line">        <span class="built_in">sort</span>(ptsY, ptsY + nNum, CmpY);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.3f\n"</span>, <span class="built_in">FindMinDis</span>(pts, ptsY, ptsTemp, <span class="number">0</span>, nNum - <span class="number">1</span>));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>hdu 1007 代码如下：<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">100000</span> + <span class="number">10</span>)</span><br><span class="line">struct Point</span><br><span class="line">{</span><br><span class="line">    double x, y;</span><br><span class="line">};</span><br><span class="line">Point pts<span class="selector-attr">[MAX]</span>;</span><br><span class="line">Point ptsTemp<span class="selector-attr">[MAX]</span>;</span><br><span class="line">const double FINF = <span class="number">1</span>LL &lt;&lt; <span class="number">60</span>;</span><br><span class="line">bool <span class="built_in">CmpX</span>(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">{</span><br><span class="line">    return <span class="selector-tag">a</span><span class="selector-class">.x</span> &lt; <span class="selector-tag">b</span>.x;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">CmpY</span>(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">{</span><br><span class="line">    return <span class="selector-tag">a</span><span class="selector-class">.y</span> &lt; <span class="selector-tag">b</span>.y;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Dis</span>(Point <span class="selector-tag">a</span>, Point b)</span><br><span class="line">{</span><br><span class="line">    return <span class="built_in">sqrt</span>((<span class="selector-tag">a</span><span class="selector-class">.x</span> - <span class="selector-tag">b</span>.x) * (<span class="selector-tag">a</span><span class="selector-class">.x</span> - <span class="selector-tag">b</span>.x) + (<span class="selector-tag">b</span><span class="selector-class">.y</span> - <span class="selector-tag">a</span>.y) * (<span class="selector-tag">b</span><span class="selector-class">.y</span> - <span class="selector-tag">a</span>.y));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Find</span>(int nL, int nH)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nL == nH)</span><br><span class="line">    {</span><br><span class="line">        return FINF;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nL + <span class="number">1</span> == nH)</span><br><span class="line">    {</span><br><span class="line">        return <span class="built_in">Dis</span>(pts<span class="selector-attr">[nL]</span>, pts<span class="selector-attr">[nH]</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nL + <span class="number">2</span> == nH)</span><br><span class="line">    {</span><br><span class="line">        return <span class="built_in">min</span>(<span class="built_in">Dis</span>(pts<span class="selector-attr">[nL]</span>, pts<span class="selector-attr">[nL + 1]</span>), </span><br><span class="line">                   <span class="built_in">min</span>(<span class="built_in">Dis</span>(pts<span class="selector-attr">[nL]</span>, pts<span class="selector-attr">[nH]</span>), <span class="built_in">Dis</span>(pts<span class="selector-attr">[nH]</span>, pts<span class="selector-attr">[nL + 1]</span>)));</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        int nMid = (nL + nH) / <span class="number">2</span>;</span><br><span class="line">        double fAns = <span class="built_in">min</span>(<span class="built_in">Find</span>(nL, nMid), <span class="built_in">Find</span>(nMid + <span class="number">1</span>, nH));</span><br><span class="line">        int nK = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nL; <span class="selector-tag">i</span> &lt;= nH; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">fabs</span>(pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span> - pts<span class="selector-attr">[nMid]</span>.x) &lt;= fAns)</span><br><span class="line">            {</span><br><span class="line">                ptsTemp<span class="selector-attr">[nK++]</span> = pts<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">sort</span>(ptsTemp, ptsTemp + nK, CmpY);</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nK; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="selector-tag">i</span> + <span class="number">1</span>; j &lt; nK; ++j)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (ptsTemp<span class="selector-attr">[j]</span><span class="selector-class">.y</span> - ptsTemp<span class="selector-attr">[i]</span><span class="selector-class">.y</span> &gt;= fAns)</span><br><span class="line">                {</span><br><span class="line">                    break;</span><br><span class="line">                }</span><br><span class="line">                fAns = <span class="built_in">min</span>(fAns, <span class="built_in">Dis</span>(ptsTemp<span class="selector-attr">[j]</span>, ptsTemp<span class="selector-attr">[i]</span>));</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return fAns;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nN;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, &amp;pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, &amp;pts<span class="selector-attr">[i]</span>.y);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">sort</span>(pts, pts + nN, CmpX);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%.2f\n"</span>, <span class="built_in">Find</span>(<span class="number">0</span>, nN -<span class="number">1</span>) * <span class="number">0.5</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/20/poj-1269-intersecting-lines/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1230,117 +1340,6 @@ XX***
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/04/uva-10025-the-1-2-n-k-problem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/05/04/uva-10025-the-1-2-n-k-problem/" class="post-title-link" itemprop="url">uva 10025 - The ? 1 ? 2 ? ... ? n = k problem</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-05-04 13:30:00" itemprop="dateCreated datePublished" datetime="2012-05-04T13:30:00+08:00">2012-05-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/05/04/uva-10025-the-1-2-n-k-problem/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10025 - The ? 1 ? 2 ? ... ? n = k problem" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/05/04/uva-10025-the-1-2-n-k-problem/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/04/uva-10025-the-1-2-n-k-problem/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这也算一个数学类的杂题吧。题目本身比较有意思，解题的思路很需要猜想。题目的意思用+和-去替代式子(? 1 ? 2 ? … ? n = k)中的？号，对于指定的K，求最小的n。For example: to obtain k = 12 , - 1 + 2 + 3 + 4 + 5 + 6 - 7 = 12 with n = 7。<br>这个题，我的思路大致如下。首先，K可能是正的也是负的，而且显然负的情况，有相应的正对应情况。那么考虑所有k为正的情况。由于k一定小于等于n<em>(n+1)/2的，所以可以先求出这样的最小n。这个可以二分搜索，或者直接用解不等式方程(不过这种方法一直wa了)。<br>然后就剩下的是第二点了，假设a + b = n</em>(n+1)/2, a - b = k。可以得到 n<em>(n+1)/2 - k = 2 </em> b。意思是，必须满足 n<em>(n+1)/2和k的差为偶数。假如满足了，这样的n是不是一定OK了？？？<br>答案是肯定的，这一点就是需要猜想的地方了。因为，仔细观察下，1到n的数字可以组合出任意的1到 n</em>(n+1)/4之间的数字，这个数字即是b。至于证明，可以用数学归纳法从n==1开始证明了。。。至此已经很简单了。<br>由于求n存在2种不同的方法，而且我开始用解一元二次不等式的方法求的N，出现了浮点误差，一直WA了。后面改成二分才过了。。。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt; </span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetN</span>(int nK)</span><br><span class="line">{</span><br><span class="line">    int nBeg = <span class="number">1</span>;</span><br><span class="line">    int nEnd = <span class="built_in">sqrt</span>(nK * <span class="number">2</span>) + <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    while (nBeg &lt;= nEnd)</span><br><span class="line">    {</span><br><span class="line">        int nMid = (nBeg + nEnd) / <span class="number">2</span>;</span><br><span class="line">        int nTemp = (nMid * nMid + nMid) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (nTemp &gt;= nK)</span><br><span class="line">        {</span><br><span class="line">            nEnd = nMid - <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        {</span><br><span class="line">            nBeg = nMid + <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return nEnd + <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nK;</span><br><span class="line">    int nTest;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nTest);</span><br><span class="line">    while (nTest--)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nK);</span><br><span class="line">        <span class="keyword">if</span> (nK &lt; <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            nK *= -<span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">//int nN = ceil(sqrt(2 * fabs(1.0 * nK) + 0.25) - 0.5 + 1e-9);</span></span><br><span class="line">        <span class="comment">//上面那种方法存在浮点误差,wa了三次</span></span><br><span class="line">        int nN = <span class="built_in">GetN</span>(nK);</span><br><span class="line"></span><br><span class="line">        while (<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (((nN * nN + nN) / <span class="number">2</span> - nK) % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, nN);</span><br><span class="line">                break;</span><br><span class="line">            }</span><br><span class="line">            ++nN;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (nTest)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1391,7 +1390,7 @@ XX***
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1456,12 +1455,12 @@ XX***
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">641k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

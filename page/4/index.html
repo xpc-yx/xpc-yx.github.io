@@ -222,6 +222,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" class="post-title-link" itemprop="url">CTex下如何使Beamer支持中文</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-11-28 19:17:05" itemprop="dateCreated datePublished" datetime="2015-11-28T19:17:05+08:00">2015-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" class="post-meta-item leancloud_visitors" data-flag-title="CTex下如何使Beamer支持中文" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/11/28/CTex%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BFBeamer%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>我使用的是windows下的最新版CTex，版本号是CTeX_2.9.2.164_Full.exe。注意使用full版本，如果不是，可能不支持beamer。beamer是一个流行的演讲文档模板，有多种主题，效果也还不错。</p>
+<p>我在尝试beamer的过程中，发现网上大部分例子都不支持中文，或者不支持我使用的环境下的中文，即windows下的最新版CTex。折腾了几天，试了很多个模板，发现xeCJK能够完美解决这个问题，因为很多老的模板都是用的CJK，我将其中一个模板改成xeCJK就支持中文了。<br> 下面给出这个模板的设置。  </p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">\documentclass{beamer}</span><br><span class="line">\usetheme{Warsaw}</span><br><span class="line">\usepackage{fontspec,xunicode,xltxtra}</span><br><span class="line">\usepackage<span class="selector-attr">[slantfont,boldfont]</span>{xeCJK} % 允许斜体和粗体</span><br><span class="line">\setbeamercovered{transparent}</span><br><span class="line">\usepackage<span class="selector-attr">[english]</span>{babel}</span><br><span class="line">% or whatever</span><br><span class="line">\usepackage{hyperref}</span><br><span class="line">\usepackage<span class="selector-attr">[T1]</span>{fontenc}</span><br><span class="line">% or whatever</span><br><span class="line">\usefonttheme{professionalfonts}</span><br><span class="line">\usepackage{times}</span><br><span class="line">\usepackage{mathptmx}</span><br><span class="line">\usepackage{tabularx}</span><br><span class="line">% Or whatever. Note that the encoding and the <span class="attribute">font</span> should match. If T1</span><br><span class="line">% does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage{xcolor}</span><br><span class="line">\usepackage{booktabs, multirow, enumerate}</span><br><span class="line">\usepackage{animate}</span><br><span class="line">\usepackage{multimedia}</span><br><span class="line"></span><br><span class="line">% ... or whatever. Note that the encoding and the <span class="attribute">font</span> should match.</span><br><span class="line">% If T1 does not look nice, try deleting the line with the fontenc.</span><br><span class="line">\usepackage{lmodern} %optional</span><br><span class="line">\usepackage{listings}</span><br><span class="line"></span><br><span class="line">% Delete this, <span class="keyword">if</span> you do not want the <span class="selector-tag">table</span> of contents to pop up at</span><br><span class="line">% the beginning of each subsection:</span><br><span class="line">\AtBeginSection<span class="selector-attr">[]</span></span><br><span class="line">{</span><br><span class="line">    \begin{frame}&lt;beamer&gt;</span><br><span class="line">        \frametitle{内容大纲}</span><br><span class="line">        \tableofcontents<span class="selector-attr">[currentsection]</span></span><br><span class="line">    \end{frame}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">\setCJKmainfont{Microsoft YaHei}   % 设置缺省中文字体</span><br><span class="line">\setCJKmonofont{SimSun}   % 设置等宽字体</span><br><span class="line">\setmainfont{TeX Gyre Pagella} % 英文衬线字体</span><br><span class="line">\setmonofont{Microsoft YaHei} % 英文等宽字体</span><br><span class="line">\setsansfont{Trebuchet MS} % 英文无衬线字体</span><br><span class="line"></span><br><span class="line">\begin{document}</span><br><span class="line"></span><br><span class="line">\title<span class="selector-attr">[***纹理***]</span>% optional, use only with long paper titles</span><br><span class="line">{ ***纹理***\\<span class="selector-attr">[2ex]</span>}</span><br><span class="line"></span><br><span class="line">%\subtitle<span class="selector-attr">[malloc]</span> %optional</span><br><span class="line">%{malloc\ 实现}</span><br><span class="line"></span><br><span class="line">\author<span class="selector-attr">[yx]</span> % optional, use only with lots of authors</span><br><span class="line">{</span><br><span class="line">\textcolor<span class="selector-attr">[rgb]</span>{<span class="number">0.00</span>, <span class="number">0.41</span>, <span class="number">0.66</span>}{yx}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">% the titlepage</span><br><span class="line">% the plain option removes the sidebar and <span class="selector-tag">header</span> from the title page</span><br><span class="line">\begin{frame}<span class="selector-attr">[plain]</span></span><br><span class="line">  \titlepage</span><br><span class="line">\end{frame}</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line"></span><br><span class="line">\begin{frame}</span><br><span class="line">        \frametitle{内容大纲}</span><br><span class="line">        \tableofcontents</span><br><span class="line">\end{frame}</span><br><span class="line"></span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\section{研究背景和意义}</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">\begin{frame}{纹理的作用}{}</span><br><span class="line">  \begin{block}&lt;<span class="number">1</span>-&gt;{}</span><br><span class="line">    纹理是图形学中增强真实性的重要手段。</span><br><span class="line">  \end{block}</span><br><span class="line">  \begin{block}&lt;<span class="number">2</span>-&gt;{}</span><br><span class="line">    应用纹理到三维表面能够有效的表示物体表面的颜色，材质，几何等属性。</span><br><span class="line">  \end{block}</span><br><span class="line">\end{frame}</span><br><span class="line">%%%%%%%%%%%%%%%%</span><br><span class="line">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span><br><span class="line">\end{document}</span><br></pre></td></tr></tbody></table></figure>
+<p>值得注意的是，请用utf8来保存该文档，并且在WinEdit中用utf8来打开，否则还是可能看到乱码的。<br>boats against the current, borne back ceaselessly into the past.</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/10/28/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9C%8B%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8A%E7%BA%BF%E4%BA%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1318,124 +1425,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" class="post-title-link" itemprop="url">C++调用MATLAB引擎求解线性方程组</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-04-12 13:13:45" itemprop="dateCreated datePublished" datetime="2015-04-12T13:13:45+08:00">2015-04-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" class="post-meta-item leancloud_visitors" data-flag-title="C++调用MATLAB引擎求解线性方程组" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/04/12/C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E6%B1%82%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>以前写过一篇<a href="http://www.xpc-yx.com/2015/01/20/%E4%BD%BF%E7%94%A8c%E8%B0%83%E7%94%A8matlab%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" title="C++调用MATLAB引擎计算特征向量">C++调用MATLAB引擎计算特征向量</a>，里面讲了如何配置环境等等。现在又有一个新的需求，求解线性系统。又想起了MATLAB这个工具，于是又写了个小类。这里要求解的是AX=B。其中，A是m*n的矩阵，X是n维行向量，B是m维列向量。MATLAB里面求解很简单X=A\B。</p>
-<p>该类的头文件如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求解线性系统AX = B.</span></span><br><span class="line">    <span class="comment">//A是Row*Column的矩阵,B是Row*1的列向量</span></span><br><span class="line">    class CLinearSystem</span><br><span class="line">    {</span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">CLinearSystem</span>() {}</span><br><span class="line">        <span class="built_in">CLinearSystem</span>(double* pMatrixA, int nRow, int nColumn, double* pColumnB);</span><br><span class="line">        ~<span class="built_in">CLinearSystem</span>() {}</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        void <span class="built_in">GetResult</span>(double* pX);<span class="comment">//pX保证能输出m_nColumn个元素</span></span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        double* m_pMatrixA;</span><br><span class="line">        double* m_pColumnB;</span><br><span class="line">        int m_nRow;</span><br><span class="line">        int m_nColumn;</span><br><span class="line">    };</span><br></pre></td></tr></tbody></table></figure>
-<p>源文件如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"LinearSystem.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;cassert&gt;</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"engine.h"</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"libeng.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"libmx.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"libmat.lib"</span>)</span><br><span class="line"></span><br><span class="line">    CLinearSystem::<span class="built_in">CLinearSystem</span>(double* pMatrixA, int nRow, int nColumn, double* pColumnB)</span><br><span class="line">        : <span class="built_in">m_pMatrixA</span>(pMatrixA), <span class="built_in">m_nRow</span>(nRow), <span class="built_in">m_nColumn</span>(nColumn), <span class="built_in">m_pColumnB</span>(pColumnB)</span><br><span class="line">    {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void CLinearSystem::<span class="built_in">GetResult</span>(double* pX)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">assert</span>(pX != NULL);</span><br><span class="line"></span><br><span class="line">        Engine *ep = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!(ep = <span class="built_in">engOpen</span>(NULL)))<span class="comment">//打开matlab引擎</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">fprintf</span>(stderr, <span class="string">"\nCan't start MATLAB engine\n"</span>);</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        mxArray* matrixA = <span class="built_in">mxCreateDoubleMatrix</span>(m_nRow, m_nColumn, mxREAL);</span><br><span class="line">        <span class="comment">//matlab里面的矩阵是列主顺序，这里需要变换位置</span></span><br><span class="line">        double* pA = <span class="built_in">mxGetPr</span>(matrixA);</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; m_nColumn; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nRow; ++i)</span><br><span class="line">            {</span><br><span class="line">                *pA++ = *(m_pMatrixA + <span class="selector-tag">i</span> * m_nColumn + j);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        mxArray* columnB = <span class="built_in">mxCreateDoubleMatrix</span>(m_nRow, <span class="number">1</span>, mxREAL);</span><br><span class="line">        <span class="built_in">memcpy</span>(<span class="built_in">mxGetPr</span>(columnB), m_pColumnB, <span class="built_in">sizeof</span>(double) * m_nRow * <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"A"</span>, matrixA);</span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"B"</span>, columnB);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"X = A\\B;"</span>);</span><br><span class="line"></span><br><span class="line">        mxArray* rowX = <span class="built_in">engGetVariable</span>(ep, <span class="string">"X"</span>); <span class="comment">//返回计算结果</span></span><br><span class="line">        <span class="built_in">memcpy</span>(pX, <span class="built_in">mxGetPr</span>(rowX), <span class="built_in">sizeof</span>(double) * m_nColumn);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(matrixA);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(columnB);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(rowX);</span><br><span class="line">        <span class="built_in">engClose</span>(ep);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<p>该类里面就一个计算结果的函数。实现的过程也很简单，打开MATLAB引擎，创建了对应的矩阵和向量，计算表达式。注意，”X = A\B;”中必须加转义\。另外，MATLAB中的矩阵是列主序的，也就是按照列存储的。所以，从C++的矩阵变换到MATLAB矩阵需要重新设置值，而不是简单的拷贝内存。<br><span style="font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; line-height: 1.5;">  如果，A是巨大的稀疏矩阵，那么就应该创建稀疏矩阵来计算了。测试代码如下：</span></p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//测试线性系统</span></span><br><span class="line">int nRow = <span class="number">3</span>, nColumn = <span class="number">2</span>;</span><br><span class="line">double pA<span class="selector-attr">[3]</span><span class="selector-attr">[2]</span> = { {<span class="number">4</span>, <span class="number">5</span>}, {<span class="number">1</span>, <span class="number">2</span>}, {<span class="number">3</span>, <span class="number">1</span>} };</span><br><span class="line">double pB<span class="selector-attr">[3]</span> = {<span class="number">3</span>, <span class="number">15</span>, <span class="number">12</span>};</span><br><span class="line">CLinearSystem <span class="built_in">ls</span>((double*)pA, nRow, nColumn, pB);</span><br><span class="line">double pX<span class="selector-attr">[2]</span>;</span><br><span class="line">ls<span class="selector-class">.GetResult</span>(pX);</span><br><span class="line"><span class="function"><span class="title">printf</span><span class="params">(<span class="string">"%f %f\n"</span>, pX[<span class="number">0</span>], pX[<span class="number">1</span>])</span></span>;</span><br></pre></td></tr></tbody></table></figure>
-<p>输出为：3.000000 -0.600000</p>
-<p>前面说了，系数矩阵的事情，现在代码进行了更新，加入了稀疏矩阵，A可以是稀疏矩阵传入，B的话没有当做稀疏矩阵传入了。不过，在调用MATLAB代码时候还是得作为稀疏矩阵。具体代码如下，就不细说了。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#pragma</span> once</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifndef</span> LIBYX_LINEAR_SYSTEM_H</span><br><span class="line"><span class="selector-id">#define</span> LIBYX_LINEAR_SYSTEM_H</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"MatlabSparseMatrix.h"</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//求解线性系统AX = B.</span></span><br><span class="line">    <span class="comment">//A是Row*Column的矩阵,B是Row*1的列向量</span></span><br><span class="line">    class CLinearSystem</span><br><span class="line">    {</span><br><span class="line">    public:</span><br><span class="line">        <span class="built_in">CLinearSystem</span>() {}</span><br><span class="line">        <span class="built_in">CLinearSystem</span>(double* pMatrixA, int nRow, int nColumn, double* pColumnB);</span><br><span class="line">        <span class="built_in">CLinearSystem</span>(MatlabSparseInfor* pSI, int nNum, int nRow, int nColumn, double* pColumnB);</span><br><span class="line">        ~<span class="built_in">CLinearSystem</span>() {}</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">        void <span class="built_in">GetResult</span>(double* pX);<span class="comment">//pX保证能输出m_nColumn个元素</span></span><br><span class="line">        void <span class="built_in">GetResultSparse</span>(double* pX);<span class="comment">//中间过程使用稀疏矩阵计算结果</span></span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        double* m_pMatrixA;</span><br><span class="line">        double* m_pColumnB;</span><br><span class="line">        int m_nRow;</span><br><span class="line">        int m_nColumn;</span><br><span class="line"></span><br><span class="line">    private:<span class="comment">//稀疏矩阵形式输入A</span></span><br><span class="line">        MatlabSparseInfor* m_pSI;</span><br><span class="line">        int m_nNum;</span><br><span class="line">    };</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"LinearSystem.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;cassert&gt;</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"engine.h"</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"libeng.lib"</span>) </span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"libmx.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"libmat.lib"</span>)</span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">{</span><br><span class="line">    CLinearSystem::<span class="built_in">CLinearSystem</span>(double* pMatrixA, int nRow, int nColumn, double* pColumnB)</span><br><span class="line">        : <span class="built_in">m_pMatrixA</span>(pMatrixA), <span class="built_in">m_nRow</span>(nRow), <span class="built_in">m_nColumn</span>(nColumn), <span class="built_in">m_pColumnB</span>(pColumnB)</span><br><span class="line">    {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    CLinearSystem::<span class="built_in">CLinearSystem</span>(MatlabSparseInfor* pSI, int nNum, int nRow, int nColumn, double* pColumnB)</span><br><span class="line">        : <span class="built_in">m_pSI</span>(pSI), <span class="built_in">m_nNum</span>(nNum), <span class="built_in">m_nRow</span>(nRow), <span class="built_in">m_nColumn</span>(nColumn), <span class="built_in">m_pColumnB</span>(pColumnB)</span><br><span class="line">    {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void CLinearSystem::<span class="built_in">GetResult</span>(double* pX)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">assert</span>(pX != NULL);</span><br><span class="line"></span><br><span class="line">        Engine *ep = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!(ep = <span class="built_in">engOpen</span>(NULL)))<span class="comment">//打开matlab引擎</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">fprintf</span>(stderr, <span class="string">"\nCan't start MATLAB engine\n"</span>);</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        mxArray* matrixA = <span class="built_in">mxCreateDoubleMatrix</span>(m_nRow, m_nColumn, mxREAL);</span><br><span class="line">        <span class="comment">//matlab里面的矩阵是列主顺序，这里需要变换位置</span></span><br><span class="line">        double* pA = <span class="built_in">mxGetPr</span>(matrixA);</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; m_nColumn; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nRow; ++i)</span><br><span class="line">            {</span><br><span class="line">                *pA++ = *(m_pMatrixA + <span class="selector-tag">i</span> * m_nColumn + j);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        mxArray* columnB = <span class="built_in">mxCreateDoubleMatrix</span>(m_nRow, <span class="number">1</span>, mxREAL);</span><br><span class="line">        <span class="built_in">memcpy</span>(<span class="built_in">mxGetPr</span>(columnB), m_pColumnB, <span class="built_in">sizeof</span>(double) * m_nRow * <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"A"</span>, matrixA);</span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"B"</span>, columnB);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"X = A\\B;"</span>);</span><br><span class="line"></span><br><span class="line">        mxArray* rowX = <span class="built_in">engGetVariable</span>(ep, <span class="string">"X"</span>); <span class="comment">//返回计算结果</span></span><br><span class="line">        <span class="built_in">memcpy</span>(pX, <span class="built_in">mxGetPr</span>(rowX), <span class="built_in">sizeof</span>(double) * m_nColumn);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(matrixA);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(columnB);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(rowX);</span><br><span class="line">        <span class="built_in">engClose</span>(ep);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void CLinearSystem::<span class="built_in">GetResultSparse</span>(double* pX)</span><br><span class="line">    {</span><br><span class="line">        Engine *ep = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!(ep = <span class="built_in">engOpen</span>(NULL)))<span class="comment">//打开matlab引擎</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">fprintf</span>(stderr, <span class="string">"\nCan't start MATLAB engine\n"</span>);</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//以下代码构造稀疏系数矩阵</span></span><br><span class="line">        mxArray* sm = <span class="built_in">mxCreateSparse</span>(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">        double* pr = <span class="built_in">mxGetPr</span>(sm);</span><br><span class="line">        mwIndex* ir = <span class="built_in">mxGetIr</span>(sm); </span><br><span class="line">        mwIndex* jc = <span class="built_in">mxGetJc</span>(sm); </span><br><span class="line"></span><br><span class="line">        int k = <span class="number">0</span>;</span><br><span class="line">        int nLastC = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nNum; ++i)</span><br><span class="line">        {</span><br><span class="line">            pr<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.v;</span><br><span class="line">            ir<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.r;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (m_pSI<span class="selector-attr">[i]</span><span class="selector-class">.c</span> != nLastC)</span><br><span class="line">            {</span><br><span class="line">                jc<span class="selector-attr">[k]</span> = i;</span><br><span class="line">                nLastC = m_pSI<span class="selector-attr">[i]</span>.c;</span><br><span class="line">                ++k;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        jc<span class="selector-attr">[k]</span> = m_nNum;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//以下代码构造稀疏列</span></span><br><span class="line">        mxArray* columnB = <span class="built_in">mxCreateSparse</span>(m_nRow, <span class="number">1</span>, m_nRow, mxREAL);</span><br><span class="line">        pr = <span class="built_in">mxGetPr</span>(columnB);</span><br><span class="line">        ir = <span class="built_in">mxGetIr</span>(columnB); </span><br><span class="line">        jc = <span class="built_in">mxGetJc</span>(columnB); </span><br><span class="line"></span><br><span class="line">        jc<span class="selector-attr">[0]</span> = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nRow; ++i)</span><br><span class="line">        {</span><br><span class="line">            pr<span class="selector-attr">[i]</span> = m_pColumnB<span class="selector-attr">[i]</span>;</span><br><span class="line">            ir<span class="selector-attr">[i]</span> = i;</span><br><span class="line">        }</span><br><span class="line">        jc<span class="selector-attr">[1]</span> = m_nRow;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将构造的稀疏矩阵传入MATLAB命令中</span></span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"sm"</span>, sm);</span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"columnB"</span>, columnB);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"X = sm\\columnB;"</span>);</span><br><span class="line"></span><br><span class="line">        mxArray* rowX = <span class="built_in">engGetVariable</span>(ep, <span class="string">"X"</span>); <span class="comment">//返回计算结果</span></span><br><span class="line">        <span class="built_in">memcpy</span>(pX, <span class="built_in">mxGetPr</span>(rowX), <span class="built_in">sizeof</span>(double) * m_nColumn);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(rowX);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(columnB);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(sm);</span><br><span class="line">        <span class="built_in">engClose</span>(ep);</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1486,7 +1475,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1551,12 +1540,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">641k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
