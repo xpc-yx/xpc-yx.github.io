@@ -4790,7 +4790,7 @@ CImage CImage::operator=(const CImage yxImage)
     <title>Matcap的原理和应用</title>
     <url>/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/</url>
     <content><![CDATA[<html><head></head><body><h1 id="一、概念和原理"><a href="#一、概念和原理" class="headerlink" title="一、概念和原理"></a>一、概念和原理</h1><h2 id="2-1-什么是Matcap"><a href="#2-1-什么是Matcap" class="headerlink" title="2.1 什么是Matcap"></a>2.1 什么是Matcap</h2><p>  什么是Matcap？Matcap实际上是Material Capture的缩写，即材质捕捉。实际上，这是一种离线渲染方案。类似光照烘焙，将光照或者其它更复杂环境下的渲染数据存储到一张2D贴图上， 再从这张2D贴图进行采样进行实时渲染。</p>
-<p><a href="https://help.sketchfab.com/hc/en-us/articles/115003065883-Materials-MatCap-">Materials (MatCap)</a><br>这篇文章对Matcap的定义是：<br>MatCap (Material Capture) shaders are complete materials, including lighting and reflections. They work by defining a color for every vertex normal direction relative to the camera. </p>
+<p><a href="https://help.sketchfab.com/hc/en-us/articles/115003065883-Materials-MatCap-">Materials (MatCap)</a>这篇文章对Matcap的定义是：<br>MatCap (Material Capture) shaders are complete materials, including lighting and reflections. They work by defining a color for every vertex normal direction relative to the camera. </p>
 <h2 id="2-2-如何理解Matcap"><a href="#2-2-如何理解Matcap" class="headerlink" title="2.2 如何理解Matcap"></a>2.2 如何理解Matcap</h2><p>Matcap是一种在视线空间下使用单位法线采样单位球的离线渲染算法。</p>
 <ul>
 <li>为什么是视线空间？因为视线空间下，相机变化就可以看到不同的渲染结果。</li>
