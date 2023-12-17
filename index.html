@@ -293,7 +293,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -338,8 +338,9 @@
 <h2 id="3-3-解决办法"><a href="#3-3-解决办法" class="headerlink" title="3.3 解决办法"></a>3.3 解决办法</h2><h3 id="3-1-1-缩放uv"><a href="#3-1-1-缩放uv" class="headerlink" title="3.1.1 缩放uv"></a>3.1.1 缩放uv</h3><p>第一种方式是对matcapUV进行缩放，比如缩小uv可以使得避免采样边缘区域。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float2 matCapUV = viewNormal.xy * <span class="number">0.5</span> * _MatcapUVScale + <span class="number">0.5</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>这种方式可以简单的解决边缘瑕疵问题，但是无法解决单点采样。</p>
-<h3 id="3-1-2-使用视线空间下单位球的法线"><a href="#3-1-2-使用视线空间下单位球的法线" class="headerlink" title="3.1.2 使用视线空间下单位球的法线"></a>3.1.2 使用视线空间下单位球的法线</h3><p><img alt="matcap优化" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap优化.png"><br>如上图所示，在Matcap的定义中，我们处于视线空间内，视线方向始终是（0，0，1）。我们最终要使用的是单位球的N方向。假设反射方向是R，可以计算得到N是(Rx，Ry，Rz+1)。那么问题转化为求反射向量R。我们可以用视线空间的顶点和法线求得视线空间下的R，然后用视线空间的R去代替单位球上的反射向量R即可，即使两个方向向量不能等价，也可以得到相应正确的结果。<br>这种算法可以显著优化平面的单点采样问题。<br><img alt="matcap优化对比" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap优化对比.png"></p>
-<p>从上图可以看出，对于平面来说，两种算法的效果差异非常明显。</p>
+<h3 id="3-1-2-使用视线空间下单位球的法线"><a href="#3-1-2-使用视线空间下单位球的法线" class="headerlink" title="3.1.2 使用视线空间下单位球的法线"></a>3.1.2 使用视线空间下单位球的法线</h3><p><img alt="matcap优化" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap优化.png"><br>如上图所示，在Matcap的定义中，我们处于视线空间内，视线方向始终是（0，0，1）。我们最终要使用的是单位球的N方向。假设反射方向是R，可以计算得到N是(Rx，Ry，Rz+1)。那么问题转化为求反射向量R。我们可以用视线空间的顶点和法线求得视线空间下的R，然后用视线空间的R去代替单位球上的反射向量R即可，即使两个方向向量不能等价，也可以得到相应正确的结果。<br>这种算法可以显著优化平面的单点采样问题。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#if _MATCAP_FIX_EDGE_FLAW</span><br><span class="line">	float3 r = reflect(input.positionVS, viewNormal);</span><br><span class="line">	r = normalize(r);</span><br><span class="line">	float m = 2.82842712474619 * sqrt(r.z + 1.0); </span><br><span class="line">	float2 matCapUV = r.xy / m * _MatcapUVScale + 0.5;</span><br><span class="line">#else</span><br><span class="line">	float2 matCapUV = viewNormal.xy * 0.5 * _MatcapUVScale + 0.5;</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p><img alt="matcap优化对比" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap优化对比.png"><br>从上图可以看出，对于平面来说，两种算法的效果差异非常明显。</p>
 <h1 id="四、Matcap与其它效果的结合"><a href="#四、Matcap与其它效果的结合" class="headerlink" title="四、Matcap与其它效果的结合"></a>四、Matcap与其它效果的结合</h1><p>下面的测试均以如下Matcap贴图为例。<br><img alt="matcap输入" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap输入.png"></p>
 <h2 id="4-1-基础颜色"><a href="#4-1-基础颜色" class="headerlink" title="4.1 基础颜色"></a>4.1 基础颜色</h2><p>如果把Matcap当作光照的结果，那么可以额外提供基础颜色来控制最终结果。比如，提供基础颜色贴图和基础颜色，乘以到matcap上作为最终输出。<br><img alt="matcap基础色" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap基础色.png"></p>
 <h2 id="4-2-法线贴图"><a href="#4-2-法线贴图" class="headerlink" title="4.2 法线贴图"></a>4.2 法线贴图</h2><p>既然matcap需要用到法线，那么可以额外提供法线贴图去修改像素的法线。<br><img alt="matcap法线" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/matcap法线.png"><br>从上图可以看出，法线对最终的渲染结果影响显著。</p>
@@ -1808,7 +1809,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">638k</span>
+    <span title="站点总字数">639k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
