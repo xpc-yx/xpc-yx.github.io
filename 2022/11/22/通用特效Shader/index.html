@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="一、通用特效Shader介绍1.1 什么是通用特效材质Unity支持SRP Batcher后，使用UberShader的优势非常明显。所谓，UberShader，即一个超级Shader，覆盖一类功能，而不是多个分散的小Shader，比如一个通用特效Shader，整个项目内的所有特效都使用该Shader来制作所有的粒子特效或者模型特效，其它需求也类似，比如物体、地形等。 1.2 通用特效材质的意义1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通用特效Shader的实现">
+<meta property="og:url" content="http://xiaopengcheng.top/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="一、通用特效Shader介绍1.1 什么是通用特效材质Unity支持SRP Batcher后，使用UberShader的优势非常明显。所谓，UberShader，即一个超级Shader，覆盖一类功能，而不是多个分散的小Shader，比如一个通用特效Shader，整个项目内的所有特效都使用该Shader来制作所有的粒子特效或者模型特效，其它需求也类似，比如物体、地形等。 1.2 通用特效材质的意义1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsSurfaceOptions.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsSurfaceInputs.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/EffectsCustomData.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsMask.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsMaskTest.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsDistortion.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsDistortionTest.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsDissolveOptions.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsDissolveTest.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsEmissionOptions.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsRimLightOptions.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsLightOptions.png">
+<meta property="article:published_time" content="2022-11-22T07:10:00.000Z">
+<meta property="article:modified_time" content="2024-11-10T14:07:42.924Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="特效">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/%E5%B0%8F%E4%B9%A6%E5%8C%A0/UberEffectsSurfaceOptions.png">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>通用特效Shader的实现 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          通用特效Shader的实现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-22 15:10:00" itemprop="dateCreated datePublished" datetime="2022-11-22T15:10:00+08:00">2022-11-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/" class="post-meta-item leancloud_visitors" data-flag-title="通用特效Shader的实现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <html><head></head><body><h1 id="一、通用特效Shader介绍"><a href="#一、通用特效Shader介绍" class="headerlink" title="一、通用特效Shader介绍"></a>一、通用特效Shader介绍</h1><h2 id="1-1-什么是通用特效材质"><a href="#1-1-什么是通用特效材质" class="headerlink" title="1.1 什么是通用特效材质"></a>1.1 什么是通用特效材质</h2><p>Unity支持SRP Batcher后，使用UberShader的优势非常明显。所谓，UberShader，即一个超级Shader，覆盖一类功能，而不是多个分散的小Shader，比如一个通用特效Shader，整个项目内的所有特效都使用该Shader来制作所有的粒子特效或者模型特效，其它需求也类似，比如物体、地形等。</p>
+<h2 id="1-2-通用特效材质的意义"><a href="#1-2-通用特效材质的意义" class="headerlink" title="1.2 通用特效材质的意义"></a>1.2 通用特效材质的意义</h2><h3 id="1-2-1-方便使用和沟通"><a href="#1-2-1-方便使用和沟通" class="headerlink" title="1.2.1 方便使用和沟通"></a>1.2.1 方便使用和沟通</h3><p>整个项目只有一个特效Shader的情况下，美术很容易熟悉该Shader有哪些功能，能够尽可能复用该通用Shader的多个功能制作复杂特效；同时，避免美术与技术美术或者技术重复沟通类似的功能。</p>
+<h3 id="1-2-2-方便维护"><a href="#1-2-2-方便维护" class="headerlink" title="1.2.2 方便维护"></a>1.2.2 方便维护</h3><p>对于技术美术或者开发同学来说，维护一个Shader的成本比维护多个的成本低很多。对于重复功能不需要再重复开发，优化性能时候也不用满世界扫描美术到底用的是什么Shader，只需要优化这一个Shader性能即可。</p>
+<h3 id="1-2-3-批次更低"><a href="#1-2-3-批次更低" class="headerlink" title="1.2.3 批次更低"></a>1.2.3 批次更低</h3><p>由于支持SRP Batcher，Unity使用的是最终的变体级别合批。与多个分散小Shader相比，一个Shader质制作的特效更可能被SRP Batcher，因为使用的同一个变体的概率很高，而不同的Shader天然就是不同的变体，不可能被SRP Batcher。因此，只要复用率越高，被合并的批次越多。</p>
+<h2 id="1-2-通用特效材质主要模块"><a href="#1-2-通用特效材质主要模块" class="headerlink" title="1.2 通用特效材质主要模块"></a>1.2 通用特效材质主要模块</h2><p>主要包括基础功能、Mask、Distortion（扭曲）、Dissolve（溶解）、Emission（自发光）、Reflection（反射）、其它等。每个大的模块都有变体开关，部分消耗大的小功能也需要有变体开关。这里只是列出本人项目中用到过的一些功能，基本上覆盖了常见的特效功能，但是不同项目会有不同的需求，因此除了常见的扭曲、溶解等还会有不少定制功能。这篇文章的目的，不在于介绍这些功能的实现细节，而是说明一个超级特效Shader在项目中使用的意义。</p>
+<h1 id="二、通用特效具体模块"><a href="#二、通用特效具体模块" class="headerlink" title="二、通用特效具体模块"></a>二、通用特效具体模块</h1><h2 id="2-1-Surface-Options（基础设置）"><a href="#2-1-Surface-Options（基础设置）" class="headerlink" title="2.1 Surface Options（基础设置）"></a>2.1 Surface Options（基础设置）</h2><p><img alt="UberEffectsSurfaceOptions" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsSurfaceOptions.png"><br>Surface Type：不透明或者半透明<br>Render Face：Front（剔除背面）、Back（剔除前面）、Both（不剔除）<br>Custom ZWrite：是否覆盖深度写入<br>ZTest：深度测试<br>ColorMask：输出颜色通道<br>Alpha Clipping：Alpha裁剪<br>Enable Billboard：是否作为Billboard渲染（朝向相机）</p>
+<h2 id="2-2-Surface-Inputs-（基础输入）"><a href="#2-2-Surface-Inputs-（基础输入）" class="headerlink" title="2.2 Surface Inputs （基础输入）"></a>2.2 Surface Inputs （基础输入）</h2><p><img alt="UberEffectsSurfaceInputs" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsSurfaceInputs.png"><br>Base Map：基础颜色贴图<br>Base Color：基础颜色<br>Enable BackFace Base Color：开启该选项，可以给背面单独制定基础颜色<br>Apply Vertex Color：开启该选项，顶点颜色应用到基础色上<br>BaseMap UvType：该设置有UV、ScreenUV、ReflectionUV三种类型。UV模式是使用模型UV0，ScreenUV是使用屏幕空间位置作为UV，ReflectionUV使用反射向量的两个分量比如xz作为UV。ScreenUV和ReflectionUV可以实现一些特殊效果。<br>BaseMap Rotation：UV模式下，对模型UV0旋转。<br>BaseMap U Speed：UV的U移动速度。<br>BaseMap V Speed：UV的V移动速度。<br>BaseMap Custom Speed (CustomData1.xy, UV0.zw)：该功能是使用Unity粒子的CustomData1.xy来作为UV。如下所示的CustomData1.xy是曲线：<br><img alt="EffectsCustomData" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/EffectsCustomData.png"><br>Normal Map：法线贴图，只在需要使用法线方向时候有意义，比如反射、Matcap等<br>Normal Scale：法线强度缩放<br>Normal U Speed：法线的U移动速度。<br>Normal V Speed：法线的V移动速度。</p>
+<h2 id="2-3-Mask-Options"><a href="#2-3-Mask-Options" class="headerlink" title="2.3 Mask Options"></a>2.3 Mask Options</h2><p><img alt="UberEffectsMask" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsMask.png"><br>Mask贴图的作用是修改透明度，在半透明模式下可以只显示通过Mask的区域。</p>
+<p>Mask Map (R)：Mask贴图，默认使用R通道。<br>Mask Channel Mask (Default R)：Mask贴图的通道掩码。<br>Mask Rotation：Mask贴图的UV旋转。<br>Mask U Speed：Mask贴图的U移动速度。<br>Mask V Speed：Mask贴图的V移动毒素。<br>Mask Custom Speed (CustomData1.zw, UV1.xy):使用Unity粒子的CustomData1.zw来作为Mask的UV。<br>Mask Intensity:  Mask的强度缩放。<br>Mask Min：Mask的强度最小值。<br>Mask Max：Mask的强度最大值。最终的Mask强度会在该范围内SmoothStep。<br>下面是使用Mask的效果：<br><img alt="UberEffectsMaskTest" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsMaskTest.gif"></p>
+<h2 id="2-4-Distortion-Options"><a href="#2-4-Distortion-Options" class="headerlink" title="2.4 Distortion Options"></a>2.4 Distortion Options</h2><p><img alt="UberEffectsDistortion" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsDistortion.png"><br>Distortion的功能就是扭曲其它模块的采样UV，比如基础色、自发光、溶解等。<br>Distortion Map (RG) Mask(A)：扭曲贴图，RG通道是扭曲强度，A通道是扭曲Mask。<br>Distortion Rotation：扭曲的UV旋转。<br>Distortion U Speed：扭曲的U移动速度。<br>Distortion V Speed：扭曲的V移动速度。<br>Distortion Intensity：扭曲的强度缩放。<br>下面是使用扭曲的效果：<br><img alt="UberEffectsDistortionTest" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsDistortionTest.gif"></p>
+<h2 id="2-5-Dissolve-Options"><a href="#2-5-Dissolve-Options" class="headerlink" title="2.5 Dissolve Options"></a>2.5 Dissolve Options</h2><p><img alt="UberEffectsDissolveOptions" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsDissolveOptions.png"><br>Dissolve Map (R)：溶解贴图，默认使用R通道。<br>Dissolve Channel Mask (Default R)：溶解贴图的通道掩码。<br>Dissolve Rotation：溶解贴图的UV旋转。<br>Dissolve U Speed：溶解贴图的U移动速度。<br>Dissolve V Speed：溶解贴图的V移动速度。<br>Dissolve Intensity：溶解强度，注意不是溶解贴图的输入强度缩放。<br>Dissolve Width：溶解宽度。<br>Dissolve Edge Color：溶解边缘颜色。<br>Dissolve Edge Intensity：溶解边缘颜色强度缩放。<br>Dissolve Hard Edge：是否硬边溶解。<br>Dissolve Custom Intensity (CustomData2.x, UV1.z)：使用粒子系统的CustomData2.x作为溶解强度。<br>Dissolve Custom Width (CustomData2.y, UV1.w)：使用粒子系统的CustomData2.y作为溶解宽度。<br>溶解的功能比较复杂，最基本的思想是用一张贴图作为溶解强度输入，然后通过在溶解强度和宽度之间计算出溶解阈值，用这个阈值去修改透明度；溶解的边缘颜色则是将溶解阈值应用到单独是边缘颜色上再叠加到输出颜色上；至于硬边溶解是直接将溶解阈值取sign。<br>有兴趣还原的可以参考下面代码：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">half disslove = dot(SAMPLE_TEXTURE2D(_DissolveMap, sampler_DissolveMap, input.uv3.xy + distortion), _DissolveChannelMask);</span><br><span class="line">half dissloveIntensity = input.uv3.z;</span><br><span class="line">half dissolveWidth = input.uv3.w;</span><br><span class="line">half dissolveWithParticle = (dissloveIntensity * (1 + dissolveWidth) - dissolveWidth);</span><br><span class="line">half dissolveAlpha = saturate(smoothstep(dissolveWithParticle, (dissolveWithParticle + dissolveWidth), disslove));</span><br><span class="line">color.a *= _DissolveHardEdge ? sign(dissolveAlpha) : dissolveAlpha;</span><br><span class="line">color.rgb += _DissolveEdgeColor.rgb * _DissolveEdgeColor.a * _DissolveEdgeIntensity * (_DissolveHardEdge ? sign(1 - dissolveAlpha) : (1 - dissolveAlpha));</span><br></pre></td></tr></tbody></table></figure><br>下面是使用溶解的效果：<br><img alt="UberEffectsDissolveTest" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsDissolveTest.gif"><p></p>
+<h2 id="2-6-Emission-Options"><a href="#2-6-Emission-Options" class="headerlink" title="2.6 Emission Options"></a>2.6 Emission Options</h2><p><img alt="UberEffectsEmissionOptions" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsEmissionOptions.png"><br>Emission Map：自发光贴图。<br>EmissionColor：自发光颜色。<br>Use WorldPos As UV：特殊需求，使用世界空间位置作为UV采样自发光贴图。<br>Emission U Speed：自发光的U移动速度。<br>Emission V Speed：自发光的V移动速度。<br>Emission Intensity：自发光的强度缩放。<br>自发光的原理比较简单，采样一张额外的自发光贴图叠加颜色，不再赘述。</p>
+<h2 id="2-7-RimLight-Options"><a href="#2-7-RimLight-Options" class="headerlink" title="2.7 RimLight Options"></a>2.7 RimLight Options</h2><p><img alt="UberEffectsRimLightOptions" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsRimLightOptions.png"><br>RimLight Color：边缘光颜色。<br>RimLight Width：边缘光宽度。<br>RimLight Smoothness：边缘光光滑度。<br>RimLight Intensity：边缘光强度缩放。<br>RimLight Min：边缘光最小强度。<br>RimLight Max：边缘光最大强度。<br>RimLight Reverse：是否反转强度。<br>边缘光是实际上是计算法线与视线的夹角来判断边缘，当夹角越大边缘光越强，最终将边缘光叠加回输出颜色上。具体代码如下：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">half cosTheta = dot(normalWS, viewDirWS);</span><br><span class="line">half rimLightStrength = pow(saturate(1 - 1 / _RimLightWidth * cosTheta), _RimLightSmoothness);</span><br><span class="line">rimLightStrength = (_RimLightReverse ? 1 - rimLightStrength : rimLightStrength) * _RimLightIntensity;</span><br><span class="line">rimLightStrength = smoothstep(_RimLightMinValue, _RimLightMaxValue, rimLightStrength);</span><br><span class="line">color.rgb += _RimLightColor * rimLightStrength;</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="2-8-Light-Options"><a href="#2-8-Light-Options" class="headerlink" title="2.8 Light Options"></a>2.8 Light Options</h2><p><img alt="UberEffectsLightOptions" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UberEffectsLightOptions.png"><br>Real Time Light Strength：实时光强度<br>Real Time Shadow Strength：实时光阴影强度<br>Real Time Shadow Color：实时光阴影颜色<br>Real Time Shadow Color Strength：实时光阴影颜色强度<br>强调一下：这里不是让特效Shader走完整的光照计算，而只是用光源的信息去修改最终的输出颜色。这样性能高效，看起来也在接受光源阴影。</p>
+<h2 id="2-9-其它功能"><a href="#2-9-其它功能" class="headerlink" title="2.9 其它功能"></a>2.9 其它功能</h2><h3 id="2-9-1-Depth-Bias"><a href="#2-9-1-Depth-Bias" class="headerlink" title="2.9.1 Depth Bias"></a>2.9.1 Depth Bias</h3><p>深度偏移，特效有时候需要偏移深度来强制放在某些物体之前，这个功能比较有效果。</p>
+<h3 id="2-9-2-Reflection-Options"><a href="#2-9-2-Reflection-Options" class="headerlink" title="2.9.2 Reflection Options"></a>2.9.2 Reflection Options</h3><p>使用反射方向采样Cubemap，将结果叠加到输出颜色上即可。</p>
+<h3 id="2-9-2-Matcap"><a href="#2-9-2-Matcap" class="headerlink" title="2.9.2 Matcap"></a>2.9.2 Matcap</h3><p>参考上一篇文章的Matcap，对于特效的matcap可以简单实现即可。</p>
+</body></html>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\10\22\Urp下自定义特效管线和后处理特效实现\" rel="bookmark">Urp下自定义特效管线和后处理特效实现</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2022/11/22/%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader/" title="通用特效Shader的实现">http://xiaopengcheng.top/2022/11/22/通用特效Shader/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%89%B9%E6%95%88/" rel="tag"><i class="fa fa-tag"></i> 特效</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/19/Matcap%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/" rel="prev" title="Matcap的原理和应用">
+      <i class="fa fa-chevron-left"></i> Matcap的原理和应用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88Shader%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">一、通用特效Shader介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88%E6%9D%90%E8%B4%A8"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是通用特效材质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88%E6%9D%90%E8%B4%A8%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 通用特效材质的意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E6%96%B9%E4%BE%BF%E4%BD%BF%E7%94%A8%E5%92%8C%E6%B2%9F%E9%80%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 方便使用和沟通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E6%96%B9%E4%BE%BF%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 方便维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E6%89%B9%E6%AC%A1%E6%9B%B4%E4%BD%8E"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3 批次更低</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88%E6%9D%90%E8%B4%A8%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97"><span class="nav-number">1.3.</span> <span class="nav-text">1.2 通用特效材质主要模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%80%9A%E7%94%A8%E7%89%B9%E6%95%88%E5%85%B7%E4%BD%93%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">二、通用特效具体模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Surface-Options%EF%BC%88%E5%9F%BA%E7%A1%80%E8%AE%BE%E7%BD%AE%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Surface Options（基础设置）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Surface-Inputs-%EF%BC%88%E5%9F%BA%E7%A1%80%E8%BE%93%E5%85%A5%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Surface Inputs （基础输入）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Mask-Options"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Mask Options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-Distortion-Options"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 Distortion Options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-Dissolve-Options"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 Dissolve Options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-Emission-Options"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 Emission Options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-RimLight-Options"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 RimLight Options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-Light-Options"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 Light Options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-%E5%85%B6%E5%AE%83%E5%8A%9F%E8%83%BD"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 其它功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-1-Depth-Bias"><span class="nav-number">2.9.1.</span> <span class="nav-text">2.9.1 Depth Bias</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-2-Reflection-Options"><span class="nav-number">2.9.2.</span> <span class="nav-text">2.9.2 Reflection Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-2-Matcap"><span class="nav-number">2.9.3.</span> <span class="nav-text">2.9.2 Matcap</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">643k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:45</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

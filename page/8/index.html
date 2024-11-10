@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">operator new 和placement new表达式</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-07-31 20:24:26" itemprop="dateCreated datePublished" datetime="2014-07-31T20:24:26+08:00">2014-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="operator new 和placement new表达式" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/07/31/operator%20new%20%E5%92%8Cplacement%20new%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>上一篇文章里面讲到用allocator预分配空间已经在需要的时候才构造对象，其实还有其它的办法实现这一功能。operator new表达式也可以只分配内存而不初始化，但是返回的是void指针，因此没有allocator类型化的优点。同样placement new表达式只负责调用指定的构造函数初始化内存，不申请内存，与allocator的construct相比，这个表达式更加方便，可以使用任意类型的构造函数参数列表。但是，construct只能使用复制构造函数。<br>同样的，可以使用operator delete代替allocator的deallocate释放内存。使用析构函数代替allocator的destroy清理对象。下面我把原来使用allocator的代码改写成使用这些表达式的。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;memory&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">class Vector</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">Vector</span>() : <span class="built_in">elements</span>(<span class="number">0</span>), <span class="built_in">first_free</span>(<span class="number">0</span>), <span class="built_in">end</span>(<span class="number">0</span>) {}</span><br><span class="line">    ~<span class="built_in">Vector</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (T* <span class="selector-tag">p</span> = first_free; <span class="selector-tag">p</span> != elements;)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//allocator.destroy(--p);</span></span><br><span class="line">            <span class="attr">--p</span>;</span><br><span class="line">            p-&gt;~<span class="built_in">T</span>();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (elements)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//allocator.deallocate(elements, end - elements);</span></span><br><span class="line">            operator delete<span class="selector-attr">[]</span>(elements);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void <span class="built_in">push_back</span>(const T t)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (first_free == end)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">reallocate</span>();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//allocator.construct(first_free, t);//复制构造新对象</span></span><br><span class="line">        new (first_free) <span class="built_in">T</span>(t);</span><br><span class="line">        ++first_free;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void <span class="built_in">pop_back</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (first_free != elements)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//allocator.destroy(--first_free);</span></span><br><span class="line">            <span class="attr">--first_free</span>;</span><br><span class="line">            first_free-&gt;~<span class="built_in">T</span>();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//std::allocator&lt;T&gt; allocator;</span></span><br><span class="line">    void <span class="built_in">reallocate</span>()</span><br><span class="line">    {</span><br><span class="line">        std::ptrdiff_t size = first_free - elements;</span><br><span class="line">        std::ptrdiff_t newcapacity = <span class="number">2</span> * std::<span class="built_in">max</span>(size, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//T* newelements = allocator.allocate(newcapacity);//申请新内存</span></span><br><span class="line">        T* newelements = static_cast&lt;T*&gt;(operator new<span class="selector-attr">[]</span>(newcapacity * <span class="built_in">sizeof</span>(T)));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//newelements处直接复制构造</span></span><br><span class="line">        std::<span class="built_in">uninitialized_copy</span>(elements, first_free, newelements);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (T* <span class="selector-tag">p</span> = first_free; <span class="selector-tag">p</span> != elements;)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//allocator.destroy(--p);//析构原对象</span></span><br><span class="line">            <span class="attr">--p</span>;</span><br><span class="line">            p-&gt;~<span class="built_in">T</span>();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (elements)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//allocator.deallocate(elements, end - elements);//释放内存</span></span><br><span class="line">            operator delete<span class="selector-attr">[]</span>(elements);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        elements = newelements;</span><br><span class="line">        first_free = elements + size;</span><br><span class="line">        end = elements + newcapacity;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    T* elements;</span><br><span class="line">    T* first_free;</span><br><span class="line">    T* end;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">//template &lt;typename T&gt; std::allocator&lt;T&gt; Vector&lt;T&gt;::allocator;</span></span><br></pre></td></tr></tbody></table></figure><br>placement new表达式的一般形式是new (地址) 类型名(初始化列表)，由于使用初始化列表直接构造对象，因此不用拷贝。而且比只能用复制构造函数构造的allocator的construct函数更方便。<br>比如，allocator<t> alloc;string* sp = alloc.allocate(2);如果用定位new表达式，new (sp) string(b, e);(b,e是用2个迭代器构造string类型)。但是，用construct的话，则是alloc.construct(sp+1,string(b,e));可以清楚的看到，需要用迭代器构造个临时的string对象，再用这个临时对象调用复制构造函数。因此，会有细微的性能损失。最终要的是，有些类根本没有可以调用的复制构造函数，比如该函数是私有的，那么就必须使用placement new表达式了。<br>operator new和operator delete的使用方式类似于new和delete，具体的可以参看代码。<p></p>
+</t></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/31/allocator%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1233,120 +1343,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" class="post-title-link" itemprop="url">MFC框架下OpenGL全屏抗锯齿</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-02-24 11:08:21" itemprop="dateCreated datePublished" datetime="2014-02-24T11:08:21+08:00">2014-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" class="post-meta-item leancloud_visitors" data-flag-title="MFC框架下OpenGL全屏抗锯齿" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/02/24/MFC%E6%A1%86%E6%9E%B6%E4%B8%8BOpenGL%E5%85%A8%E5%B1%8F%E6%8A%97%E9%94%AF%E9%BD%BF/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>其实OpenGL的全屏抗锯齿就是开启多重采样。在使用glut的时候，很方便就能实现。只要启用多重采样缓冲就行了。但是，在MFC窗口中的实现就很麻烦了。<br>首先，在MFC窗口中渲染OpenGL就需要比较麻烦的设置。所以，需要在设置OpenGL渲染环境的时候进一步处理。具体的来看下面一段代码吧。<br>这段代码就是MFC窗口创建的时候，设置OpenGL渲染环境的代码。<br>对于没有启用多重采样的情况，思路是先获取DC，然后调用ChoosePixelFormat获取最佳像素格式，再调用SetPixelFormat设置像素格式，接着调用wglCreateContext创建OpenGL渲染环境，最后调用wglMakeCurrent设置OpenGL渲染环境。<br>如果启用了多重采样，代码逻辑就更加复杂了。最恶心的一点是窗口必须创建2次。第一次按照常规思路设置好OpenGL渲染环境，然后调用函数InitMultisample判断是否支持多重采样，如果支持则销毁窗口，重新创建一次。第二次的思路是按照多重采样初始化得到的像素格式设置好OpenGL渲染环境的像素格式，其余的设置和常规的一样。具体参见下面的代码。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">BOOL COglWnd::<span class="built_in">SetupGLContext</span>()</span><br><span class="line"> {</span><br><span class="line">     DWORD dwFlags = (PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL);</span><br><span class="line"></span><br><span class="line">     PIXELFORMATDESCRIPTOR pfd =</span><br><span class="line">     {</span><br><span class="line">         <span class="built_in">sizeof</span>(PIXELFORMATDESCRIPTOR),  <span class="comment">// Structure size,</span></span><br><span class="line">         <span class="number">1</span>,              <span class="comment">// Structure version number</span></span><br><span class="line">         dwFlags,            <span class="comment">// Property flags</span></span><br><span class="line">         PFD_TYPE_RGBA,          <span class="comment">// RGBA mode</span></span><br><span class="line">         <span class="number">24</span>,             <span class="comment">// 24-bit color</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,       <span class="comment">// 8-bit each color</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,        <span class="comment">// No alpha or accum. buffer,</span></span><br><span class="line">         <span class="number">16</span>,             <span class="comment">// 32-bit z-buffer</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>,               <span class="comment">// No stencil or aux buffer</span></span><br><span class="line">         PFD_MAIN_PLANE,         <span class="comment">// Mainn layer type</span></span><br><span class="line">         <span class="number">0</span>,              <span class="comment">// Reserved</span></span><br><span class="line">         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,            <span class="comment">// Unsupported.</span></span><br><span class="line">     };</span><br><span class="line"></span><br><span class="line">     BOOL bOk = false;</span><br><span class="line">     m_hDC = <span class="built_in">GetDC</span>()-&gt;m_hDC;</span><br><span class="line">     int PixelFormat;</span><br><span class="line"></span><br><span class="line">     static bool bFirst = true;</span><br><span class="line">     <span class="keyword">if</span> (bFirst)</span><br><span class="line">     {</span><br><span class="line">         bFirst = false;</span><br><span class="line"></span><br><span class="line">         PixelFormat = <span class="built_in">ChoosePixelFormat</span>(m_hDC, pfd);</span><br><span class="line">         bOk = <span class="built_in">SetPixelFormat</span>(m_hDC, PixelFormat, pfd);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"GL set pixel format fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">         m_hGLRC = <span class="built_in">wglCreateContext</span>(m_hDC);</span><br><span class="line">         bOk = <span class="built_in">wglMakeCurrent</span>(m_hDC, m_hGLRC);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"Set up GL render context fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">         <span class="built_in">InitMultisample</span>(m_hWnd);</span><br><span class="line">         <span class="keyword">if</span> (arbMultisampleSupported)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">DestroyWindow</span>();</span><br><span class="line">             <span class="built_in">CreateEx</span>(<span class="number">0</span>, m_className, <span class="string">"OglWnd"</span>, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,</span><br><span class="line">                 m_rect, m_parent, <span class="number">0</span>);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">     {</span><br><span class="line">         PixelFormat = arbMultisampleFormat;<span class="comment">//第二次创建</span></span><br><span class="line">         bOk = <span class="built_in">SetPixelFormat</span>(m_hDC, PixelFormat, pfd);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"GL set pixel format fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">         m_hGLRC = <span class="built_in">wglCreateContext</span>(m_hDC);</span><br><span class="line">         bOk = <span class="built_in">wglMakeCurrent</span>(m_hDC, m_hGLRC);</span><br><span class="line">         <span class="keyword">if</span> (!bOk)</span><br><span class="line">         {</span><br><span class="line">             <span class="built_in">MessageBox</span>(<span class="built_in">_T</span>(<span class="string">"Set up GL render context fail!"</span>), <span class="built_in">_T</span>(<span class="string">"Error"</span>), MB_OK);</span><br><span class="line">             return bOk;</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line"></span><br><span class="line">     return bOk;</span><br><span class="line"> }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>那么函数InitMultisample是怎么来的了。NeHe刚好有一节课是讲这个的，我是从那里下载得到的。该函数代码如下。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// InitMultisample: Used To Query The Multisample Frequencies</span></span><br><span class="line">bool <span class="built_in">InitMultisample</span>(HWND hWnd)</span><br><span class="line">{  </span><br><span class="line">     <span class="comment">// See If The String Exists In WGL!</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">WGLisExtensionSupported</span>(<span class="string">"WGL_ARB_multisample"</span>))</span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported=false;</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get Our Pixel Format</span></span><br><span class="line">    PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)<span class="built_in">wglGetProcAddress</span>(<span class="string">"wglChoosePixelFormatARB"</span>);  </span><br><span class="line">    <span class="keyword">if</span> (!wglChoosePixelFormatARB) </span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported=false;</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get Our Current Device Context</span></span><br><span class="line">    HDC hDC = <span class="built_in">GetDC</span>(hWnd);</span><br><span class="line"></span><br><span class="line">    int     pixelFormat;</span><br><span class="line">    int     valid;</span><br><span class="line">    UINT    numFormats;</span><br><span class="line">    <span class="attribute">float</span>   fAttributes[] = {<span class="number">0</span>,<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These Attributes Are The Bits We Want To Test For In Our Sample</span></span><br><span class="line">    <span class="comment">// Everything Is Pretty Standard, The Only One We Want To </span></span><br><span class="line">    <span class="comment">// Really Focus On Is The SAMPLE BUFFERS ARB And WGL SAMPLES</span></span><br><span class="line">    <span class="comment">// These Two Are Going To Do The Main Testing For Whether Or Not</span></span><br><span class="line">    <span class="comment">// We Support Multisampling On This Hardware.</span></span><br><span class="line">    int iAttributes<span class="selector-attr">[]</span> =</span><br><span class="line">    {</span><br><span class="line">        WGL_DRAW_TO_WINDOW_ARB,GL_TRUE,</span><br><span class="line">        WGL_SUPPORT_OPENGL_ARB,GL_TRUE,</span><br><span class="line">        WGL_ACCELERATION_ARB,WGL_FULL_ACCELERATION_ARB,</span><br><span class="line">        WGL_COLOR_BITS_ARB,<span class="number">24</span>,</span><br><span class="line">        WGL_ALPHA_BITS_ARB,<span class="number">8</span>,</span><br><span class="line">        WGL_DEPTH_BITS_ARB,<span class="number">16</span>,</span><br><span class="line">        WGL_STENCIL_BITS_ARB,<span class="number">0</span>,</span><br><span class="line">        WGL_DOUBLE_BUFFER_ARB,GL_TRUE,</span><br><span class="line">        WGL_SAMPLE_BUFFERS_ARB,GL_TRUE,</span><br><span class="line">        WGL_SAMPLES_ARB,<span class="number">16</span>,<span class="comment">//16设置了抗锯齿的质量</span></span><br><span class="line">        <span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    <span class="comment">// First We Check To See If We Can Get A Pixel Format For 4 Samples</span></span><br><span class="line">    valid = <span class="built_in">wglChoosePixelFormatARB</span>(hDC,iAttributes,fAttributes,<span class="number">1</span>,pixelFormat,numFormats);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If We Returned True, And Our Format Count Is Greater Than 1</span></span><br><span class="line">    <span class="keyword">if</span> (valid  numFormats &gt;= <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported = true;</span><br><span class="line">        arbMultisampleFormat = pixelFormat; </span><br><span class="line">        return arbMultisampleSupported;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Our Pixel Format With 4 Samples Failed, Test For 2 Samples</span></span><br><span class="line">    iAttributes<span class="selector-attr">[19]</span> = <span class="number">2</span>;</span><br><span class="line">    valid = <span class="built_in">wglChoosePixelFormatARB</span>(hDC,iAttributes,fAttributes,<span class="number">1</span>,pixelFormat,numFormats);</span><br><span class="line">    <span class="keyword">if</span> (valid  numFormats &gt;= <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        arbMultisampleSupported = true;</span><br><span class="line">        arbMultisampleFormat = pixelFormat;  </span><br><span class="line">        return arbMultisampleSupported;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return The Valid Format</span></span><br><span class="line">    return  arbMultisampleSupported;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>该函数的使用还是很简单的，基本上是修改了2个全局变量，arbMultisampleSupported判断是否支持多重采样，arbMultisampleFormat则是对应的像素格式。我在代码中注释了一行：WGL_SAMPLES_ARB,16,//16设置了抗锯齿的质量。这里貌似可以修改数字的大小，据说一般显卡都支持到16，16的情况下，抗锯齿很好了，4的话效果一般般。这个函数相关的完整代码可以从NeHe下载。<br>至于完整代码，可以参考我上一篇文章，然后将这一篇文章的代码加进去即可。<br>未抗锯齿的效果：<img alt="" data-src="https://c2.staticflickr.com/8/7346/27417287776_bda4d8b386_o.png"><br>抗锯齿的效果：<img alt="" data-src="https://c2.staticflickr.com/8/7593/27417289466_6e1071be4d_o.png"></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1397,14 +1393,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1453,7 +1449,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1462,12 +1458,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">639k</span>
+    <span title="站点总字数">643k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:45</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

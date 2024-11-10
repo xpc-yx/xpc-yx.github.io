@@ -222,6 +222,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">指针和引用的区别</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-12-25 09:53:45" itemprop="dateCreated datePublished" datetime="2012-12-25T09:53:45+08:00">2012-12-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-meta-item leancloud_visitors" data-flag-title="指针和引用的区别" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/12/25/%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>306</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>区别一：引用必须要指代一个对象，所以<strong>引用必须初始化</strong>，但是指针不需要。</p>
+<p>区别二：存在空指针，但是<strong>不存在空引用</strong>，引用必须要指代某个对象。</p>
+<p>区别三：由于不存在空引用，使用引用时候<strong>不需要测试是否有效</strong>，但是使用指针则需要保证其是有效的。</p>
+<p>区别四：指针可以改变其指向的对象，但是引用不可以，<strong>引用一被初始化后就不能改变</strong>。</p>
+<p>区别五：重载[]操作符的时候，由于语法需要，应该<strong>返回引用</strong>而不是指针。</p>
+<p>区别六：从概念上看，指针是一个变量，而<strong>引用则是其它变量的别名</strong>。</p>
+<p>区别七：指针是占据内存的，但是<strong>引用则不一定会分配内存</strong>，引用只是一个别名。</p>
+<p>区别八：对指针使用操作符和对引用使用操作符效果不同，对引用使用操作符得到的都是<strong>对所指代的对象使用操作符的结果</strong>。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/12/20/SetWindowPos%E7%A7%BB%E5%8A%A8%E5%AD%90%E7%AA%97%E5%8F%A3%E6%88%96%E5%8D%A0%E6%BB%A1%E6%A1%8C%E9%9D%A2%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1299,138 +1416,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-title-link" itemprop="url">单线程环境中对象大小固定的内存池</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-11-15 11:51:36" itemprop="dateCreated datePublished" datetime="2012-11-15T11:51:36+08:00">2012-11-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="单线程环境中对象大小固定的内存池" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/15/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>内存池并不是表面意义上存储大量可分配内存的池子，如果是这样的话，new和delete对应的就是一个理论上无限大的内存池。标题中的单线程指的是该内存池实现为了加快速度没有处理线程同步，因为很多应用你明显知道不需要线程同步。固定大小指的是该内存池每次只分配或者删除固定大小的对象。</p>
-<p>这样的内存池怎么就加快了速度了。我觉得主要有以下几个方面。</p>
-<p>1.不需要处理线程同步，去除掉线程同步的代码后，显然速度会加快。</p>
-<p>2.总体来看，该内存池只会扩张不会收缩，也就是向系统释放堆内存的次数减少了。事实上，该内存池总是按需操作的。</p>
-<p>3.该内存池的new和delete操作并没有去真正申请和释放堆内存，而是向自定义的对象空闲列表申请和释放。当对象空闲列表为空的时候，才一次性申请一大片空闲对象。大家都知道堆申请和释放比较耗时，最快的栈内存。所以，这也是一个显著的方面。</p>
-<p>以下2段代码分别展示了原始的内存操作和使用内存池后的操作，</p>
-<p>原始情况，</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">Rational</span>(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : <span class="built_in">n</span>(a), <span class="built_in">d</span>(b) {}</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n; <span class="comment">// Numerator</span></span><br><span class="line">    int d; <span class="comment">// Denominator</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    const int ARRAY_SIZE = <span class="number">1000</span>;</span><br><span class="line">    const int LOOP_TIMES = <span class="number">5000</span>;</span><br><span class="line">    Rational* array<span class="selector-attr">[ARRAY_SIZE]</span>;</span><br><span class="line"></span><br><span class="line">    clock_t beg = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; LOOP_TIMES; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            array<span class="selector-attr">[j]</span> = new <span class="built_in">Rational</span>(j);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            delete array<span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    clock_t end = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"use %f second(s).\n"</span>, <span class="number">1.0</span> * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>该代码的运行结果，</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7643/27430249375_aaa747666a_o.png"></p>
-<p>内存池，</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">struct NextOnFreeList</span><br><span class="line">{</span><br><span class="line">    NextOnFreeList* next;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">Rational</span>(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : <span class="built_in">n</span>(a), <span class="built_in">d</span>(b) {}</span><br><span class="line"></span><br><span class="line">    void* operator <span class="built_in">new</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (freeList == <span class="number">0</span>)<span class="comment">// if the list is empty, fill it up.</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">expandTheFreeList</span>();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        NextOnFreeList* head = freeList;</span><br><span class="line">        freeList = head-&gt;next;</span><br><span class="line">        return head;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    void operator <span class="built_in">delete</span>(void* doomed, size_t size)</span><br><span class="line">    {</span><br><span class="line">        NextOnFreeList* head = static_cast&lt;NextOnFreeList*&gt; (doomed);</span><br><span class="line">        head-&gt;next = freeList;</span><br><span class="line">        freeList = head;</span><br><span class="line">    }</span><br><span class="line">    static void <span class="built_in">newMemPool</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">expandTheFreeList</span>();</span><br><span class="line">    }</span><br><span class="line">    static void <span class="built_in">deleteMemPool</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    static void <span class="built_in">expandTheFreeList</span>();</span><br><span class="line">    static NextOnFreeList* freeList;</span><br><span class="line">    enum { EXPANSION_SIZE = <span class="number">32</span> };</span><br><span class="line">    int n; <span class="comment">// Numerator</span></span><br><span class="line">    int d; <span class="comment">// Denominator</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">NextOnFreeList* Rational::freeList = NULL;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当空闲列表里面没有对象时，该函数才会被调用</span></span><br><span class="line">void Rational::<span class="built_in">expandTheFreeList</span>()</span><br><span class="line">{</span><br><span class="line">    size_t size = <span class="built_in">sizeof</span>(Rational) &gt; <span class="built_in">sizeof</span>(NextOnFreeList*) ?</span><br><span class="line">                  <span class="built_in">sizeof</span>(Rational) : <span class="built_in">sizeof</span>(NextOnFreeList*);</span><br><span class="line">    NextOnFreeList* runner = (NextOnFreeList*)new char<span class="selector-attr">[size]</span>;</span><br><span class="line">    freeList = runner;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; EXPANSION_SIZE; ++i)</span><br><span class="line">    {</span><br><span class="line">        runner-&gt;next = (NextOnFreeList*)new char<span class="selector-attr">[size]</span>;</span><br><span class="line">        runner = runner-&gt;next;</span><br><span class="line">    }</span><br><span class="line">    runner-&gt;next = <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void Rational::<span class="built_in">deleteMemPool</span>()</span><br><span class="line">{</span><br><span class="line">    NextOnFreeList* nextPtr = freeList;</span><br><span class="line">    while (nextPtr)</span><br><span class="line">    {</span><br><span class="line">        freeList = nextPtr-&gt;next;</span><br><span class="line">        delete <span class="selector-attr">[]</span> nextPtr;</span><br><span class="line">        nextPtr = freeList;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    const int ARRAY_SIZE = <span class="number">1000</span>;</span><br><span class="line">    const int LOOP_TIMES = <span class="number">5000</span>;</span><br><span class="line">    Rational* array<span class="selector-attr">[ARRAY_SIZE]</span>;</span><br><span class="line"></span><br><span class="line">    clock_t beg = <span class="built_in">clock</span>();</span><br><span class="line">    Rational::<span class="built_in">newMemPool</span>();</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; LOOP_TIMES; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            array<span class="selector-attr">[j]</span> = new <span class="built_in">Rational</span>(j);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            delete array<span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    clock_t end = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"use %f second(s).\n"</span>, <span class="number">1.0</span> * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">"pause"</span>);</span><br><span class="line">    Rational::<span class="built_in">deleteMemPool</span>();</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>该代码运行结果，</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7327/27331465702_971345d5c7_o.png"></p>
-<p>通过以上结果的对比可以看到时间比例为921/78，直接就快了10多倍。而且我们的内存申请和删除操作还不够频繁，如果再更频繁的场合，效率上面的提示会更加大。</p>
-<p>下面我们来分析一下内存池实现的代码。</p>
-<p>说来也比较简单，因为原理都已经讲清楚了。首先去除了线程同步代码，然后把内存放在对象空闲列表里面，从里面释放和删除对象，当对象空闲列表为空的时候，一次性申请一片对象。作为一个有经验的c++程序员这些代码已经足够简单了。需要注意的是，在expandTheFreeList函数里面，申请新对象的时候，需要注意大小必须是Rational和NextOnFreeList*中大小大的一个。该内存池还用到了指针类型强转，语法上面还是比较巧妙的。</p>
-<p>由于该内存池只是针对单个的类，应用场合未免有点限制。如果我们用泛型编程实现内存池，就可以把应用场合推广了。下面将内存池的功能独立出来，用模板重新实现了下，代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line"></span><br><span class="line">template  class MemoryPool</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">MemoryPool</span>(size_t size = EXPANSION_SIZE)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">expandTheFreeList</span>(size);</span><br><span class="line">    }</span><br><span class="line">    ~<span class="built_in">MemoryPool</span>();</span><br><span class="line">    <span class="comment">//allocate a T element from the free list.</span></span><br><span class="line">    void* <span class="built_in">alloc</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (next == NULL)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">expandTheFreeList</span>();</span><br><span class="line">        }</span><br><span class="line">        MemoryPool* head = next;</span><br><span class="line">        next = head-&gt;next;</span><br><span class="line">        return head;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//return a T element to the free list.</span></span><br><span class="line">    void <span class="built_in">free</span>(void* doomed)</span><br><span class="line">    {</span><br><span class="line">        MemoryPool* head = static_cast&lt; MemoryPool* &gt; (doomed);</span><br><span class="line">        head-&gt;next = next;</span><br><span class="line">        next = head;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//next element on the free list.</span></span><br><span class="line">    MemoryPool* next;</span><br><span class="line">    <span class="comment">//if the freelist is empty, expand it by this amount.</span></span><br><span class="line">    enum {EXPANSION_SIZE = <span class="number">32</span>};</span><br><span class="line">    <span class="comment">//add free elements to the free list</span></span><br><span class="line">    void <span class="built_in">expandTheFreeList</span>(int howMany = EXPANSION_SIZE);</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">template  MemoryPool :: ~<span class="built_in">MemoryPool</span>()</span><br><span class="line">{</span><br><span class="line">    MemoryPool* nextPtr = NULL;</span><br><span class="line">    while (nextPtr)</span><br><span class="line">    {</span><br><span class="line">        nextPtr = next;</span><br><span class="line">        next = next-&gt;next;</span><br><span class="line">        delete <span class="selector-attr">[]</span> nextPtr;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template  void MemoryPool :: <span class="built_in">expandTheFreeList</span>(int howMany)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//we must allocate an object enough to contain the next pointer</span></span><br><span class="line">    size_t size = <span class="built_in">sizeof</span>(T) &gt; <span class="built_in">sizeof</span>(MemoryPool*) ? <span class="built_in">sizeof</span>(T) :</span><br><span class="line">                  <span class="built_in">sizeof</span>(MemoryPool*);</span><br><span class="line"></span><br><span class="line">    MemoryPool* runner = (MemoryPool*) new char<span class="selector-attr">[size]</span>;</span><br><span class="line">    next = runner;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; howMany; ++i)     {         runner-&gt;next = (MemoryPool*) new char<span class="selector-attr">[size]</span>;</span><br><span class="line">        runner = runner-&gt;next;</span><br><span class="line">    }</span><br><span class="line">    runner-&gt;next = NULL;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">Rational</span>(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : <span class="built_in">n</span>(a), <span class="built_in">d</span>(b) {}</span><br><span class="line">    void* operator <span class="built_in">new</span>(size_t size) {return memPool-&gt;<span class="built_in">alloc</span>(size);}</span><br><span class="line">    void operator <span class="built_in">delete</span>(void* doomed, size_t size) {memPool-&gt;<span class="built_in">free</span>(doomed);}</span><br><span class="line">    static void <span class="built_in">newMemPool</span>() {memPool = new MemoryPool;}</span><br><span class="line">    static void <span class="built_in">deleteMemPool</span>() {delete memPool;}</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static MemoryPool* memPool;</span><br><span class="line">};</span><br><span class="line">MemoryPool* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    const int ARRAY_SIZE = <span class="number">1000</span>;</span><br><span class="line">    const int LOOP_TIMES = <span class="number">5000</span>;</span><br><span class="line">    Rational* array<span class="selector-attr">[ARRAY_SIZE]</span>;</span><br><span class="line"></span><br><span class="line">    clock_t beg = <span class="built_in">clock</span>();</span><br><span class="line">    Rational::<span class="built_in">newMemPool</span>();</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; LOOP_TIMES; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            array<span class="selector-attr">[j]</span> = new <span class="built_in">Rational</span>(j);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            delete array<span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    clock_t end = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"use %f second(s).\n"</span>, <span class="number">1.0</span> * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">"pause"</span>);</span><br><span class="line">    Rational::<span class="built_in">deleteMemPool</span>();</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>运行效果如图：</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7611/26821417364_a0b48abf91_o.png"></p>
-<p>可以看到用模板重新实现后，速度并没有下降多少，这个例子速度下降近一倍的原因估计是与原来的实现相比多了一些函数调用吧，但是还是比不使用内存池的情况下快一个数量级。</p>
-<p>整个代码的思路是把内存池的实现部分用一个模板类包含了，用不同的类实例化模板类，就可以对不同的类使用内存池了，泛型编程在速度和灵活性上面的结合确实是非常优美的。而且你可以看到，例子二和例子三的主函数部分完全一致，也就是保持了外部接口的统一性，只需要修改类Rational的实现即可。现在将内存池应用到不同的类也只需要在类里面添加一个针对该类的泛型内存池成员而已。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1481,14 +1466,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1537,7 +1522,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1546,12 +1531,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">639k</span>
+    <span title="站点总字数">643k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:40</span>
+    <span title="站点阅读时长">9:45</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
