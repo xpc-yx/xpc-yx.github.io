@@ -222,6 +222,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">NGUI概述</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-01-12 17:15:51" itemprop="dateCreated datePublished" datetime="2017-01-12T17:15:51+08:00">2017-01-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏开发</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" class="post-meta-item leancloud_visitors" data-flag-title="NGUI概述" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/01/12/NGUI%E6%A6%82%E8%BF%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h2 id="NGUI介绍"><a href="#NGUI介绍" class="headerlink" title="NGUI介绍"></a>NGUI介绍</h2><p>NGUI是Unity中最流行的UI插件，在UGUI出现前几乎是Unity唯一的UI解决方案。<br>NGUI是一个提供高效事件通知框架的强大UI系统。NGUI遵循<a href="https://en.wikipedia.org/wiki/KISS_principle">Kiss准则</a>，其中类代码简洁，多数在200行以内。程序员可以方便的扩展其组件类代码以获得定制的功能。<br><a href="http://www.tasharen.com/?page_id=140">NGUI官方网址</a><br><a href="http://www.tasharen.com/forum/index.php?board=12.0">NGUI官方文档地址</a></p>
+<h2 id="NGUI下载"><a href="#NGUI下载" class="headerlink" title="NGUI下载"></a>NGUI下载</h2><p>我们可以从unity商店购买NGUI，或者下载其免费版本。<br><a href="https://www.assetstore.Unity.com/cn/#!/content/2413">NGUI的Unity商店</a><br>当然也可以下载网上其它人提供的版本学习研究。<br><a href="http://www.ceeger.com/forum/read.php?tid=20718fid=16">NGUI 3.10.2</a></p>
+<h2 id="NGUI导入"><a href="#NGUI导入" class="headerlink" title="NGUI导入"></a>NGUI导入</h2><p>下载NGUI后，我们得到的是一个.unitypackage文件，比如NGUI Next-Gen UI v3.6.8.unitypackage。<br>Unity编辑器中，打开菜单Assets-&gt;ImportPackage-&gt;CustomPackage，然后选择下载的.unitypackage文件导入编辑器。导入NGUI后，在工程的Assets目录下会出现一个NGUI文件夹，并且Unity编辑器中会多了一个NGUI主菜单。</p>
+<h2 id="NGUI例子"><a href="#NGUI例子" class="headerlink" title="NGUI例子"></a>NGUI例子</h2><p>打开NGUI-&gt;Options-&gt;Reset Prefab ToolBar，会出现如下工具条：</p>
+<p><img alt="NGUI例子" data-src="https://c1.staticflickr.com/1/782/31420422424_657c6cee61_o.png"><br>这里面有基本的NGUI控件例子，是我们学习参照的好材料。</p>
+<h2 id="NGUI类图"><a href="#NGUI类图" class="headerlink" title="NGUI类图"></a>NGUI类图</h2><p>下面是我整理的NGUI类图：<br><img alt="NGUI类图" data-src="https://c1.staticflickr.com/1/363/32223724406_7e07b90f4b_o.png"></p>
+<p>该类图中列出了NGUI中绝大部分的类。<br>类图中有两个最重要的分支，UIWidgetContainer分支和UIWidget分支。<br>NGUI中的大部分控件都继承自UIWidgetContainer，这说明在NGUI中，其实是把控件当作Sprite的容器而已。UIWidget的子类就是Sprite和Texture，表示NGUI中的控件都是图片化的，控件的表现都依赖图片。</p>
+<h2 id="NGUI常用组件"><a href="#NGUI常用组件" class="headerlink" title="NGUI常用组件"></a>NGUI常用组件</h2><h3 id="UILabel-文本"><a href="#UILabel-文本" class="headerlink" title="UILabel 文本"></a>UILabel 文本</h3><h3 id="UIInput-输入框"><a href="#UIInput-输入框" class="headerlink" title="UIInput 输入框"></a>UIInput 输入框</h3><h3 id="UITextList-多文本显示框，类似聊天窗"><a href="#UITextList-多文本显示框，类似聊天窗" class="headerlink" title="UITextList 多文本显示框，类似聊天窗"></a>UITextList 多文本显示框，类似聊天窗</h3><h3 id="UISprite-图片精灵"><a href="#UISprite-图片精灵" class="headerlink" title="UISprite 图片精灵"></a>UISprite 图片精灵</h3><h3 id="UIBotton-按钮"><a href="#UIBotton-按钮" class="headerlink" title="UIBotton 按钮"></a>UIBotton 按钮</h3><h3 id="UIToggle-单选框-复选框"><a href="#UIToggle-单选框-复选框" class="headerlink" title="UIToggle 单选框/复选框"></a>UIToggle 单选框/复选框</h3><h3 id="UIScrollBar-滚动条"><a href="#UIScrollBar-滚动条" class="headerlink" title="UIScrollBar 滚动条"></a>UIScrollBar 滚动条</h3><h3 id="UISlider-滑动条-进度条"><a href="#UISlider-滑动条-进度条" class="headerlink" title="UISlider 滑动条/进度条"></a>UISlider 滑动条/进度条</h3><h3 id="UIProgressBar-进度条"><a href="#UIProgressBar-进度条" class="headerlink" title="UIProgressBar 进度条"></a>UIProgressBar 进度条</h3><h3 id="UIPopupList-下拉框"><a href="#UIPopupList-下拉框" class="headerlink" title="UIPopupList 下拉框"></a>UIPopupList 下拉框</h3><h3 id="UIGrid-将子控件按照单元格布局"><a href="#UIGrid-将子控件按照单元格布局" class="headerlink" title="UIGrid 将子控件按照单元格布局"></a>UIGrid 将子控件按照单元格布局</h3><h3 id="UITable-UIGrid加强版，类似Html的table"><a href="#UITable-UIGrid加强版，类似Html的table" class="headerlink" title="UITable UIGrid加强版，类似Html的table"></a>UITable UIGrid加强版，类似Html的table</h3><h3 id="UIPanel-控件渲染器，管理和绘制其下所有的组件"><a href="#UIPanel-控件渲染器，管理和绘制其下所有的组件" class="headerlink" title="UIPanel 控件渲染器，管理和绘制其下所有的组件"></a>UIPanel 控件渲染器，管理和绘制其下所有的组件</h3><h3 id="UIScrollView-滚动视窗"><a href="#UIScrollView-滚动视窗" class="headerlink" title="UIScrollView 滚动视窗"></a>UIScrollView 滚动视窗</h3><h3 id="UIKeyBinding-给控件的点击或者选中事情绑定按键"><a href="#UIKeyBinding-给控件的点击或者选中事情绑定按键" class="headerlink" title="UIKeyBinding 给控件的点击或者选中事情绑定按键"></a>UIKeyBinding 给控件的点击或者选中事情绑定按键</h3><h3 id="UIRoot-NGUI的UI根物体"><a href="#UIRoot-NGUI的UI根物体" class="headerlink" title="UIRoot NGUI的UI根物体"></a>UIRoot NGUI的UI根物体</h3><h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a href="http://www.tasharen.com/forum/index.php?topic=6754">NGUI官网</a></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/25/WebGL%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1706,117 +1823,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/12/18/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/18/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">软件推荐列表</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-12-18 15:22:59" itemprop="dateCreated datePublished" datetime="2015-12-18T15:22:59+08:00">2015-12-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/12/18/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/" class="post-meta-item leancloud_visitors" data-flag-title="软件推荐列表" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/12/18/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/12/18/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>663</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>1.发布博客软件：Windows Live Write，可以参考<a href="http://www.xpc-yx.com/2015/11/25/%E8%AF%95%E8%AF%95windows-live-write%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2/">我的WindowsLiveWrite博文</a>。</p>
-<p>2.Windows7/Xp上显示TGA图片的缩略图：MysticThumbs，可以参考<a href="http://www.xpc-yx.com/2015/10/12/%E5%A6%82%E4%BD%95%E8%AE%A9tga%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE/">我的MysticThumbs博文</a>。</p>
-<p>3.记笔记：印象笔记（Evernote），不用介绍了，任何设备上都可以用（电脑，手机，ipad…)。</p>
-<p>4.注册表浏览器：registryworkshop，比Windows默认的注册表舒服很多。</p>
-<p>5.破解工具：<strong>TrialReset。</strong>该软件可以清除很多软件的保护信息，比如visual assist X，我就用它清楚过VA的保护信息。搜索该软件会得到一些介绍，单纯的清除信息操作很简单，清除后相当于<strong>无限延长试用期</strong>。试试会得到你意想不到的结果。</p>
-<p>6.阅读软件：<strong>calibre</strong>。calibre是一个非常优秀的书籍管理软件。当然，我找到它的原因是它可以非常方便的转mobi,epub等。这样就可以将任意格式的书籍放到kindle或者多看阅读器（支持多种设备，手机，ipad，kindle等）上面去看了。这对于用阅读打法无聊时光的我，非常有用。calibre还可以在PC上当做书籍管理和阅读软件，我正在用它看epub格式的书籍了，因为多看阅读器不支持Windows平台。更多功能我就不知道了，有待挖掘。</p>
-<p>7.文件内容搜索工具：<strong>FileSeek</strong>。这款软件能够下载到破解版，我现在主要用来搜索as代码（逆战的界面使用的是ScaleForm开发的，需要写as代码）。Windows自带的搜索功能对于文件内容搜索确实不方便额。</p>
-<p>持续更新…</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1867,7 +1873,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-count">220</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1880,7 +1886,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1932,12 +1938,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">643k</span>
+    <span title="站点总字数">644k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:45</span>
+    <span title="站点阅读时长">9:46</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

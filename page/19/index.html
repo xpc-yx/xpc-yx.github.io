@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/24/poj-3348-cows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/06/24/poj-3348-cows/" class="post-title-link" itemprop="url">poj 3348 Cows</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-24 19:00:00" itemprop="dateCreated datePublished" datetime="2012-06-24T19:00:00+08:00">2012-06-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/24/poj-3348-cows/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3348 Cows" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/24/poj-3348-cows/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/24/poj-3348-cows/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这个题用到2个计算几何算法。求解凸包和简单多边形面积。凸包算法详细解释见算法导论。求解多边形面积的思想是将多边形分解为三角形，一般是假设按顺序取多边形上面连续的2点与原点组合成一个三角形，依次下去用叉积求有向面积之和，最后取绝对值即可。注意，这些点必须是在多边形上逆时针或者顺时针给出的，而求出凸包刚好给了这样的一系列点。<br>凸包代码，其实先找出一个y坐标最小的点，再对剩下的所有点按极角排序。然后对排序后的点进行一个二维循环即可。二维循环的解释是当加入新的点进入凸包集合时候，如果与以前加入的点形成的偏转方向不一致，那么前面那些点都需要弹出集合。</p>
+<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="selector-id">#define</span> MAX_N (<span class="number">10000</span> + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">struct Point</span><br><span class="line">{</span><br><span class="line">    double x, y;</span><br><span class="line">    bool operator &lt;(const Point p) const</span><br><span class="line">    {</span><br><span class="line">        return y &lt; <span class="selector-tag">p</span><span class="selector-class">.y</span> || y == <span class="selector-tag">p</span><span class="selector-class">.y</span>  x &lt; <span class="selector-tag">p</span>.x;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">Point pts<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nN;</span><br><span class="line">Point ans<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nM;</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Det</span>(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">{</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Cross</span>(Point <span class="selector-tag">a</span>, Point <span class="selector-tag">b</span>, Point c)</span><br><span class="line">{</span><br><span class="line">    return <span class="built_in">Det</span>(<span class="selector-tag">b</span><span class="selector-class">.x</span> - <span class="selector-tag">a</span><span class="selector-class">.x</span>, <span class="selector-tag">b</span><span class="selector-class">.y</span> - <span class="selector-tag">a</span><span class="selector-class">.y</span>, c<span class="selector-class">.x</span> - <span class="selector-tag">a</span><span class="selector-class">.x</span>, c<span class="selector-class">.y</span> - <span class="selector-tag">a</span>.y);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">CrossCmp</span>(const Point <span class="selector-tag">a</span>, const Point b)</span><br><span class="line">{</span><br><span class="line">    double cs = <span class="built_in">Cross</span>(pts<span class="selector-attr">[0]</span>, <span class="selector-tag">a</span>, b);</span><br><span class="line">    return cs &gt; <span class="number">0</span> || cs == <span class="number">0</span>  <span class="selector-tag">a</span><span class="selector-class">.x</span> &lt; <span class="selector-tag">b</span>.x; </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Scan</span>()</span><br><span class="line">{</span><br><span class="line">    nM = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">sort</span>(pts + <span class="number">1</span>, pts + nN, CrossCmp);<span class="comment">//对所有点按极角排序,逆时针偏转</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//第0-2个点，其实不会进入第二重循环的</span></span><br><span class="line">    <span class="comment">//从第3个点开始，就依次检查与凸包中前面点形成的边的偏转方向</span></span><br><span class="line">    <span class="comment">//如果不是逆时针偏转，则弹出该点</span></span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        while (nM &gt;= <span class="number">2</span>  <span class="built_in">Cross</span>(ans<span class="selector-attr">[nM - 2]</span>, ans<span class="selector-attr">[nM - 1]</span>, pts<span class="selector-attr">[i]</span>) &lt;= <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            nM--;</span><br><span class="line">        }</span><br><span class="line">        ans<span class="selector-attr">[nM++]</span> = pts<span class="selector-attr">[i]</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">GetArea</span>()</span><br><span class="line">{</span><br><span class="line">    double fAns = <span class="number">0.0</span>;</span><br><span class="line">    Point ori = {<span class="number">0.0</span>, <span class="number">0.0</span>};</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nM; ++i)</span><br><span class="line">    {</span><br><span class="line">        fAns += <span class="built_in">Cross</span>(ori, ans<span class="selector-attr">[i]</span>, ans<span class="selector-attr">[(i + 1) % nM]</span>);</span><br><span class="line">    }</span><br><span class="line">    return <span class="built_in">fabs</span>(fAns) * <span class="number">0.5</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN) == <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, &amp;pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, &amp;pts<span class="selector-attr">[i]</span>.y);</span><br><span class="line">            <span class="keyword">if</span> (pts<span class="selector-attr">[i]</span> &lt; pts<span class="selector-attr">[0]</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">swap</span>(pts<span class="selector-attr">[i]</span>, pts<span class="selector-attr">[0]</span>);<span class="comment">//pts[0]是y坐标最小的点</span></span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">Scan</span>();<span class="comment">//扫描出凸包</span></span><br><span class="line">        double fArea = <span class="built_in">GetArea</span>();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, (int)(fArea / <span class="number">50</span>));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/22/poj-3714-raid-and-hdu-1007-quoit-design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1230,116 +1341,6 @@ XX***
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/07/uva-10112-myacm-triangles/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/05/07/uva-10112-myacm-triangles/" class="post-title-link" itemprop="url">uva 10112 - Myacm Triangles</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-05-07 15:00:00" itemprop="dateCreated datePublished" datetime="2012-05-07T15:00:00+08:00">2012-05-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/05/07/uva-10112-myacm-triangles/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10112 - Myacm Triangles" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/05/07/uva-10112-myacm-triangles/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/07/uva-10112-myacm-triangles/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是一个几何题。题意是给出一系列点，点最多才15个，求一个这里面的三个点组合出来的三角形，其面积是最大的，而且没有任何其它的点在这个三角形的内部和边界上。求三角形的面积，题目上面已经给了公式，也可以用0.5<em>|a|</em>|b|<em>sin(a,b)求，这里的a和b指的是2条边代表的向量。<br>现在就剩下一个问题了，怎么判断一个点在三角形的内部和边界上。在边界上，比较好判断，判断是否共线，然后再点是在线段的内部。<br>具体说明下，判断一个点在三角形内部的思路。我用的还是线性规划的思想。<em>*如果该点在三角形的内部，那么任取三角形的一条边，该内部点和剩余的三角形的一个顶点必定在三角形的那条的边的同一侧。</em></em>这个方法也可以推广到N边的凸多边形，证明的话很简单，因为线性规划一直在划分区域。所以，划分到最后围起来的区域就是凸多边形的内部了。<br>至于写代码的话，由于是第一次写这种几何题，写得很凌乱。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">20</span>)</span><br><span class="line">int nN;</span><br><span class="line">struct Point</span><br><span class="line">{</span><br><span class="line">    char szLabel<span class="selector-attr">[5]</span>;</span><br><span class="line">    int x;</span><br><span class="line">    int y;</span><br><span class="line">};</span><br><span class="line">Point points<span class="selector-attr">[MAX]</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//三点是否共线</span></span><br><span class="line">bool <span class="built_in">IsOneLine</span>(int nOne, int nTwo, int nThree)</span><br><span class="line">{</span><br><span class="line">    int nA = points<span class="selector-attr">[nTwo]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nOne]</span>.x;</span><br><span class="line">    int nB = points<span class="selector-attr">[nTwo]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nOne]</span>.y;</span><br><span class="line">    int nC = points<span class="selector-attr">[nThree]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nOne]</span>.x;</span><br><span class="line">    int nD = points<span class="selector-attr">[nThree]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nOne]</span>.y;</span><br><span class="line"></span><br><span class="line">    return (nA * nD == nB * nC);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//点nOne和点nTwo是否在直线(nBeg,nEnd)的同一侧(不能在直线上)</span></span><br><span class="line">bool <span class="built_in">IsSameSide</span>(int nBeg, int nEnd, int nOne, int nTwo)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//求直线的向量</span></span><br><span class="line">    int nA = points<span class="selector-attr">[nBeg]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nEnd]</span>.x;</span><br><span class="line">    int nB = points<span class="selector-attr">[nBeg]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nEnd]</span>.y;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//直线方程为nB(x - points[nBeg].x) - nA(y - points[nBeg].y) = 0</span></span><br><span class="line">    <span class="comment">//分别用nOne和nTwo的坐标代入直线方程计算结果，然后将结果相乘</span></span><br><span class="line">    <span class="comment">//乘积必须大于0</span></span><br><span class="line">    int nRes = (nB * (points<span class="selector-attr">[nOne]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nBeg]</span>.x) - nA * (points<span class="selector-attr">[nOne]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nBeg]</span>.y))</span><br><span class="line">               * (nB * (points<span class="selector-attr">[nTwo]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nBeg]</span>.x) - nA * (points<span class="selector-attr">[nTwo]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nBeg]</span>.y));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (nRes &gt; <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//printf("点:%d,点:%d,在直线nBeg:%d, nEnd:%d的同一侧\n", nOne, nTwo, nBeg, nEnd);</span></span><br><span class="line">    }</span><br><span class="line">    return nRes &gt; <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//点是否在三角形(nOne, nTwo, nThree)外部</span></span><br><span class="line">bool <span class="built_in">PointOutTriangle</span>(int nOne, int nTwo, int nThree, int nPoint)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//前面3个ifelse是判断点是否在边上</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">IsOneLine</span>(nOne, nTwo, nPoint))</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> ((points<span class="selector-attr">[nOne]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nPoint]</span>.x) * (points<span class="selector-attr">[nTwo]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nPoint]</span>.x) &lt;= <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return false;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">IsOneLine</span>(nOne, nThree, nPoint))</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> ((points<span class="selector-attr">[nOne]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nPoint]</span>.x) * (points<span class="selector-attr">[nThree]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nPoint]</span>.x) &lt;= <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return false;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">IsOneLine</span>(nTwo, nThree, nPoint))</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> ((points<span class="selector-attr">[nTwo]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nPoint]</span>.x) * (points<span class="selector-attr">[nThree]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nPoint]</span>.x) &lt;= <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return false;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//下面的IsSameSide如果nPoint在直线的(nOne,nTwo)的外侧也会判断为假</span></span><br><span class="line">    <span class="comment">//所以需要先在上面判断点是否在边的内侧</span></span><br><span class="line">    return !(<span class="built_in">IsSameSide</span>(nOne, nTwo, nThree, nPoint)</span><br><span class="line">              <span class="built_in">IsSameSide</span>(nOne, nThree, nTwo, nPoint)</span><br><span class="line">              <span class="built_in">IsSameSide</span>(nTwo, nThree, nOne, nPoint));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">IsValid</span>(int nOne, int nTwo, int nThree)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">IsOneLine</span>(nOne, nTwo, nThree))</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//printf("点:%d,%d,%d共线\n", nOne, nTwo, nThree);</span></span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (<span class="selector-tag">i</span> == nOne || <span class="selector-tag">i</span> == nTwo || <span class="selector-tag">i</span> == nThree)</span><br><span class="line">        {</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">PointOutTriangle</span>(nOne, nTwo, nThree, i))</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//printf("点:%d, 在三角形:%d,%d,%d内部\n", i, nOne, nTwo, nThree);</span></span><br><span class="line">            return false;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算三角形(nOne, nTwo, nThree)的面积</span></span><br><span class="line">double <span class="built_in">GetArea</span>(int nOne, int nTwo, int nThree)</span><br><span class="line">{</span><br><span class="line">    return <span class="number">0.5</span> * <span class="built_in">fabs</span>((points<span class="selector-attr">[nThree]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nOne]</span>.y) * (points<span class="selector-attr">[nTwo]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nOne]</span>.x)</span><br><span class="line">                      - (points<span class="selector-attr">[nTwo]</span><span class="selector-class">.y</span> - points<span class="selector-attr">[nOne]</span>.y) * (points<span class="selector-attr">[nThree]</span><span class="selector-class">.x</span> - points<span class="selector-attr">[nOne]</span>.x));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s%d%d"</span>, points<span class="selector-attr">[i]</span><span class="selector-class">.szLabel</span>, &amp;points<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, &amp;points<span class="selector-attr">[i]</span>.y);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        double fMaxArea = <span class="number">0.0</span>;</span><br><span class="line">        int nI = -<span class="number">1</span>, nJ = -<span class="number">1</span>, nK = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN - <span class="number">2</span>; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="selector-tag">i</span> + <span class="number">1</span>; j &lt; nN - <span class="number">1</span>; ++j)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">for</span> (int k = j + <span class="number">1</span>; k &lt; nN; ++k)</span><br><span class="line">                {</span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">IsValid</span>(<span class="selector-tag">i</span>, j, k))</span><br><span class="line">                    {</span><br><span class="line">                        <span class="comment">//printf("i:%d,j:%d,k:%d valid\n", i, j, k);</span></span><br><span class="line">                        double fArea = <span class="built_in">GetArea</span>(<span class="selector-tag">i</span>, j, k);</span><br><span class="line">                        <span class="comment">//printf("Area:%f\n", fArea);</span></span><br><span class="line">                        <span class="keyword">if</span> (fArea &gt; fMaxArea)</span><br><span class="line">                        {</span><br><span class="line">                            nI = i;</span><br><span class="line">                            nJ = j;</span><br><span class="line">                            nK = k;</span><br><span class="line">                            fMaxArea = fArea;</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s%s%s\n"</span>, points<span class="selector-attr">[nI]</span><span class="selector-class">.szLabel</span>, points<span class="selector-attr">[nJ]</span><span class="selector-class">.szLabel</span>, points<span class="selector-attr">[nK]</span>.szLabel);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1390,7 +1391,7 @@ XX***
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-count">220</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1403,7 +1404,7 @@ XX***
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1455,12 +1456,12 @@ XX***
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">643k</span>
+    <span title="站点总字数">644k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:45</span>
+    <span title="站点阅读时长">9:46</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/24/poj%201811%20Prime%20Test%20%E6%95%B0%E8%AE%BA%20%E7%B4%A0%E6%95%B0%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/09/24/poj%201811%20Prime%20Test%20%E6%95%B0%E8%AE%BA%20%E7%B4%A0%E6%95%B0%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">poj 1811 Prime Test 数论 素数测试</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-09-24 10:30:00" itemprop="dateCreated datePublished" datetime="2012-09-24T10:30:00+08:00">2012-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/09/24/poj%201811%20Prime%20Test%20%E6%95%B0%E8%AE%BA%20%E7%B4%A0%E6%95%B0%E6%B5%8B%E8%AF%95/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1811 Prime Test 数论 素数测试" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/09/24/poj%201811%20Prime%20Test%20%E6%95%B0%E8%AE%BA%20%E7%B4%A0%E6%95%B0%E6%B5%8B%E8%AF%95/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/24/poj%201811%20Prime%20Test%20%E6%95%B0%E8%AE%BA%20%E7%B4%A0%E6%95%B0%E6%B5%8B%E8%AF%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef unsigned long long LL;</span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">5000000</span>)</span><br><span class="line">bool bPrime<span class="selector-attr">[MAX]</span>;</span><br><span class="line">void <span class="built_in">InitPrime</span>()</span><br><span class="line">{</span><br><span class="line">    int nMax = <span class="built_in">sqrt</span>((double)MAX) + <span class="number">1</span>;</span><br><span class="line">    bPrime<span class="selector-attr">[0]</span> = bPrime<span class="selector-attr">[1]</span> = true;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">2</span>; <span class="selector-tag">i</span> &lt;= nMax; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (!bPrime<span class="selector-attr">[i]</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">2</span> * i; j &lt; MAX; j += i)</span><br><span class="line">            {</span><br><span class="line">                bPrime<span class="selector-attr">[j]</span> = true;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">LL <span class="built_in">multAndMod</span>(LL <span class="selector-tag">a</span>, LL <span class="selector-tag">b</span>, LL n)</span><br><span class="line">{</span><br><span class="line">    LL tmp = <span class="number">0</span>;</span><br><span class="line">    while (b)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">if</span>(<span class="selector-tag">b</span> &amp; <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            tmp = (tmp + a) % n;</span><br><span class="line">        }</span><br><span class="line">        <span class="selector-tag">a</span> = (<span class="selector-tag">a</span> &lt;&lt; <span class="number">1</span>) % n;</span><br><span class="line">        <span class="selector-tag">b</span> &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    return tmp;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//计算a^u%n</span></span><br><span class="line">LL <span class="built_in">ModExp</span>(LL <span class="selector-tag">a</span>, LL u, LL n)</span><br><span class="line">{</span><br><span class="line">    LL d = <span class="number">1</span>;</span><br><span class="line">    <span class="selector-tag">a</span> %= n;</span><br><span class="line">    while (u)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (u &amp; <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            d = <span class="built_in">multAndMod</span>(d, <span class="selector-tag">a</span>, n);</span><br><span class="line">        }</span><br><span class="line">        <span class="selector-tag">a</span> = <span class="built_in">multAndMod</span>(<span class="selector-tag">a</span>, <span class="selector-tag">a</span>, n);</span><br><span class="line">        u &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    return d % n;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//判断nN是不是合数</span></span><br><span class="line">bool <span class="built_in">Witness</span>(LL <span class="selector-tag">a</span>, LL nN)</span><br><span class="line">{</span><br><span class="line">    LL u = nN - <span class="number">1</span>, t = <span class="number">0</span>;<span class="comment">//将nN-1表示为u*2^t</span></span><br><span class="line">    while (u % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        t++;</span><br><span class="line">        u &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    LL x0 = <span class="built_in">ModExp</span>(<span class="selector-tag">a</span>, u, nN);<span class="comment">//x是a^u</span></span><br><span class="line">    LL x1;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= t; ++i)</span><br><span class="line">    {</span><br><span class="line">        x1 = <span class="built_in">multAndMod</span>(x0, x0, nN);</span><br><span class="line">        <span class="keyword">if</span> (x1 == <span class="number">1</span> &amp;&amp; x0 != nN - <span class="number">1</span> &amp;&amp; x0 != <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            return true;</span><br><span class="line">        }</span><br><span class="line">        x0 = x1;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (x1 != <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        return true;</span><br><span class="line">    }</span><br><span class="line">    return false;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//素数测试</span></span><br><span class="line">bool <span class="built_in">MillerRabin</span>(LL nN)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//if (nN &lt; MAX)return !bPrime[nN];</span></span><br><span class="line">    const int TIME = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; TIME; ++i)</span><br><span class="line">    {</span><br><span class="line">        LL <span class="selector-tag">a</span> = <span class="built_in">rand</span>() % (nN - <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Witness</span>(<span class="selector-tag">a</span>, nN))</span><br><span class="line">        {</span><br><span class="line">            return false;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return true;</span><br><span class="line">}</span><br><span class="line">LL <span class="built_in">gcd</span>(LL <span class="selector-tag">a</span>, LL b)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; b)<span class="built_in">swap</span>(<span class="selector-tag">a</span>, b);</span><br><span class="line">    while (b)</span><br><span class="line">    {</span><br><span class="line">        LL t = a;</span><br><span class="line">        <span class="selector-tag">a</span> = b;</span><br><span class="line">        <span class="selector-tag">b</span> = t % b;</span><br><span class="line">    }</span><br><span class="line">    return a;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//启发式寻找nN的因子</span></span><br><span class="line">LL <span class="built_in">PollardRho</span>(LL n, LL c)</span><br><span class="line">{</span><br><span class="line">    LL <span class="selector-tag">i</span> = <span class="number">1</span>, t = <span class="number">2</span>;</span><br><span class="line">    LL x, y;</span><br><span class="line">    LL ans;</span><br><span class="line">    <span class="built_in">srand</span>(<span class="selector-tag">time</span>(NULL));  </span><br><span class="line">    y = x = <span class="built_in">rand</span>() % n;</span><br><span class="line">    <span class="built_in">while</span>(<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        i++;</span><br><span class="line">        x = (<span class="built_in">multAndMod</span>(x, x, n) + c) % n;</span><br><span class="line">        ans = <span class="built_in">gcd</span>(y - x, n);</span><br><span class="line">        <span class="built_in">if</span>(ans &gt; <span class="number">1</span> &amp;&amp; ans &lt; n)</span><br><span class="line">            return ans;</span><br><span class="line">        <span class="built_in">if</span>(x == y)</span><br><span class="line">            return n;</span><br><span class="line">        <span class="built_in">if</span>(t == i)</span><br><span class="line">        {</span><br><span class="line">            y = x;</span><br><span class="line">            t &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">LL <span class="built_in">FindMin</span>(LL nN, LL c)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//printf("nN:%I64u\n", nN);</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">MillerRabin</span>(nN) || nN &lt;= <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        return nN;</span><br><span class="line">    }</span><br><span class="line">    LL <span class="selector-tag">p</span> = nN;</span><br><span class="line">    while (<span class="selector-tag">p</span> &gt;= nN) <span class="selector-tag">p</span> = <span class="built_in">PollardRho</span>(<span class="selector-tag">p</span>, c--);</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">p</span> &gt; <span class="number">1</span>)</span><br><span class="line">        <span class="selector-tag">p</span> = <span class="built_in">FindMin</span>(<span class="selector-tag">p</span>, c);<span class="comment">//分解p的最小因子</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">p</span> &lt; nN)</span><br><span class="line">    {</span><br><span class="line">        LL <span class="selector-tag">q</span> = nN / p;</span><br><span class="line">        <span class="selector-tag">q</span> = <span class="built_in">FindMin</span>(<span class="selector-tag">q</span>, c);<span class="comment">//找到q的最小因子</span></span><br><span class="line">        <span class="selector-tag">p</span> = <span class="built_in">min</span>(<span class="selector-tag">p</span>, q);</span><br><span class="line">    }</span><br><span class="line">    return p;</span><br><span class="line">}</span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nTest;</span><br><span class="line">    <span class="built_in">srand</span>(<span class="selector-tag">time</span>(NULL));</span><br><span class="line">    <span class="comment">//InitPrime();</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nTest);</span><br><span class="line">    while (nTest--)</span><br><span class="line">    {</span><br><span class="line">        LL nN;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%I64u"</span>, &amp;nN);</span><br><span class="line">        <span class="keyword">if</span> (nN &gt; <span class="number">2</span> &amp;&amp; nN % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"2\n"</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nN == <span class="number">2</span> || <span class="built_in">MillerRabin</span>(nN))</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Prime\n"</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%I64u\n"</span>, <span class="built_in">FindMin</span>(nN, <span class="number">181</span>));</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/18/hdu%204294%20Multiple%20%E6%95%B0%E8%AE%BA%20+%20bfs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1218,123 +1328,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/06/poj-2065-seti/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/08/06/poj-2065-seti/" class="post-title-link" itemprop="url">poj 2065 SETI</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-08-06 13:00:00" itemprop="dateCreated datePublished" datetime="2012-08-06T13:00:00+08:00">2012-08-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/08/06/poj-2065-seti/" class="post-meta-item leancloud_visitors" data-flag-title="poj 2065 SETI" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/08/06/poj-2065-seti/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/08/06/poj-2065-seti/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>题意比较纠结，搜索了把题意。<br>给你一个素数P(P&lt;=30000)和一串长为n的字符串str[]。字母 ‘*’ 代表0，字母a-z分别代表1-26，这n个字符所代表的数字分别代表f(1)、f(2)….f(n)。定义: f (k) = ∑<sub>0&lt;=i&lt;=n-1</sub>a<sub>i</sub>k<sup>i</sup> (mod p) (1&lt;=k&lt;=n,0&lt;=ai&lt;P)，求a0、a1…..an-1。题目保证肯定有唯一解。<br>解题思路：高斯消元。根据上面的公式显然可以列出有n个未知数的n个方程式：</p>
-<p></p><div>   a0*1^0 + a1*1^1+a2*1^2+........+an-1*1^(n-1) = f(1)</div><p></p>
-<p></p><div>   a0*2^0 + a1*2^1+a2*2^2+........+an-1*2^(n-1) = f(2)</div><p></p>
-<p></p><div>   ..............</div><p></p>
-<p></p><div>   a0*n^0 + a1*n^1+a2*n^2+........+an-1*n^(n-1) = f(n)</div><p></p>
-<p></p><div>   然后采用高斯消元法来解上面的方程组即可。<br>典型的高斯消元题，只是多了个modP，因此计算过程中可能需要扩展欧几里德算法。<p></p>
-<p>说下所谓的高斯消元的思路，其实可以参看维基百科，</p><div><a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E6%96%AF%E6%B6%88%E5%8E%BB%E6%B3%95">http://zh.wikipedia.org/wiki/%E9%AB%98%E6%96%AF%E6%B6%88%E5%8E%BB%E6%B3%95</a>，<br>大致过程是一直消变量。比如刚开始，消第一个变量，消完之后只让第一个方程含有第一个变量，然后消第二个变量，消完之后只让第二个方程含第二个变量，以此下去让最后的方程含最后一个变量，而且最后一个方程中对于前N-1个变量的系数都是0，这样就能解出这N个变量了。<br>关于自由元指的是这个变量可以取任何值，得出这样的结论是在消变量的过程中发现该变量的在第row个方程到第N方程中的系数都是0了，所以可以取任何值。判断无解的方式是，第row+1到第N个方程在高斯消元之后所有的系数必定是0，所以方程的值也必须是0。<br>求方程的解得过程是从N个解开始逆推，第N-1个方程也就包含2个变量了，第N个变量和第N-1个变量，以此下去，就可以解出方程组了。<br>具体的可以参照维基百科和代码仔细分析。还有演算法笔记上也有高斯消元的解释。<p></p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">70</span> + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">int nMatrix<span class="selector-attr">[MAX]</span><span class="selector-attr">[MAX]</span>;</span><br><span class="line">int nAns<span class="selector-attr">[MAX]</span>;</span><br><span class="line">void <span class="built_in">InitMatrix</span>(char* szStr, int nN, int nP)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(nMatrix, <span class="number">0</span>, <span class="built_in">sizeof</span>(nMatrix));</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[nN]</span> = (szStr<span class="selector-attr">[i]</span> == <span class="string">'*'</span> ? <span class="number">0</span> : szStr<span class="selector-attr">[i]</span> - <span class="string">'a'</span> + <span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        int nTemp = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nN; ++j)</span><br><span class="line">        {</span><br><span class="line">            nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = nTemp;</span><br><span class="line">            nTemp = (nTemp * (<span class="selector-tag">i</span> + <span class="number">1</span>)) % nP;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">egcd</span>(int nA, int nB, int nX, int nY)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nA &lt; nB)<span class="built_in">swap</span>(nA, nB);</span><br><span class="line">    <span class="keyword">if</span> (nB == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        nX = <span class="number">1</span>, nY = <span class="number">0</span>;</span><br><span class="line">        return nA;</span><br><span class="line">    }</span><br><span class="line">    int nRet = <span class="built_in">egcd</span>(nB, nA % nB, nX, nY);</span><br><span class="line">    int nT = nX;</span><br><span class="line">    nX = nY;</span><br><span class="line">    nY = nT - (nA / nB) * nY;</span><br><span class="line">    return nRet;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">Gauss</span>(int nN, int nP)</span><br><span class="line">{</span><br><span class="line">    int nR, nC;</span><br><span class="line">    <span class="keyword">for</span> (nR = nC = <span class="number">0</span>; nR &lt; nN  nC &lt; nN; ++nR, ++nC)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nMatrix<span class="selector-attr">[nR]</span><span class="selector-attr">[nC]</span> == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nR + <span class="number">1</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[nC]</span>)</span><br><span class="line">                {</span><br><span class="line">                    <span class="keyword">for</span> (int j = nC; j &lt;= nN; ++j)</span><br><span class="line">                    {</span><br><span class="line">                        <span class="built_in">swap</span>(nMatrix<span class="selector-attr">[nR]</span><span class="selector-attr">[j]</span>, nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span>);</span><br><span class="line">                    }</span><br><span class="line">                    break;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (nMatrix<span class="selector-attr">[nR]</span><span class="selector-attr">[nC]</span> == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            nR--;    <span class="comment">//自由元</span></span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        int nA = nMatrix<span class="selector-attr">[nR]</span><span class="selector-attr">[nC]</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nR + <span class="number">1</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[nC]</span>)</span><br><span class="line">            {</span><br><span class="line">                int nB = nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[nC]</span>;</span><br><span class="line">                <span class="keyword">for</span> (int j = nC; j &lt;= nN; ++j)</span><br><span class="line">                {</span><br><span class="line">                    nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = (nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> * nA - nMatrix<span class="selector-attr">[nR]</span><span class="selector-attr">[j]</span> * nB) % nP;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nR; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[nN]</span>)</span><br><span class="line">        {</span><br><span class="line">            return -<span class="number">1</span>;<span class="comment">//无解</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int nX, nY;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nN - <span class="number">1</span>; <span class="selector-tag">i</span> &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    {</span><br><span class="line">        int nSum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="selector-tag">i</span> + <span class="number">1</span>; j &lt; nN; ++j)</span><br><span class="line">        {</span><br><span class="line">            nSum = (nSum + nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> * nAns<span class="selector-attr">[j]</span>) % nP;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        nSum = (nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[nN]</span> - nSum + nP * nP) % nP;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">egcd</span>(nP, (nMatrix<span class="selector-attr">[i]</span><span class="selector-attr">[i]</span> + nP) % nP, nX, nY);</span><br><span class="line">        nY = (nY + nP) % nP;</span><br><span class="line">        nAns<span class="selector-attr">[i]</span> = (nY * nSum + nP) % nP;<span class="comment">//第i个解</span></span><br><span class="line">    }</span><br><span class="line">    return <span class="number">1</span> &lt;&lt; (nN - nR);<span class="comment">//返回解的个数,本题有唯一解</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    {</span><br><span class="line">        int nP;</span><br><span class="line">        int nN;</span><br><span class="line">        char szStr<span class="selector-attr">[MAX]</span>;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%s"</span>, nP, szStr);</span><br><span class="line">        nN = <span class="built_in">strlen</span>(szStr);</span><br><span class="line">        <span class="built_in">InitMatrix</span>(szStr, nN, nP);</span><br><span class="line">        <span class="built_in">Gauss</span>(nN, nP);</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d%s"</span>, nAns<span class="selector-attr">[i]</span>, <span class="selector-tag">i</span> == nN - <span class="number">1</span> ? <span class="string">"\n"</span> : <span class="string">" "</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</div></div></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1385,7 +1378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-count">220</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1398,7 +1391,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1450,12 +1443,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">643k</span>
+    <span title="站点总字数">644k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:45</span>
+    <span title="站点阅读时长">9:46</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
