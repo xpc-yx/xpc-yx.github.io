@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/18/poj%202778%20DNA%20Sequence%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%86%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/10/18/poj%202778%20DNA%20Sequence%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%86%A5/" class="post-title-link" itemprop="url">poj 2778 DNA Sequence AC自动机+矩阵快速冥</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-10-18 10:30:00" itemprop="dateCreated datePublished" datetime="2012-10-18T10:30:00+08:00">2012-10-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/10/18/poj%202778%20DNA%20Sequence%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%86%A5/" class="post-meta-item leancloud_visitors" data-flag-title="poj 2778 DNA Sequence AC自动机+矩阵快速冥" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/10/18/poj%202778%20DNA%20Sequence%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%86%A5/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/18/poj%202778%20DNA%20Sequence%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%86%A5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>题意很简单，假定文本集就是A,C,T,G，给定M个模式串，问你长度为N的文本不出现这些模式串的可能性到底有多少种。。。<br>确实非常不直观的样子。。。<br>解法是先学学AC自动机，建立起Trie图，根据trie图可以得到长度为1的路径矩阵，然后再快速冥得到长度为N的路径矩阵。<br>说起来都非常纠结，没学过AC自动机更加无法理解。学AC自动机之前据说得先学Trie树和KMP才好理解。学AC自动机搞Trie图就花费了近2天了，然后弄懂这个题又是一天，好在基本明白了。马上快比赛了，从长春换到金华也不知道是好是坏。。。还是弱菜啊。。。<br>贴下我的Trie图+快速冥(直接二分了,没有写成数论里面那种算法)…<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long INT;</span><br><span class="line">const int MOD = <span class="number">100000</span>;</span><br><span class="line">const int MAX_P = <span class="number">100</span>;</span><br><span class="line">const int MAX_D = <span class="number">4</span>;</span><br><span class="line">int nIdx<span class="selector-attr">[256]</span>;</span><br><span class="line">char szPat<span class="selector-attr">[MAX_P]</span>;</span><br><span class="line">INT nMatrix<span class="selector-attr">[MAX_P]</span><span class="selector-attr">[MAX_P]</span>;</span><br><span class="line">INT B<span class="selector-attr">[MAX_P]</span><span class="selector-attr">[MAX_P]</span>;</span><br><span class="line">INT A<span class="selector-attr">[MAX_P]</span><span class="selector-attr">[MAX_P]</span>;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">InitIdx</span>()</span><br><span class="line">{</span><br><span class="line">    nIdx<span class="selector-attr">[<span class="string">'A'</span>]</span> = <span class="number">0</span>;</span><br><span class="line">    nIdx<span class="selector-attr">[<span class="string">'C'</span>]</span> = <span class="number">1</span>;</span><br><span class="line">    nIdx<span class="selector-attr">[<span class="string">'T'</span>]</span> = <span class="number">2</span>;</span><br><span class="line">    nIdx<span class="selector-attr">[<span class="string">'G'</span>]</span> = <span class="number">3</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">struct Trie</span><br><span class="line">{</span><br><span class="line">    Trie* fail;</span><br><span class="line">    Trie* next<span class="selector-attr">[MAX_D]</span>;</span><br><span class="line">    int no;</span><br><span class="line">    bool flag;</span><br><span class="line">    <span class="built_in">Trie</span>()</span><br><span class="line">    {</span><br><span class="line">        fail = NULL;</span><br><span class="line">        <span class="built_in">memset</span>(next, <span class="number">0</span>, <span class="built_in">sizeof</span>(next));</span><br><span class="line">        no = <span class="number">0</span>;</span><br><span class="line">        flag = false;</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line">Trie tries<span class="selector-attr">[MAX_D * MAX_P]</span>;</span><br><span class="line">int nP;</span><br><span class="line">Trie* pRoot;</span><br><span class="line"></span><br><span class="line">Trie* <span class="built_in">NewNode</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(tries<span class="selector-attr">[nP]</span>, <span class="number">0</span>, <span class="built_in">sizeof</span>(Trie));</span><br><span class="line">    tries<span class="selector-attr">[nP]</span><span class="selector-class">.no</span> = nP;</span><br><span class="line">    return tries<span class="selector-attr">[nP++]</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">InitTrie</span>(Trie* pRoot)</span><br><span class="line">{</span><br><span class="line">    nP = <span class="number">0</span>;</span><br><span class="line">    pRoot = <span class="built_in">NewNode</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Insert</span>(char* pszPat)</span><br><span class="line">{</span><br><span class="line">    Trie* pNode = pRoot;</span><br><span class="line"></span><br><span class="line">    while (*pszPat)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;next<span class="selector-attr">[nIdx[*pszPat]</span>] == NULL)</span><br><span class="line">        {</span><br><span class="line">            pNode-&gt;next<span class="selector-attr">[nIdx[*pszPat]</span>] = <span class="built_in">NewNode</span>();</span><br><span class="line">        }</span><br><span class="line">        pNode = pNode-&gt;next<span class="selector-attr">[nIdx[*pszPat]</span>];</span><br><span class="line">        ++pszPat;</span><br><span class="line">    }</span><br><span class="line">    pNode-&gt;flag = true;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">BuildAC</span>(Trie* pRoot)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(nMatrix, <span class="number">0</span>, <span class="built_in">sizeof</span>(nMatrix));</span><br><span class="line"></span><br><span class="line">    pRoot-&gt;fail = NULL;</span><br><span class="line">    queue&lt;Trie*&gt; qt;</span><br><span class="line">    qt<span class="selector-class">.push</span>(pRoot);</span><br><span class="line">    while (!qt<span class="selector-class">.empty</span>())</span><br><span class="line">    {</span><br><span class="line">        Trie* front = qt<span class="selector-class">.front</span>();</span><br><span class="line">        qt<span class="selector-class">.pop</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; MAX_D; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (front-&gt;next<span class="selector-attr">[i]</span>)</span><br><span class="line">            {</span><br><span class="line">                Trie* pNode = front-&gt;fail;</span><br><span class="line">                while (pNode &amp;&amp; pNode-&gt;next<span class="selector-attr">[i]</span> == NULL)</span><br><span class="line">                {</span><br><span class="line">                    pNode = pNode-&gt;fail;</span><br><span class="line">                }</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span>-&gt;fail = pNode? pNode-&gt;next<span class="selector-attr">[i]</span> : pRoot;</span><br><span class="line">                <span class="keyword">if</span> (front-&gt;next<span class="selector-attr">[i]</span>-&gt;fail-&gt;flag == true)</span><br><span class="line">                {</span><br><span class="line">                    front-&gt;next<span class="selector-attr">[i]</span>-&gt;flag = true;</span><br><span class="line">                }</span><br><span class="line"></span><br><span class="line">                qt<span class="selector-class">.push</span>(front-&gt;next<span class="selector-attr">[i]</span>);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span> = front == pRoot? pRoot : front-&gt;fail-&gt;next<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (front-&gt;next<span class="selector-attr">[i]</span>-&gt;flag == false)</span><br><span class="line">            {</span><br><span class="line">                nMatrix<span class="selector-attr">[front-&gt;no]</span><span class="selector-attr">[front-&gt;next[i]</span>-&gt;no]++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return nP;<span class="comment">//节点总个数</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">MultyMatrix</span>(INT A<span class="selector-attr">[]</span><span class="selector-attr">[MAX_P]</span>, INT B<span class="selector-attr">[]</span><span class="selector-attr">[MAX_P]</span>, INT C<span class="selector-attr">[]</span><span class="selector-attr">[MAX_P]</span>, int nSize)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nSize; ++j)</span><br><span class="line">        {</span><br><span class="line">            INT nSum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (int k = <span class="number">0</span>; k &lt; nSize; ++k)</span><br><span class="line">            {</span><br><span class="line">                nSum = (nSum + A<span class="selector-attr">[i]</span><span class="selector-attr">[k]</span> * B<span class="selector-attr">[k]</span><span class="selector-attr">[j]</span>) % MOD;</span><br><span class="line">            }</span><br><span class="line">            C<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = nSum;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">CopyMatrix</span>(INT A<span class="selector-attr">[]</span><span class="selector-attr">[MAX_P]</span>, INT B<span class="selector-attr">[]</span><span class="selector-attr">[MAX_P]</span>, int nSize)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nSize; ++j)</span><br><span class="line">        {</span><br><span class="line">            A<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = B<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">MatrixPower</span>(INT M<span class="selector-attr">[]</span><span class="selector-attr">[MAX_P]</span>, int nSize, INT nP)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nP == <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">CopyMatrix</span>(A, M, nSize);</span><br><span class="line">        return;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">MatrixPower</span>(M, nSize, nP / <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">MultyMatrix</span>(A, A, B, nSize);</span><br><span class="line">    <span class="keyword">if</span> (nP % <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">MultyMatrix</span>(B, M, A, nSize);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">CopyMatrix</span>(A, B, nSize);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    INT nM, nN;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">InitIdx</span>();</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%I64d%I64d"</span>, &amp;nM, &amp;nN) == <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">InitTrie</span>(pRoot);</span><br><span class="line">        while (nM--)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s"</span>, szPat);</span><br><span class="line">            <span class="built_in">Insert</span>(szPat);</span><br><span class="line">        }</span><br><span class="line">        int nSize = <span class="built_in">BuildAC</span>(pRoot);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">MatrixPower</span>(nMatrix, nSize, nN);</span><br><span class="line">        INT nAns = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">        {</span><br><span class="line">            nAns = (nAns + A<span class="selector-attr">[0]</span><span class="selector-attr">[i]</span>) % MOD;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%I64d\n"</span>, nAns % MOD);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/12/hnu-10076-jimmys-riddles-dfa/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1216,122 +1326,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" class="post-title-link" itemprop="url">poj 1200 Crazy Search 字符串hash</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-09-27 10:00:00" itemprop="dateCreated datePublished" datetime="2012-09-27T10:00:00+08:00">2012-09-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1200 Crazy Search 字符串hash" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这个题是求一个字符串里面出现了多少个长度为N的不同子串，同时给出了母串里面不同字符<br>的个数NC。<br>保存子串到set里面直接暴力肯定超时了。这个题有个利用字符串hash的解法，虽然理论上有<br>bug，但是能过这个题。<br>利用给出的NC，对长度为N的字符串，将其当作NC进制的数字，求出其值，对值进行hash，<br>求出不同的hash位置个数。<br>这个算法其实类似于Karp-Rabin字符串匹配算法。不过，Karp-Rabin算法做了点改进，对<br>进制为D的字符串求值的时候为了防止溢出会模一个素数，而且不会每次都迭代求下一个子串的<br>值，而是从当前子串的值直接递推出下一个字符的值。怎么递推了，其实很简单，就是当前值去<br>掉最高位再乘以D(相当于左移一位,不过是D进制的，不能直接用&lt;&lt;符号)，再加上新的最低位。<br>Karp-Rabin算法应该主要在于设计出合理的hash算法，比如，用取模hash函数的话，得保<br>证hash表足够大，否则冲突太多，速度就不会怎么好了。比如这个题，hash表小了就AC不了了。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">const int MAX = <span class="number">13747347</span>;</span><br><span class="line">int nHash<span class="selector-attr">[MAX]</span>;</span><br><span class="line">char szStr<span class="selector-attr">[17000001]</span>;</span><br><span class="line">int nN, nNC;</span><br><span class="line">int nW<span class="selector-attr">[200]</span>;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Insert</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    int nPos = nKey;</span><br><span class="line">    while (nHash<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>  nHash<span class="selector-attr">[nPos]</span> != nKey)</span><br><span class="line">    {</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    nHash<span class="selector-attr">[nPos]</span> = nKey;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">Find</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    int nPos = nKey;</span><br><span class="line">    while (nHash<span class="selector-attr">[nPos]</span> != -<span class="number">1</span> &amp;&amp; nHash<span class="selector-attr">[nPos]</span> != nKey)</span><br><span class="line">    {</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    return nHash<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d%s"</span>, &amp;nN, &amp;nNC, szStr) == <span class="number">3</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">memset</span>(nW, <span class="number">0</span>, <span class="built_in">sizeof</span>(nW));</span><br><span class="line">        <span class="built_in">memset</span>(nHash, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nHash));</span><br><span class="line">        int nNum = <span class="number">0</span>;</span><br><span class="line">        int nSize = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (char* pszStr = szStr; *pszStr; ++pszStr)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (!nW<span class="selector-attr">[*pszStr]</span>)</span><br><span class="line">            {</span><br><span class="line">                nW<span class="selector-attr">[*pszStr]</span> = ++nNum;</span><br><span class="line">            }</span><br><span class="line">            ++nSize;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        int nKey = <span class="number">0</span>;</span><br><span class="line">        int nAns = <span class="number">0</span>;</span><br><span class="line">        int nPowN = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nN; ++j)</span><br><span class="line">        {</span><br><span class="line">            nKey = (nKey * nNC + nW<span class="selector-attr">[szStr[j]</span>]) % MAX;</span><br><span class="line">            nPowN *= nNC;</span><br><span class="line">        }</span><br><span class="line">        nPowN /= nNC;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">Find</span>(nKey))</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">Insert</span>(nKey);</span><br><span class="line">            nAns++;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nN; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">        {</span><br><span class="line">            nKey = (nNC * (nKey - nPowN * nW<span class="selector-attr">[szStr[i - nN]</span>])</span><br><span class="line">                    + nW<span class="selector-attr">[szStr[i]</span>]) % MAX;</span><br><span class="line">            nKey = (nKey + MAX) % MAX;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">Find</span>(nKey))</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">Insert</span>(nKey);</span><br><span class="line">                nAns++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, nAns);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1377,7 +1376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1390,7 +1389,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1442,12 +1441,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

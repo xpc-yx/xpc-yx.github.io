@@ -222,6 +222,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-26 17:00:00" itemprop="dateCreated datePublished" datetime="2012-06-26T17:00:00+08:00">2012-06-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/" class="post-meta-item leancloud_visitors" data-flag-title="zoj 1081 Points Within - 改进弧长法判断点和简单多边形的关系" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/26/zoj%201081%20Points%20Within%20-%20%E6%94%B9%E8%BF%9B%E5%BC%A7%E9%95%BF%E6%B3%95%E5%88%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%AE%80%E5%8D%95%E5%A4%9A%E8%BE%B9%E5%BD%A2%E7%9A%84%E5%85%B3%E7%B3%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>转角法判断点和多边形的关系大家都知道，原理比较简单，在多边形内扫过的转角一定是360度，在边界上和外面则不一定。<br>实现起来也比较麻烦，浮点误差比较大，而且还要考虑些特殊情况。<br>在网上找到一种叫做改进弧长法的算法，原理和转角法类似，但是做了很多重要的改进。比如，计算转角改成了计算叉积，根据叉积决定旋转方向，还要根据计算下一个点的象限决定偏转多少，每次偏转的都是90度的倍数。该算法可以方便判断出点在多边形内，还是边界上，还是在多边形外面。</p>
+<p>摘自别人对该算法的描述如下：<br>首先从该书中摘抄一段弧长法的介绍：“弧长法要求多边形是有向多边形，一般规定沿多边形的正向，边的左侧为多边形的内侧域。以被测点为圆心作单位圆，将全部有向边向单位圆作径向投影，并计算其中单位圆上弧长的代数和。若代数和为0，则点在多边形外部；若代数和为2π则点在多边形内部；若代数和为π，则点在多边形上。”<br>按书上的这个介绍，其实弧长法就是转角法。但它的改进方法比较厉害：将坐标原点平移到被测点P，这个新坐标系将平面划分为4个象限，对每个多边形顶点P ，只考虑其所在的象限，然后按邻接顺序访问多边形的各个顶点P，分析P和P[i+1]，有下列三种情况：<br>（1）P[i+1]在P的下一象限。此时弧长和加π/2；<br>（2）P[i+1]在P的上一象限。此时弧长和减π/2；<br>（3）P[i+1]在Pi的相对象限。首先计算f=y[i+1]<em>x-x[i+1]</em>y（叉积），若f=0，则点在多边形上；若f&lt;0，弧长和减π；若f&gt;0，弧长和加π。<br>最后对算出的代数和和上述的情况一样判断即可。实现的时候还有两点要注意，第一个是若P的某个坐标为0时，一律当正号处理；第二点是若被测点和多边形的顶点重合时要特殊处理。</p>
+<p>以上就是书上讲解的内容，其实还存在一个问题。那就是当多边形的某条边在坐标轴上而且两个顶点分别在原点的两侧时会出错。如边(3,0)-(-3,0)，按以上的处理，象限分别是第一和第二，这样会使代数和加π/2，有可能导致最后结果是被测点在多边形外。而实际上被测点是在多边形上（该边穿过该点）。对于这点，我的处理办法是：每次算P和P[i+1]时，就计算叉积和点积，判断该点是否在该边上，是则判断结束，否则继续上述过程。这样牺牲了时间，但保证了正确性。<br>具体实现的时候，由于只需知道当前点和上一点的象限位置，所以附加空间只需O(1)。实现的时候可以把上述的“π/2”改成1，“π”改成2，这样便可以完全使用整数进行计算。不必考虑顶点的顺序，逆时针和顺时针都可以处理，只是最后的代数和符号不同而已。整个算法编写起来非常容易。</p>
+<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">100</span> + <span class="number">10</span>)</span><br><span class="line">struct Point</span><br><span class="line">{</span><br><span class="line">    double x,y;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">Point pts<span class="selector-attr">[MAX]</span>;</span><br><span class="line">const int OUT = <span class="number">0</span>;</span><br><span class="line">const int IN = <span class="number">1</span>;</span><br><span class="line">const int EDGE = <span class="number">2</span>;</span><br><span class="line">const double fPre = <span class="number">1</span>e-<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">DblCmp</span>(double fD)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">fabs</span>(fD) &lt; fPre)</span><br><span class="line">    {</span><br><span class="line">        return <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        return fD &gt; <span class="number">0</span> ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetQuadrant</span>(Point p)</span><br><span class="line">{</span><br><span class="line">    return <span class="built_in">DblCmp</span>(<span class="selector-tag">p</span>.x) &gt;= <span class="number">0</span> ? (<span class="built_in">DblCmp</span>(<span class="selector-tag">p</span>.y) &gt;= <span class="number">0</span> ? <span class="number">0</span> : <span class="number">3</span>) :</span><br><span class="line">               (<span class="built_in">DblCmp</span>(<span class="selector-tag">p</span>.y) &gt;= <span class="number">0</span> ? <span class="number">1</span> : <span class="number">2</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Det</span>(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">{</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">PtInPolygon</span>(Point* pts, int nN, Point p)</span><br><span class="line">{</span><br><span class="line">    int <span class="selector-tag">i</span>, j, k;</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; nN; ++j)</span><br><span class="line">    {</span><br><span class="line">        pts<span class="selector-attr">[j]</span><span class="selector-class">.x</span> -= <span class="selector-tag">p</span>.x;</span><br><span class="line">        pts<span class="selector-attr">[j]</span><span class="selector-class">.y</span> -= <span class="selector-tag">p</span>.y;</span><br><span class="line">    }</span><br><span class="line">    int nA1, nA2;</span><br><span class="line">    int nSum = <span class="number">0</span>;</span><br><span class="line">    nA1 = <span class="built_in">GetQuadrant</span>(pts<span class="selector-attr">[0]</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        k = (<span class="selector-tag">i</span> + <span class="number">1</span>) % nN;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">DblCmp</span>(pts<span class="selector-attr">[k]</span>.x) == <span class="number">0</span>  <span class="built_in">DblCmp</span>(pts<span class="selector-attr">[k]</span>.y) == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            break;<span class="comment">//与顶点重合</span></span><br><span class="line">        }</span><br><span class="line">        int nC = <span class="built_in">DblCmp</span>(<span class="built_in">Det</span>(pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, pts<span class="selector-attr">[i]</span><span class="selector-class">.y</span>,</span><br><span class="line">                            pts<span class="selector-attr">[k]</span><span class="selector-class">.x</span>, pts<span class="selector-attr">[k]</span>.y));</span><br><span class="line">        <span class="keyword">if</span> (!nC  <span class="built_in">DblCmp</span>(pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span> * pts<span class="selector-attr">[k]</span>.x) &lt;= <span class="number">0</span></span><br><span class="line">                 <span class="built_in">DblCmp</span>(pts<span class="selector-attr">[i]</span><span class="selector-class">.y</span> * pts<span class="selector-attr">[k]</span>.y) &lt;= <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            break;<span class="comment">//边上</span></span><br><span class="line">        }</span><br><span class="line">        nA2 = <span class="built_in">GetQuadrant</span>(pts<span class="selector-attr">[k]</span>);</span><br><span class="line">        <span class="keyword">if</span> ((nA1 + <span class="number">1</span>) % <span class="number">4</span> == nA2)</span><br><span class="line">        {</span><br><span class="line">            nSum += <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((nA1 + <span class="number">2</span>) % <span class="number">4</span> == nA2)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (nC &gt; <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                nSum += <span class="number">2</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                nSum -= <span class="number">2</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((nA1 + <span class="number">3</span>) % <span class="number">4</span> == nA2)</span><br><span class="line">        {</span><br><span class="line">            nSum -= <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        nA1 = nA2;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; nN; ++j)</span><br><span class="line">    {</span><br><span class="line">        pts<span class="selector-attr">[j]</span><span class="selector-class">.x</span> += <span class="selector-tag">p</span>.x;</span><br><span class="line">        pts<span class="selector-attr">[j]</span><span class="selector-class">.y</span> += <span class="selector-tag">p</span>.y;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">i</span> &lt; nN)</span><br><span class="line">    {</span><br><span class="line">        return EDGE;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nSum)<span class="comment">//逆时针nSum == 4, 顺时针nSum == -4</span></span><br><span class="line">    {</span><br><span class="line">        return IN;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        return OUT;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nN, nM;</span><br><span class="line">    int nCase = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;nN, &amp;nM), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nCase &gt; <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, &amp;pts<span class="selector-attr">[i]</span><span class="selector-class">.x</span>, &amp;pts<span class="selector-attr">[i]</span>.y);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Problem %d:\n"</span>, nCase++);</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nM; ++i)</span><br><span class="line">        {</span><br><span class="line">            Point p;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf"</span>, <span class="selector-tag">p</span><span class="selector-class">.x</span>, <span class="selector-tag">p</span>.y);</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">PtInPolygon</span>(pts, nN, p))</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Within\n"</span>);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Outside\n"</span>);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/24/poj-3348-cows/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1231,121 +1344,11 @@ XX***
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/07/uva-107-the-cat-in-the-hat/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/05/07/uva-107-the-cat-in-the-hat/" class="post-title-link" itemprop="url">uva 107 - The Cat in the Hat</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-05-07 19:00:00" itemprop="dateCreated datePublished" datetime="2012-05-07T19:00:00+08:00">2012-05-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/05/07/uva-107-the-cat-in-the-hat/" class="post-meta-item leancloud_visitors" data-flag-title="uva 107 - The Cat in the Hat" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/05/07/uva-107-the-cat-in-the-hat/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/07/uva-107-the-cat-in-the-hat/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是一个很神的数学题吧。基本上过这个题的很多都会wa10多次，而且这个题好像简单的枚举其中的一个指数值都能过，可能是数据量比较小。<br>但是，这个题还是有数学的解法的。但是，即使找到了这个正确的解法，过题的话，也是一件很困难的事情。题意大致如下：一只猫，高度为H，戴了一个帽子，帽子里面有N只猫（N是常数，且未知），同样帽子里面的猫也戴了帽子，但是这些猫的高度变成了H / (N + 1)，会向下取整。以此递归下去，直到最后的猫的高度都为1为止。现在，给出H和高度为1的猫的数量。要求的是高度大于1的猫的数量，以及所有猫的高度之和。<br>很别扭吧。通过上面的信息，得出2个式子。假设one代表为高度为1的猫的数量。one = N的n次。H &gt;= (N + 1)的n次。注意第二个式子不一定取等号，因为很多时候都是不能整除的。现在要求N和n。2个方程解2个未知数，应该能解出来。但是，注意的是其中一个还是不等式。。。<br>指数关系很多时候会转换为对数的关系。所以，继续求对数，有lgH &gt;= n <em> lg(N + 1)。其中，由第一个式子可以得到n = lg(one) / lg(N)。那么最终转换为：lgH &gt;= (lg(one) / lgN) </em> lg(N + 1)。换个形式就是lgH / lg(One) &gt;= lg(N + 1) / lgN。现在，已经很清晰了。因为，函数lg(N + 1) / lg(N) 是单调递减的。看到单调的函数，马上就会知道可以二分了。意思是，我们可以二分出一个N让lg(N + 1) / lgN 最接近lgH/lg(One)，而且是小于lgH / lg(One)的。剩下的工作就只是求和而已了。<br>写二分的时候，有一个地方可以注意一下。因为 lg(N + 1) / lgN 可能会出现除数为0的情况，所以可以进一步转换为lgH <em> lgN &gt;=lg(N + 1) </em> lg(one)。 也是求一个N让上面那个不等式2边的值最接近，而且右边小于左边。能很快写对这个题真不是件容易的事情。。。<br>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nInitH, nOnes;</span><br><span class="line">    int nN, n;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;nInitH, &amp;nOnes), nInitH + nOnes)</span><br><span class="line">    {</span><br><span class="line">        int nBeg = <span class="number">1</span>;</span><br><span class="line">        int nEnd = nOnes;</span><br><span class="line">        int nMid;</span><br><span class="line"></span><br><span class="line">        while (nBeg &lt;= nEnd)</span><br><span class="line">        {</span><br><span class="line">            nMid = (nBeg + nEnd) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            double fRes = <span class="built_in">log10</span>(nInitH) * <span class="built_in">log10</span>(nMid);</span><br><span class="line">            double fTemp = <span class="built_in">log10</span>(nMid + <span class="number">1</span>) * <span class="built_in">log10</span>(nOnes);</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">fabs</span>(fRes - fTemp) &lt; <span class="number">1</span>e-<span class="number">10</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="comment">//printf("Find nN:%d\n", nMid);</span></span><br><span class="line">                nN = nMid;</span><br><span class="line">                break;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (fTemp &gt; fRes)</span><br><span class="line">            {</span><br><span class="line">                nBeg = nMid + <span class="number">1</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                nEnd = nMid - <span class="number">1</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        n = <span class="built_in">floor</span>(<span class="built_in">log10</span>(nInitH) / <span class="built_in">log10</span>(nN + <span class="number">1</span>) + <span class="number">1</span>e-<span class="number">9</span>);</span><br><span class="line">        <span class="comment">//printf("nN:%d, n:%d\n", nN, n);</span></span><br><span class="line"></span><br><span class="line">        int nSum = <span class="number">0</span>;</span><br><span class="line">        int nLazy = <span class="number">0</span>;</span><br><span class="line">        int nNum = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt;= n; ++i)</span><br><span class="line">        {</span><br><span class="line">            nSum += nNum * nInitH;</span><br><span class="line">            nLazy += nNum;</span><br><span class="line">            nNum *= nN;</span><br><span class="line">            nInitH /= (nN + <span class="number">1</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, nLazy - nOnes, nSum);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1391,7 +1394,7 @@ XX***
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1404,7 +1407,7 @@ XX***
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1456,12 +1459,12 @@ XX***
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

@@ -222,6 +222,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-title-link" itemprop="url">多线程内存池</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-19 21:04:54" itemprop="dateCreated datePublished" datetime="2012-11-19T21:04:54+08:00">2012-11-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/" class="post-meta-item leancloud_visitors" data-flag-title="多线程内存池" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/19/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%B1%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>如果一个内存池需要线程同步了，估计和默认的内存操作也差不了多远了。现在对内存操作的优化只是在优化线程同步操作上面了。默认的lock和unlock可能实现得过于完美，因而要求更多的cpu周期。如果选择更原子的lock和unlock实现，还是可以加快内存操作的速度的。</p>
+<p>多线程内存池在实现上也就是在申请和释放外面包裹了一对加锁和解锁操作而已。</p>
+<p>如果我们采用模板编程，就可以实现一个功能强悍的模板类，该模板类有两个参数，单线程内存池和锁。这样的话，可以组合出很多情况。比如说，单线程内存池有对象大小固定和不固定两种实现，锁在Windows下可以用临界区，互斥体，信号量，事件实现。这样最多可以组合出8种不同的实例化。</p>
+<p>一般说来互斥体比临界区慢很多，在这里可以进行很好的测试。我实现了临界区和互斥体版本的锁，经过测试发现前者比后者快30多倍。因为互斥体据说是内核对象，而临界区是用户态对象，那么互斥体的使用就需要系统在用户态和内核态之间进行切换，肯定会消耗更多的时间。</p>
+<p>互斥体版本代码如下，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; class MemoryPool</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">MemoryPool</span>(size_t size = EXPANSION_SIZE)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">expandTheFreeList</span>(size);</span><br><span class="line">    }</span><br><span class="line">    ~<span class="built_in">MemoryPool</span>();</span><br><span class="line">    <span class="comment">//allocate a T element from the free list.</span></span><br><span class="line">    void* <span class="built_in">alloc</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (next == NULL)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">expandTheFreeList</span>();</span><br><span class="line">        }</span><br><span class="line">        MemoryPool&lt;T&gt;* head = next;</span><br><span class="line">        next = head-&gt;next;</span><br><span class="line">        return head;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//return a T element to the free list.</span></span><br><span class="line">    void <span class="built_in">free</span>(void* doomed)</span><br><span class="line">    {</span><br><span class="line">        MemoryPool&lt;T&gt;* head = static_cast&lt; MemoryPool&lt;T&gt;* &gt; (doomed);</span><br><span class="line">        head-&gt;next = next;</span><br><span class="line">        next = head;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//next element on the free list.</span></span><br><span class="line">    MemoryPool&lt;T&gt;* next;</span><br><span class="line">    <span class="comment">//if the freelist is empty, expand it by this amount.</span></span><br><span class="line">    enum {EXPANSION_SIZE = <span class="number">32</span>};</span><br><span class="line">    <span class="comment">//add free elements to the free list</span></span><br><span class="line">    void <span class="built_in">expandTheFreeList</span>(int howMany = EXPANSION_SIZE);</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; MemoryPool&lt;T&gt; :: ~<span class="built_in">MemoryPool</span>()</span><br><span class="line">{</span><br><span class="line">    MemoryPool&lt;T&gt;* nextPtr = NULL;</span><br><span class="line">    while (nextPtr)</span><br><span class="line">    {</span><br><span class="line">        nextPtr = next;</span><br><span class="line">        next = next-&gt;next;</span><br><span class="line">        delete <span class="selector-attr">[]</span> nextPtr;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; void MemoryPool&lt;T&gt; :: <span class="built_in">expandTheFreeList</span>(int howMany)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//we must allocate an object enough to contain the next pointer</span></span><br><span class="line">    size_t size = <span class="built_in">sizeof</span>(T) &gt; <span class="built_in">sizeof</span>(MemoryPool&lt;T&gt;*) ? <span class="built_in">sizeof</span>(T) :</span><br><span class="line">                  <span class="built_in">sizeof</span>(MemoryPool&lt;T&gt;*);</span><br><span class="line"></span><br><span class="line">    MemoryPool&lt;T&gt;* runner = (MemoryPool&lt;T&gt;*) new char<span class="selector-attr">[size]</span>;</span><br><span class="line">    next = runner;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; howMany; ++i)</span><br><span class="line">    {</span><br><span class="line">        runner-&gt;next = (MemoryPool&lt;T&gt;*) new char<span class="selector-attr">[size]</span>;</span><br><span class="line">        runner = runner-&gt;next;</span><br><span class="line">    }</span><br><span class="line">    runner-&gt;next = NULL;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">class ABClock <span class="comment">//abstract base class</span></span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    virtual ~<span class="built_in">ABClock</span>() {}</span><br><span class="line">    virtual void <span class="built_in">lock</span>() = <span class="number">0</span>;</span><br><span class="line">    virtual void <span class="built_in">unlock</span>() = <span class="number">0</span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class MutexLock : public ABClock</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">MutexLock</span>()</span><br><span class="line">    {</span><br><span class="line">        hMutex = <span class="built_in">CreateMutex</span>(NULL, FALSE, NULL);</span><br><span class="line">    }</span><br><span class="line">    ~<span class="built_in">MutexLock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">CloseHandle</span>(hMutex);</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">lock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">WaitForSingleObject</span>(hMutex, INFINITE);</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">unlock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">ReleaseMutex</span>(hMutex);</span><br><span class="line">    }</span><br><span class="line">private:</span><br><span class="line">    HANDLE hMutex;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">template &lt;typename POOLTYPE, typename LOCK&gt;</span><br><span class="line">class MTMemoryPool</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="comment">//allocate an element from the freelist.</span></span><br><span class="line">    void* <span class="built_in">alloc</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        void* mem;</span><br><span class="line">        theLock<span class="selector-class">.lock</span>();</span><br><span class="line">        mem = stPool<span class="selector-class">.alloc</span>(size);</span><br><span class="line">        theLock<span class="selector-class">.unlock</span>();</span><br><span class="line">        return mem;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//return an element to the freelist</span></span><br><span class="line">    void <span class="built_in">free</span>(void* someElement)</span><br><span class="line">    {</span><br><span class="line">        theLock<span class="selector-class">.lock</span>();</span><br><span class="line">        stPool<span class="selector-class">.free</span>(someElement);</span><br><span class="line">        theLock<span class="selector-class">.unlock</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    POOLTYPE stPool;<span class="comment">//Single-threaded pool.</span></span><br><span class="line">    LOCK theLock;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">Rational</span>(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : <span class="built_in">n</span>(a), <span class="built_in">d</span>(b) {}</span><br><span class="line">    void* operator <span class="built_in">new</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        return memPool-&gt;<span class="built_in">alloc</span>(size);</span><br><span class="line">    }</span><br><span class="line">    void operator <span class="built_in">delete</span>(void* doomed, size_t size)</span><br><span class="line">    {</span><br><span class="line">        memPool-&gt;<span class="built_in">free</span>(doomed);</span><br><span class="line">    }</span><br><span class="line">    static void <span class="built_in">newMemPool</span>()</span><br><span class="line">    {</span><br><span class="line">        memPool = new MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, MutexLock&gt;;</span><br><span class="line">    }</span><br><span class="line">    static void <span class="built_in">deleteMemPool</span>()</span><br><span class="line">    {</span><br><span class="line">        delete memPool;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, MutexLock&gt;* memPool;</span><br><span class="line">};</span><br><span class="line">MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, MutexLock&gt;* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    const int ARRAY_SIZE = <span class="number">1000</span>;</span><br><span class="line">    const int LOOP_TIMES = <span class="number">5000</span>;</span><br><span class="line"></span><br><span class="line">    Rational* array<span class="selector-attr">[ARRAY_SIZE]</span>;</span><br><span class="line">    clock_t beg = <span class="built_in">clock</span>();</span><br><span class="line">    Rational::<span class="built_in">newMemPool</span>();</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; LOOP_TIMES; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            array<span class="selector-attr">[j]</span> = new <span class="built_in">Rational</span>(j);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            delete array<span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    clock_t end = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"use %f second(s).\n"</span>, <span class="number">1.0</span> * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">"pause"</span>);</span><br><span class="line">    Rational::<span class="built_in">deleteMemPool</span>();</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>运行结果，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7573/27396123196_0e8f1d69ee_o.png"></p>
+<p>临界区版本代码如下，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; class MemoryPool</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">MemoryPool</span>(size_t size = EXPANSION_SIZE)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">expandTheFreeList</span>(size);</span><br><span class="line">    }</span><br><span class="line">    ~<span class="built_in">MemoryPool</span>();</span><br><span class="line">    <span class="comment">//allocate a T element from the free list.</span></span><br><span class="line">    void* <span class="built_in">alloc</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (next == NULL)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">expandTheFreeList</span>();</span><br><span class="line">        }</span><br><span class="line">        MemoryPool&lt;T&gt;* head = next;</span><br><span class="line">        next = head-&gt;next;</span><br><span class="line">        return head;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">//return a T element to the free list.</span></span><br><span class="line">    void <span class="built_in">free</span>(void* doomed)</span><br><span class="line">    {</span><br><span class="line">        MemoryPool&lt;T&gt;* head = static_cast&lt; MemoryPool&lt;T&gt;* &gt; (doomed);</span><br><span class="line">        head-&gt;next = next;</span><br><span class="line">        next = head;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="comment">//next element on the free list.</span></span><br><span class="line">    MemoryPool&lt;T&gt;* next;</span><br><span class="line">    <span class="comment">//if the freelist is empty, expand it by this amount.</span></span><br><span class="line">    enum {EXPANSION_SIZE = <span class="number">32</span>};</span><br><span class="line">    <span class="comment">//add free elements to the free list</span></span><br><span class="line">    void <span class="built_in">expandTheFreeList</span>(int howMany = EXPANSION_SIZE);</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; MemoryPool&lt;T&gt; :: ~<span class="built_in">MemoryPool</span>()</span><br><span class="line">{</span><br><span class="line">    MemoryPool&lt;T&gt;* nextPtr = NULL;</span><br><span class="line">    while (nextPtr)</span><br><span class="line">    {</span><br><span class="line">        nextPtr = next;</span><br><span class="line">        next = next-&gt;next;</span><br><span class="line">        delete <span class="selector-attr">[]</span> nextPtr;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; void MemoryPool&lt;T&gt; :: <span class="built_in">expandTheFreeList</span>(int howMany)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//we must allocate an object enough to contain the next pointer</span></span><br><span class="line">    size_t size = <span class="built_in">sizeof</span>(T) &gt; <span class="built_in">sizeof</span>(MemoryPool&lt;T&gt;*) ? <span class="built_in">sizeof</span>(T) :</span><br><span class="line">                  <span class="built_in">sizeof</span>(MemoryPool&lt;T&gt;*);</span><br><span class="line"></span><br><span class="line">    MemoryPool&lt;T&gt;* runner = (MemoryPool&lt;T&gt;*) new char<span class="selector-attr">[size]</span>;</span><br><span class="line">    next = runner;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; howMany; ++i)</span><br><span class="line">    {</span><br><span class="line">        runner-&gt;next = (MemoryPool&lt;T&gt;*) new char<span class="selector-attr">[size]</span>;</span><br><span class="line">        runner = runner-&gt;next;</span><br><span class="line">    }</span><br><span class="line">    runner-&gt;next = NULL;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">class ABClock <span class="comment">//abstract base class</span></span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    virtual ~<span class="built_in">ABClock</span>() {}</span><br><span class="line">    virtual void <span class="built_in">lock</span>() = <span class="number">0</span>;</span><br><span class="line">    virtual void <span class="built_in">unlock</span>() = <span class="number">0</span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class CriticalSectionLock : public ABClock</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CriticalSectionLock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">InitializeCriticalSection</span>(csMyCriticalSection);</span><br><span class="line">    }</span><br><span class="line">    ~<span class="built_in">CriticalSectionLock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">DeleteCriticalSection</span>(csMyCriticalSection);</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">lock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">EnterCriticalSection</span>(csMyCriticalSection);</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">unlock</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">LeaveCriticalSection</span>(csMyCriticalSection);</span><br><span class="line">    }</span><br><span class="line">private:</span><br><span class="line">    CRITICAL_SECTION csMyCriticalSection;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">template &lt;typename POOLTYPE, typename LOCK&gt;</span><br><span class="line">class MTMemoryPool</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="comment">//allocate an element from the freelist.</span></span><br><span class="line">    void* <span class="built_in">alloc</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        void* mem;</span><br><span class="line">        theLock<span class="selector-class">.lock</span>();</span><br><span class="line">        mem = stPool<span class="selector-class">.alloc</span>(size);</span><br><span class="line">        theLock<span class="selector-class">.unlock</span>();</span><br><span class="line">        return mem;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//return an element to the freelist</span></span><br><span class="line">    void <span class="built_in">free</span>(void* someElement)</span><br><span class="line">    {</span><br><span class="line">        theLock<span class="selector-class">.lock</span>();</span><br><span class="line">        stPool<span class="selector-class">.free</span>(someElement);</span><br><span class="line">        theLock<span class="selector-class">.unlock</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    POOLTYPE stPool;<span class="comment">//Single-threaded pool.</span></span><br><span class="line">    LOCK theLock;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class Rational</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">Rational</span>(int <span class="selector-tag">a</span> = <span class="number">0</span>, int <span class="selector-tag">b</span> = <span class="number">1</span>) : <span class="built_in">n</span>(a), <span class="built_in">d</span>(b) {}</span><br><span class="line">    void* operator <span class="built_in">new</span>(size_t size)</span><br><span class="line">    {</span><br><span class="line">        return memPool-&gt;<span class="built_in">alloc</span>(size);</span><br><span class="line">    }</span><br><span class="line">    void operator <span class="built_in">delete</span>(void* doomed, size_t size)</span><br><span class="line">    {</span><br><span class="line">        memPool-&gt;<span class="built_in">free</span>(doomed);</span><br><span class="line">    }</span><br><span class="line">    static void <span class="built_in">newMemPool</span>()</span><br><span class="line">    {</span><br><span class="line">        memPool = new MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, CriticalSectionLock&gt;;</span><br><span class="line">    }</span><br><span class="line">    static void <span class="built_in">deleteMemPool</span>()</span><br><span class="line">    {</span><br><span class="line">        delete memPool;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int n;</span><br><span class="line">    int d;</span><br><span class="line">    static MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, CriticalSectionLock&gt;* memPool;</span><br><span class="line">};</span><br><span class="line">MTMemoryPool&lt; MemoryPool&lt;Rational&gt;, CriticalSectionLock&gt;* Rational::memPool = NULL;</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    const int ARRAY_SIZE = <span class="number">1000</span>;</span><br><span class="line">    const int LOOP_TIMES = <span class="number">5000</span>;</span><br><span class="line"></span><br><span class="line">    Rational* array<span class="selector-attr">[ARRAY_SIZE]</span>;</span><br><span class="line">    clock_t beg = <span class="built_in">clock</span>();</span><br><span class="line">    Rational::<span class="built_in">newMemPool</span>();</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; LOOP_TIMES; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            array<span class="selector-attr">[j]</span> = new <span class="built_in">Rational</span>(j);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; ARRAY_SIZE; ++j)</span><br><span class="line">        {</span><br><span class="line">            delete array<span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    clock_t end = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"use %f second(s).\n"</span>, <span class="number">1.0</span> * (end - beg) / CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">"pause"</span>);</span><br><span class="line">    Rational::<span class="built_in">deleteMemPool</span>();</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>运行结果，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7147/27430312475_c7dc864833_o.png"></p>
+<p>两个版本的代码只在线程同步锁的实现上有差别，但是速度却相差了30多倍。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/18/%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%AF%B9%E8%B1%A1%E5%A4%A7%E5%B0%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E5%86%85%E5%AD%98%E6%B1%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1280,129 +1402,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/06/Console%E5%B7%A5%E7%A8%8B%E4%B8%8B%E5%A6%82%E4%BD%95%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%BB%91%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%BE%E7%A4%BAWindows%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/11/06/Console%E5%B7%A5%E7%A8%8B%E4%B8%8B%E5%A6%82%E4%BD%95%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%BB%91%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%BE%E7%A4%BAWindows%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">Console工程下如何不显示控制台黑窗口只显示Windows窗口</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-11-06 19:53:00" itemprop="dateCreated datePublished" datetime="2012-11-06T19:53:00+08:00">2012-11-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/11/06/Console%E5%B7%A5%E7%A8%8B%E4%B8%8B%E5%A6%82%E4%BD%95%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%BB%91%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%BE%E7%A4%BAWindows%E7%AA%97%E5%8F%A3/" class="post-meta-item leancloud_visitors" data-flag-title="Console工程下如何不显示控制台黑窗口只显示Windows窗口" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/11/06/Console%E5%B7%A5%E7%A8%8B%E4%B8%8B%E5%A6%82%E4%BD%95%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%BB%91%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%BE%E7%A4%BAWindows%E7%AA%97%E5%8F%A3/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/06/Console%E5%B7%A5%E7%A8%8B%E4%B8%8B%E5%A6%82%E4%BD%95%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%BB%91%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%BE%E7%A4%BAWindows%E7%AA%97%E5%8F%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>957</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>本文是以OpenGL的代码为例子的。计算机图形学OpenGL版上面的例子都是控制台模式的，如果不进行设置，运行的时候会先出现黑窗口再出现Windows窗口。</p>
-<p>其实要去除控制台窗口非常简单，只需要修改工程设置，把子系统改成Windows，程序的入口点改成mainCRTStartup。</p>
-<p>下面我先把几中解决办法列举出来，再解释下我的理解。</p>
-<p>方法一：在程序中加入一句#pragma comment(linker, “/subsystem:\”windows\” /entry:\”mainCRTStartup\””)，建议加在include的后面。</p>
-<p>方法二：修改工程设置。</p>
-<p>对于vc6，地方在Project-&gt;setting-&gt;Link-&gt;Project Options。</p>
-<p>点开后的界面如图，<br><img alt="" data-src="https://c2.staticflickr.com/8/7311/26822691403_8a9e32a9b9_o.png"></p>
-<p>在右下角的Project Options里面找到/subsytem:,并把其后面其后面的参数改成为windows,然后再找到/entry:，把其后面的值改成”mainCRTStartup”，如果找不到就添加，最后的效果是/subsystem:windows /entry:”mainCRTStartup”。</p>
-<p>对于vs2008，地方在项目-&gt;属性-&gt;链接器，</p>
-<p>然后在左边选中高级，如图所示，<br><img alt="" data-src="https://c2.staticflickr.com/8/7339/26822691883_876f4aac50_o.png"></p>
-<p>在最上面的入口点输入mainCRTStartup，再选中系统，如图所示，</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7323/26822692733_cb9da04a2a_o.png"></p>
-<p>在最上面的子系统选择Windows即可了。</p>
-<p>为什么这样设置下就可以了了。<strong>主要是因为Windows系统下有几种子系统，一种是控制台，一种是窗口子系统</strong>，如果建立了控制台工程肯定是要创建控制台子系统程序了，建立了Windows Application和MFC之类的工程则是窗口子系统了。<strong>不同的子系统会链接不同的主函数</strong>，控制台的会链接main,窗口的会链接WinMain，如果不匹配肯定会链接失败。</p>
-<p>现在我们使用OpenGL编程，又建立的是控制台工程，如果不进行设置肯定会出现黑窗口的，所以我们把工程的子系统改成Windows，但是我们不想改主函数为WinMain了，因为这样会很麻烦，所以我们再把程序入口改成mainCRTStartup。同样如果是win32 App工程下，我们可以把子系统改成控制台，再设置程序入口为WinMainCRTStartup，应该就会得到相反的效果了。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1448,7 +1452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1461,7 +1465,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1513,12 +1517,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

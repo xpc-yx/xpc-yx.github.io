@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" class="post-title-link" itemprop="url">poj 1200 Crazy Search 字符串hash</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-09-27 10:00:00" itemprop="dateCreated datePublished" datetime="2012-09-27T10:00:00+08:00">2012-09-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1200 Crazy Search 字符串hash" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/27/poj%201200%20Crazy%20Search%20%E5%AD%97%E7%AC%A6%E4%B8%B2hash/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这个题是求一个字符串里面出现了多少个长度为N的不同子串，同时给出了母串里面不同字符<br>的个数NC。<br>保存子串到set里面直接暴力肯定超时了。这个题有个利用字符串hash的解法，虽然理论上有<br>bug，但是能过这个题。<br>利用给出的NC，对长度为N的字符串，将其当作NC进制的数字，求出其值，对值进行hash，<br>求出不同的hash位置个数。<br>这个算法其实类似于Karp-Rabin字符串匹配算法。不过，Karp-Rabin算法做了点改进，对<br>进制为D的字符串求值的时候为了防止溢出会模一个素数，而且不会每次都迭代求下一个子串的<br>值，而是从当前子串的值直接递推出下一个字符的值。怎么递推了，其实很简单，就是当前值去<br>掉最高位再乘以D(相当于左移一位,不过是D进制的，不能直接用&lt;&lt;符号)，再加上新的最低位。<br>Karp-Rabin算法应该主要在于设计出合理的hash算法，比如，用取模hash函数的话，得保<br>证hash表足够大，否则冲突太多，速度就不会怎么好了。比如这个题，hash表小了就AC不了了。</p>
+<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">const int MAX = <span class="number">13747347</span>;</span><br><span class="line">int nHash<span class="selector-attr">[MAX]</span>;</span><br><span class="line">char szStr<span class="selector-attr">[17000001]</span>;</span><br><span class="line">int nN, nNC;</span><br><span class="line">int nW<span class="selector-attr">[200]</span>;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Insert</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    int nPos = nKey;</span><br><span class="line">    while (nHash<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>  nHash<span class="selector-attr">[nPos]</span> != nKey)</span><br><span class="line">    {</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    nHash<span class="selector-attr">[nPos]</span> = nKey;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">Find</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    int nPos = nKey;</span><br><span class="line">    while (nHash<span class="selector-attr">[nPos]</span> != -<span class="number">1</span> &amp;&amp; nHash<span class="selector-attr">[nPos]</span> != nKey)</span><br><span class="line">    {</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    return nHash<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d%s"</span>, &amp;nN, &amp;nNC, szStr) == <span class="number">3</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">memset</span>(nW, <span class="number">0</span>, <span class="built_in">sizeof</span>(nW));</span><br><span class="line">        <span class="built_in">memset</span>(nHash, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nHash));</span><br><span class="line">        int nNum = <span class="number">0</span>;</span><br><span class="line">        int nSize = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (char* pszStr = szStr; *pszStr; ++pszStr)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (!nW<span class="selector-attr">[*pszStr]</span>)</span><br><span class="line">            {</span><br><span class="line">                nW<span class="selector-attr">[*pszStr]</span> = ++nNum;</span><br><span class="line">            }</span><br><span class="line">            ++nSize;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        int nKey = <span class="number">0</span>;</span><br><span class="line">        int nAns = <span class="number">0</span>;</span><br><span class="line">        int nPowN = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nN; ++j)</span><br><span class="line">        {</span><br><span class="line">            nKey = (nKey * nNC + nW<span class="selector-attr">[szStr[j]</span>]) % MAX;</span><br><span class="line">            nPowN *= nNC;</span><br><span class="line">        }</span><br><span class="line">        nPowN /= nNC;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">Find</span>(nKey))</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">Insert</span>(nKey);</span><br><span class="line">            nAns++;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = nN; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">        {</span><br><span class="line">            nKey = (nNC * (nKey - nPowN * nW<span class="selector-attr">[szStr[i - nN]</span>])</span><br><span class="line">                    + nW<span class="selector-attr">[szStr[i]</span>]) % MAX;</span><br><span class="line">            nKey = (nKey + MAX) % MAX;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">Find</span>(nKey))</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">Insert</span>(nKey);</span><br><span class="line">                nAns++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, nAns);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/24/poj%201811%20Prime%20Test%20%E6%95%B0%E8%AE%BA%20%E7%B4%A0%E6%95%B0%E6%B5%8B%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1217,122 +1328,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/30/poj-3093-margaritas-on-the-river-walk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/08/30/poj-3093-margaritas-on-the-river-walk/" class="post-title-link" itemprop="url">poj 3093 Margaritas on the River Walk</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-08-30 22:30:00" itemprop="dateCreated datePublished" datetime="2012-08-30T22:30:00+08:00">2012-08-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/08/30/poj-3093-margaritas-on-the-river-walk/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3093 Margaritas on the River Walk" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/08/30/poj-3093-margaritas-on-the-river-walk/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/08/30/poj-3093-margaritas-on-the-river-walk/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是一个动态规划题，据说是背包问题的变形。我动态规划做得很少，解法一直按照算法导论的思想分解重叠子问题。<br>题意是用钱尽可能多的买物品，每种物品买一个，问有多少种买法。<br>我也想不出这是什么背包问题的变形，没做过几个背包问题，也没看过背包九讲。还是坚持认为正确的用状态描述成子问题就一定能解题的。今天和队友在做专题时候做到这个题，我一直做了一上午都没出来。<br>后面发现了个性质就可以直接转换为类似最简单的背包问题了。排序物品价值，从最大物品开始分解子问题，用剩余物品数和钱描述问题的状态。<strong>当前物品是否必须取，是根据当前的钱把剩下的物品全买了之后剩下的钱还是否大于当前物品的价值，如果大于就必须买，否则可以买或者不买。</strong><br><strong>为了正确描述问题的状态，必须事先排序价值数组，因为排序之后可以保证不能买当前物品的时候一定不能买前面的物品，那么我们对前面物品的处理就是正确的了。</strong>至此可以进行最简单的子问题分解了。到最后物品处理完之后（物品数为0），如果钱一点都没减少，那么(0, M) = 0，否则(0, M) = 1。注意这个边界处理，否则会wa。所以，需要先对价值数组排序，并计算出表示前N个物品价值和的数组。<br>做不出来的时候，翻了下别人的解法，一头雾水。看来还是算法导论的思想指导意义大多了。。。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt; </span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef long long INT;</span><br><span class="line">INT nAns<span class="selector-attr">[40]</span><span class="selector-attr">[1010]</span>;</span><br><span class="line">INT nValue<span class="selector-attr">[100]</span>;</span><br><span class="line">INT nSum<span class="selector-attr">[100]</span>;</span><br><span class="line">INT nN, nM;</span><br><span class="line"></span><br><span class="line">INT <span class="built_in">GetAns</span>(INT nNum, INT nMoney)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nAns<span class="selector-attr">[nNum]</span><span class="selector-attr">[nMoney]</span> == -<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nNum == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            nAns<span class="selector-attr">[nNum]</span><span class="selector-attr">[nMoney]</span> = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (nMoney == nM)</span><br><span class="line">            {</span><br><span class="line">                nAns<span class="selector-attr">[nNum]</span><span class="selector-attr">[nMoney]</span> = <span class="number">0</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        {</span><br><span class="line">            INT nRet = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (nMoney - nSum<span class="selector-attr">[nNum - 1]</span> &gt;= nValue<span class="selector-attr">[nNum]</span>)</span><br><span class="line">            {</span><br><span class="line">                nRet = <span class="built_in">GetAns</span>(nNum - <span class="number">1</span>, nMoney - nValue<span class="selector-attr">[nNum]</span>);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (nMoney &gt;= nValue<span class="selector-attr">[nNum]</span>)</span><br><span class="line">                {</span><br><span class="line">                    nRet += <span class="built_in">GetAns</span>(nNum - <span class="number">1</span>, nMoney - nValue<span class="selector-attr">[nNum]</span>);</span><br><span class="line">                }</span><br><span class="line">                nRet += <span class="built_in">GetAns</span>(nNum - <span class="number">1</span>, nMoney);</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            nAns<span class="selector-attr">[nNum]</span><span class="selector-attr">[nMoney]</span> = nRet;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return nAns<span class="selector-attr">[nNum]</span><span class="selector-attr">[nMoney]</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    INT nT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%I64d"</span>, &amp;nT);</span><br><span class="line">    <span class="keyword">for</span> (INT <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nT; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%I64d%I64d"</span>, &amp;nN, &amp;nM);</span><br><span class="line">        <span class="keyword">for</span> (INT j = <span class="number">1</span>; j &lt;= nN; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%I64d"</span>, nValue<span class="selector-attr">[j]</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">memset</span>(nAns, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nAns));</span><br><span class="line">        <span class="built_in">sort</span>(nValue + <span class="number">1</span>, nValue + nN + <span class="number">1</span>);</span><br><span class="line">        nSum<span class="selector-attr">[0]</span> = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (INT j = <span class="number">1</span>; j &lt;= nN; ++j)</span><br><span class="line">        {</span><br><span class="line">            nSum<span class="selector-attr">[j]</span> = nSum<span class="selector-attr">[j - 1]</span> + nValue<span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%I64d %I64d\n"</span>, <span class="selector-tag">i</span>, <span class="built_in">GetAns</span>(nN, nM));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1378,7 +1378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1391,7 +1391,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1443,12 +1443,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

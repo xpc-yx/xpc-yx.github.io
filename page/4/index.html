@@ -222,6 +222,164 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">C++编写的程序启动过程</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-01-16 17:21:46" itemprop="dateCreated datePublished" datetime="2016-01-16T17:21:46+08:00">2016-01-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-meta-item leancloud_visitors" data-flag-title="C++编写的程序启动过程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/01/16/C%20C++%E7%BC%96%E5%86%99%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>记得以前学汇编和PE文件的时候知道，系统不会直接调用我们编写的main，而是调用指定的入口地址。实际上这个入口地址，是在链接时候指定的，MS C++中使用链接命令/entry:function可以修改默认设置。</p>
+<p>那么，默认情况下，我们使用VC编写的应用程序使用的是什么入口函数了？</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>mainCRTStartup</strong> (or <strong>wmainCRTStartup</strong>)</td>
+<td>An application using /SUBSYSTEM:<strong>CONSOLE</strong>; calls <strong>main</strong> (or <strong>wmain</strong>)</td>
+</tr>
+<tr>
+<td><strong>WinMainCRTStartup</strong> (or <strong>wWinMainCRTStartup</strong>)</td>
+<td>An application using /SUBSYSTEM:<strong>WINDOWS</strong>; calls <strong>WinMain</strong> (or <strong>wWinMain</strong>), which must be defined with <strong>__stdcall</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>注意，区分入口函数和主函数（main，WinMain）。</p>
+<p>默认情况下，控制台程序使用<strong>mainCRTStartup</strong>作为入口函数，窗口程序使用<strong>WinMainCRTStartup</strong>作为入口函数。同时，这两个函数都有对应的Unicode版本（前缀加w)。</p>
+<p>现在要考虑的是，这些启动函数都做了什么事情？</p>
+<p>在crtexe.c文件中可以找到这几个启动函数的定义，如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#ifdef _WINMAIN_</span><br><span class="line"></span><br><span class="line">#ifdef WPRFLAG</span><br><span class="line">int wWinMainCRTStartup(</span><br><span class="line">#else  /* WPRFLAG */</span><br><span class="line">int WinMainCRTStartup(</span><br><span class="line">#endif  /* WPRFLAG */</span><br><span class="line"></span><br><span class="line">#else  /* _WINMAIN_ */</span><br><span class="line"></span><br><span class="line">#ifdef WPRFLAG</span><br><span class="line">int wmainCRTStartup(</span><br><span class="line">#else  /* WPRFLAG */</span><br><span class="line">int mainCRTStartup(</span><br><span class="line">#endif  /* WPRFLAG */</span><br><span class="line"></span><br><span class="line">#endif  /* _WINMAIN_ */</span><br><span class="line">        void</span><br><span class="line">        )</span><br><span class="line">{</span><br><span class="line">        /*</span><br><span class="line">         * The /GS security cookie must be initialized before any exception</span><br><span class="line">         * handling targetting the current image is registered.  No function</span><br><span class="line">         * using exception handling can be called in the current image until</span><br><span class="line">         * after __security_init_cookie has been called.</span><br><span class="line">         */</span><br><span class="line">        __security_init_cookie();</span><br><span class="line"></span><br><span class="line">        return __tmainCRTStartup();</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>因此，实际上是根据平台（Windows或者Console），多字节还是Unicode，生成不同的默认入口函数。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">__declspec(noinline)</span><br><span class="line">int</span><br><span class="line">__tmainCRTStartup(</span><br><span class="line">         void</span><br><span class="line">         )</span><br><span class="line">{</span><br><span class="line">        int initret;</span><br><span class="line">        int mainret=0;</span><br><span class="line">        int managedapp;</span><br><span class="line">#ifdef _WINMAIN_</span><br><span class="line">        _TUCHAR *lpszCommandLine;</span><br><span class="line">        STARTUPINFO StartupInfo;</span><br><span class="line"></span><br><span class="line">        __try {</span><br><span class="line">            /*</span><br><span class="line">            Note: MSDN specifically notes that GetStartupInfo returns no error, and throws unspecified SEH if it fails, so</span><br><span class="line">            the very general exception handler below is appropriate</span><br><span class="line">            */</span><br><span class="line">            GetStartupInfo( amp;StartupInfo );</span><br><span class="line">        } __except(EXCEPTION_EXECUTE_HANDLER) {</span><br><span class="line">            return 255;</span><br><span class="line">        }</span><br><span class="line">#endif  /* _WINMAIN_ */</span><br><span class="line">        /*</span><br><span class="line">         * Determine if this is a managed application</span><br><span class="line">         */</span><br><span class="line">        managedapp = check_managed_app();</span><br><span class="line"></span><br><span class="line">        if ( !_heap_init(1) )               /* initialize heap */</span><br><span class="line">            fast_error_exit(_RT_HEAPINIT);  /* write message and die */</span><br><span class="line"></span><br><span class="line">        if( !_mtinit() )                    /* initialize multi-thread */</span><br><span class="line">            fast_error_exit(_RT_THREAD);    /* write message and die */</span><br><span class="line"></span><br><span class="line">        /* Enable buffer count checking if linking against static lib */</span><br><span class="line">        _CrtSetCheckCount(TRUE);</span><br><span class="line"></span><br><span class="line">        /*</span><br><span class="line">         * Initialize the Runtime Checks stuff</span><br><span class="line">         */</span><br><span class="line">#ifdef _RTC</span><br><span class="line">        _RTC_Initialize();</span><br><span class="line">#endif  /* _RTC */</span><br><span class="line">        /*</span><br><span class="line">         * Guard the remainder of the initialization code and the call</span><br><span class="line">         * to user's main, or WinMain, function in a __try/__except</span><br><span class="line">         * statement.</span><br><span class="line">         */</span><br><span class="line"></span><br><span class="line">        __try {</span><br><span class="line"></span><br><span class="line">            if ( _ioinit() lt; 0 )            /* initialize lowio */</span><br><span class="line">                _amsg_exit(_RT_LOWIOINIT);</span><br><span class="line"></span><br><span class="line">            /* get wide cmd line info */</span><br><span class="line">            _tcmdln = (_TSCHAR *)GetCommandLineT();</span><br><span class="line"></span><br><span class="line">            /* get wide environ info */</span><br><span class="line">            _tenvptr = (_TSCHAR *)GetEnvironmentStringsT();</span><br><span class="line"></span><br><span class="line">            if ( _tsetargv() lt; 0 )</span><br><span class="line">                _amsg_exit(_RT_SPACEARG);</span><br><span class="line">            if ( _tsetenvp() lt; 0 )</span><br><span class="line">                _amsg_exit(_RT_SPACEENV);</span><br><span class="line"></span><br><span class="line">            initret = _cinit(TRUE);                  /* do C data initialize */</span><br><span class="line">            if (initret != 0)</span><br><span class="line">                _amsg_exit(initret);</span><br><span class="line"></span><br><span class="line">#ifdef _WINMAIN_</span><br><span class="line"></span><br><span class="line">            lpszCommandLine = _twincmdln();</span><br><span class="line">            mainret = _tWinMain( (HINSTANCE)amp;__ImageBase,</span><br><span class="line">                                 NULL,</span><br><span class="line">                                 lpszCommandLine,</span><br><span class="line">                                 StartupInfo.dwFlags amp; STARTF_USESHOWWINDOW</span><br><span class="line">                                      ? StartupInfo.wShowWindow</span><br><span class="line">                                      : SW_SHOWDEFAULT</span><br><span class="line">                                );</span><br><span class="line">#else  /* _WINMAIN_ */</span><br><span class="line">            _tinitenv = _tenviron;</span><br><span class="line">            mainret = _tmain(__argc, _targv, _tenviron);</span><br><span class="line">#endif  /* _WINMAIN_ */</span><br><span class="line"></span><br><span class="line">            if ( !managedapp )</span><br><span class="line">                exit(mainret);</span><br><span class="line"></span><br><span class="line">            _cexit();</span><br><span class="line"></span><br><span class="line">        }</span><br><span class="line">        __except ( _XcptFilter(GetExceptionCode(), GetExceptionInformation()) )</span><br><span class="line">        {</span><br><span class="line">            /*</span><br><span class="line">             * Should never reach here</span><br><span class="line">             */</span><br><span class="line"></span><br><span class="line">            mainret = GetExceptionCode();</span><br><span class="line"></span><br><span class="line">            if ( !managedapp )</span><br><span class="line">                _exit(mainret);</span><br><span class="line"></span><br><span class="line">            _c_exit();</span><br><span class="line"></span><br><span class="line">        } /* end of try - except */</span><br><span class="line"></span><br><span class="line">        return mainret;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面代码，可以很清晰了解启动函数到底做了什么事情。</p>
+<p>Console版本</p>
+<p>1.初始化C的堆申请（_heap_init(1)）</p>
+<p>2.初始化多线程（_mtinit()）</p>
+<p>3.获取命令行（GetCommandLineT()）</p>
+<p>4.获取环境变量（GetEnvironmentStringsT()）</p>
+<p>5.初始化C和C++的全局变量（_cinit(TRUE)）</p>
+<p>6.调用main函数（_tmain(__argc, _targv, _tenviron)）</p>
+<p>Windows版本</p>
+<p>1.获取StartupInfo（GetStartupInfo( StartupInfo )）</p>
+<p>2.初始化C的堆申请（_heap_init(1)）</p>
+<p>3.初始化多线程（_mtinit()）</p>
+<p>4.获取命令行（GetCommandLineT()）</p>
+<p>5.获取环境变量（GetEnvironmentStringsT()）</p>
+<p>6.初始化C和C++的全局变量（_cinit(TRUE)）</p>
+<p>7.调用WinMain函数</p>
+<p>最后再看看_cinit(TRUE)到底做了什么事情？</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl _cinit (</span><br><span class="line">        int initFloatingPrecision</span><br><span class="line">        )</span><br><span class="line">{</span><br><span class="line">        int initret;</span><br><span class="line"></span><br><span class="line">        /*</span><br><span class="line">         * initialize floating point package, if present</span><br><span class="line">         */</span><br><span class="line">#ifdef CRTDLL</span><br><span class="line">        _fpmath(initFloatingPrecision);</span><br><span class="line">#else  /* CRTDLL */</span><br><span class="line">        if (_FPinit != NULL amp;amp;</span><br><span class="line">            _IsNonwritableInCurrentImage((PBYTE)amp;_FPinit))</span><br><span class="line">        {</span><br><span class="line">            (*_FPinit)(initFloatingPrecision);</span><br><span class="line">        }</span><br><span class="line">        _initp_misc_cfltcvt_tab();</span><br><span class="line">#endif  /* CRTDLL */</span><br><span class="line"></span><br><span class="line">        /*</span><br><span class="line">         * do initializations</span><br><span class="line">         */</span><br><span class="line">        initret = _initterm_e( __xi_a, __xi_z );</span><br><span class="line">        if ( initret != 0 )</span><br><span class="line">            return initret;</span><br><span class="line"></span><br><span class="line">#ifdef _RTC</span><br><span class="line">        atexit(_RTC_Terminate);</span><br><span class="line">#endif  /* _RTC */</span><br><span class="line">        /*</span><br><span class="line">         * do C++ initializations</span><br><span class="line">         */</span><br><span class="line">        _initterm( __xc_a, __xc_z );</span><br><span class="line"></span><br><span class="line">#ifndef CRTDLL</span><br><span class="line">        /*</span><br><span class="line">         * If we have any dynamically initialized __declspec(thread)</span><br><span class="line">         * variables, then invoke their initialization for the thread on</span><br><span class="line">         * which the DLL is being loaded, by calling __dyn_tls_init through</span><br><span class="line">         * a callback defined in tlsdyn.obj.  We can't rely on the OS</span><br><span class="line">         * calling __dyn_tls_init with DLL_PROCESS_ATTACH because, on</span><br><span class="line">         * Win2K3 and before, that call happens before the CRT is</span><br><span class="line">         * initialized.</span><br><span class="line">         */</span><br><span class="line">        if (__dyn_tls_init_callback != NULL amp;amp;</span><br><span class="line">            _IsNonwritableInCurrentImage((PBYTE)amp;__dyn_tls_init_callback))</span><br><span class="line">        {</span><br><span class="line">            __dyn_tls_init_callback(NULL, DLL_THREAD_ATTACH, NULL);</span><br><span class="line">        }</span><br><span class="line">#endif  /* CRTDLL */</span><br><span class="line"></span><br><span class="line">        return 0;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>最重要的两行，initret = _initterm_e( <strong>xi_a, </strong>xi_z )和_initterm( <strong>xc_a, </strong>xc_z )。这两行的作用分别是初始化C标准库中的全局变量和初始化C++的全局变量。</p>
+<p>至此，对C++程序的默认启动函数的基本过程有个了解了。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/12/18/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%88%97%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1278,150 +1436,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/" class="post-title-link" itemprop="url">stl源码剖析之sort</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-04-22 15:58:48" itemprop="dateCreated datePublished" datetime="2015-04-22T15:58:48+08:00">2015-04-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/STL/" itemprop="url" rel="index">
-                    <span itemprop="name">STL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之sort" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>排序的重要性就不用说了。stl里面的很多容器都是自序的，比如set和map，从begin到end就是一个顺序，毕竟最基本的概念就是一颗搜索树。另外，stack、queue、priority_queue的顺序也是内部实现决定的，不用多说了。list则不支持随机迭代器，内部也提供sort函数。所以，stl里面的sort泛型算法针对的是vector，deque，原生数组之类的数据。正常情况下，用的最多的也就是vector了。</p>
-<p>插入排序和快速排序大家都知道是什么。但是，stl里面的sort并不仅仅是一个快速排序，而是一个复杂的组合体，有人把它叫做intro_sort。下面说一下introsort的几点要点。</p>
-<p>1&gt; 递归层次的限制，超过一定层次直接堆排序剩余数据。</p>
-<p>2&gt; 数据长度小于一定值，直接返回，不继续排序。</p>
-<p>3&gt;递归结束后，得到多段相互之间有序的数据（段内部无序），再进行一次优化的插入排序。</p>
-<p>4&gt;轴元素选取采用三点取中法，以避免分割不均。</p>
-<p>sort的代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">sort</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">  <span class="keyword">if</span> (first != last) {</span><br><span class="line">    <span class="built_in">__introsort_loop</span>(first, last, <span class="built_in">value_type</span>(first), <span class="built_in">__lg</span>(last - first) * <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">__final_insertion_sort</span>(first, last);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>从代码中可以看到，sort内部调用的是<strong>introsort_loop排序得到多段互相之间有序的小段，再进行插入排序。其中，</strong>lg是计算递归层次，定义如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 找出 2^k &lt;= n 的最大值k。例，n=7，得k=2，n=20，得k=4，n=8，得k=3。</span></span><br><span class="line">template &lt;class Size&gt;</span><br><span class="line">inline Size <span class="built_in">__lg</span>(Size n) {</span><br><span class="line">  Size k;</span><br><span class="line">  <span class="keyword">for</span> (k = <span class="number">0</span>; n &gt; <span class="number">1</span>; n &gt;&gt;= <span class="number">1</span>) ++k;</span><br><span class="line">  return k;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>因此，可以看出长度为64的数据，其递归层次不能超过16。如果超过，则进行堆排序。__introsort_loop的代码如下，是整个算法的关键。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator, class T, class Size&gt;</span><br><span class="line">void <span class="built_in">__introsort_loop</span>(RandomAccessIterator first,</span><br><span class="line">                      RandomAccessIterator last, T*,</span><br><span class="line">                      Size depth_limit) {</span><br><span class="line">  <span class="comment">// 以下，__stl_threshold 是個全域常數，稍早定義為 const int 16。</span></span><br><span class="line">  while (last - first &gt; __stl_threshold) {</span><br><span class="line">    <span class="keyword">if</span> (depth_limit == <span class="number">0</span>) {             <span class="comment">// 至此，切割惡化</span></span><br><span class="line">      <span class="built_in">partial_sort</span>(first, last, last);  <span class="comment">// 改用 heapsort</span></span><br><span class="line">      return;</span><br><span class="line">    }</span><br><span class="line">    <span class="attr">--depth_limit</span>;</span><br><span class="line">    <span class="comment">// 以下是 median-of-three partition，選擇一個夠好的樞軸並決定切割點。</span></span><br><span class="line">    <span class="comment">// 切割點將落在迭代器 cut 身上。</span></span><br><span class="line">    RandomAccessIterator cut = __unguarded_partition</span><br><span class="line">      (first, last, <span class="built_in">T</span>(<span class="built_in">__median</span>(*first, *(first + (last - first)/<span class="number">2</span>),</span><br><span class="line">                               *(last - <span class="number">1</span>))));</span><br><span class="line">    <span class="comment">// 對右半段遞迴進行 sort.</span></span><br><span class="line">    <span class="built_in">__introsort_loop</span>(cut, last, <span class="built_in">value_type</span>(first), depth_limit);</span><br><span class="line">    last = cut;</span><br><span class="line">    <span class="comment">// 現在回到while 迴圈，準備對左半段遞迴進行 sort.</span></span><br><span class="line">    <span class="comment">// 這種寫法可讀性較差，效率並沒有比較好。</span></span><br><span class="line">    <span class="comment">// RW STL 採用一般教科書寫法（直觀地對左半段和右半段遞迴），較易閱讀。</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>从代码里面可以看出，stl里面定义了个常数<strong>stl_threshold决定要不要继续循环，如果数据的长度比该值小，那么就不继续递归排序了，除非是调用了堆排，长度小于</strong>stl_threshold的段是没有经过排序的。当层次耗尽，depth_limit为0，直接调用partial_sort堆排序返回。另外的部分，就是采用三点取中法决定轴元素。还有这个代码写成了类似尾递归的形式，与教科书上不一致，较难阅读和理解。<br>__median的代码如下，容易理解。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class T&gt;</span><br><span class="line">inline const T <span class="built_in">__median</span>(const T <span class="selector-tag">a</span>, const T <span class="selector-tag">b</span>, const T c) {</span><br><span class="line">  <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; b)</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">b</span> &lt; c)      <span class="comment">// a &lt; b &lt; c</span></span><br><span class="line">      return b;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; c) <span class="comment">// a &lt; b, b &gt;= c, a &lt; c</span></span><br><span class="line">      return c;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      return a;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; c)   <span class="comment">// c &gt; a &gt;= b</span></span><br><span class="line">    return a;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="selector-tag">b</span> &lt; c)       <span class="comment">// a &gt;= b, a &gt;= c, b &lt; c</span></span><br><span class="line">    return c;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    return b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>__unguarded_partition与教科书上的partion实现不同，实现简单而且高效。其代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">RandomAccessIterator <span class="built_in">__unguarded_partition</span>(RandomAccessIterator first,</span><br><span class="line">                                           RandomAccessIterator last,</span><br><span class="line">                                           T pivot) {</span><br><span class="line">  while (true) {</span><br><span class="line"></span><br><span class="line">    while (*first &lt; pivot) ++first; <span class="comment">// first 找到 &gt;= pivot 的元素，就停下來</span></span><br><span class="line">    <span class="attr">--last</span>;                     <span class="comment">// 調整</span></span><br><span class="line">    while (pivot &lt; *last) <span class="attr">--last</span>;   <span class="comment">// last 找到 &lt;= pivot 的元素，就停下來</span></span><br><span class="line">    <span class="comment">// 注意，以下first &lt; last 判斷動作，只適用於random iterator</span></span><br><span class="line">    <span class="keyword">if</span> (!(first &lt; last)) return first;  <span class="comment">// 交錯，結束迴圈。</span></span><br><span class="line">    <span class="built_in">iter_swap</span>(first, last);             <span class="comment">// 大小值交換</span></span><br><span class="line">    ++first;                            <span class="comment">// 調整</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>现在回到sort函数中，最后的插入排序__final_insertion_sort。该函数再进行一次插入排序，由于小段之间都是有序的，因此该函数很快就能执行完。其代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void <span class="built_in">__final_insertion_sort</span>(RandomAccessIterator first,</span><br><span class="line">                            RandomAccessIterator last) {</span><br><span class="line">  <span class="keyword">if</span> (last - first &gt; __stl_threshold) {</span><br><span class="line">    <span class="built_in">__insertion_sort</span>(first, first + __stl_threshold);</span><br><span class="line">    <span class="built_in">__unguarded_insertion_sort</span>(first + __stl_threshold, last);</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">__insertion_sort</span>(first, last);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>该函数判断当前排序范围是不是小于等于于<strong>stl_threshold（16），如果是，直接进行优化的插入排序</strong>insertion_sort。否则，排序前面的16个元素，再调用<strong>unguarded_insertion_sort排序剩下的元素。</strong>unguarded_insertion_sort的相关定义代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">__unguarded_insertion_sort</span>(RandomAccessIterator first,</span><br><span class="line">                                RandomAccessIterator last) {</span><br><span class="line">  <span class="built_in">__unguarded_insertion_sort_aux</span>(first, last, <span class="built_in">value_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">void <span class="built_in">__unguarded_insertion_sort_aux</span>(RandomAccessIterator first,</span><br><span class="line">                                    RandomAccessIterator last, T*) {</span><br><span class="line">  <span class="keyword">for</span> (RandomAccessIterator <span class="selector-tag">i</span> = first; <span class="selector-tag">i</span> != last; ++i)</span><br><span class="line">    <span class="built_in">__unguarded_linear_insert</span>(<span class="selector-tag">i</span>, <span class="built_in">T</span>(*i));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>__insertion_sort的相关代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void <span class="built_in">__insertion_sort</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">  <span class="keyword">if</span> (first == last) return;</span><br><span class="line">  <span class="keyword">for</span> (RandomAccessIterator <span class="selector-tag">i</span> = first + <span class="number">1</span>; <span class="selector-tag">i</span> != last; ++i)  <span class="comment">// 外迴圈</span></span><br><span class="line">    <span class="built_in">__linear_insert</span>(first, <span class="selector-tag">i</span>, <span class="built_in">value_type</span>(first));   <span class="comment">// first,i形成一個子範圍</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void <span class="built_in">__linear_insert</span>(RandomAccessIterator first,</span><br><span class="line">                                  RandomAccessIterator last, T*) {</span><br><span class="line">  T value = *last;      <span class="comment">// 記錄尾元素</span></span><br><span class="line">  <span class="keyword">if</span> (value &lt; *first) { <span class="comment">// 尾比頭還小（那就別一個個比較了，一次做完…）</span></span><br><span class="line">    <span class="built_in">copy_backward</span>(first, last, last + <span class="number">1</span>); <span class="comment">// 將整個範圍向右遞移一個位置</span></span><br><span class="line">    *first = value;     <span class="comment">// 令頭元素等於原先的尾元素值</span></span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">__unguarded_linear_insert</span>(last, value);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">void <span class="built_in">__unguarded_linear_insert</span>(RandomAccessIterator last, T value) {</span><br><span class="line">  RandomAccessIterator next = last;</span><br><span class="line">  <span class="attr">--next</span>;</span><br><span class="line">  <span class="comment">// insertion sort 的內迴圈</span></span><br><span class="line">  <span class="comment">// 注意，一旦不出現逆轉對（inversion），迴圈就可以結束了。</span></span><br><span class="line">  while (value &lt; *next) {   <span class="comment">// 逆轉對（inversion）存在</span></span><br><span class="line">    *last = *next;      <span class="comment">// 轉正</span></span><br><span class="line">    last = next;            <span class="comment">// 調整迭代器</span></span><br><span class="line">    <span class="attr">--next</span>;             <span class="comment">// 前進一個位置</span></span><br><span class="line">  }</span><br><span class="line">  *last = value;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>从上面的代码可以看出，关于插入排序的代码比sort其它部分的代码都要多，可见stl对插入排序进行了特别的优化，以使得其在处理接近有序数据的时候，速度非常快。从代码中可以看到，这些函数最终都调用了__unguarded_linear_insert函数，该函数优化了插入排序的实现。该函数的思路是从后往前找是否存在比value小的元素，如果还存在，就往后移动数据一个位置。最终，得到的是value需要插入的位置。根据stl源码剖析作者的说法，该函数不需要判断越界，因此提高了速度。在大数据量的排序中，优势很大。毕竟，该函数会被sort频繁调用。</p>
-<p>关于插入排序代码实现的具体思路，参考stl源码剖析一书。本文的代码也取自该书提供的源码。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1467,7 +1486,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1480,7 +1499,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1532,12 +1551,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

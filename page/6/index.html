@@ -222,6 +222,133 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-title-link" itemprop="url">stl源码剖析之heap</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-01 13:59:33" itemprop="dateCreated datePublished" datetime="2015-01-01T13:59:33+08:00">2015-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之heap" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。</p>
+<p>下图是push_heap的示意图。<img alt="" data-src="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png"></p>
+<p>从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">push_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="comment">// 注意，调用该函数时候，新元素位于最后一个位置(last-1)。</span></span><br><span class="line">    <span class="built_in">__push_heap_aux</span>(first, last, <span class="built_in">distance_type</span>(first), <span class="built_in">value_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">inline void <span class="built_in">__push_heap_aux</span>(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, Distance*, T*) {</span><br><span class="line">    <span class="built_in">__push_heap</span>(first, <span class="built_in">Distance</span>((last - first) - <span class="number">1</span>), <span class="built_in">Distance</span>(<span class="number">0</span>),</span><br><span class="line">        <span class="built_in">T</span>(*(last - <span class="number">1</span>)));</span><br><span class="line">    <span class="comment">// (last-first)–1代表新元素的索引，0是堆首的索引，*(last - 1)是新加入的值</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void <span class="built_in">__push_heap</span>(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance topIndex, T value) {</span><br><span class="line">    Distance parent = (holeIndex - <span class="number">1</span>) / <span class="number">2</span>;  <span class="comment">// 找出父節點</span></span><br><span class="line">    while (holeIndex &gt; topIndex  *(first + parent) &lt; value) {</span><br><span class="line">        <span class="comment">// 尚未到达顶端，且父节点小于新值</span></span><br><span class="line">        <span class="comment">// 由于以上使用 operator&lt;，可知 STL heap 是max-heap</span></span><br><span class="line">        *(first + holeIndex) = *(first + parent);   <span class="comment">// 令洞值为父值</span></span><br><span class="line">        holeIndex = parent; <span class="comment">// percolate up：调整洞号，向上提升至父节点。</span></span><br><span class="line">        parent = (holeIndex - <span class="number">1</span>) / <span class="number">2</span>;   <span class="comment">// 新洞的父节点</span></span><br><span class="line">    }    <span class="comment">// 持续至顶端，或满足 heap 的次序特性为止。</span></span><br><span class="line">    *(first + holeIndex) = value;   <span class="comment">// 令洞值为新值。</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>push_heap的用法是输入迭代器对，并且保证[first,last-1)是最大堆，*(last-1)是新加入的元素。push_heap调用辅助函数<strong>push_heap_aux。至于为什么需要这个辅助函数了？应该是为了提取出distance_type和value_type吧，这两个内联函数的定义，可以参考stl源码剖析迭代器的那章。下面来思考真正的实现函数</strong>push_heap。这个函数需要新加入元素位置holeIndex和堆首位置topIndex，另外还有保存好的新加入值。算法的过程很简单，就是上溯holeIndex，找到真正满足条件的位置（无法继续上回溯），然后把value放入该位置即可。<br>pop_heap实际上是一个相反的过程。实现思路是将堆大小加一后，再找出最后一个元素应该放入的位置holeIndex，最后再加入这个值。示意图如下：</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png"><br>下面看看摘录出来的代码，思想类似于push_heap，只需要求出最终的holeIndex。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">pop_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="built_in">__pop_heap_aux</span>(first, last, <span class="built_in">value_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void <span class="built_in">__pop_heap_aux</span>(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, T*) {</span><br><span class="line">    <span class="built_in">__pop_heap</span>(first, last - <span class="number">1</span>, last - <span class="number">1</span>, <span class="built_in">T</span>(*(last - <span class="number">1</span>)), <span class="built_in">distance_type</span>(first));</span><br><span class="line">    <span class="comment">// pop动作的結果为底层容器的第一個元素。因此，首先设定欲调整值为尾值，然后將首值調至 </span></span><br><span class="line">    <span class="comment">// 尾节点（所以以上將迭代器result设为last-1）。然后重整 [first, last-1)，</span></span><br><span class="line">    <span class="comment">// 使之重新成一個合格的 heap。</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">inline void <span class="built_in">__pop_heap</span>(RandomAccessIterator first, RandomAccessIterator last,</span><br><span class="line">    RandomAccessIterator result, T value, Distance*) {</span><br><span class="line">    *result = *first; <span class="comment">// 設定尾值为首值，于是尾值即是結果，</span></span><br><span class="line">    <span class="comment">// 可由调用底层容器之 pop_back() 取出尾值。</span></span><br><span class="line">    <span class="built_in">__adjust_heap</span>(first, <span class="built_in">Distance</span>(<span class="number">0</span>), <span class="built_in">Distance</span>(last - first), value);</span><br><span class="line">    <span class="comment">// 以上欲重新調整 heap，洞号为 0，欲調整值为value。</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void <span class="built_in">__adjust_heap</span>(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance len, T value) {</span><br><span class="line">    Distance topIndex = holeIndex;</span><br><span class="line">    Distance secondChild = <span class="number">2</span> * holeIndex + <span class="number">2</span>;   <span class="comment">// 洞节点之右子节点</span></span><br><span class="line">    while (secondChild &lt; len) {</span><br><span class="line">        <span class="comment">// 比较洞节点之左右兩个子值，然后以 secondChild 代表较大子节点。</span></span><br><span class="line">        <span class="keyword">if</span> (*(first + secondChild) &lt; *(first + (secondChild - <span class="number">1</span>)))</span><br><span class="line">            secondChild--;</span><br><span class="line">        <span class="comment">// Percolate down：令较大大子值为洞值，再令洞号下移至较大子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + secondChild);</span><br><span class="line">        holeIndex = secondChild;</span><br><span class="line">        <span class="comment">// 找出新洞节点的右子节点</span></span><br><span class="line">        secondChild = <span class="number">2</span> * (secondChild + <span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (secondChild == len) { <span class="comment">// 沒有右子节点，只有左子节点</span></span><br><span class="line">        <span class="comment">// Percolate down：令左子值为洞值，再令洞号下移至左子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + (secondChild - <span class="number">1</span>));</span><br><span class="line">        holeIndex = secondChild - <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 將欲调整值填入目前的洞号內。注意，此時肯定滿足次序特性。</span></span><br><span class="line">    <span class="comment">// 依侯捷之见，下面直接改為 *(first + holeIndex) = value; 应该可以。</span></span><br><span class="line">    <span class="built_in">__push_heap</span>(first, holeIndex, topIndex, value);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>类似于push_heap，pop_heap也是调用辅助函数<strong>pop_heap_aux。</strong>pop_heap_aux调用<strong>pop_heap。</strong>pop_heap调用<strong>adjust_heap调整holeIndex，最终在holeIndex处放入value（原最后一个的值）。关键代码是</strong>adjust_heap中的循环。循环的主要意思是将holeIndex不断下放，直到最底层。最后的if语句的意思是，如果最底层有左子节点，而没有右子节点，那么最终位置肯定是这个左子节点。最后一句代码的意思是加入value到holeIndex，由于已经调整完毕，所以一个赋值操作也可以达到要求，参见侯捷注释。<br>sort_heap就比较简单了，不断将极值移动到末尾，不断pop_heap。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下這個 sort_heap() 不允許指定「大小比較標準」</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void <span class="built_in">sort_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="comment">// 以下，每執行一次 pop_heap()，極值（在STL heap中為極大值）即被放在尾端。</span></span><br><span class="line">    <span class="comment">// 扣除尾端再執行一次 pop_heap()，次極值又被放在新尾端。一直下去，最後即得</span></span><br><span class="line">    <span class="comment">// 排序結果。</span></span><br><span class="line">    while (last - first &gt; <span class="number">1</span>)</span><br><span class="line">        <span class="built_in">pop_heap</span>(first, last--); <span class="comment">// 每執行 pop_heap() 一次，操作範圍即退縮一格。</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>最后要将的是make_heap，即将一个迭代器对里面的内容构造为最大堆。代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 將 [first,last) 排列為一個 heap。</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">make_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="built_in">__make_heap</span>(first, last, <span class="built_in">value_type</span>(first), <span class="built_in">distance_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下這組 make_heap() 不允許指定「大小比較標準」。</span></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">void <span class="built_in">__make_heap</span>(RandomAccessIterator first, RandomAccessIterator last, T*,</span><br><span class="line">    Distance*) {</span><br><span class="line">    <span class="keyword">if</span> (last - first &lt; <span class="number">2</span>) return;   <span class="comment">// 如果長度為 0 或 1，不必重新排列。</span></span><br><span class="line">    Distance len = last - first;</span><br><span class="line">    <span class="comment">// 找出第一個需要重排的子樹頭部，以 parent 標示出。由於任何葉節點都不需執行 </span></span><br><span class="line">    <span class="comment">// perlocate down，所以有以下計算。parent 命名不佳，名為 holeIndex 更好。</span></span><br><span class="line">    Distance parent = (len - <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    while (true) {</span><br><span class="line">        <span class="comment">// 重排以 parent 為首的子樹。len 是為了讓 __adjust_heap() 判斷操作範圍</span></span><br><span class="line">        <span class="built_in">__adjust_heap</span>(first, parent, len, <span class="built_in">T</span>(*(first + parent)));</span><br><span class="line">        <span class="keyword">if</span> (parent == <span class="number">0</span>) return;    <span class="comment">// 走完根節點，就結束。</span></span><br><span class="line">        parent--;                   <span class="comment">// （即將重排之子樹的）頭部向前一個節點</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>make_heap中代码的思路也很简单。从原序列的中间位置开始不断调整（调用</strong>adjust_heap），每次调整的目的是以当前位置为根的构建一个子堆。至于为什么从中间位置开始就可以了？原因很简单，最底层元素的数目大致就会占了一半了。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/31/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bstack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1225,123 +1352,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/05/cuda%E7%BB%93%E5%90%88opencv%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B3%E6%BB%91%E6%BB%A4%E6%B3%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/05/cuda%E7%BB%93%E5%90%88opencv%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B3%E6%BB%91%E6%BB%A4%E6%B3%A2/" class="post-title-link" itemprop="url">cuda结合opencv实现简单的平滑滤波</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-11-05 10:36:30" itemprop="dateCreated datePublished" datetime="2014-11-05T10:36:30+08:00">2014-11-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/CUDA/" itemprop="url" rel="index">
-                    <span itemprop="name">CUDA</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/11/05/cuda%E7%BB%93%E5%90%88opencv%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B3%E6%BB%91%E6%BB%A4%E6%B3%A2/" class="post-meta-item leancloud_visitors" data-flag-title="cuda结合opencv实现简单的平滑滤波" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/11/05/cuda%E7%BB%93%E5%90%88opencv%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B3%E6%BB%91%E6%BB%A4%E6%B3%A2/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/05/cuda%E7%BB%93%E5%90%88opencv%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B3%E6%BB%91%E6%BB%A4%E6%B3%A2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这次也是使用opencv的mat加载处理图像。唯一与上次有区别的是核函数的编写。<br>根据cuda的线程分配模型，每一个像素是分配单独的线程处理的。那么有这样的一个疑问？<br>像平滑滤波这些应用，如何在每一个线程中获取周围的像素了？<br>其实，这个问题很好解决。因为，在核函数中，我们能够根据线程id，块id，块尺寸等计算<br>出当前像素的位置。那么，自然能够得到其邻域的位置。从而实现了平滑滤波。<br>代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;opencv/cv.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;opencv/highgui.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;opencv2/opencv.hpp&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"cuda_runtime.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"device_launch_parameters.h"</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> _DEBUG</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#else</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247.lib"</span>)</span><br><span class="line"><span class="selector-id">#endif</span> <span class="comment">// DEBUG</span></span><br><span class="line"></span><br><span class="line">__global__ void <span class="built_in">smooth_kernel</span>(const uchar3* <span class="attribute">src</span>, uchar3* dst, int width, int height)</span><br><span class="line">{</span><br><span class="line">    int x = threadIdx<span class="selector-class">.x</span> + blockIdx<span class="selector-class">.x</span> * blockDim.x;</span><br><span class="line">    int y = threadIdx<span class="selector-class">.y</span> + blockIdx<span class="selector-class">.y</span> * blockDim.y;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">if</span>(x &lt; <span class="attribute">width</span>  y &lt; height)</span><br><span class="line">    {</span><br><span class="line">        int offset = x + y * <span class="attribute">width</span>;</span><br><span class="line">        int <span class="attribute">left</span> = offset - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (x - <span class="number">1</span> &lt; <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="attribute">left</span> += <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        int <span class="attribute">right</span> = offset + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (x + <span class="number">1</span> &gt;= <span class="attribute">width</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="attribute">right</span> -= <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        int <span class="attribute">top</span> = offset - width;</span><br><span class="line">        <span class="keyword">if</span> (y - <span class="number">1</span> &lt; <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="attribute">top</span> += width;</span><br><span class="line">        }</span><br><span class="line">        int <span class="attribute">bottom</span> = offset + width;</span><br><span class="line">        <span class="keyword">if</span> (y + <span class="number">1</span> &gt;= <span class="attribute">height</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="attribute">bottom</span> -= width;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        dst<span class="selector-attr">[offset]</span><span class="selector-class">.x</span> = <span class="number">0.125</span> * (<span class="number">4</span> * <span class="attribute">src</span>[offset].x + src[left].x + src[right].x + src[top].x + src[bottom].x);</span><br><span class="line">        dst<span class="selector-attr">[offset]</span><span class="selector-class">.y</span> = <span class="number">0.125</span> * (<span class="number">4</span> * <span class="attribute">src</span>[offset].y + src[left].y + src[right].y + src[top].y + src[bottom].y);</span><br><span class="line">        dst<span class="selector-attr">[offset]</span><span class="selector-class">.z</span> = <span class="number">0.125</span> * (<span class="number">4</span> * <span class="attribute">src</span>[offset].z + src[left].z + src[right].z + src[top].z + src[bottom].z);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">smooth_caller</span>(const uchar3* <span class="attribute">src</span>, uchar3* dst, int width, int height)</span><br><span class="line">{</span><br><span class="line">    dim3 <span class="built_in">threads</span>(<span class="number">16</span>, <span class="number">16</span>);</span><br><span class="line">    dim3 <span class="built_in">grids</span>((<span class="attribute">width</span> + threads.x - <span class="number">1</span>) / threads.x, (height + threads.y - <span class="number">1</span>) / threads.y);</span><br><span class="line"></span><br><span class="line">    smooth_kernel&lt;&lt; &lt;grids, threads &gt;&gt; &gt;(<span class="attribute">src</span>, dst, width, height);</span><br><span class="line">    <span class="built_in">cudaThreadSynchronize</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    cv::Mat image = cv::<span class="built_in">imread</span>(<span class="string">"lena.png"</span>);</span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"src"</span>, image);</span><br><span class="line"></span><br><span class="line">    size_t memSize = image<span class="selector-class">.step</span> * image.rows;</span><br><span class="line">    uchar3* d_src = NULL;</span><br><span class="line">    uchar3* d_dst = NULL;</span><br><span class="line">    <span class="built_in">cudaMalloc</span>((void**)d_src, memSize);</span><br><span class="line">    <span class="built_in">cudaMalloc</span>((void**)d_dst, memSize);</span><br><span class="line">    <span class="built_in">cudaMemcpy</span>(d_src, image<span class="selector-class">.data</span>, memSize, cudaMemcpyHostToDevice);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">smooth_caller</span>(d_src, d_dst, image<span class="selector-class">.cols</span>, image.rows);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cudaMemcpy</span>(image<span class="selector-class">.data</span>, d_dst, memSize, cudaMemcpyDeviceToHost);</span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"gpu"</span>, image);</span><br><span class="line">    cv::<span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cudaFree</span>(d_src);</span><br><span class="line">    <span class="built_in">cudaFree</span>(d_dst);</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>效果如图：<br><img alt="" data-src="https://c2.staticflickr.com/8/7602/26844527913_20fbe94fea_o.png"></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1387,7 +1402,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1400,7 +1415,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1452,12 +1467,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

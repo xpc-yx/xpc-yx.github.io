@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/" class="post-title-link" itemprop="url">使用OpenGL绘制太阳系</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-05-06 22:01:17" itemprop="dateCreated datePublished" datetime="2013-05-06T22:01:17+08:00">2013-05-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/" class="post-meta-item leancloud_visitors" data-flag-title="使用OpenGL绘制太阳系" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/05/06/%E4%BD%BF%E7%94%A8OpenGL%E7%BB%98%E5%88%B6%E5%A4%AA%E9%98%B3%E7%B3%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>365</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>写这个程序的目的最初是给别人做个作业，最后那个人也不知道要不要，很郁闷。本来不怎么想写的，去网上下了别人的代码，后面发现完全不对头，就拿来做了大幅度的修改，不过使用了下载的图片作为纹理。<br>这个例子最大的用处是使用OpenGL怎么<strong>自动产生球体纹理</strong>，自己计算球体的纹理坐标毕竟麻烦了点，虽然也不难。当然还有加载纹理，以及光照，视角设定，特殊键处理等的方法。可以使用上下键放缩和左右键移动。由于使用的是别人的代码修改的，自己感觉一坨糟，也不想去改好了。总之，要模拟出个漂亮的太阳系没那么容易，我的这个比网上有些下载的貌似稍微强点。<br>先上张图片，再把代码和纹理都贡献了，不过得传到百度网盘了，提供链接。<br><img alt="" data-src="https://c1.staticflickr.com/8/7433/26841670424_a40d9b5a11_o.jpg"><br>对于靠近太阳的行星，可以按上键靠近，对于贴了地球纹理那个球体，还可以看到地球的样子了。有兴趣的完全可以把这个太阳系改得再漂亮点。<br><a href="https://pan.baidu.com/s/1qYDxEZM">百度网盘下载</a></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/04/03/vc%E5%86%85%E5%B5%8Cwmplayer%E6%92%AD%E6%94%BE%E5%99%A8(%E5%B1%8F%E8%94%BD%E5%8F%B3%E9%94%AE%EF%BC%8C%E5%85%A8%E5%B1%8F%EF%BC%8C%E6%92%AD%E6%94%BE%E4%BF%A1%E6%81%AF%E7%AD%89%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1230,119 +1340,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/01/02/Hough%E5%8F%98%E6%8D%A2%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/01/02/Hough%E5%8F%98%E6%8D%A2%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF/" class="post-title-link" itemprop="url">Hough变换检测直线</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-01-02 13:23:32" itemprop="dateCreated datePublished" datetime="2013-01-02T13:23:32+08:00">2013-01-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/01/02/Hough%E5%8F%98%E6%8D%A2%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF/" class="post-meta-item leancloud_visitors" data-flag-title="Hough变换检测直线" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/01/02/Hough%E5%8F%98%E6%8D%A2%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/01/02/Hough%E5%8F%98%E6%8D%A2%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>hough变换是图像处理里面一种检测直线等规则曲线的方法。这里介绍下检测直线的原理和实现方法，最后给出相关的代码。</p>
-<p>先给出数学上面的里面，斜截式直线y=kx+b有两个参数k,b，注意直线方程是在笛卡儿坐标系xoy中的。任意一条直线对应于kob平面中一个点(k,b)。那么，对于xoy平面中的任意一个点肯定有无数条通过它的直线，那么直线都有对应的kob平面中的点，这些点能组成一条直线。<strong>综合起来就是，xoy平面中一条直线对应于kob平面中的一个点，xoy平面中的一个点对应于kob平面中的一条直线。</strong><br>现在有个问题是<strong>斜截式无法表示xoy平面中所有直线</strong>，那么我们希望能找到能够表示xoy平面中所有直线的参数式子。这个式子是r=x<em>cos(θ)+y</em>sin(θ)。推导过程如下：<br><img alt="" data-src="https://c7.staticflickr.com/8/7224/27351286542_6ddb76e445_o.jpg"><br>r为原点到直线的距离，(x0,y0)为垂足，θ为垂线和x轴正向的夹角，那么对于直线上面的任意的一个点都有<br>(x0, y0) <em> (x-x0,y-y0)=0,得到x </em> x0 - x0 <em> x0 + y </em> y0 - y0 <em> y0 = 0，即x </em> x0 + y <em> y0 = x0 </em> x0 + y0 <em> y0 = r </em> r。等式两边再除以r得到r = x <em> cos(θ) + y </em> sin(θ)。那么这个关于(θ,r)的参数式子可以表示xoy平面上所有的直线了。</p>
-<p>现在再来讨论下如何根据这个参数式子检测直线的。<br>我们手上的只有xoy平面上的图像。而且根据我们的推理，我们的图像的原点必须在左下角，因为我们是用笛卡尔坐标系推出该参数式子的。那么，我们可以枚举图像上面每一个可能是直线上面的点(比如，我们可以对图像阈值化后，像素值为255的点就可能是直线上面的点），由于图像上的每个点对应于θor平面上面的一条曲线(这里管它是直线还是曲线了，对于检测原理没影响)，那么我们就能得到很多θor平面上的曲线。我们对每个(θ,r)点计数通过其上的曲线个数，最后选取曲线个数最大的那个点（θmax,Rmax）其对应的肯定是我们要检测的直线。至于其它的预处理，<strong>一般是梯度滤波增强边缘或者拉普拉斯增强边缘，然后弄个全局二值化，就可以用hough变换检测直线了(我这次的实验就没有平滑滤波噪声，那样会使直线变粗，使检测效果变坏）</strong>。<br>最后我给出我的检测直线的代码，并指出代码需要主要的实现点。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//针对hough变换的定义得到的直线相对的是坐标系原点的坐标系</span></span><br><span class="line"><span class="comment">//针对hough变换的定义得到的直线相对的是坐标系原点的坐标系</span></span><br><span class="line">void CxBitmap::<span class="built_in">HoughLine</span>(int* pnR, double* pfTheta)</span><br><span class="line">{</span><br><span class="line">    const double PI = <span class="number">4.0</span> * <span class="built_in">atan</span>(<span class="number">1.0</span>);</span><br><span class="line">    double fRate = PI / <span class="number">180</span>;</span><br><span class="line">    int nWidth = <span class="built_in">GetWidth</span>(), nHeight = <span class="built_in">GetHeight</span>();</span><br><span class="line">    int iRMax = (int)<span class="built_in">sqrt</span>(nWidth * nWidth + nHeight * nHeight) + <span class="number">1</span>;</span><br><span class="line">    int iThMax = <span class="number">360</span>;</span><br><span class="line">    int iTh;</span><br><span class="line">    int iR;</span><br><span class="line">    int iMax = -<span class="number">1</span>;</span><br><span class="line">    int iThMaxIndex = -<span class="number">1</span>;</span><br><span class="line">    int iRMaxIndex = -<span class="number">1</span>;</span><br><span class="line">    int *pnArray = NULL;</span><br><span class="line">    int nPos = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m_bBinary == FALSE)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">GrayToBinary</span>();</span><br><span class="line">    }</span><br><span class="line">    pnArray = new int<span class="selector-attr">[iRMax * iThMax]</span>;<span class="comment">//iRMax行,每一行长度是iThMax</span></span><br><span class="line">    <span class="built_in">memset</span>(pnArray, <span class="number">0</span>, <span class="built_in">sizeof</span>(int) * iRMax * iThMax);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int y = <span class="number">0</span>; y &lt; nHeight; y++)</span><br><span class="line">    {</span><br><span class="line">        nPos = m_nBytesPerLine * y;</span><br><span class="line">        <span class="keyword">for</span> (int x = <span class="number">0</span>; x &lt; nWidth; x++)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">if</span>(pbyBuffer<span class="selector-attr">[nPos]</span> == <span class="number">255</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">for</span>(iTh = <span class="number">0</span>; iTh &lt; iThMax; iTh++) { iR = (int)(x * <span class="built_in">cos</span>(iTh * fRate) + y * <span class="built_in">sin</span>(iTh * fRate)); <span class="built_in">if</span>(iR &gt; <span class="number">0</span>)</span><br><span class="line">                    {</span><br><span class="line">                        pnArray<span class="selector-attr">[iR * iThMax + iTh]</span>++;</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            nPos++;</span><br><span class="line">        } <span class="comment">// x</span></span><br><span class="line">    } <span class="comment">// y</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">for</span>(iR = <span class="number">0</span>; iR &lt; iRMax; iR++)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">for</span>(iTh = <span class="number">0</span>; iTh &lt; iThMax; iTh++) { int iCount = pnArray<span class="selector-attr">[iR * iThMax + iTh]</span>; <span class="built_in">if</span>(iCount &gt; iMax)</span><br><span class="line">            {</span><br><span class="line">                iMax = iCount;</span><br><span class="line">                iRMaxIndex = iR;</span><br><span class="line">                iThMaxIndex = iTh;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    *pnR = iRMaxIndex;</span><br><span class="line">    *pfTheta = fRate * iThMaxIndex;</span><br><span class="line"></span><br><span class="line">    delete <span class="selector-attr">[]</span> pnArray;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>注意nPos <strong>必须按m_nBytesPerLine对齐</strong>，因为即使是灰度图像每行的长度也不一定是图像的宽度，如果这个错了，检测结果就完全错了。另外一个是计算出来的iR值必须大于0才有效。<br>相关博文可以参考这篇关于hough变换的文章，<a href="http://www.narutoacm.com/archives/hough-transform/" title="我也说说hough变换">我也说说hough变换</a></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1388,7 +1390,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1401,7 +1403,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1453,12 +1455,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

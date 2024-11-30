@@ -222,6 +222,145 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/" class="post-title-link" itemprop="url">stl源码剖析之sort</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-04-22 15:58:48" itemprop="dateCreated datePublished" datetime="2015-04-22T15:58:48+08:00">2015-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/STL/" itemprop="url" rel="index">
+                    <span itemprop="name">STL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之sort" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/04/22/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bsort/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>排序的重要性就不用说了。stl里面的很多容器都是自序的，比如set和map，从begin到end就是一个顺序，毕竟最基本的概念就是一颗搜索树。另外，stack、queue、priority_queue的顺序也是内部实现决定的，不用多说了。list则不支持随机迭代器，内部也提供sort函数。所以，stl里面的sort泛型算法针对的是vector，deque，原生数组之类的数据。正常情况下，用的最多的也就是vector了。</p>
+<p>插入排序和快速排序大家都知道是什么。但是，stl里面的sort并不仅仅是一个快速排序，而是一个复杂的组合体，有人把它叫做intro_sort。下面说一下introsort的几点要点。</p>
+<p>1&gt; 递归层次的限制，超过一定层次直接堆排序剩余数据。</p>
+<p>2&gt; 数据长度小于一定值，直接返回，不继续排序。</p>
+<p>3&gt;递归结束后，得到多段相互之间有序的数据（段内部无序），再进行一次优化的插入排序。</p>
+<p>4&gt;轴元素选取采用三点取中法，以避免分割不均。</p>
+<p>sort的代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">sort</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">  <span class="keyword">if</span> (first != last) {</span><br><span class="line">    <span class="built_in">__introsort_loop</span>(first, last, <span class="built_in">value_type</span>(first), <span class="built_in">__lg</span>(last - first) * <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">__final_insertion_sort</span>(first, last);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从代码中可以看到，sort内部调用的是<strong>introsort_loop排序得到多段互相之间有序的小段，再进行插入排序。其中，</strong>lg是计算递归层次，定义如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 找出 2^k &lt;= n 的最大值k。例，n=7，得k=2，n=20，得k=4，n=8，得k=3。</span></span><br><span class="line">template &lt;class Size&gt;</span><br><span class="line">inline Size <span class="built_in">__lg</span>(Size n) {</span><br><span class="line">  Size k;</span><br><span class="line">  <span class="keyword">for</span> (k = <span class="number">0</span>; n &gt; <span class="number">1</span>; n &gt;&gt;= <span class="number">1</span>) ++k;</span><br><span class="line">  return k;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>因此，可以看出长度为64的数据，其递归层次不能超过16。如果超过，则进行堆排序。__introsort_loop的代码如下，是整个算法的关键。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator, class T, class Size&gt;</span><br><span class="line">void <span class="built_in">__introsort_loop</span>(RandomAccessIterator first,</span><br><span class="line">                      RandomAccessIterator last, T*,</span><br><span class="line">                      Size depth_limit) {</span><br><span class="line">  <span class="comment">// 以下，__stl_threshold 是個全域常數，稍早定義為 const int 16。</span></span><br><span class="line">  while (last - first &gt; __stl_threshold) {</span><br><span class="line">    <span class="keyword">if</span> (depth_limit == <span class="number">0</span>) {             <span class="comment">// 至此，切割惡化</span></span><br><span class="line">      <span class="built_in">partial_sort</span>(first, last, last);  <span class="comment">// 改用 heapsort</span></span><br><span class="line">      return;</span><br><span class="line">    }</span><br><span class="line">    <span class="attr">--depth_limit</span>;</span><br><span class="line">    <span class="comment">// 以下是 median-of-three partition，選擇一個夠好的樞軸並決定切割點。</span></span><br><span class="line">    <span class="comment">// 切割點將落在迭代器 cut 身上。</span></span><br><span class="line">    RandomAccessIterator cut = __unguarded_partition</span><br><span class="line">      (first, last, <span class="built_in">T</span>(<span class="built_in">__median</span>(*first, *(first + (last - first)/<span class="number">2</span>),</span><br><span class="line">                               *(last - <span class="number">1</span>))));</span><br><span class="line">    <span class="comment">// 對右半段遞迴進行 sort.</span></span><br><span class="line">    <span class="built_in">__introsort_loop</span>(cut, last, <span class="built_in">value_type</span>(first), depth_limit);</span><br><span class="line">    last = cut;</span><br><span class="line">    <span class="comment">// 現在回到while 迴圈，準備對左半段遞迴進行 sort.</span></span><br><span class="line">    <span class="comment">// 這種寫法可讀性較差，效率並沒有比較好。</span></span><br><span class="line">    <span class="comment">// RW STL 採用一般教科書寫法（直觀地對左半段和右半段遞迴），較易閱讀。</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从代码里面可以看出，stl里面定义了个常数<strong>stl_threshold决定要不要继续循环，如果数据的长度比该值小，那么就不继续递归排序了，除非是调用了堆排，长度小于</strong>stl_threshold的段是没有经过排序的。当层次耗尽，depth_limit为0，直接调用partial_sort堆排序返回。另外的部分，就是采用三点取中法决定轴元素。还有这个代码写成了类似尾递归的形式，与教科书上不一致，较难阅读和理解。<br>__median的代码如下，容易理解。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class T&gt;</span><br><span class="line">inline const T <span class="built_in">__median</span>(const T <span class="selector-tag">a</span>, const T <span class="selector-tag">b</span>, const T c) {</span><br><span class="line">  <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; b)</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">b</span> &lt; c)      <span class="comment">// a &lt; b &lt; c</span></span><br><span class="line">      return b;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; c) <span class="comment">// a &lt; b, b &gt;= c, a &lt; c</span></span><br><span class="line">      return c;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      return a;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="selector-tag">a</span> &lt; c)   <span class="comment">// c &gt; a &gt;= b</span></span><br><span class="line">    return a;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="selector-tag">b</span> &lt; c)       <span class="comment">// a &gt;= b, a &gt;= c, b &lt; c</span></span><br><span class="line">    return c;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    return b;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>__unguarded_partition与教科书上的partion实现不同，实现简单而且高效。其代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">RandomAccessIterator <span class="built_in">__unguarded_partition</span>(RandomAccessIterator first,</span><br><span class="line">                                           RandomAccessIterator last,</span><br><span class="line">                                           T pivot) {</span><br><span class="line">  while (true) {</span><br><span class="line"></span><br><span class="line">    while (*first &lt; pivot) ++first; <span class="comment">// first 找到 &gt;= pivot 的元素，就停下來</span></span><br><span class="line">    <span class="attr">--last</span>;                     <span class="comment">// 調整</span></span><br><span class="line">    while (pivot &lt; *last) <span class="attr">--last</span>;   <span class="comment">// last 找到 &lt;= pivot 的元素，就停下來</span></span><br><span class="line">    <span class="comment">// 注意，以下first &lt; last 判斷動作，只適用於random iterator</span></span><br><span class="line">    <span class="keyword">if</span> (!(first &lt; last)) return first;  <span class="comment">// 交錯，結束迴圈。</span></span><br><span class="line">    <span class="built_in">iter_swap</span>(first, last);             <span class="comment">// 大小值交換</span></span><br><span class="line">    ++first;                            <span class="comment">// 調整</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>现在回到sort函数中，最后的插入排序__final_insertion_sort。该函数再进行一次插入排序，由于小段之间都是有序的，因此该函数很快就能执行完。其代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void <span class="built_in">__final_insertion_sort</span>(RandomAccessIterator first,</span><br><span class="line">                            RandomAccessIterator last) {</span><br><span class="line">  <span class="keyword">if</span> (last - first &gt; __stl_threshold) {</span><br><span class="line">    <span class="built_in">__insertion_sort</span>(first, first + __stl_threshold);</span><br><span class="line">    <span class="built_in">__unguarded_insertion_sort</span>(first + __stl_threshold, last);</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">__insertion_sort</span>(first, last);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>该函数判断当前排序范围是不是小于等于于<strong>stl_threshold（16），如果是，直接进行优化的插入排序</strong>insertion_sort。否则，排序前面的16个元素，再调用<strong>unguarded_insertion_sort排序剩下的元素。</strong>unguarded_insertion_sort的相关定义代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">__unguarded_insertion_sort</span>(RandomAccessIterator first,</span><br><span class="line">                                RandomAccessIterator last) {</span><br><span class="line">  <span class="built_in">__unguarded_insertion_sort_aux</span>(first, last, <span class="built_in">value_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">void <span class="built_in">__unguarded_insertion_sort_aux</span>(RandomAccessIterator first,</span><br><span class="line">                                    RandomAccessIterator last, T*) {</span><br><span class="line">  <span class="keyword">for</span> (RandomAccessIterator <span class="selector-tag">i</span> = first; <span class="selector-tag">i</span> != last; ++i)</span><br><span class="line">    <span class="built_in">__unguarded_linear_insert</span>(<span class="selector-tag">i</span>, <span class="built_in">T</span>(*i));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>__insertion_sort的相关代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void <span class="built_in">__insertion_sort</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">  <span class="keyword">if</span> (first == last) return;</span><br><span class="line">  <span class="keyword">for</span> (RandomAccessIterator <span class="selector-tag">i</span> = first + <span class="number">1</span>; <span class="selector-tag">i</span> != last; ++i)  <span class="comment">// 外迴圈</span></span><br><span class="line">    <span class="built_in">__linear_insert</span>(first, <span class="selector-tag">i</span>, <span class="built_in">value_type</span>(first));   <span class="comment">// first,i形成一個子範圍</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void <span class="built_in">__linear_insert</span>(RandomAccessIterator first,</span><br><span class="line">                                  RandomAccessIterator last, T*) {</span><br><span class="line">  T value = *last;      <span class="comment">// 記錄尾元素</span></span><br><span class="line">  <span class="keyword">if</span> (value &lt; *first) { <span class="comment">// 尾比頭還小（那就別一個個比較了，一次做完…）</span></span><br><span class="line">    <span class="built_in">copy_backward</span>(first, last, last + <span class="number">1</span>); <span class="comment">// 將整個範圍向右遞移一個位置</span></span><br><span class="line">    *first = value;     <span class="comment">// 令頭元素等於原先的尾元素值</span></span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">__unguarded_linear_insert</span>(last, value);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">void <span class="built_in">__unguarded_linear_insert</span>(RandomAccessIterator last, T value) {</span><br><span class="line">  RandomAccessIterator next = last;</span><br><span class="line">  <span class="attr">--next</span>;</span><br><span class="line">  <span class="comment">// insertion sort 的內迴圈</span></span><br><span class="line">  <span class="comment">// 注意，一旦不出現逆轉對（inversion），迴圈就可以結束了。</span></span><br><span class="line">  while (value &lt; *next) {   <span class="comment">// 逆轉對（inversion）存在</span></span><br><span class="line">    *last = *next;      <span class="comment">// 轉正</span></span><br><span class="line">    last = next;            <span class="comment">// 調整迭代器</span></span><br><span class="line">    <span class="attr">--next</span>;             <span class="comment">// 前進一個位置</span></span><br><span class="line">  }</span><br><span class="line">  *last = value;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面的代码可以看出，关于插入排序的代码比sort其它部分的代码都要多，可见stl对插入排序进行了特别的优化，以使得其在处理接近有序数据的时候，速度非常快。从代码中可以看到，这些函数最终都调用了__unguarded_linear_insert函数，该函数优化了插入排序的实现。该函数的思路是从后往前找是否存在比value小的元素，如果还存在，就往后移动数据一个位置。最终，得到的是value需要插入的位置。根据stl源码剖析作者的说法，该函数不需要判断越界，因此提高了速度。在大数据量的排序中，优势很大。毕竟，该函数会被sort频繁调用。</p>
+<p>关于插入排序代码实现的具体思路，参考stl源码剖析一书。本文的代码也取自该书提供的源码。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/04/22/%E4%BD%BF%E7%94%A8Eigen%E8%A7%A3%E7%A8%80%E7%96%8F%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1273,138 +1412,11 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-title-link" itemprop="url">stl源码剖析之heap</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-01-01 13:59:33" itemprop="dateCreated datePublished" datetime="2015-01-01T13:59:33+08:00">2015-01-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/STL/" itemprop="url" rel="index">
-                    <span itemprop="name">STL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" class="post-meta-item leancloud_visitors" data-flag-title="stl源码剖析之heap" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>前面提到priority_queue的内部使用了stl的泛型heap算法。现在让我们看看怎么来实现heap。至于heap，就不作仔细介绍了，本质上是用一个数组表示的完全二叉树，并且父节点总是大于（或者小于）子节点的值。我们先来看push_heap。</p>
-<p>下图是push_heap的示意图。<img alt="" data-src="https://c2.staticflickr.com/8/7396/26842499204_ef7d51fc09_o.png"></p>
-<p>从图中可以看到算法的过程是将新加入堆的值（50），层层上挪，直到正确的位置。下面来看，摘录出来的代码。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">push_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="comment">// 注意，调用该函数时候，新元素位于最后一个位置(last-1)。</span></span><br><span class="line">    <span class="built_in">__push_heap_aux</span>(first, last, <span class="built_in">distance_type</span>(first), <span class="built_in">value_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">inline void <span class="built_in">__push_heap_aux</span>(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, Distance*, T*) {</span><br><span class="line">    <span class="built_in">__push_heap</span>(first, <span class="built_in">Distance</span>((last - first) - <span class="number">1</span>), <span class="built_in">Distance</span>(<span class="number">0</span>),</span><br><span class="line">        <span class="built_in">T</span>(*(last - <span class="number">1</span>)));</span><br><span class="line">    <span class="comment">// (last-first)–1代表新元素的索引，0是堆首的索引，*(last - 1)是新加入的值</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void <span class="built_in">__push_heap</span>(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance topIndex, T value) {</span><br><span class="line">    Distance parent = (holeIndex - <span class="number">1</span>) / <span class="number">2</span>;  <span class="comment">// 找出父節點</span></span><br><span class="line">    while (holeIndex &gt; topIndex  *(first + parent) &lt; value) {</span><br><span class="line">        <span class="comment">// 尚未到达顶端，且父节点小于新值</span></span><br><span class="line">        <span class="comment">// 由于以上使用 operator&lt;，可知 STL heap 是max-heap</span></span><br><span class="line">        *(first + holeIndex) = *(first + parent);   <span class="comment">// 令洞值为父值</span></span><br><span class="line">        holeIndex = parent; <span class="comment">// percolate up：调整洞号，向上提升至父节点。</span></span><br><span class="line">        parent = (holeIndex - <span class="number">1</span>) / <span class="number">2</span>;   <span class="comment">// 新洞的父节点</span></span><br><span class="line">    }    <span class="comment">// 持续至顶端，或满足 heap 的次序特性为止。</span></span><br><span class="line">    *(first + holeIndex) = value;   <span class="comment">// 令洞值为新值。</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>push_heap的用法是输入迭代器对，并且保证[first,last-1)是最大堆，*(last-1)是新加入的元素。push_heap调用辅助函数<strong>push_heap_aux。至于为什么需要这个辅助函数了？应该是为了提取出distance_type和value_type吧，这两个内联函数的定义，可以参考stl源码剖析迭代器的那章。下面来思考真正的实现函数</strong>push_heap。这个函数需要新加入元素位置holeIndex和堆首位置topIndex，另外还有保存好的新加入值。算法的过程很简单，就是上溯holeIndex，找到真正满足条件的位置（无法继续上回溯），然后把value放入该位置即可。<br>pop_heap实际上是一个相反的过程。实现思路是将堆大小加一后，再找出最后一个元素应该放入的位置holeIndex，最后再加入这个值。示意图如下：</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7380/27175417620_82251818fc_o.png"><br>下面看看摘录出来的代码，思想类似于push_heap，只需要求出最终的holeIndex。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">pop_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="built_in">__pop_heap_aux</span>(first, last, <span class="built_in">value_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T&gt;</span><br><span class="line">inline void <span class="built_in">__pop_heap_aux</span>(RandomAccessIterator first,</span><br><span class="line">    RandomAccessIterator last, T*) {</span><br><span class="line">    <span class="built_in">__pop_heap</span>(first, last - <span class="number">1</span>, last - <span class="number">1</span>, <span class="built_in">T</span>(*(last - <span class="number">1</span>)), <span class="built_in">distance_type</span>(first));</span><br><span class="line">    <span class="comment">// pop动作的結果为底层容器的第一個元素。因此，首先设定欲调整值为尾值，然后將首值調至 </span></span><br><span class="line">    <span class="comment">// 尾节点（所以以上將迭代器result设为last-1）。然后重整 [first, last-1)，</span></span><br><span class="line">    <span class="comment">// 使之重新成一個合格的 heap。</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">inline void <span class="built_in">__pop_heap</span>(RandomAccessIterator first, RandomAccessIterator last,</span><br><span class="line">    RandomAccessIterator result, T value, Distance*) {</span><br><span class="line">    *result = *first; <span class="comment">// 設定尾值为首值，于是尾值即是結果，</span></span><br><span class="line">    <span class="comment">// 可由调用底层容器之 pop_back() 取出尾值。</span></span><br><span class="line">    <span class="built_in">__adjust_heap</span>(first, <span class="built_in">Distance</span>(<span class="number">0</span>), <span class="built_in">Distance</span>(last - first), value);</span><br><span class="line">    <span class="comment">// 以上欲重新調整 heap，洞号为 0，欲調整值为value。</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">template &lt;class RandomAccessIterator, class Distance, class T&gt;</span><br><span class="line">void <span class="built_in">__adjust_heap</span>(RandomAccessIterator first, Distance holeIndex,</span><br><span class="line">    Distance len, T value) {</span><br><span class="line">    Distance topIndex = holeIndex;</span><br><span class="line">    Distance secondChild = <span class="number">2</span> * holeIndex + <span class="number">2</span>;   <span class="comment">// 洞节点之右子节点</span></span><br><span class="line">    while (secondChild &lt; len) {</span><br><span class="line">        <span class="comment">// 比较洞节点之左右兩个子值，然后以 secondChild 代表较大子节点。</span></span><br><span class="line">        <span class="keyword">if</span> (*(first + secondChild) &lt; *(first + (secondChild - <span class="number">1</span>)))</span><br><span class="line">            secondChild--;</span><br><span class="line">        <span class="comment">// Percolate down：令较大大子值为洞值，再令洞号下移至较大子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + secondChild);</span><br><span class="line">        holeIndex = secondChild;</span><br><span class="line">        <span class="comment">// 找出新洞节点的右子节点</span></span><br><span class="line">        secondChild = <span class="number">2</span> * (secondChild + <span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (secondChild == len) { <span class="comment">// 沒有右子节点，只有左子节点</span></span><br><span class="line">        <span class="comment">// Percolate down：令左子值为洞值，再令洞号下移至左子节点处。</span></span><br><span class="line">        *(first + holeIndex) = *(first + (secondChild - <span class="number">1</span>));</span><br><span class="line">        holeIndex = secondChild - <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 將欲调整值填入目前的洞号內。注意，此時肯定滿足次序特性。</span></span><br><span class="line">    <span class="comment">// 依侯捷之见，下面直接改為 *(first + holeIndex) = value; 应该可以。</span></span><br><span class="line">    <span class="built_in">__push_heap</span>(first, holeIndex, topIndex, value);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>类似于push_heap，pop_heap也是调用辅助函数<strong>pop_heap_aux。</strong>pop_heap_aux调用<strong>pop_heap。</strong>pop_heap调用<strong>adjust_heap调整holeIndex，最终在holeIndex处放入value（原最后一个的值）。关键代码是</strong>adjust_heap中的循环。循环的主要意思是将holeIndex不断下放，直到最底层。最后的if语句的意思是，如果最底层有左子节点，而没有右子节点，那么最终位置肯定是这个左子节点。最后一句代码的意思是加入value到holeIndex，由于已经调整完毕，所以一个赋值操作也可以达到要求，参见侯捷注释。<br>sort_heap就比较简单了，不断将极值移动到末尾，不断pop_heap。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下這個 sort_heap() 不允許指定「大小比較標準」</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">void <span class="built_in">sort_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="comment">// 以下，每執行一次 pop_heap()，極值（在STL heap中為極大值）即被放在尾端。</span></span><br><span class="line">    <span class="comment">// 扣除尾端再執行一次 pop_heap()，次極值又被放在新尾端。一直下去，最後即得</span></span><br><span class="line">    <span class="comment">// 排序結果。</span></span><br><span class="line">    while (last - first &gt; <span class="number">1</span>)</span><br><span class="line">        <span class="built_in">pop_heap</span>(first, last--); <span class="comment">// 每執行 pop_heap() 一次，操作範圍即退縮一格。</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>最后要将的是make_heap，即将一个迭代器对里面的内容构造为最大堆。代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 將 [first,last) 排列為一個 heap。</span></span><br><span class="line">template &lt;class RandomAccessIterator&gt;</span><br><span class="line">inline void <span class="built_in">make_heap</span>(RandomAccessIterator first, RandomAccessIterator last) {</span><br><span class="line">    <span class="built_in">__make_heap</span>(first, last, <span class="built_in">value_type</span>(first), <span class="built_in">distance_type</span>(first));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下這組 make_heap() 不允許指定「大小比較標準」。</span></span><br><span class="line">template &lt;class RandomAccessIterator, class T, class Distance&gt;</span><br><span class="line">void <span class="built_in">__make_heap</span>(RandomAccessIterator first, RandomAccessIterator last, T*,</span><br><span class="line">    Distance*) {</span><br><span class="line">    <span class="keyword">if</span> (last - first &lt; <span class="number">2</span>) return;   <span class="comment">// 如果長度為 0 或 1，不必重新排列。</span></span><br><span class="line">    Distance len = last - first;</span><br><span class="line">    <span class="comment">// 找出第一個需要重排的子樹頭部，以 parent 標示出。由於任何葉節點都不需執行 </span></span><br><span class="line">    <span class="comment">// perlocate down，所以有以下計算。parent 命名不佳，名為 holeIndex 更好。</span></span><br><span class="line">    Distance parent = (len - <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    while (true) {</span><br><span class="line">        <span class="comment">// 重排以 parent 為首的子樹。len 是為了讓 __adjust_heap() 判斷操作範圍</span></span><br><span class="line">        <span class="built_in">__adjust_heap</span>(first, parent, len, <span class="built_in">T</span>(*(first + parent)));</span><br><span class="line">        <span class="keyword">if</span> (parent == <span class="number">0</span>) return;    <span class="comment">// 走完根節點，就結束。</span></span><br><span class="line">        parent--;                   <span class="comment">// （即將重排之子樹的）頭部向前一個節點</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p><strong>make_heap中代码的思路也很简单。从原序列的中间位置开始不断调整（调用</strong>adjust_heap），每次调整的目的是以当前位置为根的构建一个子堆。至于为什么从中间位置开始就可以了？原因很简单，最底层元素的数目大致就会占了一半了。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1450,7 +1462,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1463,7 +1475,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1515,12 +1527,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">644k</span>
+    <span title="站点总字数">649k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:46</span>
+    <span title="站点阅读时长">9:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
