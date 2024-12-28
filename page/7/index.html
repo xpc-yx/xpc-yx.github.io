@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">opencv实现快速傅立叶变换和逆变换</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-11-07 14:10:54" itemprop="dateCreated datePublished" datetime="2014-11-07T14:10:54+08:00">2014-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/" class="post-meta-item leancloud_visitors" data-flag-title="opencv实现快速傅立叶变换和逆变换" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>说实话觉得网上很多人转载的文章的挺坑的，全部是opencv文档程序的翻译，看来看去都是那一<br>篇，真的没啥意思。<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/core/discrete_fourier_transform/discrete_fourier_transform.html">文档的地址</a>。<br>本来opencv实现dft就是一个函数的事情，但是很少有关于逆变换使用的资料。我这几天在翻译<br>matlab版本的L0Smooth到opencv上面，就碰到这样一件很坑爹的事情。<br>首先，很少有人说清楚这个函数的使用方法。还有，根据教程，dft之前最好扩充原矩阵到合适的尺<br>寸(2,3,5的倍数)，再调用dft会加快速度。那么，idft的时候了？如何恢复原有的尺寸？<br>在我的L0Smooth代码里，就碰到这样的事情了。如果，图片尺寸是2，3，5的倍数，那么能够得到<br>正确结果。否则得到是全黑的图片。如果，我不扩张矩阵，那么就能正确处理。<br>所以，到这里，我不推荐调用dft之前先扩充矩阵了。因为，我找了很久也没找到解决办法。<br>我数学水平有限，也分析不出原因，也没有时间去系统的学习这些了。<br>这里提供两个例子，说明dft和idft的使用。<br>例子一：类似于opencv官方文档的例子<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/core/core.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/imgproc/imgproc.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/highgui/highgui.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> _DEBUG</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#else</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247.lib"</span>)</span><br><span class="line"><span class="selector-id">#endif</span> <span class="comment">// DEBUG</span></span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Read image from file</span></span><br><span class="line">    <span class="comment">// Make sure that the image is in grayscale</span></span><br><span class="line">    cv::Mat <span class="selector-tag">img</span> = cv::<span class="built_in">imread</span>(<span class="string">"lena.JPG"</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    cv::Mat planes<span class="selector-attr">[]</span> = {cv::Mat_&lt;<span class="attribute">float</span>&gt;(img), cv::Mat::<span class="built_in">zeros</span>(img.<span class="built_in">size</span>(), CV_32F)};</span><br><span class="line">    cv::Mat complexI;    <span class="comment">//Complex plane to contain the DFT coefficients {[0]-Real,[1]-Img}</span></span><br><span class="line">    cv::<span class="built_in">merge</span>(planes, <span class="number">2</span>, complexI);</span><br><span class="line">    cv::<span class="built_in">dft</span>(complexI, complexI);  <span class="comment">// Applying DFT</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里可以对复数矩阵comlexI进行处理</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Reconstructing original imae from the DFT coefficients</span></span><br><span class="line">    cv::Mat invDFT, invDFTcvt;</span><br><span class="line">    cv::<span class="built_in">idft</span>(complexI, invDFT, cv::DFT_SCALE | cv::DFT_REAL_OUTPUT ); <span class="comment">// Applying IDFT</span></span><br><span class="line">    cv::invDFT<span class="selector-class">.convertTo</span>(invDFTcvt, CV_8U); </span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Output"</span>, invDFTcvt);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//show the image</span></span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Original Image"</span>, img);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait until user press some key</span></span><br><span class="line">    cv::<span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>代码意思很简单，dft之后再idft，注意参数额，必须有DFT_SCALE。代码中，先merge了个<br>复数矩阵，在例子2中可以看到，其实这一步可以去掉。<br>例子2：<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/core/core.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/imgproc/imgproc.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/highgui/highgui.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> _DEBUG</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#else</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247.lib"</span>)</span><br><span class="line"><span class="selector-id">#endif</span> <span class="comment">// DEBUG</span></span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Read image from file</span></span><br><span class="line">    <span class="comment">// Make sure that the image is in grayscale</span></span><br><span class="line">    cv:;Mat <span class="selector-tag">img</span> = cv::<span class="built_in">imread</span>(<span class="string">"lena.JPG"</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    cv::Mat dftInput1, dftImage1, inverseDFT, inverseDFTconverted;</span><br><span class="line">    cv::<span class="selector-tag">img</span><span class="selector-class">.convertTo</span>(dftInput1, CV_32F);</span><br><span class="line">    cv::<span class="built_in">dft</span>(dftInput1, dftImage1, cv::DFT_COMPLEX_OUTPUT);    <span class="comment">// Applying DFT</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Reconstructing original imae from the DFT coefficients</span></span><br><span class="line">    cv::<span class="built_in">idft</span>(dftImage1, inverseDFT, cv::DFT_SCALE | cv::DFT_REAL_OUTPUT ); <span class="comment">// Applying IDFT</span></span><br><span class="line">    cv::inverseDFT<span class="selector-class">.convertTo</span>(inverseDFTconverted, CV_8U);</span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Output"</span>, inverseDFTconverted);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//show the image</span></span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Original Image"</span>, img);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait until user press some key</span></span><br><span class="line">    <span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>从代码中可以看到，dft时候添加参数DFT_COMPLEX_OUTPUT，就可以自动得到复数矩阵了，代码更加简洁。<br>注意，必须先将图片对应的uchar矩阵转换为float矩阵，再进行dft，idft，最后再转换回来。<p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/05/cuda%E7%BB%93%E5%90%88opencv%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B3%E6%BB%91%E6%BB%A4%E6%B3%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1224,116 +1334,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/08/15/extern%20C%E7%9A%84%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/08/15/extern%20C%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">extern "C"的理解</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-08-15 20:55:40" itemprop="dateCreated datePublished" datetime="2014-08-15T20:55:40+08:00">2014-08-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/08/15/extern%20C%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="extern "C"的理解" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/08/15/extern%20C%E7%9A%84%E7%90%86%E8%A7%A3/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/08/15/extern%20C%E7%9A%84%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>我们经常会看到头文件里面会有下列的结构。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifdef</span> __cplusplus</span><br><span class="line">extern <span class="string">"C"</span> {</span><br><span class="line"><span class="selector-id">#endif</span></span><br><span class="line">    <span class="comment">/*...*/</span></span><br><span class="line"><span class="selector-id">#ifdef</span> __cplusplus</span><br><span class="line">}</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure><br>而且我们也大都知道这是为了和C语言兼容。但是更具体的事情了？<br>实际上，这段代码是为了保证用C语言调用C++函数或者用C++调用C语言实现的函数，都能够顺利进行。不仅仅是单向的左右。如果没有加#ifdef <strong>cplusplus判断就是单向的吧。<br>大家都知道C++支持函数重载，而C语言是不支持的。所以，类似函数int add(int,int)很可能在链接的时候，符号是_add_int_int。而在C语言里面，还是_add。既然符号不一样，那就会找不到吧。这就发生在用C语言去调用C++实现的函数的时候。如果在C++头文件里面加上extern “C”声明，那么就会按照C语言的方式生成函数，自然能和C语言兼容了。<br>如下列代码，就能顺利运行。<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.h</span></span><br><span class="line"><span class="selector-id">#ifndef</span> ADD_H</span><br><span class="line"><span class="selector-id">#define</span> ADD_H</span><br><span class="line"></span><br><span class="line"><span class="comment">//int add(int x, int y);</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> __cplusplus</span><br><span class="line">extern <span class="string">"C"</span> {</span><br><span class="line"><span class="selector-id">#endif</span></span><br><span class="line">    int <span class="built_in">add</span>(int x, int y);</span><br><span class="line"><span class="selector-id">#ifdef</span> __cplusplus</span><br><span class="line">}</span><br><span class="line"><span class="selector-id">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//add.cpp</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"add.h"</span></span><br><span class="line"></span><br><span class="line">int <span class="built_in">add</span>(int x, int y)</span><br><span class="line">{</span><br><span class="line">    return x + y;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"add.h"</span></span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>如果把头文件定义改成，<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.h</span></span><br><span class="line"><span class="selector-id">#ifndef</span> ADD_H</span><br><span class="line"><span class="selector-id">#define</span> ADD_H</span><br><span class="line"></span><br><span class="line">int <span class="built_in">add</span>(int x, int y);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*#ifdef __cplusplus</span></span><br><span class="line"><span class="comment">extern "C" {</span></span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"><span class="comment">    int add(int x, int y);</span></span><br><span class="line"><span class="comment">#ifdef __cplusplus</span></span><br><span class="line"><span class="comment">}</span></span><br><span class="line"><span class="comment">#endif*/</span></span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure><br>main.c就无法链接到函数_add上面。提示：main.obj : error LNK2019: 无法解析的外部符号 _add，该符号在函数 _main 中被引用。<br>现在再反过来，用c语言实现add，c++实现main。代码如下，<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.h</span></span><br><span class="line"><span class="selector-id">#ifndef</span> ADD_H</span><br><span class="line"><span class="selector-id">#define</span> ADD_H</span><br><span class="line"></span><br><span class="line">int <span class="built_in">add</span>(int x, int y);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*#ifdef __cplusplus</span></span><br><span class="line"><span class="comment">extern "C" {</span></span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"><span class="comment">    int add(int x, int y);</span></span><br><span class="line"><span class="comment">#ifdef __cplusplus</span></span><br><span class="line"><span class="comment">}</span></span><br><span class="line"><span class="comment">#endif*/</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//add.c</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"add.h"</span></span><br><span class="line"></span><br><span class="line">int <span class="built_in">add</span>(int x, int y)</span><br><span class="line">{</span><br><span class="line">    return x + y;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"add.h"</span></span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>结果还是无法链接，提示： error LNK2019: 无法解析的外部符号 “int </strong>cdecl add(int,int)” (?add@@YAHHH@Z)，该符号在函数 _main 中被引用。这是因为main.cpp用C++的方式去查找函数符号，_add_int_int，而add.c里面生成的符号是_add。因此无法链接上去。那么，能不能直接加上extern “C”就行了？<br>由于C语言里面不支持extern “C”，那么作为C语言的头文件就不能这么加，应该加上#ifdef __cplusplus的判断，再将所有的函数定义前加上extern “C”，就能保证该头文件同时兼容C语言和C++了。<p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1384,7 +1384,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1397,7 +1397,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1449,12 +1449,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">649k</span>
+    <span title="站点总字数">671k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:50</span>
+    <span title="站点阅读时长">10:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

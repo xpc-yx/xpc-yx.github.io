@@ -222,6 +222,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">使用Matlab计算稀疏矩阵的特征向量</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-12 17:03:06" itemprop="dateCreated datePublished" datetime="2015-01-12T17:03:06+08:00">2015-01-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-meta-item leancloud_visitors" data-flag-title="使用Matlab计算稀疏矩阵的特征向量" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/12/%E4%BD%BF%E7%94%A8Matlab%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>825</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>首先，说明下为什么要用MATLAB。原因是，支持稀疏矩阵的矩阵库比较少，即使支持去学习使用时间也更多。所以，就用MATLAB了。目的是使用MATLAB计算稀疏矩阵的特征向量，再用C++调用MATLAB代码。</p>
+<p>问题1：如何定义稀疏矩阵。MATLAB使用sparse函数创建稀疏矩阵。如下调用：S = sparse(i,j,s,m,n)，根据参数创建稀疏矩阵。i和j代表不为0元素的行和列值，s则是对应的值，m和n是矩阵的大小。当然还有其它接口，具体查阅MATLAB文档。</p>
+<p>问题2：怎么计算稀疏矩阵的特征向量？MATLAB提供了eigs函数。其实，还有个eig函数，经本人实验，在使用C++调用MATLAB引擎的过程中，该函数失败了。那么，就只能使用eigs函数了。eigs函数有几种形式。下面说下我用到的几种形式。</p>
+<p>形式1：d = eigs(A)，返回的是稀疏矩阵A的特征值（所有的特征值构成一个向量d，本人的理解是没有保证d是有序的）。</p>
+<p>形式2：d = <tt><span class="highlight_01">eigs</span>(A,k)，返回的是最大的k个特征值，文档也没有说是有序的，如果设置k为1，那么返回的是最大的特征值。</tt></p>
+<p>形式3：[V,D] = eigs(A)，V是特征向量构成的矩阵，每列是一个特征矩阵，D则是一个对角矩阵，对角线上的值是和V对应的特征值。不过，V和D的大小都固定为6。</p>
+<p>形式4：[V,D] = eigs(A，k)，则可以返回最大的k个特征向量和对应的特征值，但是也没有排序，需要根据D排序V，以方便使用。</p>
+<p>问题3：如何实现返回k个根据特征值排序后的特征向量？这是最有价值的问题了。直接提供代码吧。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[V,D]</span> = <span class="built_in">eigs</span>(sm,k);</span><br><span class="line"><span class="selector-attr">[newD,IX]</span> = <span class="built_in">sort</span>(<span class="built_in">diag</span>(D)));;</span><br><span class="line">newV=<span class="built_in">V</span>(:,IX);</span><br></pre></td></tr></tbody></table></figure>
+<p>newV就是根据特征值排序后的特征向量，sm当然需要先建立了。<br>写在最后的话，之所以使用MATLAB计算稀疏矩阵的特征向量，是因为可以用C++调用。所以，关于这篇文章这些知识就够了，也算是我为自己做的整理吧。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/01/stl%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B9%8Bheap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1242,116 +1355,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">opencv实现快速傅立叶变换和逆变换</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-11-07 14:10:54" itemprop="dateCreated datePublished" datetime="2014-11-07T14:10:54+08:00">2014-11-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/OpenCV/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenCV</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/" class="post-meta-item leancloud_visitors" data-flag-title="opencv实现快速傅立叶变换和逆变换" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>说实话觉得网上很多人转载的文章的挺坑的，全部是opencv文档程序的翻译，看来看去都是那一<br>篇，真的没啥意思。<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/core/discrete_fourier_transform/discrete_fourier_transform.html">文档的地址</a>。<br>本来opencv实现dft就是一个函数的事情，但是很少有关于逆变换使用的资料。我这几天在翻译<br>matlab版本的L0Smooth到opencv上面，就碰到这样一件很坑爹的事情。<br>首先，很少有人说清楚这个函数的使用方法。还有，根据教程，dft之前最好扩充原矩阵到合适的尺<br>寸(2,3,5的倍数)，再调用dft会加快速度。那么，idft的时候了？如何恢复原有的尺寸？<br>在我的L0Smooth代码里，就碰到这样的事情了。如果，图片尺寸是2，3，5的倍数，那么能够得到<br>正确结果。否则得到是全黑的图片。如果，我不扩张矩阵，那么就能正确处理。<br>所以，到这里，我不推荐调用dft之前先扩充矩阵了。因为，我找了很久也没找到解决办法。<br>我数学水平有限，也分析不出原因，也没有时间去系统的学习这些了。<br>这里提供两个例子，说明dft和idft的使用。<br>例子一：类似于opencv官方文档的例子<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/core/core.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/imgproc/imgproc.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/highgui/highgui.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> _DEBUG</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#else</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247.lib"</span>)</span><br><span class="line"><span class="selector-id">#endif</span> <span class="comment">// DEBUG</span></span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Read image from file</span></span><br><span class="line">    <span class="comment">// Make sure that the image is in grayscale</span></span><br><span class="line">    cv::Mat <span class="selector-tag">img</span> = cv::<span class="built_in">imread</span>(<span class="string">"lena.JPG"</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    cv::Mat planes<span class="selector-attr">[]</span> = {cv::Mat_&lt;<span class="attribute">float</span>&gt;(img), cv::Mat::<span class="built_in">zeros</span>(img.<span class="built_in">size</span>(), CV_32F)};</span><br><span class="line">    cv::Mat complexI;    <span class="comment">//Complex plane to contain the DFT coefficients {[0]-Real,[1]-Img}</span></span><br><span class="line">    cv::<span class="built_in">merge</span>(planes, <span class="number">2</span>, complexI);</span><br><span class="line">    cv::<span class="built_in">dft</span>(complexI, complexI);  <span class="comment">// Applying DFT</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里可以对复数矩阵comlexI进行处理</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Reconstructing original imae from the DFT coefficients</span></span><br><span class="line">    cv::Mat invDFT, invDFTcvt;</span><br><span class="line">    cv::<span class="built_in">idft</span>(complexI, invDFT, cv::DFT_SCALE | cv::DFT_REAL_OUTPUT ); <span class="comment">// Applying IDFT</span></span><br><span class="line">    cv::invDFT<span class="selector-class">.convertTo</span>(invDFTcvt, CV_8U); </span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Output"</span>, invDFTcvt);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//show the image</span></span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Original Image"</span>, img);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait until user press some key</span></span><br><span class="line">    cv::<span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>代码意思很简单，dft之后再idft，注意参数额，必须有DFT_SCALE。代码中，先merge了个<br>复数矩阵，在例子2中可以看到，其实这一步可以去掉。<br>例子2：<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/core/core.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/imgproc/imgproc.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"opencv2/highgui/highgui.hpp"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ifdef</span> _DEBUG</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247d.lib"</span>)</span><br><span class="line"><span class="selector-id">#else</span></span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_core247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_imgproc247.lib"</span>)</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(lib, <span class="string">"opencv_highgui247.lib"</span>)</span><br><span class="line"><span class="selector-id">#endif</span> <span class="comment">// DEBUG</span></span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Read image from file</span></span><br><span class="line">    <span class="comment">// Make sure that the image is in grayscale</span></span><br><span class="line">    cv:;Mat <span class="selector-tag">img</span> = cv::<span class="built_in">imread</span>(<span class="string">"lena.JPG"</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    cv::Mat dftInput1, dftImage1, inverseDFT, inverseDFTconverted;</span><br><span class="line">    cv::<span class="selector-tag">img</span><span class="selector-class">.convertTo</span>(dftInput1, CV_32F);</span><br><span class="line">    cv::<span class="built_in">dft</span>(dftInput1, dftImage1, cv::DFT_COMPLEX_OUTPUT);    <span class="comment">// Applying DFT</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Reconstructing original imae from the DFT coefficients</span></span><br><span class="line">    cv::<span class="built_in">idft</span>(dftImage1, inverseDFT, cv::DFT_SCALE | cv::DFT_REAL_OUTPUT ); <span class="comment">// Applying IDFT</span></span><br><span class="line">    cv::inverseDFT<span class="selector-class">.convertTo</span>(inverseDFTconverted, CV_8U);</span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Output"</span>, inverseDFTconverted);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//show the image</span></span><br><span class="line">    cv::<span class="built_in">imshow</span>(<span class="string">"Original Image"</span>, img);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait until user press some key</span></span><br><span class="line">    <span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>从代码中可以看到，dft时候添加参数DFT_COMPLEX_OUTPUT，就可以自动得到复数矩阵了，代码更加简洁。<br>注意，必须先将图片对应的uchar矩阵转换为float矩阵，再进行dft，idft，最后再转换回来。<p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1402,7 +1405,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1415,7 +1418,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1467,12 +1470,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">649k</span>
+    <span title="站点总字数">671k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:50</span>
+    <span title="站点阅读时长">10:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

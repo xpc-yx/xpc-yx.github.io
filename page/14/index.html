@@ -222,6 +222,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/06/%E5%9C%A8VC%E4%B8%8B%E9%9D%A2%E5%AD%A6%E4%B9%A0OpenGL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/11/06/%E5%9C%A8VC%E4%B8%8B%E9%9D%A2%E5%AD%A6%E4%B9%A0OpenGL/" class="post-title-link" itemprop="url">在VC下面学习OpenGL</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-11-06 20:10:35" itemprop="dateCreated datePublished" datetime="2012-11-06T20:10:35+08:00">2012-11-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/11/06/%E5%9C%A8VC%E4%B8%8B%E9%9D%A2%E5%AD%A6%E4%B9%A0OpenGL/" class="post-meta-item leancloud_visitors" data-flag-title="在VC下面学习OpenGL" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/11/06/%E5%9C%A8VC%E4%B8%8B%E9%9D%A2%E5%AD%A6%E4%B9%A0OpenGL/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/11/06/%E5%9C%A8VC%E4%B8%8B%E9%9D%A2%E5%AD%A6%E4%B9%A0OpenGL/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>先贴一个OpenGL程序的代码,</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdlib.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;<span class="selector-tag">time</span>.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/gl.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glu.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;gl/glut.h&gt;</span><br><span class="line"><span class="selector-id">#pragma</span> <span class="built_in">comment</span>(linker, <span class="string">"/subsystem:\"windows\" /entry:\"mainCRTStartup\""</span>) <span class="comment">//设置连接器选项</span></span><br><span class="line"></span><br><span class="line">const int WINDOW_WIDTH = <span class="number">640</span>;</span><br><span class="line">const int WINDOW_HEIGHT = <span class="number">480</span>;</span><br><span class="line">const int WINDOW_POS_X = <span class="number">300</span>;</span><br><span class="line">const int WINDOW_POS_Y = <span class="number">150</span>;</span><br><span class="line">const int NUM = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">myInit</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glClearColor</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>);<span class="comment">//设置背景颜色为亮白</span></span><br><span class="line">    <span class="built_in">glColor3f</span>(<span class="number">0.0</span>f, <span class="number">0.0</span>f, <span class="number">0.0</span>f);<span class="comment">//设置绘图颜色为黑色</span></span><br><span class="line">    <span class="built_in">glPointSize</span>(<span class="number">4.0</span>);<span class="comment">//设置点的大小为4*4像素</span></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_PROJECTION);</span><br><span class="line">    <span class="built_in">glLoadIdentity</span>();</span><br><span class="line">    <span class="built_in">gluOrtho2D</span>(<span class="number">0.0</span>, WINDOW_WIDTH, <span class="number">0.0</span>, WINDOW_HEIGHT);<span class="comment">//以上三句话合起伙是设置窗口的坐标系</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">myDisplay</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);<span class="comment">//清屏</span></span><br><span class="line">    <span class="built_in">glBegin</span>(GL_POINTS);</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; NUM; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">glVertex2i</span>(<span class="built_in">rand</span>() % WINDOW_WIDTH, <span class="built_in">rand</span>() % WINDOW_HEIGHT);</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">glEnd</span>();</span><br><span class="line">    <span class="built_in">glFlush</span>();<span class="comment">//送往设备显示</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>(int argc, char** argv)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glutInit</span>(argc, argv);</span><br><span class="line">    <span class="built_in">glutInitDisplayMode</span>(GLUT_SINGLE | GLUT_RGB);<span class="comment">//设置显示模式</span></span><br><span class="line">    <span class="built_in">glutInitWindowSize</span>(WINDOW_WIDTH, WINDOW_HEIGHT);</span><br><span class="line">    <span class="built_in">glutInitWindowPosition</span>(WINDOW_POS_X, WINDOW_POS_Y);</span><br><span class="line">    <span class="built_in">glutCreateWindow</span>(<span class="string">"散乱点图"</span>);</span><br><span class="line">    <span class="built_in">glutDisplayFunc</span>(myDisplay);<span class="comment">//注册重绘回调函数</span></span><br><span class="line">    <span class="built_in">myInit</span>();</span><br><span class="line">    <span class="built_in">srand</span>(<span class="selector-tag">time</span>(NULL));</span><br><span class="line">    <span class="built_in">glutMainLoop</span>();<span class="comment">//进入消息循环</span></span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>该程序只是创建一个窗口，然后在里面画一些随机的点。效果如图所示，</p>
+<p><img alt="" data-src="https://c6.staticflickr.com/8/7386/26822942093_22d5d37726_o.jpg"></p>
+<p>说实话这个程序非常简单，在主函数里面只是设置了窗口大小和位置，然后创建了个窗口，做了些初始化，并且为窗口设置了显示回调函数。初始化函数里面都有注释，显示回调函数里面只是一直在随机画点而已。</p>
+<p>说实话，仅仅是使用最基本的opengl画图确实太简单了，也没什么多说的，如果你熟悉Windows程序设计和C++语言，只是换个库而已，真正需要学习的是计算机图形学。我觉得OpenGL相对于DirectX简洁明了很多了，所以才选择了计算机图形学OpenGL版这本书来学习图形学的。下面来简要介绍下OpenGL的库组成吧。</p>
+<p>OpenGL库分为四个部分，GL和GLU，GLUT以及GLUI。GL和GLU都是用于绘图的，只是第一个是基本库，第二个是一些高级的绘图函数。GLUT库主要包含一些管理窗口和菜单的函数，GLUI则是一些高级的界面管理部分，比如各种复杂的按钮和菜单。</p>
+<p>我觉得如果在VC下面建立控制台工程，然后设置链接命令去掉控制台窗口，再在main函数下执行OpenGL操作，这个过程不仅简洁而且感觉效果也不错。现在看来，OpenGL确实是一个比较美观的东西，至少相对于我用了几年的MFC来说。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/11/06/Console%E5%B7%A5%E7%A8%8B%E4%B8%8B%E5%A6%82%E4%BD%95%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%BB%91%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%BE%E7%A4%BAWindows%E7%AA%97%E5%8F%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1235,117 +1352,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/18/hnu%202243%20%E8%80%83%E7%A0%94%E8%B7%AF%E8%8C%AB%E8%8C%AB%E2%80%94%E2%80%94%E5%8D%95%E8%AF%8D%E6%83%85%E7%BB%93%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%86%A5%E7%B4%AF%E5%8A%A0%E5%92%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/10/18/hnu%202243%20%E8%80%83%E7%A0%94%E8%B7%AF%E8%8C%AB%E8%8C%AB%E2%80%94%E2%80%94%E5%8D%95%E8%AF%8D%E6%83%85%E7%BB%93%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%86%A5%E7%B4%AF%E5%8A%A0%E5%92%8C/" class="post-title-link" itemprop="url">hnu 2243 考研路茫茫——单词情结 AC自动机+矩阵冥累加和</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-10-18 18:00:00" itemprop="dateCreated datePublished" datetime="2012-10-18T18:00:00+08:00">2012-10-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/10/18/hnu%202243%20%E8%80%83%E7%A0%94%E8%B7%AF%E8%8C%AB%E8%8C%AB%E2%80%94%E2%80%94%E5%8D%95%E8%AF%8D%E6%83%85%E7%BB%93%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%86%A5%E7%B4%AF%E5%8A%A0%E5%92%8C/" class="post-meta-item leancloud_visitors" data-flag-title="hnu 2243 考研路茫茫——单词情结 AC自动机+矩阵冥累加和" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/10/18/hnu%202243%20%E8%80%83%E7%A0%94%E8%B7%AF%E8%8C%AB%E8%8C%AB%E2%80%94%E2%80%94%E5%8D%95%E8%AF%8D%E6%83%85%E7%BB%93%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%86%A5%E7%B4%AF%E5%8A%A0%E5%92%8C/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/18/hnu%202243%20%E8%80%83%E7%A0%94%E8%B7%AF%E8%8C%AB%E8%8C%AB%E2%80%94%E2%80%94%E5%8D%95%E8%AF%8D%E6%83%85%E7%BB%93%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA+%E7%9F%A9%E9%98%B5%E5%86%A5%E7%B4%AF%E5%8A%A0%E5%92%8C/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这个题目更奇葩。据说是上一个题的加强版。题意是给定M个模式串，然后给定长度L，问不超过L的文本至少含有一个模式的情况的总种数。<br>还是用模式串建立Trie图，根据Trie图建立起路径长度为1的矩阵M。<br>总情况数目为26^1+26^2+…+26^L。不含模式串的情况总数为矩阵N = M^1+M^2+M^3+…+M^L的第一行之和。总情况数目减去不含模式串的情况就是答案。<br>这里用到了矩阵的一些算法，比如快速冥，还有快速冥求和。但是，我用了操作符重载，最悲剧的是重载后的操作符没有优先级，而我还当作有优先级的在用，所以悲剧了。。。一直样例都过不去。。。唉，最后才发现了这个问题。。。写了260行左右的代码，前面的一部分代码可以当作矩阵操作的模板了。。。Trie图的也不错，过几天估计得打印下来用了。。。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;queue&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef unsigned long long INT;</span><br><span class="line">const int MAX_D = <span class="number">26</span>;</span><br><span class="line">const int MAX_L = <span class="number">10</span>;</span><br><span class="line">const int MAX_N = <span class="number">10</span>;</span><br><span class="line">char szPat<span class="selector-attr">[MAX_L]</span>;</span><br><span class="line"></span><br><span class="line">const int MAX_S = <span class="number">31</span>;</span><br><span class="line">struct Matrix</span><br><span class="line">{</span><br><span class="line">    int nSize;</span><br><span class="line">    INT nD<span class="selector-attr">[MAX_S]</span><span class="selector-attr">[MAX_S]</span>;</span><br><span class="line">    <span class="built_in">Matrix</span>(int nS)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">Clear</span>(nS);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    Matrix operator = (const Matrix m)</span><br><span class="line">    {</span><br><span class="line">        nSize = m.nSize;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nSize; ++j)</span><br><span class="line">            {</span><br><span class="line">                nD<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = m<span class="selector-class">.nD</span><span class="selector-attr">[i]</span><span class="selector-attr">[j]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return *this;</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">Clear</span>(int nS)</span><br><span class="line">    {</span><br><span class="line">        nSize = nS;</span><br><span class="line">        <span class="built_in">memset</span>(nD, <span class="number">0</span>, <span class="built_in">sizeof</span>(nD));</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">Unit</span>()</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nSize; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nSize; ++j)</span><br><span class="line">            {</span><br><span class="line">                nD<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = (<span class="selector-tag">i</span> == j ? <span class="number">1</span> : <span class="number">0</span>);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">Matrix operator+(const Matrix A, const Matrix B)</span><br><span class="line">{</span><br><span class="line">    Matrix <span class="built_in">C</span>(A.nSize);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; A.nSize; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; A.nSize; ++j)</span><br><span class="line">        {</span><br><span class="line">            C<span class="selector-class">.nD</span><span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = A<span class="selector-class">.nD</span><span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> + B<span class="selector-class">.nD</span><span class="selector-attr">[i]</span><span class="selector-attr">[j]</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return C;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Matrix operator*(const Matrix nA, const Matrix nB)</span><br><span class="line">{</span><br><span class="line">    Matrix <span class="built_in">nC</span>(nB.nSize);</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nA.nSize; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nA.nSize; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int k = <span class="number">0</span>; k &lt; nA.nSize; ++k)</span><br><span class="line">            {</span><br><span class="line">                nC<span class="selector-class">.nD</span><span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> += nA<span class="selector-class">.nD</span><span class="selector-attr">[i]</span><span class="selector-attr">[k]</span> * nB<span class="selector-class">.nD</span><span class="selector-attr">[k]</span><span class="selector-attr">[j]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return nC;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Matrix operator^(Matrix B, INT nExp)</span><br><span class="line">{</span><br><span class="line">    Matrix <span class="built_in">ans</span>(B.nSize);</span><br><span class="line"></span><br><span class="line">    ans<span class="selector-class">.Unit</span>();</span><br><span class="line">    while (nExp)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nExp % <span class="number">2</span>)</span><br><span class="line">        {</span><br><span class="line">            ans = ans * B;</span><br><span class="line">        }</span><br><span class="line">        B = B * B;</span><br><span class="line">        nExp &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    return ans;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//求base^1+base^2++base^N</span></span><br><span class="line">Matrix <span class="built_in">SumPowMatrix</span>(Matrix base, INT nN)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nN == <span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        return base;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    Matrix ans = <span class="built_in">SumPowMatrix</span>(base, nN / <span class="number">2</span>);</span><br><span class="line">    ans = ans + ((base^(nN / <span class="number">2</span>)) * ans);<span class="comment">//重载运算符保证不了优先级</span></span><br><span class="line">    <span class="keyword">if</span> (nN % <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        ans = ans + (base^nN);<span class="comment">//没优先级啊,必须加括号,查错2个小时了</span></span><br><span class="line">    }</span><br><span class="line">    return ans;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">struct Trie</span><br><span class="line">{</span><br><span class="line">    Trie* next<span class="selector-attr">[MAX_D]</span>;</span><br><span class="line">    Trie* fail;</span><br><span class="line">    int no;</span><br><span class="line">    bool flag;</span><br><span class="line">};</span><br><span class="line">Trie tries<span class="selector-attr">[MAX_L * MAX_N]</span>;</span><br><span class="line">int nP;</span><br><span class="line">Trie* pRoot;</span><br><span class="line"></span><br><span class="line">Trie* <span class="built_in">NewNode</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(tries<span class="selector-attr">[nP]</span>, <span class="number">0</span>, <span class="built_in">sizeof</span>(Trie));</span><br><span class="line">    tries<span class="selector-attr">[nP]</span><span class="selector-class">.no</span> = nP;</span><br><span class="line">    return tries<span class="selector-attr">[nP++]</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">InitTrie</span>(Trie* pRoot)</span><br><span class="line">{</span><br><span class="line">    nP = <span class="number">0</span>;</span><br><span class="line">    pRoot = <span class="built_in">NewNode</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Insert</span>(Trie* pRoot, char* pszPat)</span><br><span class="line">{</span><br><span class="line">    Trie* pNode = pRoot;</span><br><span class="line">    while (*pszPat)</span><br><span class="line">    {</span><br><span class="line">        int idx = *pszPat - <span class="string">'a'</span>;</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;next<span class="selector-attr">[idx]</span> == NULL)</span><br><span class="line">        {</span><br><span class="line">            pNode-&gt;next<span class="selector-attr">[idx]</span> = <span class="built_in">NewNode</span>();</span><br><span class="line">        }</span><br><span class="line">        pNode = pNode-&gt;next<span class="selector-attr">[idx]</span>;</span><br><span class="line">        ++pszPat;</span><br><span class="line">    }</span><br><span class="line">    pNode-&gt;flag = true;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">BuildAC</span>(Trie* pRoot, Matrix M)</span><br><span class="line">{</span><br><span class="line">    pRoot-&gt;fail = NULL;</span><br><span class="line">    queue&lt;Trie*&gt; qt;</span><br><span class="line">    qt<span class="selector-class">.push</span>(pRoot);</span><br><span class="line"></span><br><span class="line">    M<span class="selector-class">.Clear</span>(nP);</span><br><span class="line">    while (!qt<span class="selector-class">.empty</span>())</span><br><span class="line">    {</span><br><span class="line">        Trie* front = qt<span class="selector-class">.front</span>();</span><br><span class="line">        qt<span class="selector-class">.pop</span>();</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; MAX_D; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (front-&gt;next<span class="selector-attr">[i]</span>)</span><br><span class="line">            {</span><br><span class="line">                Trie* pNode = front-&gt;fail;</span><br><span class="line">                while (pNode &amp;&amp; pNode-&gt;next<span class="selector-attr">[i]</span> == NULL)</span><br><span class="line">                {</span><br><span class="line">                    pNode = pNode-&gt;fail;</span><br><span class="line">                }</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span>-&gt;fail = pNode? pNode-&gt;next<span class="selector-attr">[i]</span> : pRoot;</span><br><span class="line">                <span class="keyword">if</span> (front-&gt;next<span class="selector-attr">[i]</span>-&gt;fail-&gt;flag)</span><br><span class="line">                {</span><br><span class="line">                    front-&gt;next<span class="selector-attr">[i]</span>-&gt;flag = true;</span><br><span class="line">                }</span><br><span class="line">                qt<span class="selector-class">.push</span>(front-&gt;next<span class="selector-attr">[i]</span>);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span> = front == pRoot? pRoot : front-&gt;fail-&gt;next<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="comment">//这里必须要加上front-&gt;flag为false的判断么?加不加会生成不同的矩阵</span></span><br><span class="line">            <span class="keyword">if</span> (!front-&gt;next<span class="selector-attr">[i]</span>-&gt;flag)</span><br><span class="line">            {</span><br><span class="line">                ++M<span class="selector-class">.nD</span><span class="selector-attr">[front-&gt;no]</span><span class="selector-attr">[front-&gt;next[i]</span>-&gt;no];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nN;</span><br><span class="line">    INT nL;</span><br><span class="line">    Matrix <span class="built_in">M</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%I64u"</span>, &amp;nN, &amp;nL) == <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">InitTrie</span>(pRoot);</span><br><span class="line">        while (nN--)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s"</span>, szPat);</span><br><span class="line">            <span class="built_in">Insert</span>(pRoot, szPat);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">BuildAC</span>(pRoot, M);</span><br><span class="line"></span><br><span class="line">        Matrix <span class="built_in">tmp</span>(<span class="number">1</span>);</span><br><span class="line">        tmp<span class="selector-class">.nD</span><span class="selector-attr">[0]</span><span class="selector-attr">[0]</span> = <span class="number">26</span>;</span><br><span class="line">        tmp = <span class="built_in">SumPowMatrix</span>(tmp, nL);</span><br><span class="line">        INT nAns = tmp<span class="selector-class">.nD</span><span class="selector-attr">[0]</span><span class="selector-attr">[0]</span>;</span><br><span class="line">        Matrix msum = <span class="built_in">SumPowMatrix</span>(M, nL);</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; msum.nSize; ++i)</span><br><span class="line">        {</span><br><span class="line">            nAns -= msum<span class="selector-class">.nD</span><span class="selector-attr">[0]</span><span class="selector-attr">[i]</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%I64u\n"</span>, nAns);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1396,7 +1402,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1409,7 +1415,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1461,12 +1467,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">649k</span>
+    <span title="站点总字数">671k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:50</span>
+    <span title="站点阅读时长">10:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

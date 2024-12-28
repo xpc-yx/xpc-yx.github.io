@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/03/03/%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93%E5%88%B0%E5%9B%BE%E7%89%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/03/03/%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93%E5%88%B0%E5%9B%BE%E7%89%87/" class="post-title-link" itemprop="url">使用OpenGL渲染到图片</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-03-03 22:51:06" itemprop="dateCreated datePublished" datetime="2014-03-03T22:51:06+08:00">2014-03-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/03/03/%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93%E5%88%B0%E5%9B%BE%E7%89%87/" class="post-meta-item leancloud_visitors" data-flag-title="使用OpenGL渲染到图片" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/03/03/%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93%E5%88%B0%E5%9B%BE%E7%89%87/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/03/03/%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93%E5%88%B0%E5%9B%BE%E7%89%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>标题的意思是使用OpenGL生成特定的图片。比如说，把OpenGL渲染出来的特定结果保存出来，或者生成特殊的纹理图片。<br>第一步，保存OpenGL环境。这个使用glPushAttrib(GL_ALL_ATTRIB_BITS)实现。<br>第二步，设置视口。既然我们要生成指定大小的图片，那我们就<strong>把视口设置为该图片的大小</strong>。glViewport(0, 0, nWidth, nHeight);<br>第三步，设置投影矩阵。<br>第四步，设置模型视图矩阵。<br>第五步，进行相关绘制。<br>第六步，调用<strong>glReadPixels</strong>保存绘制内容。（这一步也可以放到后面的任意位置）<br>第七步，恢复模型视图矩阵。<br>第八步，恢复投影矩阵。<br>第九步，恢复OpenGL环境。<br>大致的代码，可以用下面这个函数描述。只需要替换绘制的代码就可以改成你需要的形式了。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">void CDrawedTexture::<span class="built_in">InterpolateData</span>(int m_nWidth, int m_nHeight)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glPushAttrib</span>(GL_ALL_ATTRIB_BITS);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, nWidth, nHeight);</span><br><span class="line">    <span class="built_in">glClearColor</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">    <span class="built_in">glDisable</span>(GL_TEXTURE_2D);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_PROJECTION);</span><br><span class="line">    <span class="built_in">glPushMatrix</span>();</span><br><span class="line">    <span class="built_in">glLoadIdentity</span>();</span><br><span class="line">    <span class="built_in">gluOrtho2D</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_MODELVIEW);</span><br><span class="line">    <span class="built_in">glPushMatrix</span>();</span><br><span class="line">    <span class="built_in">glLoadIdentity</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//绘制三角形</span></span><br><span class="line">    <span class="built_in">glEnable</span>(GL_TEXTURE_2D);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_faces<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">    {</span><br><span class="line">        m_faces<span class="selector-attr">[i]</span><span class="selector-class">.v</span><span class="selector-attr">[0]</span>.pTexture-&gt;<span class="built_in">Bind2d</span>();</span><br><span class="line">        <span class="built_in">glBegin</span>(GL_TRIANGLES);</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; <span class="number">3</span>; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//设置纹理坐标</span></span><br><span class="line">            <span class="built_in">glTexCoord2f</span>(m_faces<span class="selector-attr">[i]</span><span class="selector-class">.v</span><span class="selector-attr">[j]</span><span class="selector-class">.oldTexPos</span><span class="selector-attr">[0]</span>, m_faces<span class="selector-attr">[i]</span><span class="selector-class">.v</span><span class="selector-attr">[j]</span><span class="selector-class">.oldTexPos</span><span class="selector-attr">[1]</span>);</span><br><span class="line">            <span class="comment">//设置坐标</span></span><br><span class="line">            <span class="built_in">glVertex2f</span>(m_faces<span class="selector-attr">[i]</span><span class="selector-class">.v</span><span class="selector-attr">[j]</span><span class="selector-class">.newTexPos</span><span class="selector-attr">[0]</span>, m_faces<span class="selector-attr">[i]</span><span class="selector-class">.v</span><span class="selector-attr">[j]</span><span class="selector-class">.newTexPos</span><span class="selector-attr">[1]</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">glEnd</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glReadPixels</span>(<span class="number">0</span>, <span class="number">0</span>, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, m_img<span class="selector-class">.raw</span>());</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glPopMatrix</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_PROJECTION);</span><br><span class="line">    <span class="built_in">glPopMatrix</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glPopAttrib</span>();</span><br><span class="line"></span><br><span class="line">    m_img<span class="selector-class">.save</span>(<span class="string">"插值纹理.bmp"</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>注意请使用<strong>双缓存区</strong>，而且<strong>绝对不能调用交换缓存区函数</strong>。原因是生成图片是幕后工作，交换缓存区会破坏屏幕当前的显示。这里还有个必须很注意的地方，就是glReadPixels的参数一定要正确。比如<strong>像素的格式</strong>，还有<strong>数据的类型</strong>。如果你的颜色缓存区是rgba的，那么你一定得使用<strong>GL_RGBA</strong>而不是GL_RGB，还有一般不能使用GL_BYTE，而是要使用<strong>GL_UNSIGNED_BYTE</strong>，否则会造成数据截断。<br>我这段代码的意图是将笔画绘制所经过的三维部分投影到二维图片上面保存起来。三维模型上面贴了纹理。<br>当然还可以用FBO实现和本文类似的功能。<br>如果实现所谓的渲染到纹理，我们只需要把渲染到后缓存区的数据提取出来，绑定到纹理就行了。<p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/02/26/MFC%E7%9A%84%E5%8D%95%E6%96%87%E6%A1%A3(SDI)%E7%9A%84CMainFrame%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%89%98%E7%9B%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1299,110 +1409,6 @@ CImage CImage::operator=(const CImage yxImage)
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/10/21/%E7%BA%B9%E7%90%86%E5%90%88%E6%88%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/10/21/%E7%BA%B9%E7%90%86%E5%90%88%E6%88%90/" class="post-title-link" itemprop="url">纹理合成</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-10-21 09:03:08" itemprop="dateCreated datePublished" datetime="2013-10-21T09:03:08+08:00">2013-10-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/10/21/%E7%BA%B9%E7%90%86%E5%90%88%E6%88%90/" class="post-meta-item leancloud_visitors" data-flag-title="纹理合成" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/10/21/%E7%BA%B9%E7%90%86%E5%90%88%E6%88%90/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/10/21/%E7%BA%B9%E7%90%86%E5%90%88%E6%88%90/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>622</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这里讲得纹理合成指的是合成图片纹理，也就是二维纹理合成，并不是指将纹理直接合成到三维模型上面。虽然从本质上面来说，三维纹理合成和二维纹理是一样的。<br>纹理合成基本上是用的非参数化的采样方法，也就是Li-Yi-Wei的那篇纹理合成的论文所使用的方法。基本思路就是为当前要合成的像素在样图中寻找一个最佳的邻域，至于这个邻域的形状是可以变化的。合成像素选取的顺序也是可以变化的。这些或多或少都会影响合成的最终结果。LiYiWei的论文里面选取的是L形状的邻域，并且使用扫描线的顺序。<br>在LiYiWei的三维纹理合成论文居然又提到了合成顺序对合成结果影响不大，这个好像没那么正确。因为，合成纹理像素的使用，需要匹配邻域，而且这些邻域最好是已经合成的像素，如果不是就不会得到较好的结果。这个是最关键的一点。所以说，合成顺序对合成结果还是有一定的影响的。<br>为什么L邻域能够得到较好的结果了，那是因为扫描线顺序下，L邻域里面的像素都是已经合成的像素。所以，如果打算对合成纹理算法进行局部的修改就需要注意邻域和合成顺序的设定，必须尽可能使用已经合成的像素。<br>为什么说三维纹理的合成和二维纹理的合成，本质是一致的了？因为三维纹理合成需要局部铺平，来构造邻域，然后的匹配和二维的思想是完全一致的。<br>下面是我自己实现代码的合成结果。纹理合成的代码网上还是能够找到的，虽然不是那么好找，这也只限于二维合成的代码。最好不要看csdn上面那个自以为写了加速的代码。<br>样本纹理：<img alt="" data-src="https://c1.staticflickr.com/8/7087/27352028232_085b3cb8aa_o.jpg"><br>合成纹理：<img alt="" data-src="https://c2.staticflickr.com/8/7455/26841928854_35ef671fb0_o.png"></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1453,7 +1459,7 @@ CImage CImage::operator=(const CImage yxImage)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1466,7 +1472,7 @@ CImage CImage::operator=(const CImage yxImage)
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1518,12 +1524,12 @@ CImage CImage::operator=(const CImage yxImage)
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">649k</span>
+    <span title="站点总字数">671k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:50</span>
+    <span title="站点阅读时长">10:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

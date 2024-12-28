@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/08/uva-550-multiplying-by-rotation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/05/08/uva-550-multiplying-by-rotation/" class="post-title-link" itemprop="url">uva 550 - Multiplying by Rotation</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-05-08 21:30:00" itemprop="dateCreated datePublished" datetime="2012-05-08T21:30:00+08:00">2012-05-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/05/08/uva-550-multiplying-by-rotation/" class="post-meta-item leancloud_visitors" data-flag-title="uva 550 - Multiplying by Rotation" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/05/08/uva-550-multiplying-by-rotation/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/08/uva-550-multiplying-by-rotation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>903</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这也是一个数学题，刚开始还真以为好难的样子，需要用到什么数论的理论啊。其实，只要去找规律就行了。<br>题意是给出一个进制，一个数字的最低位，和另外的一个数字，比如10进制，第一个数字的最低位是7，第二个数字是4，根据这些信息，和规则（XXXXX7 <em> 4 = 7XXXXX，例子: 179487 </em> 4 = 717948 ）求出第一个数字的最小长度。这个规则的意思是乘积是把第一个数字的最低位移动到最高位上去就行了。<br>貌似很难的样子，其实用笔在纸上求一下XXXXX7 <em> 4 = 7XXXXX就会发现。XXXXX7的每一位都是能够确定的，当然顺序是从最低位到最高位开始。因为知道最低位，所以次低位一定是最低位</em>第二个数%base。以此类推，递归下去即可。最终条件是，没有进位了，而且乘积+原来的进位==最低位。<br>我用的递归完全可以改成循环的形式，这样速度应该会快些。</p>
+<p>代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int nBase;</span><br><span class="line">int nTwo;</span><br><span class="line">int nOneLow;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetMin</span>(int nLow, int nCarry, int nNum)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//printf("nLow:%d, nCarry:%d, nNum:%d\n", nLow, nCarry, nNum);</span></span><br><span class="line">    int nTemp = nCarry + nLow * nTwo;</span><br><span class="line">    <span class="keyword">if</span> (nTemp == nOneLow)</span><br><span class="line">    {</span><br><span class="line">        return nNum;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="built_in">GetMin</span>(nTemp % nBase, nTemp / nBase, nNum + <span class="number">1</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//freopen("out.txt", "w", stdout);</span></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;nBase, &amp;nOneLow, &amp;nTwo) == <span class="number">3</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">GetMin</span>(nOneLow, <span class="number">0</span>, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/07/uva-107-the-cat-in-the-hat/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1213,120 +1324,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/03/20/%E6%97%A0%E7%A9%B7%E5%A4%A7%E6%95%B0%E7%BB%84%E4%B8%8A%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/03/20/%E6%97%A0%E7%A9%B7%E5%A4%A7%E6%95%B0%E7%BB%84%E4%B8%8A%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%EF%BC%9F/" class="post-title-link" itemprop="url">无穷大数组上如何直接寻址来实现字典？</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-03-20 10:00:00" itemprop="dateCreated datePublished" datetime="2012-03-20T10:00:00+08:00">2012-03-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/03/20/%E6%97%A0%E7%A9%B7%E5%A4%A7%E6%95%B0%E7%BB%84%E4%B8%8A%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%EF%BC%9F/" class="post-meta-item leancloud_visitors" data-flag-title="无穷大数组上如何直接寻址来实现字典？" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/03/20/%E6%97%A0%E7%A9%B7%E5%A4%A7%E6%95%B0%E7%BB%84%E4%B8%8A%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%EF%BC%9F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/03/20/%E6%97%A0%E7%A9%B7%E5%A4%A7%E6%95%B0%E7%BB%84%E4%B8%8A%E5%A6%82%E4%BD%95%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%EF%BC%9F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是算法导论习题11.1-4。<br>具体题目如下：<br><img alt="" data-src="https://c5.staticflickr.com/8/7454/27312219812_3440407ffa_o.jpg"></p>
-<p>解决该题目的要点：<br>1.由于是无穷大的数组，所以无法事先初始化该数组。<br>2.所提供的方案必须是O（1）。<br>3.使用的额外空间只能是O（n），这样平均到每一个项上的空间都是O（1）。</p>
-<p>一时之间好像没有一点头绪，在几个群里面发问了，网上搜了很久也没有找到答案，后面一群里有个高人给了个链接，里面有解法。链接地址：</p>
-<blockquote>
-<p><a href="http://www.cnblogs.com/flyfy1/archive/2011/03/05/1971502.html">http://www.cnblogs.com/flyfy1/archive/2011/03/05/1971502.html</a></p>
-</blockquote>
-<p>这篇文章里面另外给了个pdf，这个pdf估计是解法的来源。伪代码写得不给力，不过前面的英文描述却很清晰。说实话，这个方法很巧妙。</p>
-<p>解法大概的意思如下：<br>开一个额外的数组A，A[0]表示A数组元素的数目(当然不包括A[0]本身)，A[i]代表插入的第i个元素的key。假设原来的无穷大数组用Huge<br>表示，如果Huge<a href="直接寻址，假设i就是key">i</a>有效，则表示其在A数组中的索引。那么如果A[Huge[i]] == i 而且 Huge[i] &lt;= A[0] &amp;&amp;<br>Huge[i] &gt; 0，则表示i这个位置已经有元素插入了。</p>
-<p>插入：A[0]++;A[A[0]] = key; Huge[key] = A[0];<br>搜索:  A[Huge[i]] == i &amp;&amp; Huge[i] &lt;= A[0] &amp;&amp; Huge[i] &gt; 0 则return true;<br>删除:  先搜索该位置是否有元素, 如果Search(key)成功，则先把Huge[ A[A[0]] ] = Huge[key]，<br>然后交换A[A[0]]和A[Huge[key]]，A[0]—即可。<br>所有操作都是O（1），平均到每一个项，使用的空间都是O（1）。</p>
-<p>我用代码实现的模拟如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using std::swap;</span><br><span class="line">using std::vector;</span><br><span class="line"><span class="selector-id">#define</span> INF (<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">int nHuge<span class="selector-attr">[INF]</span>;<span class="comment">//假设这个巨大的数组是无法初始化的</span></span><br><span class="line">vector&lt;int&gt; vA;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Init</span>()</span><br><span class="line">{</span><br><span class="line">    vA<span class="selector-class">.push_back</span>(<span class="number">0</span>);<span class="comment">//添加A[0]表示元素的数目</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Insert</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    vA<span class="selector-attr">[0]</span>++;</span><br><span class="line">    nHuge<span class="selector-attr">[nKey]</span> = vA<span class="selector-attr">[0]</span>;</span><br><span class="line">    vA<span class="selector-class">.push_back</span>(nKey);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">Search</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nHuge<span class="selector-attr">[nKey]</span> &gt; <span class="number">0</span> &amp;&amp; nHuge<span class="selector-attr">[nKey]</span> &lt;= vA<span class="selector-attr">[0]</span> &amp;&amp; vA<span class="selector-attr">[nHuge[nKey]</span>] == nKey)</span><br><span class="line">    {</span><br><span class="line">        return true;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return false;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Delete</span>(int nKey)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Search</span>(nKey))</span><br><span class="line">    {</span><br><span class="line">        nHuge<span class="selector-attr">[ vA[vA[0]</span>] ] = nHuge<span class="selector-attr">[nKey]</span>;<span class="comment">//将huge的最后一个元素中存储的A数组的索引改为nHuge[nKey]</span></span><br><span class="line">        <span class="built_in">swap</span>(vA<span class="selector-attr">[vA[0]</span>], vA<span class="selector-attr">[nHuge[nKey]</span>]);<span class="comment">//交换key</span></span><br><span class="line">        <span class="attr">--vA</span><span class="selector-attr">[0]</span>;</span><br><span class="line">        vA<span class="selector-class">.erase</span>(vA<span class="selector-class">.end</span>() - <span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">10</span>)</span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">Init</span>();</span><br><span class="line">    int i;</span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; MAX; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">Insert</span>(i);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; MAX; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Search:%d %s\n"</span>, <span class="selector-tag">i</span>, <span class="built_in">Search</span>(i) == true? <span class="string">"Success"</span> : <span class="string">"Failure"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Delete</span>(<span class="number">4</span>);</span><br><span class="line">    <span class="built_in">Delete</span>(<span class="number">9</span>);</span><br><span class="line">    <span class="built_in">Delete</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; MAX * <span class="number">2</span>; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Search:%d %s\n"</span>, <span class="selector-tag">i</span>, <span class="built_in">Search</span>(i) == true? <span class="string">"Success"</span> : <span class="string">"Failure"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1377,7 +1374,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1390,7 +1387,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1442,12 +1439,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">649k</span>
+    <span title="站点总字数">671k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:50</span>
+    <span title="站点阅读时长">10:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
