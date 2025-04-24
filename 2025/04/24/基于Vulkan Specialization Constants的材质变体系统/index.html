@@ -56,7 +56,7 @@
 <meta property="og:description" content="材质变体所谓材质变体，指的是一份材质代码文件，最终对应的是多份运行时gpu程序。比如，shader代码里面有开关或者选项，不同的组合对应不同的最终gpu program。那么，所有的这些组合对应的gpu program，可以统一理解为这个材质对应的所有变体。比如下面shader代码： 1234567891011121314151617float4 color;float3 normal;void">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-24T04:28:30.000Z">
-<meta property="article:modified_time" content="2025-04-24T15:03:51.510Z">
+<meta property="article:modified_time" content="2025-04-24T15:13:17.208Z">
 <meta property="article:author" content="远行">
 <meta property="article:tag" content="Vulkan Specialization Constants">
 <meta property="article:tag" content="材质变体系统">
@@ -287,7 +287,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5k</span>
+              <span>5.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -334,6 +334,7 @@
 </ul>
 <h2 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h2><ul>
 <li>依赖高级特性，在传统图形API上不支持。只能针对运行Vulkan的平台做优化。</li>
+<li>一些复杂的情况无法兼容，比如高通驱动无法优化比较复杂的使用Specialization Constants的代码等，会出现明显性能下降；spirv-optimizer对于将Specialization Constants作为变量传递的代码无法识别等。</li>
 <li>使用vulkan的Specialization Constants接口在驱动上进行JIT编译的方案，运行结果依赖具体硬件的驱动实现，结果不稳定。</li>
 <li>使用spirv-optimizer剔除分支的方案需要额外的运行时处理时间，会引起切换变体卡顿，引擎需要妥善处理，比如异步调用spirv-optimizer，同时对优化后的spir-v缓存。</li>
 </ul>

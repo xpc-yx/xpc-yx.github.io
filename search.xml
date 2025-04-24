@@ -5101,6 +5101,7 @@ CImage CImage::operator=(const CImage yxImage)
 </ul>
 <h2 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h2><ul>
 <li>依赖高级特性，在传统图形API上不支持。只能针对运行Vulkan的平台做优化。</li>
+<li>一些复杂的情况无法兼容，比如高通驱动无法优化比较复杂的使用Specialization Constants的代码等，会出现明显性能下降；spirv-optimizer对于将Specialization Constants作为变量传递的代码无法识别等。</li>
 <li>使用vulkan的Specialization Constants接口在驱动上进行JIT编译的方案，运行结果依赖具体硬件的驱动实现，结果不稳定。</li>
 <li>使用spirv-optimizer剔除分支的方案需要额外的运行时处理时间，会引起切换变体卡顿，引擎需要妥善处理，比如异步调用spirv-optimizer，同时对优化后的spir-v缓存。</li>
 </ul>
