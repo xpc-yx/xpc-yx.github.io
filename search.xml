@@ -5107,7 +5107,7 @@ CImage CImage::operator=(const CImage yxImage)
 </ul>
 <h1 id="动态变体与传统变体的对比"><a href="#动态变体与传统变体的对比" class="headerlink" title="动态变体与传统变体的对比"></a>动态变体与传统变体的对比</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
 <li>可以解决变体爆炸问题。</li>
-<li>可能更快的编译PSO</li>
+<li>可能更快的编译PSO。</li>
 </ul>
 <h2 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h2><ul>
 <li>跨平台差，需要高级图形API特性。</li>
