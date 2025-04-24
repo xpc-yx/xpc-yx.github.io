@@ -222,6 +222,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/" class="post-title-link" itemprop="url">数值到颜色的自然映射</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-06-08 12:52:12" itemprop="dateCreated datePublished" datetime="2015-06-08T12:52:12+08:00">2015-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/" class="post-meta-item leancloud_visitors" data-flag-title="数值到颜色的自然映射" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>很久没更新博客了。额，一直想写这个来着。记得以前写过绘制三维标量场的文章，方法是找的渐变颜色纹理图片，然后用一维纹理坐标映射贴上去的。后面发现根本不需要去找图片，这种渐变色本来就是一种颜色空间的定义。<a href="http://baike.baidu.com/link?url=RUroPPZprWlPOJx8JaodE2Je0wql6wHv0N3LigWMqsRjCxxVDAT_yWwGYL4myeEkHTKIeBxFbC9qjwvrzD2XlzgyxW-2lUZ25TyUePioufQBbhhZSTRB5VUApB0gCfgsJPG-CtbbTBBs3DacsTvMAFk5YzmyeD5uius5R5vTr3sPZbGsfmiL-6ovaPXrncfqk0vcp8KhirUnmKEEZdR_0q">请看hsv颜色模型</a>，这种颜色模型类似于rgb，也是三个分量h（色调），s（饱和度），v（亮度）。h表示的绕圆锥的一周，也就是纯颜色的渐变，正是我们需要的东西。s表示从圆心到圆边缘的半径，0-1的范围，表示颜色纯度。v则是垂直的轴，表示亮度。如下图，我们要的就是绕圈一周的颜色渐变。</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7213/27452089865_0225e3c1e8_o.png"></p>
+<p>总体思路就是数值0-1，映射到hsv颜色空间的（0-360,1,255）。实现标量场的方法是，首先，将hsv的（0-360,1,255）转换为rgb，保存为一维数组。以该数组为数据，生成一维纹理，数值0-1作为纹理坐标，再贴图即可生成标量场。下面是用该方法生成标量场的相关代码。首先是构造一维纹理数组，然后用其生成1d纹理。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">int CTexture::<span class="built_in">BuildColorMapTexture</span>()</span><br><span class="line">{</span><br><span class="line">        const int COLOR_SIZE = <span class="number">240</span>;<span class="comment">//红到蓝</span></span><br><span class="line">        ImageRGBA <span class="built_in">colorMap</span>(COLOR_SIZE, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; COLOR_SIZE; ++i)</span><br><span class="line">        {</span><br><span class="line">            colorMap<span class="selector-class">.pixel</span>(<span class="selector-tag">i</span>, <span class="number">0</span>) = <span class="built_in">Hsv2Rgb</span>(<span class="selector-tag">i</span>, <span class="number">1</span>, <span class="number">255</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">glPixelStorei</span>(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">glGenTextures</span>(<span class="number">1</span>, m_uTexName);</span><br><span class="line">        <span class="built_in">glBindTexture</span>(GL_TEXTURE_1D, m_uTexName);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);</span><br><span class="line">        <span class="built_in">glTexEnvf</span>(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//生成2d的Mipmap纹理</span></span><br><span class="line">        int nRet = <span class="built_in">gluBuild1DMipmaps</span>(GL_TEXTURE_1D, <span class="number">4</span>, COLOR_SIZE, GL_RGBA, GL_UNSIGNED_BYTE,</span><br><span class="line">            colorMap<span class="selector-class">.raw</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return <span class="number">0</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>hsv2rgb的代码如下，从网上可以随便找个修改。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">PixelRGBA <span class="built_in">Hsv2Rgb</span>(<span class="attribute">float</span> H, float S, float V)</span><br><span class="line">{</span><br><span class="line">        <span class="attribute">float</span> R, G, B;</span><br><span class="line"></span><br><span class="line">        int i;</span><br><span class="line">        <span class="attribute">float</span> f, p, q, t;</span><br><span class="line">        <span class="built_in">if</span>(S == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">// achromatic (grey)</span></span><br><span class="line">            R = G = B = V;</span><br><span class="line">            return <span class="built_in">V4B</span>(R, G, B, <span class="number">255</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        H /= <span class="number">60</span>; <span class="comment">// sector 0 to 5</span></span><br><span class="line">        <span class="selector-tag">i</span> = <span class="built_in">floor</span>( H );</span><br><span class="line">        f = H - i; <span class="comment">// factorial part of h</span></span><br><span class="line">        <span class="selector-tag">p</span> = V * ( <span class="number">1</span> - S );</span><br><span class="line">        <span class="selector-tag">q</span> = V * ( <span class="number">1</span> - S * f );</span><br><span class="line">        t = V * ( <span class="number">1</span> - S * ( <span class="number">1</span> - f ) );</span><br><span class="line"></span><br><span class="line">        <span class="built_in">switch</span>( <span class="selector-tag">i</span> )</span><br><span class="line">        {</span><br><span class="line">        case <span class="number">0</span>:</span><br><span class="line">            R = V;</span><br><span class="line">            G = t;</span><br><span class="line">            B = p;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">1</span>:</span><br><span class="line">            R = q;</span><br><span class="line">            G = V;</span><br><span class="line">            B = p;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">2</span>:</span><br><span class="line">            R = p;</span><br><span class="line">            G = V;</span><br><span class="line">            B = t;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">3</span>:</span><br><span class="line">            R = p;</span><br><span class="line">            G = q;</span><br><span class="line">            B = V;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">4</span>:</span><br><span class="line">            R = t;</span><br><span class="line">            G = p;</span><br><span class="line">            B = V;</span><br><span class="line">            break;</span><br><span class="line">        default: <span class="comment">// case 5:</span></span><br><span class="line">            R = V;</span><br><span class="line">            G = p;</span><br><span class="line">            B = q;</span><br><span class="line">            break;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return <span class="built_in">V4B</span>(R, G, B, <span class="number">255</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>剩下的事情就是使用BuildColorMapTexture生成1d纹理，然后将数值作为1d纹理坐标设置好就行了。下面是相关的效果图：</p>
+<p>颜色空间转换生成纹理：</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7138/26844818173_cb7558cfc0_o.png"></p>
+<p>渐变纹理贴图：</p>
+<p><img alt="" data-src="https://c8.staticflickr.com/8/7638/27452089775_9fe5365f97_o.jpg"><img alt="" data-src="https://c2.staticflickr.com/8/7365/27175625310_f7f44d74d5_o.png"></p>
+<p>不同的方法效果有区别，原因可能是贴图的数据更精细，而且同一范围比如0-0.3对应的颜色就可能不一致。马上要毕业了，工作内容是游戏开发，以后估计不会再更新读研期间类似的文章的了。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/05/25/%E9%AA%91%E8%A1%8C%E9%9D%96%E6%B8%AF%E5%8F%A4%E9%95%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1287,125 +1408,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">使用C++调用MATLAB引擎计算稀疏矩阵的特征向量</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-01-20 21:43:19" itemprop="dateCreated datePublished" datetime="2015-01-20T21:43:19+08:00">2015-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" class="post-meta-item leancloud_visitors" data-flag-title="使用C++调用MATLAB引擎计算稀疏矩阵的特征向量" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>上一篇文章讲了如何用MATLAB计算稀疏矩阵的特征向量，但是我们最终的目的是使用C++达到这个需求。大致搜索了下，发现使用C++调用MATLAB计算引擎的方式最方便，就采用了，目前的计算速度和方便性都能满足要求。下面讲一下如何操作。</p>
-<p>1.首先是安装MATLAB，并且保证版本正确，比如32位程序只能调用32位的MATLAB，如我的机器是64位win8.1，所以必须强制安装32位的MATLAB，才能配合我用vs2010编写的32位程序。如果，我用vs2010开放64位程序，那么当然是可以使用64MATLAB的，但是配置64位开源库是个大工程，有些库并没有针对64位版本测试过。</p>
-<p>2.假设我的MATLAB安装在C:\Program Files (x86)\MATLAB下面，那么include目录是C:\Program Files (x86)\MATLAB\R2013a\extern\include，lib目录是C:\Program Files (x86)\MATLAB\R2013a\extern\lib\win32\microsoft，bin目录是C:\Program Files (x86)\MATLAB\R2013a\bin\win32。include和lib在vs里面设置好就行了，至于bin目录需要加入到path环境变量中，最后重启电脑生效，当然你一个个去找需要的dll也是可以的。</p>
-<p>3.配置好之后，就可以使用MATLAB引擎了。大致需要1&gt;打开引擎，2&gt;用C++创建变量，3&gt;把变量对应到MATLAB命令中，4&gt;执行MATLAB命令，5&gt;将MATLAB变量传回C++这样的一些操作。比如，engOpen打开引擎，mxCreateSparse用于创建稀疏矩阵，engPutVariable将变量传入MATLAB，engEvalString执行命令，engGetVariable返回结果。具体怎么操作还是得参考相应教程。另外，可以用C++创建不同类型的变量，稀疏矩阵是比较特殊的一种。</p>
-<p>4.至于如何用MATLAB计算稀疏矩阵的特征向量，参阅上一篇文章。</p>
-<p>5.关键的一步，如何设置mxCreateSparse返回的稀疏矩阵的值。先看下面的代码吧。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mxArray* sm = <span class="built_in">mxCreateSparse</span>(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">double* pr = <span class="built_in">mxGetPr</span>(sm);</span><br><span class="line">mwIndex* ir = <span class="built_in">mxGetIr</span>(sm);</span><br><span class="line">mwIndex* jc = <span class="built_in">mxGetJc</span>(sm); </span><br><span class="line"></span><br><span class="line">int k = <span class="number">0</span>;</span><br><span class="line">int nLastC = -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nNum; ++i)</span><br><span class="line">{</span><br><span class="line">    pr<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.v;</span><br><span class="line">    ir<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.r;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m_pSI<span class="selector-attr">[i]</span><span class="selector-class">.c</span> != nLastC)</span><br><span class="line">    {</span><br><span class="line">        jc<span class="selector-attr">[k]</span> = i;</span><br><span class="line">        nLastC = m_pSI<span class="selector-attr">[i]</span>.c;</span><br><span class="line">        ++k;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">jc<span class="selector-attr">[k]</span> = m_nNum;</span><br></pre></td></tr></tbody></table></figure>
-<p>pr对应的是值，ir对应的是行，关键的是jc，jc并不是列，而是到当前列为止出现的值数目，具体可以查阅MATLAB文档，或者理解下以上代码，正确初始化稀疏矩阵是成功的关键。<br>下面随附我的计算拉普拉斯矩阵FiedlerVector的函数。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">void CSparseMatrix::<span class="built_in">GetFiedlerVector</span>(double* pVector, int nChoose)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">assert</span>(nChoose &gt;= <span class="number">0</span>  nChoose &lt;= <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        Engine *ep = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!(ep = <span class="built_in">engOpen</span>(NULL)))<span class="comment">//打开matlab引擎</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">fprintf</span>(stderr, <span class="string">"\nCan't start MATLAB engine\n"</span>);</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        mxArray* sm = <span class="built_in">mxCreateSparse</span>(m_nRow, m_nColumn, m_nNum, mxREAL);</span><br><span class="line">        double* pr = <span class="built_in">mxGetPr</span>(sm);</span><br><span class="line">        mwIndex* ir = <span class="built_in">mxGetIr</span>(sm);</span><br><span class="line">        mwIndex* jc = <span class="built_in">mxGetJc</span>(sm); </span><br><span class="line"></span><br><span class="line">        int k = <span class="number">0</span>;</span><br><span class="line">        int nLastC = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nNum; ++i)</span><br><span class="line">        {</span><br><span class="line">            pr<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.v;</span><br><span class="line">            ir<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.r;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (m_pSI<span class="selector-attr">[i]</span><span class="selector-class">.c</span> != nLastC)</span><br><span class="line">            {</span><br><span class="line">                jc<span class="selector-attr">[k]</span> = i;</span><br><span class="line">                nLastC = m_pSI<span class="selector-attr">[i]</span>.c;</span><br><span class="line">                ++k;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        jc<span class="selector-attr">[k]</span> = m_nNum;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"sm"</span>, sm);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"max_d = eigs(sm, 1);"</span>);<span class="comment">//获得最大绝对值的特征值</span></span><br><span class="line"></span><br><span class="line">        double fMaxE;</span><br><span class="line">        mxArray* max_d = <span class="built_in">engGetVariable</span>(ep, <span class="string">"max_d"</span>);</span><br><span class="line">        <span class="built_in">memcpy</span>(fMaxE, (void *)<span class="built_in">mxGetPr</span>(max_d), <span class="built_in">sizeof</span>(double));<span class="comment">//获得最大的特征值(假设特征值是从最大排列到0)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//更新对角线元素，相当于sm = sm - fMaxE，这样会使计算出来的特征值都减去fMaxE</span></span><br><span class="line">        pr = <span class="built_in">mxGetPr</span>(sm);</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_nNum; ++i)</span><br><span class="line">        {</span><br><span class="line">            pr<span class="selector-attr">[i]</span> = m_pSI<span class="selector-attr">[i]</span>.v;</span><br><span class="line">            <span class="keyword">if</span> (m_pSI<span class="selector-attr">[i]</span><span class="selector-class">.r</span> == m_pSI<span class="selector-attr">[i]</span>.c)<span class="comment">//对角线元素</span></span><br><span class="line">            {</span><br><span class="line">                pr<span class="selector-attr">[i]</span> -= fMaxE;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">engPutVariable</span>(ep, <span class="string">"sm"</span>, sm);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"[V,D] = eigs(sm);"</span>);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"[newD,IX] = sort(diag(D));"</span>);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, <span class="string">"newV=V(:,IX);"</span>);</span><br><span class="line"></span><br><span class="line">        const int EVAl_STR_LEN = <span class="number">100</span>;</span><br><span class="line">        char szEvalString<span class="selector-attr">[EVAl_STR_LEN]</span>;</span><br><span class="line">        <span class="built_in">sprintf</span>(szEvalString, <span class="string">"Fiedler = newV(:, %d);"</span>, nChoose);</span><br><span class="line">        <span class="built_in">engEvalString</span>(ep, szEvalString);</span><br><span class="line"></span><br><span class="line">        mxArray* fiedler = <span class="built_in">engGetVariable</span>(ep, <span class="string">"Fiedler"</span>); <span class="comment">//返回计算结果</span></span><br><span class="line">        <span class="built_in">memcpy</span>(pVector, (void *)<span class="built_in">mxGetPr</span>(fiedler), <span class="built_in">sizeof</span>(double) * m_nRow);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(sm);</span><br><span class="line">        <span class="built_in">mxDestroyArray</span>(fiedler);</span><br><span class="line">        <span class="built_in">engClose</span>(ep);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<p>参照以上函数基本可以知道本文所讲的内容了，一切尽在代码中。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1456,7 +1458,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">222</span>
+          <span class="site-state-item-count">223</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1469,7 +1471,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">113</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1512,7 +1514,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1521,12 +1523,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">671k</span>
+    <span title="站点总字数">676k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:10</span>
+    <span title="站点阅读时长">10:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

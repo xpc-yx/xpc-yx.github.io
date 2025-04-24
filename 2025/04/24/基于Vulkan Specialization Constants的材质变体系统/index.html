@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://xiaopengcheng.top').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left"},
+    copycode: {"enable":true,"show_result":true,"style":"flat"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '420f506edca2c5290761c146d6bde3b2',
+      indexName: 'xiaopengcheng.top',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="材质变体所谓材质变体，指的是一份材质代码文件，最终对应的是多份运行时gpu程序。比如，shader代码里面有开关或者选项，不同的组合对应不同的最终gpu program。那么，所有的这些组合对应的gpu program，可以统一理解为这个材质对应的所有变体。比如下面shader代码： 1234567891011121314151617float4 color;float3 normal;void">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Vulkan Specialization Constants的材质变体系统">
+<meta property="og:url" content="http://xiaopengcheng.top/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="远行&#39;s Blog">
+<meta property="og:description" content="材质变体所谓材质变体，指的是一份材质代码文件，最终对应的是多份运行时gpu程序。比如，shader代码里面有开关或者选项，不同的组合对应不同的最终gpu program。那么，所有的这些组合对应的gpu program，可以统一理解为这个材质对应的所有变体。比如下面shader代码： 1234567891011121314151617float4 color;float3 normal;void">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-24T04:28:30.000Z">
+<meta property="article:modified_time" content="2025-04-24T15:03:51.510Z">
+<meta property="article:author" content="远行">
+<meta property="article:tag" content="Vulkan Specialization Constants">
+<meta property="article:tag" content="材质变体系统">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaopengcheng.top/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>基于Vulkan Specialization Constants的材质变体系统 | 远行's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="远行's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远行's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">STEP BY STEP</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+
+  </li>
+        <li class="menu-item menu-item-e-mail">
+
+    <a href="mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮箱</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于Vulkan Specialization Constants的材质变体系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-04-24 12:28:30" itemprop="dateCreated datePublished" datetime="2025-04-24T12:28:30+08:00">2025-04-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" class="post-meta-item leancloud_visitors" data-flag-title="基于Vulkan Specialization Constants的材质变体系统" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <html><head></head><body><h1 id="材质变体"><a href="#材质变体" class="headerlink" title="材质变体"></a>材质变体</h1><p>所谓材质变体，指的是一份材质代码文件，最终对应的是多份运行时gpu程序。比如，shader代码里面有开关或者选项，不同的组合对应不同的最终gpu program。那么，所有的这些组合对应的gpu program，可以统一理解为这个材质对应的所有变体。<br>比如下面shader代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">#if COLOR_RED</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">#else</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if NORMAL_POSITIVE</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">#else</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>有2个开关，COLOR_RED，NORMAL_POSITIVE。每个开关都有2种状态，开或者关。那么，可以组合出2*2=4种状态。<br>类似C语言，glsl或者hlsl也支持#define宏，因此也有大于2个状态的开关，比如COLOR_RED == 0、COLOR_RED == 1、COLOR_RED == 2。总的状态计算方式是所有开关的状态数相乘，也就是复杂度是指数级的。</p>
+<h1 id="传统变体（静态编译变体）"><a href="#传统变体（静态编译变体）" class="headerlink" title="传统变体（静态编译变体）"></a>传统变体（静态编译变体）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>这里的传统变体指的是针对每一种组合状态都编译生成单独的着色器代码。实际上，目前绝大部分引擎实现的变体方案都是这种方式。</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期"><a href="#编译期" class="headerlink" title="编译期"></a>编译期</h3><p>算法基本思路很简单，遍历所有的状态组合，针对当前状态，#define相应的宏，然后编译当前代码。<br>比如，</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#define COLOR_RED 1</span><br><span class="line">#define NORMAL_POSITIVE 0</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">#if COLOR_RED</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">#else</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if NORMAL_POSITIVE</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">#else</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>对应的代码就是开关COLOR_RED打开、NORMAL_POSITIVE关闭的变体组合状态。<br>同时，将当前状态的激活关键字（变体开关）组合与编译后的代码做映射，保存在编译结果中。</p>
+<h3 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h3><p>根据当前的变体开关选择，映射到具体的代码。这里的映射方式与编译期的算法类似。比如，在材质类里面有一个hashmap， 保持变体状态组合到具体gpu program的映射。如果，hashmap内不存在这个映射，那么从编译期生成的代码内加载具体的编译后shader code，然后创建gpu program。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>由于需要在编译期就决定所有的状态组合，那么很可能会出现包体和内存爆炸的情况。比如，有10个开关，每个开关有2种状态，那么就是1024个变体，对应1024份代码。假设，一份代码的尺寸是10kb，那么就是10mb，有10个这样的材质，那么包体占用就是100mb，内存占用会更大。这就是游戏项目中常说的变体爆炸问题。</p>
+<h1 id="动态变体"><a href="#动态变体" class="headerlink" title="动态变体"></a>动态变体</h1><h2 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h2><p> 相比于传统变体，动态变体的最大优势是不会出现变体爆炸问题。在编译期间的编译结果，只有一份代码，同时保存变体定义信息。在运行时，二次编译生成真正的中间代码（spir-v）或者gpu上的汇编代码。</p>
+<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期-1"><a href="#编译期-1" class="headerlink" title="编译期"></a>编译期</h3><p>不需要复杂的遍历算法，直接编译shader代码即可。但是，需要工具链或者图形API支持。比如，使用vulkan支持的Specialization Constants实现变体，那么可以在编译期保存Specialization Constants定义信息的同时，使用spirv-tools编译生成一份spir-v中间代码。</p>
+<h3 id="运行时-1"><a href="#运行时-1" class="headerlink" title="运行时"></a>运行时</h3><p>加载这份编译后的代码，比如spir-v中间代码。针对，当前的变体设置，对spir-v进一步处理成指定的变体状态或者将变体设置提交给vulkan，让驱动去编译。</p>
+<h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h2><p>这种方式会有一定的局限性，无法优化所有的情况。比如驱动可能有bug，无法优化掉一些复杂变体组合的情况或者一些复杂的代码，导致真正运行的代码有多余的指令，引起性能大幅度下降。</p>
+<h1 id="Vulkan-Specialization-Constants变体"><a href="#Vulkan-Specialization-Constants变体" class="headerlink" title="Vulkan Specialization Constants变体"></a>Vulkan Specialization Constants变体</h1><h2 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h2><p>不同的图形API对动态变体的支持情况不一样，比如OpenGL不支持，Vulkan支持Specialization Constants，metal支持Function Constants。<br>这里专门指代基于Vulkan Specialization Constants实现的变体系统。</p>
+<h2 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="使用Specialization-Constants实现材质代码"><a href="#使用Specialization-Constants实现材质代码" class="headerlink" title="使用Specialization Constants实现材质代码"></a>使用Specialization Constants实现材质代码</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">layout(constant_id = 0) const bool COLOR_RED = true;</span><br><span class="line">layout(constant_id = 1) const bool NORMAL_POSITIVE = true;</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">if (COLOR_RED) {</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">if (NORMAL_POSITIVE) {</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>比如上述代码，定义了2个Specialization Constants变量：COLOR_RED和NORMAL_POSITIVE 。同时在代码内使用了这2个变量作为开关进行分支选择，注意：从语法上，Specialization Constants是作为变量处理，而不是宏。</p>
+<h3 id="使用spirv-tools编译带有Specialization-Constants信息的材质代码"><a href="#使用spirv-tools编译带有Specialization-Constants信息的材质代码" class="headerlink" title="使用spirv-tools编译带有Specialization Constants信息的材质代码"></a>使用spirv-tools编译带有Specialization Constants信息的材质代码</h3><p>这一步与传统变体的区别是不需要遍历所有的变体状态组合，直接编译代码即可。对于，vulkan来说，使用glslang库调用spirv-tools编译代码就可以获得带有Specialization Constants信息的spir-v中间代码。</p>
+<h3 id="运行时决定Specialization-Constants"><a href="#运行时决定Specialization-Constants" class="headerlink" title="运行时决定Specialization Constants"></a>运行时决定Specialization Constants</h3><p>上一步得到的是一份带有Specialization Constants信息的spir-v中间代码，如果获得最终的运行时代码了？</p>
+<h4 id="变体组合映射gpu-program"><a href="#变体组合映射gpu-program" class="headerlink" title="变体组合映射gpu program"></a>变体组合映射gpu program</h4><p>这部分类似传统变体方案，需要将变体组合状态映射到具体的Specialization Constants设置。</p>
+<h4 id="设置Specialization-Constants"><a href="#设置Specialization-Constants" class="headerlink" title="设置Specialization Constants"></a>设置Specialization Constants</h4><p>有两种实现思路，各有优劣，下面具体说明。<br><strong>1. 使用vulkan的Specialization Constants接口</strong><br>使用vulkan的Specialization Constants，在在vulkan的pipeline中传递运行时的Specialization Constants设置信息。因为Specialization Constants是PSO的一部分，因此这种方式需要重新编译gpu program和PSO。由于，不需要完整编译gpu program，因此与切换gpu program的方案（传统变体）这个方案会编译更快。</p>
+<p><strong>2. 使用spirv-optimizer剔除分支</strong><br>第二种方式是使用spir-optimizer里面的pass处理spir-v中间代码，比如设置Specialization Constants的值后，剔除dead code和Specialization Constants信息等，直接获得最终不带Specialization Constants信息的spir-v。这个spir-v就可以直接传递vulkan创建gpu program。</p>
+<p><strong>3. 两个方案对比</strong></p>
+<ul>
+<li>vulkan的Specialization Constants依赖驱动的JIT编译结果，如果驱动实现有问题，那么实际上Specialization Constants无法精准剔除代码，导致性能达不到预期。</li>
+<li>spirv-optimizer剔除代码的方式，可以避免驱动的问题，在不同的驱动上表现一致；而且方便调试，比如可以在RenderDoc上抓取最终运行代码，或者mali offline compiler离线查看，确定最终运行的变体状态，但是这个方案依赖这个中间处理工具的能力。</li>
+</ul>
+<h2 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h2><ul>
+<li>依赖高级特性，在传统图形API上不支持。只能针对运行Vulkan的平台做优化。</li>
+<li>使用vulkan的Specialization Constants接口在驱动上进行JIT编译的方案，运行结果依赖具体硬件的驱动实现，结果不稳定。</li>
+<li>使用spirv-optimizer剔除分支的方案需要额外的运行时处理时间，会引起切换变体卡顿，引擎需要妥善处理，比如异步调用spirv-optimizer，同时对优化后的spir-v缓存。</li>
+</ul>
+<h1 id="动态变体与传统变体的对比"><a href="#动态变体与传统变体的对比" class="headerlink" title="动态变体与传统变体的对比"></a>动态变体与传统变体的对比</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>可以解决变体爆炸问题。</li>
+<li>可能更快的编译PSO</li>
+</ul>
+<h2 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h2><ul>
+<li>跨平台差，需要高级图形API特性。</li>
+<li>可能依赖硬件驱动实现。</li>
+<li>可能引入运行时卡顿。</li>
+</ul>
+<h1 id="其它问题探讨"><a href="#其它问题探讨" class="headerlink" title="其它问题探讨"></a>其它问题探讨</h1><h2 id="变体收集"><a href="#变体收集" class="headerlink" title="变体收集"></a>变体收集</h2><p>变体收集是另一个经常讨论的问题。一般需要引擎支持才能实现完整的变体收集。下面讲一个之前实现过的方案。</p>
+<ul>
+<li>引擎runtime<br>引擎内有一个统一的ShaderProgramManger。该管理器内有2层hash，保存了所有材质和材质变体组合对应的gpu program。引擎内所有切换变体的操作最终都通过该类来查找gpu program。因此，该类完整收集了当前引擎运行状态下所有的变体组合。那么，可以在该类里面实现dump接口，遍历所有缓存的材质变体组合，输出文件作为变体集合文件。<br>实际项目中，可以用自动化系统运行常见的场景，在合适的时机调用dump接口进行收集。</li>
+<li>变体集合编译<br>假如使用spirv-optimizer的方案实现动态变体，那么可以针对变体集合文件内的收集到的变体状态组合，提前编译出最终的spir-v。在ShaderProgramManger查找变体时候，判断有提前预编译的情况，可以直接加载，而不是去调用spirv-optimizer处理。</li>
+</ul>
+<h2 id="变体预热"><a href="#变体预热" class="headerlink" title="变体预热"></a>变体预热</h2><ul>
+<li><p>变体切换<br>对于传统变体来说，就是根据变体设置查找相应的着色器代码；对于动态变体来说，可能需要对spir-v代码进行预处理。</p>
+</li>
+<li><p>编译PSO<br>对于使用vulkan的Specialization Constants接口的方案来说，gpu program已经确定，需要设置Specialization Constants，再重新编译PSO。这个过程实际上是对gpu program重新编译获得最终的版本，由于有之前的编译信息，会比编译完整的gpu program更快。<br>对于其它方案，实际上是编译完整的gpu program，与使用vulkan的Specialization Constants接口的方案对比，速度更慢。</p>
+</li>
+<li><p>实现思路<br>比如引擎可以加载变体集合文件，根据变体集合文件的描述，提前编译对应变体的代码以及PSO。</p>
+</li>
+</ul>
+<h2 id="动态变体无法解决PSO编译的问题"><a href="#动态变体无法解决PSO编译的问题" class="headerlink" title="动态变体无法解决PSO编译的问题"></a>动态变体无法解决PSO编译的问题</h2><p>网上也有讨论Specialization Constants的文章，比如：<a href="https://zhuanlan.zhihu.com/p/678177922">【笔记】Shader变体大杀器：specialization constants</a>。该文章的评论里面提到Specialization Constants无法解决PSO的预热问题，从而对Specialization Constants进行了否定。实际上，这个是概念上的混淆。无论如何，PSO是需要重新编译的，因为最终的渲染状态数目是没有改变的；动态变体只是将确定最终gpu program的过程延迟到运行时决定，从而避免变体爆炸，并没有减少材质变体的状态总数。期望通过<br>Specialization Constants减少PSO数目或者加快PSO预热是方向上的错误。正确的思路是从PSO的收集缓存等方面来考虑，避免第一次切换到该PSO的卡顿。</p>
+</body></html>
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>远行
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xiaopengcheng.top/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" title="基于Vulkan Specialization Constants的材质变体系统">http://xiaopengcheng.top/2025/04/24/基于Vulkan Specialization Constants的材质变体系统/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Vulkan-Specialization-Constants/" rel="tag"><i class="fa fa-tag"></i> Vulkan Specialization Constants</a>
+              <a href="/tags/%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" rel="tag"><i class="fa fa-tag"></i> 材质变体系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/12/28/filament%E7%9A%84%E6%9D%90%E8%B4%A8%E7%B3%BB%E7%BB%9F/" rel="prev" title="filament的材质系统">
+      <i class="fa fa-chevron-left"></i> filament的材质系统
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">材质变体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E5%8F%98%E4%BD%93%EF%BC%88%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91%E5%8F%98%E4%BD%93%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">传统变体（静态编译变体）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%9C%9F"><span class="nav-number">2.2.1.</span> <span class="nav-text">编译期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="nav-number">2.2.2.</span> <span class="nav-text">运行时</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8F%98%E4%BD%93"><span class="nav-number">3.</span> <span class="nav-text">动态变体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5-1"><span class="nav-number">3.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF-1"><span class="nav-number">3.2.</span> <span class="nav-text">实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%9C%9F-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">编译期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">运行时</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-1"><span class="nav-number">3.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vulkan-Specialization-Constants%E5%8F%98%E4%BD%93"><span class="nav-number">4.</span> <span class="nav-text">Vulkan Specialization Constants变体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5-2"><span class="nav-number">4.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF-2"><span class="nav-number">4.2.</span> <span class="nav-text">实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Specialization-Constants%E5%AE%9E%E7%8E%B0%E6%9D%90%E8%B4%A8%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.1.</span> <span class="nav-text">使用Specialization Constants实现材质代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8spirv-tools%E7%BC%96%E8%AF%91%E5%B8%A6%E6%9C%89Specialization-Constants%E4%BF%A1%E6%81%AF%E7%9A%84%E6%9D%90%E8%B4%A8%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.2.</span> <span class="nav-text">使用spirv-tools编译带有Specialization Constants信息的材质代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%B3%E5%AE%9ASpecialization-Constants"><span class="nav-number">4.2.3.</span> <span class="nav-text">运行时决定Specialization Constants</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E4%BD%93%E7%BB%84%E5%90%88%E6%98%A0%E5%B0%84gpu-program"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">变体组合映射gpu program</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AESpecialization-Constants"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">设置Specialization Constants</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-2"><span class="nav-number">4.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8F%98%E4%BD%93%E4%B8%8E%E4%BC%A0%E7%BB%9F%E5%8F%98%E4%BD%93%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">5.</span> <span class="nav-text">动态变体与传统变体的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">5.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A3%E5%8A%BF"><span class="nav-number">5.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98%E6%8E%A2%E8%AE%A8"><span class="nav-number">6.</span> <span class="nav-text">其它问题探讨</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E4%BD%93%E6%94%B6%E9%9B%86"><span class="nav-number">6.1.</span> <span class="nav-text">变体收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E4%BD%93%E9%A2%84%E7%83%AD"><span class="nav-number">6.2.</span> <span class="nav-text">变体预热</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8F%98%E4%BD%93%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3PSO%E7%BC%96%E8%AF%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">6.3.</span> <span class="nav-text">动态变体无法解决PSO编译的问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="远行"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">远行</p>
+  <div class="site-description" itemprop="description">远行的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xpc-yx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xpc-yx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaopengcheng4912@qq.com" title="E-Mail → mailto:xiaopengcheng4912@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/sitemap.xml" title="sitemap → &#x2F;sitemap.xml"><i class="fa fa-fw fa-sitemap"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远行</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">676k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">10:15</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'xqSndxWj2seRmSIR1WvYWOxI-gzGzoHsz',
+    appKey: 'dWX3wyEMQ9djk8yiujbPp4pz',
+    placeholder: "留下你的足迹 O(∩_∩)O~~",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

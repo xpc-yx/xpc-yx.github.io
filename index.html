@@ -222,6 +222,163 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">基于Vulkan Specialization Constants的材质变体系统</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-04-24 12:28:30" itemprop="dateCreated datePublished" datetime="2025-04-24T12:28:30+08:00">2025-04-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" class="post-meta-item leancloud_visitors" data-flag-title="基于Vulkan Specialization Constants的材质变体系统" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h1 id="材质变体"><a href="#材质变体" class="headerlink" title="材质变体"></a>材质变体</h1><p>所谓材质变体，指的是一份材质代码文件，最终对应的是多份运行时gpu程序。比如，shader代码里面有开关或者选项，不同的组合对应不同的最终gpu program。那么，所有的这些组合对应的gpu program，可以统一理解为这个材质对应的所有变体。<br>比如下面shader代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">#if COLOR_RED</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">#else</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if NORMAL_POSITIVE</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">#else</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>有2个开关，COLOR_RED，NORMAL_POSITIVE。每个开关都有2种状态，开或者关。那么，可以组合出2*2=4种状态。<br>类似C语言，glsl或者hlsl也支持#define宏，因此也有大于2个状态的开关，比如COLOR_RED == 0、COLOR_RED == 1、COLOR_RED == 2。总的状态计算方式是所有开关的状态数相乘，也就是复杂度是指数级的。</p>
+<h1 id="传统变体（静态编译变体）"><a href="#传统变体（静态编译变体）" class="headerlink" title="传统变体（静态编译变体）"></a>传统变体（静态编译变体）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>这里的传统变体指的是针对每一种组合状态都编译生成单独的着色器代码。实际上，目前绝大部分引擎实现的变体方案都是这种方式。</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期"><a href="#编译期" class="headerlink" title="编译期"></a>编译期</h3><p>算法基本思路很简单，遍历所有的状态组合，针对当前状态，#define相应的宏，然后编译当前代码。<br>比如，</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#define COLOR_RED 1</span><br><span class="line">#define NORMAL_POSITIVE 0</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">#if COLOR_RED</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">#else</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if NORMAL_POSITIVE</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">#else</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>对应的代码就是开关COLOR_RED打开、NORMAL_POSITIVE关闭的变体组合状态。<br>同时，将当前状态的激活关键字（变体开关）组合与编译后的代码做映射，保存在编译结果中。</p>
+<h3 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h3><p>根据当前的变体开关选择，映射到具体的代码。这里的映射方式与编译期的算法类似。比如，在材质类里面有一个hashmap， 保持变体状态组合到具体gpu program的映射。如果，hashmap内不存在这个映射，那么从编译期生成的代码内加载具体的编译后shader code，然后创建gpu program。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>由于需要在编译期就决定所有的状态组合，那么很可能会出现包体和内存爆炸的情况。比如，有10个开关，每个开关有2种状态，那么就是1024个变体，对应1024份代码。假设，一份代码的尺寸是10kb，那么就是10mb，有10个这样的材质，那么包体占用就是100mb，内存占用会更大。这就是游戏项目中常说的变体爆炸问题。</p>
+<h1 id="动态变体"><a href="#动态变体" class="headerlink" title="动态变体"></a>动态变体</h1><h2 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h2><p> 相比于传统变体，动态变体的最大优势是不会出现变体爆炸问题。在编译期间的编译结果，只有一份代码，同时保存变体定义信息。在运行时，二次编译生成真正的中间代码（spir-v）或者gpu上的汇编代码。</p>
+<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期-1"><a href="#编译期-1" class="headerlink" title="编译期"></a>编译期</h3><p>不需要复杂的遍历算法，直接编译shader代码即可。但是，需要工具链或者图形API支持。比如，使用vulkan支持的Specialization Constants实现变体，那么可以在编译期保存Specialization Constants定义信息的同时，使用spirv-tools编译生成一份spir-v中间代码。</p>
+<h3 id="运行时-1"><a href="#运行时-1" class="headerlink" title="运行时"></a>运行时</h3><p>加载这份编译后的代码，比如spir-v中间代码。针对，当前的变体设置，对spir-v进一步处理成指定的变体状态或者将变体设置提交给vulkan，让驱动去编译。</p>
+<h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h2><p>这种方式会有一定的局限性，无法优化所有的情况。比如驱动可能有bug，无法优化掉一些复杂变体组合的情况或者一些复杂的代码，导致真正运行的代码有多余的指令，引起性能大幅度下降。</p>
+<h1 id="Vulkan-Specialization-Constants变体"><a href="#Vulkan-Specialization-Constants变体" class="headerlink" title="Vulkan Specialization Constants变体"></a>Vulkan Specialization Constants变体</h1><h2 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h2><p>不同的图形API对动态变体的支持情况不一样，比如OpenGL不支持，Vulkan支持Specialization Constants，metal支持Function Constants。<br>这里专门指代基于Vulkan Specialization Constants实现的变体系统。</p>
+<h2 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="使用Specialization-Constants实现材质代码"><a href="#使用Specialization-Constants实现材质代码" class="headerlink" title="使用Specialization Constants实现材质代码"></a>使用Specialization Constants实现材质代码</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">layout(constant_id = 0) const bool COLOR_RED = true;</span><br><span class="line">layout(constant_id = 1) const bool NORMAL_POSITIVE = true;</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">if (COLOR_RED) {</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">if (NORMAL_POSITIVE) {</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>比如上述代码，定义了2个Specialization Constants变量：COLOR_RED和NORMAL_POSITIVE 。同时在代码内使用了这2个变量作为开关进行分支选择，注意：从语法上，Specialization Constants是作为变量处理，而不是宏。</p>
+<h3 id="使用spirv-tools编译带有Specialization-Constants信息的材质代码"><a href="#使用spirv-tools编译带有Specialization-Constants信息的材质代码" class="headerlink" title="使用spirv-tools编译带有Specialization Constants信息的材质代码"></a>使用spirv-tools编译带有Specialization Constants信息的材质代码</h3><p>这一步与传统变体的区别是不需要遍历所有的变体状态组合，直接编译代码即可。对于，vulkan来说，使用glslang库调用spirv-tools编译代码就可以获得带有Specialization Constants信息的spir-v中间代码。</p>
+<h3 id="运行时决定Specialization-Constants"><a href="#运行时决定Specialization-Constants" class="headerlink" title="运行时决定Specialization Constants"></a>运行时决定Specialization Constants</h3><p>上一步得到的是一份带有Specialization Constants信息的spir-v中间代码，如果获得最终的运行时代码了？</p>
+<h4 id="变体组合映射gpu-program"><a href="#变体组合映射gpu-program" class="headerlink" title="变体组合映射gpu program"></a>变体组合映射gpu program</h4><p>这部分类似传统变体方案，需要将变体组合状态映射到具体的Specialization Constants设置。</p>
+<h4 id="设置Specialization-Constants"><a href="#设置Specialization-Constants" class="headerlink" title="设置Specialization Constants"></a>设置Specialization Constants</h4><p>有两种实现思路，各有优劣，下面具体说明。<br><strong>1. 使用vulkan的Specialization Constants接口</strong><br>使用vulkan的Specialization Constants，在在vulkan的pipeline中传递运行时的Specialization Constants设置信息。因为Specialization Constants是PSO的一部分，因此这种方式需要重新编译gpu program和PSO。由于，不需要完整编译gpu program，因此与切换gpu program的方案（传统变体）这个方案会编译更快。</p>
+<p><strong>2. 使用spirv-optimizer剔除分支</strong><br>第二种方式是使用spir-optimizer里面的pass处理spir-v中间代码，比如设置Specialization Constants的值后，剔除dead code和Specialization Constants信息等，直接获得最终不带Specialization Constants信息的spir-v。这个spir-v就可以直接传递vulkan创建gpu program。</p>
+<p><strong>3. 两个方案对比</strong></p>
+<ul>
+<li>vulkan的Specialization Constants依赖驱动的JIT编译结果，如果驱动实现有问题，那么实际上Specialization Constants无法精准剔除代码，导致性能达不到预期。</li>
+<li>spirv-optimizer剔除代码的方式，可以避免驱动的问题，在不同的驱动上表现一致；而且方便调试，比如可以在RenderDoc上抓取最终运行代码，或者mali offline compiler离线查看，确定最终运行的变体状态，但是这个方案依赖这个中间处理工具的能力。</li>
+</ul>
+<h2 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h2><ul>
+<li>依赖高级特性，在传统图形API上不支持。只能针对运行Vulkan的平台做优化。</li>
+<li>使用vulkan的Specialization Constants接口在驱动上进行JIT编译的方案，运行结果依赖具体硬件的驱动实现，结果不稳定。</li>
+<li>使用spirv-optimizer剔除分支的方案需要额外的运行时处理时间，会引起切换变体卡顿，引擎需要妥善处理，比如异步调用spirv-optimizer，同时对优化后的spir-v缓存。</li>
+</ul>
+<h1 id="动态变体与传统变体的对比"><a href="#动态变体与传统变体的对比" class="headerlink" title="动态变体与传统变体的对比"></a>动态变体与传统变体的对比</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>可以解决变体爆炸问题。</li>
+<li>可能更快的编译PSO</li>
+</ul>
+<h2 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h2><ul>
+<li>跨平台差，需要高级图形API特性。</li>
+<li>可能依赖硬件驱动实现。</li>
+<li>可能引入运行时卡顿。</li>
+</ul>
+<h1 id="其它问题探讨"><a href="#其它问题探讨" class="headerlink" title="其它问题探讨"></a>其它问题探讨</h1><h2 id="变体收集"><a href="#变体收集" class="headerlink" title="变体收集"></a>变体收集</h2><p>变体收集是另一个经常讨论的问题。一般需要引擎支持才能实现完整的变体收集。下面讲一个之前实现过的方案。</p>
+<ul>
+<li>引擎runtime<br>引擎内有一个统一的ShaderProgramManger。该管理器内有2层hash，保存了所有材质和材质变体组合对应的gpu program。引擎内所有切换变体的操作最终都通过该类来查找gpu program。因此，该类完整收集了当前引擎运行状态下所有的变体组合。那么，可以在该类里面实现dump接口，遍历所有缓存的材质变体组合，输出文件作为变体集合文件。<br>实际项目中，可以用自动化系统运行常见的场景，在合适的时机调用dump接口进行收集。</li>
+<li>变体集合编译<br>假如使用spirv-optimizer的方案实现动态变体，那么可以针对变体集合文件内的收集到的变体状态组合，提前编译出最终的spir-v。在ShaderProgramManger查找变体时候，判断有提前预编译的情况，可以直接加载，而不是去调用spirv-optimizer处理。</li>
+</ul>
+<h2 id="变体预热"><a href="#变体预热" class="headerlink" title="变体预热"></a>变体预热</h2><ul>
+<li><p>变体切换<br>对于传统变体来说，就是根据变体设置查找相应的着色器代码；对于动态变体来说，可能需要对spir-v代码进行预处理。</p>
+</li>
+<li><p>编译PSO<br>对于使用vulkan的Specialization Constants接口的方案来说，gpu program已经确定，需要设置Specialization Constants，再重新编译PSO。这个过程实际上是对gpu program重新编译获得最终的版本，由于有之前的编译信息，会比编译完整的gpu program更快。<br>对于其它方案，实际上是编译完整的gpu program，与使用vulkan的Specialization Constants接口的方案对比，速度更慢。</p>
+</li>
+<li><p>实现思路<br>比如引擎可以加载变体集合文件，根据变体集合文件的描述，提前编译对应变体的代码以及PSO。</p>
+</li>
+</ul>
+<h2 id="动态变体无法解决PSO编译的问题"><a href="#动态变体无法解决PSO编译的问题" class="headerlink" title="动态变体无法解决PSO编译的问题"></a>动态变体无法解决PSO编译的问题</h2><p>网上也有讨论Specialization Constants的文章，比如：<a href="https://zhuanlan.zhihu.com/p/678177922">【笔记】Shader变体大杀器：specialization constants</a>。该文章的评论里面提到Specialization Constants无法解决PSO的预热问题，从而对Specialization Constants进行了否定。实际上，这个是概念上的混淆。无论如何，PSO是需要重新编译的，因为最终的渲染状态数目是没有改变的；动态变体只是将确定最终gpu program的过程延迟到运行时决定，从而避免变体爆炸，并没有减少材质变体的状态总数。期望通过<br>Specialization Constants减少PSO数目或者加快PSO预热是方向上的错误。正确的思路是从PSO的收集缓存等方面来考虑，避免第一次切换到该PSO的卡顿。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2024/12/28/filament%E7%9A%84%E6%9D%90%E8%B4%A8%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1606,130 +1763,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">Unity下的日式卡通渲染实现-阴影篇（二）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-26 18:20:00" itemprop="dateCreated datePublished" datetime="2022-02-26T18:20:00+08:00">2022-02-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
-                    <span itemprop="name">Rendering</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="Unity下的日式卡通渲染实现-阴影篇（二）" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/26/Unity%E4%B8%8B%E7%9A%84%E6%97%A5%E5%BC%8F%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0-%E9%98%B4%E5%BD%B1%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这边文章讲述的是项目中用到的一些卡通渲染阴影相关技术。</p>
-<h1 id="一、SDF面部阴影"><a href="#一、SDF面部阴影" class="headerlink" title="一、SDF面部阴影"></a>一、SDF面部阴影</h1><p>SDF这个概念具体是什么意思了？可以去观看闫令琪在B站上的101课程，有一节专门讲述了SDF的定义和混合SDF能够产生什么效果。其实SDF面部阴影基本的思想就是混合面部的SDF得到一张阴影阈值图，然后利用这张阴影阈值图实现二维的阴影渲染。<br>比较详细的解释可以参考这篇文章，<a href="https://zhuanlan.zhihu.com/p/361716315">卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）</a>。</p>
-<h2 id="1-1-如何计算SDF"><a href="#1-1-如何计算SDF" class="headerlink" title="1.1 如何计算SDF"></a>1.1 如何计算SDF</h2><p>根据SDF的定义（到边界的最短有符号距离，形状内部为负，外部为正），计算二维的SDF其实很容易，可以使用C++写程序离线处理图片得到对应的SDF图。不过，我们现在需要的是更进一步的阴影阈值图。</p>
-<h2 id="1-2-如何计算阴影阈值图"><a href="#1-2-如何计算阴影阈值图" class="headerlink" title="1.2 如何计算阴影阈值图"></a>1.2 如何计算阴影阈值图</h2><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/特定角度的SDF阴影图.png"><br>阴影阈值图实际上是根据上述的多个角度的阴影图，首先计算每个阴影图的SDF图；然后将所有的SDF图递归混合起来，最终的输出就是阴影阈值图。<br>如何混合SDF图了？根据前后2个SDF图的在对应像素点的差异值来插值前后2个SDF图。<br>不过这些阴影图是有一定的要求的：图片必须连续且后一张必须可以覆盖前一张（可以是暗部覆盖也可以是亮部覆盖，但只能是一种）。<br>这个离线计算阴影阈值图的程序网上已经有人给出来了：<a href="https://zhuanlan.zhihu.com/p/356185096">如何快速生成混合卡通光照图</a>。</p>
-<h2 id="1-3-如何渲染SDF面部阴影"><a href="#1-3-如何渲染SDF面部阴影" class="headerlink" title="1.3 如何渲染SDF面部阴影"></a>1.3 如何渲染SDF面部阴影</h2><p>文章<a href="https://zhuanlan.zhihu.com/p/361716315">卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）</a>给出的Shader代码基本上问题不大，不过有2个比较明显的问题。<br><strong>朝向问题</strong>：美术出的资源坐标系以及顶点位置不一定是朝着Unity局部坐标系的正Y轴，最好使用脚本传入正Y轴，否则有些模型的阴影就会反了。<br><strong>左右判断问题</strong>：经过验证应该用right去判断还不是left，同样最好是用脚本传入，否则阴影过渡可能出现问题。<br>最后的if判断可以省略：直接用smoothstep计算bias即可达到效果。<br>最终的效果如下：<br><img alt="SDF阴影动画" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/SDF阴影动画.gif"></p>
-<h1 id="二、自阴影"><a href="#二、自阴影" class="headerlink" title="二、自阴影"></a>二、自阴影</h1><p>自阴影实际上是一种ShadowMap的变形，默认的ShadowMap会应用到所有开启了阴影投射的问题上。如果角色还使用这个ShadowMap可能会造成分辨率不够，比如阴影不够清晰、阴影锯齿严重等。因此，对所有的角色重新投影到一个新的ShadowMap上，然后利用这个新的ShadowMap计算自阴影。</p>
-<h2 id="2-1-收集所有激活的角色"><a href="#2-1-收集所有激活的角色" class="headerlink" title="2.1 收集所有激活的角色"></a>2.1 收集所有激活的角色</h2><p>给每个角色增加一个MonoBehavior脚本，该脚本激活的时候收集角色的包围盒，角色删除时候取消<br>对应的包围盒。对所有的角色包围盒计算一个并集，将该并集作为正交相机的渲染范围去渲染下一步的阴影Pass。</p>
-<h2 id="2-2-自定义ShadowCastPass"><a href="#2-2-自定义ShadowCastPass" class="headerlink" title="2.2 自定义ShadowCastPass"></a>2.2 自定义ShadowCastPass</h2><p>增加Urp的自定义Pass，该Pass的渲染模板是额外的ShadowMap对应的RT。在该Pass执行的时候去收集上述的角色包围盒并集，同时将并集作为正交相机的渲染范围，然后去渲染自定义ShadowTag的Pass。<br>Shader内的阴影Pass实现跟Urp默认的阴影Pass基本一致。</p>
-<h2 id="2-3-渲染自阴影"><a href="#2-3-渲染自阴影" class="headerlink" title="2.3 渲染自阴影"></a>2.3 渲染自阴影</h2><p>自阴影的渲染基本与传统的ShadowMap一致。不过，需要注意的是阴影投影矩阵已经变化了，需要从脚本中传入Shader。同时，采样阴影贴图的z值需要增加偏移参数去调整，以获得好的效果。美术可能还需要去控制特定区域的阴影强弱，比如可以使用顶点色来控制阴影强度。<br>效果如下图：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/卡通渲染自阴影.jpg"></p>
-<h1 id="三、深度边缘阴影"><a href="#三、深度边缘阴影" class="headerlink" title="三、深度边缘阴影"></a>三、深度边缘阴影</h1><p>深度边缘阴影和上一篇讲的深度边缘光的原理类似，都必须利用深度贴图来判断当前像素处于边缘<br>的程度。同样，角色Shader中需要增加DepthOnly来输出深度到深度贴图了。<br>效果如下图：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/卡通渲染深度阴影.jpg"><br>对比自阴影的效果图，可以看到在细节的遮挡区域阴影效果得到了进一步的增强。</p>
-<h1 id="四、默认的Urp阴影"><a href="#四、默认的Urp阴影" class="headerlink" title="四、默认的Urp阴影"></a>四、默认的Urp阴影</h1><p>默认的Urp阴影决定的是主灯的阴影效果，比如角色走入主方向光形成的阴影区域内，那么角色的亮度是否需要做一定的调整了？<br>在urp的shader源码中，这个阴影体现为mainlight的shadowAttenuation大小，该值会去缩放主灯的颜色亮度。如果直接使用该值去缩放灯光，那么会出现一定的自遮挡的阴影，而且这个阴影很丑。因此，可以使用这个shadowAttenuation去缩放卡通着色后的结果，从而体现出角色在不同光照区域有一定的表现差异。<br>不过，如果采用shadowmask的光照烘焙方式，烘焙后场景的静态物体就不会投影阴影了。因此，这个时候通过shadowmap得到的实时阴影就是不正确的，表现就会看起来很怪异。<br>有什么解决办法了？<br>方法一：一种简单的方式是让场景美术摆放一些大的不烘焙的隐藏面片来投影实时阴影。<br>方法二：另一种方式采用遮挡探针（和Unity的光照探针是一起的，实质上就是布置光照探针），类似光照探针一样，可以让动态的物体采用烘焙的阴影信息，不过这个时候主角就不采样shadowmap了。<br>方法三：改成DistanceShadowMask方式，这样子烘焙后的静态物体也会投影实时阴影，可以避免布置光照探针。不过性能损失会增大不少。</p>
-<h1 id="五、阴影如何跟着色结合？"><a href="#五、阴影如何跟着色结合？" class="headerlink" title="五、阴影如何跟着色结合？"></a>五、阴影如何跟着色结合？</h1><p>对于每种阴影可以指定一个阴影颜色，上述的各种算法只是计算对应的阴影强度。最终，使用阴影强度插值卡通着色结果和阴影颜色，就可以得到应用阴影后的效果。</p>
-<h1 id="六、参考资料"><a href="#六、参考资料" class="headerlink" title="六、参考资料"></a>六、参考资料</h1><blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/361716315">卡通渲染之基于SDF生成面部阴影贴图的效果实现（URP）</a><br><a href="https://zhuanlan.zhihu.com/p/356185096">如何快速生成混合卡通光照图</a></p>
-</blockquote>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1780,7 +1813,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">222</span>
+          <span class="site-state-item-count">223</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1793,7 +1826,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">113</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1836,7 +1869,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1845,12 +1878,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">671k</span>
+    <span title="站点总字数">676k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:10</span>
+    <span title="站点阅读时长">10:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

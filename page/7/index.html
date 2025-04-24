@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/10/opencv%E7%9A%84gpu%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0dft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/11/10/opencv%E7%9A%84gpu%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0dft/" class="post-title-link" itemprop="url">opencv的gpu部分实现dft</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-11-10 14:47:45" itemprop="dateCreated datePublished" datetime="2014-11-10T14:47:45+08:00">2014-11-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/11/10/opencv%E7%9A%84gpu%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0dft/" class="post-meta-item leancloud_visitors" data-flag-title="opencv的gpu部分实现dft" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/11/10/opencv%E7%9A%84gpu%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0dft/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/10/opencv%E7%9A%84gpu%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0dft/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>最近打算使用gpu优化L0Smooth的代码，但是不熟悉opencv的gpu部分的使用，<br>直接用cuda觉得太麻烦，还是继续试试opencv吧。<br>首先，从网站上下载下来的默认版本是不支持gpu的，必须下载代码下来，用cmake生成工程，注意<br>选择支持cuda等选项，具体参考教程。这样生成的版本才能支持gpu运算。<br>那么如何测试自己的opencv是否支持gpu计算了，以及自己的硬件是否符合要求？<br>使用这句代码打印cuda设备个数：<br>printf(“Device Num:%d\n”, cv::gpu::getCudaEnabledDeviceCount());<br>如果，个数大于0，那么说明你的显卡是支持cuda的，并且你的opencv版本支持gpu运算了。<br>下面是我测试成功的gpumat实现的dft和idft函数，输入和输出的都是cpu上的mat。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">Dft</span>(cv::Mat <span class="keyword">in</span>, cv::Mat out)</span><br><span class="line">{</span><br><span class="line">    cv::gpu::GpuMat <span class="built_in">gpuIn0</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC1);</span><br><span class="line">    gpuIn0<span class="selector-class">.upload</span>(<span class="keyword">in</span>);</span><br><span class="line"></span><br><span class="line">    std::vector&lt;cv::gpu::GpuMat&gt; planes;</span><br><span class="line"></span><br><span class="line">    planes<span class="selector-class">.push_back</span>(gpuIn0);</span><br><span class="line"></span><br><span class="line">    cv::Mat zero = cv::Mat::<span class="built_in">zeros</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC1);</span><br><span class="line">    cv::gpu::GpuMat <span class="built_in">gpuZero</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC1);</span><br><span class="line">    gpuZero<span class="selector-class">.upload</span>(zero);</span><br><span class="line"></span><br><span class="line">    planes<span class="selector-class">.push_back</span>(gpuZero);</span><br><span class="line"></span><br><span class="line">    cv::gpu::GpuMat <span class="built_in">gpuIn</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC2);</span><br><span class="line">    cv::gpu::<span class="built_in">merge</span>(planes, gpuIn);</span><br><span class="line"></span><br><span class="line">    cv::gpu::GpuMat <span class="built_in">gpuOut</span>(gpuIn<span class="selector-class">.size</span>(), CV_32FC2);</span><br><span class="line"></span><br><span class="line">    cv::gpu::<span class="built_in">dft</span>(gpuIn, gpuOut, gpuIn<span class="selector-class">.size</span>(), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    out<span class="selector-class">.create</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC2);</span><br><span class="line">    gpuOut<span class="selector-class">.download</span>(out);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">IDft</span>(cv::Mat <span class="keyword">in</span>, cv::Mat out)</span><br><span class="line">{</span><br><span class="line">    cv::gpu::GpuMat <span class="built_in">gpuIn</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC2);</span><br><span class="line">    cv::gpu::GpuMat <span class="built_in">gpuOut</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC2);</span><br><span class="line"></span><br><span class="line">    gpuIn<span class="selector-class">.upload</span>(<span class="keyword">in</span>);</span><br><span class="line">    cv::gpu::<span class="built_in">dft</span>(gpuIn, gpuOut, gpuIn<span class="selector-class">.size</span>(), cv::DFT_INVERSE);</span><br><span class="line"></span><br><span class="line">    cv::gpu::GpuMat splitter<span class="selector-attr">[2]</span>;</span><br><span class="line">    cv::gpu::<span class="built_in">split</span>(gpuOut, splitter);</span><br><span class="line"></span><br><span class="line">    out<span class="selector-class">.create</span>(<span class="keyword">in</span><span class="selector-class">.size</span>(), CV_32FC1);</span><br><span class="line"></span><br><span class="line">    double minV, maxV;</span><br><span class="line">    cv::gpu::<span class="built_in">minMax</span>(splitter<span class="selector-attr">[0]</span>, minV, maxV);</span><br><span class="line">    splitter<span class="selector-attr">[0]</span><span class="selector-class">.convertTo</span>(splitter<span class="selector-attr">[0]</span>, CV_32F, <span class="number">255.0</span> / maxV);</span><br><span class="line">    splitter<span class="selector-attr">[0]</span><span class="selector-class">.download</span>(out);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>从代码上，可以看出，要尽可能把运算放到gpu上去，包括很多辅助运算，比如说merge,convert等可以加快速度。<br>这个版本的代码，dft的输入和输出都是双通道的，也就是一个通道实数，一个是复数的矩阵。通过merge生成和split分离。<br>这两个函数在分离通道单独处理时候非常有用，比如说可以分离彩色图像的三个通道，单独进行dft处理。最后再将结果合并。<p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/07/opencv%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%92%8C%E9%80%86%E5%8F%98%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1212,128 +1322,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/08/17/%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/08/17/%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">多态的内存结构</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-08-17 20:55:40" itemprop="dateCreated datePublished" datetime="2014-08-17T20:55:40+08:00">2014-08-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/08/17/%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" class="post-meta-item leancloud_visitors" data-flag-title="多态的内存结构" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/08/17/%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/08/17/%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这里的多态指的是动态多态，不包括函数重装和模版的静态多态内容。多态所代表的特性，才是面向对象的真正表现。具体行为其实就是用基类的指针或者引用调用虚函数，得到的结果跟指针指向对象的具体类型有关，而跟指针的静态类型无关。比如说，基类指针指向派生类A的对象，那么调用的其实是派生类A里面实现的虚函数，如果是派生类B的对象，那么则是B类里面实现的虚函数。<br>我们先定义一个接口。也就是一个包含纯虚函数的类，这种类不能用于构造对象。其实，接口才是我们最关心的。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#define</span> interface struct</span><br><span class="line">interface IAnimal</span><br><span class="line">{</span><br><span class="line">    virtual void <span class="built_in">Eat</span>() = <span class="number">0</span>;</span><br><span class="line">    virtual void <span class="built_in">Drink</span>() = <span class="number">0</span>;</span><br><span class="line">    virtual void <span class="built_in">Sleep</span>() = <span class="number">0</span>;</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>然后定义2个类继承这个接口。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">class  CMonkey : public IAnimal</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CMonkey</span>()</span><br><span class="line">    {</span><br><span class="line">        m_nSex = <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Eat</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"Monkey Eat"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Drink</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"Monkey Drink"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Sleep</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"Monkey Sleep"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    enum SEX</span><br><span class="line">    {</span><br><span class="line">        MALE = <span class="number">0</span>,</span><br><span class="line">        FEMALE = <span class="number">1</span></span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    int <span class="built_in">GetSex</span>() const { return m_nSex; }</span><br><span class="line">    void <span class="built_in">SetSex</span>(int nSex) { m_nSex = nSex; }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int m_nSex;<span class="comment">//0:male,1:female</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class  CMonster : public IAnimal</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CMonster</span>()</span><br><span class="line">    {</span><br><span class="line">        m_nEvil = NO;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Eat</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"Monster Eat"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Drink</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"Monster Drink"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Sleep</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"Monster Sleep"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    enum EVIL</span><br><span class="line">    {</span><br><span class="line">        NO = <span class="number">0</span>,</span><br><span class="line">        YES = <span class="number">1</span></span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    int <span class="built_in">GetEvil</span>() const { return m_nEvil; }</span><br><span class="line">    void <span class="built_in">SetEvil</span>(int nEvil) { m_nEvil = nEvil; }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int m_nEvil;<span class="comment">//0:no,1:yes</span></span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>再定义CPeople多重继承上面2个类。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class CPeople : public CMonkey, public CMonster</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    virtual void <span class="built_in">Eat</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"People Eat"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Drink</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"People Drink"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Sleep</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"People Sleep"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    virtual void <span class="built_in">Name</span>()</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; <span class="string">"People Name"</span> &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    const char* <span class="built_in">GetName</span>() const { return m_szName; }</span><br><span class="line">    void <span class="built_in">SetName</span>(char* pszName) { <span class="built_in">strcpy</span>(m_szName, pszName); }</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    char m_szName<span class="selector-attr">[12]</span>;</span><br><span class="line">};</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>我们先来测试多态是如何表现的。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CMonkey monkey;</span><br><span class="line">monkey<span class="selector-class">.SetSex</span>(CMonkey::MALE);</span><br><span class="line"></span><br><span class="line">CMonster monster;</span><br><span class="line">monster<span class="selector-class">.SetEvil</span>(CMonster::YES);</span><br><span class="line"></span><br><span class="line">CPeople people;</span><br><span class="line">people<span class="selector-class">.SetName</span>(<span class="string">"Jack"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//下面代码用于展示多态</span></span><br><span class="line">IAnimal* pAnimal<span class="selector-attr">[3]</span>;</span><br><span class="line">pAnimal<span class="selector-attr">[0]</span> = monkey;</span><br><span class="line">pAnimal<span class="selector-attr">[1]</span> = monster;</span><br><span class="line">pAnimal<span class="selector-attr">[2]</span> = (CMonkey*)people;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; <span class="number">3</span>; ++i)</span><br><span class="line">{</span><br><span class="line">    pAnimal<span class="selector-attr">[i]</span>-&gt;<span class="built_in">Eat</span>();</span><br><span class="line">    pAnimal<span class="selector-attr">[i]</span>-&gt;<span class="built_in">Drink</span>();</span><br><span class="line">    pAnimal<span class="selector-attr">[i]</span>-&gt;<span class="built_in">Sleep</span>();</span><br><span class="line">}</span><br><span class="line">cout &lt;&lt; endl;</span><br></pre></td></tr></tbody></table></figure>
-<p>这段代码的输出如下：<br><img alt="" data-src="https://c2.staticflickr.com/8/7434/27380153181_ff9b2957e2_o.png"><br>从代码的输出可以看到，pAnimal[i]是根据所指向的数据类型确定该调用什么函数的。这就是多态的意思。相同的接口，不同的表现。<br>下面我们来推测这几个对象的内存布局。首先是monkey。<br>假设，对象monkey的内存布局，如图：<img alt="" data-src="https://c2.staticflickr.com/8/7437/27417494266_3100a6f0a1_o.png"><br>也就是，monkey保护2个成员，一个虚函数表指针和一个int成员。虚函数表指针指向一个表，前面3项是函数地址，第四项是NULL，第五项根据有些书籍的说法是type_info对象的地址。<br>我用下面的代码来验证这个内存布局。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">typedef void (*FunType) ();</span><br><span class="line">FunType p;</span><br><span class="line">int nSex;</span><br><span class="line">int* vtbl = NULL;</span><br><span class="line">cout &lt;&lt; <span class="string">"sizeof(monkey): "</span> &lt;&lt; <span class="built_in">sizeof</span>(monkey) &lt;&lt; endl;</span><br><span class="line">vtbl = (int*)(*(int*)monkey);<span class="comment">//虚函数指针</span></span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl address:"</span> &lt;&lt; (int)vtbl &lt;&lt; endl;</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[0]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[1]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[2]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl[3]:"</span> &lt;&lt; vtbl<span class="selector-attr">[3]</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl[4]:"</span> &lt;&lt; vtbl<span class="selector-attr">[4]</span> &lt;&lt; endl;</span><br><span class="line">nSex = *((int*)monkey + <span class="number">1</span>);</span><br><span class="line">cout &lt;&lt; <span class="string">"nSex: "</span> &lt;&lt; nSex &lt;&lt; endl &lt;&lt; endl;</span><br></pre></td></tr></tbody></table></figure>
-<p>输出如同：<img alt="" data-src="https://c2.staticflickr.com/8/7353/27417494176_8b8ba18342_o.png"><br>从输出可以看到，monkey大小为8字节，刚好是一个指针和一个int的大小。而且，monkey的地址转换为int*之后，再取值就可以得到虚函数表的地址。用vtbl[0]到vtbl[2]调用刚好是调用接口里面定义的三个虚函数。vtbl[3]为0，vtbl[4]为一个地址。为什么，这里推断vtbl里面含有5项了，而不是4项了。下面再说明。<br>monster的内存布局类似，就不说明了。<br>最关键的是people的内存布局。推测如下图所示：<img alt="" data-src="https://c2.staticflickr.com/8/7493/27451678785_83cd5ec637_o.png"><br>用下面的代码，来验证这个假设。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">"sizeof(people): "</span> &lt;&lt; <span class="built_in">sizeof</span>(people) &lt;&lt; endl;</span><br><span class="line">vtbl = (int*)(*(int*)people);<span class="comment">//虚函数指针</span></span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl address:"</span> &lt;&lt; (int)vtbl &lt;&lt; endl;</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[0]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[1]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[2]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[3]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl[4]:"</span> &lt;&lt; vtbl<span class="selector-attr">[4]</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl[5]:"</span> &lt;&lt; vtbl<span class="selector-attr">[5]</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">nSex = *((int*)people + <span class="number">1</span>);</span><br><span class="line">cout &lt;&lt; <span class="string">"nSex: "</span> &lt;&lt; nSex &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">vtbl = (int*)(*((int*)people + <span class="number">2</span>));<span class="comment">//虚函数指针</span></span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl address:"</span> &lt;&lt; (int)vtbl &lt;&lt; endl;</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[0]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[1]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line"><span class="selector-tag">p</span> = (FunType)vtbl<span class="selector-attr">[2]</span>;</span><br><span class="line"><span class="selector-tag">p</span>();</span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl[3]:"</span> &lt;&lt; vtbl<span class="selector-attr">[3]</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">"vtbl[4]:"</span> &lt;&lt; vtbl<span class="selector-attr">[4]</span> &lt;&lt; endl;</span><br><span class="line">nEvil = *((int*)people + <span class="number">3</span>);</span><br><span class="line">cout &lt;&lt; <span class="string">"nEvil: "</span> &lt;&lt; nEvil &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">char* pszName = (char*)((int*)people + <span class="number">4</span>);</span><br><span class="line">cout &lt;&lt; pszName &lt;&lt; endl;</span><br></pre></td></tr></tbody></table></figure>
-<p>输出如同：<img alt="" data-src="https://c2.staticflickr.com/8/7050/27380153041_b39de8e71f_o.png"><br>people大小为28字节，符合假设。第一个成员为继承自CMonkey的虚函数表指针，符合假设。虚函数表的前三项，是在CPeople类中实现的接口里面虚函数地址，接下来CPeolple里面定义的虚函数Name的地址，最后是NULL和type_info obj的地址。people的第三个成员为继承自CMonster的虚函数指针，指向虚函数表的第七项。从第七项开始，可以看作继承自CMonster的虚函数表。<br>从输出可以看出，CPeople里面新定义的虚函数，放到第一个虚函数指针所指向的虚表里面了。并且，由于一个类只有只有一张虚表，所以不同的虚函数指针所指向的其实是虚表的不同部分。这些表可以看作是独立的，也可以看作是地址上面连续的。<br>前面说过，为什么猜测虚函数表里面还有一个NULL项了，然后才跟随一个type_info obj的地址？由于，在上面的输出中，2个虚函数指针相差是24。所以，我猜测第一个虚表里面含有6项。经过代码测试，第五项也是0。<br>至于为什么猜测内存布局里面先是虚函数表的指针，再是数据成员，这个是我通过代码测试得来的。环境是vs2013。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1384,7 +1372,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">222</span>
+          <span class="site-state-item-count">223</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1397,7 +1385,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">113</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1440,7 +1428,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1449,12 +1437,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">671k</span>
+    <span title="站点总字数">676k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:10</span>
+    <span title="站点阅读时长">10:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

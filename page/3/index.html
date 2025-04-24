@@ -222,6 +222,140 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">左右手坐标系和相关定则的总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-06 20:15:30" itemprop="dateCreated datePublished" datetime="2020-03-06T20:15:30+08:00">2020-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="左右手坐标系和相关定则的总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>左手坐标系和右手坐标系是三维空间下两种不同的坐标系，而且无法通过旋转将左手坐标系转换到右手坐标系。与其相对应的，有左手定则和右手定则，主要是用来确定叉积的朝向或者说旋向。<br>首先，规定二维坐标，X轴朝右、Y轴朝上，推广到三维空间，需要确定的是Z轴是朝前还是朝后。</p>
+<h1 id="一、左手坐标系"><a href="#一、左手坐标系" class="headerlink" title="一、左手坐标系"></a>一、左手坐标系</h1><p>所谓左手坐标系，指的是通过左手来确定的一个三维空间坐标系。</p>
+<h2 id="1-1-确定左手坐标系的方式"><a href="#1-1-确定左手坐标系的方式" class="headerlink" title="1.1 确定左手坐标系的方式"></a>1.1 确定左手坐标系的方式</h2><p>下面总结了三种可以确定左手坐标系的方法。</p>
+<h3 id="1-1-1-拇指、食指、中指相互垂直确定法"><a href="#1-1-1-拇指、食指、中指相互垂直确定法" class="headerlink" title="1.1.1 拇指、食指、中指相互垂直确定法"></a>1.1.1 拇指、食指、中指相互垂直确定法</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/左右手坐标系.png"><br>如图，伸出左手，拇指朝上代表Y轴、食指朝前代表Z轴、中指朝右代表X轴。注意，中指这个时候是只能往右边弯曲的。</p>
+<h3 id="1-1-2-左手定则确定法"><a href="#1-1-2-左手定则确定法" class="headerlink" title="1.1.2 左手定则确定法"></a>1.1.2 左手定则确定法</h3><p>伸出左手，手指朝着右边X轴，握向Y轴，这个时候拇指指向的方向就是Z轴（朝前）。</p>
+<h3 id="1-1-3-人站立的正面朝向确定法"><a href="#1-1-3-人站立的正面朝向确定法" class="headerlink" title="1.1.3 人站立的正面朝向确定法"></a>1.1.3 人站立的正面朝向确定法</h3><p>人朝前站立着，右手伸出的朝向是X轴，头顶的方向是Y轴，面向Z轴。</p>
+<h2 id="1-2-左手定则"><a href="#1-2-左手定则" class="headerlink" title="1.2 左手定则"></a>1.2 左手定则</h2><p>假设，叉乘计算，C=A叉乘B。如何确定在C的朝向了？如果A和B都在左手坐标系下，那么使用左手定则来确定C的朝向。<br>类似1.1.2，伸出左手，手指朝着A，握向B，这个时候拇指指向的方向就是C。</p>
+<h1 id="二、右手坐标系"><a href="#二、右手坐标系" class="headerlink" title="二、右手坐标系"></a>二、右手坐标系</h1><h2 id="2-1-确定右手坐标系的方式"><a href="#2-1-确定右手坐标系的方式" class="headerlink" title="2.1 确定右手坐标系的方式"></a>2.1 确定右手坐标系的方式</h2><h3 id="2-1-1-拇指、食指、中指相互垂直确定法"><a href="#2-1-1-拇指、食指、中指相互垂直确定法" class="headerlink" title="2.1.1 拇指、食指、中指相互垂直确定法"></a>2.1.1 拇指、食指、中指相互垂直确定法</h3><p>参考1.1.1，伸出右手，拇指朝上代表Y轴、食指朝前代表Z轴、中指朝左代表X轴。注意，中指这个时候是只能往左边弯曲的。<br>但是，我们一般假定X轴朝右，因此需要握着Z轴旋转180度。这个时候，拇指朝上代表Y轴、食指朝后代表Z轴、中指朝右代表X轴。注意，左右手坐标系旋转后不会改变。</p>
+<h3 id="2-1-2-左手定则确定法"><a href="#2-1-2-左手定则确定法" class="headerlink" title="2.1.2 左手定则确定法"></a>2.1.2 左手定则确定法</h3><p>伸出右手，手指朝着右边X轴，握向Y轴，这个时候拇指指向的方向就是Z轴（朝后）。</p>
+<h3 id="2-1-3-人站立的正面朝向确定法"><a href="#2-1-3-人站立的正面朝向确定法" class="headerlink" title="2.1.3 人站立的正面朝向确定法"></a>2.1.3 人站立的正面朝向确定法</h3><p>人朝前站立着，右手伸出的朝向是X轴，头顶的方向是Y轴，背后的是Z轴。</p>
+<h2 id="2-2-右手定则"><a href="#2-2-右手定则" class="headerlink" title="2.2 右手定则"></a>2.2 右手定则</h2><p>类似1.1，如果A和B都在,右手坐标系下，那么使用右手定则来确定C的朝向。<br>类似1.1.2，伸出右手，手指朝着A，握向B，这个时候拇指指向的方向就是C。<br>因此，左手定则和右手定则的区别是使用左手还是右手。</p>
+<h1 id="三、图形API的左右手坐标系"><a href="#三、图形API的左右手坐标系" class="headerlink" title="三、图形API的左右手坐标系"></a>三、图形API的左右手坐标系</h1><p>图形管线中，存在多个坐标系，每个坐标系都可以使用左手或者右手坐标系。下面按照，物体坐标系-&gt;世界坐标系-&gt;摄像机坐标系-&gt;裁剪坐标系-&gt;窗口坐标系来说明。</p>
+<h2 id="3-1-OpenGL"><a href="#3-1-OpenGL" class="headerlink" title="3.1 OpenGL"></a>3.1 OpenGL</h2><p>OpenGL默认是右手坐标系。不过到了窗口坐标系，OpenGL使用的是左手坐标系。为什么了？<strong>因为OpenGL的深度范围是[0,1]，而且是摄像机越远，深度越大，这就是左手坐标系啦</strong>。<br>由于物体坐标系、世界坐标系、摄像机坐标系都是右手坐标系，但是窗口坐标系是左手坐标系，那么投影矩阵就需要乘以右手坐标系变换到左手坐标系这个变换，也就是Z变换成-Z。不过这个变换也可以放在摄像机坐标系，也就是MVP的V中。现在假定，都乘到P中了。<br>最终结论是：物体坐标系、世界坐标系、摄像机坐标系是右手坐标系；裁剪坐标系和窗口坐标系是左手坐标系，窗口坐标系实际上只是裁剪坐标系进行齐次除法后再平移缩放而已。</p>
+<h2 id="3-2-DirectX"><a href="#3-2-DirectX" class="headerlink" title="3.2 DirectX"></a>3.2 DirectX</h2><p>DirectX默认是左手坐标系。<br>类似3.1，物体坐标系、世界坐标系、摄像机坐标系是左手坐标系。<strong>注意，DirectX的窗口坐标系是以左上角为原点的，深度是朝前的，那么跟OpenGL的反过来，是右手坐标系。</strong><br>因此，裁剪坐标系和窗口坐标系是右手手坐标系。投影变化同样要乘以，右手坐标系变换到左手坐标系这个变换，也就是Z变换成-Z。</p>
+<h2 id="3-3-Vulkan"><a href="#3-3-Vulkan" class="headerlink" title="3.3 Vulkan"></a>3.3 Vulkan</h2><p>Vulkan的窗口坐标系和DirectX的一致，因此推测其余坐标系和DirectX的一致。</p>
+<h2 id="3-4-Metal"><a href="#3-4-Metal" class="headerlink" title="3.4 Metal"></a>3.4 Metal</h2><p>Vulkan的窗口坐标系和DirectX的一致，因此推测其余坐标系和DirectX的一致。</p>
+<p>看来只有，历史遗留的奇葩OpenGL的窗口坐标系，原点在左下角啊。原点在哪，这个跟纹理的v坐标是否需要取反也有关系。</p>
+<h1 id="四、游戏引擎的左右手坐标系"><a href="#四、游戏引擎的左右手坐标系" class="headerlink" title="四、游戏引擎的左右手坐标系"></a>四、游戏引擎的左右手坐标系</h1><p>游戏引擎中，物体和世界坐标系是固定的，对于所有的图形API都会一样。</p>
+<h2 id="4-1-Unity"><a href="#4-1-Unity" class="headerlink" title="4.1 Unity"></a>4.1 Unity</h2><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/Unity物体坐标系.jpg"><br>根据上图，Unity的物体和世界坐标系可以推测都是左手系。<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/Unity坐标系旋向.jpg"><br>根据上图，出自Shader入门精要，Unity的窗口坐标系和OpenGL的一致，是左手系。但是摄像机空间变换到了右手系。那么，在V中需要乘以Z到-Z的变换。同时，P中再乘以-Z到Z的变换变回左手系。<br>为啥多次一举了，怀疑这个结论的正确性。下面做实验，用IMGizmos绘制坐标轴。代码如下，</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">namespace GYGame</span><br><span class="line">{</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 出生点</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class PlayerStart : MonoBehaviour</span><br><span class="line">    {</span><br><span class="line">        public float GizmosHeight { get; set; } = 2.0f;</span><br><span class="line"></span><br><span class="line">        void OnDrawGizmos()</span><br><span class="line">        {</span><br><span class="line">            IMGizmos.Line3D(transform.position, transform.position + transform.up * GizmosHeight, Color.green);</span><br><span class="line">            IMGizmos.Line3D(transform.position, transform.position + transform.right * GizmosHeight, Color.red);</span><br><span class="line">            IMGizmos.Line3D(transform.position, transform.position + transform.forward * GizmosHeight, Color.blue);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>选中场景相机，可以得到下面结果，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/Unity摄像机坐标系.jpg"><br>可以看到右下角的场景相机画面里面有显示PlayerStart的Gizmos，Gizmos显示的坐标系是左手系，跟右上角显示的坐标系是一致的。同时，引擎自带的Gizmos显示的摄像机前向也是Z轴正向。<br>因此，推测我实验的Unity版本是2020，与UnityShader入门精要使用的Unity5.X版本，摄像机空间的旋向性已经发生了变化。</p>
+<h2 id="4-2-UnrealEngine"><a href="#4-2-UnrealEngine" class="headerlink" title="4.2 UnrealEngine"></a>4.2 UnrealEngine</h2><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/虚幻坐标系.jpg"><br>虚幻和Unity一样也是采用左手坐标系，不过其是Z轴朝上，Y轴朝外。沿着X轴旋转90度，可以得到Z轴朝内，Y轴朝上，那么和Unity的是一致的。<br>推测，其余的空间的坐标系旋向和Unity的是一致。摄像机空间的旋向也可以用类似4.1的方式绘制Gizmos，然后选中摄像机，查看摄像机的绘制结果。</p>
+<h1 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h1><blockquote>
+<p><a href="https://book.douban.com/subject/26821639/">Shader入门精要</a><br><a href="https://zhuanlan.zhihu.com/p/269621383">图形坐标系的跨平台适配</a></p>
+</blockquote>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2018/12/19/Unity3D%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1779,146 +1913,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">使用CWebBrowser2定制IE浏览器窗口</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-04-21 21:06:41" itemprop="dateCreated datePublished" datetime="2016-04-21T21:06:41+08:00">2016-04-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" class="post-meta-item leancloud_visitors" data-flag-title="使用CWebBrowser2定制IE浏览器窗口" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>9.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。</p>
-<p>本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中，下面Show一下这个自带萌妹子的弹窗吧。</p>
-<p><img alt="" data-src="https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png"></p>
-<p>这是一个无边框的Windows对话框程序，并且是一个基于背景图片的不规则弹窗窗口；内部嵌入了一个浏览器控件窗口，这个漂亮的妹子就是浏览器控件打开的网页显示出来的。对这个妹子有兴趣的，可以去玩一把逆战，退出客户端的时候就会出来这个弹窗了。</p>
-<p>下面介绍一些关于实现该弹窗浏览器的Tips。</p>
-<h2 id="一、如何获得CWebBrowser2"><a href="#一、如何获得CWebBrowser2" class="headerlink" title="一、如何获得CWebBrowser2"></a>一、如何获得CWebBrowser2</h2><p>方法1：网络搜索下载，比如我以前的一篇博文里面有下载链接：vc内嵌浏览器。</p>
-<p>方法2：在MFC程序中插入IE对应的Activex控件，工程中就会生成这个类。</p>
-<p>为了定制浏览器窗口，我继承了该类，自定义了浏览器窗口类CYXBrwser。</p>
-<h2 id="二、让浏览器窗口适应对话框窗口大小"><a href="#二、让浏览器窗口适应对话框窗口大小" class="headerlink" title="二、让浏览器窗口适应对话框窗口大小"></a>二、让浏览器窗口适应对话框窗口大小</h2><p>在对话框类的OnInitDialog()函数中，添加如下代码：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">m_pBrowser = new <span class="built_in">CYXBrowser</span>(); </span><br><span class="line">RECT rect; </span><br><span class="line"><span class="function"><span class="title">GetClientRect</span><span class="params">(rect)</span></span>;</span><br><span class="line">rect<span class="selector-class">.left</span> += <span class="number">8</span>;</span><br><span class="line">rect<span class="selector-class">.right</span> -= <span class="number">8</span>;</span><br><span class="line">rect<span class="selector-class">.top</span> += <span class="number">8</span>;</span><br><span class="line">rect<span class="selector-class">.bottom</span> -= <span class="number">1</span>;</span><br><span class="line">m_pBrowser-&gt;<span class="built_in">Create</span>(<span class="built_in">TEXT</span>(<span class="string">"NZBrowser"</span>), WS_CHILD | WS_VISIBLE, rect, this, MY_IEBROWSER_ID);</span><br></pre></td></tr></tbody></table></figure>
-<p>注意，rect的大小需要调节来获得需要的效果。</p>
-<h2 id="三、屏蔽右键"><a href="#三、屏蔽右键" class="headerlink" title="三、屏蔽右键"></a>三、屏蔽右键</h2><p>有种比较的方法是在PreTranslateMessage中过滤WM_RBUTTONDOWN消息。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//屏蔽右键</span></span><br><span class="line">BOOL CYXBrowser::<span class="built_in">PreTranslateMessage</span>(MSG* pMsg) </span><br><span class="line">{</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> Add your specialized code here and/or call the base class</span></span><br><span class="line">    <span class="built_in">if</span>(WM_RBUTTONDOWN == pMsg-&gt;message)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//AfxMessageBox(_T("Right Menu!"));</span></span><br><span class="line">        return TRUE;</span><br><span class="line">    }</span><br><span class="line">    return CWnd::<span class="built_in">PreTranslateMessage</span>(pMsg);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="四、隐藏网页的滚动条"><a href="#四、隐藏网页的滚动条" class="headerlink" title="四、隐藏网页的滚动条"></a>四、隐藏网页的滚动条</h2><p>这是最难处理的一个地方。不仅仅需要修改程序，而且需要web端的配合。</p>
-<p>第一步：添加DocumentComplete事件响应。在C<em>*</em>Dlg的cpp中添加如下宏：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">BEGIN_EVENTSINK_MAP</span><span class="params">(CClientBrowserDlg, CDialog)</span></span></span><br><span class="line">    <span class="built_in">ON_EVENT</span>(CClientBrowserDlg, MY_IEBROWSER_ID, DISPID_DOCUMENTCOMPLETE, DocumentComplete, VTS_DISPATCH VTS_PVARIANT)</span><br><span class="line"><span class="function"><span class="title">END_EVENTSINK_MAP</span><span class="params">()</span></span></span><br></pre></td></tr></tbody></table></figure>
-<p>注意，CClientBrowserDlg是响应函数所在的类，MY_IEBROWSER_ID是二中指定的浏览器窗口ID。DocumentComplete是CClientBrowserDlg中的响应该事件的成员函数。</p>
-<p>第二步：实现该函数，直接贴代码。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">void CClientBrowserDlg::<span class="built_in">DocumentComplete</span>(LPDISPATCH pDisp, VARIANT* URL)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">UNUSED_ALWAYS</span>(pDisp);</span><br><span class="line">    <span class="built_in">ASSERT</span>(<span class="built_in">V_VT</span>(URL) == VT_BSTR);</span><br><span class="line"></span><br><span class="line">    CString <span class="built_in">str</span>(<span class="built_in">V_BSTR</span>(URL));</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">OnDocumentComplete</span>(str);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnDocumentComplete</span>(LPCTSTR lpszURL)</span><br><span class="line">{</span><br><span class="line">    m_bDocumentComplete = true;</span><br><span class="line">    <span class="built_in">HideScrollBar</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">HideScrollBar</span>()</span><br><span class="line">{</span><br><span class="line">    HRESULT hr;</span><br><span class="line">    IDispatch *pDisp = <span class="built_in">GetDocument</span>();</span><br><span class="line">    IHTMLDocument2 *pDocument = NULL;</span><br><span class="line">    IHTMLElement*   pEl;  </span><br><span class="line">    IHTMLBodyElement   *pBodyEl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pDisp)</span><br><span class="line">    {</span><br><span class="line">        hr = pDisp-&gt;<span class="built_in">QueryInterface</span>(IID_IHTMLDocument2, (void**)pDocument);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">SUCCEEDED</span>(hr))</span><br><span class="line">        {</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">if</span>(pDocument  <span class="built_in">SUCCEEDED</span>(pDocument-&gt;<span class="built_in">get_body</span>(pEl)))  </span><br><span class="line">    {  </span><br><span class="line">        <span class="built_in">if</span>(pEl  <span class="built_in">SUCCEEDED</span>(pEl-&gt;<span class="built_in">QueryInterface</span>(IID_IHTMLBodyElement, (void**)pBodyEl)))  </span><br><span class="line">        {  </span><br><span class="line">            pBodyEl-&gt;<span class="built_in">put_scroll</span>(L<span class="string">"no"</span>);<span class="comment">//去滚动条</span></span><br><span class="line">        }  </span><br><span class="line">        IHTMLStyle   *phtmlStyle;  </span><br><span class="line">        pEl-&gt;<span class="built_in">get_style</span>(phtmlStyle);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(phtmlStyle  != NULL)  </span><br><span class="line">        {  </span><br><span class="line">            phtmlStyle-&gt;<span class="built_in">put_overflow</span>(L<span class="string">"hidden"</span>);</span><br><span class="line">            <span class="comment">//需要设置网页源码DOCTYPE为&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span></span><br><span class="line">            <span class="comment">//去除边框才有效</span></span><br><span class="line">            phtmlStyle-&gt;<span class="built_in">put_border</span>(L<span class="string">"none"</span>);<span class="comment">//   去除边框</span></span><br><span class="line"></span><br><span class="line">            phtmlStyle-&gt;<span class="built_in">Release</span>();  </span><br><span class="line">            pEl-&gt;<span class="built_in">Release</span>();  </span><br><span class="line">        }  </span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>关键函数是HideScrollBar()。</p>
-<p>第三步：在浏览器内嵌网页的最前面添加，</p>
-<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span> <span class="keyword">PUBLIC</span> <span class="string">"-//W3C//DTD HTML 4.01 Transitional//EN"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<p>注意，第三步是不可缺少的。</p>
-<h2 id="五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框"><a href="#五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框" class="headerlink" title="五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框**"></a>五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框**</h2><p>在CClientBrowserDlg::OnInitDialog()中添加如下代码，</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*屏蔽掉"服务器正在运行中"要选择"切换到..."或"重试"的对话框*/</span></span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">EnableBusyDialog</span>(FALSE);</span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">SetBusyReply</span>(SERVERCALL_RETRYLATER);</span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">EnableNotRespondingDialog</span>(TRUE);</span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">SetMessagePendingDelay</span>(-<span class="number">1</span>);</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="六、点击网页打开系统默认浏览器"><a href="#六、点击网页打开系统默认浏览器" class="headerlink" title="六、点击网页打开系统默认浏览器"></a>六、点击网页打开系统默认浏览器</h2><p>第一步：绑定NEWWINDOW2事件。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ON_EVENT</span><span class="params">(CClientBrowserDlg, MY_IEBROWSER_ID, DISPID_NEWWINDOW2, OnNewWindow2, VTS_PDISPATCH VTS_PBOOL)</span></span></span><br></pre></td></tr></tbody></table></figure>
-<p>第二步：设置该OnNewWindow2的*bCancel为true，并且调用ShellExecute打开网页。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void CClientBrowserDlg::<span class="built_in">OnNewWindow2</span>(LPDISPATCH* ppDisp, BOOL* bCancel)</span><br><span class="line">{</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">OnNewWindow2</span>(ppDisp, bCancel);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnNewWindow2</span>(LPDISPATCH* ppDisp, BOOL* bCancel)</span><br><span class="line">{</span><br><span class="line">    *bCancel = TRUE;<span class="comment">//禁止弹出新窗口（因为会使用IE弹窗）</span></span><br><span class="line"></span><br><span class="line">    HRESULT hr;</span><br><span class="line">    IDispatch *pDisp = <span class="built_in">GetDocument</span>();</span><br><span class="line">    IHTMLDocument2 *pHTMLDocument2 = NULL;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pDisp)</span><br><span class="line">    {</span><br><span class="line">        hr = pDisp-&gt;<span class="built_in">QueryInterface</span>(IID_IHTMLDocument2, (void**)pHTMLDocument2);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">SUCCEEDED</span>(hr))</span><br><span class="line">        {</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pHTMLDocument2 != NULL)  </span><br><span class="line">    {  </span><br><span class="line">        CComPtr&lt;IHTMLElement&gt; pIHTMLElement;  </span><br><span class="line">        pHTMLDocument2-&gt;<span class="built_in">get_activeElement</span>(pIHTMLElement);  </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (pIHTMLElement != NULL)  </span><br><span class="line">        {  </span><br><span class="line">            variant_t url;  </span><br><span class="line">            hr = pIHTMLElement-&gt;<span class="built_in">getAttribute</span>(L<span class="string">"href"</span>, <span class="number">0</span>, url);  </span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">SUCCEEDED</span>(hr))  </span><br><span class="line">            {  </span><br><span class="line">                CString <span class="built_in">strURL</span>(<span class="built_in">V_BSTR</span>(url));</span><br><span class="line">                <span class="comment">//打开默认浏览器</span></span><br><span class="line">                <span class="built_in">ShellExecute</span>(m_hWndOwner, NULL, strURL, NULL, NULL, SW_NORMAL);</span><br><span class="line">            }  </span><br><span class="line">        }  </span><br><span class="line">    }     </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>处理了六，五也就不需要了，因为点击网页不会再弹出IE浏览器了。</p>
-<h2 id="七、为网页元素的添加事件处理：比如web按钮的点击等"><a href="#七、为网页元素的添加事件处理：比如web按钮的点击等" class="headerlink" title="七、为网页元素的添加事件处理：比如web按钮的点击等"></a>七、为网页元素的添加事件处理：比如web按钮的点击等</h2><p>第一步：继承CCmdTarget新建类CHtmlEventHandle，代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#pragma</span> once</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#import</span> &lt;mshtml.tlb&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CHtmlEventHandle command target</span></span><br><span class="line">class CYXBrowser;</span><br><span class="line"></span><br><span class="line">class CHtmlEventHandle : public CCmdTarget</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">DECLARE_DYNAMIC</span>(CHtmlEventHandle)</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CHtmlEventHandle</span>();</span><br><span class="line">    virtual ~<span class="built_in">CHtmlEventHandle</span>();</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    void <span class="built_in">SetWnd</span>(CWnd* pWnd) { m_pWnd = pWnd;}</span><br><span class="line">    void <span class="built_in">SetWebBrowser</span>(CYXBrowser* pWebBroswer) { m_pWebBrowser = pWebBroswer; }</span><br><span class="line">    <span class="comment">// 消息处理函数</span></span><br><span class="line">    void <span class="built_in">OnClick</span>(MSHTML::IHTMLEventObjPtr pEvtObj);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    CWnd* m_pWnd;</span><br><span class="line">    CYXBrowser* m_pWebBrowser;</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    <span class="built_in">DECLARE_MESSAGE_MAP</span>()</span><br><span class="line">    <span class="built_in">DECLARE_DISPATCH_MAP</span>()</span><br><span class="line">    <span class="built_in">DECLARE_INTERFACE_MAP</span>()</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// HtmlEventHandle.cpp : implementation file</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"ClientBrowser.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"HtmlEventHandle.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"mshtmdid.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"MsHTML.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"YXBrowser.h"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// CHtmlEventHandle</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">IMPLEMENT_DYNAMIC</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line"></span><br><span class="line">CHtmlEventHandle::<span class="built_in">CHtmlEventHandle</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">EnableAutomation</span>();  <span class="comment">// 重要：激活 IDispatch</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">CHtmlEventHandle::~<span class="built_in">CHtmlEventHandle</span>()</span><br><span class="line">{</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">BEGIN_MESSAGE_MAP</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line"><span class="function"><span class="title">END_MESSAGE_MAP</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">BEGIN_DISPATCH_MAP</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line">    <span class="built_in">DISP_FUNCTION_ID</span>(CHtmlEventHandle, <span class="string">"HTMLELEMENTEVENTS2_ONCLICK"</span>,</span><br><span class="line">    DISPID_HTMLELEMENTEVENTS2_ONCLICK, OnClick,</span><br><span class="line">    VT_EMPTY, VTS_DISPATCH)</span><br><span class="line"><span class="function"><span class="title">END_DISPATCH_MAP</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">BEGIN_INTERFACE_MAP</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line">    <span class="built_in">INTERFACE_PART</span>(CHtmlEventHandle,</span><br><span class="line">    DIID_HTMLButtonElementEvents2, Dispatch)</span><br><span class="line"><span class="function"><span class="title">END_INTERFACE_MAP</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// CHtmlEventHandle message handlers</span></span><br><span class="line"></span><br><span class="line">void CHtmlEventHandle::<span class="built_in">OnClick</span>(MSHTML::IHTMLEventObjPtr pEvtObj)</span><br><span class="line">{</span><br><span class="line">    MSHTML::IHTMLElementPtr pElement =</span><br><span class="line">        pEvtObj-&gt;<span class="built_in">GetsrcElement</span>(); <span class="comment">// 事件发生的对象元素</span></span><br><span class="line">    <span class="built_in">while</span>(pElement) <span class="comment">// 逐层向上检查</span></span><br><span class="line">    {</span><br><span class="line">        _bstr_t strId;</span><br><span class="line">        pElement-&gt;<span class="built_in">get_id</span>(strId<span class="selector-class">.GetBSTR</span>());</span><br><span class="line">        <span class="built_in">if</span>(<span class="built_in">_bstr_t</span>(HTML_CLOSE_BUTTON) == strId)<span class="comment">//响应关闭按钮点击</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">PostQuitMessage</span>(<span class="number">0</span>);</span><br><span class="line">            break;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">_bstr_t</span>(HTML_SET_BUTTON) == strId)<span class="comment">//30天不弹出设置</span></span><br><span class="line">        {</span><br><span class="line"></span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        pElement = pElement-&gt;<span class="built_in">GetparentElement</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">//注意那几个宏。宏的具体解释我没有去深究，仿照DISP_FUNCTION_ID可以为点击外的其它事件添加处理。</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>第二步：在CYXBrowser中注册这个web事件处理类。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//添加成员</span></span><br><span class="line">private:</span><br><span class="line">    void <span class="built_in">InstallEventHandler</span>();</span><br><span class="line">    void <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    CHtmlEventHandle *m_pEventHandler;</span><br><span class="line">    DWORD m_dwDocCookie;    <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    IDispatch *m_pDispDoc;  <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    bool m_bDocumentComplete;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相应的函数实现</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 安装响应函数。省略了一些失败判断以突出主要步骤</span></span><br><span class="line">void CYXBrowser::<span class="built_in">InstallEventHandler</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">if</span>(m_dwDocCookie)   <span class="comment">// 已安装，卸载先。最后一次安装的才有效</span></span><br><span class="line">        <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line"></span><br><span class="line">    m_pDispDoc = <span class="built_in">GetDocument</span>();</span><br><span class="line">    IConnectionPointContainerPtr pCPC = m_pDispDoc;</span><br><span class="line">    IConnectionPointPtr pCP;</span><br><span class="line">    <span class="comment">// 找到安装点</span></span><br><span class="line">    pCPC-&gt;<span class="built_in">FindConnectionPoint</span>(DIID_HTMLDocumentEvents2, pCP);</span><br><span class="line">    IUnknown* pUnk = m_pEventHandler-&gt;<span class="built_in">GetInterface</span>(IID_IUnknown);</span><br><span class="line">    <span class="comment">//安装</span></span><br><span class="line">    HRESULT hr = pCP-&gt;<span class="built_in">Advise</span>(pUnk, m_dwDocCookie);</span><br><span class="line">    <span class="built_in">if</span>(!<span class="built_in">SUCCEEDED</span>(hr))  <span class="comment">// 安装失败</span></span><br><span class="line">        m_dwDocCookie = <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 卸载响应函数。省略了一些失败判断以突出主要步骤</span></span><br><span class="line">void CYXBrowser::<span class="built_in">UninstallEventHandler</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">if</span>(<span class="number">0</span> == m_dwDocCookie) return;</span><br><span class="line"></span><br><span class="line">    IConnectionPointContainerPtr pCPC = m_pDispDoc;</span><br><span class="line">    IConnectionPointPtr pCP;</span><br><span class="line">    pCPC-&gt;<span class="built_in">FindConnectionPoint</span>(DIID_HTMLDocumentEvents2, pCP);</span><br><span class="line">    HRESULT hr = pCP-&gt;<span class="built_in">Unadvise</span>(m_dwDocCookie);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//在OnDocumentComplete中安装事件处理</span></span><br><span class="line">CYXBrowser::<span class="built_in">CYXBrowser</span>()</span><br><span class="line">{</span><br><span class="line">    m_pEventHandler = new CHtmlEventHandle;</span><br><span class="line">    m_pEventHandler-&gt;<span class="built_in">SetWnd</span>(m_pParent);</span><br><span class="line">    m_pEventHandler-&gt;<span class="built_in">SetWebBrowser</span>(this);</span><br><span class="line">    m_dwDocCookie = <span class="number">0</span>;    <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    m_pDispDoc = NULL;  <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    m_bDocumentComplete = false;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnDocumentComplete</span>(LPCTSTR lpszURL)</span><br><span class="line">{</span><br><span class="line">    m_bDocumentComplete = true;</span><br><span class="line">    <span class="built_in">HideScrollBar</span>();</span><br><span class="line">    <span class="built_in">InstallEventHandler</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//在OnBeforeNavigate2和OnDestroy中卸载处理</span></span><br><span class="line"><span class="comment">// 在 BeforeNavigate2 和 Destroy 事件中卸载响应函数</span></span><br><span class="line">void CYXBrowser::<span class="built_in">OnBeforeNavigate2</span>(LPCTSTR lpszURL, DWORD nFlags,</span><br><span class="line">                                   LPCTSTR lpszTargetFrameName, CByteArray baPostedData,</span><br><span class="line">                                   LPCTSTR lpszHeaders, BOOL* pbCancel)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line">    <span class="comment">// 其他代码...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnDestroy</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line">    CWebBrowser2::<span class="built_in">OnDestroy</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>现在就可以在void CHtmlEventHandle::OnClick(MSHTML::IHTMLEventObjPtr pEvtObj)函数内捕获网页按钮之类的点击了。处理代码的思路是从当前元素开始，不断往上查找父元素，直到匹配的元素ID为止。</p>
-<h2 id="八、判断url是否有效，如果无效则打开资源url，防止Web页面为空"><a href="#八、判断url是否有效，如果无效则打开资源url，防止Web页面为空" class="headerlink" title="八、判断url是否有效，如果无效则打开资源url，防止Web页面为空"></a>八、判断url是否有效，如果无效则打开资源url，防止Web页面为空</h2><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用该函数判断url是否能打开</span></span><br><span class="line">bool CYXBrowser::<span class="built_in">IsUrlAvailable</span>(CString strUrl)</span><br><span class="line">{</span><br><span class="line">    CInternetSession* session = new <span class="built_in">CInternetSession</span>(); </span><br><span class="line">    CInternetFile* file = NULL; </span><br><span class="line">    bool bAvailable = true;</span><br><span class="line"></span><br><span class="line">    try</span><br><span class="line">    {</span><br><span class="line">        file = (CInternetFile*)session-&gt;<span class="built_in">OpenURL</span>(strUrl); </span><br><span class="line">    }</span><br><span class="line">    catch (CInternetException*)</span><br><span class="line">    {</span><br><span class="line">        bAvailable = false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    delete session;</span><br><span class="line">    <span class="keyword">if</span> (!file)</span><br><span class="line">    {</span><br><span class="line">        bAvailable = false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return bAvailable;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//在对话框初始化时候，判断外网url是否能打开，如果不能则加载资源内的url</span></span><br><span class="line"><span class="keyword">if</span> (m_pBrowser-&gt;<span class="built_in">IsUrlAvailable</span>(theApp.m_strUrl))</span><br><span class="line">{</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">Navigate2</span>(theApp.m_strUrl);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">{</span><br><span class="line">    TCHAR szModule<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    <span class="built_in">GetModuleFileName</span>(theApp<span class="selector-class">.m_hInstance</span>, szModule, MAX_PATH);</span><br><span class="line">    theApp<span class="selector-class">.m_strUrl</span><span class="selector-class">.Format</span>(<span class="built_in">_T</span>(<span class="string">"res://%s/%s"</span>), szModule, theApp.m_strLocalUrl);</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">Navigate2</span>(theApp.m_strUrl);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>注意资源url的格式是res://模块名/网页名，因此需要在该程序中导入自定义的资源，并且将其命名为theApp.m_strLocalUrl代表的字符串值，比如”NZ.HTML”。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1969,7 +1963,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">222</span>
+          <span class="site-state-item-count">223</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1982,7 +1976,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">113</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2025,7 +2019,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2034,12 +2028,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">671k</span>
+    <span title="站点总字数">676k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:10</span>
+    <span title="站点阅读时长">10:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

@@ -5070,4 +5070,70 @@ CImage CImage::operator=(const CImage yxImage)
         <tag>材质系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>基于Vulkan Specialization Constants的材质变体系统</title>
+    <url>/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<html><head></head><body><h1 id="材质变体"><a href="#材质变体" class="headerlink" title="材质变体"></a>材质变体</h1><p>所谓材质变体，指的是一份材质代码文件，最终对应的是多份运行时gpu程序。比如，shader代码里面有开关或者选项，不同的组合对应不同的最终gpu program。那么，所有的这些组合对应的gpu program，可以统一理解为这个材质对应的所有变体。<br>比如下面shader代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">#if COLOR_RED</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">#else</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if NORMAL_POSITIVE</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">#else</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>有2个开关，COLOR_RED，NORMAL_POSITIVE。每个开关都有2种状态，开或者关。那么，可以组合出2*2=4种状态。<br>类似C语言，glsl或者hlsl也支持#define宏，因此也有大于2个状态的开关，比如COLOR_RED == 0、COLOR_RED == 1、COLOR_RED == 2。总的状态计算方式是所有开关的状态数相乘，也就是复杂度是指数级的。</p>
+<h1 id="传统变体（静态编译变体）"><a href="#传统变体（静态编译变体）" class="headerlink" title="传统变体（静态编译变体）"></a>传统变体（静态编译变体）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>这里的传统变体指的是针对每一种组合状态都编译生成单独的着色器代码。实际上，目前绝大部分引擎实现的变体方案都是这种方式。</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期"><a href="#编译期" class="headerlink" title="编译期"></a>编译期</h3><p>算法基本思路很简单，遍历所有的状态组合，针对当前状态，#define相应的宏，然后编译当前代码。<br>比如，</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">#define COLOR_RED 1</span><br><span class="line">#define NORMAL_POSITIVE 0</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">#if COLOR_RED</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">#else</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if NORMAL_POSITIVE</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">#else</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>对应的代码就是开关COLOR_RED打开、NORMAL_POSITIVE关闭的变体组合状态。<br>同时，将当前状态的激活关键字（变体开关）组合与编译后的代码做映射，保存在编译结果中。</p>
+<h3 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h3><p>根据当前的变体开关选择，映射到具体的代码。这里的映射方式与编译期的算法类似。比如，在材质类里面有一个hashmap， 保持变体状态组合到具体gpu program的映射。如果，hashmap内不存在这个映射，那么从编译期生成的代码内加载具体的编译后shader code，然后创建gpu program。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>由于需要在编译期就决定所有的状态组合，那么很可能会出现包体和内存爆炸的情况。比如，有10个开关，每个开关有2种状态，那么就是1024个变体，对应1024份代码。假设，一份代码的尺寸是10kb，那么就是10mb，有10个这样的材质，那么包体占用就是100mb，内存占用会更大。这就是游戏项目中常说的变体爆炸问题。</p>
+<h1 id="动态变体"><a href="#动态变体" class="headerlink" title="动态变体"></a>动态变体</h1><h2 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h2><p> 相比于传统变体，动态变体的最大优势是不会出现变体爆炸问题。在编译期间的编译结果，只有一份代码，同时保存变体定义信息。在运行时，二次编译生成真正的中间代码（spir-v）或者gpu上的汇编代码。</p>
+<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期-1"><a href="#编译期-1" class="headerlink" title="编译期"></a>编译期</h3><p>不需要复杂的遍历算法，直接编译shader代码即可。但是，需要工具链或者图形API支持。比如，使用vulkan支持的Specialization Constants实现变体，那么可以在编译期保存Specialization Constants定义信息的同时，使用spirv-tools编译生成一份spir-v中间代码。</p>
+<h3 id="运行时-1"><a href="#运行时-1" class="headerlink" title="运行时"></a>运行时</h3><p>加载这份编译后的代码，比如spir-v中间代码。针对，当前的变体设置，对spir-v进一步处理成指定的变体状态或者将变体设置提交给vulkan，让驱动去编译。</p>
+<h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h2><p>这种方式会有一定的局限性，无法优化所有的情况。比如驱动可能有bug，无法优化掉一些复杂变体组合的情况或者一些复杂的代码，导致真正运行的代码有多余的指令，引起性能大幅度下降。</p>
+<h1 id="Vulkan-Specialization-Constants变体"><a href="#Vulkan-Specialization-Constants变体" class="headerlink" title="Vulkan Specialization Constants变体"></a>Vulkan Specialization Constants变体</h1><h2 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h2><p>不同的图形API对动态变体的支持情况不一样，比如OpenGL不支持，Vulkan支持Specialization Constants，metal支持Function Constants。<br>这里专门指代基于Vulkan Specialization Constants实现的变体系统。</p>
+<h2 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="使用Specialization-Constants实现材质代码"><a href="#使用Specialization-Constants实现材质代码" class="headerlink" title="使用Specialization Constants实现材质代码"></a>使用Specialization Constants实现材质代码</h3><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">layout(constant_id = 0) const bool COLOR_RED = true;</span><br><span class="line">layout(constant_id = 1) const bool NORMAL_POSITIVE = true;</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">if (COLOR_RED) {</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">if (NORMAL_POSITIVE) {</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>比如上述代码，定义了2个Specialization Constants变量：COLOR_RED和NORMAL_POSITIVE 。同时在代码内使用了这2个变量作为开关进行分支选择，注意：从语法上，Specialization Constants是作为变量处理，而不是宏。</p>
+<h3 id="使用spirv-tools编译带有Specialization-Constants信息的材质代码"><a href="#使用spirv-tools编译带有Specialization-Constants信息的材质代码" class="headerlink" title="使用spirv-tools编译带有Specialization Constants信息的材质代码"></a>使用spirv-tools编译带有Specialization Constants信息的材质代码</h3><p>这一步与传统变体的区别是不需要遍历所有的变体状态组合，直接编译代码即可。对于，vulkan来说，使用glslang库调用spirv-tools编译代码就可以获得带有Specialization Constants信息的spir-v中间代码。</p>
+<h3 id="运行时决定Specialization-Constants"><a href="#运行时决定Specialization-Constants" class="headerlink" title="运行时决定Specialization Constants"></a>运行时决定Specialization Constants</h3><p>上一步得到的是一份带有Specialization Constants信息的spir-v中间代码，如果获得最终的运行时代码了？</p>
+<h4 id="变体组合映射gpu-program"><a href="#变体组合映射gpu-program" class="headerlink" title="变体组合映射gpu program"></a>变体组合映射gpu program</h4><p>这部分类似传统变体方案，需要将变体组合状态映射到具体的Specialization Constants设置。</p>
+<h4 id="设置Specialization-Constants"><a href="#设置Specialization-Constants" class="headerlink" title="设置Specialization Constants"></a>设置Specialization Constants</h4><p>有两种实现思路，各有优劣，下面具体说明。<br><strong>1. 使用vulkan的Specialization Constants接口</strong><br>使用vulkan的Specialization Constants，在在vulkan的pipeline中传递运行时的Specialization Constants设置信息。因为Specialization Constants是PSO的一部分，因此这种方式需要重新编译gpu program和PSO。由于，不需要完整编译gpu program，因此与切换gpu program的方案（传统变体）这个方案会编译更快。</p>
+<p><strong>2. 使用spirv-optimizer剔除分支</strong><br>第二种方式是使用spir-optimizer里面的pass处理spir-v中间代码，比如设置Specialization Constants的值后，剔除dead code和Specialization Constants信息等，直接获得最终不带Specialization Constants信息的spir-v。这个spir-v就可以直接传递vulkan创建gpu program。</p>
+<p><strong>3. 两个方案对比</strong></p>
+<ul>
+<li>vulkan的Specialization Constants依赖驱动的JIT编译结果，如果驱动实现有问题，那么实际上Specialization Constants无法精准剔除代码，导致性能达不到预期。</li>
+<li>spirv-optimizer剔除代码的方式，可以避免驱动的问题，在不同的驱动上表现一致；而且方便调试，比如可以在RenderDoc上抓取最终运行代码，或者mali offline compiler离线查看，确定最终运行的变体状态，但是这个方案依赖这个中间处理工具的能力。</li>
+</ul>
+<h2 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h2><ul>
+<li>依赖高级特性，在传统图形API上不支持。只能针对运行Vulkan的平台做优化。</li>
+<li>使用vulkan的Specialization Constants接口在驱动上进行JIT编译的方案，运行结果依赖具体硬件的驱动实现，结果不稳定。</li>
+<li>使用spirv-optimizer剔除分支的方案需要额外的运行时处理时间，会引起切换变体卡顿，引擎需要妥善处理，比如异步调用spirv-optimizer，同时对优化后的spir-v缓存。</li>
+</ul>
+<h1 id="动态变体与传统变体的对比"><a href="#动态变体与传统变体的对比" class="headerlink" title="动态变体与传统变体的对比"></a>动态变体与传统变体的对比</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>可以解决变体爆炸问题。</li>
+<li>可能更快的编译PSO</li>
+</ul>
+<h2 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h2><ul>
+<li>跨平台差，需要高级图形API特性。</li>
+<li>可能依赖硬件驱动实现。</li>
+<li>可能引入运行时卡顿。</li>
+</ul>
+<h1 id="其它问题探讨"><a href="#其它问题探讨" class="headerlink" title="其它问题探讨"></a>其它问题探讨</h1><h2 id="变体收集"><a href="#变体收集" class="headerlink" title="变体收集"></a>变体收集</h2><p>变体收集是另一个经常讨论的问题。一般需要引擎支持才能实现完整的变体收集。下面讲一个之前实现过的方案。</p>
+<ul>
+<li>引擎runtime<br>引擎内有一个统一的ShaderProgramManger。该管理器内有2层hash，保存了所有材质和材质变体组合对应的gpu program。引擎内所有切换变体的操作最终都通过该类来查找gpu program。因此，该类完整收集了当前引擎运行状态下所有的变体组合。那么，可以在该类里面实现dump接口，遍历所有缓存的材质变体组合，输出文件作为变体集合文件。<br>实际项目中，可以用自动化系统运行常见的场景，在合适的时机调用dump接口进行收集。</li>
+<li>变体集合编译<br>假如使用spirv-optimizer的方案实现动态变体，那么可以针对变体集合文件内的收集到的变体状态组合，提前编译出最终的spir-v。在ShaderProgramManger查找变体时候，判断有提前预编译的情况，可以直接加载，而不是去调用spirv-optimizer处理。</li>
+</ul>
+<h2 id="变体预热"><a href="#变体预热" class="headerlink" title="变体预热"></a>变体预热</h2><ul>
+<li><p>变体切换<br>对于传统变体来说，就是根据变体设置查找相应的着色器代码；对于动态变体来说，可能需要对spir-v代码进行预处理。</p>
+</li>
+<li><p>编译PSO<br>对于使用vulkan的Specialization Constants接口的方案来说，gpu program已经确定，需要设置Specialization Constants，再重新编译PSO。这个过程实际上是对gpu program重新编译获得最终的版本，由于有之前的编译信息，会比编译完整的gpu program更快。<br>对于其它方案，实际上是编译完整的gpu program，与使用vulkan的Specialization Constants接口的方案对比，速度更慢。</p>
+</li>
+<li><p>实现思路<br>比如引擎可以加载变体集合文件，根据变体集合文件的描述，提前编译对应变体的代码以及PSO。</p>
+</li>
+</ul>
+<h2 id="动态变体无法解决PSO编译的问题"><a href="#动态变体无法解决PSO编译的问题" class="headerlink" title="动态变体无法解决PSO编译的问题"></a>动态变体无法解决PSO编译的问题</h2><p>网上也有讨论Specialization Constants的文章，比如：<a href="https://zhuanlan.zhihu.com/p/678177922">【笔记】Shader变体大杀器：specialization constants</a>。该文章的评论里面提到Specialization Constants无法解决PSO的预热问题，从而对Specialization Constants进行了否定。实际上，这个是概念上的混淆。无论如何，PSO是需要重新编译的，因为最终的渲染状态数目是没有改变的；动态变体只是将确定最终gpu program的过程延迟到运行时决定，从而避免变体爆炸，并没有减少材质变体的状态总数。期望通过<br>Specialization Constants减少PSO数目或者加快PSO预热是方向上的错误。正确的思路是从PSO的收集缓存等方面来考虑，避免第一次切换到该PSO的卡顿。</p>
+</body></html>]]></content>
+      <categories>
+        <category>Rendering</category>
+      </categories>
+      <tags>
+        <tag>Vulkan Specialization Constants</tag>
+        <tag>材质变体系统</tag>
+      </tags>
+  </entry>
 </search>

@@ -222,6 +222,146 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">使用CWebBrowser2定制IE浏览器窗口</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-04-21 21:06:41" itemprop="dateCreated datePublished" datetime="2016-04-21T21:06:41+08:00">2016-04-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" class="post-meta-item leancloud_visitors" data-flag-title="使用CWebBrowser2定制IE浏览器窗口" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2016/04/21/%E4%BD%BF%E7%94%A8CWebBrowser2%E5%AE%9A%E5%88%B6IE%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>在客户端程序中嵌入浏览器，有两种方式，一种是使用微软的IE控件，一种是使用CEF。这里介绍的是使用CWebBrowser2类（在MFC程序中插入IE的Active控件生成），定制内嵌浏览器窗口的一些经验。</p>
+<p>本文的经验积累于实现逆战退出游戏时候的广告弹窗的过程中，下面Show一下这个自带萌妹子的弹窗吧。</p>
+<p><img alt="" data-src="https://farm2.staticflickr.com/1575/25953542404_086b3470a8_o.png"></p>
+<p>这是一个无边框的Windows对话框程序，并且是一个基于背景图片的不规则弹窗窗口；内部嵌入了一个浏览器控件窗口，这个漂亮的妹子就是浏览器控件打开的网页显示出来的。对这个妹子有兴趣的，可以去玩一把逆战，退出客户端的时候就会出来这个弹窗了。</p>
+<p>下面介绍一些关于实现该弹窗浏览器的Tips。</p>
+<h2 id="一、如何获得CWebBrowser2"><a href="#一、如何获得CWebBrowser2" class="headerlink" title="一、如何获得CWebBrowser2"></a>一、如何获得CWebBrowser2</h2><p>方法1：网络搜索下载，比如我以前的一篇博文里面有下载链接：vc内嵌浏览器。</p>
+<p>方法2：在MFC程序中插入IE对应的Activex控件，工程中就会生成这个类。</p>
+<p>为了定制浏览器窗口，我继承了该类，自定义了浏览器窗口类CYXBrwser。</p>
+<h2 id="二、让浏览器窗口适应对话框窗口大小"><a href="#二、让浏览器窗口适应对话框窗口大小" class="headerlink" title="二、让浏览器窗口适应对话框窗口大小"></a>二、让浏览器窗口适应对话框窗口大小</h2><p>在对话框类的OnInitDialog()函数中，添加如下代码：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">m_pBrowser = new <span class="built_in">CYXBrowser</span>(); </span><br><span class="line">RECT rect; </span><br><span class="line"><span class="function"><span class="title">GetClientRect</span><span class="params">(rect)</span></span>;</span><br><span class="line">rect<span class="selector-class">.left</span> += <span class="number">8</span>;</span><br><span class="line">rect<span class="selector-class">.right</span> -= <span class="number">8</span>;</span><br><span class="line">rect<span class="selector-class">.top</span> += <span class="number">8</span>;</span><br><span class="line">rect<span class="selector-class">.bottom</span> -= <span class="number">1</span>;</span><br><span class="line">m_pBrowser-&gt;<span class="built_in">Create</span>(<span class="built_in">TEXT</span>(<span class="string">"NZBrowser"</span>), WS_CHILD | WS_VISIBLE, rect, this, MY_IEBROWSER_ID);</span><br></pre></td></tr></tbody></table></figure>
+<p>注意，rect的大小需要调节来获得需要的效果。</p>
+<h2 id="三、屏蔽右键"><a href="#三、屏蔽右键" class="headerlink" title="三、屏蔽右键"></a>三、屏蔽右键</h2><p>有种比较的方法是在PreTranslateMessage中过滤WM_RBUTTONDOWN消息。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//屏蔽右键</span></span><br><span class="line">BOOL CYXBrowser::<span class="built_in">PreTranslateMessage</span>(MSG* pMsg) </span><br><span class="line">{</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> Add your specialized code here and/or call the base class</span></span><br><span class="line">    <span class="built_in">if</span>(WM_RBUTTONDOWN == pMsg-&gt;message)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//AfxMessageBox(_T("Right Menu!"));</span></span><br><span class="line">        return TRUE;</span><br><span class="line">    }</span><br><span class="line">    return CWnd::<span class="built_in">PreTranslateMessage</span>(pMsg);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="四、隐藏网页的滚动条"><a href="#四、隐藏网页的滚动条" class="headerlink" title="四、隐藏网页的滚动条"></a>四、隐藏网页的滚动条</h2><p>这是最难处理的一个地方。不仅仅需要修改程序，而且需要web端的配合。</p>
+<p>第一步：添加DocumentComplete事件响应。在C<em>*</em>Dlg的cpp中添加如下宏：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">BEGIN_EVENTSINK_MAP</span><span class="params">(CClientBrowserDlg, CDialog)</span></span></span><br><span class="line">    <span class="built_in">ON_EVENT</span>(CClientBrowserDlg, MY_IEBROWSER_ID, DISPID_DOCUMENTCOMPLETE, DocumentComplete, VTS_DISPATCH VTS_PVARIANT)</span><br><span class="line"><span class="function"><span class="title">END_EVENTSINK_MAP</span><span class="params">()</span></span></span><br></pre></td></tr></tbody></table></figure>
+<p>注意，CClientBrowserDlg是响应函数所在的类，MY_IEBROWSER_ID是二中指定的浏览器窗口ID。DocumentComplete是CClientBrowserDlg中的响应该事件的成员函数。</p>
+<p>第二步：实现该函数，直接贴代码。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">void CClientBrowserDlg::<span class="built_in">DocumentComplete</span>(LPDISPATCH pDisp, VARIANT* URL)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">UNUSED_ALWAYS</span>(pDisp);</span><br><span class="line">    <span class="built_in">ASSERT</span>(<span class="built_in">V_VT</span>(URL) == VT_BSTR);</span><br><span class="line"></span><br><span class="line">    CString <span class="built_in">str</span>(<span class="built_in">V_BSTR</span>(URL));</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">OnDocumentComplete</span>(str);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnDocumentComplete</span>(LPCTSTR lpszURL)</span><br><span class="line">{</span><br><span class="line">    m_bDocumentComplete = true;</span><br><span class="line">    <span class="built_in">HideScrollBar</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">HideScrollBar</span>()</span><br><span class="line">{</span><br><span class="line">    HRESULT hr;</span><br><span class="line">    IDispatch *pDisp = <span class="built_in">GetDocument</span>();</span><br><span class="line">    IHTMLDocument2 *pDocument = NULL;</span><br><span class="line">    IHTMLElement*   pEl;  </span><br><span class="line">    IHTMLBodyElement   *pBodyEl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pDisp)</span><br><span class="line">    {</span><br><span class="line">        hr = pDisp-&gt;<span class="built_in">QueryInterface</span>(IID_IHTMLDocument2, (void**)pDocument);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">SUCCEEDED</span>(hr))</span><br><span class="line">        {</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">if</span>(pDocument  <span class="built_in">SUCCEEDED</span>(pDocument-&gt;<span class="built_in">get_body</span>(pEl)))  </span><br><span class="line">    {  </span><br><span class="line">        <span class="built_in">if</span>(pEl  <span class="built_in">SUCCEEDED</span>(pEl-&gt;<span class="built_in">QueryInterface</span>(IID_IHTMLBodyElement, (void**)pBodyEl)))  </span><br><span class="line">        {  </span><br><span class="line">            pBodyEl-&gt;<span class="built_in">put_scroll</span>(L<span class="string">"no"</span>);<span class="comment">//去滚动条</span></span><br><span class="line">        }  </span><br><span class="line">        IHTMLStyle   *phtmlStyle;  </span><br><span class="line">        pEl-&gt;<span class="built_in">get_style</span>(phtmlStyle);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(phtmlStyle  != NULL)  </span><br><span class="line">        {  </span><br><span class="line">            phtmlStyle-&gt;<span class="built_in">put_overflow</span>(L<span class="string">"hidden"</span>);</span><br><span class="line">            <span class="comment">//需要设置网页源码DOCTYPE为&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span></span><br><span class="line">            <span class="comment">//去除边框才有效</span></span><br><span class="line">            phtmlStyle-&gt;<span class="built_in">put_border</span>(L<span class="string">"none"</span>);<span class="comment">//   去除边框</span></span><br><span class="line"></span><br><span class="line">            phtmlStyle-&gt;<span class="built_in">Release</span>();  </span><br><span class="line">            pEl-&gt;<span class="built_in">Release</span>();  </span><br><span class="line">        }  </span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>关键函数是HideScrollBar()。</p>
+<p>第三步：在浏览器内嵌网页的最前面添加，</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span> <span class="keyword">PUBLIC</span> <span class="string">"-//W3C//DTD HTML 4.01 Transitional//EN"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>注意，第三步是不可缺少的。</p>
+<h2 id="五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框"><a href="#五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框" class="headerlink" title="五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框**"></a>五、屏蔽多次点击浏览器窗口的提示：”服务器正在运行中”要选择”切换到…”或”重试”的对话框**</h2><p>在CClientBrowserDlg::OnInitDialog()中添加如下代码，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*屏蔽掉"服务器正在运行中"要选择"切换到..."或"重试"的对话框*/</span></span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">EnableBusyDialog</span>(FALSE);</span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">SetBusyReply</span>(SERVERCALL_RETRYLATER);</span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">EnableNotRespondingDialog</span>(TRUE);</span><br><span class="line"><span class="function"><span class="title">AfxOleGetMessageFilter</span><span class="params">()</span></span>-&gt;<span class="built_in">SetMessagePendingDelay</span>(-<span class="number">1</span>);</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="六、点击网页打开系统默认浏览器"><a href="#六、点击网页打开系统默认浏览器" class="headerlink" title="六、点击网页打开系统默认浏览器"></a>六、点击网页打开系统默认浏览器</h2><p>第一步：绑定NEWWINDOW2事件。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ON_EVENT</span><span class="params">(CClientBrowserDlg, MY_IEBROWSER_ID, DISPID_NEWWINDOW2, OnNewWindow2, VTS_PDISPATCH VTS_PBOOL)</span></span></span><br></pre></td></tr></tbody></table></figure>
+<p>第二步：设置该OnNewWindow2的*bCancel为true，并且调用ShellExecute打开网页。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void CClientBrowserDlg::<span class="built_in">OnNewWindow2</span>(LPDISPATCH* ppDisp, BOOL* bCancel)</span><br><span class="line">{</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">OnNewWindow2</span>(ppDisp, bCancel);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnNewWindow2</span>(LPDISPATCH* ppDisp, BOOL* bCancel)</span><br><span class="line">{</span><br><span class="line">    *bCancel = TRUE;<span class="comment">//禁止弹出新窗口（因为会使用IE弹窗）</span></span><br><span class="line"></span><br><span class="line">    HRESULT hr;</span><br><span class="line">    IDispatch *pDisp = <span class="built_in">GetDocument</span>();</span><br><span class="line">    IHTMLDocument2 *pHTMLDocument2 = NULL;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pDisp)</span><br><span class="line">    {</span><br><span class="line">        hr = pDisp-&gt;<span class="built_in">QueryInterface</span>(IID_IHTMLDocument2, (void**)pHTMLDocument2);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">SUCCEEDED</span>(hr))</span><br><span class="line">        {</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pHTMLDocument2 != NULL)  </span><br><span class="line">    {  </span><br><span class="line">        CComPtr&lt;IHTMLElement&gt; pIHTMLElement;  </span><br><span class="line">        pHTMLDocument2-&gt;<span class="built_in">get_activeElement</span>(pIHTMLElement);  </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (pIHTMLElement != NULL)  </span><br><span class="line">        {  </span><br><span class="line">            variant_t url;  </span><br><span class="line">            hr = pIHTMLElement-&gt;<span class="built_in">getAttribute</span>(L<span class="string">"href"</span>, <span class="number">0</span>, url);  </span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">SUCCEEDED</span>(hr))  </span><br><span class="line">            {  </span><br><span class="line">                CString <span class="built_in">strURL</span>(<span class="built_in">V_BSTR</span>(url));</span><br><span class="line">                <span class="comment">//打开默认浏览器</span></span><br><span class="line">                <span class="built_in">ShellExecute</span>(m_hWndOwner, NULL, strURL, NULL, NULL, SW_NORMAL);</span><br><span class="line">            }  </span><br><span class="line">        }  </span><br><span class="line">    }     </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>处理了六，五也就不需要了，因为点击网页不会再弹出IE浏览器了。</p>
+<h2 id="七、为网页元素的添加事件处理：比如web按钮的点击等"><a href="#七、为网页元素的添加事件处理：比如web按钮的点击等" class="headerlink" title="七、为网页元素的添加事件处理：比如web按钮的点击等"></a>七、为网页元素的添加事件处理：比如web按钮的点击等</h2><p>第一步：继承CCmdTarget新建类CHtmlEventHandle，代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#pragma</span> once</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#import</span> &lt;mshtml.tlb&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CHtmlEventHandle command target</span></span><br><span class="line">class CYXBrowser;</span><br><span class="line"></span><br><span class="line">class CHtmlEventHandle : public CCmdTarget</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">DECLARE_DYNAMIC</span>(CHtmlEventHandle)</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CHtmlEventHandle</span>();</span><br><span class="line">    virtual ~<span class="built_in">CHtmlEventHandle</span>();</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    void <span class="built_in">SetWnd</span>(CWnd* pWnd) { m_pWnd = pWnd;}</span><br><span class="line">    void <span class="built_in">SetWebBrowser</span>(CYXBrowser* pWebBroswer) { m_pWebBrowser = pWebBroswer; }</span><br><span class="line">    <span class="comment">// 消息处理函数</span></span><br><span class="line">    void <span class="built_in">OnClick</span>(MSHTML::IHTMLEventObjPtr pEvtObj);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    CWnd* m_pWnd;</span><br><span class="line">    CYXBrowser* m_pWebBrowser;</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    <span class="built_in">DECLARE_MESSAGE_MAP</span>()</span><br><span class="line">    <span class="built_in">DECLARE_DISPATCH_MAP</span>()</span><br><span class="line">    <span class="built_in">DECLARE_INTERFACE_MAP</span>()</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// HtmlEventHandle.cpp : implementation file</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"stdafx.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"ClientBrowser.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"HtmlEventHandle.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"mshtmdid.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"MsHTML.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"YXBrowser.h"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// CHtmlEventHandle</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">IMPLEMENT_DYNAMIC</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line"></span><br><span class="line">CHtmlEventHandle::<span class="built_in">CHtmlEventHandle</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">EnableAutomation</span>();  <span class="comment">// 重要：激活 IDispatch</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">CHtmlEventHandle::~<span class="built_in">CHtmlEventHandle</span>()</span><br><span class="line">{</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">BEGIN_MESSAGE_MAP</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line"><span class="function"><span class="title">END_MESSAGE_MAP</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">BEGIN_DISPATCH_MAP</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line">    <span class="built_in">DISP_FUNCTION_ID</span>(CHtmlEventHandle, <span class="string">"HTMLELEMENTEVENTS2_ONCLICK"</span>,</span><br><span class="line">    DISPID_HTMLELEMENTEVENTS2_ONCLICK, OnClick,</span><br><span class="line">    VT_EMPTY, VTS_DISPATCH)</span><br><span class="line"><span class="function"><span class="title">END_DISPATCH_MAP</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">BEGIN_INTERFACE_MAP</span><span class="params">(CHtmlEventHandle, CCmdTarget)</span></span></span><br><span class="line">    <span class="built_in">INTERFACE_PART</span>(CHtmlEventHandle,</span><br><span class="line">    DIID_HTMLButtonElementEvents2, Dispatch)</span><br><span class="line"><span class="function"><span class="title">END_INTERFACE_MAP</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// CHtmlEventHandle message handlers</span></span><br><span class="line"></span><br><span class="line">void CHtmlEventHandle::<span class="built_in">OnClick</span>(MSHTML::IHTMLEventObjPtr pEvtObj)</span><br><span class="line">{</span><br><span class="line">    MSHTML::IHTMLElementPtr pElement =</span><br><span class="line">        pEvtObj-&gt;<span class="built_in">GetsrcElement</span>(); <span class="comment">// 事件发生的对象元素</span></span><br><span class="line">    <span class="built_in">while</span>(pElement) <span class="comment">// 逐层向上检查</span></span><br><span class="line">    {</span><br><span class="line">        _bstr_t strId;</span><br><span class="line">        pElement-&gt;<span class="built_in">get_id</span>(strId<span class="selector-class">.GetBSTR</span>());</span><br><span class="line">        <span class="built_in">if</span>(<span class="built_in">_bstr_t</span>(HTML_CLOSE_BUTTON) == strId)<span class="comment">//响应关闭按钮点击</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">PostQuitMessage</span>(<span class="number">0</span>);</span><br><span class="line">            break;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">_bstr_t</span>(HTML_SET_BUTTON) == strId)<span class="comment">//30天不弹出设置</span></span><br><span class="line">        {</span><br><span class="line"></span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        pElement = pElement-&gt;<span class="built_in">GetparentElement</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">//注意那几个宏。宏的具体解释我没有去深究，仿照DISP_FUNCTION_ID可以为点击外的其它事件添加处理。</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>第二步：在CYXBrowser中注册这个web事件处理类。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//添加成员</span></span><br><span class="line">private:</span><br><span class="line">    void <span class="built_in">InstallEventHandler</span>();</span><br><span class="line">    void <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    CHtmlEventHandle *m_pEventHandler;</span><br><span class="line">    DWORD m_dwDocCookie;    <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    IDispatch *m_pDispDoc;  <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    bool m_bDocumentComplete;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相应的函数实现</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 安装响应函数。省略了一些失败判断以突出主要步骤</span></span><br><span class="line">void CYXBrowser::<span class="built_in">InstallEventHandler</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">if</span>(m_dwDocCookie)   <span class="comment">// 已安装，卸载先。最后一次安装的才有效</span></span><br><span class="line">        <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line"></span><br><span class="line">    m_pDispDoc = <span class="built_in">GetDocument</span>();</span><br><span class="line">    IConnectionPointContainerPtr pCPC = m_pDispDoc;</span><br><span class="line">    IConnectionPointPtr pCP;</span><br><span class="line">    <span class="comment">// 找到安装点</span></span><br><span class="line">    pCPC-&gt;<span class="built_in">FindConnectionPoint</span>(DIID_HTMLDocumentEvents2, pCP);</span><br><span class="line">    IUnknown* pUnk = m_pEventHandler-&gt;<span class="built_in">GetInterface</span>(IID_IUnknown);</span><br><span class="line">    <span class="comment">//安装</span></span><br><span class="line">    HRESULT hr = pCP-&gt;<span class="built_in">Advise</span>(pUnk, m_dwDocCookie);</span><br><span class="line">    <span class="built_in">if</span>(!<span class="built_in">SUCCEEDED</span>(hr))  <span class="comment">// 安装失败</span></span><br><span class="line">        m_dwDocCookie = <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 卸载响应函数。省略了一些失败判断以突出主要步骤</span></span><br><span class="line">void CYXBrowser::<span class="built_in">UninstallEventHandler</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">if</span>(<span class="number">0</span> == m_dwDocCookie) return;</span><br><span class="line"></span><br><span class="line">    IConnectionPointContainerPtr pCPC = m_pDispDoc;</span><br><span class="line">    IConnectionPointPtr pCP;</span><br><span class="line">    pCPC-&gt;<span class="built_in">FindConnectionPoint</span>(DIID_HTMLDocumentEvents2, pCP);</span><br><span class="line">    HRESULT hr = pCP-&gt;<span class="built_in">Unadvise</span>(m_dwDocCookie);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//在OnDocumentComplete中安装事件处理</span></span><br><span class="line">CYXBrowser::<span class="built_in">CYXBrowser</span>()</span><br><span class="line">{</span><br><span class="line">    m_pEventHandler = new CHtmlEventHandle;</span><br><span class="line">    m_pEventHandler-&gt;<span class="built_in">SetWnd</span>(m_pParent);</span><br><span class="line">    m_pEventHandler-&gt;<span class="built_in">SetWebBrowser</span>(this);</span><br><span class="line">    m_dwDocCookie = <span class="number">0</span>;    <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    m_pDispDoc = NULL;  <span class="comment">// 用于卸载事件响应函数</span></span><br><span class="line">    m_bDocumentComplete = false;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnDocumentComplete</span>(LPCTSTR lpszURL)</span><br><span class="line">{</span><br><span class="line">    m_bDocumentComplete = true;</span><br><span class="line">    <span class="built_in">HideScrollBar</span>();</span><br><span class="line">    <span class="built_in">InstallEventHandler</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//在OnBeforeNavigate2和OnDestroy中卸载处理</span></span><br><span class="line"><span class="comment">// 在 BeforeNavigate2 和 Destroy 事件中卸载响应函数</span></span><br><span class="line">void CYXBrowser::<span class="built_in">OnBeforeNavigate2</span>(LPCTSTR lpszURL, DWORD nFlags,</span><br><span class="line">                                   LPCTSTR lpszTargetFrameName, CByteArray baPostedData,</span><br><span class="line">                                   LPCTSTR lpszHeaders, BOOL* pbCancel)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line">    <span class="comment">// 其他代码...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CYXBrowser::<span class="built_in">OnDestroy</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">UninstallEventHandler</span>();</span><br><span class="line">    CWebBrowser2::<span class="built_in">OnDestroy</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>现在就可以在void CHtmlEventHandle::OnClick(MSHTML::IHTMLEventObjPtr pEvtObj)函数内捕获网页按钮之类的点击了。处理代码的思路是从当前元素开始，不断往上查找父元素，直到匹配的元素ID为止。</p>
+<h2 id="八、判断url是否有效，如果无效则打开资源url，防止Web页面为空"><a href="#八、判断url是否有效，如果无效则打开资源url，防止Web页面为空" class="headerlink" title="八、判断url是否有效，如果无效则打开资源url，防止Web页面为空"></a>八、判断url是否有效，如果无效则打开资源url，防止Web页面为空</h2><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用该函数判断url是否能打开</span></span><br><span class="line">bool CYXBrowser::<span class="built_in">IsUrlAvailable</span>(CString strUrl)</span><br><span class="line">{</span><br><span class="line">    CInternetSession* session = new <span class="built_in">CInternetSession</span>(); </span><br><span class="line">    CInternetFile* file = NULL; </span><br><span class="line">    bool bAvailable = true;</span><br><span class="line"></span><br><span class="line">    try</span><br><span class="line">    {</span><br><span class="line">        file = (CInternetFile*)session-&gt;<span class="built_in">OpenURL</span>(strUrl); </span><br><span class="line">    }</span><br><span class="line">    catch (CInternetException*)</span><br><span class="line">    {</span><br><span class="line">        bAvailable = false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    delete session;</span><br><span class="line">    <span class="keyword">if</span> (!file)</span><br><span class="line">    {</span><br><span class="line">        bAvailable = false;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return bAvailable;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//在对话框初始化时候，判断外网url是否能打开，如果不能则加载资源内的url</span></span><br><span class="line"><span class="keyword">if</span> (m_pBrowser-&gt;<span class="built_in">IsUrlAvailable</span>(theApp.m_strUrl))</span><br><span class="line">{</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">Navigate2</span>(theApp.m_strUrl);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">{</span><br><span class="line">    TCHAR szModule<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    <span class="built_in">GetModuleFileName</span>(theApp<span class="selector-class">.m_hInstance</span>, szModule, MAX_PATH);</span><br><span class="line">    theApp<span class="selector-class">.m_strUrl</span><span class="selector-class">.Format</span>(<span class="built_in">_T</span>(<span class="string">"res://%s/%s"</span>), szModule, theApp.m_strLocalUrl);</span><br><span class="line">    m_pBrowser-&gt;<span class="built_in">Navigate2</span>(theApp.m_strUrl);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>注意资源url的格式是res://模块名/网页名，因此需要在该程序中导入自定义的资源，并且将其命名为theApp.m_strLocalUrl代表的字符串值，比如”NZ.HTML”。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/03/17/%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E4%B8%8A%E5%9F%BA%E4%BA%8E%E7%AC%94%E7%94%BB%E7%9A%84%E7%BA%B9%E7%90%86%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%90%88%E6%88%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1321,127 +1461,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/" class="post-title-link" itemprop="url">数值到颜色的自然映射</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-06-08 12:52:12" itemprop="dateCreated datePublished" datetime="2015-06-08T12:52:12+08:00">2015-06-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/" class="post-meta-item leancloud_visitors" data-flag-title="数值到颜色的自然映射" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/06/08/%E6%95%B0%E5%80%BC%E5%88%B0%E9%A2%9C%E8%89%B2%E7%9A%84%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>很久没更新博客了。额，一直想写这个来着。记得以前写过绘制三维标量场的文章，方法是找的渐变颜色纹理图片，然后用一维纹理坐标映射贴上去的。后面发现根本不需要去找图片，这种渐变色本来就是一种颜色空间的定义。<a href="http://baike.baidu.com/link?url=RUroPPZprWlPOJx8JaodE2Je0wql6wHv0N3LigWMqsRjCxxVDAT_yWwGYL4myeEkHTKIeBxFbC9qjwvrzD2XlzgyxW-2lUZ25TyUePioufQBbhhZSTRB5VUApB0gCfgsJPG-CtbbTBBs3DacsTvMAFk5YzmyeD5uius5R5vTr3sPZbGsfmiL-6ovaPXrncfqk0vcp8KhirUnmKEEZdR_0q">请看hsv颜色模型</a>，这种颜色模型类似于rgb，也是三个分量h（色调），s（饱和度），v（亮度）。h表示的绕圆锥的一周，也就是纯颜色的渐变，正是我们需要的东西。s表示从圆心到圆边缘的半径，0-1的范围，表示颜色纯度。v则是垂直的轴，表示亮度。如下图，我们要的就是绕圈一周的颜色渐变。</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7213/27452089865_0225e3c1e8_o.png"></p>
-<p>总体思路就是数值0-1，映射到hsv颜色空间的（0-360,1,255）。实现标量场的方法是，首先，将hsv的（0-360,1,255）转换为rgb，保存为一维数组。以该数组为数据，生成一维纹理，数值0-1作为纹理坐标，再贴图即可生成标量场。下面是用该方法生成标量场的相关代码。首先是构造一维纹理数组，然后用其生成1d纹理。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">int CTexture::<span class="built_in">BuildColorMapTexture</span>()</span><br><span class="line">{</span><br><span class="line">        const int COLOR_SIZE = <span class="number">240</span>;<span class="comment">//红到蓝</span></span><br><span class="line">        ImageRGBA <span class="built_in">colorMap</span>(COLOR_SIZE, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; COLOR_SIZE; ++i)</span><br><span class="line">        {</span><br><span class="line">            colorMap<span class="selector-class">.pixel</span>(<span class="selector-tag">i</span>, <span class="number">0</span>) = <span class="built_in">Hsv2Rgb</span>(<span class="selector-tag">i</span>, <span class="number">1</span>, <span class="number">255</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">glPixelStorei</span>(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">glGenTextures</span>(<span class="number">1</span>, m_uTexName);</span><br><span class="line">        <span class="built_in">glBindTexture</span>(GL_TEXTURE_1D, m_uTexName);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">        <span class="built_in">glTexParameteri</span>(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);</span><br><span class="line">        <span class="built_in">glTexEnvf</span>(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//生成2d的Mipmap纹理</span></span><br><span class="line">        int nRet = <span class="built_in">gluBuild1DMipmaps</span>(GL_TEXTURE_1D, <span class="number">4</span>, COLOR_SIZE, GL_RGBA, GL_UNSIGNED_BYTE,</span><br><span class="line">            colorMap<span class="selector-class">.raw</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (nRet != <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return <span class="number">0</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>hsv2rgb的代码如下，从网上可以随便找个修改。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">PixelRGBA <span class="built_in">Hsv2Rgb</span>(<span class="attribute">float</span> H, float S, float V)</span><br><span class="line">{</span><br><span class="line">        <span class="attribute">float</span> R, G, B;</span><br><span class="line"></span><br><span class="line">        int i;</span><br><span class="line">        <span class="attribute">float</span> f, p, q, t;</span><br><span class="line">        <span class="built_in">if</span>(S == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">// achromatic (grey)</span></span><br><span class="line">            R = G = B = V;</span><br><span class="line">            return <span class="built_in">V4B</span>(R, G, B, <span class="number">255</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        H /= <span class="number">60</span>; <span class="comment">// sector 0 to 5</span></span><br><span class="line">        <span class="selector-tag">i</span> = <span class="built_in">floor</span>( H );</span><br><span class="line">        f = H - i; <span class="comment">// factorial part of h</span></span><br><span class="line">        <span class="selector-tag">p</span> = V * ( <span class="number">1</span> - S );</span><br><span class="line">        <span class="selector-tag">q</span> = V * ( <span class="number">1</span> - S * f );</span><br><span class="line">        t = V * ( <span class="number">1</span> - S * ( <span class="number">1</span> - f ) );</span><br><span class="line"></span><br><span class="line">        <span class="built_in">switch</span>( <span class="selector-tag">i</span> )</span><br><span class="line">        {</span><br><span class="line">        case <span class="number">0</span>:</span><br><span class="line">            R = V;</span><br><span class="line">            G = t;</span><br><span class="line">            B = p;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">1</span>:</span><br><span class="line">            R = q;</span><br><span class="line">            G = V;</span><br><span class="line">            B = p;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">2</span>:</span><br><span class="line">            R = p;</span><br><span class="line">            G = V;</span><br><span class="line">            B = t;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">3</span>:</span><br><span class="line">            R = p;</span><br><span class="line">            G = q;</span><br><span class="line">            B = V;</span><br><span class="line">            break;</span><br><span class="line">        case <span class="number">4</span>:</span><br><span class="line">            R = t;</span><br><span class="line">            G = p;</span><br><span class="line">            B = V;</span><br><span class="line">            break;</span><br><span class="line">        default: <span class="comment">// case 5:</span></span><br><span class="line">            R = V;</span><br><span class="line">            G = p;</span><br><span class="line">            B = q;</span><br><span class="line">            break;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        return <span class="built_in">V4B</span>(R, G, B, <span class="number">255</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>剩下的事情就是使用BuildColorMapTexture生成1d纹理，然后将数值作为1d纹理坐标设置好就行了。下面是相关的效果图：</p>
-<p>颜色空间转换生成纹理：</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7138/26844818173_cb7558cfc0_o.png"></p>
-<p>渐变纹理贴图：</p>
-<p><img alt="" data-src="https://c8.staticflickr.com/8/7638/27452089775_9fe5365f97_o.jpg"><img alt="" data-src="https://c2.staticflickr.com/8/7365/27175625310_f7f44d74d5_o.png"></p>
-<p>不同的方法效果有区别，原因可能是贴图的数据更精细，而且同一范围比如0-0.3对应的颜色就可能不一致。马上要毕业了，工作内容是游戏开发，以后估计不会再更新读研期间类似的文章的了。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1492,7 +1511,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">222</span>
+          <span class="site-state-item-count">223</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1505,7 +1524,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">113</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1548,7 +1567,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1557,12 +1576,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">671k</span>
+    <span title="站点总字数">676k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:10</span>
+    <span title="站点阅读时长">10:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
