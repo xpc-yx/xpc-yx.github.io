@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/04/03/uva-465-overflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/04/03/uva-465-overflow/" class="post-title-link" itemprop="url">Uva 465 - Overflow</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-04-03 10:00:00" itemprop="dateCreated datePublished" datetime="2012-04-03T10:00:00+08:00">2012-04-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/04/03/uva-465-overflow/" class="post-meta-item leancloud_visitors" data-flag-title="Uva 465 - Overflow" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/04/03/uva-465-overflow/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/04/03/uva-465-overflow/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这是一道很简单的题吧，大数都不需要用到，可是很悲剧wa了很久。确实写题太不严谨了，出了好多bug，甚至题意都没注意清楚。<br>这种题我一直忘记忽略前导’0’。还有题目没有给出最长的数字的长度，所以最好用string类。<br>使用longlong之前最好已经测试了OJ，是用%lld还是%I64d，如果OJ后台是linux下的g++，只能是%lld，Windows下的MinGW32(Dev-C++也一样用的是这个库)要用%I64d才能正确。所以预赛之前需要对普通题进行测试下。还有注意复合逻辑表达式是否写正确了，最近经常写错了，太郁闷了。<br>给自己提个醒吧，校赛这种题再不能迅速A掉基本太丢人了。<br>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt; </span><br><span class="line"><span class="selector-id">#include</span> &lt;limits.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">10000</span>)</span><br><span class="line">char szIntMax<span class="selector-attr">[20]</span>;</span><br><span class="line">char szLine<span class="selector-attr">[MAX]</span>;</span><br><span class="line">char szOne<span class="selector-attr">[MAX]</span>;</span><br><span class="line">char szTwo<span class="selector-attr">[MAX]</span>;</span><br><span class="line">char szOper<span class="selector-attr">[10]</span>;</span><br><span class="line"></span><br><span class="line">char* <span class="built_in">MyItoa</span>(int nNum, char* pszNum, int nBase)</span><br><span class="line">{</span><br><span class="line">    int nLen = <span class="number">0</span>;</span><br><span class="line">    while (nNum)</span><br><span class="line">    {</span><br><span class="line">        pszNum<span class="selector-attr">[nLen++]</span> = nNum % nBase + <span class="string">'0'</span>;</span><br><span class="line">        nNum /= nBase;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">reverse</span>(pszNum, pszNum + nLen);</span><br><span class="line">    pszNum<span class="selector-attr">[nLen]</span> = <span class="string">'\0'</span>;</span><br><span class="line"></span><br><span class="line">    return pszNum;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">IsBigger</span>(char* pszOne, int nLenOne, char* pszTwo, int nLenTwo)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//printf(";pszOne:%s, pszTwo:%s\n";, pszOne, pszTwo);</span></span><br><span class="line">    <span class="keyword">if</span> (nLenOne != nLenTwo)</span><br><span class="line">    {</span><br><span class="line">        return nLenOne &gt; nLenTwo;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nLenOne; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (pszOne<span class="selector-attr">[i]</span> != pszTwo<span class="selector-attr">[i]</span>)</span><br><span class="line">            {</span><br><span class="line">                return pszOne<span class="selector-attr">[i]</span> &gt; pszTwo<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">StripHeadZero</span>(char* pszNum)</span><br><span class="line">{</span><br><span class="line">    int nLen = <span class="built_in">strlen</span>(pszNum);</span><br><span class="line">    int i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nLen &amp;&amp; pszNum<span class="selector-attr">[i]</span> == <span class="string">'0'</span>; ++i);</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">i</span> == nLen)</span><br><span class="line">    {</span><br><span class="line">        pszNum<span class="selector-attr">[0]</span> = <span class="string">'0'</span>;</span><br><span class="line">        pszNum<span class="selector-attr">[1]</span> = <span class="string">'\0'</span>;</span><br><span class="line">        nLen = <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        char* pszWrite = pszNum;</span><br><span class="line">        char* pszRead = pszNum + i;</span><br><span class="line">        nLen = <span class="number">0</span>;</span><br><span class="line">        while (*pszRead)</span><br><span class="line">        {</span><br><span class="line">            *pszWrite++ = *pszRead++;</span><br><span class="line">            ++nLen;</span><br><span class="line">        }</span><br><span class="line">        *pszWrite = <span class="string">'\0'</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return nLen;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nIntMax = INT_MAX;</span><br><span class="line">    <span class="built_in">MyItoa</span>(nIntMax, szIntMax, <span class="number">10</span>);</span><br><span class="line">    int nLenMax = <span class="built_in">strlen</span>(szIntMax);</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">gets</span>(szLine))</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (szLine<span class="selector-attr">[0]</span> == <span class="string">'\0'</span>)</span><br><span class="line">        {</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">sscanf</span>(szLine, <span class="string">";%s%s%s"</span>;, szOne, szOper, szTwo);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">";%s %s %s\n"</span>;, szOne, szOper, szTwo);</span><br><span class="line">        <span class="built_in">StripHeadZero</span>(szOne);</span><br><span class="line">        <span class="built_in">StripHeadZero</span>(szTwo);</span><br><span class="line"></span><br><span class="line">        int nLenOne = <span class="built_in">strlen</span>(szOne);</span><br><span class="line">        int nLenTwo = <span class="built_in">strlen</span>(szTwo);</span><br><span class="line">        bool bFirst = false;</span><br><span class="line">        bool bSecond = false;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">IsBigger</span>(szOne, nLenOne, szIntMax, nLenMax))</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">";first number too big\n"</span>;);</span><br><span class="line">            bFirst = true;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">IsBigger</span>(szTwo, nLenTwo, szIntMax, nLenMax))</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">";second number too big\n"</span>;);</span><br><span class="line">            bSecond = true;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bFirst || bSecond)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (szOper<span class="selector-attr">[0]</span> == <span class="string">'+'</span> || (szOper<span class="selector-attr">[0]</span> == <span class="string">'*'</span> &amp;&amp; szOne<span class="selector-attr">[0]</span> != <span class="string">'0'</span> &amp;&amp; szTwo<span class="selector-attr">[0]</span> != <span class="string">'0'</span>))</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">";result too big\n"</span>;);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        {</span><br><span class="line">            long long nOne, nTwo;</span><br><span class="line">            <span class="built_in">sscanf</span>(szLine, <span class="string">"%lld%s%lld"</span>, &amp;nOne, szOper, &amp;nTwo);</span><br><span class="line">            long long nResult;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (szOper<span class="selector-attr">[0]</span> == <span class="string">'+'</span>)</span><br><span class="line">            {</span><br><span class="line">                nResult = nOne + nTwo;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (szOper<span class="selector-attr">[0]</span> == <span class="string">'*'</span>)</span><br><span class="line">            {</span><br><span class="line">                nResult = nOne * nTwo;</span><br><span class="line">            }</span><br><span class="line">            <span class="comment">//printf(";%I64d\n";, nResult);</span></span><br><span class="line">            <span class="keyword">if</span> (nResult &gt; INT_MAX)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">";result too big\n"</span>;);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/03/30/Uva%2010132%20-%20File%20Fragmentation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1212,121 +1322,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/01/03/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0BatchDelFile,%20%E8%B0%83%E7%94%A8cmd%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6,%20Windows%E7%95%8C%E9%9D%A2%E4%B8%8B%E4%B8%8D%E5%9B%9E%E6%98%BEConsole%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/01/03/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0BatchDelFile,%20%E8%B0%83%E7%94%A8cmd%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6,%20Windows%E7%95%8C%E9%9D%A2%E4%B8%8B%E4%B8%8D%E5%9B%9E%E6%98%BEConsole%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">自定义可变参数函数BatchDelFile, 调用cmd批量删除指定格式文件, Windows界面下不回显Console窗口</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-01-03 10:00:00" itemprop="dateCreated datePublished" datetime="2012-01-03T10:00:00+08:00">2012-01-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/01/03/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0BatchDelFile,%20%E8%B0%83%E7%94%A8cmd%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6,%20Windows%E7%95%8C%E9%9D%A2%E4%B8%8B%E4%B8%8D%E5%9B%9E%E6%98%BEConsole%E7%AA%97%E5%8F%A3/" class="post-meta-item leancloud_visitors" data-flag-title="自定义可变参数函数BatchDelFile, 调用cmd批量删除指定格式文件, Windows界面下不回显Console窗口" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/01/03/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0BatchDelFile,%20%E8%B0%83%E7%94%A8cmd%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6,%20Windows%E7%95%8C%E9%9D%A2%E4%B8%8B%E4%B8%8D%E5%9B%9E%E6%98%BEConsole%E7%AA%97%E5%8F%A3/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/01/03/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0BatchDelFile,%20%E8%B0%83%E7%94%A8cmd%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6,%20Windows%E7%95%8C%E9%9D%A2%E4%B8%8B%E4%B8%8D%E5%9B%9E%E6%98%BEConsole%E7%AA%97%E5%8F%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>今天在做课设，由于想给程序加上删除以前的配置文件的功能，由于某种原因，同类型的文件比较多，加上暑假实习的时候，做了个用dir命令实现的批量文件修改器，所以决定用del命令，一下子写好后，发现以前由于没有要求做界面，而现在课设我用的是MFC里面的CFormView做的界面，所以会闪烁而过一个console窗口，实在不爽之，所以，找方法去掉它。<br>网上找来找去，只找到启动cmd，传参数的都很少，传参数时候组合参数的更加少，加上我对dos命令不熟悉，所以实在悲催，浪费了不少时间。<br>这种东西，一直窃以为有人做好之后，提供比较合格的接口，大家以后都方便，所以贴出来，大家雅俗共赏，批评下。还发现网上的代码有个问题，居然大多把直接cmd路径写上去，其实大家都知道，系统路径是不确定的，所以特定修正了这个bug，而且我也实验了下，无论参数是绝对路径还是相对路径这个函数都是有效的。<br>大家用这个函数的时候，记得cmd命令都是可以匹配通配符的哦。</p>
-<p>函数代码如下:</p>
-<p>//批量删除指定格式文件,不显示console窗口</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">BatchDelFile</span>(char* pszFile)</span><br><span class="line">{</span><br><span class="line">    char szDelCmd<span class="selector-attr">[MAX_INFO_LEN]</span>;</span><br><span class="line">    char szCurDir<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    char szCmdPath<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    SHELLEXECUTEINFO shExecInfo = {<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line">    <span class="built_in">GetCurrentDirectory</span>(MAX_PATH, szCurDir);<span class="comment">//获取当前路径</span></span><br><span class="line">    <span class="built_in">GetSystemDirectory</span>(szCmdPath, MAX_PATH);<span class="comment">//获取cmd路径</span></span><br><span class="line">    <span class="built_in">strcat</span>(szCmdPath, <span class="string">"\\cmd.exe"</span>);</span><br><span class="line">    <span class="built_in">sprintf</span>(szDelCmd, <span class="string">"%s /c del /f /q /s %s"</span>,</span><br><span class="line">    szCmdPath, pszFile);<span class="comment">//格式化出命令字符串, 注意加上/c, 还有那2个""</span></span><br><span class="line"></span><br><span class="line">    shExecInfo<span class="selector-class">.cbSize</span> = <span class="built_in">sizeof</span>(SHELLEXECUTEINFO);</span><br><span class="line">    shExecInfo<span class="selector-class">.fMask</span> = SEE_MASK_NOCLOSEPROCESS;</span><br><span class="line">    shExecInfo<span class="selector-class">.hwnd</span> = NULL;</span><br><span class="line">    shExecInfo<span class="selector-class">.lpVerb</span> = NULL;</span><br><span class="line">    shExecInfo<span class="selector-class">.lpFile</span> = szCmdPath;<span class="comment">//cmd的路径</span></span><br><span class="line">    shExecInfo<span class="selector-class">.lpParameters</span> = szDelCmd;<span class="comment">//程序参数,参数格式必须保证正确</span></span><br><span class="line">    shExecInfo<span class="selector-class">.lpDirectory</span> = szCurDir;<span class="comment">//如果szFile是相对路径,那个这个参数就会起作用</span></span><br><span class="line">    shExecInfo<span class="selector-class">.nShow</span> = SW_HIDE;<span class="comment">//隐藏cmd窗口</span></span><br><span class="line">    shExecInfo<span class="selector-class">.hInstApp</span> = NULL;</span><br><span class="line">    <span class="built_in">ShellExecuteEx</span>(&amp;shExecInfo);</span><br><span class="line">    <span class="built_in">WaitForSingleObject</span>(shExecInfo<span class="selector-class">.hProcess</span>, INFINITE);<span class="comment">//无限等待cmd窗口执行完毕</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>以下是我在一个消息出来函数的调用：<br>char szDelFiles[MAX_PATH];<br>sprintf(szDelFiles, “\”<em>.tcp.txt\” + \”</em>.udp.txt\””);<br>BatchDelFile(szDelFiles);</p>
-<p>为了调用方便，我还实现了一个可变参数列表的版本，以及一个传一个文件名数组的版本。</p>
-<p>可变参数版本代码如下：<br>//批量删除指定格式文件,不显示console窗口</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">BatchDelFile</span>(int nNum, ...)</span><br><span class="line">{</span><br><span class="line">    va_list argPtr;</span><br><span class="line">    int i;</span><br><span class="line">    char* pszDelCmd;</span><br><span class="line">    char szCurDir<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    char szCmdPath<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    SHELLEXECUTEINFO shExecInfo = {<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line">    pszDelCmd = (char*)<span class="built_in">malloc</span>((nNum + <span class="number">2</span>)* MAX_PATH);</span><br><span class="line">    <span class="built_in">GetCurrentDirectory</span>(MAX_PATH, szCurDir);<span class="comment">//获取当前路径</span></span><br><span class="line">    <span class="built_in">GetSystemDirectory</span>(szCmdPath, MAX_PATH);<span class="comment">//获取cmd路径</span></span><br><span class="line">    <span class="built_in">strcat</span>(szCmdPath, <span class="string">"\\cmd.exe"</span>);</span><br><span class="line">    <span class="built_in">sprintf</span>(pszDelCmd, <span class="string">"%s /c del /f /q /s "</span>, szCmdPath);<span class="comment">//格式化出命令字符串, 注意加上/c</span></span><br><span class="line">    <span class="built_in">va_start</span>(argPtr, nNum);</span><br><span class="line">    <span class="built_in">for</span>(<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nNum; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">strcat</span>(pszDelCmd, <span class="string">"\""</span>);</span><br><span class="line">        <span class="built_in">strcat</span>(pszDelCmd, *(char**)argPtr);</span><br><span class="line">        <span class="built_in">strcat</span>(pszDelCmd, <span class="string">"\""</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="selector-tag">i</span> != nNum - <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">strcat</span>(pszDelCmd, <span class="string">" + "</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">va_arg</span>(argPtr, char**);</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">va_end</span>(argPtr);</span><br><span class="line">    shExecInfo<span class="selector-class">.cbSize</span> = <span class="built_in">sizeof</span>(SHELLEXECUTEINFO);</span><br><span class="line">    shExecInfo<span class="selector-class">.fMask</span> = SEE_MASK_NOCLOSEPROCESS;</span><br><span class="line">    shExecInfo<span class="selector-class">.hwnd</span> = NULL;</span><br><span class="line">    shExecInfo<span class="selector-class">.lpVerb</span> = NULL;</span><br><span class="line">    shExecInfo<span class="selector-class">.lpFile</span> = szCmdPath;<span class="comment">//cmd的路径</span></span><br><span class="line">    shExecInfo<span class="selector-class">.lpParameters</span> = pszDelCmd;<span class="comment">//程序参数,参数格式必须保证正确</span></span><br><span class="line">    shExecInfo<span class="selector-class">.lpDirectory</span> = szCurDir;<span class="comment">//如果szFile是相对路径,那个这个参数就会起作用</span></span><br><span class="line">    shExecInfo<span class="selector-class">.nShow</span> = SW_HIDE;<span class="comment">//隐藏cmd窗口</span></span><br><span class="line">    shExecInfo<span class="selector-class">.hInstApp</span> = NULL;</span><br><span class="line">    <span class="built_in">ShellExecuteEx</span>(&amp;shExecInfo);</span><br><span class="line">    <span class="built_in">WaitForSingleObject</span>(shExecInfo<span class="selector-class">.hProcess</span>, INFINITE);<span class="comment">//无限等待cmd窗口执行完毕</span></span><br><span class="line">    <span class="built_in">free</span>(pszDelCmd);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>调用方法：<br>BatchDelFile(2, “<em>.tcp.txt”, “</em>.udp.txt”);//第一个是文件个数，后面依次是文件路径，文件路径可以是相对路径也可以是绝对路径。</p>
-<p>文件名数组的版本代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">BatchDelFile</span>(int nNum, char** pszFiles)</span><br><span class="line">{</span><br><span class="line">    int i;</span><br><span class="line">    char* pszDelCmd;</span><br><span class="line">    char szCurDir<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    char szCmdPath<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    SHELLEXECUTEINFO shExecInfo = {<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line">    pszDelCmd = (char*)<span class="built_in">malloc</span>((nNum + <span class="number">2</span>)* MAX_PATH);</span><br><span class="line">    <span class="built_in">GetCurrentDirectory</span>(MAX_PATH, szCurDir);<span class="comment">//获取当前路径</span></span><br><span class="line">    <span class="built_in">GetSystemDirectory</span>(szCmdPath, MAX_PATH);<span class="comment">//获取cmd路径</span></span><br><span class="line">    <span class="built_in">strcat</span>(szCmdPath, <span class="string">"\\cmd.exe"</span>);</span><br><span class="line">    <span class="built_in">sprintf</span>(pszDelCmd, <span class="string">"%s /c del /f /q /s "</span>, szCmdPath);<span class="comment">//格式化出命令字符串, 注意加上/c</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">for</span>(<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nNum; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">strcat</span>(pszDelCmd, <span class="string">"\""</span>);</span><br><span class="line">        <span class="built_in">strcat</span>(pszDelCmd, *(pszFiles + i));</span><br><span class="line">        <span class="built_in">strcat</span>(pszDelCmd, <span class="string">"\""</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="selector-tag">i</span> != nNum - <span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">strcat</span>(pszDelCmd, <span class="string">" + "</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    shExecInfo<span class="selector-class">.cbSize</span> = <span class="built_in">sizeof</span>(SHELLEXECUTEINFO);</span><br><span class="line">    shExecInfo<span class="selector-class">.fMask</span> = SEE_MASK_NOCLOSEPROCESS;</span><br><span class="line">    shExecInfo<span class="selector-class">.hwnd</span> = NULL;</span><br><span class="line">    shExecInfo<span class="selector-class">.lpVerb</span> = NULL;</span><br><span class="line">    shExecInfo<span class="selector-class">.lpFile</span> = szCmdPath;<span class="comment">//cmd的路径</span></span><br><span class="line">    shExecInfo<span class="selector-class">.lpParameters</span> = pszDelCmd;<span class="comment">//程序参数,参数格式必须保证正确</span></span><br><span class="line">    shExecInfo<span class="selector-class">.lpDirectory</span> = szCurDir;<span class="comment">//如果szFile是相对路径,那个这个参数就会起作用</span></span><br><span class="line">    shExecInfo<span class="selector-class">.nShow</span> = SW_HIDE;<span class="comment">//隐藏cmd窗口</span></span><br><span class="line">    shExecInfo<span class="selector-class">.hInstApp</span> = NULL;</span><br><span class="line">    <span class="built_in">ShellExecuteEx</span>(&amp; shExecInfo);</span><br><span class="line">    <span class="built_in">WaitForSingleObject</span>(shExecInfo<span class="selector-class">.hProcess</span>, INFINITE);<span class="comment">//无限等待cmd窗口执行完毕</span></span><br><span class="line">    <span class="built_in">free</span>(pszDelCmd);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>调用方法：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char* szFiles<span class="selector-attr">[2]</span>;</span><br><span class="line">szFiles<span class="selector-attr">[0]</span> = <span class="string">"*.tcp.txt"</span>;</span><br><span class="line">szFiles<span class="selector-attr">[1]</span> = <span class="string">"*.udp.txt"</span>;</span><br><span class="line"><span class="function"><span class="title">BatchDelFile</span><span class="params">(<span class="number">2</span>, szFiles)</span></span>;</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1377,7 +1372,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-count">224</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1390,7 +1385,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-count">114</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1442,12 +1437,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">676k</span>
+    <span title="站点总字数">678k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:15</span>
+    <span title="站点阅读时长">10:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

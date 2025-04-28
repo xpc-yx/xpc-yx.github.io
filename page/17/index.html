@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">hdu 1556 Color the ball 树状数组</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-09-06 12:00:00" itemprop="dateCreated datePublished" datetime="2012-09-06T12:00:00+08:00">2012-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" class="post-meta-item leancloud_visitors" data-flag-title="hdu 1556 Color the ball 树状数组" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这个题的意思是给定一个长为N的区间。不断的给某个子区间[A,B]中的每个点涂一次色。最后问每个点的涂色次数。<br>这个题貌似可以扩展到多维的情况，但是多维的情况下必须用树状数组求和以加快速度，一维的情况直接求和即可。<br>假如，第一次涂色是对区间[A,B]涂色一次，可以让nNum[nA]++,nNum[nB+1]—即可。因为这样对于区间[0,nA-1]的任意值i有都要nNum[1]+nNum[2]+…+nNum[i] = 0。而对于区间[nA,nB]的任意值i有nNum[1]+nNum[2]+…+nNum[i] = 0。对于区间[nB+1, nN]的任意值i有nNum[1]+nNum[2]+…+nNum[i] = 0。那么重复多次了。如果上述求和nNum[1]+nNum[2]+…+nNum[i] 刚好代表每个结点i的涂色次数，那么这个题就可解了。<br>用例子验证一下，发现肯定是这样的。证明略了。至于树状数组网上一大堆资料。树状数组模板单一，敲代码太方便了。</p>
+<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int nNum<span class="selector-attr">[100000 + 10]</span>;</span><br><span class="line">int nN;</span><br><span class="line">int <span class="built_in">LowBit</span>(int nI)</span><br><span class="line">{</span><br><span class="line">    return nI &amp; (-nI);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Add</span>(int nI, int nAdd)</span><br><span class="line">{</span><br><span class="line">    while (nI &lt;= nN)</span><br><span class="line">    {</span><br><span class="line">        nNum<span class="selector-attr">[nI]</span> += nAdd;</span><br><span class="line">        nI += <span class="built_in">LowBit</span>(nI);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetSum</span>(int nI)</span><br><span class="line">{</span><br><span class="line">    int nAns = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    while (nI &gt; <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        nAns += nNum<span class="selector-attr">[nI]</span>;</span><br><span class="line">        nI -= <span class="built_in">LowBit</span>(nI);</span><br><span class="line">    }</span><br><span class="line">    return nAns;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nA, nB;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">memset</span>(nNum, <span class="number">0</span>, <span class="built_in">sizeof</span>(nNum));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, nA, nB);</span><br><span class="line">            <span class="built_in">Add</span>(nA, <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">Add</span>(nB + <span class="number">1</span>, -<span class="number">1</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d%s"</span>, <span class="built_in">GetSum</span>(i), <span class="selector-tag">i</span> == nN ? <span class="string">"\n"</span> : <span class="string">" "</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/03/poj%203255%20Roadblocks%20%E6%AC%A1%E7%9F%AD%E8%B7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1224,116 +1335,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/07/22/poj-2417-discrete-logging/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/07/22/poj-2417-discrete-logging/" class="post-title-link" itemprop="url">poj 2417 Discrete Logging</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-07-22 13:30:00" itemprop="dateCreated datePublished" datetime="2012-07-22T13:30:00+08:00">2012-07-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/07/22/poj-2417-discrete-logging/" class="post-meta-item leancloud_visitors" data-flag-title="poj 2417 Discrete Logging" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/07/22/poj-2417-discrete-logging/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/07/22/poj-2417-discrete-logging/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是个求离散对数的问题。以前学密码学基础的时候也接触过，但是没想到acm里面还会有这样的习题。问题的意思是给定素数P，给出方程a^x = b % p，注意有模的方程等式2边都是取模数的意思。解这样的方程有一个固定的算法，叫做baby-step算法。但是，注意限定条件是p必须是素数。<br>下面的图描述了这个算法：<br><img alt="" data-src="https://c5.staticflickr.com/8/7132/27134956060_0a46748ab7_o.jpg"><br><img alt="" data-src="https://c1.staticflickr.com/8/7278/26802327624_ce592b5e96_o.jpg"><br>意思很清楚，就是假设x = i <em> m + j，那么方程可以转化为b</em>(a^-m)^i  = a^j % p。先计算出右边的值，存储在一张表里面，然后从小到大枚举左边的i（0&lt;=i&lt;m)，率先满足等式的就是最小的解x。<br>poj上面这个题用map存储(a^j,j)对的时候会超时，改成hash表存储才能过，额，毕竟理论复杂度不是一个数量级的。我的hash表是开了2个数组，一个键，一个值，用来相互验证，槽冲突的话，一直往后找位置。感觉这样的做法没有链式hash复杂度平均的样子。<br>代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">1000000</span>)</span><br><span class="line">long long nData<span class="selector-attr">[MAX]</span>;</span><br><span class="line">long long nKey<span class="selector-attr">[MAX]</span>;</span><br><span class="line">long long <span class="built_in">egcd</span>(long long <span class="selector-tag">a</span>, long long <span class="selector-tag">b</span>, long long x, long long y)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="selector-tag">b</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        x = <span class="number">1</span>;</span><br><span class="line">        y = <span class="number">0</span>;</span><br><span class="line">        return a;</span><br><span class="line">    }</span><br><span class="line">    long long ret = <span class="built_in">egcd</span>(<span class="selector-tag">b</span>, <span class="selector-tag">a</span> % <span class="selector-tag">b</span>, x, y);</span><br><span class="line">    long long t = x;</span><br><span class="line">    x = y;</span><br><span class="line">    y = t - (<span class="selector-tag">a</span> / b) * y;</span><br><span class="line">    return ret;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">long long <span class="built_in">GetPos</span>(long long key)</span><br><span class="line">{</span><br><span class="line">    return (key ^ <span class="number">0</span>xA5A5A5A5) % MAX;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Add</span>(long long key, long long data)</span><br><span class="line">{</span><br><span class="line">    long long nPos = <span class="built_in">GetPos</span>(key);</span><br><span class="line">    while (nData<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    nData<span class="selector-attr">[nPos]</span> = data;</span><br><span class="line">    nKey<span class="selector-attr">[nPos]</span> = key;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">Query</span>(int key)</span><br><span class="line">{</span><br><span class="line">    int nPos = <span class="built_in">GetPos</span>(key);</span><br><span class="line"></span><br><span class="line">    while (nData<span class="selector-attr">[nPos]</span> != -<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nKey<span class="selector-attr">[nPos]</span> == key)</span><br><span class="line">        {</span><br><span class="line">            return nData<span class="selector-attr">[nPos]</span>;</span><br><span class="line">        }</span><br><span class="line">        nPos = (nPos + <span class="number">1</span>) % MAX;</span><br><span class="line">    }</span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">long long <span class="built_in">BabyStep</span>(long long nA, long long nB, long long nP)</span><br><span class="line">{</span><br><span class="line">    long long nM = <span class="built_in">ceil</span>(<span class="built_in">sqrt</span>((double)(nP - <span class="number">1</span>)));</span><br><span class="line">    long long x, y;</span><br><span class="line">    <span class="built_in">egcd</span>(nP, nA, x, y);<span class="comment">//y是nA%p的乘法逆</span></span><br><span class="line">    y = (y + nP) % nP;</span><br><span class="line">    long long nTemp = <span class="number">1</span>;</span><br><span class="line">    long long c = <span class="number">1</span>;<span class="comment">//c是nA的—m次</span></span><br><span class="line">    <span class="built_in">memset</span>(nData, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nData));</span><br><span class="line">    <span class="built_in">memset</span>(nKey, -<span class="number">1</span>, <span class="built_in">sizeof</span>(nKey));</span><br><span class="line">    <span class="keyword">for</span> (long long j = <span class="number">0</span>; j &lt; nM; ++j)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">Add</span>(nTemp, j);</span><br><span class="line">        nTemp = (nTemp * nA) % nP;</span><br><span class="line">        c = (c * y) % nP;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    long long r = nB;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nM; ++i)</span><br><span class="line">    {</span><br><span class="line">        long long j = <span class="built_in">Query</span>(r);</span><br><span class="line">        <span class="keyword">if</span> (j != -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            return <span class="selector-tag">i</span> * nM + j;</span><br><span class="line">        }</span><br><span class="line">        r = (r * c) % nP;</span><br><span class="line">    }</span><br><span class="line">    return -<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    long long nP, nB, nN;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%I64d%I64d%I64d"</span>, &amp;nP, &amp;nB, &amp;nN) == <span class="number">3</span>)</span><br><span class="line">    {</span><br><span class="line">        long long nAns = <span class="built_in">BabyStep</span>(nB, nN, nP);</span><br><span class="line">        <span class="keyword">if</span> (nAns == -<span class="number">1</span>)<span class="built_in">printf</span>(<span class="string">"no solution\n"</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%I64d\n"</span>, nAns);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1384,7 +1385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-count">224</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1397,7 +1398,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-count">114</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1449,12 +1450,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">676k</span>
+    <span title="站点总字数">678k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:15</span>
+    <span title="站点阅读时长">10:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

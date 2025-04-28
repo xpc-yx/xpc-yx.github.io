@@ -222,6 +222,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/03/poj%201006%20Biorhythms%20%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/10/03/poj%201006%20Biorhythms%20%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/" class="post-title-link" itemprop="url">poj 1006 Biorhythms 中国剩余定理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-10-03 10:30:00" itemprop="dateCreated datePublished" datetime="2012-10-03T10:30:00+08:00">2012-10-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/10/03/poj%201006%20Biorhythms%20%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1006 Biorhythms 中国剩余定理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/10/03/poj%201006%20Biorhythms%20%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/03/poj%201006%20Biorhythms%20%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>此题本来模拟即可，但是注意有容易出错的地方。<br>这题主要是可以用中国剩余定理来做。<br>根据题意可以抽象出这样的模型。给出三个数A,B,C分别是模23,28,33后的余数，求最小的数字<br>使得其模23,28,33分别为A,B,C，并且要大于给定的数字D。<br>中国剩余定理很好的解决了这种余数问题。令模数为Ni,余数为Ai,设Mi = N1<em>N2</em>…<em>Ni-1</em>Ni+1<em>…</em>Nn，<br>那么答案一定满足形式ans = <span>Σ</span>Ai<em>Mi</em>(Mi对Ni的乘法逆) % N。(N为所有Ni的乘积)。<br>很明显，由于ans的第i项有Mi因子，所以模N1-Ni-1和Ni+1-Nn肯定是0，而Ai<em>Mi</em>(Mi对Ni的乘法逆) %Ni就是Ai。这样就满足了要求。<br>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">Egcd</span>(int nN, int nM, int nX, int nY)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nM == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        nX = <span class="number">1</span>, nY = <span class="number">0</span>;</span><br><span class="line">        return nN;</span><br><span class="line">    }</span><br><span class="line">    int nRet = <span class="built_in">Egcd</span>(nM, nN % nM, nX, nY);</span><br><span class="line">    int nT = nX;</span><br><span class="line">    nX = nY;</span><br><span class="line">    nY = nT - (nN / nM) * nY;</span><br><span class="line">    return nRet;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nA, nB, nC, nD;</span><br><span class="line">    int nDays = <span class="number">21252</span>;</span><br><span class="line">    int nCase = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>, &amp;nA, &amp;nB, &amp;nC, &amp;nD),</span><br><span class="line">            nA != -<span class="number">1</span> || nB != -<span class="number">1</span> || nC != -<span class="number">1</span> || nD != -<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        int nFirst = <span class="number">0</span>;</span><br><span class="line">        nA %= <span class="number">23</span>;</span><br><span class="line">        nB %= <span class="number">28</span>;</span><br><span class="line">        nC %= <span class="number">33</span>;</span><br><span class="line">        int nM1= <span class="number">28</span> * <span class="number">33</span>, nM2 = <span class="number">23</span> * <span class="number">33</span>, nM3 = <span class="number">23</span> * <span class="number">28</span>;</span><br><span class="line">        int nN1, nN2, nN3, nTemp;</span><br><span class="line">        <span class="built_in">Egcd</span>(<span class="number">23</span>, nM1, nTemp, nN1);</span><br><span class="line">        <span class="built_in">Egcd</span>(<span class="number">28</span>, nM2, nTemp, nN2);</span><br><span class="line">        <span class="built_in">Egcd</span>(<span class="number">33</span>, nM3, nTemp, nN3);</span><br><span class="line">        nFirst = (nA * nM1 * nN1 + nB * nM2 * nN2 + nC * nM3 * nN3) % nDays;</span><br><span class="line">        while (nFirst &lt;= nD)nFirst += nDays;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Case %d: the next triple peak occurs in %d days.\n"</span>,</span><br><span class="line">               nCase++, nFirst - nD);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/30/poj%202406%20Power%20Strings%20kmp%E7%9A%84%E5%A6%99%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1217,117 +1327,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">hdu 1556 Color the ball 树状数组</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-09-06 12:00:00" itemprop="dateCreated datePublished" datetime="2012-09-06T12:00:00+08:00">2012-09-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" class="post-meta-item leancloud_visitors" data-flag-title="hdu 1556 Color the ball 树状数组" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/06/hdu%201556%20Color%20the%20ball%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这个题的意思是给定一个长为N的区间。不断的给某个子区间[A,B]中的每个点涂一次色。最后问每个点的涂色次数。<br>这个题貌似可以扩展到多维的情况，但是多维的情况下必须用树状数组求和以加快速度，一维的情况直接求和即可。<br>假如，第一次涂色是对区间[A,B]涂色一次，可以让nNum[nA]++,nNum[nB+1]—即可。因为这样对于区间[0,nA-1]的任意值i有都要nNum[1]+nNum[2]+…+nNum[i] = 0。而对于区间[nA,nB]的任意值i有nNum[1]+nNum[2]+…+nNum[i] = 0。对于区间[nB+1, nN]的任意值i有nNum[1]+nNum[2]+…+nNum[i] = 0。那么重复多次了。如果上述求和nNum[1]+nNum[2]+…+nNum[i] 刚好代表每个结点i的涂色次数，那么这个题就可解了。<br>用例子验证一下，发现肯定是这样的。证明略了。至于树状数组网上一大堆资料。树状数组模板单一，敲代码太方便了。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int nNum<span class="selector-attr">[100000 + 10]</span>;</span><br><span class="line">int nN;</span><br><span class="line">int <span class="built_in">LowBit</span>(int nI)</span><br><span class="line">{</span><br><span class="line">    return nI &amp; (-nI);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Add</span>(int nI, int nAdd)</span><br><span class="line">{</span><br><span class="line">    while (nI &lt;= nN)</span><br><span class="line">    {</span><br><span class="line">        nNum<span class="selector-attr">[nI]</span> += nAdd;</span><br><span class="line">        nI += <span class="built_in">LowBit</span>(nI);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetSum</span>(int nI)</span><br><span class="line">{</span><br><span class="line">    int nAns = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    while (nI &gt; <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        nAns += nNum<span class="selector-attr">[nI]</span>;</span><br><span class="line">        nI -= <span class="built_in">LowBit</span>(nI);</span><br><span class="line">    }</span><br><span class="line">    return nAns;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nA, nB;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">memset</span>(nNum, <span class="number">0</span>, <span class="built_in">sizeof</span>(nNum));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, nA, nB);</span><br><span class="line">            <span class="built_in">Add</span>(nA, <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">Add</span>(nB + <span class="number">1</span>, -<span class="number">1</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d%s"</span>, <span class="built_in">GetSum</span>(i), <span class="selector-tag">i</span> == nN ? <span class="string">"\n"</span> : <span class="string">" "</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1378,7 +1377,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-count">224</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1391,7 +1390,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-count">114</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1443,12 +1442,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">676k</span>
+    <span title="站点总字数">678k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:15</span>
+    <span title="站点阅读时长">10:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

@@ -222,6 +222,136 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/06/08/DrawCall%E3%80%81Batches%E3%80%81SetPassCalls%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/08/DrawCall%E3%80%81Batches%E3%80%81SetPassCalls%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" class="post-title-link" itemprop="url">DrawCall、Batches、SetPassCalls的区别和联系</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-08 16:25:00" itemprop="dateCreated datePublished" datetime="2020-06-08T16:25:00+08:00">2020-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/08/DrawCall%E3%80%81Batches%E3%80%81SetPassCalls%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" class="post-meta-item leancloud_visitors" data-flag-title="DrawCall、Batches、SetPassCalls的区别和联系" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/06/08/DrawCall%E3%80%81Batches%E3%80%81SetPassCalls%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/08/DrawCall%E3%80%81Batches%E3%80%81SetPassCalls%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h1 id="一、DrawCall、Batches、SetPassCalls的基本理解"><a href="#一、DrawCall、Batches、SetPassCalls的基本理解" class="headerlink" title="一、DrawCall、Batches、SetPassCalls的基本理解"></a>一、DrawCall、Batches、SetPassCalls的基本理解</h1><p>我们先从图形渲染的角度对这些概念做一个基本的理解。</p>
+<h2 id="1-1-DrawCall"><a href="#1-1-DrawCall" class="headerlink" title="1.1 DrawCall"></a>1.1 DrawCall</h2><p>DrawCall实际上指的是一次图形渲染接口的调用，比如OpenGL的glDrawArrays或者glDrawElements的一次调用，以及DirectX的DrawPrimitive或者DrawIndexedPrimitive。因此，DrawCall可以简单理解为一次渲染指令调用。</p>
+<h2 id="1-2-Batches"><a href="#1-2-Batches" class="headerlink" title="1.2 Batches"></a>1.2 Batches</h2><p>我们知道，在调用DrawCall之前，需要设置渲染状态，比如当前使用的Shader、当前shader的参数（材质参数）、深度测试是否开启、模板测试设置等，设置完这些状态后，才会调用DrawCall。我们把设置渲染状态，加载网格数据，然后调用DrawCall这一个过程，叫做一个批次。理论上，我们可以在设置完渲染状态后，调用多个DrawCall，假如一个DrawCall的绘制数量有限制的话，但是通常一个批次也就调用一次DrawCall。<br>那么所谓合批，就是想办法尽量减少批次。减少批次的关键是减少场景中不同的渲染状态组合，也就是渲染状态切换尽可能少。这样子批次自然最少。批次少了，批次对应的DrawCall自然少了，每个批次需要的渲染状态切换也少了。注意，渲染状态切换类似于DrawCall都是一次渲染指令调用。</p>
+<h2 id="1-3-SetPassCalls"><a href="#1-3-SetPassCalls" class="headerlink" title="1.3 SetPassCalls"></a>1.3 SetPassCalls</h2><p>那么什么是SetPassCalls了。在Shader中有一个Pass的概念，比如一个Shader有2个Pass，那么实际上应用这个Shader的物体会按照Shader的Pass定义顺序渲染2遍，每一遍都是用对应的Pass渲染。Unity的官方文档里面解释SetPassCalls就是Shader中的Pass被切换的次数，因为每个渲染批次都会设置一个Pass，一个Pass就会对应一些渲染状态，当渲染状态变化时候就必须开始新的批次，但是新的批次下Pass可能没有变化</p>
+<h1 id="二、Unity的DrawCall、Batches、SetPassCalls区别和联系"><a href="#二、Unity的DrawCall、Batches、SetPassCalls区别和联系" class="headerlink" title="二、Unity的DrawCall、Batches、SetPassCalls区别和联系"></a>二、Unity的DrawCall、Batches、SetPassCalls区别和联系</h1><p>我们以一个没有开启静态合批的场景运行时的统计数据为例子来说明。我们打开Unity场景的Statistics窗口，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UnityStatistics.jpg"><br>以及Profile窗口，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UnityProfileRendering.jpg"><br>FrameDebug窗口，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UnityFrameDebug.jpg"></p>
+<p>我们可以得出这个场景的DrawCall是584，Batches也是584，SetPassCalls是192。Statistics中是不会显示DrawCall的，只有在Profile窗口下选中Rendering才能看到。</p>
+<h2 id="2-1-Unity的DrawCall"><a href="#2-1-Unity的DrawCall" class="headerlink" title="2.1 Unity的DrawCall"></a>2.1 Unity的DrawCall</h2><p>根据运行数据，可以得出结论DrawCall数目基本等于Batches。为什么说基本了？因为同一个Batch下，可能分多次调用DrawCall，比如网格过于巨大，可能拆分成多个DrawCall，这个也是符合批次的定义的，因为渲染状态没有切换，这发生在静态合批和动态合批的情况下。<br>如果没有静态合批和动态合批，那么DC等于Batches，如果有那么DC没有变化，但是Batches等于合并之后的渲染状态切换。</p>
+<h2 id="2-2-Unity的Batches"><a href="#2-2-Unity的Batches" class="headerlink" title="2.2 Unity的Batches"></a>2.2 Unity的Batches</h2><p>Unity的批次实际上就是前面解释的Batches。不过，Batches实际上包含有三类：Static Batches、Dynamic Batches、Instancing Batches，分别对应Unity的静态合批、动态合批、实例化渲染。</p>
+<h2 id="2-3-Unity的SetPassCalls"><a href="#2-3-Unity的SetPassCalls" class="headerlink" title="2.3 Unity的SetPassCalls"></a>2.3 Unity的SetPassCalls</h2><p>根据FrameDebug窗口可以看到，一共是197+24+1+1=233个渲染事件。其中，Clear事件有14个。除去Clear事件后还生效219的事件，不过我们的SetPassCalls是192，还多了17个。我们观察到UI相机有18个DrawMesh事件，点击后发现这个事件使用的都是同样的Pass，如下图所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/UnityUIPass.jpg"><br>，这些Pass之间除了材质属性外的渲染状态都是一致的，因此还要减去17。<br>注意，FrameDebug窗口的截图中折叠的部分基本是SRP Batch。<br>根据这些数据我们可以得出结论，如果支持SRP Batch，一个SetPassCall等于一个SRP Batch；如果不支持SRP Batch，那么一个SetPassCall就是一次Shader的Pass切换。由于Pass切换实际上指的是Shader关键字或者ROP阶段的设置改变，那么其实这个跟SRP是一致的。SRP本质上也是Shader变体切换，而非传统的材质切换。传统的材质切换对应的是Batches。<br>注明：实验引擎版本是Unity2020.3.12。</p>
+<h2 id="2-4-总结"><a href="#2-4-总结" class="headerlink" title="2.4 总结"></a>2.4 总结</h2><p>至此可以得出最终结论，Unity的DrawCall和Batches数目在没有静态合批和动态合批时候相等，Batches对应的是传统的材质切换，DrawCall是一次Batch内一次到多次的渲染命令调用。SetPassCalls一般会大幅度少于Batches，对应的是SRP Batch或者Pass切换，数目等于FrameDebug中的事件数目减去Clear事件、Draw Mesh事件中重复的Pass数目。</p>
+<h1 id="三、DrawCall相关的性能优化"><a href="#三、DrawCall相关的性能优化" class="headerlink" title="三、DrawCall相关的性能优化"></a>三、DrawCall相关的性能优化</h1><h2 id="3-1-为什么需要降低DrawCall"><a href="#3-1-为什么需要降低DrawCall" class="headerlink" title="3.1 为什么需要降低DrawCall"></a>3.1 为什么需要降低DrawCall</h2><p> 一谈起游戏优化，尤其是渲染优化，大家就说降低DrawCall，降低批次。实际上，大部分人都没法正确区分，Unity引擎下DrawCall、Batch、SetPassCall这三个概念。DrawCall或者批次高，并不是性能低下的直接原因，真正的原因是批次高，导致渲染状态切换过多。而渲染状态切换实际上是发生的渲染管线的CPU阶段，使用图形API，比如OpenGL或者DirectX来完成的。这样CPU会花费大量的时间提交渲染指令给GPU，CPU占用过高，但是GPU的渲染指令队列并没有饱和，GPU执行渲染指令的速度很快，因此GPU的负荷可能还没上来，GPU在等待CPU提交渲染指令，整个渲染流水线没有最高速的跑起来。当然如果GPU也忙不过来，那么不仅仅需要降低批次，Shader复杂度和OverDraw应该是重点关注对象。</p>
+<h2 id="3-2-如何降低批次"><a href="#3-2-如何降低批次" class="headerlink" title="3.2 如何降低批次"></a>3.2 如何降低批次</h2><h3 id="3-2-1-静态合批"><a href="#3-2-1-静态合批" class="headerlink" title="3.2.1 静态合批"></a>3.2.1 静态合批</h3><p> 静态合批实际上是引擎在打包或者烘焙时候，将同材质的物体合并成一个更大的物体，这样相同材质的物体只需要一次渲染状态设置和一次DrawCall调用，也就一个批次。由于合并生成大的模型后，会占用额外的内存空间，比如三个同材质的立方体的网格就是一个简单的立方体，合并后的网格占用是三个世界空间立方体的组合，因此有时候需要考虑静态合批带来的内存增长。</p>
+<h3 id="3-2-2-动态合批"><a href="#3-2-2-动态合批" class="headerlink" title="3.2.2 动态合批"></a>3.2.2 动态合批</h3><p> 动态合批是静态合批在运行时的体现。Unity对动态合批有一些限制，比如限制模型顶点属性不能超过900等，具体可以参考<a href="https://docs.unity3d.com/2021.2/Documentation/Manual/dynamic-batching.html">Dynamic batching</a>。动态合批由于是运行是合并网格，因此不仅会增大内存，还会占用CPU时间。动态合批一般应用在一些小物体的合并上，比如小的道具或者特效等。</p>
+<h3 id="3-4-3-Instancing-Draw"><a href="#3-4-3-Instancing-Draw" class="headerlink" title="3.4.3 Instancing Draw"></a>3.4.3 Instancing Draw</h3><p> Instancing Draw实际上是图形接口支持的一种技术，可以翻译为实例化渲染，可以参考文档：<a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/10%20Instancing/">实例化</a>。这种技术通常应用在重复的物体大量出现的情况下，比如说草地、树木、星星，这种只有位置或者朝向、缩放等不一样。实例化渲染可以通过指定每物体属性（正常的每顶点属性是每个顶点不一样）来传入这种每个物体不一样的属性，从而避免使用不同的材质。在OpenGL中是使用glVertexAttribDivisor来设置属性的更新速度，从而指定每物体属性。<br> 至于Unity的Instancing，参考文档：<a href="https://docs.unity3d.com/Manual/GPUInstancing.html">GPU instancing</a>。关键点：GPU instancing不能和SRP Batcher、Static Batcher并存，SRP Batcher、Static Batcher的优先级更高；GPU instancing不支持 SkinnedMeshRenderers（蒙皮）； Graphics.DrawMeshInstanced或者Graphics.DrawMeshInstancedIndirect是主动Instancing，如果不调用这2个函数，那么Unity会尝试Instancing（如果Shader支持Instancing，且没有开启SRP Batch），这会有额外的CPU消耗。</p>
+<h3 id="3-4-4-SRP-Batcher"><a href="#3-4-4-SRP-Batcher" class="headerlink" title="3.4.4 SRP Batcher"></a>3.4.4 SRP Batcher</h3><p> 参考文档：<a href="https://docs.unity.cn/2019.4/Documentation/Manual/SRPBatcher.html">Scriptable Render Pipeline (SRP) Batcher</a>。关键点：只有可编程管线才支持，默认管线不能支持；Shader必须支持SRP Batcher；只支持Mesh和SkinMesh，不支持粒子系统；不能与 Instancing Draw兼容；如果使用了MaterialPropertyBlock，SRP Batcher无法开启。<br> SRP Batcher本质上是Shader变体级别的合批优化，根据前面的分析等价于一次SetPassCall。具体原理还是参考Unity 的官方文档。</p>
+<h3 id="3-4-6-合批方法的优先级"><a href="#3-4-6-合批方法的优先级" class="headerlink" title="3.4.6 合批方法的优先级"></a>3.4.6 合批方法的优先级</h3><p> 根据Unity优化DC的官方文档<a href="https://docs.unity3d.com/2021.2/Documentation/Manual/optimizing-draw-calls.html">Optimizing draw calls</a>，合批方法的优先级如下：</p>
+<p> 1.SRP Batcher and static batching<br> 2.GPU instancing<br> 3.Dynamic batching<br> 其中SRP和静态合批是最高优先级，并且是可以兼容的（对于使用SRP Batcher兼容Shader的物体），因此可以同时启用静态合批和SRP Batcher。不过，经过实验发现上述实验场景在开启了SRP Batcher后，再去打开静态合批，Batches并没有多少什么变化，猜测是场景内使用同样材质的物体过少，相反使用同样Shader变体的物体较多。</p>
+<h3 id="3-4-5-合批总结"><a href="#3-4-5-合批总结" class="headerlink" title="3.4.5 合批总结"></a>3.4.5 合批总结</h3><p> 对于目前的可编程管线，优先使用的都是SRP，因此Shader要尽可能兼容SRP Batcher。对于特殊情况，比如渲染草地这种，才需要舍弃SRP Batcher去使用实例化渲染。对于不支持SRP Batcher的Shader，动态合批和静态合批才可能会被开启。动态合并和静态合批都要增大内存，动态合批还会占用CPU，限制条件还非常多。所以，首选SRP Batcher和Instancing。<br>由于SRP Batcher不能降低DrawCall和Batcher，实际上降低的是SetPassCall；但是静态合批和动态合批可以降低Batcher，但是不能降低DrawCall。所以，在一些低端机器上，Batcher过多可能引起问题的话，还是得开启传统的静态合批，不过这会需要打开网格读写，合并网格也会增大包体和内存。因此出现这种情况的话，最好的选择应该是只开启SRP Batcher，然后让美术手工合并网格和贴图。</p>
+<h1 id="四、参考资料"><a href="#四、参考资料" class="headerlink" title="四、参考资料"></a>四、参考资料</h1><blockquote>
+<p><a href="https://blog.csdn.net/qq_30259857/article/details/110062397">DrawCall，Batches，SetPass calls是什么？原理？【匠】</a><br><a href="https://docs.unity.cn/cn/2022.1/Manual/RenderingStatistics.html">The Rendering Statistics window</a><br><a href="https://blog.csdn.net/yudianxia/article/details/79398590">Unity Profiler中常见的WaitForTargetFPS、Gfx.WaitForPresent 和 Graphics.PresentAndSync</a><br><a href="https://docs.unity3d.com/2021.2/Documentation/Manual/DrawCallBatching.html">Draw call batching</a><br><a href="https://docs.unity3d.com/2021.2/Documentation/Manual/optimizing-draw-calls.html">Optimizing draw calls</a></p>
+</blockquote>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/03/06/%E5%B7%A6%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AE%9A%E5%88%99%E7%9A%84%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1802,117 +1932,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/" class="post-title-link" itemprop="url">使用MFC创建基于图片的不规则窗口程序</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-04-23 20:45:25" itemprop="dateCreated datePublished" datetime="2016-04-23T20:45:25+08:00">2016-04-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/" class="post-meta-item leancloud_visitors" data-flag-title="使用MFC创建基于图片的不规则窗口程序" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2016/04/23/%E4%BD%BF%E7%94%A8MFC%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%8D%E8%A7%84%E5%88%99%E7%AA%97%E5%8F%A3%E7%A8%8B%E5%BA%8F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>上一篇文章定制IE浏览器弹窗中的外部窗口就是一个不规则窗口，这篇文章介绍下其是如何实现的。思路是根据这张图片创建一个不规则区域，然后将窗口的区域设置为该不规则区域。</p>
-<h2 id="第一步，在资源文件rc中设置对话框的属性"><a href="#第一步，在资源文件rc中设置对话框的属性" class="headerlink" title="第一步，在资源文件rc中设置对话框的属性"></a><strong>第一步，在资源文件rc中设置对话框的属性</strong></h2><p>Border：None</p>
-<p>Style：Popup</p>
-<h2 id="第二步，导入背景图片到程序资源中"><a href="#第二步，导入背景图片到程序资源中" class="headerlink" title="第二步，导入背景图片到程序资源中"></a><strong>第二步，导入背景图片到程序资源中</strong></h2><p>最好是导入位图，虽然也可以导入其它格式的图片。假设导入位图ID为IDB_BITMAP_BACK。</p>
-<h2 id="第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域"><a href="#第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域" class="headerlink" title="第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域"></a><strong>第三步，在OnInitialDlg函数中，创建区域，并将其设置为窗口区域</strong></h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//OnInitDialog()中</span><br><span class="line">CRgn wndRgn;</span><br><span class="line"></span><br><span class="line">m_bitmapBack.LoadBitmap(IDB_BITMAP_BACK);</span><br><span class="line">CreateRgn(m_bitmapBack, RGB(255, 255, 255), wndRgn);</span><br><span class="line">SetWindowRgn(wndRgn, TRUE);</span><br><span class="line"></span><br><span class="line">//根据图片创建区域的函数</span><br><span class="line">void CClientBrowserDlg::CreateRgn(CBitmap cBitmap, COLORREF dwColorKey, CRgn wndRgn)  </span><br><span class="line">{  </span><br><span class="line">    CDC *pDC = this-&gt;GetDC();  </span><br><span class="line">    CDC memDC;  </span><br><span class="line">    //创建与传入DC兼容的临时DC  </span><br><span class="line">    memDC.CreateCompatibleDC(pDC);  </span><br><span class="line"></span><br><span class="line">    CBitmap *pOldMemBmp=NULL;  </span><br><span class="line">    //将位图选入临时DC  </span><br><span class="line">    pOldMemBmp = memDC.SelectObject(cBitmap);  </span><br><span class="line"></span><br><span class="line">    //创建总的窗体区域，初始region为0  </span><br><span class="line">    wndRgn.CreateRectRgn(0,0,0,0);  </span><br><span class="line"></span><br><span class="line">    BITMAP bit;     </span><br><span class="line">    cBitmap.GetBitmap (bit);//取得位图参数，这里要用到位图的长和宽       </span><br><span class="line"></span><br><span class="line">    int y;  </span><br><span class="line">    for(y=0; y &lt;= bit.bmHeight; y++)  </span><br><span class="line">    {  </span><br><span class="line">        CRgn rgnTemp;  </span><br><span class="line">        int iX = 0;  </span><br><span class="line">        do  </span><br><span class="line">        {  </span><br><span class="line">            //跳过透明色找到下一个非透明色的点.  </span><br><span class="line">            while (iX &lt;= bit.bmWidth   memDC.GetPixel(iX, y) == dwColorKey)  </span><br><span class="line">                iX++;  </span><br><span class="line">            //记住这个起始点  </span><br><span class="line">            int iLeftX = iX;  </span><br><span class="line">            //寻找下个透明色的点  </span><br><span class="line">            while (iX &lt;= bit.bmWidth   memDC.GetPixel(iX, y) != dwColorKey)  </span><br><span class="line">                ++iX;  </span><br><span class="line">            //创建一个包含起点与重点间高为1像素的临时“region”  </span><br><span class="line">            rgnTemp.CreateRectRgn(iLeftX, y, iX, y+1);  </span><br><span class="line">            //合并到主"region".  </span><br><span class="line">            wndRgn.CombineRgn(wndRgn, rgnTemp, RGN_OR);  </span><br><span class="line">            //删除临时"region",否则下次创建时和出错  </span><br><span class="line">            rgnTemp.DeleteObject();  </span><br><span class="line">        } while(iX &lt; bit.bmWidth );  </span><br><span class="line">        iX = 0;  </span><br><span class="line">    }  </span><br><span class="line"></span><br><span class="line">    if(pOldMemBmp)  </span><br><span class="line">        memDC.SelectObject(pOldMemBmp);  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="第四步，在OnPaint-绘制窗口背景图片"><a href="#第四步，在OnPaint-绘制窗口背景图片" class="headerlink" title="第四步，在OnPaint()绘制窗口背景图片"></a><strong>第四步，在OnPaint()绘制窗口背景图片</strong></h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">void CClientBrowserDlg::OnPaint()</span><br><span class="line">{</span><br><span class="line">    if (IsIconic())</span><br><span class="line">    {</span><br><span class="line">        CPaintDC dc(this); // device context for painting</span><br><span class="line"></span><br><span class="line">        SendMessage(WM_ICONERASEBKGND, reinterpret_cast&lt;WPARAM&gt;(dc.GetSafeHdc()), 0);</span><br><span class="line"></span><br><span class="line">        // Center icon in client rectangle</span><br><span class="line">        int cxIcon = GetSystemMetrics(SM_CXICON);</span><br><span class="line">        int cyIcon = GetSystemMetrics(SM_CYICON);</span><br><span class="line">        CRect rect;</span><br><span class="line">        GetClientRect(rect);</span><br><span class="line">        int x = (rect.Width() - cxIcon + 1) / 2;</span><br><span class="line">        int y = (rect.Height() - cyIcon + 1) / 2;</span><br><span class="line"></span><br><span class="line">        // Draw the icon</span><br><span class="line">        dc.DrawIcon(x, y, m_hIcon);</span><br><span class="line">    }</span><br><span class="line">    else</span><br><span class="line">    {</span><br><span class="line">        //选入DC  </span><br><span class="line">        CClientDC cdc(this);</span><br><span class="line">        CDC comdc;  </span><br><span class="line">        comdc.CreateCompatibleDC(cdc);  </span><br><span class="line">        comdc.SelectObject(m_bitmapBack);  </span><br><span class="line"></span><br><span class="line">        //生成BITMAP  </span><br><span class="line">        BITMAP bit;  </span><br><span class="line">        m_bitmapBack.GetBitmap(bit);  </span><br><span class="line"></span><br><span class="line">        //客户区域  </span><br><span class="line">        CRect rect;  </span><br><span class="line">        GetClientRect(rect);</span><br><span class="line"></span><br><span class="line">        //用客户区的DC绘制所生成的BITMAP，并适应为窗口大小  </span><br><span class="line">        cdc.StretchBlt(0,0,rect.Width(),rect.Height(),comdc,0,0,bit.bmWidth,bit.bmHeight,SRCCOPY);</span><br><span class="line"></span><br><span class="line">        CDialog::OnPaint();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="第五步，点击客户区移动窗口"><a href="#第五步，点击客户区移动窗口" class="headerlink" title="第五步，点击客户区移动窗口"></a><strong>第五步，点击客户区移动窗口</strong></h2><p>这一点还是有意义的，比如上一篇定制IE浏览器窗口的文章，其外部窗口就是使用这里介绍的不规则窗体。不规则窗体由于是无边框的，因此无法点击边框移动窗口了。因此，设置点击客户端移动是有意义的。而<strong>且窗口的内部区域已经被浏览器控件占据了，只有外部的边界区域可以点击到，因此这样刚好模拟出了点击正常窗口边框的效果。</strong></p>
-<p>设置客户区可以点击的代码如下：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">LRESULT CClientBrowserDlg::OnNcHitTest(CPoint point)</span><br><span class="line">{</span><br><span class="line">    // TODO: Add your message handler code here and/or call default</span><br><span class="line">    // 取得鼠标所在的窗口区域</span><br><span class="line">    UINT nHitTest = CDialog::OnNcHitTest(point);</span><br><span class="line"></span><br><span class="line">    // 如果鼠标在窗口客户区，则返回标题条代号给Windows</span><br><span class="line">    // 使Windows按鼠标在标题条上类进行处理，即可单击移动窗口</span><br><span class="line">    return (nHitTest == HTCLIENT) ? HTCAPTION : nHitTest;</span><br><span class="line">    //return CDialog::OnNcHitTest(point);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1963,7 +1982,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-count">224</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1976,7 +1995,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-count">114</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2028,12 +2047,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">676k</span>
+    <span title="站点总字数">678k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:15</span>
+    <span title="站点阅读时长">10:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

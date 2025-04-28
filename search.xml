@@ -5137,4 +5137,39 @@ CImage CImage::operator=(const CImage yxImage)
         <tag>材质变体系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>假云阴影模拟</title>
+    <url>/2023/05/24/%E5%81%87%E4%BA%91%E9%98%B4%E5%BD%B1%E6%A8%A1%E6%8B%9F/</url>
+    <content><![CDATA[<html><head></head><body><h1 id="云阴影效果简介"><a href="#云阴影效果简介" class="headerlink" title="云阴影效果简介"></a>云阴影效果简介</h1><p>这里说的云阴影，是使用噪声图或者特定规律的随机图模拟的假云阴影。效果类似于大片云投影在大地上，同时阴影按照一定速度移动和随机流动变化，并且支持双层阴影叠加。效果如下：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/云阴影.gif"></p>
+<h1 id="全局参数"><a href="#全局参数" class="headerlink" title="全局参数"></a>全局参数</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/云阴影参数.png"></p>
+<h2 id="全局云阴影开关"><a href="#全局云阴影开关" class="headerlink" title="全局云阴影开关"></a>全局云阴影开关</h2><p>可以看到，有一个是否启用（Enable）的全局开关控制是否开启全局云阴影。这可以使用全局变体实现，由于全局变体无法剔除，容易引入变体爆炸问题。因此，最好使用材质局部变体替代。</p>
+<h2 id="云阴影颜色"><a href="#云阴影颜色" class="headerlink" title="云阴影颜色"></a>云阴影颜色</h2><p>有一个全局的云阴影颜色用于调整整体的云阴影颜色，比如可以调出红色等特殊颜色的云阴影，默认是黑色。</p>
+<h2 id="云阴影参数"><a href="#云阴影参数" class="headerlink" title="云阴影参数"></a>云阴影参数</h2><p>从参数设置可以看到，云阴影分为两层。每层有大小、强度、方向、速度以及噪声的强度、速度、tiling。噪声是为了模拟云阴影边缘的快速变化抖动效果。同时，需要一张云阴影贴图来控制这两层的参数；规定贴图的R、G通道是第一层阴影的强度和噪声的强度，B、A通道是第二层阴影的强度和噪声的强度。</p>
+<h1 id="Shader或者材质参数"><a href="#Shader或者材质参数" class="headerlink" title="Shader或者材质参数"></a>Shader或者材质参数</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/云阴影材质参数.png"></p>
+<h2 id="材质云阴影开关"><a href="#材质云阴影开关" class="headerlink" title="材质云阴影开关"></a>材质云阴影开关</h2><p>Shader上有专门的变体开关控制是否激活云阴影。这里针对的是当前材质的开关，使用local变体即可满足据要求。</p>
+<h2 id="材质云阴影强度"><a href="#材质云阴影强度" class="headerlink" title="材质云阴影强度"></a>材质云阴影强度</h2><p>同时，有一个强度滑块控制该材质的云阴影强度。这样，可以定制不同材质接收到云阴影强度。</p>
+<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><h2 id="修改albedo"><a href="#修改albedo" class="headerlink" title="修改albedo"></a>修改albedo</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">#if _GLOBAL_CLOUD_SHADOW</span><br><span class="line">		surfaceData.albedo = ApplyGlobalCloudShadow修改(surfaceData.albedo, input.positionWS, _CloudShadowIntensity);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>从上述代码可以看到，在开启变体_GLOBAL_CLOUD_SHADOW时候，使用函数ApplyGlobalCloudShadow修改albedo。</p>
+<h2 id="计算CloudShadow"><a href="#计算CloudShadow" class="headerlink" title="计算CloudShadow"></a>计算CloudShadow</h2><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">inline half3 ApplyGlobalCloudShadow(half3 albedo, float3 positionWS, half intensity = 1.0f)</span><br><span class="line">{</span><br><span class="line">    half firstCloudShadowIntensity = GetFirstGlobalCloudShadowIntensity(positionWS);</span><br><span class="line">    half secondCloudShadowIntensity = GetSecondGlobalCloudShadowIntensity(positionWS);</span><br><span class="line"></span><br><span class="line">    albedo *= lerp(half3(1, 1, 1), _CloudShadowColor, intensity * max(firstCloudShadowIntensity, secondCloudShadowIntensity));</span><br><span class="line">    return albedo;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<ol>
+<li>函数ApplyGlobalCloudShadow首先计算两层云阴影强度，再使用max获得两层的最大强度（两层阴影叠加的位置取最大值）作为云阴影强度。</li>
+<li>然后使用这个云阴影强度在白色与云阴影颜色之间进行插值获得最终的云阴影颜色。</li>
+<li>最终，将该云阴影颜色乘到albedo上。</li>
+</ol>
+<h2 id="计算单层CloudShadow强度"><a href="#计算单层CloudShadow强度" class="headerlink" title="计算单层CloudShadow强度"></a>计算单层CloudShadow强度</h2><p>该函数代码比较关键，不再直接提供源码，有需要的可以理解后再自行实现。</p>
+<ol>
+<li>使用传入的positionWS计算出worldUV。</li>
+<li>使用worldUV结合云阴影的大小、速度计算出云阴影的位置（cloudUV），然后使用cloudUV采用贴图的R通道获得云阴影强度。</li>
+<li>使用worldUV结合云阴影噪声的速度、tiling计算出云阴影噪声的位置（cloudNoiseUV），然后使用cloudNoiseUV采用贴图的B通道获得云阴影噪声强度。</li>
+<li>将云阴影强度和云阴影噪声强度进行叠加获得整体的云阴影强度。注意：叠加算法很关键，需要使用PS的线性加深模式。</li>
+</ol>
+<h1 id="整体效果"><a href="#整体效果" class="headerlink" title="整体效果"></a>整体效果</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/云阴影整体.gif"></p>
+</body></html>]]></content>
+      <categories>
+        <category>Rendering</category>
+      </categories>
+      <tags>
+        <tag>云阴影</tag>
+      </tags>
+  </entry>
 </search>

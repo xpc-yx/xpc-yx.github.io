@@ -222,6 +222,126 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">使用CGAL计算SDF分割模型</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-01-22 20:28:12" itemprop="dateCreated datePublished" datetime="2015-01-22T20:28:12+08:00">2015-01-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
+                    <span itemprop="name">CGAL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL计算SDF分割模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/01/22/%E4%BD%BF%E7%94%A8CGAL%E8%AE%A1%E7%AE%97SDF%E5%88%86%E5%89%B2%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>最新版的cgal4.5，提供了个<a href="http://doc.cgal.org/latest/Surface_mesh_segmentation/index.html" title="Triangulated Surface Mesh Segmentation">Triangulated Surface Mesh Segmentation</a>包，利用该部分代码可以计算三维模型每个面或者顶点的sdf（<em>Shape Diameter Function）</em>属性。sdf的具体定义可以参考论文：L. Shapira, A. Shamir, and D. Cohen-Or. Consistent mesh partitioning and skeletonisation using the shape diameter function. <em>The Visual Computer</em>, 24(4):249–259, 2008.</p>
+<p>那么sdf可以做什么了？sdf最终能表示三维模型上面的一个标量场，该标量场代表的是模型厚度的分布。因此，利用该标量场可以对模型进行分割，不管是自动化的还是交互的都可以。如何计算sdf了？可以利用定义自己去实现算法，或者利用库，比如cgal。</p>
+<p>关于如何使用sdf标量场进行模型分割？cgal的文档说的很清楚，先用k个gmm进行软聚类（每个cluster是k-means初始化的），再利用软聚类的结果进行硬聚类，这一步实际上利用graph-cut求能量最小化。更清楚的解释，参考CGAL的相关文档。刘利刚老师用sdf进行交互式分割的文章，也是利用gmm和graph-cut作为工具实现的，原理和cgal的实现思路基本一致。</p>
+<p>下面将一下，我使用该代码碰到的问题。计算sdf的函数是CGAL::sdf_values，这是一个复杂的模板函数，该函数的第一个参数是一个模板类Polyhedron的引用。由于cgal使用了非常复杂的模板语法，所以经常会碰到一些恶心的语法问题，编译无法通过。这一次也是。由于默认情况下，使用cgal都会继承CGAL::Polyhedron_3<kernel, items="">以实现自定义的多面体类。所以，使用这个函数的时候就会出现模板参数不匹配的情况。怎么解决了。首先，没必要去修改自己的多面体类，也不可能去修改cgal库，再重新构造个cgal默认的Polyhedron_3对象也很浪费。</kernel,></p>
+<p>其实，这里可以考虑到转型。类型转换有两种考虑，转值和转指针。如果将自定义多面体类转换为默认的多面体类，肯定会生成个具大的临时对象，多浪费啊。所以了，可以先取地址转换为基类指针再解引用就获得了cgal默认的Polyhedron_3对象了。我的代码如下：std::pair<double, double=""> min_max_sdf = CGAL::sdf_values(<em>(Polyhedron</em>)m_pModel, m_sdf_property_map);</double,></p>
+<p>至于其它部分的使用，参考cgal手册即可，非常简单方便。下面再贴几张图，展示下sdf标量场的分布，以及利用sdf的分割结果。</p>
+<p>sdf标量场，白色的是等值线。</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7719/27451907645_8f5cee7a2e_o.png"></p>
+<p>sdf分割模型结果：</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7604/27417732786_830e67189b_o.png"></p>
+<p>至于分割边界不是很整齐，这只是跟模型密度有关系，模型越密，能够得到越平滑的边界，也有相关的算法优化边界。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/01/20/%E4%BD%BF%E7%94%A8C++%E8%B0%83%E7%94%A8MATLAB%E5%BC%95%E6%93%8E%E8%AE%A1%E7%AE%97%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1254,116 +1374,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/" class="post-title-link" itemprop="url">opencv gpu或者cuda加速第一次调用</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2014-11-11 15:29:48" itemprop="dateCreated datePublished" datetime="2014-11-11T15:29:48+08:00">2014-11-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/CUDA/" itemprop="url" rel="index">
-                    <span itemprop="name">CUDA</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/" class="post-meta-item leancloud_visitors" data-flag-title="opencv gpu或者cuda加速第一次调用" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2014/11/11/opencv%20gpu%E6%88%96%E8%80%85cuda%E5%8A%A0%E9%80%9F%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>450</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>经测试，第一次gpu调用，无论是用opencv的gpu模块或者cuda都会比较耗时，可能将近1s。<br>额，这也不是我一个人碰到的问题，确实有这回事。stackoverflow上面有个帖子就是关于这个的。<br>帖子地址：<a href="http://stackoverflow.com/questions/12074281/why-opencv-gpu-codes-is-slower-than-cpu">关于速度慢</a>，<a href="https://stackoverflow.com/questions/10415204/how-to-create-a-cuda-context">关于解决办法</a>。<br>如果，看了上面的帖子话，这篇文章也不用看下去了。因为我要讲的就是这件事情。<br>我的观点也是，在第一次调用之前先建立cuda context。为什么需要做这样的事情了？额，假如，<br>你只调用一次gpu处理，总不能太慢了吧。那样就看不到速度了，所以先调用次垃圾操作初始化cuda环境。<br>方法是调用cudaFree(0)，在这之前最好调用先调用cudaSetDevice(0)。记住包含cuda的头文件，<br>如果只有opencv的头文件，这2个函数是找不到的。还有，建立的工程是cuda runtime模版。<br>在我的L0Smooth代码里，这样的处理之后，初次L0Smooth调用能减少1s左右，从3s变成了2s。<br>其余的耗时，基本都在gpu版本的dft和idft，还得继续寻找加快速度的办法。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1414,7 +1424,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-count">224</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1427,7 +1437,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-count">114</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1479,12 +1489,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">676k</span>
+    <span title="站点总字数">678k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:15</span>
+    <span title="站点阅读时长">10:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
