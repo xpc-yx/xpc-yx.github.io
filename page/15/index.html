@@ -222,6 +222,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/21/poj%203691%20DNA%20repair%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20dp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/10/21/poj%203691%20DNA%20repair%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20dp/" class="post-title-link" itemprop="url">poj 3691 DNA repair AC自动机 + dp</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-10-21 11:30:00" itemprop="dateCreated datePublished" datetime="2012-10-21T11:30:00+08:00">2012-10-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/10/21/poj%203691%20DNA%20repair%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20dp/" class="post-meta-item leancloud_visitors" data-flag-title="poj 3691 DNA repair AC自动机 + dp" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/10/21/poj%203691%20DNA%20repair%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20dp/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/21/poj%203691%20DNA%20repair%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20dp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>题意是给定一系列模式串。然后给出一个文本串，问至少改变文本串里面多少个字符可以使文本串不包含任何一个模式串。<br>还是先建立Trie图，然后在Trie图上面进行dp。dp的思路也不是很复杂。dp[i][j]的意思是长度为i的文本串需要改变dp[i][j]个字符顺利到达状态j。需要注意的是长度为i的时候，对应的字符串中的第i-1个字符。刚开始一直没发现这个bug。而且注意中途不能转移到匹配成功的状态上去，多加几个条件控制即可了。。。转移方程，dp[i][j] = min(dp[i][j], dp[i-1][nNext] + szText[i-1] != k)，其中nNext是从状态j可以转移到的非匹配成功的状态，k代表的当前边的权。</p>
+<p>代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;queue&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX_N = <span class="number">61</span>;</span><br><span class="line">const int MAX_L = <span class="number">31</span>;</span><br><span class="line">const int MAX_D = <span class="number">4</span>;</span><br><span class="line">const int INF = <span class="number">1110</span>;</span><br><span class="line">char chHash<span class="selector-attr">[256]</span>;</span><br><span class="line">char szPat<span class="selector-attr">[MAX_L]</span>;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">InitHash</span>()</span><br><span class="line">{</span><br><span class="line">    chHash<span class="selector-attr">[<span class="string">'A'</span>]</span> = <span class="number">0</span>;</span><br><span class="line">    chHash<span class="selector-attr">[<span class="string">'G'</span>]</span> = <span class="number">1</span>;</span><br><span class="line">    chHash<span class="selector-attr">[<span class="string">'C'</span>]</span> = <span class="number">2</span>;</span><br><span class="line">    chHash<span class="selector-attr">[<span class="string">'T'</span>]</span> = <span class="number">3</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">struct Trie</span><br><span class="line">{</span><br><span class="line">    Trie* fail;</span><br><span class="line">    Trie* next<span class="selector-attr">[MAX_D]</span>;</span><br><span class="line">    bool flag;</span><br><span class="line">    int no;</span><br><span class="line">};</span><br><span class="line">int nP;</span><br><span class="line">Trie* pRoot;</span><br><span class="line">Trie tries<span class="selector-attr">[MAX_N * MAX_L]</span>;</span><br><span class="line"></span><br><span class="line">Trie* <span class="built_in">NewNode</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(tries<span class="selector-attr">[nP]</span>, <span class="number">0</span>, <span class="built_in">sizeof</span>(Trie));</span><br><span class="line">    tries<span class="selector-attr">[nP]</span><span class="selector-class">.no</span> = nP;</span><br><span class="line">    return tries<span class="selector-attr">[nP++]</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">InitTrie</span>(Trie* pRoot)</span><br><span class="line">{</span><br><span class="line">    nP = <span class="number">0</span>;</span><br><span class="line">    pRoot = <span class="built_in">NewNode</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Insert</span>(Trie* pRoot, char* pszPat)</span><br><span class="line">{</span><br><span class="line">    Trie* pNode = pRoot;</span><br><span class="line">    while (*pszPat)</span><br><span class="line">    {</span><br><span class="line">        int idx = chHash<span class="selector-attr">[*pszPat]</span>;</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;next<span class="selector-attr">[idx]</span> == NULL)</span><br><span class="line">        {</span><br><span class="line">            pNode-&gt;next<span class="selector-attr">[idx]</span> = <span class="built_in">NewNode</span>();</span><br><span class="line">        }</span><br><span class="line">        pNode = pNode-&gt;next<span class="selector-attr">[idx]</span>;</span><br><span class="line">        ++pszPat;</span><br><span class="line">    }</span><br><span class="line">    pNode-&gt;flag = true;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">BuildAC</span>(Trie* pRoot)</span><br><span class="line">{</span><br><span class="line">    pRoot-&gt;fail = NULL;</span><br><span class="line">    queue&lt;Trie*&gt; qt;</span><br><span class="line">    qt<span class="selector-class">.push</span>(pRoot);</span><br><span class="line"></span><br><span class="line">    while (!qt<span class="selector-class">.empty</span>())</span><br><span class="line">    {</span><br><span class="line">        Trie* front = qt<span class="selector-class">.front</span>();</span><br><span class="line">        qt<span class="selector-class">.pop</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; MAX_D; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (front-&gt;next<span class="selector-attr">[i]</span>)</span><br><span class="line">            {</span><br><span class="line">                Trie* pNode = front-&gt;fail;</span><br><span class="line">                while (pNode &amp;&amp; pNode-&gt;next<span class="selector-attr">[i]</span> == NULL)</span><br><span class="line">                {</span><br><span class="line">                    pNode = pNode-&gt;fail;</span><br><span class="line">                }</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span>-&gt;fail = pNode? pNode-&gt;next<span class="selector-attr">[i]</span> : pRoot;</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span>-&gt;flag |= front-&gt;next<span class="selector-attr">[i]</span>-&gt;fail-&gt;flag;</span><br><span class="line">                qt<span class="selector-class">.push</span>(front-&gt;next<span class="selector-attr">[i]</span>);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                front-&gt;next<span class="selector-attr">[i]</span> = front == pRoot? pRoot : front-&gt;fail-&gt;next<span class="selector-attr">[i]</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int nChange<span class="selector-attr">[INF]</span><span class="selector-attr">[INF]</span>;</span><br><span class="line">char szText<span class="selector-attr">[INF]</span>;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">Solve</span>()</span><br><span class="line">{</span><br><span class="line">    int nLen = <span class="built_in">strlen</span>(szText);</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt;= nLen; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nP; ++j)</span><br><span class="line">        {</span><br><span class="line">            nChange<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = INF;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int <span class="selector-tag">i</span>, j, k;</span><br><span class="line">    nChange<span class="selector-attr">[0]</span><span class="selector-attr">[0]</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nLen; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; nP; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (tries<span class="selector-attr">[j]</span>.flag) continue;</span><br><span class="line">            <span class="keyword">if</span> (nChange<span class="selector-attr">[i - 1]</span><span class="selector-attr">[j]</span> == INF) continue;</span><br><span class="line">            <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; MAX_D; ++k)</span><br><span class="line">            {</span><br><span class="line">                int nNext = tries<span class="selector-attr">[j]</span><span class="selector-class">.next</span><span class="selector-attr">[k]</span> - tries;</span><br><span class="line">                <span class="keyword">if</span> (tries<span class="selector-attr">[nNext]</span>.flag) continue;</span><br><span class="line">                <span class="comment">//trie是边权树,所以i是从1到len,而且当前字符是szText[i-1]</span></span><br><span class="line">                int nTemp = nChange<span class="selector-attr">[i - 1]</span><span class="selector-attr">[j]</span> + (k != chHash<span class="selector-attr">[szText[i - 1]</span>]);</span><br><span class="line">                nChange<span class="selector-attr">[i]</span><span class="selector-attr">[nNext]</span> = <span class="built_in">min</span>(nChange<span class="selector-attr">[i]</span><span class="selector-attr">[nNext]</span>, nTemp);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int nAns = INF;</span><br><span class="line">    <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nP; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (!tries<span class="selector-attr">[i]</span>.flag)</span><br><span class="line">            nAns = <span class="built_in">min</span>(nAns, nChange<span class="selector-attr">[nLen]</span><span class="selector-attr">[i]</span>);</span><br><span class="line">    }</span><br><span class="line">    return nAns == INF? -<span class="number">1</span> : nAns;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nN;</span><br><span class="line">    int nCase = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">InitHash</span>();</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">InitTrie</span>(pRoot);</span><br><span class="line">        while (nN--)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s"</span>, szPat);</span><br><span class="line">            <span class="built_in">Insert</span>(pRoot, szPat);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">BuildAC</span>(pRoot);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>, szText);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Case %d: %d\n"</span>, nCase++, <span class="built_in">Solve</span>());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/20/poj%201625%20Censored!%20AC%E8%87%AA%E5%8A%A8%E6%9C%BA%20+%20DP%20+%20%E5%A4%A7%E6%95%B0%E5%8A%A0%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1217,117 +1328,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/10/08/poj%201703%20Find%20them,%20Catch%20them%20%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/10/08/poj%201703%20Find%20them,%20Catch%20them%20%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">poj 1703 Find them, Catch them 并查集</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-10-08 12:30:00" itemprop="dateCreated datePublished" datetime="2012-10-08T12:30:00+08:00">2012-10-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/10/08/poj%201703%20Find%20them,%20Catch%20them%20%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-meta-item leancloud_visitors" data-flag-title="poj 1703 Find them, Catch them 并查集" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/10/08/poj%201703%20Find%20them,%20Catch%20them%20%E5%B9%B6%E6%9F%A5%E9%9B%86/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/10/08/poj%201703%20Find%20them,%20Catch%20them%20%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>并查集应用的变形。<br>给出的是2个节点是敌对关系的信息，最后询问任意2个节点的关系。根据这些信息，<br>节点之间可能是敌对的，也可能不是的（因为敌人的敌人就是朋友），也可能给出的<br>信息根本描述不了它们的关系。<br>看起来跟原始的并查集应用差远了。。。<br>有个比较直接的做法，那么就是把不在一个集合的节点直接用并查集合并在一起。这样的话，<br>如果询问的2个节点在同一个并查集里面，那么它们之间的关系是确定的，否则无法确定它们的<br>关系。<br>现在还有一个问题是，在同一个并查集里面的2个节点是敌对关系还是朋友关系。。。<br>可以给每个节点另外附加个信息，记录其距离并查集根节点的距离。如果，询问的2个节点距离<br>其根节点的距离都是奇数或者都是偶数，那么这2个节点是朋友关系，否则是敌对关系。。。</p>
-<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAX_N = <span class="number">100010</span>;</span><br><span class="line">int nSets<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nDis<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line"></span><br><span class="line">int nN, nM;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">MakeSets</span>(int nNum)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nNum; ++i)</span><br><span class="line">    {</span><br><span class="line">        nSets<span class="selector-attr">[i]</span> = i;</span><br><span class="line">        nDis<span class="selector-attr">[i]</span> = <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">FindSet</span>(int nI)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nSets<span class="selector-attr">[nI]</span> != nI)</span><br><span class="line">    {</span><br><span class="line">        int nPre = nSets<span class="selector-attr">[nI]</span>;</span><br><span class="line">        nSets<span class="selector-attr">[nI]</span> = <span class="built_in">FindSet</span>(nSets<span class="selector-attr">[nI]</span>);</span><br><span class="line">        nDis<span class="selector-attr">[nI]</span> = (nDis<span class="selector-attr">[nI]</span> + nDis<span class="selector-attr">[nPre]</span>) % <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">    return nSets<span class="selector-attr">[nI]</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">UnionSet</span>(int nI, int nJ)</span><br><span class="line">{</span><br><span class="line">    int nA = <span class="built_in">FindSet</span>(nI);</span><br><span class="line">    int nB = <span class="built_in">FindSet</span>(nJ);</span><br><span class="line">    <span class="keyword">if</span> (nA != nB)</span><br><span class="line">    {</span><br><span class="line">        nSets<span class="selector-attr">[nA]</span> = nB;</span><br><span class="line">        nDis<span class="selector-attr">[nA]</span> = (nDis<span class="selector-attr">[nI]</span> + nDis<span class="selector-attr">[nJ]</span> + <span class="number">1</span>) % <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nT;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, nT);</span><br><span class="line">    while (nT--)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, nN, nM);</span><br><span class="line">        <span class="built_in">MakeSets</span>(nN);</span><br><span class="line">        char szOper<span class="selector-attr">[10]</span>;</span><br><span class="line">        int nA, nB;</span><br><span class="line">        while (nM--)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s%d%d"</span>, szOper, &amp;nA, &amp;nB);</span><br><span class="line">            <span class="keyword">if</span> (szOper<span class="selector-attr">[0]</span> == <span class="string">'D'</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">UnionSet</span>(nA, nB);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                int nX = <span class="built_in">FindSet</span>(nA);</span><br><span class="line">                int nY = <span class="built_in">FindSet</span>(nB);</span><br><span class="line">                <span class="keyword">if</span> (nX == nY)</span><br><span class="line">                {</span><br><span class="line">                    <span class="keyword">if</span> (nDis<span class="selector-attr">[nA]</span> == nDis<span class="selector-attr">[nB]</span>)</span><br><span class="line">                    {</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">"In the same gang.\n"</span>);</span><br><span class="line">                    }</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    {</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">"In different gangs.\n"</span>);</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                {</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"Not sure yet.\n"</span>);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1378,7 +1378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">224</span>
+          <span class="site-state-item-count">225</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1391,7 +1391,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">114</span>
+        <span class="site-state-item-count">115</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1443,12 +1443,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">678k</span>
+    <span title="站点总字数">680k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:16</span>
+    <span title="站点阅读时长">10:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

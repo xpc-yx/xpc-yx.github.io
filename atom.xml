@@ -43,6 +43,32 @@
   </entry>
   
   <entry>
+    <title>Vulkan与OpenGL的对比</title>
+    <link href="http://xiaopengcheng.top/2025/02/18/Vulkan%E4%B8%8EOpenGL%E7%9A%84%E5%AF%B9%E6%AF%94/"/>
+    <id>http://xiaopengcheng.top/2025/02/18/Vulkan%E4%B8%8EOpenGL%E7%9A%84%E5%AF%B9%E6%AF%94/</id>
+    <published>2025-02-18T09:28:30.000Z</published>
+    <updated>2025-04-29T08:05:07.029Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h1 id="传统图形API与现代图形API"><a href="#传统图形API与现代图形API" class="headerlink" title="传统图形API与现代图形API"></a>传统图形API与现代图形API</h1><p>传统图形API指的是OpenGL/DirectX11这类简单易用、驱动托管严重的图形接口；而现代图形API则指的是Vulkan/Metal/DirectX12这类使用复杂、暴露更多底层硬件功能来显式控制的弱驱动设计的图形接口。<br>现代图形API与传统图形API相比，使用和设计上有不少的区别，下面总结一些Vulkan与OpenGL的区别来对比说明。</p><h1 id="渲染状态管理"><a href="#渲染状态管理" class="headerlink" title="渲染状态管理"></a>渲染状态管理</h1><p>OpenGL是一个全局的状态机，而Vulkan提供了PSO（PipelineState Object）来保存不同的管线状态。这样的区别是：</p><h2 id="驱动实现"><a href="#驱动实现" class="headerlink" title="驱动实现"></a>驱动实现</h2><p>OpenGL由于要在驱动内管理和保存全局的状态，实现复杂。而Vulkan将状态管理暴露给应用层管理，不再需要在驱动层处理，从而驱动实现更为简单。</p><h2 id="状态切换性能"><a href="#状态切换性能" class="headerlink" title="状态切换性能"></a>状态切换性能</h2><p>OpenGL由于是全局状态机，在渲染时候经常需要设置和恢复状态，都会触发驱动内对全局状态机的管理，容易引发CPU上的性能瓶颈。但是Vulkan的PSO可以进行预编译，将不同的状态提前存储到不同的PSO上，同时对PSO收集离线缓存和提前预加载编译，等到渲染时候进行PSO切换即可。这样可以大幅度降低因为渲染状态切换导致的CPU性能瓶颈。<br>同时，Vulkan的渲染状态是缓存在PSO内，相比OpenGL的全局状态管理，可能性能本身就更好。</p><h1 id="多线程支持"><a href="#多线程支持" class="headerlink" title="多线程支持"></a>多线程支持</h1><p>OpenGL只支持单线程提交DC，而Vulkan支持多线程提交DC。<br>具体思路：Vulkan支持多线程录制command后再提交到command queue。比如，每个线程创建一个command buffer，并行录制command到command buffer，再提交到指定的command queue。<br>更进一步，Vulkan支持多个command queue，这些queue可能在硬件层（驱动内）是并行的，比如Graphics的queue和compute的queue。</p><h1 id="Shader编译"><a href="#Shader编译" class="headerlink" title="Shader编译"></a>Shader编译</h1><p>OpenGL将Shader的编译直接交给驱动负责。而Vulkan则将Shader使用spirv-tools编译成跨平台的中间语言spir-v，驱动只负责编译spir-v。这样的好处是：</p><ol><li>跨平台：驱动只需要处理中间格式，方便使用工具将不同的语言比如hlsl、glsl等都统一编译成spirv。</li><li>性能：驱动只需要编译中间语言，不需要对着色器代码做负责的编译检查语法分析等，性能更好。</li></ol><h1 id="资源绑定"><a href="#资源绑定" class="headerlink" title="资源绑定"></a>资源绑定</h1><p>OpenGL的资源绑定都是一次API调用，比如glBindTexture等。而Vulkan支持在PSO上一次性绑定多个资产，以及Bindless等。具体可以参考文章系列：<a href="https://zhuanlan.zhihu.com/p/136449475">游戏引擎随笔 0x13：现代图形 API 的 Bindless</a>，<a href="https://zhuanlan.zhihu.com/p/416895286">游戏引擎随笔 0x23：再论现代图形 API 的 Bindless（上）</a>，<a href="https://zhuanlan.zhihu.com/p/421175854">游戏引擎随笔 0x24：再论现代图形 API 的 Bindless（下）</a>。</p><h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><p>OpenGL不支持显式的内存管理，都是托管给驱动负责。但是Vulkan支持或者说必须显式的管理与分配内存，因为驱动不再负责。具体来说是，Vulkan必须应用层申请内存同时进行管理，而OpenGL不需要。</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Vulkan 显式分配显存</span><br><span class="line">VkMemoryAllocateInfo allocInfo{};</span><br><span class="line">allocInfo.allocationSize = size;</span><br><span class="line">allocInfo.memoryTypeIndex = findMemoryType(...);</span><br><span class="line">vkAllocateMemory(device, &amp;allocInfo, nullptr, &amp;deviceMemory);</span><br><span class="line">vkBindBufferMemory(device, buffer, deviceMemory, 0);</span><br><span class="line"></span><br><span class="line">// OpenGL 隐式分配</span><br><span class="line">GLuint buffer;</span><br><span class="line">glGenBuffers(1, &amp;buffer);</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, buffer);</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);</span><br></pre></td></tr></tbody></table></figure><p>比如上述代码，OpenGL是直接调用glGenBuffers获得buffer的id即可，内部由驱动去申请和管理内存；而Vulkan则需要调用vkAllocateMemory具体的申请内存，后续的管理和同步也需要应用层负责。因此，理论上Vulkan可以实现更接近应用需要的内存管理机制。</p><h1 id="同步机制"><a href="#同步机制" class="headerlink" title="同步机制"></a>同步机制</h1><p>这里的同步包括CPU和GPU的同步，以及GPU不同的渲染操作之间的同步等。OpenGL的同步都由驱动隐式完成，应用层无法控制。而Vulkan提供了多种手段来显式控制同步，以更好的优化性能。</p><ol><li>Fence用于CPU和GPU之间的同步，比如CPU等待某个GPU操作完成。</li><li>Semaphores用GPU内部的同步。</li><li>Pipeline Barrier用于同一个queue内同步。</li><li>Event可以用于等待Pipeline事件发生，也可以用于CPU和GPU之间的同步。</li></ol><p>更具体的内容可以参考文章：<a href="https://zhuanlan.zhihu.com/p/100162469">游戏引擎随笔 0x07：现代图形 API 的同步</a>。</p><h1 id="错误验证"><a href="#错误验证" class="headerlink" title="错误验证"></a>错误验证</h1><p>OpenGL由于是驱动管理全局的状态，而且驱动内置了错误管理和验证机制，导致驱动的实现复杂并且有较大的性能损失。相反，Vulkan的错误验证层是可选的组件，并且在Vulkan层，并没有在硬件的驱动内实现；在开发阶段，可以开启验证层排查问题，而真正的运行阶段并没有验证层。</p><ol><li>性能：Vulkan没有错误验证层性能更好，驱动实现更简单。</li><li>开发：Vulkan由于没有驱动兜底，因此开发难度更大，需要更仔细的调试和验证。</li></ol><h1 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h1><p>以上这些对比区别，都是CPU层面的，因此Vulkan这种现代图形API适合需要对CPU性能做极致优化的场景。如果，性能瓶颈在GPU上，将图形API从OpenGL切换到Vulkan上也无法解决问题。相信随着硬件的发作，Vulkan会逐渐替代OpenGL/OpenGLES成为事实上的默认跨平台图形API。</p></body></html>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;传统图形API与现代图形API&quot;&gt;&lt;a href=&quot;#传统图形API与现代图形API&quot; class=&quot;headerlink&quot; title=&quot;传统图形API与现代图形API&quot;&gt;&lt;/a&gt;传统图形API与现代图形API&lt;</summary>
+      
+    
+    
+    
+    <category term="Rendering" scheme="http://xiaopengcheng.top/categories/Rendering/"/>
+    
+    
+    <category term="OpenGL" scheme="http://xiaopengcheng.top/tags/OpenGL/"/>
+    
+    <category term="Vulkan" scheme="http://xiaopengcheng.top/tags/Vulkan/"/>
+    
+  </entry>
+  
+  <entry>
     <title>filament的材质系统</title>
     <link href="http://xiaopengcheng.top/2024/12/28/filament%E7%9A%84%E6%9D%90%E8%B4%A8%E7%B3%BB%E7%BB%9F/"/>
     <id>http://xiaopengcheng.top/2024/12/28/filament%E7%9A%84%E6%9D%90%E8%B4%A8%E7%B3%BB%E7%BB%9F/</id>
@@ -520,36 +546,6 @@
     <category term="坐标空间" scheme="http://xiaopengcheng.top/tags/%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4/"/>
     
     <category term="坐标变换" scheme="http://xiaopengcheng.top/tags/%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>伽马校正和颜色空间</title>
-    <link href="http://xiaopengcheng.top/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/"/>
-    <id>http://xiaopengcheng.top/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</id>
-    <published>2020-08-26T04:28:30.000Z</published>
-    <updated>2022-03-26T10:00:09.427Z</updated>
-    
-    <content type="html"><![CDATA[<html><head></head><body><h1 id="一、伽马校正"><a href="#一、伽马校正" class="headerlink" title="一、伽马校正"></a>一、伽马校正</h1><p>所谓gamma校正，实际上是一个颜色的非线性变换。下面来解释这个变换曲线存在的原因。</p><h2 id="1-1-人眼的非线性视觉效应"><a href="#1-1-人眼的非线性视觉效应" class="headerlink" title="1.1 人眼的非线性视觉效应"></a>1.1 人眼的非线性视觉效应</h2><p>为什么要有gamma校正了。一言以蔽之，人眼的生理效应。如下图所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/gamma_correction_brightness.png"></p><p>第一行是人眼感受到的线性亮度变化，第二行是真实的非线性亮度变化。可以得出结论，首尾两端是一致的，但是中间值变化不一致；真实的中间亮度值必须更大，才能得到人眼感知的线性亮度变化。我们的目的是让人眼感受到线性的亮度变化曲线，因此输入亮度必须是第二行这种非线性的亮度变化曲线。<br>第二行的亮度变化曲线，就是<strong>伽马校正曲线</strong>。</p><h2 id="1-2-非线性显示器"><a href="#1-2-非线性显示器" class="headerlink" title="1.2 非线性显示器"></a>1.2 非线性显示器</h2><p>显示器为了应对人眼的这种非线性视觉效应，采用的也是类似的机制（也可能是历史原因，总之认为当今的显示器都是如此设计就行）。假设我们输入的颜色值，即输入给显示器的电压，那么这个电压对应的是1.1的第二行（Gamma校正曲线）；人眼感受到的显示器的真实输出对应的是1.1的第一行（线性颜色输出），即gamma编码曲线。<br>如下图所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/gamma_correction_gamma_curves.png"></p><p>这里反复强调了，人眼感受到的显示器亮度，而不是显示器的输出亮度。举个例子，<strong>输入颜色值是0.732的话，那么显示器经过gamma编码后输出的亮度是0.5，人眼感受到的亮度是0.218</strong>，刚好和人眼的视觉效应匹配。</p><p>值得强调的是，gamma指数2.2是可以变化的，在不同的场景下，可以选择不同的gamma指数。</p><h2 id="1-3-总结"><a href="#1-3-总结" class="headerlink" title="1.3 总结"></a>1.3 总结</h2><p>总结，照片是按照gamma校正曲线编码的，显示器经过gamma编码后，输出照片的亮度是线性曲线，人眼看到线性曲线的亮度后感知到的曲线是gamma曲线。<br>因此，我们需要确定输入的颜色数据是在线性曲线或者gamma校正曲线上。</p><h1 id="二、颜色空间和工作流"><a href="#二、颜色空间和工作流" class="headerlink" title="二、颜色空间和工作流"></a>二、颜色空间和工作流</h1><p>颜色空间可以理解为，颜色是在哪个空间下制作的。不需要特别多的数学曲线来描绘，但是这个说明又需要一点美术经验来理解。下面来具体分类解释。</p><h2 id="2-1-伽马颜色空间和工作流"><a href="#2-1-伽马颜色空间和工作流" class="headerlink" title="2.1 伽马颜色空间和工作流"></a>2.1 伽马颜色空间和工作流</h2><p>比如，我们拍摄的<strong>照片</strong>，人眼看起来是正确的，那么说明人眼感受到的是线性变化的，因此照片的数据是经过伽马校正的，也就是照片的数据变化是在gamma校正曲线上的。同样的，在电脑上<strong>使用软件制作的图片</strong>也是处于gamma校正曲线上的。<br>我们把这种颜色数据在gamma校正曲线上的，叫做gamma color space，也叫做sRGB。<br>那么，伽马工作流指的是所有的流程都在伽马颜色空间完成，比如输入数据，比如光照计算等。</p><h2 id="2-2-线性颜色空间和工作流"><a href="#2-2-线性颜色空间和工作流" class="headerlink" title="2.2 线性颜色空间和工作流"></a>2.2 线性颜色空间和工作流</h2><p>类似的，线性颜色空间指的是输入数据是在线性曲线上的。那么，我们如果用一张真实的图片作为输入，首先要对其进行gamma校正，也就是需要将这张贴图设置为sRGB，引擎或者图形接口自动会将其转换。<br>线性工作流指的是所有的流程都在线性颜色空间完成，比如输入数据，比如光照计算等。<br>值得强调的是，我们现在的显示器都是gamma显示器，因此我们不能在渲染管线中不能直接输出线性数据，需要转换到sRGB空间再进行输出，某些硬件支持这个自动转换，如果检测到硬件不支持，渲染引擎会在后处理流程中用shader来转换。</p><h2 id="2-3-工作流总结"><a href="#2-3-工作流总结" class="headerlink" title="2.3 工作流总结"></a>2.3 工作流总结</h2><p>下面用一张流程图来总结颜色空间的工作流，如下所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/颜色空间工作流.jpg"></p><ul><li>sRGB Texture在gamma工作流下正常显示</li><li>线性工作流的输出必须进行gamma校正，否则显示会变暗</li><li>gamma工作流的shader计算在sRGB空间中</li><li>线性工作流的shader计算在线性空间中</li></ul><p>注意，sRGB贴图移除gamma校正和shader输出进行gamma校正，都有硬件的自动支持，比如OpenGL的sRGB纹理和 GL_FRAMEBUFFER_SRGB。如果硬件不支持，那么应用（比如游戏引擎），在线性工作流中需要自己进行变换，比如加载sRGB贴图时候手动变换到线性空间和使用shader进行gamma校正。</p><h2 id="2-4-关于贴图设置为sRGB后变暗的说明"><a href="#2-4-关于贴图设置为sRGB后变暗的说明" class="headerlink" title="2.4 关于贴图设置为sRGB后变暗的说明"></a>2.4 关于贴图设置为sRGB后变暗的说明</h2><p>业界或者网上一直流传，贴图设置为sRGB后会变暗。<br>参考2.3的图，在线性工作流下，如果贴图设置为sRGB后，引擎会对贴图进行去gamma校正，变换为线性空间，颜色数值都会变小，参考1.2的曲线图。不管原始图片是否是sRGB空间下创建的，渲染时候得到的颜色值都变小了，因此不管输出时候是否进行gamma校正，我们看到的结果都会变暗。<br>如果是gamma工作流，则不会变暗，因为没有去gamma校正这个过程。</p><h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>我们讲述了人眼和显示器的视觉效应，以及两种颜色空间和对应的工作流。我们需要着重弄清楚的是，人眼的视觉效应、显示器的gamma校正、gamma颜色空间（sRGB）。</p><h1 id="四、参考资料"><a href="#四、参考资料" class="headerlink" title="四、参考资料"></a>四、参考资料</h1><blockquote><p><a href="https://docs.unity.cn/2019.4/Documentation/Manual/LinearLighting.html">Unity Color space</a><br><a href="https://learnopengl.com/Advanced-Lighting/Gamma-Correction">Gamma Correction</a><br><a href="https://zhuanlan.zhihu.com/p/66558476">Gamma、Linear、sRGB 和Unity Color Space，你真懂了吗？</a></p></blockquote></body></html>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1 id=&quot;一、伽马校正&quot;&gt;&lt;a href=&quot;#一、伽马校正&quot; class=&quot;headerlink&quot; title=&quot;一、伽马校正&quot;&gt;&lt;/a&gt;一、伽马校正&lt;/h1&gt;&lt;p&gt;所谓gamma校正，实际上是一个颜色的非线性变换。下面来解</summary>
-      
-    
-    
-    
-    <category term="图形学" scheme="http://xiaopengcheng.top/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="Rendering" scheme="http://xiaopengcheng.top/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/"/>
-    
-    
-    <category term="伽马校正" scheme="http://xiaopengcheng.top/tags/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3/"/>
-    
-    <category term="颜色空间" scheme="http://xiaopengcheng.top/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/"/>
-    
-    <category term="srgb" scheme="http://xiaopengcheng.top/tags/srgb/"/>
     
   </entry>
   
