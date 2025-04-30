@@ -222,158 +222,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">scaleform中从unrealscript往actionscript传输数据的方式</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-10-17 16:06:18" itemprop="dateCreated datePublished" datetime="2015-10-17T16:06:18+08:00">2015-10-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
-                    <span itemprop="name">游戏开发</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/UnrealEngine/" itemprop="url" rel="index">
-                    <span itemprop="name">UnrealEngine</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="scaleform中从unrealscript往actionscript传输数据的方式" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>在逆战的界面开发中，一般只需要从uc往flash中单向传输数据，因此这里只总结从uc-&gt;flash的数据流动方法。flash-&gt;uc的数据流动，其实有相对应的方式，比如SetVariableBool函数有对应的GetVariableBool函数。</p>
-<p>在unrealscript中，使用scaleform的界面类，都继承自GfxMoviePlayer。</p>
-<p>一、传输变量</p>
-<p>native function SetVariableString(string path, string s);</p>
-<p>native function SetVariableBool(string path, bool b);</p>
-<p>native function SetVariableNumber(string path, float f);</p>
-<p>我在GfxUIMovie中没找到专门设置int的函数，估计可以用SetVariableNumber替代。关键是理解path的设置，比如对应flash文件的名称是ReBornGuide。那么path可能是ReBornGuide.str或者_root.ReBornGuide.str，具体跟ue3项目的一些设置有关。</p>
-<p>这几个函数对应的cpp声明如下：</p>
-<p>String：SetVariableString(const FString path, const FString s);</p>
-<p>Bool：SetVariableBool(const FString path, UBool b);</p>
-<p>Float：SetVariableNumber(const FString path, float f);</p>
-<p>有趣的是，这几个函数的字符串参数都是引用，这样恰恰说明了在uc中，字符串是引用类型。</p>
-<p>例子：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">String strTest = <span class="string">"测试"</span>;</span><br><span class="line">String path = <span class="string">"_root.TestFlash.strTest"</span>;</span><br><span class="line"><span class="function"><span class="title">SetVariableString</span><span class="params">(path，strTest)</span></span>;</span><br><span class="line">TestFlash.as中：</span><br><span class="line"><span class="selector-tag">var</span>&nbsp;strTest:String;</span><br></pre></td></tr></tbody></table></figure>
-<p>二、传输数组</p>
-<p>native function bool SetVariableStringArray(string path, int index, array<string> Arg);</string></p>
-<p>native function bool SetVariableFloatArray(string path, int index, array<float> Arg);</float></p>
-<p>native function bool SetVariableIntArray(string path, int index, array<int> Arg);</int></p>
-<p>其对应的cpp实现</p>
-<p>String：SetVariableStringArray(const FString path,  INT Index，const TArray<fstring> arg);</fstring></p>
-<p>Float：SetVariableFloatArray(const FString path, INT Index，const TArray<float> arg);</float></p>
-<p>Int：SetVariableFloatArray(const FString path, INT Index，const TArray<int> arg);</int></p>
-<p>这里Index表示从数组的第几个元素开始，0表示传输全部，arg是要传输的数组。</p>
-<p>例子：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">local array&lt;String&gt; strArray;</span><br><span class="line">strArray<span class="selector-class">.AddItem</span>(<span class="string">"0"</span>);</span><br><span class="line">strArray<span class="selector-class">.AddItem</span>(<span class="string">"1"</span>);</span><br><span class="line">String path = <span class="string">"_root.TestFlash.strTest"</span>;</span><br><span class="line"><span class="function"><span class="title">SetVariableStringArray</span><span class="params">(path，strArray)</span></span>;</span><br><span class="line">TestFlash.as中：</span><br><span class="line"><span class="selector-tag">var</span>&nbsp;strArray:Array = new <span class="built_in">Array</span>();</span><br></pre></td></tr></tbody></table></figure>
-<p>三、传输复合对象（结构体）</p>
-<p>当需要传输整体的数据，或者传输多个数据的时候，可以将数据组合成一个结构体。假设在uc中定义了如下结构体，</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct RankData</span><br><span class="line">{</span><br><span class="line">   <span class="selector-tag">var</span> string Name;</span><br><span class="line">   <span class="selector-tag">var</span> int Rank;</span><br><span class="line">   <span class="selector-tag">var</span> double d;</span><br><span class="line">   <span class="selector-tag">var</span> <span class="attribute">float</span> f;</span><br><span class="line">   <span class="selector-tag">var</span> bool b;</span><br><span class="line">};</span><br><span class="line">RankData RD;</span><br></pre></td></tr></tbody></table></figure>
-<p>我们想将其一次性传入as中定义的Object对象,var RD:Object。这里我们可以使用SetVariableObject函数。其定义如下：</p>
-<p>native function SetVariableObject(string path, GFxObject Object);</p>
-<p>下面的例子很好说明了如何使用该函数。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">uc中:</span><br><span class="line">struct RankData</span><br><span class="line">{</span><br><span class="line">   <span class="selector-tag">var</span> string Name;</span><br><span class="line">   <span class="selector-tag">var</span> int Rank;</span><br><span class="line">   <span class="selector-tag">var</span> double d;</span><br><span class="line">   <span class="selector-tag">var</span> <span class="attribute">float</span> f;</span><br><span class="line">   <span class="selector-tag">var</span> bool b;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">function <span class="built_in">SetFlashVariables</span>()</span><br><span class="line">{</span><br><span class="line">    local GFxObject GfxObj;</span><br><span class="line">    local RankData RD;</span><br><span class="line">    local string path;</span><br><span class="line"></span><br><span class="line">    RD<span class="selector-class">.Name</span> = <span class="string">"test"</span>;</span><br><span class="line">    RD<span class="selector-class">.Rank</span> = <span class="number">1</span>;</span><br><span class="line">    RD<span class="selector-class">.d</span> = <span class="number">1.0</span>;</span><br><span class="line">    RD<span class="selector-class">.f</span> = <span class="number">1.0</span>;</span><br><span class="line">    RD<span class="selector-class">.b</span> = True;</span><br><span class="line">    GfxObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">    GfxObj<span class="selector-class">.SetString</span>(<span class="string">"Name"</span>, RD.Name);</span><br><span class="line">    GfxObj<span class="selector-class">.SetInt</span>(<span class="string">"Rank"</span>, RD.Rank);</span><br><span class="line">    GfxObj<span class="selector-class">.SetDouble</span>(<span class="string">"d"</span>, RD.d);</span><br><span class="line">    GfxObj<span class="selector-class">.SetFloat</span>(<span class="string">"f"</span>, RD.f);</span><br><span class="line">    GfxObj<span class="selector-class">.SetBool</span>(<span class="string">"b"</span>, RD.b);</span><br><span class="line"></span><br><span class="line">    path = <span class="string">"_root.TestFlash.RD"</span></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxObj);</span><br><span class="line">    GfxObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">TestFlash.as中:</span><br><span class="line"><span class="selector-tag">var</span> RD:Object = new <span class="built_in">Object</span>();</span><br><span class="line"><span class="comment">//在uc中调用了SetFlashVariables函数后，as中就能获得RD的值。</span></span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.Name)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.Name)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.f)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.d)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.b)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
-<p>从上面代表可以看出，GFxObject可以代表一个符号变量，可以设置一个GFxObject的多个属性，然后一次性将这个对象传入flash。GFxObject.uc中有如下Set变量的函数：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">native final function <span class="built_in">SetBool</span>(string Member, bool b);</span><br><span class="line">native final function <span class="built_in">SetFloat</span>(string Member, <span class="attribute">float</span> f);</span><br><span class="line">native final function <span class="built_in">SetDouble</span>(string Member,double d);</span><br><span class="line">native final function <span class="built_in">SetInt</span>(string Member,int i);</span><br><span class="line">native final function <span class="built_in">SetString</span>(string Member, string s);</span><br><span class="line">native final function <span class="built_in">SetObject</span>(string Member, GFxObject val);</span><br></pre></td></tr></tbody></table></figure>
-<p>因此，可以看出可以设置GFxObject各种类型的属性。关键的是还可以设置其GFxObject类型的属性，从而可以嵌套定义。比如结构体中定义另一结构体成员。当需要将多次传输组合为一次时候，也可以使用这种方式，并不需要一定定义结构体。</p>
-<p>四、传输结构体数组</p>
-<p>假设as中定义如下数组，var RankListDatas:Array = new Array();那么可以用下面代码传输：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//军衔列表每项的数据</span></span><br><span class="line">struct RankListData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> int Level;<span class="comment">//等级</span></span><br><span class="line">    <span class="selector-tag">var</span> string Name;<span class="comment">//军衔名</span></span><br><span class="line">};</span><br><span class="line"><span class="selector-tag">var</span> array&lt;RankListData&gt; RankListDatas;</span><br><span class="line"><span class="selector-tag">var</span> string path;</span><br><span class="line">function <span class="built_in">SetFlashRankListDatas</span>()</span><br><span class="line">{</span><br><span class="line">    local int Index;</span><br><span class="line">    local GFxObject GfxRankListDatas;</span><br><span class="line">    local GFxObject GfxTempObj;</span><br><span class="line"></span><br><span class="line">    GfxRankListDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">    <span class="keyword">for</span> (Index = <span class="number">0</span>; Index &lt; RankDatas.Length; Index++)<span class="comment">//第0项是多余的</span></span><br><span class="line">    {        </span><br><span class="line">        GfxTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetInt</span>(<span class="string">"Level"</span>, RankListDatas<span class="selector-attr">[Index]</span>.Level);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetString</span>(<span class="string">"Name"</span>, RankListDatas<span class="selector-attr">[Index]</span>.Name);</span><br><span class="line">        GfxRankListDatas<span class="selector-class">.SetElementObject</span>(Index, GfxTempObj);</span><br><span class="line">        GfxTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxRankListDatas);</span><br><span class="line">    GfxRankListDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>从代码里面可以看到，还是用SetVariableObject传输数据。不过，需要用CreateArray()创建GFxObject对象。在as代码中RankListDatas[0].Name就可以访问第一个元素的Name属性了。</p>
-<p>GfxRankListDatas.SetElementObject(Index, GfxTempObj)则是将GfxTempObj设置为GfxRankListDatas代表的数组的第Index个元素。</p>
-<p>五、传输结构体数组的数组（结构体内部复合结构体数组）</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">struct AwardData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> string IconSource;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">struct RankAwardData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> string RankAwardTitle;</span><br><span class="line">    <span class="selector-tag">var</span> array&lt;AwardData&gt; AwardDatas;</span><br><span class="line">};</span><br><span class="line"><span class="selector-tag">var</span> array&lt;RankAwardData&gt; RankAwardDatas;</span><br><span class="line"><span class="selector-tag">var</span> string path;</span><br><span class="line"></span><br><span class="line">function <span class="built_in">SetFlashRankAwardDatas</span>()</span><br><span class="line">{</span><br><span class="line">    local int Index;</span><br><span class="line">    local int i;</span><br><span class="line">    local GFxObject GfxRankAwardDatas;</span><br><span class="line">    local GFxObject GfxTempObj;</span><br><span class="line">    local GFxObject GfxAwardDatas;</span><br><span class="line">    local GFxObject GfxAwardTempObj;</span><br><span class="line"></span><br><span class="line">    GfxRankAwardDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">    <span class="keyword">for</span> (Index = <span class="number">0</span>; Index &lt; RankAwardDatas.Length; Index++)</span><br><span class="line">    {        </span><br><span class="line">        GfxTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetString</span>(<span class="string">"RankAwardTitle"</span>, RankAwardDatas<span class="selector-attr">[Index]</span>.RankAwardTitle);</span><br><span class="line"></span><br><span class="line">        GfxAwardDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; RankAwardDatas<span class="selector-attr">[Index]</span><span class="selector-class">.AwardDatas</span>.Length; ++i)</span><br><span class="line">        {</span><br><span class="line">            GfxAwardTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">            GfxAwardTempObj<span class="selector-class">.SetString</span>(<span class="string">"IconSource"</span>, RankAwardDatas<span class="selector-attr">[Index]</span><span class="selector-class">.AwardDatas</span><span class="selector-attr">[i]</span>.IconSource);</span><br><span class="line">            GfxAwardDatas<span class="selector-class">.SetElementObject</span>(<span class="selector-tag">i</span>, GfxAwardTempObj);</span><br><span class="line">            GfxAwardTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">        }</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetObject</span>(<span class="string">"RankAward"</span>, GfxAwardDatas);</span><br><span class="line">        GfxRankAwardDatas<span class="selector-class">.SetElementObject</span>(Index, GfxTempObj);</span><br><span class="line">        GfxAwardDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">        GfxTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxRankAwardDatas);</span><br><span class="line">    GfxRankAwardDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>从上面代码可以看出，调用GfxTempObj.SetObject(“RankAward”, GfxAwardDatas)可以设置GFxObject对象的GFxObject属性，从而能够传输复合结构体类型的数组。假设as中对应的数组定义为var RankAwardDatas:Array=new Array();那么，在as代码中RankAwardDatas[0].RankAward.IconSource则能访问该数组第一个元素的结构体成员的IconSource属性。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/10/12/windows7%E4%B8%8A%E9%9D%A2%E7%AD%89%E5%A6%82%E4%BD%95%E8%AE%A9tga%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1443,6 +1291,127 @@
   
   
 
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">说说我的QT下使用OpenGL渲染Mesh的框架</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-03-13 21:22:39" itemprop="dateCreated datePublished" datetime="2015-03-13T21:22:39+08:00">2015-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-meta-item leancloud_visitors" data-flag-title="说说我的QT下使用OpenGL渲染Mesh的框架" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>我终于把界面换成qt的了，即使我从大二开始就用mfc，一直用到去年上半年。也终于到了，我实在受不了mfc代码混乱的时候了，qt那么方便的东西，我为什么不早点用了。这里就不吐槽mfc的混乱，qt的方便了。在mfc里面建立一个复杂的界面，比如说有dock窗口，或者tab页面的，代码多，而且混乱麻烦，更无语的是，每次我都必须去搜索下，解决各种各样的问题，有的还可以理解，有的就是莫名其妙了。更别说什么代码清晰，跨平台之类的，何止是天方夜谭。</p>
+<p>下面，说说我自己逐渐搭建的这个框架吧。其实，这个框架是从我上一个项目里，使用mfc的单文档单视图，主窗口里面有几个dockpane，视图里面放置了渲染OpenGL的子窗口，过渡来的。在qt的框架里面，mfc所有的这些恶心的东西都没有了，只剩下一个MainWindow类。在这个类里面，创建菜单，工具条，状态条，主窗口，dock窗口，tab窗口。代码简洁方便。渲染opengl的窗口设置为MainWindow的主widget。渲染窗口只是一个普通的widget而已，可以任意放置。</p>
+<p>这样的做法能够把界面和渲染窗口独立出来，渲染窗口对应一个独立的类(COglWidget)，所以方便创建不同类型的复杂界面。我觉得我应该先用viso画个类图，才能说清楚。下图是我的界面。中间是COglWidget。右侧是一个DockWidget，里面放置了个设置Mesh属性的widget。</p>
+<p><img alt="" data-src="https://c7.staticflickr.com/8/7463/26842619574_12cf1f5142_o.jpg"></p>
+<p>通过主窗口的构造函数，可以看看如何创建这个界面，虽然在主窗口里面做这么的事情不是个好的习惯。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::<span class="built_in">CMainWindow</span>(QWidget *parent)</span><br><span class="line">        : <span class="built_in">QMainWindow</span>(parent)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        <span class="built_in">setWindowTitle</span>(<span class="selector-tag">tr</span>(<span class="string">"Skeleton Extract"</span>));</span><br><span class="line"></span><br><span class="line">        m_pSEMesh = new <span class="built_in">CSEMesh</span>();</span><br><span class="line">        m_pOglForSE = new <span class="built_in">COglWidget</span>(this, m_pSEMesh);</span><br><span class="line">        m_pSEMesh-&gt;<span class="built_in">SetOglWidget</span>(m_pOglForSE);</span><br><span class="line">        <span class="built_in">setCentralWidget</span>((QWidget*)m_pOglForSE);<span class="comment">//设置中间是渲染OpenGL的widget      </span></span><br><span class="line"></span><br><span class="line">        m_pPCMesh = new <span class="built_in">CPointCloudMesh</span>();</span><br><span class="line">        m_pOglForPC = new <span class="built_in">COglWidget</span>(this, m_pPCMesh);</span><br><span class="line">        <span class="comment">//m_pOglForPC-&gt;SetEye(0.0, 0.0, 1.0);</span></span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">setFixedSize</span>(<span class="number">960</span>, <span class="number">720</span>);</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">setWindowTitle</span>(<span class="selector-tag">tr</span>(<span class="string">"Point Cloud For Geodesic Matrix Eigen Vector"</span>));</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">move</span>((QApplication::<span class="built_in">desktop</span>()-&gt;<span class="attribute">width</span>() - m_pOglForPC-&gt;<span class="built_in">width</span>()) / <span class="number">2</span>,</span><br><span class="line">            (QApplication::<span class="built_in">desktop</span>()-&gt;<span class="attribute">height</span>() - m_pOglForPC-&gt;<span class="built_in">height</span>())/<span class="number">2</span>);</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">hide</span>();</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">setWindowFlags</span>(Qt::Window);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">CreateActions</span>();</span><br><span class="line">        <span class="built_in">CreateMenus</span>();</span><br><span class="line">        <span class="built_in">CreateToolBars</span>();</span><br><span class="line">        <span class="built_in">CreateStatusBar</span>();</span><br><span class="line">        <span class="built_in">CreateDockWidgets</span>();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">setMinimumSize</span>(<span class="number">960</span>, <span class="number">720</span>);</span><br><span class="line">        <span class="built_in">setWindowState</span>(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        std::string strName = <span class="string">"MeshData\\bunny_3k.m"</span>;</span><br><span class="line">        m_pSEMesh-&gt;<span class="built_in">LoadModel</span>(strName<span class="selector-class">.c_str</span>());</span><br><span class="line">        m_pMeshNameLabel-&gt;<span class="built_in">setText</span>(<span class="built_in">QString</span>(strName<span class="selector-class">.c_str</span>()));</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<p>再来看一个使用tabwidget的界面，记得在mfc中使用tab页面应该是比较麻烦，我也没用过。不过，在qt里面，唯一需要改变的是把tabwidget设置为central的widget，把其它widget加入到tab页面里面就行了。效果如图：<br><img alt="" data-src="https://c5.staticflickr.com/8/7433/27175531460_7ebec89490_o.jpg"><br>这个界面的创建代码如下，这里我把菜单，工具条，状态栏都去掉了。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::<span class="built_in">CMainWindow</span>(QWidget *parent)</span><br><span class="line">        : <span class="built_in">QMainWindow</span>(parent)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        <span class="built_in">setWindowTitle</span>(<span class="selector-tag">tr</span>(<span class="string">"Virtual Box"</span>));</span><br><span class="line"></span><br><span class="line">        m_pMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pOglWidget = new <span class="built_in">COglWidget</span>(this, m_pMesh);</span><br><span class="line"></span><br><span class="line">        m_pMainViewMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pMainViewMesh-&gt;<span class="built_in">DrawStyle</span>(CCubeMesh::MAIN_VIEW);</span><br><span class="line">        m_pMainViewWidget = new <span class="built_in">CViewWidget</span>(this, m_pMainViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pTopViewMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pTopViewMesh-&gt;<span class="built_in">DrawStyle</span>(CCubeMesh::TOP_VIEW);</span><br><span class="line">        m_pTopViewWidget = new <span class="built_in">CViewWidget</span>(this, m_pTopViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pSideViewMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pSideViewMesh-&gt;<span class="built_in">DrawStyle</span>(CCubeMesh::SIDE_VIEW);</span><br><span class="line">        m_pSideViewWidget = new <span class="built_in">CViewWidget</span>(this, m_pSideViewMesh);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//CreateActions();</span></span><br><span class="line">        <span class="comment">//CreateMenus();</span></span><br><span class="line">        <span class="comment">//CreateToolBars();</span></span><br><span class="line">        <span class="comment">//CreateStatusBar();</span></span><br><span class="line">        <span class="comment">//CreateDockWidgets();</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">setMinimumSize</span>(<span class="number">960</span>, <span class="number">720</span>);</span><br><span class="line">        <span class="built_in">setWindowState</span>(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//std::string strName = "cube.obj";</span></span><br><span class="line">        <span class="comment">//m_pMesh-&gt;LoadModel(strName.c_str());</span></span><br><span class="line">        <span class="comment">//m_pMeshNameLabel-&gt;setText(QString(strName.c_str()));</span></span><br><span class="line">        m_pTabWidget = new <span class="built_in">QTabWidget</span>(this);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pOglWidget, <span class="string">"Cube View"</span>);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pMainViewWidget, <span class="string">"Main View"</span>);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pTopViewWidget, <span class="string">"Top View"</span>);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pSideViewWidget, <span class="string">"Side View"</span>);</span><br><span class="line">        <span class="built_in">setCentralWidget</span>((QWidget*)m_pTabWidget);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面的代码中，可以看到创建一个OglWidget需要一个Mesh指针。在我的框架中，COglWidget内中只使用几个固定的Mesh函数。因此，可以把COglWidget实现为依赖于一个IMesh接口，这样就进一步把OpenGL窗口和Mesh分离开来。不管Mesh类的具体实现如何，OpenGL窗口只需要依赖IMesh接口，因此，第一个界面里面的Mesh类实际上组合了一个CGAL的CGAL::Polyhedron_3对象。而第二个界面的Mesh类是一个简单的渲染长方体的类，不过支持渲染多个视图而已。<br>下面说说，COglWidget类具有哪些功能。首先，渲染Mesh，包括设置视口，eye，投影，光照，背景等等，其次，处理鼠标按键操作模型，我的实现是把所有的鼠标按键消息都丢给了下层的一个trackball类，这个trackball类支持旋转缩放移动模型，另外还写了几个打开文件，以及选取背景色的操作。<br>现在到了Mesh的部分了。因为跟OpenGL窗口相关的只是IMesh接口，所以，我可以任意实现实际的Mesh类。<br>IMesh的定义如下，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> IMESH_H</span><br><span class="line"><span class="selector-id">#define</span> IMESH_H</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/vertex.h"</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">{</span><br><span class="line">    struct IMesh</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">IMesh</span>()</span><br><span class="line">        {</span><br><span class="line">            m_pMatMV = new double<span class="selector-attr">[16]</span>;</span><br><span class="line">            m_pMatProj = new double<span class="selector-attr">[16]</span>;</span><br><span class="line">            m_pViewport = new int<span class="selector-attr">[4]</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        virtual ~<span class="built_in">IMesh</span>()</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">FreeModel</span>();</span><br><span class="line">            delete<span class="selector-attr">[]</span> m_pMatMV;</span><br><span class="line">            delete<span class="selector-attr">[]</span> m_pMatProj;</span><br><span class="line">            delete<span class="selector-attr">[]</span> m_pViewport;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        virtual bool <span class="built_in">LoadModel</span>(const char* pFilename) { return true; }</span><br><span class="line">        virtual void <span class="built_in">SaveModel</span>(const char* sFilename) {}</span><br><span class="line">        virtual void <span class="built_in">UnifyModel</span>() {}</span><br><span class="line"></span><br><span class="line">        virtual bool <span class="built_in">HasModelLoad</span>() const { return true; }</span><br><span class="line">        virtual void <span class="built_in">FreeModel</span>() {}</span><br><span class="line"></span><br><span class="line">        virtual void <span class="built_in">InitData</span>() {}</span><br><span class="line">        virtual void <span class="built_in">DestroyData</span>() {}</span><br><span class="line"></span><br><span class="line">        virtual void <span class="built_in">DrawScene</span>()</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">glGetDoublev</span>(GL_MODELVIEW_MATRIX, m_pMatMV);</span><br><span class="line">            <span class="built_in">glGetDoublev</span>(GL_PROJECTION_MATRIX, m_pMatProj);</span><br><span class="line">            <span class="built_in">glGetIntegerv</span>(GL_VIEWPORT, m_pViewport);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        void <span class="built_in">WindowWidth</span>(int nWidth) { m_nWinWidth = nWidth; }</span><br><span class="line">        int <span class="built_in">WindowWidth</span>() const { return m_nWinWidth; }</span><br><span class="line">        void <span class="built_in">WindowHeight</span>(int nHeight) { m_nWinHeight = nHeight; }</span><br><span class="line">        int <span class="built_in">WindowHeight</span>() const { return m_nWinHeight; }</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        double* m_pMatMV;<span class="comment">//模型视图矩阵</span></span><br><span class="line">        double* m_pMatProj;<span class="comment">//投影矩阵</span></span><br><span class="line">        int* m_pViewport;<span class="comment">//视口</span></span><br><span class="line">        int m_nWinWidth;</span><br><span class="line">        int m_nWinHeight;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        v3d m_vMax, m_vMin;         <span class="comment">// bounding box of the scene</span></span><br><span class="line">    };</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>其中，DrawScene()是渲染接口，另外还有加载模型的接口等，里面还有些数据。我用CTriMesh继承IMesh接口，同时组合Enriched_Model *m_pModel的指针，创建一个CGAL的多边形网格模型，实际的操作基本都交给m_pModel。这个类的定义太复杂了，就不贴了。这个类里面我集成了基本操作，比如按照点，线，面方式渲染，渲染包围盒，坐标轴，法线，顶点，边，面的索引等，加载和保存模型等等。因此，CTriMesh作为模型的基类，在实际的项目中，再继承CTriMesh，比如第一个界面中的CSEMesh，在CSEMesh中进行具体的处理。<br>所以，实际的算法实现都在CSEMesh里面。因为，IMesh和CTriMesh，COglWidget可以固化了。能够变化的只是CMainWindow。如果要添加新的代码，只能继承CTriMesh，在子类里面实现具体的算法，也算是对修改关闭对扩展开放吧。</p>
+<p>因此，如果再做类似的东西，我就有一个很方便的框架了。。。鉴于不少人留言要代码，有兴趣的可以参考这个<a href="https://pan.baidu.com/s/1eSbiwYe">QtRenderMesh</a>。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -1493,7 +1462,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">227</span>
+          <span class="site-state-item-count">226</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

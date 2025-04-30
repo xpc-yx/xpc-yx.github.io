@@ -222,118 +222,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/14/poj%202886%20Who%20Gets%20the%20Most%20Candies%20%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%92%8C%E5%8F%8D%E7%B4%A0%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/09/14/poj%202886%20Who%20Gets%20the%20Most%20Candies%20%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%92%8C%E5%8F%8D%E7%B4%A0%E6%95%B0/" class="post-title-link" itemprop="url">poj 2886 Who Gets the Most Candies? 约瑟夫环和反素数</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-09-14 10:00:00" itemprop="dateCreated datePublished" datetime="2012-09-14T10:00:00+08:00">2012-09-14</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/09/14/poj%202886%20Who%20Gets%20the%20Most%20Candies%20%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%92%8C%E5%8F%8D%E7%B4%A0%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="poj 2886 Who Gets the Most Candies? 约瑟夫环和反素数" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/09/14/poj%202886%20Who%20Gets%20the%20Most%20Candies%20%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%92%8C%E5%8F%8D%E7%B4%A0%E6%95%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/09/14/poj%202886%20Who%20Gets%20the%20Most%20Candies%20%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%92%8C%E5%8F%8D%E7%B4%A0%E6%95%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>直接模拟约瑟夫环是N^2，况且这题每次移动的距离和方向都是不确定的，只能模拟，如果加快查找和移动的话，可以提高速度，果断用线段树维护当前位置前面有多少个人。<br>至于反素数指的是求一个小于等于N的数字，使得其因子个数在1-N中是最大的。这个利用一个必要条件暴力搜索即可。</p>
-<p></p><div>其实就是利用下面这2个性质搜索的。 性质一:一个反素数的质因子必然是从2开始连续的质数。性质二:p=2^t1<em>3^t2</em>5^t3*7^t4…..必然t1&gt;=t2&gt;=t3&gt;=….。<p></p>
-<p>代码如下：&lt;/div&gt;<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int nPrime<span class="selector-attr">[16]</span> = {<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">29</span>,<span class="number">31</span>,<span class="number">37</span>,<span class="number">41</span>,<span class="number">43</span>,<span class="number">47</span>,<span class="number">53</span>};</span><br><span class="line">int nAns;</span><br><span class="line">int nCN;</span><br><span class="line">const int MAX_N = <span class="number">500010</span>;</span><br><span class="line"><span class="comment">//nPow不会超过20</span></span><br><span class="line">void <span class="built_in">InitBest</span>(int nCur, int nI, int nMax, int nN, int nNum)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nCur &gt; nN) return;</span><br><span class="line">    <span class="keyword">if</span> (nNum &gt; nCN){nAns = nCur;nCN = nNum;}</span><br><span class="line">    <span class="keyword">if</span> (nNum == nCN){nAns = <span class="built_in">min</span>(nAns, nCur);}</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nMax; ++i)</span><br><span class="line">    {</span><br><span class="line">        nCur *= nPrime<span class="selector-attr">[nI]</span>;</span><br><span class="line">        <span class="keyword">if</span> (nCur &gt; nN)return;<span class="comment">//不加这句优化会超时</span></span><br><span class="line">        <span class="keyword">if</span> (nI &lt; <span class="number">15</span>)</span><br><span class="line">        <span class="built_in">InitBest</span>(nCur, nI + <span class="number">1</span>, <span class="selector-tag">i</span>, nN, nNum * (<span class="selector-tag">i</span> + <span class="number">1</span>));</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">char szNames<span class="selector-attr">[MAX_N]</span><span class="selector-attr">[10]</span>;</span><br><span class="line">int nValue<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nTree<span class="selector-attr">[MAX_N &lt;&lt; 2]</span>;</span><br><span class="line">void <span class="built_in">PushUp</span>(int nRt)</span><br><span class="line">{</span><br><span class="line">    nTree<span class="selector-attr">[nRt]</span> = nTree<span class="selector-attr">[nRt &lt;&lt; 1]</span> + nTree<span class="selector-attr">[nRt &lt;&lt; 1 | 1]</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">BuildTree</span>(int nL, int nR, int nRt, int nV)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nL == nR)</span><br><span class="line">    {</span><br><span class="line">        nTree<span class="selector-attr">[nRt]</span> = nV;</span><br><span class="line">        return;</span><br><span class="line">    }</span><br><span class="line">    int nMid = (nL + nR) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">BuildTree</span>(nL, nMid, nRt &lt;&lt; <span class="number">1</span>, nV);</span><br><span class="line">    <span class="built_in">BuildTree</span>(nMid + <span class="number">1</span>, nR, nRt &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, nV);</span><br><span class="line">    <span class="built_in">PushUp</span>(nRt);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Add</span>(int nL, int nR, int nRt, int nP, int nV)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nL == nR)</span><br><span class="line">    {</span><br><span class="line">        nTree<span class="selector-attr">[nRt]</span> += nV;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        int nMid = (nL + nR) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (nP &lt;= nMid)<span class="built_in">Add</span>(nL, nMid, nRt &lt;&lt; <span class="number">1</span>, nP, nV);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">Add</span>(nMid + <span class="number">1</span>, nR, nRt &lt;&lt; <span class="number">1</span> | <span class="number">1</span>, nP, nV);</span><br><span class="line">        <span class="built_in">PushUp</span>(nRt);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">Query</span>(int nL, int nR, int nRt, int nSum)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nL == nR)</span><br><span class="line">    {</span><br><span class="line">        return nL;</span><br><span class="line">    }</span><br><span class="line">    int nMid = (nL + nR) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    int nLs = nRt &lt;&lt; <span class="number">1</span>;</span><br><span class="line">    int nRs = nLs | <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (nTree<span class="selector-attr">[nLs]</span> &gt;= nSum) return <span class="built_in">Query</span>(nL, nMid, nLs, nSum);</span><br><span class="line">    <span class="keyword">else</span> return <span class="built_in">Query</span>(nMid + <span class="number">1</span>, nR, nRs, nSum - nTree<span class="selector-attr">[nLs]</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//InitBest(1, 0, 15);</span></span><br><span class="line">    int nN, nK;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;nN, &amp;nK) == <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        nK--;</span><br><span class="line">        nAns = <span class="number">2</span>;</span><br><span class="line">        nCN = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">InitBest</span>(<span class="number">1</span>, <span class="number">0</span>, <span class="number">20</span>, nN, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//printf("ans:%d cn:%d\n", nAns, nCN);</span></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s%d"</span>, szNames<span class="selector-attr">[i]</span>, nValue<span class="selector-attr">[i]</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">BuildTree</span>(<span class="number">0</span>, nN - <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        int nTotal = nN;</span><br><span class="line">        int nPos;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nAns; ++i)</span><br><span class="line">        {</span><br><span class="line">            nPos = <span class="built_in">Query</span>(<span class="number">0</span>, nN - <span class="number">1</span>, <span class="number">1</span>, nK + <span class="number">1</span>);</span><br><span class="line">            <span class="comment">//printf("nK:%d %s %d\n", nK, szNames[nPos], nValue[nPos]);</span></span><br><span class="line">            nTotal--;</span><br><span class="line">            <span class="built_in">Add</span>(<span class="number">0</span>, nN - <span class="number">1</span>, <span class="number">1</span>, nPos, -<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (!nTotal)break;</span><br><span class="line">            <span class="keyword">if</span> (nValue<span class="selector-attr">[nPos]</span> &gt;= <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                nK = (nK - <span class="number">1</span> + nValue<span class="selector-attr">[nPos]</span> + nTotal) % nTotal;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                nK = ((nK + nValue<span class="selector-attr">[nPos]</span>) % nTotal + nTotal) % nTotal;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s %d\n"</span>, szNames<span class="selector-attr">[nPos]</span>, nCN);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</div></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/09/12/hdu%202492%20Ping%20pong%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1337,6 +1225,116 @@
   
   
 
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/08/01/uva-10392-factoring-large-numbers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/08/01/uva-10392-factoring-large-numbers/" class="post-title-link" itemprop="url">uva 10392 - Factoring Large Numbers</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-08-01 19:30:00" itemprop="dateCreated datePublished" datetime="2012-08-01T19:30:00+08:00">2012-08-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/08/01/uva-10392-factoring-large-numbers/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10392 - Factoring Large Numbers" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/08/01/uva-10392-factoring-large-numbers/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/08/01/uva-10392-factoring-large-numbers/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>此题的意思是分解大数字，数字的范围是Longlong级别的，好像不能暴力的样子。但是，题目给出了个条件，最多只有一个因子的大小超过1000000。哈哈，这就是暴点啊。既然，如此直接枚举1000000以内的因子就行了，剩余的部分如果大于10的6次肯定是N的因子了，就不用暴力了。如果小于10的6次肯定是1啦，因为2-1000000的因子都被处理了啊。<br>这样这个题就不会超时了。确实，暴力是需要技巧的。还要注意uva上要用%lld输入。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">typedef long long LL;</span><br><span class="line"><span class="selector-id">#define</span> MAX (<span class="number">6000000</span>)</span><br><span class="line">bool bPrime<span class="selector-attr">[MAX]</span>;</span><br><span class="line">int nPrime<span class="selector-attr">[MAX]</span>;</span><br><span class="line">int nNum;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">InitPrime</span>()</span><br><span class="line">{</span><br><span class="line">    LL nMax = <span class="built_in">sqrt</span>(MAX) + <span class="number">1</span>;</span><br><span class="line">    bPrime<span class="selector-attr">[0]</span> = bPrime<span class="selector-attr">[1]</span> = true;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">2</span>; <span class="selector-tag">i</span> &lt;= nMax; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (!bPrime<span class="selector-attr">[i]</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">2</span> * i; j &lt; MAX; j += i)</span><br><span class="line">            {</span><br><span class="line">                bPrime<span class="selector-attr">[j]</span> = true;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">2</span>; <span class="selector-tag">i</span> &lt; MAX; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (!bPrime<span class="selector-attr">[i]</span>)</span><br><span class="line">            nPrime<span class="selector-attr">[nNum++]</span> = i;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">IsPrime</span>(LL nN)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (nN &lt; MAX) return !bPrime<span class="selector-attr">[nN]</span>;</span><br><span class="line">    LL nMax = <span class="built_in">sqrt</span>((double)nN) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (LL j = <span class="number">0</span>, <span class="selector-tag">i</span> = nPrime<span class="selector-attr">[j]</span>; <span class="selector-tag">i</span> &lt;= nMax; ++j, <span class="selector-tag">i</span> = nPrime<span class="selector-attr">[j]</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nN % <span class="selector-tag">i</span> == <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            return false;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return true;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    LL nN;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">InitPrime</span>();</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;nN), nN &gt;= <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (nN &lt;= <span class="number">2</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%-lld\n\n"</span>, nN);</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        int nMax = <span class="built_in">sqrt</span>((double)nN)+ <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (LL <span class="selector-tag">i</span> = <span class="number">2</span>; <span class="selector-tag">i</span> &lt;= <span class="number">1000000</span>  <span class="selector-tag">i</span> &lt;= nMax; ++i)</span><br><span class="line">        {</span><br><span class="line">            while (nN % <span class="selector-tag">i</span> == <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"    %-lld\n"</span>, i);</span><br><span class="line">                nN /= i;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span> (nN &lt; <span class="number">6000000</span>  <span class="built_in">IsPrime</span>(nN))</span><br><span class="line">            {</span><br><span class="line">                break;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (nN != <span class="number">1</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"    %-lld\n"</span>, nN);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -1387,7 +1385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">227</span>
+          <span class="site-state-item-count">226</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

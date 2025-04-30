@@ -222,127 +222,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">说说我的QT下使用OpenGL渲染Mesh的框架</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-03-13 21:22:39" itemprop="dateCreated datePublished" datetime="2015-03-13T21:22:39+08:00">2015-03-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" class="post-meta-item leancloud_visitors" data-flag-title="说说我的QT下使用OpenGL渲染Mesh的框架" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2015/03/13/%E8%AF%B4%E8%AF%B4%E6%88%91%E7%9A%84QT%E4%B8%8B%E4%BD%BF%E7%94%A8OpenGL%E6%B8%B2%E6%9F%93Mesh%E7%9A%84%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>我终于把界面换成qt的了，即使我从大二开始就用mfc，一直用到去年上半年。也终于到了，我实在受不了mfc代码混乱的时候了，qt那么方便的东西，我为什么不早点用了。这里就不吐槽mfc的混乱，qt的方便了。在mfc里面建立一个复杂的界面，比如说有dock窗口，或者tab页面的，代码多，而且混乱麻烦，更无语的是，每次我都必须去搜索下，解决各种各样的问题，有的还可以理解，有的就是莫名其妙了。更别说什么代码清晰，跨平台之类的，何止是天方夜谭。</p>
-<p>下面，说说我自己逐渐搭建的这个框架吧。其实，这个框架是从我上一个项目里，使用mfc的单文档单视图，主窗口里面有几个dockpane，视图里面放置了渲染OpenGL的子窗口，过渡来的。在qt的框架里面，mfc所有的这些恶心的东西都没有了，只剩下一个MainWindow类。在这个类里面，创建菜单，工具条，状态条，主窗口，dock窗口，tab窗口。代码简洁方便。渲染opengl的窗口设置为MainWindow的主widget。渲染窗口只是一个普通的widget而已，可以任意放置。</p>
-<p>这样的做法能够把界面和渲染窗口独立出来，渲染窗口对应一个独立的类(COglWidget)，所以方便创建不同类型的复杂界面。我觉得我应该先用viso画个类图，才能说清楚。下图是我的界面。中间是COglWidget。右侧是一个DockWidget，里面放置了个设置Mesh属性的widget。</p>
-<p><img alt="" data-src="https://c7.staticflickr.com/8/7463/26842619574_12cf1f5142_o.jpg"></p>
-<p>通过主窗口的构造函数，可以看看如何创建这个界面，虽然在主窗口里面做这么的事情不是个好的习惯。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::<span class="built_in">CMainWindow</span>(QWidget *parent)</span><br><span class="line">        : <span class="built_in">QMainWindow</span>(parent)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        <span class="built_in">setWindowTitle</span>(<span class="selector-tag">tr</span>(<span class="string">"Skeleton Extract"</span>));</span><br><span class="line"></span><br><span class="line">        m_pSEMesh = new <span class="built_in">CSEMesh</span>();</span><br><span class="line">        m_pOglForSE = new <span class="built_in">COglWidget</span>(this, m_pSEMesh);</span><br><span class="line">        m_pSEMesh-&gt;<span class="built_in">SetOglWidget</span>(m_pOglForSE);</span><br><span class="line">        <span class="built_in">setCentralWidget</span>((QWidget*)m_pOglForSE);<span class="comment">//设置中间是渲染OpenGL的widget      </span></span><br><span class="line"></span><br><span class="line">        m_pPCMesh = new <span class="built_in">CPointCloudMesh</span>();</span><br><span class="line">        m_pOglForPC = new <span class="built_in">COglWidget</span>(this, m_pPCMesh);</span><br><span class="line">        <span class="comment">//m_pOglForPC-&gt;SetEye(0.0, 0.0, 1.0);</span></span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">setFixedSize</span>(<span class="number">960</span>, <span class="number">720</span>);</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">setWindowTitle</span>(<span class="selector-tag">tr</span>(<span class="string">"Point Cloud For Geodesic Matrix Eigen Vector"</span>));</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">move</span>((QApplication::<span class="built_in">desktop</span>()-&gt;<span class="attribute">width</span>() - m_pOglForPC-&gt;<span class="built_in">width</span>()) / <span class="number">2</span>,</span><br><span class="line">            (QApplication::<span class="built_in">desktop</span>()-&gt;<span class="attribute">height</span>() - m_pOglForPC-&gt;<span class="built_in">height</span>())/<span class="number">2</span>);</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">hide</span>();</span><br><span class="line">        m_pOglForPC-&gt;<span class="built_in">setWindowFlags</span>(Qt::Window);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">CreateActions</span>();</span><br><span class="line">        <span class="built_in">CreateMenus</span>();</span><br><span class="line">        <span class="built_in">CreateToolBars</span>();</span><br><span class="line">        <span class="built_in">CreateStatusBar</span>();</span><br><span class="line">        <span class="built_in">CreateDockWidgets</span>();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">setMinimumSize</span>(<span class="number">960</span>, <span class="number">720</span>);</span><br><span class="line">        <span class="built_in">setWindowState</span>(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        std::string strName = <span class="string">"MeshData\\bunny_3k.m"</span>;</span><br><span class="line">        m_pSEMesh-&gt;<span class="built_in">LoadModel</span>(strName<span class="selector-class">.c_str</span>());</span><br><span class="line">        m_pMeshNameLabel-&gt;<span class="built_in">setText</span>(<span class="built_in">QString</span>(strName<span class="selector-class">.c_str</span>()));</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<p>再来看一个使用tabwidget的界面，记得在mfc中使用tab页面应该是比较麻烦，我也没用过。不过，在qt里面，唯一需要改变的是把tabwidget设置为central的widget，把其它widget加入到tab页面里面就行了。效果如图：<br><img alt="" data-src="https://c5.staticflickr.com/8/7433/27175531460_7ebec89490_o.jpg"><br>这个界面的创建代码如下，这里我把菜单，工具条，状态栏都去掉了。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">CMainWindow::<span class="built_in">CMainWindow</span>(QWidget *parent)</span><br><span class="line">        : <span class="built_in">QMainWindow</span>(parent)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//setWindowFlags(this-&gt;windowFlags()  ~Qt::WindowMaximizeButtonHint);//隐藏最大化按钮</span></span><br><span class="line">        <span class="built_in">setWindowTitle</span>(<span class="selector-tag">tr</span>(<span class="string">"Virtual Box"</span>));</span><br><span class="line"></span><br><span class="line">        m_pMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pOglWidget = new <span class="built_in">COglWidget</span>(this, m_pMesh);</span><br><span class="line"></span><br><span class="line">        m_pMainViewMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pMainViewMesh-&gt;<span class="built_in">DrawStyle</span>(CCubeMesh::MAIN_VIEW);</span><br><span class="line">        m_pMainViewWidget = new <span class="built_in">CViewWidget</span>(this, m_pMainViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pTopViewMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pTopViewMesh-&gt;<span class="built_in">DrawStyle</span>(CCubeMesh::TOP_VIEW);</span><br><span class="line">        m_pTopViewWidget = new <span class="built_in">CViewWidget</span>(this, m_pTopViewMesh);</span><br><span class="line"></span><br><span class="line">        m_pSideViewMesh = new <span class="built_in">CCubeMesh</span>();</span><br><span class="line">        m_pSideViewMesh-&gt;<span class="built_in">DrawStyle</span>(CCubeMesh::SIDE_VIEW);</span><br><span class="line">        m_pSideViewWidget = new <span class="built_in">CViewWidget</span>(this, m_pSideViewMesh);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//CreateActions();</span></span><br><span class="line">        <span class="comment">//CreateMenus();</span></span><br><span class="line">        <span class="comment">//CreateToolBars();</span></span><br><span class="line">        <span class="comment">//CreateStatusBar();</span></span><br><span class="line">        <span class="comment">//CreateDockWidgets();</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">setMinimumSize</span>(<span class="number">960</span>, <span class="number">720</span>);</span><br><span class="line">        <span class="built_in">setWindowState</span>(Qt::WindowMaximized);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//std::string strName = "cube.obj";</span></span><br><span class="line">        <span class="comment">//m_pMesh-&gt;LoadModel(strName.c_str());</span></span><br><span class="line">        <span class="comment">//m_pMeshNameLabel-&gt;setText(QString(strName.c_str()));</span></span><br><span class="line">        m_pTabWidget = new <span class="built_in">QTabWidget</span>(this);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pOglWidget, <span class="string">"Cube View"</span>);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pMainViewWidget, <span class="string">"Main View"</span>);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pTopViewWidget, <span class="string">"Top View"</span>);</span><br><span class="line">        m_pTabWidget-&gt;<span class="built_in">addTab</span>(m_pSideViewWidget, <span class="string">"Side View"</span>);</span><br><span class="line">        <span class="built_in">setCentralWidget</span>((QWidget*)m_pTabWidget);</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<p>从上面的代码中，可以看到创建一个OglWidget需要一个Mesh指针。在我的框架中，COglWidget内中只使用几个固定的Mesh函数。因此，可以把COglWidget实现为依赖于一个IMesh接口，这样就进一步把OpenGL窗口和Mesh分离开来。不管Mesh类的具体实现如何，OpenGL窗口只需要依赖IMesh接口，因此，第一个界面里面的Mesh类实际上组合了一个CGAL的CGAL::Polyhedron_3对象。而第二个界面的Mesh类是一个简单的渲染长方体的类，不过支持渲染多个视图而已。<br>下面说说，COglWidget类具有哪些功能。首先，渲染Mesh，包括设置视口，eye，投影，光照，背景等等，其次，处理鼠标按键操作模型，我的实现是把所有的鼠标按键消息都丢给了下层的一个trackball类，这个trackball类支持旋转缩放移动模型，另外还写了几个打开文件，以及选取背景色的操作。<br>现在到了Mesh的部分了。因为跟OpenGL窗口相关的只是IMesh接口，所以，我可以任意实现实际的Mesh类。<br>IMesh的定义如下，</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> IMESH_H</span><br><span class="line"><span class="selector-id">#define</span> IMESH_H</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"libyx/vertex.h"</span></span><br><span class="line"></span><br><span class="line">namespace LibYX</span><br><span class="line">{</span><br><span class="line">    struct IMesh</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">IMesh</span>()</span><br><span class="line">        {</span><br><span class="line">            m_pMatMV = new double<span class="selector-attr">[16]</span>;</span><br><span class="line">            m_pMatProj = new double<span class="selector-attr">[16]</span>;</span><br><span class="line">            m_pViewport = new int<span class="selector-attr">[4]</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        virtual ~<span class="built_in">IMesh</span>()</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">FreeModel</span>();</span><br><span class="line">            delete<span class="selector-attr">[]</span> m_pMatMV;</span><br><span class="line">            delete<span class="selector-attr">[]</span> m_pMatProj;</span><br><span class="line">            delete<span class="selector-attr">[]</span> m_pViewport;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        virtual bool <span class="built_in">LoadModel</span>(const char* pFilename) { return true; }</span><br><span class="line">        virtual void <span class="built_in">SaveModel</span>(const char* sFilename) {}</span><br><span class="line">        virtual void <span class="built_in">UnifyModel</span>() {}</span><br><span class="line"></span><br><span class="line">        virtual bool <span class="built_in">HasModelLoad</span>() const { return true; }</span><br><span class="line">        virtual void <span class="built_in">FreeModel</span>() {}</span><br><span class="line"></span><br><span class="line">        virtual void <span class="built_in">InitData</span>() {}</span><br><span class="line">        virtual void <span class="built_in">DestroyData</span>() {}</span><br><span class="line"></span><br><span class="line">        virtual void <span class="built_in">DrawScene</span>()</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">glGetDoublev</span>(GL_MODELVIEW_MATRIX, m_pMatMV);</span><br><span class="line">            <span class="built_in">glGetDoublev</span>(GL_PROJECTION_MATRIX, m_pMatProj);</span><br><span class="line">            <span class="built_in">glGetIntegerv</span>(GL_VIEWPORT, m_pViewport);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        void <span class="built_in">WindowWidth</span>(int nWidth) { m_nWinWidth = nWidth; }</span><br><span class="line">        int <span class="built_in">WindowWidth</span>() const { return m_nWinWidth; }</span><br><span class="line">        void <span class="built_in">WindowHeight</span>(int nHeight) { m_nWinHeight = nHeight; }</span><br><span class="line">        int <span class="built_in">WindowHeight</span>() const { return m_nWinHeight; }</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        double* m_pMatMV;<span class="comment">//模型视图矩阵</span></span><br><span class="line">        double* m_pMatProj;<span class="comment">//投影矩阵</span></span><br><span class="line">        int* m_pViewport;<span class="comment">//视口</span></span><br><span class="line">        int m_nWinWidth;</span><br><span class="line">        int m_nWinHeight;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">        v3d m_vMax, m_vMin;         <span class="comment">// bounding box of the scene</span></span><br><span class="line">    };</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
-<p>其中，DrawScene()是渲染接口，另外还有加载模型的接口等，里面还有些数据。我用CTriMesh继承IMesh接口，同时组合Enriched_Model *m_pModel的指针，创建一个CGAL的多边形网格模型，实际的操作基本都交给m_pModel。这个类的定义太复杂了，就不贴了。这个类里面我集成了基本操作，比如按照点，线，面方式渲染，渲染包围盒，坐标轴，法线，顶点，边，面的索引等，加载和保存模型等等。因此，CTriMesh作为模型的基类，在实际的项目中，再继承CTriMesh，比如第一个界面中的CSEMesh，在CSEMesh中进行具体的处理。<br>所以，实际的算法实现都在CSEMesh里面。因为，IMesh和CTriMesh，COglWidget可以固化了。能够变化的只是CMainWindow。如果要添加新的代码，只能继承CTriMesh，在子类里面实现具体的算法，也算是对修改关闭对扩展开放吧。</p>
-<p>因此，如果再做类似的东西，我就有一个很方便的框架了。。。鉴于不少人留言要代码，有兴趣的可以参考这个<a href="https://pan.baidu.com/s/1eSbiwYe">QtRenderMesh</a>。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/02/06/%E6%8F%90%E5%8F%96%E4%B8%89%E7%BB%B4%E8%A1%A8%E9%9D%A2%E6%A0%87%E9%87%8F%E5%9C%BA%E7%9A%84%E7%AD%89%E5%80%BC%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1398,6 +1277,110 @@
   
   
 
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/" class="post-title-link" itemprop="url">任意点到二维直线或者三维平面上的投影点</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-12-09 19:59:42" itemprop="dateCreated datePublished" datetime="2014-12-09T19:59:42+08:00">2014-12-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/" class="post-meta-item leancloud_visitors" data-flag-title="任意点到二维直线或者三维平面上的投影点" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/12/09/%E4%BB%BB%E6%84%8F%E7%82%B9%E5%88%B0%E4%BA%8C%E7%BB%B4%E7%9B%B4%E7%BA%BF%E6%88%96%E8%80%85%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%8A%95%E5%BD%B1%E7%82%B9/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>454</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这里统一考虑二维直线和三维平面的情况。<br>假设法线（二维直线和三维平面的法线）为n，其上的任意一点为p0。那么，<br>可以得到方程为：(p - p0)  *  n = 0。展开得到p * n = p0 * n。令p0 * n = d，由此可以得到<br>方程可以简单的表示为p * n = d，即(x, y, z) * (nx ,ny, nz) = d，二维情况直线的为(x, y) * (nx, ny) = d。<br>至此，我们可以方便的用(n,d)代表任意的二维直线或者三维平面了。<br>下面，开始应用这个表示。<br>比如，求点到直线或者平面的距离，然后求投影点，再求对称点。<br>最关键的是如何方便求出距离。假设我们要求q到直线的距离。我们现在的直线方程为<br>p * n = d。那么经过q与当前直线的平行直线的法线也为n。由于q在经过q的平行直线上面，有q * n = d’。<br>有符号距离为 d - d’ = d - q * n。通过这个式子，也可以知道d其实就是原点到直线或者平面的有符号距离。<br>那么投影点q’ = q + (d - d’) = q + (d - q * n)。<br>对称点则为 q’’ =  q’ +  (d  -  d’)  =  q + 2 * (d  -  q * n)。<br>利用这种表示方法，基本上可以直接给出答案。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -1448,7 +1431,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">227</span>
+          <span class="site-state-item-count">226</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

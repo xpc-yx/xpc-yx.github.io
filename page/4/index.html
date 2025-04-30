@@ -222,151 +222,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">虚幻三命令行参数</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-12-03 21:17:20" itemprop="dateCreated datePublished" datetime="2016-12-03T21:17:20+08:00">2016-12-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
-                    <span itemprop="name">游戏开发</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/UnrealEngine/" itemprop="url" rel="index">
-                    <span itemprop="name">UnrealEngine</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="虚幻三命令行参数" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。</p>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。</p>
-<h3 id="编译命令行参数"><a href="#编译命令行参数" class="headerlink" title="编译命令行参数"></a>编译命令行参数</h3><p>编译代码期间会用到的参数如下：</p>
-<ol>
-<li>版本 -debug -release&lt;/p&gt;</li>
-<li><p>全量 -full （默认增量）</p>
-</li>
-<li><p>自动更新C++头文件，不弹框确认 -auto<br>注意：虚幻三编译脚本.uc文件时候，会更新.h头文件</p>
-</li>
-<li><p>移除.u文件中的源代码信息 -stripsource注意：.u文件是虚幻三脚本文件编译后的字节码文件，虚幻四中不存在</p>
-<p>因此，编译代码时候最多可能指定以下参数组合：<br>make -debug -full -auto -stripsource<br>make -release -full -auto  -stripsource</p>
-</li>
-</ol>
-<p><strong>注意：通过在vs中指定make命令可以调试编译代码的过程。</strong><br>如下图所示：<br><img alt="enter description here" data-src="https://c2.staticflickr.com/6/5486/31353510066_d0fd3565ee_o.png"></p>
-<h3 id="运行命令行参数"><a href="#运行命令行参数" class="headerlink" title="运行命令行参数"></a>运行命令行参数</h3><p>启动游戏进程指定的命令行参数分为两个个部分，第一个部分用于指定进程的运行模式（客户端、服务器、编辑器），第二个部分用于指定地图的URL以及附加选项。</p>
-<h4 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h4><p>游戏进程可以用三种不同的模式进行启动，分别是客户端、服务器、编辑器模式。因此，虚幻引擎生成的游戏可执行文件同时可以作为游戏服务器、游戏客户端、游戏编辑器运行。这是一个很神奇的地方。</p>
-<ol>
-<li><p>客户端模式<br>默认情况下，启动的游戏进程就是客户端模式，不需要指定额外的命令行参数。<br>在UE4中，也可以指定-game参数。</p>
-</li>
-<li><p>服务器模式<br>通过指定server参数，可以启动一个游戏服务器。<br>比如，udk.exe server，则是使用udk启动一个游戏服务器。<br>对于UE4，则是UE4Editor.exe -server。<br>实际上，可以修改游戏引擎设置，输出自定义的游戏执行文件。在启动这个游戏可执行文件时候，只需要附近sever参数就可以启动一个游戏服务器。</p>
-</li>
-<li><p>编辑器模式<br>通过指定editor参数，可以启动一个游戏服务器。<br>比如，udk.exe editor，则是使用udk启动游戏编辑器。<br>对于UE4，则是UE4Editor.exe -editor。</p>
-</li>
-</ol>
-<h4 id="模式的URL参数"><a href="#模式的URL参数" class="headerlink" title="模式的URL参数"></a>模式的URL参数</h4><p>URL分为两个部分：地图名称或者服务器地址，可选的附加参数。<br>地图部分用于强制游戏启动时候加载特定的地图，附加参数用于设置额外的启动方式，比如设置分辨率，是否打开log窗口等。这些参数和server或editor模式结合起来就可以启动特定地图的服务器或者用编辑器打开特定地图。<br>如果没有url参数，那么游戏进程会打开默认的地图。URL参数必须在可执行命令名称的后面或者在模式参数后面。</p>
-<ol>
-<li><p>地图<br>如果运行本地游戏，则指定Maps目录下的地图名称，比如MyMap. umap。<br>如果运行网络游戏，则指定游戏服务器的IP地址（server模式启动的游戏进程就是游戏服务器）。</p>
-</li>
-<li><p>附加参数<br>附加参数与地图之间用”?”分隔。<br>附加参数分为两种类型，一种是用”=”指定的选项，一种是用”-“指定的开关。</p>
-<p>常用的选项参数：<br>dedicated：指定服务器作为专用服务器。<br>listen: 指定服务器作为监听服务器 。<br>spectatoronly：以观看模式启动游戏<br>class: 告诉引擎要使用的玩家类(覆盖默认值)。<br>game:: 指定使用的GameInfo类。<br>name: 要使用的玩家名称。<br>team: 指定玩家所在的团队。<br>resx/resy: 设置游戏窗口的分辨率。<br>consolex/consoley：设置控制台窗口(log窗口)分辨率。</p>
-<p>常用的开关参数：<br>log: 打开日志窗口。<br>windowed：窗口模式运行。<br>nomoviestartup: 略过启动动画。<br>nosplash: 略过启动splash窗口。</p>
-<p></p><p>更多的附加参数请参考文档：<a href="https://docs.unrealengine.com/latest/CHN/Programming/Basics/CommandLineArguments/index.html">虚幻四引擎命令行参数</a></p>
-</li>
-<li><p>一些示例：<br>UDK.exe server MyMap.udk<br>UDK.exe 127.0.0.1<br>UDK.exe MyMap.udk?-resX=640 -resY=480 -log log=log.txt<br>UDKLift.exe DM-发电站?Game=UTGame.UTTeamGame?listen=true?TeamIndex=0?Name=FS01 -log -windowed -resX=640 -resY=360 -nomoviestartup -nosplash windowPosX=0 windowPosY=0 -consolePosX=0 -consolePosY=365<br>MyGame.exe editor MyMap.umap -NoLoadStartupPackages -NoGADWarning</p>
-</li>
-</ol>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1455,6 +1310,158 @@
   
   
 
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">scaleform中从unrealscript往actionscript传输数据的方式</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-10-17 16:06:18" itemprop="dateCreated datePublished" datetime="2015-10-17T16:06:18+08:00">2015-10-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏开发</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/UnrealEngine/" itemprop="url" rel="index">
+                    <span itemprop="name">UnrealEngine</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="scaleform中从unrealscript往actionscript传输数据的方式" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2015/10/17/scaleform%E4%B8%AD%E4%BB%8Eunrealscript%E5%BE%80actionscript%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>在逆战的界面开发中，一般只需要从uc往flash中单向传输数据，因此这里只总结从uc-&gt;flash的数据流动方法。flash-&gt;uc的数据流动，其实有相对应的方式，比如SetVariableBool函数有对应的GetVariableBool函数。</p>
+<p>在unrealscript中，使用scaleform的界面类，都继承自GfxMoviePlayer。</p>
+<p>一、传输变量</p>
+<p>native function SetVariableString(string path, string s);</p>
+<p>native function SetVariableBool(string path, bool b);</p>
+<p>native function SetVariableNumber(string path, float f);</p>
+<p>我在GfxUIMovie中没找到专门设置int的函数，估计可以用SetVariableNumber替代。关键是理解path的设置，比如对应flash文件的名称是ReBornGuide。那么path可能是ReBornGuide.str或者_root.ReBornGuide.str，具体跟ue3项目的一些设置有关。</p>
+<p>这几个函数对应的cpp声明如下：</p>
+<p>String：SetVariableString(const FString path, const FString s);</p>
+<p>Bool：SetVariableBool(const FString path, UBool b);</p>
+<p>Float：SetVariableNumber(const FString path, float f);</p>
+<p>有趣的是，这几个函数的字符串参数都是引用，这样恰恰说明了在uc中，字符串是引用类型。</p>
+<p>例子：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">String strTest = <span class="string">"测试"</span>;</span><br><span class="line">String path = <span class="string">"_root.TestFlash.strTest"</span>;</span><br><span class="line"><span class="function"><span class="title">SetVariableString</span><span class="params">(path，strTest)</span></span>;</span><br><span class="line">TestFlash.as中：</span><br><span class="line"><span class="selector-tag">var</span>&nbsp;strTest:String;</span><br></pre></td></tr></tbody></table></figure>
+<p>二、传输数组</p>
+<p>native function bool SetVariableStringArray(string path, int index, array<string> Arg);</string></p>
+<p>native function bool SetVariableFloatArray(string path, int index, array<float> Arg);</float></p>
+<p>native function bool SetVariableIntArray(string path, int index, array<int> Arg);</int></p>
+<p>其对应的cpp实现</p>
+<p>String：SetVariableStringArray(const FString path,  INT Index，const TArray<fstring> arg);</fstring></p>
+<p>Float：SetVariableFloatArray(const FString path, INT Index，const TArray<float> arg);</float></p>
+<p>Int：SetVariableFloatArray(const FString path, INT Index，const TArray<int> arg);</int></p>
+<p>这里Index表示从数组的第几个元素开始，0表示传输全部，arg是要传输的数组。</p>
+<p>例子：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test.uc中：</span><br><span class="line">local array&lt;String&gt; strArray;</span><br><span class="line">strArray<span class="selector-class">.AddItem</span>(<span class="string">"0"</span>);</span><br><span class="line">strArray<span class="selector-class">.AddItem</span>(<span class="string">"1"</span>);</span><br><span class="line">String path = <span class="string">"_root.TestFlash.strTest"</span>;</span><br><span class="line"><span class="function"><span class="title">SetVariableStringArray</span><span class="params">(path，strArray)</span></span>;</span><br><span class="line">TestFlash.as中：</span><br><span class="line"><span class="selector-tag">var</span>&nbsp;strArray:Array = new <span class="built_in">Array</span>();</span><br></pre></td></tr></tbody></table></figure>
+<p>三、传输复合对象（结构体）</p>
+<p>当需要传输整体的数据，或者传输多个数据的时候，可以将数据组合成一个结构体。假设在uc中定义了如下结构体，</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct RankData</span><br><span class="line">{</span><br><span class="line">   <span class="selector-tag">var</span> string Name;</span><br><span class="line">   <span class="selector-tag">var</span> int Rank;</span><br><span class="line">   <span class="selector-tag">var</span> double d;</span><br><span class="line">   <span class="selector-tag">var</span> <span class="attribute">float</span> f;</span><br><span class="line">   <span class="selector-tag">var</span> bool b;</span><br><span class="line">};</span><br><span class="line">RankData RD;</span><br></pre></td></tr></tbody></table></figure>
+<p>我们想将其一次性传入as中定义的Object对象,var RD:Object。这里我们可以使用SetVariableObject函数。其定义如下：</p>
+<p>native function SetVariableObject(string path, GFxObject Object);</p>
+<p>下面的例子很好说明了如何使用该函数。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">uc中:</span><br><span class="line">struct RankData</span><br><span class="line">{</span><br><span class="line">   <span class="selector-tag">var</span> string Name;</span><br><span class="line">   <span class="selector-tag">var</span> int Rank;</span><br><span class="line">   <span class="selector-tag">var</span> double d;</span><br><span class="line">   <span class="selector-tag">var</span> <span class="attribute">float</span> f;</span><br><span class="line">   <span class="selector-tag">var</span> bool b;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">function <span class="built_in">SetFlashVariables</span>()</span><br><span class="line">{</span><br><span class="line">    local GFxObject GfxObj;</span><br><span class="line">    local RankData RD;</span><br><span class="line">    local string path;</span><br><span class="line"></span><br><span class="line">    RD<span class="selector-class">.Name</span> = <span class="string">"test"</span>;</span><br><span class="line">    RD<span class="selector-class">.Rank</span> = <span class="number">1</span>;</span><br><span class="line">    RD<span class="selector-class">.d</span> = <span class="number">1.0</span>;</span><br><span class="line">    RD<span class="selector-class">.f</span> = <span class="number">1.0</span>;</span><br><span class="line">    RD<span class="selector-class">.b</span> = True;</span><br><span class="line">    GfxObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">    GfxObj<span class="selector-class">.SetString</span>(<span class="string">"Name"</span>, RD.Name);</span><br><span class="line">    GfxObj<span class="selector-class">.SetInt</span>(<span class="string">"Rank"</span>, RD.Rank);</span><br><span class="line">    GfxObj<span class="selector-class">.SetDouble</span>(<span class="string">"d"</span>, RD.d);</span><br><span class="line">    GfxObj<span class="selector-class">.SetFloat</span>(<span class="string">"f"</span>, RD.f);</span><br><span class="line">    GfxObj<span class="selector-class">.SetBool</span>(<span class="string">"b"</span>, RD.b);</span><br><span class="line"></span><br><span class="line">    path = <span class="string">"_root.TestFlash.RD"</span></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxObj);</span><br><span class="line">    GfxObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">TestFlash.as中:</span><br><span class="line"><span class="selector-tag">var</span> RD:Object = new <span class="built_in">Object</span>();</span><br><span class="line"><span class="comment">//在uc中调用了SetFlashVariables函数后，as中就能获得RD的值。</span></span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.Name)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.Name)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.f)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.d)</span></span>;</span><br><span class="line"><span class="function"><span class="title">trace</span><span class="params">(RD.b)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面代表可以看出，GFxObject可以代表一个符号变量，可以设置一个GFxObject的多个属性，然后一次性将这个对象传入flash。GFxObject.uc中有如下Set变量的函数：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">native final function <span class="built_in">SetBool</span>(string Member, bool b);</span><br><span class="line">native final function <span class="built_in">SetFloat</span>(string Member, <span class="attribute">float</span> f);</span><br><span class="line">native final function <span class="built_in">SetDouble</span>(string Member,double d);</span><br><span class="line">native final function <span class="built_in">SetInt</span>(string Member,int i);</span><br><span class="line">native final function <span class="built_in">SetString</span>(string Member, string s);</span><br><span class="line">native final function <span class="built_in">SetObject</span>(string Member, GFxObject val);</span><br></pre></td></tr></tbody></table></figure>
+<p>因此，可以看出可以设置GFxObject各种类型的属性。关键的是还可以设置其GFxObject类型的属性，从而可以嵌套定义。比如结构体中定义另一结构体成员。当需要将多次传输组合为一次时候，也可以使用这种方式，并不需要一定定义结构体。</p>
+<p>四、传输结构体数组</p>
+<p>假设as中定义如下数组，var RankListDatas:Array = new Array();那么可以用下面代码传输：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//军衔列表每项的数据</span></span><br><span class="line">struct RankListData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> int Level;<span class="comment">//等级</span></span><br><span class="line">    <span class="selector-tag">var</span> string Name;<span class="comment">//军衔名</span></span><br><span class="line">};</span><br><span class="line"><span class="selector-tag">var</span> array&lt;RankListData&gt; RankListDatas;</span><br><span class="line"><span class="selector-tag">var</span> string path;</span><br><span class="line">function <span class="built_in">SetFlashRankListDatas</span>()</span><br><span class="line">{</span><br><span class="line">    local int Index;</span><br><span class="line">    local GFxObject GfxRankListDatas;</span><br><span class="line">    local GFxObject GfxTempObj;</span><br><span class="line"></span><br><span class="line">    GfxRankListDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">    <span class="keyword">for</span> (Index = <span class="number">0</span>; Index &lt; RankDatas.Length; Index++)<span class="comment">//第0项是多余的</span></span><br><span class="line">    {        </span><br><span class="line">        GfxTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetInt</span>(<span class="string">"Level"</span>, RankListDatas<span class="selector-attr">[Index]</span>.Level);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetString</span>(<span class="string">"Name"</span>, RankListDatas<span class="selector-attr">[Index]</span>.Name);</span><br><span class="line">        GfxRankListDatas<span class="selector-class">.SetElementObject</span>(Index, GfxTempObj);</span><br><span class="line">        GfxTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxRankListDatas);</span><br><span class="line">    GfxRankListDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从代码里面可以看到，还是用SetVariableObject传输数据。不过，需要用CreateArray()创建GFxObject对象。在as代码中RankListDatas[0].Name就可以访问第一个元素的Name属性了。</p>
+<p>GfxRankListDatas.SetElementObject(Index, GfxTempObj)则是将GfxTempObj设置为GfxRankListDatas代表的数组的第Index个元素。</p>
+<p>五、传输结构体数组的数组（结构体内部复合结构体数组）</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">struct AwardData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> string IconSource;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">struct RankAwardData</span><br><span class="line">{</span><br><span class="line">    <span class="selector-tag">var</span> string RankAwardTitle;</span><br><span class="line">    <span class="selector-tag">var</span> array&lt;AwardData&gt; AwardDatas;</span><br><span class="line">};</span><br><span class="line"><span class="selector-tag">var</span> array&lt;RankAwardData&gt; RankAwardDatas;</span><br><span class="line"><span class="selector-tag">var</span> string path;</span><br><span class="line"></span><br><span class="line">function <span class="built_in">SetFlashRankAwardDatas</span>()</span><br><span class="line">{</span><br><span class="line">    local int Index;</span><br><span class="line">    local int i;</span><br><span class="line">    local GFxObject GfxRankAwardDatas;</span><br><span class="line">    local GFxObject GfxTempObj;</span><br><span class="line">    local GFxObject GfxAwardDatas;</span><br><span class="line">    local GFxObject GfxAwardTempObj;</span><br><span class="line"></span><br><span class="line">    GfxRankAwardDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">    <span class="keyword">for</span> (Index = <span class="number">0</span>; Index &lt; RankAwardDatas.Length; Index++)</span><br><span class="line">    {        </span><br><span class="line">        GfxTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetString</span>(<span class="string">"RankAwardTitle"</span>, RankAwardDatas<span class="selector-attr">[Index]</span>.RankAwardTitle);</span><br><span class="line"></span><br><span class="line">        GfxAwardDatas = <span class="built_in">CreateArray</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; RankAwardDatas<span class="selector-attr">[Index]</span><span class="selector-class">.AwardDatas</span>.Length; ++i)</span><br><span class="line">        {</span><br><span class="line">            GfxAwardTempObj = <span class="built_in">CreateObject</span>(<span class="string">"Object"</span>);</span><br><span class="line">            GfxAwardTempObj<span class="selector-class">.SetString</span>(<span class="string">"IconSource"</span>, RankAwardDatas<span class="selector-attr">[Index]</span><span class="selector-class">.AwardDatas</span><span class="selector-attr">[i]</span>.IconSource);</span><br><span class="line">            GfxAwardDatas<span class="selector-class">.SetElementObject</span>(<span class="selector-tag">i</span>, GfxAwardTempObj);</span><br><span class="line">            GfxAwardTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">        }</span><br><span class="line">        GfxTempObj<span class="selector-class">.SetObject</span>(<span class="string">"RankAward"</span>, GfxAwardDatas);</span><br><span class="line">        GfxRankAwardDatas<span class="selector-class">.SetElementObject</span>(Index, GfxTempObj);</span><br><span class="line">        GfxAwardDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">        GfxTempObj<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SetVariableObject</span>(path, GfxRankAwardDatas);</span><br><span class="line">    GfxRankAwardDatas<span class="selector-class">.DestroyObject</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>从上面代码可以看出，调用GfxTempObj.SetObject(“RankAward”, GfxAwardDatas)可以设置GFxObject对象的GFxObject属性，从而能够传输复合结构体类型的数组。假设as中对应的数组定义为var RankAwardDatas:Array=new Array();那么，在as代码中RankAwardDatas[0].RankAward.IconSource则能访问该数组第一个元素的结构体成员的IconSource属性。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -1505,7 +1512,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">227</span>
+          <span class="site-state-item-count">226</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
