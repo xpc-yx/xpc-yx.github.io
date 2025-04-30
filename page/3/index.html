@@ -222,6 +222,323 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">游戏引擎渲染管线的总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-22 20:15:00" itemprop="dateCreated datePublished" datetime="2020-12-22T20:15:00+08:00">2020-12-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="游戏引擎渲染管线的总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>需要注意的是，本文涉及的内容过多过杂，基本涉及到游戏渲染和图形管线的方方面面。内容是根据多方面的资料整理而成，比如本人的Unity和Unreal引擎相关的理解和认知，以及引擎相关官方文档等，以及DirectX和OpenGL相关官方文档等，以及网络上各种相关文章和资料等。可能有一些纰漏或者不足之处，或者有些阶段的资料来源较为单一，本人主要目的是从概念理解上对应整个游戏引擎的渲染管线，不一定和真实的游戏完全一一对应，比如应用程序阶段的知识对应到游戏引擎应该会有一些区别和取舍，几何阶段和光栅化阶段主要参考的是OpenGL和DirectX，Vulkan和Metal相关资料参考较少，可能不同的图形API会有一些出入。由于涉及内容过多，难免理解不到位，有发现比较明显错误的，请指出以尽早修正，避免造成误解。</p>
+<h1 id="一、渲染管线的思维导图"><a href="#一、渲染管线的思维导图" class="headerlink" title="一、渲染管线的思维导图"></a>一、渲染管线的思维导图</h1><p>这是本文内容的思维导图，通过该图可以从整体上把握全文的内容，对渲染管线有整理的理解。<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/渲染管线.png"></p>
+<h1 id="二、应用程序阶段"><a href="#二、应用程序阶段" class="headerlink" title="二、应用程序阶段"></a>二、应用程序阶段</h1><h2 id="2-1-渲染数据加载"><a href="#2-1-渲染数据加载" class="headerlink" title="2.1 渲染数据加载"></a>2.1 渲染数据加载</h2><p>这个阶段指的是将渲染所需要的相关数据，比如模型、贴图、材质、Shader等加载到内存中，通常只发生一次，不需要每帧重复加载。比如，Unity游戏需要在运行时，将需要的场景或者人物从AssetBundle中加载出来，然后引擎才能显示加载的场景或者人物。</p>
+<h2 id="2-2-物体级别的裁剪"><a href="#2-2-物体级别的裁剪" class="headerlink" title="2.2 物体级别的裁剪"></a>2.2 物体级别的裁剪</h2><p>以下描述的裁剪算法是按照粒度从粗到细的裁剪，相应复杂度和代价也是在递增。最简单的是基于距离的裁剪；然后是利用空间数据结构实现的视锥体裁剪；动态的入口裁剪是一种特殊情况，可以算在视口裁剪内也可以用于预计算；然后预计算数据的裁剪；接下来才是动态的遮挡剔除。</p>
+<h3 id="2-2-1-基于距离的裁剪"><a href="#2-2-1-基于距离的裁剪" class="headerlink" title="2.2.1 基于距离的裁剪"></a>2.2.1 基于距离的裁剪</h3><p>思路是超过一定的视距即不渲染该物体，Unreal引擎支持这个特性，参考<a href="https://docs.unrealengine.com/4.27/en-US/RenderingAndGraphics/VisibilityCulling/CullDistanceVolume/">Cull Distance Volumes</a>。对于Unity，可以使用<a href="https://docs.unity3d.com/Manual/CullingGroupAPI.html">CullingGroup</a>实现类似的功能。即使引擎没有提供类似的支持，在游戏逻辑层面，先可以每帧或者隔帧判断物体跟摄像机的距离，来动态显示隐藏物体。</p>
+<h3 id="2-2-2-视锥体裁剪"><a href="#2-2-2-视锥体裁剪" class="headerlink" title="2.2.2 视锥体裁剪"></a>2.2.2 视锥体裁剪</h3><p>用物体跟摄像机视锥体做相交测试，将完全没有相交的物体过滤掉。为了加快速度，使用的是物体的包围盒或者包围球跟视锥体做相交测试。游戏引擎内一般都会有空间数据结构来组织物体，比如BVH，那么可以直接使用BVH来搜索加速这个计算。具体过程是用视锥体和空间数据结构去做相交测试，如果当前节点没有相交，那么不需要继续，如果有相交则继续遍历子节点直到叶子节点或者没有相交，叶子节点中存储的物体即是需要渲染的物体。</p>
+<h4 id="基于空间数据结构的裁剪"><a href="#基于空间数据结构的裁剪" class="headerlink" title="基于空间数据结构的裁剪"></a>基于空间数据结构的裁剪</h4><h5 id="四叉树和八叉树"><a href="#四叉树和八叉树" class="headerlink" title="四叉树和八叉树"></a>四叉树和八叉树</h5><p>四叉树对应的是二维空间，下面以八叉树为例来说明。八叉树是将三维空间平均划分为八个部分作为八个子节点，重复划分到一定的粒度为止，比如叶子节点内最多存储多少个物体，物体存储在叶子节点内。<br>优点：概念和实现简单。<br>缺点：无限空间不好划分；物体可能跨越分割面；物体分布不均匀会造成层次过深，搜索效率不高。<br>适用场景：四叉树适用于基于高度场的地形管理；八叉树室适用于室外分布均匀的三维场景（有高度）。</p>
+<h5 id="BSP"><a href="#BSP" class="headerlink" title="BSP"></a>BSP</h5><p>针对八叉树这种不均匀划分，如果将物体均匀划分成两部分，那么就是Binary Space Partition Tree，可以避免树的层次过深。注意，BSP的每个节点存储的是划分平面，而不是物体，划分平面将场景分为前后2个部分，分别对应左右子树；由于需要BSP树针对的多边形，因此可以针对物体的AABB包围盒做划分。</p>
+<p>优点：物体分布均匀，不会出现树层次过深；支持任意空间。<br>缺点：实现复杂，构造时间长，不适合动态场景。<br>适用场景：紧凑并且分布均匀的室内场景；静态场景；自带物体排序，方便实现画家算法。</p>
+<h5 id="KD-Tree"><a href="#KD-Tree" class="headerlink" title="KD-Tree"></a>KD-Tree</h5><p>BSP全称是K-Dimensional Tree。这是一种特殊的BSP，在BSP上进一步将划分面限制跟坐标轴垂直，但是保持从物体分布的中间划分，以尽可能得到一个物体分布均匀的树。KD-Tree不仅仅可以用来做空间划分，在其它领域经常用来组织K维度的数据来做搜索，比如K维数据查询、近邻查询。<br>优点：物体分布均匀，不会出现树层次过深；数据可以组织为数组形式的完全二叉树，缓存友好等。<br>缺点：如何确定最优或者较优的划分面？<br>适用场景：紧凑并且分布均匀的室内场景；辅助其它数据结构进行邻域查询。</p>
+<h5 id="BVH"><a href="#BVH" class="headerlink" title="BVH"></a>BVH</h5><p>全名是Bounding Volume Hierarchy，中文翻译层次包围盒。BSP和KD-Tree的节点代表的都是分割面，但是面有可能穿过物体。层次包围盒的思想是每个节点代表一个空间，空间计算其包含物体的最小包围盒，划分空间后重新计算子空间的包围盒。与BSP最大区别是节点代表的不再是分割平面而是包含最小包围盒的子空间。因此，这些子空间可能出现一定的重叠，但是不会出现物体出现在不同的划分里面。<br>优点：节点存储的是物体，方便碰撞检测等查询；构建快，动态更新方便。<br>缺点：如何确定最优的包围盒？<br>适用场景：视锥剔除；物体碰撞检测；射线检测；光线跟踪。</p>
+<h5 id="空间数据结构的其它应用"><a href="#空间数据结构的其它应用" class="headerlink" title="空间数据结构的其它应用"></a>空间数据结构的其它应用</h5><p>除了视锥体裁剪外，空间数据结构还有很多其它应用，比如<br>1、Ray Casting （射线检测）<br>2、碰撞检测<br>3、邻近查询 （比如查询玩家周围敌人）<br>4、光线追踪</p>
+<h4 id="Portal-Culling（入口裁剪）"><a href="#Portal-Culling（入口裁剪）" class="headerlink" title="Portal Culling（入口裁剪）"></a>Portal Culling（入口裁剪）</h4><p>适用于将场景划分为格子，格子之间可能存在入口的情形，如下图所示，<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/portal-diagram.png"><br>从入口只能看到部分被墙壁遮挡住的物体，因此可以借助这个特性加速视锥体和格子的相交裁剪。Unity中的<a href="https://docs.unity3d.com/Manual/class-OcclusionPortal.html">Occlusion Portal</a>即是这个特性。如果预计算出Protal Culling的结果，那么可以在运行时加快物体裁剪。</p>
+<h3 id="2-2-3-预计算遮挡剔除"><a href="#2-2-3-预计算遮挡剔除" class="headerlink" title="2.2.3 预计算遮挡剔除"></a>2.2.3 预计算遮挡剔除</h3><p>这是一种空间换时间的算法，会增大内存占用，降低Cpu的裁剪消耗。所以是否需要预计算遮挡数据，还需要具体讨论。一般如果内存消耗不大，但是Cpu占用较高的话，可以尝试开启预计算遮挡数据。</p>
+<h4 id="Precomputed-Visibility-UE4"><a href="#Precomputed-Visibility-UE4" class="headerlink" title="Precomputed Visibility (UE4)"></a>Precomputed Visibility (UE4)</h4><p>参考虚幻引擎的<a href="https://docs.unrealengine.com/4.27/en-US/RenderingAndGraphics/VisibilityCulling/PrecomputedVisibilityVolume/">Precomputed Visibility</a>。思想是将场景划分为格子，计算每个格子内可以看到的可见物体集合相关的数据，用于运行时动态查询。</p>
+<h4 id="预计算Occlusion-Culling-Unity"><a href="#预计算Occlusion-Culling-Unity" class="headerlink" title="预计算Occlusion Culling (Unity)"></a>预计算Occlusion Culling (Unity)</h4><p>参考Unity的<a href="https://docs.unity3d.com/Manual/OcclusionCulling.html">Occlusion culling</a>。类似于UE4的Precomputed Visibility，不过Unity的Occlusion Culling也支持动态物体，但是动态物体只能occludee（被遮挡物体）。Unity的预计算Occlusion Culling应该是入口剔除的一种预计算实现。</p>
+<h3 id="2-2-4-动态遮挡查询"><a href="#2-2-4-动态遮挡查询" class="headerlink" title="2.2.4 动态遮挡查询"></a>2.2.4 动态遮挡查询</h3><p>这里讲的是在CPU上或者GPU上实现的遮挡查询。图形API已经提供了遮挡查询相关的接口，比如OpenGL的<a href="https://www.khronos.org/opengl/wiki/Query_Object">Query Object</a>或者DirectX的<a href="https://docs.microsoft.com/en-us/windows/win32/direct3d12/predication-queries">Predication Queries</a>。但是不是所有的硬件都能够支持，因此可以在软件层面即在CPU上做软渲染实现遮挡查询。Hierarchical Z-Buffer Occlusion则是在普通的硬件遮挡查询上的进一步优化，使用了层次Z-Buffer来进一步加快速度。</p>
+<h4 id="软件遮挡查询"><a href="#软件遮挡查询" class="headerlink" title="软件遮挡查询"></a>软件遮挡查询</h4><p>软光栅化模仿硬件遮挡查询，因此不受设备类型限制，只是需要额外消耗CPU。</p>
+<h4 id="硬件遮挡查询"><a href="#硬件遮挡查询" class="headerlink" title="硬件遮挡查询"></a>硬件遮挡查询</h4><p>使用图形接口本身提供的遮挡查询接口。基本思想是用物体的包围盒去渲染Z-Buffer，统计通过深度测试的像素数目，如果有通过说明当前物体没有被完全挡住，保存结果用于下一帧查询。因此，硬件遮挡查询会存在两个问题：额外的渲染消耗和延迟一帧。</p>
+<h4 id="Hierarchical-Z-Buffer-Occlusion"><a href="#Hierarchical-Z-Buffer-Occlusion" class="headerlink" title="Hierarchical Z-Buffer Occlusion"></a>Hierarchical Z-Buffer Occlusion</h4><p>类似硬件遮挡查询，不过使用Hierarchical Z-Buffer来加快查询速度。具体实现比较复杂，请参考相关文章。</p>
+<h3 id="2-2-5-LOD切换"><a href="#2-2-5-LOD切换" class="headerlink" title="2.2.5 LOD切换"></a>2.2.5 LOD切换</h3><p>LOD指的是Level Of Details。如果物体通过了以上的裁剪，那么说明会提交给渲染线程进行处理。LOD切换指的是这些物体的细节层次切换，比如一些不重要的或者看不清楚的物体选择更简单的模型。</p>
+<h4 id="基于距离的LOD切换"><a href="#基于距离的LOD切换" class="headerlink" title="基于距离的LOD切换"></a>基于距离的LOD切换</h4><p>最常见的方式是根据摄像机距离来进行LOD切换，越远的物体选择更简略的LOD，Unity和UE4默认是这种方式。</p>
+<h4 id="基于渲染分级切换LOD"><a href="#基于渲染分级切换LOD" class="headerlink" title="基于渲染分级切换LOD"></a>基于渲染分级切换LOD</h4><p>但是我们也可以主动切换LOD，比如检测到当前硬件较差，需要切换到更低的画质，那么可以根据游戏设置的渲染品质分级来切换低的LOD。</p>
+<h4 id="LOD过渡"><a href="#LOD过渡" class="headerlink" title="LOD过渡"></a>LOD过渡</h4><p>LOD的一个常见问题是LOD的过渡问题，可能在切换LOD时候会察觉到明显的过渡。常见的方式是在切换时候混合2个LOD，比如透明度逐渐从1变化到0或者从0变化到1，避免出现明显的过渡。</p>
+<h2 id="2-3-物体级别的渲染排序"><a href="#2-3-物体级别的渲染排序" class="headerlink" title="2.3 物体级别的渲染排序"></a>2.3 物体级别的渲染排序</h2><p>为了减少OverDraw或者实现半透明效果，所有通过裁剪的物体会按照一定的次序进行渲染。下面列举几个常见的渲染次序。游戏引擎实际的渲染过程还会跟引擎渲染管线的Pass定义顺序相关，比如不透明和透明物体在不同的Pass内渲染的，而且是先在一个Pass内渲染透明物体，再在另外一个Pass渲染透明物体。</p>
+<h3 id="从前到后渲染（不透明物体）"><a href="#从前到后渲染（不透明物体）" class="headerlink" title="从前到后渲染（不透明物体）"></a>从前到后渲染（不透明物体）</h3><p>从前到后渲染可以利用Early Z-Test过滤掉不必要的片元处理。因此，如果先渲染近处的物体，那么后面渲染的远处物体就不会通过Early Z-Test，就不会进入片段处理阶段。不过，不是所有的硬件都需要按照从前到后的物体顺序进行渲染，这毕竟需要额外的CPU消耗来排序物体，部分支持HSV（hidden surface removal）特性的GPU，比如PowerVR是不需要做这个排序的。Unity提高了静态变量SystemInfo.hasHiddenSurfaceRemovalOnGPU来查询GPU是否支持HSV，<br>Urp渲染管线会根据这个来判断是否需要跳过从前到后排序物体。</p>
+<h3 id="从后到前渲染（半透明物体）"><a href="#从后到前渲染（半透明物体）" class="headerlink" title="从后到前渲染（半透明物体）"></a>从后到前渲染（半透明物体）</h3><p>由于半透明物体的渲染算法要求必须从后到前渲染物体，同时关闭深度测试 ，前面的物体与后面的物体进行颜色混合。那么这个排序过程是无法省掉的，类似从前到后渲染的排序，可以采样BSP来排序物体。</p>
+<h3 id="渲染层级或渲染队列"><a href="#渲染层级或渲染队列" class="headerlink" title="渲染层级或渲染队列"></a>渲染层级或渲染队列</h3><p>Unity同时定义了这2种排序，不过SortingLayer的优先级更高，这个是定义在物体的Renderer组件上。RenderQueue是定义在Shader和材质上，优先级在渲染层级之后。理论上，就是对所有物体进行优先级排序。</p>
+<h3 id="最少渲染状态切换"><a href="#最少渲染状态切换" class="headerlink" title="最少渲染状态切换"></a>最少渲染状态切换</h3><p>还有一种方式是尽可能在渲染物体的时候避免渲染状态切换，这样能够尽可能减少CPU消耗。那么可以在CPU计算出来一个最优的渲染顺序来尽可能减少渲染状态切换。</p>
+<h2 id="2-4-渲染数据绑定和状态设置"><a href="#2-4-渲染数据绑定和状态设置" class="headerlink" title="2.4 渲染数据绑定和状态设置"></a>2.4 渲染数据绑定和状态设置</h2><p>这一个阶段讲的是在CPU上设置渲染相关数据和状态，以及为了减少渲染状态切换的渲染合批的思想。</p>
+<h3 id="视口设置"><a href="#视口设置" class="headerlink" title="视口设置"></a>视口设置</h3><p>设置窗口的渲染区域，比如OpenGL的<a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glViewport.xhtml">glViewport</a>。通过这个设置，我们可以在一个窗口上渲染多个不同的视口，比如游戏的分屏。</p>
+<h3 id="FrameBuffer设置"><a href="#FrameBuffer设置" class="headerlink" title="FrameBuffer设置"></a>FrameBuffer设置</h3><p>一般游戏引擎不会直接将物体渲染到默认的渲染缓冲上，单独的RenderTarget方便进行后处理，在后处理之后再Blit到默认缓冲上。一个FrameBuffer可以包含颜色、深度、模板三个附件，也可以将深度和模板组织成一个32位的RT。</p>
+<h3 id="渲染合批"><a href="#渲染合批" class="headerlink" title="渲染合批"></a>渲染合批</h3><p>渲染合批指的是为了减少渲染状态切换的一种优化手段，Unity URP渲染管线的SRP技术可以大幅度优化渲染批次。这是一个在Shader变体层次的合批，与之前的材质层次的合批相比有很大的优化。</p>
+<h3 id="顶点输入绑定"><a href="#顶点输入绑定" class="headerlink" title="顶点输入绑定"></a>顶点输入绑定</h3><p>对于OpenGL来说就是创建和绑定VAO（Vertex Array Object）。一个VAO中可以包含VBO（Vertex Buffer Object）、IBO（Index Buffer Object）。然后用glVertexAttribPointer和glEnableVertexAttribArray指定数据到Shader的输入变量。<br>顶点属性通常包括，位置、法线、切线、UV、顶点颜色等。</p>
+<h3 id="Shader绑定"><a href="#Shader绑定" class="headerlink" title="Shader绑定"></a>Shader绑定</h3><p>渲染数据绑定好之后，需要指定当前使用的Shader，这包括Shader的编译链接和使用等（假设Shader代码已经加载进来）。</p>
+<h4 id="Shader编译链接使用"><a href="#Shader编译链接使用" class="headerlink" title="Shader编译链接使用"></a>Shader编译链接使用</h4><p>类似于CPU上运行的程序，Shader也需要编译链接以及开始使用的过程，不过这个过程基本上是固定。<br>可以参考learnopengl的<a href="https://learnopengl-cn.github.io/01%20Getting%20started/05%20Shaders/">着色器</a>一节。</p>
+<h4 id="Uniform变量绑定"><a href="#Uniform变量绑定" class="headerlink" title="Uniform变量绑定"></a>Uniform变量绑定</h4><p>Shader中通常会有很多全局变量，比如MVP、摄像机位置、光的信息等。这些都需要在CPU上传入Shader中。</p>
+<h3 id="Output-Merger-Stage相关设置"><a href="#Output-Merger-Stage相关设置" class="headerlink" title="Output-Merger Stage相关设置"></a>Output-Merger Stage相关设置</h3><p>在渲染管线的最后（片元着色器之后），有一个Output-Merger阶段，也叫做Raster Operations。这是一个不可编程阶段，但是有很多选择可以设置。比如剪切测试、模板测试、深度测试、颜色混合因子和函数、sRGB转换等。这些都需要在应用程序阶段进行设置。</p>
+<h2 id="2-5-DrawCall调用"><a href="#2-5-DrawCall调用" class="headerlink" title="2.5 DrawCall调用"></a>2.5 DrawCall调用</h2><p>终于到了应用程序的最后一步，即DrawCall的调用了。OpenGL对应的接口是<a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml">glDrawArrays</a>或者<a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElements.xhtml">glDrawElements</a>。</p>
+<h1 id="三、几何处理阶段"><a href="#三、几何处理阶段" class="headerlink" title="三、几何处理阶段"></a>三、几何处理阶段</h1><p>这是第二个大的阶段，当前阶段已经进行GPU中了。该阶段的起点和主要过程是顶点着色器。除了着色器之外，其余阶段都是硬件自动进行的，除了可选阶段之外，其余的都是固定的，应用程序无法根据配置来进行更改。</p>
+<h2 id="3-1-顶点着色器"><a href="#3-1-顶点着色器" class="headerlink" title="3.1 顶点着色器"></a>3.1 顶点着色器</h2><p>顶点着色器的处理对象是应用程序阶段绑定的每个顶点，顶点着色器会获得顶点属性以及相应的Uniform变量。顶点着色器的输出是一个NDC Clip Space的顶点位置。NDC（Normalized device coordinates）是规范化设备坐标系的位置，OpenGL的范围[-1,1]，DirectX的范围是[0,1]。之所以说是Clip Space，因为该阶段得到的顶点数据是一个齐次坐标，还需要进行透视除法，即x、y、z除以w分量才能得到NDC坐标系下的位置。</p>
+<h2 id="3-2-曲面细分着色器"><a href="#3-2-曲面细分着色器" class="headerlink" title="3.2 曲面细分着色器"></a>3.2 曲面细分着色器</h2><p>曲面细分着色器是一个可选阶段，用于将一个简单模型细分成复杂的模型。其实该阶段是2个着色器和一个固定阶段的组合。在DirectX中叫做Hull Shader stage、Tessellator stage、Domain Shader stage；在OpenGL的<a href="https://www.khronos.org/opengl/wiki/Tessellation">Tessellation</a>中叫做Tessellation Control Shader、Tessellation Primitive eneration、Tessellation Evaluation Shader。具体的介绍和使用方式请参考相关资料。</p>
+<h2 id="3-3-几何着色器"><a href="#3-3-几何着色器" class="headerlink" title="3.3 几何着色器"></a>3.3 几何着色器</h2><p>几何着色器也是一个可选阶段。几何着色器的输入是图元的顶点集合（比如三角形图元有三个顶点，点图元只有一个顶点），输出是一个新的图元，新的图元也要包含一个顶点集合。简单来说，几何着色器的输入和输出都是图元，输入的图元是在应用程序阶段指定的，输出的图元可以在顶点着色器中实现。</p>
+<h2 id="3-4-Stream-Output-（Transform-Feedback）"><a href="#3-4-Stream-Output-（Transform-Feedback）" class="headerlink" title="3.4 Stream Output （Transform Feedback）"></a>3.4 Stream Output （Transform Feedback）</h2><p>这是一个可选的阶段。这个阶段在DirectX中叫做Stream Output ，在OpenGL找叫做Transform Feedback。如果该阶段开启，那么顶点数据流会输出到一个Buffer中，这个Buffer可以给顶点着色器使用也可以返回给CPU，当前渲染管线则不会进行接下来的处理。</p>
+<h2 id="3-5-图元组装"><a href="#3-5-图元组装" class="headerlink" title="3.5 图元组装"></a>3.5 图元组装</h2><p>这一步是将之前得到的顶点数据组合成图元，比如顶点图元、线段图元、三角形图元。该阶段输出图元进行接下来的处理。</p>
+<h2 id="3-6-透视除法和NDC裁剪"><a href="#3-6-透视除法和NDC裁剪" class="headerlink" title="3.6 透视除法和NDC裁剪"></a>3.6 透视除法和NDC裁剪</h2><p>该阶段的输入是组装好的图元，输出的是NDC裁剪之后的图元。首先对图元的顶点进行透视除法，这样得到的顶点数据都会位于NDC内，方便进行NDC裁剪。图元裁剪后可以会产生新的图元。</p>
+<h2 id="3-7-屏幕空间映射"><a href="#3-7-屏幕空间映射" class="headerlink" title="3.7 屏幕空间映射"></a>3.7 屏幕空间映射</h2><p>该阶段是将NDC下的图元顶点坐标映射到屏幕空间。值得注意的是顶点坐标是一个齐次坐标，透视除法后得到的是NDC下的坐标；然后，通过一个缩放和平移变换将x和y映射到屏幕空间。</p>
+<h2 id="3-8-面剔除-（Face-Culling）"><a href="#3-8-面剔除-（Face-Culling）" class="headerlink" title="3.8 面剔除 （Face Culling）"></a>3.8 面剔除 （Face Culling）</h2><p>这一个阶段指的是三角形的前后面剔除。前或者后的定义是根据正视三角形的时候定义三角形顶点的旋向，可以定义逆时针旋转或者顺时针旋转为前面。实际上，面剔除跟实际的摄像机位置没有关系，不管摄像机转到哪个地方，前后面不会改变，比如渲染立方体的时候，后面都是立方体内部看不到的面，无论摄像机如何旋转。因为，前后面的定义是固定视角正对三角形时候定义的。</p>
+<h1 id="四、光栅化阶段"><a href="#四、光栅化阶段" class="headerlink" title="四、光栅化阶段"></a>四、光栅化阶段</h1><p>该大的阶段的输入是几何处理阶段输出的图元。该阶段主要分为四个部分，首先是光栅化图元得到片元（潜在的像素信息），然后进行Early Fragment Test，通过测试后再进行片元着色器，最终进行输出合并阶段的各种测试以及颜色混合等，再输出到颜色缓冲区。</p>
+<h2 id="4-1-图元光栅化"><a href="#4-1-图元光栅化" class="headerlink" title="4.1 图元光栅化"></a>4.1 图元光栅化</h2><p>该阶段是将图元的顶点信息进行线性插值，然后生成片元数据。每个片元上有顶点信息线性插值而来的片元数据。需要注意的是，这个插值是线性的，如果有一些数据是非线性的，则不能在顶点着色器中计算然后输出到片元着色器，因为线性插值的结果和在片元着色器中计算的结果是不一致的。<br>这里需要特别说明的是，关于深度z’的生成。屏幕空间映射后的z’是关于摄像机空间z倒数的一个线性函数。之所以使用1/z而不是z，是为了在近处获得更好的深度缓冲精度，因为1/z在近处的变化更快，可以优化Z-Fighting这种现象。由于z’不是一个关于z的线性函数，因此z’应该是在光栅化后硬件自动根据1/z计算出来的，而不是先计算z’再光栅化。 </p>
+<h2 id="4-2-Early-Fragment-Test"><a href="#4-2-Early-Fragment-Test" class="headerlink" title="4.2 Early Fragment Test"></a>4.2 Early Fragment Test</h2><p>参考OpenGL的<a href="https://www.khronos.org/opengl/wiki/Early_Fragment_Test">Early Fragment Test</a>，可以看到不仅仅通常所说的Early Z-Test还有其它好几个阶段都可以进行EarlyTest，一共是四个测试（Pixel ownership test、Scissor test、<br> Stencil test、Depth test）和遮挡查询更新。根据文档，Pixel ownership test和Scissor test从OpenGL4.2起会总是在EarlyTest阶段进行。那么，如果这些测试没有在EarlyTest阶段进行，则会在最终的输出合并阶段进行；如果进行了，那么输出合并阶段也不会重复处理。</p>
+<h3 id="4-3-Early-Z-Test的限制"><a href="#4-3-Early-Z-Test的限制" class="headerlink" title="4.3 Early Z-Test的限制"></a>4.3 Early Z-Test的限制</h3><p>不要在片元着色器中改变深度，比如glsl的gl_FragDepth；也不要discard片元，通常实现AlphaTest会根据Alphadiscard片元。因为这些操作会导致硬件无法预测最终的深度，从而无法进行提前深度测试。</p>
+<h2 id="4-4-片段着色器"><a href="#4-4-片段着色器" class="headerlink" title="4.4 片段着色器"></a>4.4 片段着色器</h2><p>片段着色器的输入是光栅化来的各种顶点属性，输出是一个颜色值。该阶段是计算光照结果的主要阶段。通常片元着色器会有比较复杂的计算，通常的优化手段是将计算转移到顶点着色器甚至CPU（应用程序阶段，用Uniform传入）上。</p>
+<h2 id="4-5-Output-Merger-Stage-Raster-Operations"><a href="#4-5-Output-Merger-Stage-Raster-Operations" class="headerlink" title="4.5 Output-Merger Stage(Raster Operations)"></a>4.5 Output-Merger Stage(Raster Operations)</h2><p>终于进入最后的输出合并阶段，该阶段的输入是一个个的片元。片元需要进行一些列的测试和转换，最终才会将颜色输出到缓冲区上。</p>
+<h3 id="Pixel-ownership-test"><a href="#Pixel-ownership-test" class="headerlink" title="Pixel ownership test"></a>Pixel ownership test</h3><p>根据OpenGL的文档，该阶段只对默认缓冲区生效，用于测试像素是否被其它窗口遮挡的情形。对于自定义的FrameBuffer，不存在这个测试。</p>
+<h3 id="Alpha-Test"><a href="#Alpha-Test" class="headerlink" title="Alpha Test"></a>Alpha Test</h3><p>需要特别说明的是，Alpha测试当前是已经被废弃了，从DirectX10和OpenGL3.1开始废弃，参考<a href="https://www.khronos.org/opengl/wiki/Transparency_Sorting">Transparency Sorting</a>文档；当前需要在片元着色器用discard实现。列在这里主要是为了完整性。</p>
+<h3 id="Scissor-test"><a href="#Scissor-test" class="headerlink" title="Scissor test"></a>Scissor test</h3><p>参考OpenGL的剪切测试文档，<a href="https://www.khronos.org/opengl/wiki/Scissor_Test">Scissor Test</a>。通过在应用程序阶段设置，可以让片元只通过视口的一个小矩形区域。根据EarlyTest的文档，推测该阶段目前都在EarlyTest阶段进行了。</p>
+<h3 id="Multisample-operations"><a href="#Multisample-operations" class="headerlink" title="Multisample operations"></a>Multisample operations</h3><p>如果启用了MSAA，那么需要进行resolve才能够输出到默认颜色缓冲中，进行屏幕显示。假如在默认缓冲中开了MSAA，那么从MSAA的后备缓冲交换到前向缓冲就需要进行resolve操作，因为前向缓冲是single-sample的。如果是自定义的FrameBuffer开启了MSAA，那么在Blit到默认缓冲区的时候也需要进行resolve操作。</p>
+<h3 id="模板测试"><a href="#模板测试" class="headerlink" title="模板测试"></a>模板测试</h3><p>模板测试基本思想是用一个八位的模板缓冲，一个参考值，一个比较函数，一个掩码，用该参考值和片元对应的模板缓冲值使用比较进行比较（比较之前进行掩码），通过的则片元可以继续进行深度测试，否则丢弃。另外还可以定义模板成功和失败，以及深度测试成功和失败后模板缓冲如何变化。可以参考OpenGL的<a href="https://www.khronos.org/opengl/wiki/Stencil_Test">Stencil Test</a>文档。<br>模板测试的一个常见的应用是描边或者在像素级别分类。</p>
+<h3 id="深度测试"><a href="#深度测试" class="headerlink" title="深度测试"></a>深度测试</h3><p>深度测试是根据当前片元的深度值与深度缓冲进行比较，比较函数可以设置，通过比较的片元才会进行接下来的处理，否则丢弃当前片元。</p>
+<h3 id="遮挡查询更新"><a href="#遮挡查询更新" class="headerlink" title="遮挡查询更新"></a>遮挡查询更新</h3><p>参考OpenGL的遮挡查询文档<a href="https://www.khronos.org/opengl/wiki/Query_Object#Occlusion_queries">Query Object</a>。<br>该阶段会更新遮挡查询的结果，因此遮挡查询的结果只能用于下一帧渲染。</p>
+<h3 id="颜色混合"><a href="#颜色混合" class="headerlink" title="颜色混合"></a>颜色混合</h3><p>需要注意的是，容易误解半透明渲染才会有颜色混合，实际上颜色混合是管线的一个固定的阶段，不透明渲染也会有默认的混合方式。<br>理解颜色混合，首先要明白2个概念，source和dest，source指的是当前的片元，dest指的是要目标缓冲中对应的颜色。<br>颜色混合主要是需要设置2个函数，一个函数用于设置混合因子，一个函数用来设置混合函数。混合因子有四种，source rgb和dest rgb，source a和dest a，可以一起指定也可以分开指定。具体可以参考OpenGL的<a href="https://www.khronos.org/opengl/wiki/Blending">Blending</a>文档。</p>
+<h3 id="sRGB转换"><a href="#sRGB转换" class="headerlink" title="sRGB转换"></a>sRGB转换</h3><p>1、我们知道显示器或者颜色纹理的颜色空间是sRgb，sRGB空间就是Gamma校正的颜色空间，也就是已经Gamma校正过的颜色数据，这样子在显示器上才能正常显示。如果我们使用的线性工作流，也就是在线性空间中制作资源，编写Shader计算光照结果，那么片元着色器的输出需要转换到sRgb空间。这个转换部分硬件上是自动支持，对于不支持的硬件则需要在Shader里面转换。<br>2、如果要硬件自动转换，首先要创建的必须是srgb颜色空间的FrameBuffer，在OpenGL中可以使用glEnable(GL_FRAMEBUFFER_SRGB)开启；要保证片元输出的线性空间的颜色，也就是要采用线性工作流。<br>3、需要注意的是，避免将sRGB转换和ToneMaping混合起来，ToneMaping做的是将HDR映射到LDR。这只是一个带偏向性颜色范围映射，也就是算法倾向性的增强部分颜色。而sRGB转换才是将颜色从线性空间转换到sRGB空间。</p>
+<h3 id="Dithering"><a href="#Dithering" class="headerlink" title="Dithering"></a>Dithering</h3><p>首先说明一下，颜色格式分为Float、Normalized Integer、Integer三种，默认缓冲区就是Normalized Integer格式的颜色。根据OpenGL的文档，当将一个Float颜色写入Normalized Integer缓冲区的时候，可以开启Dithering。Normalized Integer缓冲区是一个定点数缓冲来存储浮点值，比如通常我们的颜色是定义在[0,\1]的浮点值，但是颜色缓冲是[0,254]\的Int值，OpenGL会自动进行转换。</p>
+<h3 id="Logic-operations"><a href="#Logic-operations" class="headerlink" title="Logic operations"></a>Logic operations</h3><p>根据OpenGL的文档，当将颜色写入Integer（Normalized Or Not）缓冲区的时候，可以开启Logic operations。这是一些Bool操作。具体可以参考文档<a href="https://www.khronos.org/opengl/wiki/Logical_Operation">Logical Operation</a>。Logical Operations在sRGB颜色空间是禁止的。</p>
+<h3 id="Write-mask"><a href="#Write-mask" class="headerlink" title="Write mask"></a>Write mask</h3><p>该阶段可以分别指定Color、Depth、Stencil的写入掩码。具体参考文档<a href="https://www.khronos.org/opengl/wiki/Write_Mask">Write Mask</a>。</p>
+<h1 id="五、RenderPass"><a href="#五、RenderPass" class="headerlink" title="五、RenderPass"></a>五、RenderPass</h1><h2 id="5-1-Renderer"><a href="#5-1-Renderer" class="headerlink" title="5.1 Renderer"></a>5.1 Renderer</h2><p>以上所有内容在游戏引擎只是一个RenderPass，实际情况下，每帧游戏引擎会按照一定的顺序渲染多个Pass。比如，深度Pass（或者深度法线Pass）、阴影Pass、不透明物体Pass、透明物体Pass、后处理Pass等；而且后面的Pass会利用前面的Pass渲染结果来处理，比如深度Pass渲染的深度纹理可以用在后续的Pass实现一些效果。<br>总而言之，真实的游戏引擎是每帧渲染多个Pass，每个Pass对应上述的内容。</p>
+<h2 id="5-2-CameraStack"><a href="#5-2-CameraStack" class="headerlink" title="5.2 CameraStack"></a>5.2 CameraStack</h2><p>实际上，在Unity的Urp渲染管线中，更完整的过程是渲染相机堆栈-&gt;每个相机堆栈对应一个渲染器-&gt;每个渲染器包含多个Pass。不过，Urp里面每个相机堆栈只对应一个FrameBuffer，也就是所有的相机渲染输出都是这一个FrameBuffer，避免内存和带宽浪费。如果在场景内创建多个相机堆栈，那么其它的相机堆栈的输出应该是离屏RT。</p>
+<h1 id="六、参考资料"><a href="#六、参考资料" class="headerlink" title="六、参考资料"></a>六、参考资料</h1><blockquote>
+<p>1、<a href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/graphics-pipeline">Graphics pipeline</a><br>2、<a href="https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview">Rendering Pipeline Overview</a><br>3、<a href="https://www.khronos.org/opengl/wiki/Per-Sample_Processing">Per-Sample Processing</a><br>4、<a href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/output-merger-stage--om-">Output Merger (OM) stage</a><br>5、<a href="https://blog.codingnow.com/2020/07/culling_space.html">裁剪和空间管理</a><br>6、<a href="https://zhuanlan.zhihu.com/p/138295496">[总结] 漫谈HDR和色彩管理（三）SDR和HDR</a></p>
+</blockquote>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/10/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">渲染管线中的坐标空间和相关变换</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-19 21:20:00" itemprop="dateCreated datePublished" datetime="2020-10-19T21:20:00+08:00">2020-10-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B2%E6%9F%93/" itemprop="url" rel="index">
+                    <span itemprop="name">渲染</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/10/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/" class="post-meta-item leancloud_visitors" data-flag-title="渲染管线中的坐标空间和相关变换" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/19/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E6%8D%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h1 id="一、思维导图"><a href="#一、思维导图" class="headerlink" title="一、思维导图"></a>一、思维导图</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/坐标空间.png"></p>
+<h1 id="二、模型空间"><a href="#二、模型空间" class="headerlink" title="二、模型空间"></a>二、模型空间</h1><p>这里的模型空间指的是建模出来的空间，也就是用建模软件输出的数据所在的坐标空间。比如，3D Max用的是右手系，输出的模型数据所在的空间就叫模型空间；由于Unity的模型空间是左手系，所以通常需要旋转90度才能对应上。</p>
+<h1 id="三、切线空间"><a href="#三、切线空间" class="headerlink" title="三、切线空间"></a>三、切线空间</h1><p>切线空间又可以叫做纹理空间。假如纹理坐标uv构成一个二维空间，加上垂直于这个二维空间的法线，那么就是一个三维的切线空间。</p>
+<h2 id="3-1-法线贴图的切线空间"><a href="#3-1-法线贴图的切线空间" class="headerlink" title="3.1 法线贴图的切线空间"></a>3.1 法线贴图的切线空间</h2><p>切线空间有什么应用了？我们在计算光照模型的时候，通常会有更精细表示法线的数据，比如法线贴图，法线贴图通常是建模软件用高模计算出来的。不过，法线贴图是原始切线空间下的数据。因此，法线贴图中的法线数据通常是(0,0,1)，所以法线贴图表现出大部分是蓝色。我们在读取这个法线数据后，需要将其变换到计算光照模型所在的空间，比如世界空间。</p>
+<h2 id="3-2-模型空间下的切线空间"><a href="#3-2-模型空间下的切线空间" class="headerlink" title="3.2 模型空间下的切线空间"></a>3.2 模型空间下的切线空间</h2><p>顶点上除了位置数据外，还可以有法线、切线数据。注意，这些数据都是在模型空间的。因此，法线、切线、副切线（法线和切线叉积计算出来）自然可以构成一个模型空间下的切线空间。</p>
+<h2 id="3-3-切线变换"><a href="#3-3-切线变换" class="headerlink" title="3.3 切线变换"></a>3.3 切线变换</h2><p>假如我们想将切线空间下的法线变换到世界空间，该如何做了？我们需要得到一个世界空间下的切线空间。首先将<strong>模型空间下的切线空间变换到世界空间</strong>，这样我们就得到了一个世界空间下的切线子空间，然后用这个切线子空间构成一个切线变换，再对切线空间下的法线数据应用这个切线变换就能变换到世界空间。<br>用公式来表示这个变换是，$NormalWS=TangentMatrix*NormalTS$。当然也可以将切线变换到其它的空间，比如摄像机空间，区别是构造不同的TangentMatrix。</p>
+<h1 id="四、关节空间"><a href="#四、关节空间" class="headerlink" title="四、关节空间"></a>四、关节空间</h1><h2 id="4-1-关节空间"><a href="#4-1-关节空间" class="headerlink" title="4.1 关节空间"></a>4.1 关节空间</h2><p><strong>这里的关节空间，指的是带骨骼的模型中，骨骼或者关节所定义的局部空间。</strong><br>以人体手指为假设，手指会受到腕关节、肘关节、肩关节影响，对应三个骨骼。那么，手指会依次受到这三个关节的牵扯影响。我们知道，虚拟的根骨骼Root所在的是模型空间，同时每个关节也定义了自己的局部空间，比如腕关节是最终的局部空间，我们把这个关节定义的局部空间叫做关节空间。</p>
+<h2 id="4-2-关节姿势"><a href="#4-2-关节姿势" class="headerlink" title="4.2 关节姿势"></a>4.2 关节姿势</h2><p>所谓关节姿势，存储的是子关节到父关节的变换，包括旋转、缩放、平移，这个也可以叫做局部关节姿势。全局关节姿势是，将所有的局部关节姿势结合起来。<br>比如公式，$P<em>{2\to M} = P</em>{2\to 1} P<em>{1\to 0} P</em>{0\to M}$表示的是将顶点从子关节2的局部空间变换到模型空间。全局关节姿势可以表示为$P<em>{j\to M} = \prod </em>{i=j}^{0} P_{i\to p(i)}$，其中p(i)是关节i的父关节。</p>
+<h2 id="4-3-绑定关节姿势"><a href="#4-3-绑定关节姿势" class="headerlink" title="4.3 绑定关节姿势"></a>4.3 绑定关节姿势</h2><p>我们知道，默认情况下，蒙皮骨骼都有一个T-Pose，即绑定姿势，也可以理解为初始姿势。模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。</p>
+<h2 id="4-4-蒙皮矩阵"><a href="#4-4-蒙皮矩阵" class="headerlink" title="4.4 蒙皮矩阵"></a>4.4 蒙皮矩阵</h2><p>模型空间的顶点乘以绑定姿势的逆变换就能得到关节空间的顶点。关键点来了，这个时候再乘以骨骼的当前全局姿势矩阵，就又变换回了模型空间。所谓的蒙皮矩阵，就是这两个变换的结合。可以用公式表示骨骼i的蒙皮矩阵，$K<em>{j} = (B</em>{j\to M})^{-1}  C_{j \to M}$，B代表绑定姿势，C代表当前姿势。多个蒙皮矩阵的加权，就能得到蒙皮动画。</p>
+<h2 id="4-5-蒙皮动画"><a href="#4-5-蒙皮动画" class="headerlink" title="4.5 蒙皮动画"></a>4.5 蒙皮动画</h2><p>顶点会受到多个骨骼影响，这些骨骼的影响加权和为1，这个就是蒙皮动画。可以用公式来表示，$p’ = \sum_{i=1}^{n}W_i(p)K_ip$。其中，p是模型空间的顶点，Wi是骨骼i影响的权重，Ki是骨骼i的蒙皮矩阵。蒙皮矩阵的计算如上所示。</p>
+<h2 id="4-6-总结"><a href="#4-6-总结" class="headerlink" title="4.6 总结"></a>4.6 总结</h2><p>根据以上五步的推导，蒙皮动画需要存储的数据是，</p>
+<ul>
+<li>绑定姿势下的的模型空间顶点</li>
+<li>绑定关节姿势的逆矩阵</li>
+<li>当前姿势数据（实时计算当前姿势矩阵）</li>
+<li>蒙皮矩阵的权重</li>
+</ul>
+<h1 id="五、世界空间"><a href="#五、世界空间" class="headerlink" title="五、世界空间"></a>五、世界空间</h1><p>所谓世界空间，不需要解释了吧。放在游戏场景里面，指的是规定了场景坐标系的空间。模型空间，则指的是场景内的单个模型自身数据所在的空间。</p>
+<h2 id="5-1-模型变换"><a href="#5-1-模型变换" class="headerlink" title="5.1 模型变换"></a>5.1 模型变换</h2><p>模型变换就是将模型空间的顶点数据变换到世界空间，通常包括对模型的平移、旋转和缩放。但是，一般要求的变换顺序是先缩放、再旋转、最后平移，如果反过来会造成平移受到前面的变换影响，与直观印象不符合。<br>所以，$ModelMatrix=TranslateMatrix*RotateMatrix*ScaleMatrix$。特别说明平移矩阵指的是，将模型从原点移动到其在世界空间的位置。</p>
+<h1 id="六、摄像机空间"><a href="#六、摄像机空间" class="headerlink" title="六、摄像机空间"></a>六、摄像机空间</h1><p>摄像机空间也叫做观察空间。摄像机可以理解为世界空间的一个位置和朝向，比如在坐标(1,1,1)看向原点，那么射线的位置就是坐标(1,1,1)，前向就是看向的方向（-1，-1，-1）。这个时候再定义一个垂直于forward的Up方向，就可以根据叉积找到垂直forward和up方向的right方向。这三个方向就可以构成一个摄像机空间。</p>
+<h2 id="6-1-观察变换"><a href="#6-1-观察变换" class="headerlink" title="6.1 观察变换"></a>6.1 观察变换</h2><p>观察变换是将顶点从世界空间变换到新的摄像机空间。首先，需要将顶点平移，比如上述情况下的原点在观察空间下是(-1，-1，-1)；然后，需要旋转顶点以匹配观察空间的坐标轴。由于观察空间的坐标轴是世界空间下的单位正交基，因此将三个轴放入矩阵即可得到旋转矩阵的逆矩阵（等于旋转矩阵的转置矩阵）。</p>
+<h1 id="七、裁剪空间"><a href="#七、裁剪空间" class="headerlink" title="七、裁剪空间"></a>七、裁剪空间</h1><p>裁剪空间指的是观察空间下的顶点经过投影变换后所处的空间。我们知道，可视区域是摄像机前面的一个平截头体（透视投影）或者一个长方体（正交投影）。裁剪空间的用途是将可视区域外的物体裁剪，同时计算物体的二维坐标。</p>
+<h2 id="7-1-投影变换"><a href="#7-1-投影变换" class="headerlink" title="7.1 投影变换"></a>7.1 投影变换</h2><p>投影分为透视投影和正交投影两种，透视投影会造成近大远小的效果，符合视觉效应，三维游戏一般使用透视投影，正交投影则远近一样大，通常只用于建模软件。</p>
+<h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/透视投影.jpg"><br>从图可以看出，透视投影后w是有值的，并不是1，结果还是一个平截头体。具体的矩阵推动，请参考相关资料。</p>
+<h3 id="正交投影"><a href="#正交投影" class="headerlink" title="正交投影"></a>正交投影</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/正交投影.jpg"><br>从图可以看出，正交投影实际上就是缩放和平移的结合，得到的结果是一个-1到1范围的立方体。</p>
+<h2 id="7-2-透视除法和图元裁剪"><a href="#7-2-透视除法和图元裁剪" class="headerlink" title="7.2 透视除法和图元裁剪"></a>7.2 透视除法和图元裁剪</h2><p>由于透视投影后齐次坐标的w非1，需要进行透视除法，这个是图形硬件自动进行的。如图所示：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/透视除法.jpg"><br>透视除法后，可以得到和正交投影结果一样的规范化立方体，也叫做NDC（规范化设备坐标系）。<br>到了NDC后，就可以方便的进行图元裁剪，毕竟坐标都是-1到1了（DirectX下Z坐标是0到1）。</p>
+<h2 id="7-3-顶点着色器的输出"><a href="#7-3-顶点着色器的输出" class="headerlink" title="7.3 顶点着色器的输出"></a>7.3 顶点着色器的输出</h2><p>顶点着色器必须输出裁剪空间下的坐标。由于DirectX的NDC的Z范围是0到1，与OpenGL的-1到1有一定区别。因此，这2者的投影矩阵在Z坐标上有一定的平移和缩放区别。</p>
+<h1 id="八、屏幕空间"><a href="#八、屏幕空间" class="headerlink" title="八、屏幕空间"></a>八、屏幕空间</h1><p>投影变换后得到的顶点范围是-1到1。现在还需要将NDC下的顶点映射到屏幕空间。屏幕空间也可以叫做窗口空间，即窗口定义的坐标空间。</p>
+<h2 id="8-1-视口变换"><a href="#8-1-视口变换" class="headerlink" title="8.1 视口变换"></a>8.1 视口变换</h2><p>假设，窗口坐标原点在左下角（OpenGL的原点在左下角，但是DirectX的在左上角），窗口大小为Width和Height。视口变换就是把-1到1的x和y坐标范围映射到（0，width）和（0，height），对应DirectX的话，y还需要取反。这就是一个平移和缩放的过程。</p>
+<p>实际上，透视除法和视口变换（屏幕空间映射）都是硬件自动进行的。</p>
+<h1 id="九、参考资料"><a href="#九、参考资料" class="headerlink" title="九、参考资料"></a>九、参考资料</h1><blockquote>
+<p><a href="https://book.douban.com/subject/26821639/">Unity Shader入门精要</a></p>
+</blockquote>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2020/08/26/%E4%BC%BD%E9%A9%AC%E6%A0%A1%E6%AD%A3%E5%92%8C%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1677,277 +1994,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">虚幻三命令行参数</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-12-03 21:17:20" itemprop="dateCreated datePublished" datetime="2016-12-03T21:17:20+08:00">2016-12-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
-                    <span itemprop="name">游戏开发</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/UnrealEngine/" itemprop="url" rel="index">
-                    <span itemprop="name">UnrealEngine</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="虚幻三命令行参数" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2016/12/03/%E8%99%9A%E5%B9%BB%E4%B8%89%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>命令行参数是指通过命令行或者可执行文件快捷方式启动游戏进程的时候，附加在后面的一系列参数。</p>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><p>命令行参数分为两种，一种是编译游戏代码时候需要用到的命令行参数。另一种则是在启动游戏进程时候指定的参数。</p>
-<h3 id="编译命令行参数"><a href="#编译命令行参数" class="headerlink" title="编译命令行参数"></a>编译命令行参数</h3><p>编译代码期间会用到的参数如下：</p>
-<ol>
-<li>版本 -debug -release&lt;/p&gt;</li>
-<li><p>全量 -full （默认增量）</p>
-</li>
-<li><p>自动更新C++头文件，不弹框确认 -auto<br>注意：虚幻三编译脚本.uc文件时候，会更新.h头文件</p>
-</li>
-<li><p>移除.u文件中的源代码信息 -stripsource注意：.u文件是虚幻三脚本文件编译后的字节码文件，虚幻四中不存在</p>
-<p>因此，编译代码时候最多可能指定以下参数组合：<br>make -debug -full -auto -stripsource<br>make -release -full -auto  -stripsource</p>
-</li>
-</ol>
-<p><strong>注意：通过在vs中指定make命令可以调试编译代码的过程。</strong><br>如下图所示：<br><img alt="enter description here" data-src="https://c2.staticflickr.com/6/5486/31353510066_d0fd3565ee_o.png"></p>
-<h3 id="运行命令行参数"><a href="#运行命令行参数" class="headerlink" title="运行命令行参数"></a>运行命令行参数</h3><p>启动游戏进程指定的命令行参数分为两个个部分，第一个部分用于指定进程的运行模式（客户端、服务器、编辑器），第二个部分用于指定地图的URL以及附加选项。</p>
-<h4 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h4><p>游戏进程可以用三种不同的模式进行启动，分别是客户端、服务器、编辑器模式。因此，虚幻引擎生成的游戏可执行文件同时可以作为游戏服务器、游戏客户端、游戏编辑器运行。这是一个很神奇的地方。</p>
-<ol>
-<li><p>客户端模式<br>默认情况下，启动的游戏进程就是客户端模式，不需要指定额外的命令行参数。<br>在UE4中，也可以指定-game参数。</p>
-</li>
-<li><p>服务器模式<br>通过指定server参数，可以启动一个游戏服务器。<br>比如，udk.exe server，则是使用udk启动一个游戏服务器。<br>对于UE4，则是UE4Editor.exe -server。<br>实际上，可以修改游戏引擎设置，输出自定义的游戏执行文件。在启动这个游戏可执行文件时候，只需要附近sever参数就可以启动一个游戏服务器。</p>
-</li>
-<li><p>编辑器模式<br>通过指定editor参数，可以启动一个游戏服务器。<br>比如，udk.exe editor，则是使用udk启动游戏编辑器。<br>对于UE4，则是UE4Editor.exe -editor。</p>
-</li>
-</ol>
-<h4 id="模式的URL参数"><a href="#模式的URL参数" class="headerlink" title="模式的URL参数"></a>模式的URL参数</h4><p>URL分为两个部分：地图名称或者服务器地址，可选的附加参数。<br>地图部分用于强制游戏启动时候加载特定的地图，附加参数用于设置额外的启动方式，比如设置分辨率，是否打开log窗口等。这些参数和server或editor模式结合起来就可以启动特定地图的服务器或者用编辑器打开特定地图。<br>如果没有url参数，那么游戏进程会打开默认的地图。URL参数必须在可执行命令名称的后面或者在模式参数后面。</p>
-<ol>
-<li><p>地图<br>如果运行本地游戏，则指定Maps目录下的地图名称，比如MyMap. umap。<br>如果运行网络游戏，则指定游戏服务器的IP地址（server模式启动的游戏进程就是游戏服务器）。</p>
-</li>
-<li><p>附加参数<br>附加参数与地图之间用”?”分隔。<br>附加参数分为两种类型，一种是用”=”指定的选项，一种是用”-“指定的开关。</p>
-<p>常用的选项参数：<br>dedicated：指定服务器作为专用服务器。<br>listen: 指定服务器作为监听服务器 。<br>spectatoronly：以观看模式启动游戏<br>class: 告诉引擎要使用的玩家类(覆盖默认值)。<br>game:: 指定使用的GameInfo类。<br>name: 要使用的玩家名称。<br>team: 指定玩家所在的团队。<br>resx/resy: 设置游戏窗口的分辨率。<br>consolex/consoley：设置控制台窗口(log窗口)分辨率。</p>
-<p>常用的开关参数：<br>log: 打开日志窗口。<br>windowed：窗口模式运行。<br>nomoviestartup: 略过启动动画。<br>nosplash: 略过启动splash窗口。</p>
-<p></p><p>更多的附加参数请参考文档：<a href="https://docs.unrealengine.com/latest/CHN/Programming/Basics/CommandLineArguments/index.html">虚幻四引擎命令行参数</a></p>
-</li>
-<li><p>一些示例：<br>UDK.exe server MyMap.udk<br>UDK.exe 127.0.0.1<br>UDK.exe MyMap.udk?-resX=640 -resY=480 -log log=log.txt<br>UDKLift.exe DM-发电站?Game=UTGame.UTTeamGame?listen=true?TeamIndex=0?Name=FS01 -log -windowed -resX=640 -resY=360 -nomoviestartup -nosplash windowPosX=0 windowPosY=0 -consolePosX=0 -consolePosY=365<br>MyGame.exe editor MyMap.umap -NoLoadStartupPackages -NoGADWarning</p>
-</li>
-</ol>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/" class="post-title-link" itemprop="url">使用DebugView实时显示Log</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-08-15 20:48:18" itemprop="dateCreated datePublished" datetime="2016-08-15T20:48:18+08:00">2016-08-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">编程语言</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/" class="post-meta-item leancloud_visitors" data-flag-title="使用DebugView实时显示Log" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2016/08/15/%E4%BD%BF%E7%94%A8DebugView%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BALog/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><h3 id="DebugView简介"><a href="#DebugView简介" class="headerlink" title="DebugView简介"></a>DebugView简介</h3><p>DebugView是一个监视本地系统或者通过tcp/ip连接的网络系统的OutputDebugString输出的应用程序。DebugView不仅能够监视Win32应用的debug输出，还可以监视内核模型的debug输出。因此，如果使用OutputDebugString来打印调试信息的话，就可以在程序运行时候通过DebugView来实时显示程序的调试信息。<br>这种方式在某种意义上，比将Log打印到文件中，关闭程序后再查看Log输出的方式更加方便。而且可以将这两种调试程序的方式结合起来，既使用DebugView来实时显示调试信息，又将调试信息输出到Log文件中，方便以后分析。</p>
-<h2 id="安装DebugView"><a href="#安装DebugView" class="headerlink" title="安装DebugView"></a>安装DebugView</h2><p>下载地址：<a href="https://technet.microsoft.com/en-us/sysinternals/debugview.aspx">DebugView</a><br>下载后面后解压压缩包，发现里面有三个文件：Dbgview.exe、dbgview.chm、Eula.txt。<br>Dbgview.exe就是我们要使用的实时显示Log工具。dbgview.chm是自带的文档，有不懂的地方可以查阅该文档。<br>现在可以将DebugView.exe放到任何你喜欢的目录，比如桌面。</p>
-<h2 id="配置DebugView"><a href="#配置DebugView" class="headerlink" title="配置DebugView"></a>配置DebugView</h2><h3 id="配置Capture"><a href="#配置Capture" class="headerlink" title="配置Capture"></a>配置Capture</h3><p>如下图所示，要记得勾选Capture Win32和Capture Global Win32。Capture Global Win32用于网络模式下捕获网络主机的Debug输出的时候。如果需要捕获内核模式的调试输出，记得勾选Capture Kernel Win32。<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8750/28713108000_0384dfb06a_o.png"><br>如果点击Capture Global Win32菜单出现提示：<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8315/28999300555_61681b6880_o.png"><br>重新以管理员的身份启动DebugView。<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8897/28999300535_075a591b02_o.png"></p>
-<h3 id="配置Filter"><a href="#配置Filter" class="headerlink" title="配置Filter"></a>配置Filter</h3><p>如下图所示，打开Filter对话框，<br><img alt="enter description here" data-src="https://c2.staticflickr.com/8/7507/28923046321_72cd949daa_o.png"><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8744/28713274070_2809e64189_o.png"><br>然后在Include中输入要包含的字符串，比如”hankpcxiao”，多个字符串用;分隔，比如”hankpcxiao;xpc”。<br>这样就只会捕获包括过滤字符串hankpcxiao或者xpc的OutputDebugString输出。<br>如果我们在每个OutputDebugString输出前自动加上过滤字符串，那么DebugView就只会输出我们的Log信息了。</p>
-<h3 id="开启捕获"><a href="#开启捕获" class="headerlink" title="开启捕获"></a>开启捕获</h3><p>最后确保开启了捕获，如下图所示：<br><img alt="enter description here" data-src="https://c1.staticflickr.com/9/8842/28999300405_0355a4405f_o.png"></p>
-<h2 id="如何在程序中输出Log信息？"><a href="#如何在程序中输出Log信息？" class="headerlink" title="如何在程序中输出Log信息？"></a>如何在程序中输出Log信息？</h2><p>默认情况下，DebugView会捕获函数OutputDebugString的输出，但是这个函数的参数是个字符串指针，不太方便。下面我们通过一些列步骤来创建一个方便使用的Log类。</p>
-<h3 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h3><p>我们习惯使用printf这样的函数来格式化输出信息，因此这次我们也把OutputDebugString包装成可变参数形式的格式化输出函数。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DebugViewOutput</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* fm, ...)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="type">static</span> <span class="type">char</span> szMsg[MAX_PATH];</span><br><span class="line"></span><br><span class="line">    va_list argList;</span><br><span class="line">    <span class="built_in">va_start</span>(argList, fm);</span><br><span class="line">    <span class="built_in">vsprintf_s</span>(szMsg, fm, argList);</span><br><span class="line">    <span class="built_in">va_end</span>(argList);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">OutputDebugString</span>(szMsg);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="让DebugView在VS调试程序时候也能够捕获Log"><a href="#让DebugView在VS调试程序时候也能够捕获Log" class="headerlink" title="让DebugView在VS调试程序时候也能够捕获Log"></a>让DebugView在VS调试程序时候也能够捕获Log</h3><p>网上有不少介绍DebugView使用的文章，但是都忽略了一个事实，那就是默认情况下，使用VS运行程序时候，OutputDebugString的输出是到VS的输出窗口中，DebugView中并没有任何信息。只有单独运行程序的时候，DebugView才能够捕捉到信息。<br>但是这样就不能结合打断点调试和DebugView两个强大的调试方法了。不过，还是有解决办法的。通过一个叫做DBWin通信机制可以实现调试程序时候，把OutputDebugString的输出信息显示到DebugView窗口中。这套机制的本质是通过内存映射文件来跨进程交换数据。<br>具体参考以下的类代码：</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">class</span> <span class="title class_">XpcDebugView</span></span><br><span class="line">    {</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">XpcDebugView</span>() {}</span><br><span class="line">        ~<span class="built_in">XpcDebugView</span>() {}</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">XpcDebugViewOutput</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* fm, ...)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">DBWinBuffer</span></span><br><span class="line">        {</span><br><span class="line">            DWORD ProcessId;</span><br><span class="line">            <span class="type">char</span> Data[<span class="number">4096</span> - <span class="built_in">sizeof</span>(DWORD)];</span><br><span class="line">        };</span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">Initialize</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">UnInitialize</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">        HANDLE m_mutex;</span><br><span class="line">        HANDLE m_fileMapping;</span><br><span class="line">        HANDLE m_bufferReadyEvent;</span><br><span class="line">        HANDLE m_dataReadyEvent;</span><br><span class="line">        DBWinBuffer* m_buffer;</span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">XpcDebugView::Initialize</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        m_mutex = <span class="built_in">OpenMutex</span>(SYNCHRONIZE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWinMutex"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开DBWIN_BUFFER</span></span><br><span class="line">        m_fileMapping = <span class="built_in">OpenFileMapping</span>(FILE_MAP_WRITE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWIN_BUFFER"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (m_fileMapping == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开DBWIN_BUFFER_READY</span></span><br><span class="line">        m_bufferReadyEvent = <span class="built_in">OpenEvent</span>(SYNCHRONIZE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWIN_BUFFER_READY"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开DBWIN_DATA_READY</span></span><br><span class="line">        m_dataReadyEvent = <span class="built_in">OpenEvent</span>(EVENT_MODIFY_STATE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWIN_DATA_READY"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//等待DBWIN_BUFFER就绪</span></span><br><span class="line">        <span class="built_in">WaitForSingleObject</span>(m_bufferReadyEvent, INFINITE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//把DBWIN_BUFFER映射到某个地址</span></span><br><span class="line">        m_buffer = (DBWinBuffer*)<span class="built_in">MapViewOfFile</span>(m_fileMapping, FILE_MAP_WRITE, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        m_buffer-&gt;ProcessId = <span class="built_in">GetCurrentProcessId</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">XpcDebugView::UnInitialize</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="comment">//释放和关闭DBWIN_BUFFER</span></span><br><span class="line">        <span class="built_in">FlushViewOfFile</span>(m_buffer, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">UnmapViewOfFile</span>(m_buffer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//触发DBWIN_DATA_READY</span></span><br><span class="line">        <span class="built_in">SetEvent</span>(m_dataReadyEvent);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_fileMapping);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//清理</span></span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_dataReadyEvent);</span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_bufferReadyEvent);</span><br><span class="line">        <span class="built_in">ReleaseMutex</span>(m_mutex);</span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_mutex);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">XpcDebugView::XpcDebugViewOutput</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* fm, ...)</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Initialize</span>() == <span class="literal">false</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">static</span> <span class="type">char</span> szMsg[MAX_PATH];</span><br><span class="line"></span><br><span class="line">        va_list argList;</span><br><span class="line">        <span class="built_in">va_start</span>(argList, fm);</span><br><span class="line">        <span class="built_in">vsprintf_s</span>(szMsg, fm, argList);</span><br><span class="line">        <span class="built_in">va_end</span>(argList);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> <span class="keyword">warning</span>( push )</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> <span class="keyword">warning</span>( disable: 4996 )</span></span><br><span class="line">        <span class="comment">//向DBWIN_BUFFER写入数据</span></span><br><span class="line">        <span class="built_in">strcpy</span>(m_buffer-&gt;Data, szMsg);</span><br><span class="line">        <span class="built_in">printf</span>(szMsg);</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> <span class="keyword">warning</span>( pop )</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">UnInitialize</span>();</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
-<p>使用的时候直接调用类成员函数XpcDebugViewOutput即可。<br>关于这部分的内容更具体的可以参考文章，<a href="http://dooof.lofter.com/tag/DebugView">如何让OutputDebugString绕过调试器</a></p>
-<h3 id="输出到DebugView的同时输出到Log文件"><a href="#输出到DebugView的同时输出到Log文件" class="headerlink" title="输出到DebugView的同时输出到Log文件"></a>输出到DebugView的同时输出到Log文件</h3><p>我将上面的类改造成下面的样子，在初始化时候创建一个Log文件，在反初始化时候关闭Log文件，每次调用XpcDebugViewOutput使用调用fprintf将格式化字符串输出到文件中。这样就能达到输出Log信息到DebugView中的同时，又能够将Log信息持久化保存了。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">class</span> <span class="title class_">XpcDebugView</span></span><br><span class="line">    {</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">XpcDebugView</span>() { m_pszLogName = <span class="string">"DefaultLog.txt"</span>; <span class="built_in">Initialize</span>();  }</span><br><span class="line">        <span class="built_in">XpcDebugView</span>(<span class="type">const</span> <span class="type">char</span>* pszLogName) { m_pszLogName = pszLogName; <span class="built_in">Initialize</span>();}</span><br><span class="line">        ~<span class="built_in">XpcDebugView</span>() { <span class="built_in">UnInitialize</span>(); }</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">XpcDebugViewOutput</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* fm, ...)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">DBWinBuffer</span></span><br><span class="line">        {</span><br><span class="line">            DWORD ProcessId;</span><br><span class="line">            <span class="type">char</span> Data[<span class="number">4096</span> - <span class="built_in">sizeof</span>(DWORD)];</span><br><span class="line">        };</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">Initialize</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">UnInitialize</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">InitializeDBWin</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">UnInitializeDBWin</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">        HANDLE m_mutex;</span><br><span class="line">        HANDLE m_fileMapping;</span><br><span class="line">        HANDLE m_bufferReadyEvent;</span><br><span class="line">        HANDLE m_dataReadyEvent;</span><br><span class="line">        DBWinBuffer* m_buffer;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span>* m_pszLogName;</span><br><span class="line">        FILE* m_pFileLog;</span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> <span class="keyword">warning</span>( push )</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> <span class="keyword">warning</span>( disable: 4996 )</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">XpcDebugView::Initialize</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        m_pFileLog = <span class="built_in">fopen</span>(m_pszLogName, <span class="string">"w"</span>);</span><br><span class="line">        <span class="keyword">return</span> m_pFileLog != <span class="literal">NULL</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">XpcDebugView::UnInitialize</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">if</span> (m_pFileLog)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">fclose</span>(m_pFileLog);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">XpcDebugView::InitializeDBWin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        m_mutex = <span class="built_in">OpenMutex</span>(SYNCHRONIZE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWinMutex"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开DBWIN_BUFFER</span></span><br><span class="line">        m_fileMapping = <span class="built_in">OpenFileMapping</span>(FILE_MAP_WRITE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWIN_BUFFER"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (m_fileMapping == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开DBWIN_BUFFER_READY</span></span><br><span class="line">        m_bufferReadyEvent = <span class="built_in">OpenEvent</span>(SYNCHRONIZE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWIN_BUFFER_READY"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打开DBWIN_DATA_READY</span></span><br><span class="line">        m_dataReadyEvent = <span class="built_in">OpenEvent</span>(EVENT_MODIFY_STATE, FALSE, <span class="built_in">TEXT</span>(<span class="string">"DBWIN_DATA_READY"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//等待DBWIN_BUFFER就绪</span></span><br><span class="line">        <span class="built_in">WaitForSingleObject</span>(m_bufferReadyEvent, INFINITE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//把DBWIN_BUFFER映射到某个地址</span></span><br><span class="line">        m_buffer = (DBWinBuffer*)<span class="built_in">MapViewOfFile</span>(m_fileMapping, FILE_MAP_WRITE, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        m_buffer-&gt;ProcessId = <span class="built_in">GetCurrentProcessId</span>();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">XpcDebugView::UnInitializeDBWin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="comment">//释放和关闭DBWIN_BUFFER</span></span><br><span class="line">        <span class="built_in">FlushViewOfFile</span>(m_buffer, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">UnmapViewOfFile</span>(m_buffer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//触发DBWIN_DATA_READY</span></span><br><span class="line">        <span class="built_in">SetEvent</span>(m_dataReadyEvent);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_fileMapping);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//清理</span></span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_dataReadyEvent);</span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_bufferReadyEvent);</span><br><span class="line">        <span class="built_in">ReleaseMutex</span>(m_mutex);</span><br><span class="line">        <span class="built_in">CloseHandle</span>(m_mutex);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">XpcDebugView::XpcDebugViewOutput</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* fm, ...)</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">InitializeDBWin</span>() == <span class="literal">false</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">static</span> <span class="type">char</span> szMsg[MAX_PATH];</span><br><span class="line"></span><br><span class="line">        va_list argList;</span><br><span class="line">        <span class="built_in">va_start</span>(argList, fm);</span><br><span class="line">        <span class="built_in">vsprintf_s</span>(szMsg, fm, argList);</span><br><span class="line">        <span class="built_in">va_end</span>(argList);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//向DBWIN_BUFFER写入数据</span></span><br><span class="line">        <span class="built_in">strcpy</span>(m_buffer-&gt;Data, szMsg);</span><br><span class="line">        <span class="keyword">if</span> (m_pFileLog)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">fprintf</span>(m_pFileLog, szMsg);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">UnInitializeDBWin</span>();</span><br><span class="line">    }</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> <span class="keyword">warning</span>( pop )</span></span><br></pre></td></tr></tbody></table></figure>
-<h3 id="如何使用XpcDebugView类"><a href="#如何使用XpcDebugView类" class="headerlink" title="如何使用XpcDebugView类"></a>如何使用XpcDebugView类</h3><p>最简单的方式是定义一个XpcDebugView的全局变量，比如：<br>XpcDebugView myDebugview(“myLog.txt”);<br>输出Log信息的时候调用函数myDebugview.XpcDebugViewOutput(“%d %d %s\n”, 1, 2, “log”):<br>为了方便使用，可以在XpcDebugViewOutput的输出后面添加换行符，这样每次调用后就会自动换行了。<br>并且加上过滤字符串前缀，这样DebugView就只会捕获我们的输出了。</p>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">XpcDebugView::XpcDebugViewOutput</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* fm, ...)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="type">static</span> <span class="type">char</span> szMsg[MAX_PATH];</span><br><span class="line">    <span class="type">static</span> <span class="type">char</span> szOutput[MAX_PATH];</span><br><span class="line"></span><br><span class="line">    va_list argList;</span><br><span class="line">    <span class="built_in">va_start</span>(argList, fm);</span><br><span class="line">    <span class="built_in">vsprintf_s</span>(szMsg, fm, argList);</span><br><span class="line">    <span class="built_in">va_end</span>(argList);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(szOutput, <span class="string">"[hankpcxiao] "</span>);</span><br><span class="line">    <span class="built_in">strcat</span>(szOutput, szMsg);</span><br><span class="line">    <span class="built_in">strcat</span>(szOutput, <span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">if</span> (m_pFileLog)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">fprintf</span>(m_pFileLog, szOutput);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//向DBWIN_BUFFER写入数据</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">InitializeDBWin</span>())</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">strcpy</span>(m_buffer-&gt;Data, szOutput);</span><br><span class="line">        <span class="built_in">UnInitializeDBWin</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先需要下载好DebugView程序，然后配置capture选项，另外是Filter字符串。最后为了保证在VS中调试程序时候，能够将调试信息输出到DebugView，需要使用DBWin通信进制。为此，我封装了一个Log类，在将Log输出到DebugView的同时也将Log输出到日志文件中。</p>
-<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p>[1]    <a href="https://community.sophos.com/kb/en-us/119577">Frequently asked questions on the Microsoft application DebugView.exe</a><br>[2]    <a href="http://dooof.lofter.com/tag/DebugView">如何让OutputDebugString绕过调试器</a></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1998,7 +2044,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">225</span>
+          <span class="site-state-item-count">227</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2011,7 +2057,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2063,12 +2109,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">680k</span>
+    <span title="站点总字数">692k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:18</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
@@ -2174,6 +2220,54 @@ if (document.querySelectorAll('div.pdf').length) {
   
 
   
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

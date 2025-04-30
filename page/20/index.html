@@ -222,6 +222,234 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/17/poj-2653-pick-up-sticks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/06/17/poj-2653-pick-up-sticks/" class="post-title-link" itemprop="url">poj 2653 Pick-up sticks</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-17 14:30:00" itemprop="dateCreated datePublished" datetime="2012-06-17T14:30:00+08:00">2012-06-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/17/poj-2653-pick-up-sticks/" class="post-meta-item leancloud_visitors" data-flag-title="poj 2653 Pick-up sticks" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/17/poj-2653-pick-up-sticks/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/17/poj-2653-pick-up-sticks/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这是一个计算几何的题目。题意是，按顺序给一系列的线段，问最终哪些线段处在顶端。只需要穷举判断，当前的线段会与哪些线段有交点即可。也就是暴力求解，但是线段数目N有10的5次方，平方算法是不能过的。这个题能过的原因是题目描述里面说了，top的stick不会超过1000个。那么修改下暴力的方式题目就能过了。<br>从小到大枚举每个棍子，判断它是否与后面的棍子相交，如果相交直接把当前棍子的top属性置为false，然后break内层循环。这样就不会超时了，暴力也是需要技巧的，这句话说的很对啊。<br>判断2条线段是否相交的算法直接按照黑书上的模板代码写了，那个模板代码还不错吧。。。</p>
+<p>代码如下：<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"><span class="selector-id">#define</span> MAX_N (<span class="number">100000</span> + <span class="number">10</span>)</span><br><span class="line">struct POS</span><br><span class="line">{</span><br><span class="line">    double fX;</span><br><span class="line">    double fY;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">POS begs<span class="selector-attr">[MAX_N]</span>, ends<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">bool bAns<span class="selector-attr">[MAX_N]</span>;</span><br><span class="line">int nN;</span><br><span class="line">const double fPrecision = <span class="number">1</span>e-<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">double <span class="built_in">Det</span>(double fX1, double fY1, double fX2, double fY2)</span><br><span class="line">{</span><br><span class="line">    return fX1 * fY2 - fX2 * fY1;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//以a作为公共点,计算叉积</span></span><br><span class="line">double <span class="built_in">Cross</span>(POS <span class="selector-tag">a</span>, POS <span class="selector-tag">b</span>, POS c)</span><br><span class="line">{</span><br><span class="line">    return <span class="built_in">Det</span>(<span class="selector-tag">b</span><span class="selector-class">.fX</span> - <span class="selector-tag">a</span><span class="selector-class">.fX</span>, <span class="selector-tag">b</span><span class="selector-class">.fY</span> - <span class="selector-tag">a</span><span class="selector-class">.fY</span>, c<span class="selector-class">.fX</span> - <span class="selector-tag">a</span><span class="selector-class">.fX</span>, c<span class="selector-class">.fY</span> - <span class="selector-tag">a</span>.fY);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">DblCmp</span>(double fD)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">fabs</span>(fD) &lt; fPrecision)</span><br><span class="line">    {</span><br><span class="line">        return <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        return fD &gt; <span class="number">0</span> ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">bool <span class="built_in">IsSegCross</span>(int nI, int nJ)</span><br><span class="line">{</span><br><span class="line">    return (<span class="built_in">DblCmp</span>(<span class="built_in">Cross</span>(begs<span class="selector-attr">[nI]</span>, ends<span class="selector-attr">[nI]</span>, begs<span class="selector-attr">[nJ]</span>))</span><br><span class="line">            ^ <span class="built_in">DblCmp</span>(<span class="built_in">Cross</span>(begs<span class="selector-attr">[nI]</span>, ends<span class="selector-attr">[nI]</span>, ends<span class="selector-attr">[nJ]</span>))) == -<span class="number">2</span></span><br><span class="line">            (<span class="built_in">DblCmp</span>(<span class="built_in">Cross</span>(begs<span class="selector-attr">[nJ]</span>, ends<span class="selector-attr">[nJ]</span>, begs<span class="selector-attr">[nI]</span>))</span><br><span class="line">               ^ <span class="built_in">DblCmp</span>(<span class="built_in">Cross</span>(begs<span class="selector-attr">[nJ]</span>, ends<span class="selector-attr">[nJ]</span>, ends<span class="selector-attr">[nI]</span>))) == -<span class="number">2</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nN), nN)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf%lf%lf%lf"</span>, &amp;begs<span class="selector-attr">[i]</span><span class="selector-class">.fX</span>, &amp;begs<span class="selector-attr">[i]</span><span class="selector-class">.fY</span>,</span><br><span class="line">                  &amp;ends<span class="selector-attr">[i]</span><span class="selector-class">.fX</span>, &amp;ends<span class="selector-attr">[i]</span>.fY);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">memset</span>(bAns, true, <span class="built_in">sizeof</span>(bAns));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//暴力也是需要技巧的</span></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="selector-tag">i</span> + <span class="number">1</span>; j &lt;= nN; ++j)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">IsSegCross</span>(<span class="selector-tag">i</span>, j))</span><br><span class="line">                {</span><br><span class="line">                    bAns<span class="selector-attr">[i]</span> = false;</span><br><span class="line">                    break;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Top sticks:"</span>);</span><br><span class="line">        bool bPre = false;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (bAns<span class="selector-attr">[i]</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (bPre)</span><br><span class="line">                {</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">","</span>);</span><br><span class="line">                }</span><br><span class="line">                bPre = true;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">" %d"</span>, i);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">".\n"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/16/uva-657-the-die-is-cast/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2012/06/16/uva-657-the-die-is-cast/" class="post-title-link" itemprop="url">uva 657 - The die is cast</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2012-06-16 14:00:00" itemprop="dateCreated datePublished" datetime="2012-06-16T14:00:00+08:00">2012-06-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2012/06/16/uva-657-the-die-is-cast/" class="post-meta-item leancloud_visitors" data-flag-title="uva 657 - The die is cast" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2012/06/16/uva-657-the-die-is-cast/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2012/06/16/uva-657-the-die-is-cast/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这个题不错，居然需要在dfs里面写bfs。题意类似于图像识别里面，搜索一张图像里面的某个指定区域里面有几个斑点，题意里面的斑点是指色子。</p>
+<p></p><div><br>30 15<br>…………………………<br>…………………………<br> ……………<em>…………..<br>…<em>**</em></em>……<strong><em>*…………<br>…</em>X*</strong>…..<strong>X*</strong>………..<br> …<strong>*</strong>….<strong>*X</strong>…………<br> …<strong><em>X</em>…..**</strong>………….<br> …<strong>*</strong>…….<em>…………..<br> …………………………<br> ……..**</em>……..<strong>**</strong>…..<br> …….<strong>X**</strong>…..<em>X**X</em>…..<br> ……<strong><em>*</em></strong>……<strong>**</strong>…..<br>…..<strong>**X</strong>…….<em>X**X</em>…..<br>……..<strong><em>……..<em>*</em></em></strong>…..<br>…………………………<br>比如上面这个30 <em> 15的图片里面，一共有四个区域，</em>作为区域的底色，然后是求区域里面有多少个X的块。这个题单纯dfs的话，很没办法，因为无法一次性把连接在一起的X都搜索了。比如，<br>5 5<p></p>
+<p></p><div>XXX*X
+XXX*X
+.....
+X***X
+XX***
+的时候，dfs很明显就会出现问题，因为会先离开X块，再次回到X块，计数就会出现问题了。因此只能遇到X的时候，进行一次bfs，将与其相连接的X全部搜索掉。。。并且找到与当前X块相连接的一个*的位置，如果有这样的位置，就继续进行dfs。</div><br>&lt;/div&gt;<br><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;algorithm&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int nW, nH;</span><br><span class="line">char szData<span class="selector-attr">[100]</span><span class="selector-attr">[100]</span>;</span><br><span class="line">bool bVisit<span class="selector-attr">[100]</span><span class="selector-attr">[100]</span>;</span><br><span class="line">int nNum;</span><br><span class="line">int nDice<span class="selector-attr">[100]</span>;</span><br><span class="line">int nAdd<span class="selector-attr">[4]</span><span class="selector-attr">[2]</span> = {{<span class="number">0</span>, -<span class="number">1</span>}, {-<span class="number">1</span>, <span class="number">0</span>}, {<span class="number">0</span>, <span class="number">1</span>}, {<span class="number">1</span>, <span class="number">0</span>}};</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">IsPosOk</span>(int <span class="selector-tag">i</span>, int j)</span><br><span class="line">{</span><br><span class="line">    return <span class="selector-tag">i</span> &gt;= <span class="number">0</span>  <span class="selector-tag">i</span> &lt; nH  j &gt;= <span class="number">0</span>  j &lt; nW;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">struct POS</span><br><span class="line">{</span><br><span class="line">    int nI;</span><br><span class="line">    int nJ;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">bool <span class="built_in">Bfs</span>(int nI, int nJ)</span><br><span class="line">{</span><br><span class="line">    bool bRet = false;</span><br><span class="line">    queue&lt;POS&gt; qp;</span><br><span class="line">    POS pos = {nI, nJ};</span><br><span class="line">    int <span class="selector-tag">i</span> = nI, j = nJ;</span><br><span class="line"></span><br><span class="line">    qp<span class="selector-class">.push</span>(pos);</span><br><span class="line">    while (qp<span class="selector-class">.empty</span>() == false)</span><br><span class="line">    {</span><br><span class="line">        POS head = qp<span class="selector-class">.front</span>();</span><br><span class="line">        qp<span class="selector-class">.pop</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int m = <span class="number">0</span>; m &lt; <span class="number">4</span>; ++m)</span><br><span class="line">        {</span><br><span class="line">            int nNextI = head<span class="selector-class">.nI</span> + nAdd<span class="selector-attr">[m]</span><span class="selector-attr">[0]</span>;</span><br><span class="line">            int nNextJ = head<span class="selector-class">.nJ</span> + nAdd<span class="selector-attr">[m]</span><span class="selector-attr">[1]</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">IsPosOk</span>(nNextI, nNextJ)  bVisit<span class="selector-attr">[nNextI]</span><span class="selector-attr">[nNextJ]</span> == false)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (szData<span class="selector-attr">[nNextI]</span><span class="selector-attr">[nNextJ]</span> == <span class="string">'X'</span>)</span><br><span class="line">                {</span><br><span class="line">                    bVisit<span class="selector-attr">[nNextI]</span><span class="selector-attr">[nNextJ]</span> = true;</span><br><span class="line">                    POS pos = {nNextI, nNextJ};</span><br><span class="line">                    qp<span class="selector-class">.push</span>(pos);</span><br><span class="line">                }</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (szData<span class="selector-attr">[nNextI]</span><span class="selector-attr">[nNextJ]</span> == <span class="string">'*'</span>)</span><br><span class="line">                {</span><br><span class="line">                    bRet = true;</span><br><span class="line">                    nI = nNextI;<span class="comment">//   这里是返回新的dfs位置</span></span><br><span class="line">                    nJ = nNextJ;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return bRet;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">dfs</span>(int <span class="selector-tag">i</span>, int j, int nNum)</span><br><span class="line">{</span><br><span class="line">    bVisit<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> = true;</span><br><span class="line">    <span class="keyword">if</span> (szData<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> == <span class="string">'X'</span>)</span><br><span class="line">    {</span><br><span class="line">        nDice<span class="selector-attr">[nNum]</span>++;</span><br><span class="line">        bool bDfs = <span class="built_in">Bfs</span>(<span class="selector-tag">i</span>, j);<span class="comment">//扩散掉当前连通的所有'X'</span></span><br><span class="line">        <span class="keyword">if</span> (bDfs == false)</span><br><span class="line">        {</span><br><span class="line">            return;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">dfs</span>(<span class="selector-tag">i</span>, j, nNum);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int m = <span class="number">0</span>; m &lt; <span class="number">4</span>; ++m)</span><br><span class="line">    {</span><br><span class="line">        int nNextI = <span class="selector-tag">i</span> + nAdd<span class="selector-attr">[m]</span><span class="selector-attr">[0]</span>;</span><br><span class="line">        int nNextJ = j + nAdd<span class="selector-attr">[m]</span><span class="selector-attr">[1]</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">IsPosOk</span>(nNextI, nNextJ)  bVisit<span class="selector-attr">[nNextI]</span><span class="selector-attr">[nNextJ]</span> == false</span><br><span class="line">                 szData<span class="selector-attr">[nNextI]</span><span class="selector-attr">[nNextJ]</span> != <span class="string">'.'</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">dfs</span>(nNextI, nNextJ, nNum);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    int nCases = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;nW, &amp;nH), nW + nH)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nH; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%s"</span>, szData<span class="selector-attr">[i]</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">memset</span>(bVisit, false, <span class="built_in">sizeof</span>(bVisit));</span><br><span class="line">        <span class="built_in">memset</span>(nDice, <span class="number">0</span>, <span class="built_in">sizeof</span>(nDice));</span><br><span class="line">        nNum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nH; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; nW; ++j)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (szData<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> == <span class="string">'X'</span>  bVisit<span class="selector-attr">[i]</span><span class="selector-attr">[j]</span> == false)</span><br><span class="line">                {</span><br><span class="line">                    <span class="built_in">dfs</span>(<span class="selector-tag">i</span>, j, nNum);</span><br><span class="line">                    nNum++;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">sort</span>(nDice, nDice + nNum);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Throw %d\n"</span>, nCases++);</span><br><span class="line">        <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; nNum; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d%s"</span>, nDice<span class="selector-attr">[i]</span>, <span class="selector-tag">i</span> == nNum - <span class="number">1</span> ? <span class="string">"\n"</span> : <span class="string">" "</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure><p></p>
+</div></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/06/12/uva-10562-undraw-the-trees/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1113,228 +1341,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/05/02/uva-10061-how-many-zeros-and-how-many-digits/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/05/02/uva-10061-how-many-zeros-and-how-many-digits/" class="post-title-link" itemprop="url">uva 10061 - How many zero's and how many digits ?</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-05-02 10:00:00" itemprop="dateCreated datePublished" datetime="2012-05-02T10:00:00+08:00">2012-05-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/05/02/uva-10061-how-many-zeros-and-how-many-digits/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10061 - How many zero's and how many digits ?" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/05/02/uva-10061-how-many-zeros-and-how-many-digits/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/05/02/uva-10061-how-many-zeros-and-how-many-digits/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这又是一个数学题，不过我还是比较喜欢做这类数学杂题的。题目意思很简单，给2个十进制数，n和b。如果用b进制表示n!，需要多少位数，这个表示末尾会有多少个0。这个题并不需要什么高深的知识，这一点也是我喜欢做这类题的一个方法。<br>大家显然都知道求n！用10进制表示末尾会有多少个0的方法，就是求2 * 5最多有多少对。那么，b进制了。方法类似，发散一下想法而已。<br>我还是先说求多少位数的方法吧。 b的m-1次 看到这个不等式应该有想法了吧。两边同时取logb，就可以得到Σlogi(1&lt;=i 再说怎么求末尾0的，发散下想法，我们也可以对n！中的每个因子试着求b的因子对，一共有多少对。但是，后面发现这样不行，因为比如b是16，1和16是一对因子，2和8是一对因子，4和4是一对因子，也就是因为2也是4的因子，这样计算因子对就会重复了。但是对于b等于10的情况，可以例外而已。<br>呵呵，考虑其它的方法。求素数因子。任何数字都可以被分解为一些素数因子的乘积，这是毋容置疑的。那么，我们去分解n！中的小于等于b的素数因子，并将其个数存储在数组里面。然后死循环的去分解b的素数因子，能够完全分解一次(具体看下代码，不好描述），ans就加1。否则，已经没有末尾0了。<br>虽然提交了16次才过。不过最后还算不错吧，只用了0.508s。相比20s的时间界限，很小了。网上有些过的代码，跑一个数据都要几分钟。。。PS：uva上那些神人，怎么用0.0s算出来的，很难想象啊。<br>这个题目还有个很大的需要注意的地方，就是浮点数的精度问题。前面讲到求位数需要用到log函数，log函数的计算精度就出问题了。<br>最后需要对和加一个1e-9再floor才能过。特别需要注意这一点，因为开始我的程序过了所有<a href="http://online-judge.uva.es/board/viewtopic.php?f=9t=7137start=30">http://online-judge.uva.es/board/viewtopic.php?f=9t=7137start=30</a>上说的数据还是wa了。而且我还发现log10计算精度高很多，如果log(这个是自然对数)去计算，这个网站上的数据都过不了。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;string.h&gt;</span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line">int nN, nB;</span><br><span class="line"></span><br><span class="line">int nDivisor<span class="selector-attr">[1000]</span>;</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetDigit</span>(int nN, int nB)</span><br><span class="line">{</span><br><span class="line">    double fSum = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">2</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        fSum += <span class="built_in">log10</span>(i);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    fSum /= <span class="built_in">log10</span>(nB);</span><br><span class="line"></span><br><span class="line">    return <span class="built_in">floor</span>(fSum + <span class="number">1</span>e-<span class="number">9</span>) + <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="built_in">GetZero</span>(int nN, int nB)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">memset</span>(nDivisor, <span class="number">0</span>, <span class="built_in">sizeof</span>(nDivisor));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">2</span>; <span class="selector-tag">i</span> &lt;= nN; ++i)</span><br><span class="line">    {</span><br><span class="line">        int nTemp = i;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">2</span>; j &lt;= nTemp  j &lt;= nB; ++j)<span class="comment">//这样循环就可以进行素数因子分解了</span></span><br><span class="line">        {</span><br><span class="line">            while (nTemp % j == <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                nDivisor<span class="selector-attr">[j]</span>++;</span><br><span class="line">                nTemp /= j;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int nAns = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    while (<span class="number">1</span>)</span><br><span class="line">    {</span><br><span class="line">        int nTemp = nB;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (int j = <span class="number">2</span>; j &lt;= nTemp; ++j)<span class="comment">//分解nB</span></span><br><span class="line">        {</span><br><span class="line">            while (nTemp % j == <span class="number">0</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="keyword">if</span> (nDivisor<span class="selector-attr">[j]</span> &gt; <span class="number">0</span>)<span class="comment">//如果还可以继续分解</span></span><br><span class="line">                {</span><br><span class="line">                    <span class="attr">--nDivisor</span><span class="selector-attr">[j]</span>;</span><br><span class="line">                }</span><br><span class="line">                <span class="keyword">else</span> <span class="comment">//直接可以goto跳出多重循环了</span></span><br><span class="line">                {</span><br><span class="line">                    goto out;</span><br><span class="line">                }</span><br><span class="line">                nTemp /= j;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        ++nAns;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">out:</span><br><span class="line">    return nAns;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;nN, &amp;nB) == <span class="number">2</span>)</span><br><span class="line">    {</span><br><span class="line">        int nDigit = <span class="built_in">GetDigit</span>(nN, nB);</span><br><span class="line">        int nZero = <span class="built_in">GetZero</span>(nN, nB);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, nZero, nDigit);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/" class="post-title-link" itemprop="url">uva 10177 - (2/3/4)-D Sqr/Rects/Cubes/Boxes?</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2012-04-14 10:00:00" itemprop="dateCreated datePublished" datetime="2012-04-14T10:00:00+08:00">2012-04-14</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">算法题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/" class="post-meta-item leancloud_visitors" data-flag-title="uva 10177 - (2/3/4)-D Sqr/Rects/Cubes/Boxes?" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2012/04/14/uva-10177-234-d-sqrrectscubesboxes/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是一道数学题吧。想清楚之后就发现就是求累加和。<br>问题是给定一个正方形(体,超体)，求其中的所有的正方形(体,超体),长方形(体,超体)。 比如，4 <em> 4的正方形中，有14个正方形，22个长方形，4 </em> 4 <em> 4的立方体中有36个正方体，180个长方体。依次类推，超正方体指的是四维空间。<br>观察一下一个4</em>4正方形中，仔细验证一下就会发现，正方形的个数是 Σ(4 - i + 1) <em> (4 - i + 1)(其中i从1到4)，长方形的个数是Σ(4 - i + 1) (其中j从1到4) </em> Σ(4 - j + 1)(其中j从1到4)。如果变成3维的就多一层k，k也从1变化到4。如果变成4维的就再多一层l，l也从1变化到4。<br>然后变换一下，就可以得到s2(n) = 1^1 + 2^2 + … + n^n，s3(n)则是对立方的累加和，s4(n)则是对四次方的累加和。<br>再计算r2(n)。可以先把正方形包括在内计算出所有的和。那么r2(n) = Σ(n - i + 1) <em> Σ(n - j + 1) - s2(n)。如果直接进行这个式子的求和话很复杂。再观察一下这个式子，因为n - i + 1的变化范围就是1到n，那么上面的式子可以变化为 r2(n) = ΣΣi </em> j - s2(n)。意思是求i<em>j的和，i和j都是从1变化到n。很简单就可以得到r2(n) = pow(n </em> (n + 1) / 2, 2) - s2(n)。同样的求和可以得到，r3(n) = pow(n <em> (n + 1) / 2, 3) - s3(n)。r4(n) = pow(n </em> (n + 1) / 2, 4) - s4(n)。<br>另外如果不知道平方和，立方和，四次方和的公式，也可以迭代计算，复杂度也是O(100)。这样的话，根本不需要使用这些难记忆的公式了。</p>
-<p>代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#include</span> &lt;stdio.h&gt; </span><br><span class="line"><span class="selector-id">#include</span> &lt;math.h&gt;</span><br><span class="line">unsigned long long s2<span class="selector-attr">[101]</span>;</span><br><span class="line">unsigned long long r2<span class="selector-attr">[101]</span>;</span><br><span class="line">unsigned long long s3<span class="selector-attr">[101]</span>;</span><br><span class="line">unsigned long long r3<span class="selector-attr">[101]</span>;</span><br><span class="line">unsigned long long s4<span class="selector-attr">[101]</span>;</span><br><span class="line">unsigned long long r4<span class="selector-attr">[101]</span>;</span><br><span class="line"></span><br><span class="line">int <span class="selector-tag">main</span>()</span><br><span class="line">{</span><br><span class="line">    unsigned long long <span class="selector-tag">i</span> = <span class="number">0</span>;</span><br><span class="line">    while (<span class="selector-tag">i</span> &lt;= <span class="number">100</span>)</span><br><span class="line">    {</span><br><span class="line">        s2<span class="selector-attr">[i]</span> = <span class="selector-tag">i</span> * (<span class="selector-tag">i</span> + <span class="number">1</span>) * (<span class="number">2</span> * <span class="selector-tag">i</span> + <span class="number">1</span>) / <span class="number">6</span>;<span class="comment">//平方和</span></span><br><span class="line">        s3<span class="selector-attr">[i]</span> = <span class="selector-tag">i</span> * <span class="selector-tag">i</span> * (<span class="selector-tag">i</span> + <span class="number">1</span>) * (<span class="selector-tag">i</span> + <span class="number">1</span>) / <span class="number">4</span>;<span class="comment">//立方和</span></span><br><span class="line">        s4<span class="selector-attr">[i]</span> = <span class="selector-tag">i</span> * (<span class="selector-tag">i</span> + <span class="number">1</span>) * (<span class="number">6</span> * <span class="selector-tag">i</span> * <span class="selector-tag">i</span> * <span class="selector-tag">i</span> + <span class="number">9</span> * <span class="selector-tag">i</span> * <span class="selector-tag">i</span> + <span class="selector-tag">i</span> - <span class="number">1</span>) / <span class="number">30</span>;<span class="comment">//四次方和</span></span><br><span class="line">        r2<span class="selector-attr">[i]</span> = <span class="built_in">pow</span>(<span class="selector-tag">i</span> * (<span class="selector-tag">i</span> + <span class="number">1</span>) / <span class="number">2</span>, <span class="number">2</span>) - s2<span class="selector-attr">[i]</span>;</span><br><span class="line">        r3<span class="selector-attr">[i]</span> = <span class="built_in">pow</span>(<span class="selector-tag">i</span> * (<span class="selector-tag">i</span> + <span class="number">1</span>) / <span class="number">2</span>, <span class="number">3</span>) - s3<span class="selector-attr">[i]</span>;</span><br><span class="line">        r4<span class="selector-attr">[i]</span> = <span class="built_in">pow</span>(<span class="selector-tag">i</span> * (<span class="selector-tag">i</span> + <span class="number">1</span>) / <span class="number">2</span>, <span class="number">4</span>) - s4<span class="selector-attr">[i]</span>;</span><br><span class="line">        ++i;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int nN;</span><br><span class="line">    while (<span class="built_in">scanf</span>(<span class="string">";%d"</span>;, nN) != EOF)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//printf(";%I64u %I64u %I64u %I64u %I64u %I64u\n";, s2[nN], r2[nN], s3[nN], r3[nN], s4[nN], r4[nN]);</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">";%llu %llu %llu %llu %llu %llu\n"</span>;, s2<span class="selector-attr">[nN]</span>, r2<span class="selector-attr">[nN]</span>, s3<span class="selector-attr">[nN]</span>, r3<span class="selector-attr">[nN]</span>, s4<span class="selector-attr">[nN]</span>, r4<span class="selector-attr">[nN]</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1385,7 +1391,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">225</span>
+          <span class="site-state-item-count">227</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1398,7 +1404,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1450,12 +1456,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">680k</span>
+    <span title="站点总字数">692k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:18</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

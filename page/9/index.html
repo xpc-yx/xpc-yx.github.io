@@ -222,6 +222,223 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/" class="post-title-link" itemprop="url">三维平面的向量表示法</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-07-06 11:36:42" itemprop="dateCreated datePublished" datetime="2014-07-06T11:36:42+08:00">2014-07-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="三维平面的向量表示法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/07/06/%E4%B8%89%E7%BB%B4%E5%B9%B3%E9%9D%A2%E7%9A%84%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>691</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>我们都知道平面可以表示为A<em>x+B</em>y+C<em>z+d=0，但是很多人不知道这个表达式隐含的意义。<br>从另一个角度，点法式来看平面，假设法线n=(a,b,c),平面上一点p0(x0,y0,z0),平面上任意一点p为(x,y,z)。那么平面可以表示为n</em>(p-p0)=0，即(a,b,c)<em>(x-x0,y-y0,z-z0)=0，可以化简为a</em>x+b<em>y+c</em>z-a<em>x0-b</em>y0-c<em>z0=0。<br>上面两个式子一对比，就能发现a=kA,b=kB,c=kC，-a</em>x0-b<em>y0-c</em>z0=kD。取k=1，就可以得到系数相等。所以，看到平面的一般式就能够得到法线为n=(A,B,C)。<br>根据上面的结论，进一步推广，我们可以把一般式改成点积的形式(A,B,C)<em>(x,y,z)+D=0。这个就是平面的向量表示，即**n</em>P+d=0<strong>。那么这个向量表示法有什么意义了。首先，在程序实现中，我们只需要保存法线n和系数d就可以了。<br>其次，d还代表从原点到平面上任意点的向量在法线上的投影长度。所以，利用这个信息，可以方便的求出任意点到平面的距离。<br>假设n为单位法线，假设任意点为q，q在平面上的投影为q’，那么向量</strong>(q-q’)=kn<strong>。意思是向量(q-q’)肯定和法线共线，长度是其k倍。在上式两边乘以n，可以得到(q-q’)<em>n=kn</em>n，即(q<em>n-q’</em>n)=k，即k=q*n-q’n。由于q’是平面上的点，所以</strong>q’<em>n=-d<strong>，那么，</strong>k=q</em>n+d<strong>。k即是点q到平面的长度，其中q，n，d都是已知的。运用这个式子的时候，必须得先</strong>归一化n**。<br>现在可以很清晰的看到，如果我们将平面表示为向量形式，而且n是归一化的，那么计算任意点到平面的距离是非常方便的。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/" class="post-title-link" itemprop="url">在三维模型上可视化标量场及注意方面</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-06-26 12:53:45" itemprop="dateCreated datePublished" datetime="2014-06-26T12:53:45+08:00">2014-06-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/" class="post-meta-item leancloud_visitors" data-flag-title="在三维模型上可视化标量场及注意方面" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2014/06/26/%E5%9C%A8%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E4%B8%8A%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A0%87%E9%87%8F%E5%9C%BA%E5%8F%8A%E6%B3%A8%E6%84%8F%E6%96%B9%E9%9D%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>637</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>三维模型上的标量场指的是三维模型上面的每个顶点都有一个标量值，从而构成了整体的标量场。如果能够以颜色代表这个标量值的大小，那么整体的标量场就能够方便的观察出来。一般来说，hls颜色模型的色相能够代表从红到蓝的渐进过度，因此可以用hsl转rgb的方法生成一维纹理。然后归一化标量场，将标量值作为一维的纹理坐标，从而显示出整个标量场。如何加载任意格式图片作为纹理，以及其它关于OpenGL纹理的内容，可以参考我其它文章。<br>但是这样比较麻烦。首先，需要颜色空间转换，还有使用的是一维纹理。其实，有更方便的做法。直接找一张代表从红到蓝的渐进过度纹理图片，加载这张图片生成纹理，使用二维纹理坐标，固定一维的坐标，如s，变化t。<br>对应的二维纹理图和实现效果：</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7400/27380050181_bbd0509152_o.png"><br>这里需要注意一个问题，就是极限纹理坐标的跳变。比如说，纹理坐标很小接近0，可能就会直接跳到1去了，插值出来的颜色就会从红直接变成蓝，或者从蓝直接变成红，明显是不对的。如图所示，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7299/27380049411_75cf1fbd34_o.png"><br>处理这个问题的方法，有两种，一种是修改纹理坐标的模型为GL_MIRRORED_REPEAT的而不是一般的GL_REPEAT，第二个是将纹理坐标的范围压缩到大于0小于1之间。求的最大和最小标量值后，往外扩展下，再进行标量值的归一化。可以用下面的代码，处理。<br>float fDis = fMax - fMin;<br>fMin = fMin - fDis <em> 0.001;<br>fMax = fMax + fDis </em> 0.001;<br>这样正确的显示如下，</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7149/27352273672_2f6dc50da7_o.png"><br>现在可以看到，本来是带蓝色中心的红带，变成了全部是红色的带了。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2014/04/27/%E5%A6%82%E4%BD%95%E5%9C%A8MFC%E7%9A%84OpenGL%E7%AA%97%E5%8F%A3%E4%B8%AD%E4%BD%BF%E7%94%A8AntTweakBar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1134,233 +1351,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-title-link" itemprop="url">CMFCToolBar上添加组合框的bug</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-12-21 20:04:29" itemprop="dateCreated datePublished" datetime="2013-12-21T20:04:29+08:00">2013-12-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MFC/" itemprop="url" rel="index">
-                    <span itemprop="name">MFC</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-meta-item leancloud_visitors" data-flag-title="CMFCToolBar上添加组合框的bug" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>说实话，这几天为了CMFCToolBarComboBoxButton上的莫名其妙自动切换选择的bug烦死了，浪费了很多时间。也是过其它替代方法，发现都实现不了需要的界面效果。<br>我也不知道为什么自己对界面效果这么纠结。伤不起啊。本来我就没用过vs2008更新版本的MFC，也没打算用这个。由于上一次做的东西用到了切分视图，但是发现FormView自适应控件大小的实现非常麻烦，老是出现些不爽的bug，而且添加新的控件还得编辑界面，非常不爽。所以，打算使用新版本MFC里面的属性窗口。<br>刚好发现vs2010的项目导航可以生成这样的工程，果断试验之。虽然过程无比艰辛，总算可以使用这些自适应的DockPane窗口了。而且还发现这样的结构非常合适添加子窗口，以后的项目都可以采用这样的界面了，只要平台在windows下。<br>但是，美中最不足的是CFrameWndEx(使用CDockablePane必须使用扩展的框架窗口)，<strong>只能使用恶心的CMFCToolBar</strong>，因为CFrameWndEx的菜单和工具栏都是可以DockPane的子类。我只能说CMFCToolBar的使用太TMD的讲究了，一个不注意效果就不对。因为使用这个东西的人少，网上资料也很少。只能一直google，还有查看类定义的源码，慢慢尝试了。<br>现在，我这里说的只是添加组合框。<br>首先，在资源编辑器中新建工具栏IDR_BUILD，留下一个<strong>空位</strong>，如ID_BUILD_CHOOSE。如下图，第二个就是我预留的ID_BUILD_CHOOSE的空位。<img alt="" data-src="https://c8.staticflickr.com/8/7637/27379836511_65ae3047e4_o.jpg"><br>然后，在CMainFrame::OnCreate中创建两个工具栏，代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&nbsp; &nbsp;<span class="keyword">if</span> (!m_wndToolBar<span class="selector-class">.CreateEx</span>(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER</span><br><span class="line">| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC)</span><br><span class="line">	|| !m_wndToolBar<span class="selector-class">.LoadToolBar</span>(IDR_MAINFRAME))</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">TRACE0</span>(<span class="string">"未能创建工具栏\n"</span>);</span><br><span class="line">	return -<span class="number">1</span>;      <span class="comment">// 未能创建</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndToolBarBuild<span class="selector-class">.Create</span>(this, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_TOOLTIPS | CBRS_FLYBY</span><br><span class="line">	| CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC| CBRS_GRIPPER | CBRS_BORDER_3D, IDC_MFCTOOLBAR_BUILD)</span><br><span class="line">	|| !m_wndToolBarBuild<span class="selector-class">.LoadToolBar</span>(IDR_BUILD))</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">TRACE0</span>(<span class="string">"未能创建build工具栏\n"</span>);</span><br><span class="line">	return -<span class="number">1</span>;      <span class="comment">// 未能创建</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndStatusBar<span class="selector-class">.Create</span>(this))</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">TRACE0</span>(<span class="string">"未能创建状态栏\n"</span>);</span><br><span class="line">	return -<span class="number">1</span>;      <span class="comment">// 未能创建</span></span><br><span class="line">}</span><br><span class="line">m_wndStatusBar<span class="selector-class">.SetIndicators</span>(indicators, <span class="built_in">sizeof</span>(indicators)/<span class="built_in">sizeof</span>(UINT));</span><br><span class="line"></span><br><span class="line">m_wndMenuBar<span class="selector-class">.EnableDocking</span>(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBar<span class="selector-class">.EnableDocking</span>(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBarBuild<span class="selector-class">.EnableDocking</span>(CBRS_ALIGN_ANY);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">EnableDocking</span><span class="params">(CBRS_ALIGN_ANY)</span></span>;</span><br><span class="line"><span class="function"><span class="title">DockPane</span><span class="params">(m_wndMenuBar)</span></span>;</span><br><span class="line"><span class="function"><span class="title">DockPane</span><span class="params">(m_wndToolBarBuild)</span></span>;</span><br><span class="line"><span class="function"><span class="title">DockPaneLeftOf</span><span class="params">(m_wndToolBar, m_wndToolBarBuild)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
-<p>注意，创建第二个工具栏的时候需要使用<strong>Create</strong>而不是CreateEx，如果使用CreateEx就不能使用后面的ID参数。<br>现在需要实现三个消息。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ON_REGISTERED_MESSAGE</span><span class="params">(AFX_WM_RESETTOOLBAR, CMainFrame::OnToolbarReset)</span></span></span><br><span class="line"><span class="function"><span class="title">ON_COMMAND</span><span class="params">(ID_BUILD_CHOOSE, CMainFrame::OnClickChoose)</span></span></span><br><span class="line"><span class="function"><span class="title">ON_CBN_SELCHANGE</span><span class="params">(ID_BUILD_CHOOSE, CMainFrame::OnSelChangeClick)</span></span></span><br></pre></td></tr></tbody></table></figure>
-<p>代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">LRESULT CMainFrame::<span class="built_in">OnToolbarReset</span>(WPARAM wParam, LPARAM lParam)</span><br><span class="line">{</span><br><span class="line">	UINT uiToolBarId = (UINT)wParam;</span><br><span class="line"></span><br><span class="line">	switch (uiToolBarId)</span><br><span class="line">	{</span><br><span class="line">	case IDR_MAINFRAME:</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	case IDR_BUILD:</span><br><span class="line">		{</span><br><span class="line">		   CMFCToolBarComboBoxButton <span class="built_in">comboButton</span>(ID_BUILD_CHOOSE, <span class="built_in">GetCmdMgr</span>()-&gt;<span class="built_in">GetCmdImage</span>(ID_BUILD_CHOOSE, FALSE), CBS_DROPDOWN);</span><br><span class="line">		   comboButton<span class="selector-class">.EnableWindow</span>(TRUE);</span><br><span class="line">		   comboButton<span class="selector-class">.SetCenterVert</span>();</span><br><span class="line">		   comboButton<span class="selector-class">.SetFlatMode</span>();</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Example Stack"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Upsample Pyramid"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Jitter Pyramid"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Correct Pyramid"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.SelectItem</span>(<span class="number">0</span>);</span><br><span class="line">		   m_wndToolBarBuild<span class="selector-class">.ReplaceButton</span>(ID_BUILD_CHOOSE, comboButton);</span><br><span class="line">		}</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	default:</span><br><span class="line">		break;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CMainFrame::<span class="built_in">OnClickChoose</span>()</span><br><span class="line">{</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CMainFrame::<span class="built_in">OnSelChangeClick</span>()</span><br><span class="line">{</span><br><span class="line">	CMFCToolBarComboBoxButton* pCombo = CMFCToolBarComboBoxButton::<span class="built_in">GetByCmd</span>(ID_BUILD_CHOOSE, TRUE);</span><br><span class="line"></span><br><span class="line">	int nIndex = pCombo-&gt;<span class="built_in">GetCurSel</span>();</span><br><span class="line">	theAppState<span class="selector-class">.ts</span><span class="selector-class">.m_nDisplayMode</span> = nIndex;</span><br><span class="line">	theAppState<span class="selector-class">.ts</span><span class="selector-class">.UpdateDisplayWnd</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>OnToolbarReset中实现的是添加组合框，根据MSDN的文档，应该采用这样的方法，当然也可以采用CMFCToolBar的protected方法InsertButton，不过需要把这个方法改成public的，这个就需要修改类定义的源码。必须响应ID_BUILD_CHOOSE的点击消息，否则组合框是灰的，无法点击。<br>OnSelChangeClick响应的是组合框选择变化的消息，这个消息的实现必须用 CMFCToolBarComboBoxButton::GetByCmd获得组合框的指针，否则得不到正确的效果。<br>最后要讲的是我碰到的一个bug，恶心了我一周了。我在工具栏上面定义了向前和向后操作，如果我一直点击向前或者向后按钮，<strong>组合框会自动切换选择到最后一项</strong>。我调试了很久，发现跟我的算法实现代码一点关系都没有，我什么都不做，操作界面就会出现这个bug。最后，我偶然发现修改CMFCToolBarComboBoxButton comboButton(ID_BUILD_CHOOSE, GetCmdMgr()-&gt;GetCmdImage(ID_BUILD_CHOOSE, FALSE), <strong>CBS_DROPDOWNLIST</strong>);的最后一个参数为<strong>CBS_DROPDOWN</strong>就不会出现这样的bug。只是有一个不爽的地方，那就是点击组合框的时候，会出现光标而已。勉强接受了吧。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/" class="post-title-link" itemprop="url">如何用OpenCV实现PCA降维</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-12-19 10:23:10" itemprop="dateCreated datePublished" datetime="2013-12-19T10:23:10+08:00">2013-12-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/OpenCV/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenCV</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/" class="post-meta-item leancloud_visitors" data-flag-title="如何用OpenCV实现PCA降维" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这里讲的不是pca的原理，我还没仔细去研究过。我刚刚使用过opencv进行pca降维，效果成功过。所以只是记录下方式和注意的地方。当然也参考了网上很多的代码。网上的代码大多大同小异，我的代码当然也和别人的差不多。</p>
-<p>首先，我用的是C版本的OpenCV。我不是嫌弃C++版本的，而是C版本的OpenCV本来已经够复杂了，我不想再跟踪C++版本的这些对象的内存了。我们需要使用到OpenCV的CvMat结构存储数据。</p>
-<p>我们需要使用以下的CvMat。<br>CvMat<em> m_pData;//原始样本集<br>CvMat</em> m_pMean;//平均值向量、<br>CvMat<em> m_pEigVals;//协方差矩阵的特征值<br>CvMat</em> m_pEigVecs;//协方差矩阵的特征向量<br>CvMat<em> m_pResult;//PCA降维的结果<br>CvMat</em> m_pQueryIn;//输入的一个数据<br>CvMat* m_pQueryOut;//用样本集的PCA信息降维后的一个数据</p>
-<p>首先，我们创建数据m_pData = cvCreateMat(m_nRows, m_nDim, CV_64FC1);然后初始化数据。再创建m_pMean，m_pEigVals，m_pEigVecs。然后调用cvCalcPCA计算平均值向量和协方差矩阵的特征值和特征向量。最后一步是cvProjectPCA，在这个函数里面可以指定维度。我们就可以得到降维之后的数据。</p>
-<p>现在再讲查询。首先创建一个数据。m_pQueryIn = cvCreateMat(1, m_nDim, CV_64FC1);m_pQueryOut = cvCreateMat(1, m_nUseDim, CV_64FC1);然后，我们初始化m_pQueryIn。再调用cvProjectPCA(m_pQueryIn, m_pMean, m_pEigVecs, m_pQueryOut);就可以得到降维之后的数据。</p>
-<p>下面看下综合起来的代码。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (m_pData)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pData);</span><br><span class="line">}</span><br><span class="line">m_pData = <span class="built_in">cvCreateMat</span>(m_nRows, m_nDim, CV_64FC1);</span><br><span class="line"><span class="comment">//在这里初始化样本集合</span></span><br><span class="line"><span class="keyword">if</span> (m_pMean)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pMean);</span><br><span class="line">}</span><br><span class="line">m_pMean = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, m_nDim, CV_64FC1);</span><br><span class="line"><span class="keyword">if</span> (m_pEigVals)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pEigVals);</span><br><span class="line">}</span><br><span class="line">m_pEigVals = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, std::<span class="built_in">min</span>(m_nRows, m_nDim), CV_64FC1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (m_pEigVecs)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pEigVecs);</span><br><span class="line">}</span><br><span class="line">m_pEigVecs = <span class="built_in">cvCreateMat</span>(std::<span class="built_in">min</span>(m_nRows, m_nDim), m_nDim, CV_64FC1);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">cvCalcPCA</span><span class="params">(m_pData, m_pMean, m_pEigVals, m_pEigVecs, CV_PCA_DATA_AS_ROW)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (m_pResult)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pResult);</span><br><span class="line">}</span><br><span class="line">m_pResult = <span class="built_in">cvCreateMat</span>(m_nRows, m_nUseDim, CV_64FC1);</span><br><span class="line"><span class="function"><span class="title">cvProjectPCA</span><span class="params">(m_pData, m_pMean, m_pEigVecs, m_pResult)</span></span>;<span class="comment">//现在m_pResult保存的就是降低维度之后的信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化查询需要使用的数据</span></span><br><span class="line"><span class="keyword">if</span> (m_pQueryIn)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pQueryIn);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">if</span> (m_pQueryOut)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pQueryOut);</span><br><span class="line">}</span><br><span class="line">m_pQueryIn = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, m_nDim, CV_64FC1);</span><br><span class="line">m_pQueryOut = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, m_nUseDim, CV_64FC1);</span><br><span class="line"></span><br><span class="line"><span class="comment">//从m_nDim降到m_nUseDim维</span></span><br><span class="line">double* CNeighborSet::<span class="built_in">Pca</span>(double* pfIn)</span><br><span class="line">{</span><br><span class="line">	m_pQueryIn-&gt;data<span class="selector-class">.db</span> = pfIn;</span><br><span class="line">	<span class="built_in">cvProjectPCA</span>(m_pQueryIn, m_pMean, m_pEigVecs, m_pQueryOut);<span class="comment">//现在pResult保存的是降低维度之后的信息</span></span><br><span class="line">	return m_pQueryOut-&gt;data.db;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>现在还有一个问题，是确定我们到底能够降低到多少维度了。<strong>如果维度降低太多，就保持不了足够的信息，就会失真，达不到应用的效果。</strong>当然如果效果不对，可以慢慢增大维度，直到够用为止。<br>当然还有其它办法了。<strong>比如说，在代码中计算我们应该保留多少维度就能够保持90%的信息了。</strong>下面要给出的就是这个办法。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">double fSum = <span class="number">0.0</span>;</span><br><span class="line">double fSum0 = <span class="number">0.0</span>;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_pEigVals-&gt;cols; ++i)</span><br><span class="line">{</span><br><span class="line">	fSum += *(m_pEigVals-&gt;data<span class="selector-class">.db</span> + i);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double fTmp = fSum * m_fPcaRatio;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_pEigVals-&gt;cols; ++i)</span><br><span class="line">{</span><br><span class="line">	fSum0 += *(m_pEigVals-&gt;data<span class="selector-class">.db</span> + i);</span><br><span class="line">	<span class="keyword">if</span> (fSum0 &gt;= fTmp)</span><br><span class="line">	{</span><br><span class="line">		m_nUseDim = <span class="selector-tag">i</span> + <span class="number">1</span>;</span><br><span class="line">		break;</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1411,7 +1401,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">225</span>
+          <span class="site-state-item-count">227</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1424,7 +1414,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1476,12 +1466,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">680k</span>
+    <span title="站点总字数">692k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:18</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

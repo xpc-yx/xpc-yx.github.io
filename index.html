@@ -222,6 +222,98 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2025/05/01/%E4%BA%91%E9%98%B4%E5%BD%B1%E6%A8%A1%E6%8B%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/05/01/%E4%BA%91%E9%98%B4%E5%BD%B1%E6%A8%A1%E6%8B%9F/" class="post-title-link" itemprop="url">未命名</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-05-01 03:24:36" itemprop="dateCreated datePublished" datetime="2025-05-01T03:24:36+08:00">2025-05-01</time>
+            </span>
+
+          
+            <span id="/2025/05/01/%E4%BA%91%E9%98%B4%E5%BD%B1%E6%A8%A1%E6%8B%9F/" class="post-meta-item leancloud_visitors" data-flag-title="" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/05/01/%E4%BA%91%E9%98%B4%E5%BD%B1%E6%A8%A1%E6%8B%9F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/05/01/%E4%BA%91%E9%98%B4%E5%BD%B1%E6%A8%A1%E6%8B%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2025/04/24/%E5%9F%BA%E4%BA%8EVulkan%20Specialization%20Constants%E7%9A%84%E6%9D%90%E8%B4%A8%E5%8F%98%E4%BD%93%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -287,7 +379,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -319,7 +411,7 @@
 <h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译期-1"><a href="#编译期-1" class="headerlink" title="编译期"></a>编译期</h3><p>不需要复杂的遍历算法，直接编译shader代码即可。但是，需要工具链或者图形API支持。比如，使用vulkan支持的Specialization Constants实现变体，那么可以在编译期保存Specialization Constants定义信息的同时，使用spirv-tools编译生成一份spir-v中间代码。</p>
 <h3 id="运行时-1"><a href="#运行时-1" class="headerlink" title="运行时"></a>运行时</h3><p>加载这份编译后的代码，比如spir-v中间代码。针对，当前的变体设置，对spir-v进一步处理成指定的变体状态或者将变体设置提交给vulkan，让驱动去编译。</p>
 <h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h2><p>这种方式会有一定的局限性，无法优化所有的情况。比如驱动可能有bug，无法优化掉一些复杂变体组合的情况或者一些复杂的代码，导致真正运行的代码有多余的指令，引起性能大幅度下降。</p>
-<h1 id="Vulkan-Specialization-Constants变体"><a href="#Vulkan-Specialization-Constants变体" class="headerlink" title="Vulkan Specialization Constants变体"></a>Vulkan Specialization Constants变体</h1><h2 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h2><p>不同的图形API对动态变体的支持情况不一样，比如OpenGL不支持，Vulkan支持Specialization Constants，metal支持Function Constants。<br>这里专门指代基于Vulkan Specialization Constants实现的变体系统。</p>
+<h1 id="Vulkan-Specialization-Constants变体"><a href="#Vulkan-Specialization-Constants变体" class="headerlink" title="Vulkan Specialization Constants变体"></a>Vulkan Specialization Constants变体</h1><h2 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h2><p>不同的图形API对动态变体的支持情况不一样，比如OpenGL不支持，Vulkan支持Specialization Constants，metal支持Function Constants。<br>这里专门指代基于Vulkan Specialization Constants实现的变体系统。Vulkan的官方文章：<a href="https://docs.vulkan.org/samples/latest/samples/performance/specialization_constants/README.html">Utilizing Specialization Constants</a><br>对Specialization Constants有具体的介绍，并且与UBO做了对比。</p>
 <h2 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="使用Specialization-Constants实现材质代码"><a href="#使用Specialization-Constants实现材质代码" class="headerlink" title="使用Specialization Constants实现材质代码"></a>使用Specialization Constants实现材质代码</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">layout(constant_id = 0) const bool COLOR_RED = true;</span><br><span class="line">layout(constant_id = 1) const bool NORMAL_POSITIVE = true;</span><br><span class="line"></span><br><span class="line">float4 color;</span><br><span class="line">float3 normal;</span><br><span class="line"></span><br><span class="line">void setColorAndNormal() {</span><br><span class="line">if (COLOR_RED) {</span><br><span class="line">	color = float4(1, 0, 0, 1);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	color = float4(1, 1, 1, 1);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">if (NORMAL_POSITIVE) {</span><br><span class="line">	normal = float3(0, 1, 0);</span><br><span class="line">}</span><br><span class="line">else {</span><br><span class="line">	normal = float3(0, -1, 0);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>比如上述代码，定义了2个Specialization Constants变量：COLOR_RED和NORMAL_POSITIVE 。同时在代码内使用了这2个变量作为开关进行分支选择，注意：从语法上，Specialization Constants是作为变量处理，而不是宏。</p>
 <h3 id="使用spirv-tools编译带有Specialization-Constants信息的材质代码"><a href="#使用spirv-tools编译带有Specialization-Constants信息的材质代码" class="headerlink" title="使用spirv-tools编译带有Specialization Constants信息的材质代码"></a>使用spirv-tools编译带有Specialization Constants信息的材质代码</h3><p>这一步与传统变体的区别是不需要遍历所有的变体状态组合，直接编译代码即可。对于，vulkan来说，使用glslang库调用spirv-tools编译代码就可以获得带有Specialization Constants信息的spir-v中间代码。</p>
@@ -474,7 +566,7 @@
 <li>跨平台：驱动只需要处理中间格式，方便使用工具将不同的语言比如hlsl、glsl等都统一编译成spirv。</li>
 <li>性能：驱动只需要编译中间语言，不需要对着色器代码做负责的编译检查语法分析等，性能更好。</li>
 </ol>
-<h1 id="资源绑定"><a href="#资源绑定" class="headerlink" title="资源绑定"></a>资源绑定</h1><p>OpenGL的资源绑定都是一次API调用，比如glBindTexture等。而Vulkan支持在PSO上一次性绑定多个资产，以及Bindless等。具体可以参考文章系列：<a href="https://zhuanlan.zhihu.com/p/136449475">游戏引擎随笔 0x13：现代图形 API 的 Bindless</a>，<a href="https://zhuanlan.zhihu.com/p/416895286">游戏引擎随笔 0x23：再论现代图形 API 的 Bindless（上）</a>，<a href="https://zhuanlan.zhihu.com/p/421175854">游戏引擎随笔 0x24：再论现代图形 API 的 Bindless（下）</a>。</p>
+<h1 id="资源绑定"><a href="#资源绑定" class="headerlink" title="资源绑定"></a>资源绑定</h1><p>OpenGL的资源绑定都是一次API调用，比如glBindTexture等。而Vulkan支持在PSO上一次性绑定多个资产，以及Bindless等。具体可以参考文章：<a href="https://zhuanlan.zhihu.com/p/136449475">游戏引擎随笔 0x13：现代图形 API 的 Bindless</a>。</p>
 <h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><p>OpenGL不支持显式的内存管理，都是托管给驱动负责。但是Vulkan支持或者说必须显式的管理与分配内存，因为驱动不再负责。具体来说是，Vulkan必须应用层申请内存同时进行管理，而OpenGL不需要。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Vulkan 显式分配显存</span><br><span class="line">VkMemoryAllocateInfo allocInfo{};</span><br><span class="line">allocInfo.allocationSize = size;</span><br><span class="line">allocInfo.memoryTypeIndex = findMemoryType(...);</span><br><span class="line">vkAllocateMemory(device, &amp;allocInfo, nullptr, &amp;deviceMemory);</span><br><span class="line">vkBindBufferMemory(device, buffer, deviceMemory, 0);</span><br><span class="line"></span><br><span class="line">// OpenGL 隐式分配</span><br><span class="line">GLuint buffer;</span><br><span class="line">glGenBuffers(1, &amp;buffer);</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, buffer);</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);</span><br></pre></td></tr></tbody></table></figure>
 <p>比如上述代码，OpenGL是直接调用glGenBuffers获得buffer的id即可，内部由驱动去申请和管理内存；而Vulkan则需要调用vkAllocateMemory具体的申请内存，后续的管理和同步也需要应用层负责。因此，理论上Vulkan可以实现更接近应用需要的内存管理机制。</p>
@@ -485,13 +577,15 @@
 <li>Pipeline Barrier用于同一个queue内同步。</li>
 <li>Event可以用于等待Pipeline事件发生，也可以用于CPU和GPU之间的同步。</li>
 </ol>
-<p>更具体的内容可以参考文章：<a href="https://zhuanlan.zhihu.com/p/100162469">游戏引擎随笔 0x07：现代图形 API 的同步</a>。</p>
 <h1 id="错误验证"><a href="#错误验证" class="headerlink" title="错误验证"></a>错误验证</h1><p>OpenGL由于是驱动管理全局的状态，而且驱动内置了错误管理和验证机制，导致驱动的实现复杂并且有较大的性能损失。相反，Vulkan的错误验证层是可选的组件，并且在Vulkan层，并没有在硬件的驱动内实现；在开发阶段，可以开启验证层排查问题，而真正的运行阶段并没有验证层。</p>
 <ol>
 <li>性能：Vulkan没有错误验证层性能更好，驱动实现更简单。</li>
 <li>开发：Vulkan由于没有驱动兜底，因此开发难度更大，需要更仔细的调试和验证。</li>
 </ol>
 <h1 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h1><p>以上这些对比区别，都是CPU层面的，因此Vulkan这种现代图形API适合需要对CPU性能做极致优化的场景。如果，性能瓶颈在GPU上，将图形API从OpenGL切换到Vulkan上也无法解决问题。相信随着硬件的发作，Vulkan会逐渐替代OpenGL/OpenGLES成为事实上的默认跨平台图形API。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><blockquote>
+<p><a href="https://www.cnblogs.com/timlly/p/15680064.html">剖析虚幻渲染体系（13）- RHI补充篇：现代图形API之奥义与指南 </a><br><a href="https://zhuanlan.zhihu.com/p/136449475">游戏引擎随笔 0x13：现代图形 API 的 Bindless</a><br><a href="https://zhuanlan.zhihu.com/p/100162469">游戏引擎随笔 0x07：现代图形 API 的同步</a></p>
+</blockquote>
 </body></html>
       
     </div>
@@ -697,6 +791,169 @@
 <h2 id="5-4-其它数据"><a href="#5-4-其它数据" class="headerlink" title="5.4 其它数据"></a>5.4 其它数据</h2><h3 id="5-4-1-SpecializationConstants"><a href="#5-4-1-SpecializationConstants" class="headerlink" title="5.4.1 SpecializationConstants"></a>5.4.1 SpecializationConstants</h3><p>这部分之前提过，filament是通过切换变体时候，将材质内保存的constants设置数据传递给gpu program，也提到过这部分在实现上有一定的不合理。</p>
 <h3 id="5-4-2-PushConstant"><a href="#5-4-2-PushConstant" class="headerlink" title="5.4.2 PushConstant"></a>5.4.2 PushConstant</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (UTILS_UNLIKELY(info.hasMorphing)) {</span><br><span class="line">    driver.setPushConstant(ShaderStage::VERTEX,</span><br><span class="line">            +PushConstantIds::MORPHING_BUFFER_OFFSET, int32_t(info.morphingOffset));</span><br><span class="line">}</span><br><span class="line">driver.draw2(info.indexOffset, info.indexCount, info.instanceCount);</span><br></pre></td></tr></tbody></table></figure>
 <p>pushConstant数据则是在调用drawcall之前通过driver.setPushConstant传入driver。目前，filament只支持固定的pushConstants数据。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2024/06/20/%E6%B0%B4%E4%BD%93%E6%95%88%E6%9E%9C%E6%A8%A1%E6%8B%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/20/%E6%B0%B4%E4%BD%93%E6%95%88%E6%9E%9C%E6%A8%A1%E6%8B%9F/" class="post-title-link" itemprop="url">水体效果模拟</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-20 15:20:22" itemprop="dateCreated datePublished" datetime="2024-06-20T15:20:22+08:00">2024-06-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rendering/" itemprop="url" rel="index">
+                    <span itemprop="name">Rendering</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/06/20/%E6%B0%B4%E4%BD%93%E6%95%88%E6%9E%9C%E6%A8%A1%E6%8B%9F/" class="post-meta-item leancloud_visitors" data-flag-title="水体效果模拟" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/06/20/%E6%B0%B4%E4%BD%93%E6%95%88%E6%9E%9C%E6%A8%A1%E6%8B%9F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/06/20/%E6%B0%B4%E4%BD%93%E6%95%88%E6%9E%9C%E6%A8%A1%E6%8B%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><h1 id="水体效果简介"><a href="#水体效果简介" class="headerlink" title="水体效果简介"></a>水体效果简介</h1><p>这里讲的是模拟水体效果的一系列技术点。主要包括，着色模型、水体颜色、法线模拟水面流动、FlowMap控制水面流动、深度、折射、反射、焦散、泡沫、假SSS模拟等。下面具体说明。</p>
+<h1 id="着色模型"><a href="#着色模型" class="headerlink" title="着色模型"></a>着色模型</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterSurfaceOptions.png"><br>LightingMode有PBR、BlingPhong、None三种选项。默认使用PBR着色，可以为了极致的性能选择BlingPhong，甚至不着色直接输出albedo。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#if defined(_PBR)</span><br><span class="line">        half4 color = UniversalFragmentPBR(inputData, surfaceData);</span><br><span class="line">#elif defined(_BLING_PHONG)</span><br><span class="line">        surfaceData.specular = lerp(_BlingPhongSpecColor.rgb, surfaceData.albedo, surfaceData.metallic);</span><br><span class="line">        half4 color = UniversalFragmentBlinnPhong(inputData, surfaceData);</span><br><span class="line">#else</span><br><span class="line">        half4 color = half4(surfaceData.albedo * surfaceData.occlusion, surfaceData.alpha);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>可以看到PBR的结果更加细腻，最明显的区别就是高光。PBR可能看到金黄色的高光，但是BlingPhong的高光需要调整。因此，使用了一个trick，额外提供了一个BlingPhong的高光颜色来近似，同时用金属度在高光颜色和albedo之间进行插值。<br>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水着色模型.gif"></p>
+<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>output内有两个选项，第一个是在最终渲染结果的a通道上叠加一个透明度，用于整体调整透明度；一个是缩放最终的着色结果，用于整体调亮调暗。<br>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水output.gif"></p>
+<h1 id="水体颜色"><a href="#水体颜色" class="headerlink" title="水体颜色"></a>水体颜色</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterSurfaceInputs.png"><br>水体分为浅水颜色和深水颜色。浅水区域即靠近岸边的区域，深水区域即其它区域。那么怎么区分，浅水区域和深水区域了？使用水深，即使用水的深度差。这个深度差是使用水底的深度和水面的深度相减得到，具体实现在深度部分会具体讲述。<br>那么，最终的颜色即使用浅水颜色和深水颜色插值得到，过渡算法即是使用深度差进行smoothstep。具体代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">half4 baseColor = lerp(_ShallowBaseColor, _DeepBaseColor, smoothstep(_WaterDepthAdd, _ShallowDepthCutOff + _WaterDepthAdd, _WaterDepthMultiple * sceneDeltaDepth));</span><br></pre></td></tr></tbody></table></figure>
+<p>ShallowDepthCutOff用于控制浅水的范围。至于WaterDepthAdd、WaterDepthMultiple是额外提供的调整水深度范围的参数。<br>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水颜色.gif"><br>可以看到调整ShallowDepthCutOff可以扩大或者缩小浅水区域的范围。</p>
+<h2 id="水体透明度"><a href="#水体透明度" class="headerlink" title="水体透明度"></a>水体透明度</h2><p>除去output对透明度的修改外，还有水体颜色的a通道对透明度的控制，比如浅水透明度更高，深水透明度更低，然后使用深度进行过渡。<br>更重要的是实现水体边缘的平滑过渡，否则水体边缘是硬边，无法做到与岸边的平滑融合。具体实现：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">color.a *= max(0.0, smoothstep(-0.001, _TransparentDepthCutOff, sceneDeltaDepth) - _TransparentAdd);</span><br></pre></td></tr></tbody></table></figure>
+<p>算法原理类似水体颜色过渡，使用深度差在-0.001（略小于0）和TransparentDepthCutOff之间进行smoothstep插值，然后乘到原始的透明度上。<br>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水边缘平滑.gif"></p>
+<h1 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterDepthOptions.png"></p>
+<h2 id="水面深度"><a href="#水面深度" class="headerlink" title="水面深度"></a>水面深度</h2><p>水面深度指的是当前着色的像素点深度，这里我们要计算从摄像机开始的线性深度，具体代码如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">inline float GetRealtimeWaterEyeDepth(float4 projection)</span><br><span class="line">{</span><br><span class="line">    float depth = projection.z / projection.w;</span><br><span class="line">    #if !UNITY_REVERSED_Z</span><br><span class="line">        depth = depth * 0.5 + 0.5;</span><br><span class="line">    #endif</span><br><span class="line">    return LinearEyeDepth(depth, _ZBufferParams);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">float waterDepth = GetRealtimeWaterEyeDepth(input.screenPos);</span><br></pre></td></tr></tbody></table></figure>
+<p>对于性能敏感的场景，我们也可以使用一张离线的深度图。这种情况下可以假设使用正交模型，从顶往下离线渲染一张RT保存了深度图。如OfflineDepth的设置所示，需要一个摄像机原点和一个正交投影范围，根据这些信息，那么还原离线线性深度的代码如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">inline float GetOfflineWaterEyeDepth(float3 positionWS)</span><br><span class="line">{</span><br><span class="line">    float eyeDepth = _OfflineTextureWorldOrgin.y - positionWS.y;//离线相机从上往下拍摄</span><br><span class="line">    float n = _OfflineTextureCameraSettings.y;</span><br><span class="line">    float f =  _OfflineTextureCameraSettings.z;</span><br><span class="line"></span><br><span class="line">    eyeDepth = clamp(eyeDepth, n, f);</span><br><span class="line">    return eyeDepth;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">float waterDepth = GetOfflineWaterEyeDepth(input.positionWS);</span><br></pre></td></tr></tbody></table></figure>
+<p>该函数实际上就是计算距离离线深度图相机的线性距离。</p>
+<h2 id="水底深度"><a href="#水底深度" class="headerlink" title="水底深度"></a>水底深度</h2><p>同样分为实时和离线两种情况，实时深度需要从实时深度图读取深度再转换为线性深度；离线深度则是从离线深度图内读取深度，再根据正交投影信息转换为线性深度。<br>代码如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">inline float2 GetOfflineWorldUV(float3 positionWS)</span><br><span class="line">{</span><br><span class="line">    return (positionWS.xz - (_OfflineTextureWorldOrgin.xz - _OfflineTextureCameraSettings.xx)) / (2 * _OfflineTextureCameraSettings.xx);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">inline float GetSceneEyeDepth(float2 uv)</span><br><span class="line">{</span><br><span class="line">#if _REALTIME_DEPTH_MAP</span><br><span class="line">    float depth = SampleSceneDepth(uv);</span><br><span class="line">    depth = LinearEyeDepth(depth, _ZBufferParams);</span><br><span class="line">#else</span><br><span class="line">    float depth = SAMPLE_TEXTURE2D_X(_OfflineDepthMap, sampler_OfflineDepthMap, uv).r;//offline tool has fixed UNITY_REVERSED_Z</span><br><span class="line">    float n = _OfflineTextureCameraSettings.y;</span><br><span class="line">    float f = _OfflineTextureCameraSettings.z;</span><br><span class="line">    depth = n + (f - n) * depth;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    return depth;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">#if _REALTIME_DEPTH_MAP</span><br><span class="line">	float sceneDepth = GetSceneEyeDepth(screenUV);</span><br><span class="line">#else</span><br><span class="line">	float sceneDepth = GetSceneEyeDepth(offlineWorldUV);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>当然，实时深度必须开启<strong>渲染管线的深度图</strong>设置。</p>
+<h2 id="归一化深度差"><a href="#归一化深度差" class="headerlink" title="归一化深度差"></a>归一化深度差</h2><p>上面2个步骤的水底深度减去水面深度，得到的就是深度差，然后用这个深度除以最大深度差得到的就是归一化的深度差。具体代码如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float sceneDeltaDepth = max((sceneDepth - waterDepth) / _MaxWaterDepthDiff, 0.0);</span><br></pre></td></tr></tbody></table></figure>
+<p>注意，MaxWaterDepthDiff是一个可调节的参数，用户可以方便控制最大的水深（可以超过或者小于实际的最大水深），这样可以整体调整整个水体的深度。</p>
+<h2 id="归一化深度差的用途"><a href="#归一化深度差的用途" class="headerlink" title="归一化深度差的用途"></a>归一化深度差的用途</h2><p>比如，前面说到的浅水区域和深水区域定义和过渡、水体边缘平滑过渡等。以及后续的焦散、泡沫等效果，也可以用深度差控制显示范围。</p>
+<h1 id="法线模拟水面流动"><a href="#法线模拟水面流动" class="headerlink" title="法线模拟水面流动"></a>法线模拟水面流动</h1><p>我们知道水面是流动的，要模拟流动主要有两种方式，一种是顶点动画，一种是在片元内移动法线。顶点动画比较适合模拟海浪，性能消耗比较大。这里，我们使用的是法线来模拟水面的流动。<br>SurfaceInputs内有一张法线输入，以及2个法线的ScaleSpeed；按照不同的移动速度采用出2个法线值，然后进行BlendNormal，作为最终的法线。<br>具体代码如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">float2 baseNormalUV = TRANSFORM_TEX(uv, _NormalMap);</span><br><span class="line">UVPanner1 = _Time.y * 0.1f * _NormalScaleSpeed1.yz;</span><br><span class="line">UVPanner2 = _Time.y * 0.1f * _NormalScaleSpeed2.yz;</span><br><span class="line"></span><br><span class="line">half4 normalColor1 = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, baseNormalUV + UVPanner1);</span><br><span class="line">half4 normalColor2 = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, baseNormalUV + UVPanner2);</span><br><span class="line"></span><br><span class="line">half3 normalTS1 = UnpackNormalScale(normalColor1, _NormalScaleSpeed1.x);</span><br><span class="line">half3 normalTS2 = UnpackNormalScale(normalColor2, _NormalScaleSpeed2.x);</span><br><span class="line"></span><br><span class="line">outSurfaceData.normalTS = BlendNormal(normalTS1, normalTS2);</span><br></pre></td></tr></tbody></table></figure>
+<p>至于BlendNormal的实现，CommonMaterial.hlsl内具体代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// assume compositing in tangent space</span><br><span class="line">real3 BlendNormal(real3 n1, real3 n2)</span><br><span class="line">{</span><br><span class="line">    return normalize(real3(n1.xy * n2.z + n2.xy * n1.z, n1.z * n2.z));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>可以参考文章：<a href="https://zhuanlan.zhihu.com/p/364821684">Normal Blend方法总结</a>的Partial Derivative Blending部分。</p>
+<h1 id="FlowMap控制水面流动"><a href="#FlowMap控制水面流动" class="headerlink" title="FlowMap控制水面流动"></a>FlowMap控制水面流动</h1><p>上面我们实现了水面流动的模拟，但是有时候我们需要用贴图来控制水面的整体流动方向，这个时候就需要一种叫做FlowMap的技术。FlowMap实际上是一张记录了2D向量场的纹理，我们可以从这张图里面读取1个flowDir表示UV的移动方向；另外需要计算一个phase，用于表示当前的相位，结合flowDir可以获得2个UV；最后，用这个2个UV采用法线贴图，再进行插值即可。注意，插值算法也要依赖phase。详细的解释和FlowMap的应用可以参考文章：<a href="https://zhuanlan.zhihu.com/p/660311527">FlowMap技术介绍 和 案例展示</a>。</p>
+<p>具体代码如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">float2 baseNormalUV = TRANSFORM_TEX(uv, _NormalMap);</span><br><span class="line"></span><br><span class="line">float2 flowDir = (SAMPLE_TEXTURE2D(_FlowMap, sampler_FlowMap, uv).rg * 2.0f - 1.0f) * (-_FlowDirSpeed);</span><br><span class="line">float phase0 = frac(_Time.y * _FlowTimeSpeed);</span><br><span class="line">float phase1 = frac(_Time.y * _FlowTimeSpeed + 0.5f);</span><br><span class="line">UVPanner1 = flowDir * phase0;</span><br><span class="line">UVPanner2 = flowDir * phase1;</span><br><span class="line"></span><br><span class="line">half4 normalColor1 = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, baseNormalUV + UVPanner1);</span><br><span class="line">half4 normalColor2 = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, baseNormalUV + UVPanner2);</span><br><span class="line"></span><br><span class="line">flowLerp = abs(phase0 - 0.5f) / 0.5f;</span><br><span class="line">half4 normalColor = lerp(normalColor1, normalColor2, flowLerp);</span><br><span class="line">outSurfaceData.normalTS = UnpackNormalScale(normalColor, _FlowNormalScale);</span><br></pre></td></tr></tbody></table></figure>
+<p>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水flowmap.gif"><br>可以看到激活FlowMap后，水体流向会按照这张2D向量场贴图的方向流动。</p>
+<h1 id="折射"><a href="#折射" class="headerlink" title="折射"></a>折射</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterRefractionOptions.png"><br>类似于深度的计算，同样有实时折射和离线折射两种方式。实时折射需要渲染管线开启颜色贴图，而离线折射则需要使用工具预先生成一张颜色贴图，类似于离线深度，这里同样使用自顶向下的离线相机拍摄一张离线颜色贴图。<br>具体代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">inline half3 GetRefractionColor(float2 uv, float2 noise, float sceneDeltaDepth)</span><br><span class="line">{</span><br><span class="line">    half weight = saturate(1 - smoothstep(_WaterDepthAdd, _RefractionDepthCutOff + _WaterDepthAdd, sceneDeltaDepth));</span><br><span class="line">    uv += noise * _RefractionNoiseIntensity * 0.1;</span><br><span class="line"></span><br><span class="line">#if _REALTIME_REFRACTION</span><br><span class="line">    half3 sceneColor = SampleSceneColor(uv).rgb;</span><br><span class="line">#else</span><br><span class="line">    half3 sceneColor = SAMPLE_TEXTURE2D_LOD(_OfflineRefractionMap, sampler_OfflineRefractionMap, uv, sceneDeltaDepth * 10 * _OfflineRefractionLodMultiple).rgb;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    return weight * sceneColor * _RefractionColor * _RefractionIntensity;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">#if _REALTIME_REFRACTION</span><br><span class="line">	refractColor = GetRefractionColor(screenUV, inputData.normalWS.xz, sceneDeltaDepth);</span><br><span class="line">#elif _OFFLINE_REFRACTION</span><br><span class="line">	refractColor = GetRefractionColor(offlineWorldUV, inputData.normalWS.xz, sceneDeltaDepth);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="实时折射"><a href="#实时折射" class="headerlink" title="实时折射"></a>实时折射</h2><p>从上述代码可以看到，实时折射需要调用SampleSceneColor采样实时的颜色贴图，采样左边是屏幕空间uv。</p>
+<h2 id="离线折射"><a href="#离线折射" class="headerlink" title="离线折射"></a>离线折射</h2><p>而离线折射，从一张OfflineRefractionMap内采样颜色信息，同时提供了贴图LOD控制。</p>
+<h2 id="叠加折射"><a href="#叠加折射" class="headerlink" title="叠加折射"></a>叠加折射</h2><p>折射颜色与反射颜色是通过菲涅尔算法插值后，再叠加到最终的着色结果上。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">inline half CalculateFresnelTerm(half3 normalWS, half3 viewDirectionWS)</span><br><span class="line">{</span><br><span class="line">    return 1.0 - dot(normalWS, viewDirectionWS);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">half fresnelTerm = CalculateFresnelTerm(inputData.normalWS, inputData.viewDirectionWS);</span><br><span class="line"></span><br><span class="line">color.rgb += lerp(refractColor, reflectColor, fresnelTerm);</span><br></pre></td></tr></tbody></table></figure>
+<p>这里的Fresnel使用了最简单的计算法线与视线夹角的实现。</p>
+<h2 id="具体效果"><a href="#具体效果" class="headerlink" title="具体效果"></a>具体效果</h2><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水折射.gif"><br>由于水是半透明的，不开启折射也能一定程度上看到水底的效果。因此，默认情况下，不开启折射以节省性能。切换到离线折射时候，由于没有设置贴图，默认是白色贴图会导致整体变凉。实时折射情况下，调整折射噪声的强度可以看到一定程度的水底扭曲。</p>
+<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterReflectionOptions.png"><br>反射通常指的是反射周围环境的效果，由于一般水体面积很大，不需要精准反应反射物体的位置，因此不需要实时镜面反射。比较合适的方式是使用Cubemap或者反射探针反射。</p>
+<h2 id="Cubemap反射"><a href="#Cubemap反射" class="headerlink" title="Cubemap反射"></a>Cubemap反射</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">inline half3 GetCubemapReflection(half3 reflectVector)</span><br><span class="line">{</span><br><span class="line">#if _CUBEMAP_REFLECTION</span><br><span class="line">    return SAMPLE_TEXTURECUBE_LOD(_ReflectionCubeMap, sampler_ReflectionCubeMap, reflectVector, _ReflectionCubemapLod).rgb * _ReflectionCubemapColor * _ReflectionCubemapIntensity;</span><br><span class="line">#else</span><br><span class="line">    return half3(0, 0, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>Cubemap即显式指定一张固定的Cubemap，从这张图采样作为反射信息，同时支持指定贴图LOD。</p>
+<h2 id="Probe反射"><a href="#Probe反射" class="headerlink" title="Probe反射"></a>Probe反射</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">inline half3 GetProbeReflection(half3 reflectVector, float3 positionWS, half smoothness, half occlusion)</span><br><span class="line">{</span><br><span class="line">#if _PROBE_REFLECTION</span><br><span class="line">    reflectVector = BoxProjectedCubemapDirection(reflectVector, positionWS, unity_SpecCube0_ProbePosition, unity_SpecCube0_BoxMin, unity_SpecCube0_BoxMax);</span><br><span class="line">    half mip = PerceptualRoughnessToMipmapLevel(PerceptualSmoothnessToPerceptualRoughness(smoothness));</span><br><span class="line">    half4 encodedIrradiance = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);</span><br><span class="line"></span><br><span class="line">#if defined(UNITY_USE_NATIVE_HDR)</span><br><span class="line">    half3 irradiance = encodedIrradiance.rgb;</span><br><span class="line">#else</span><br><span class="line">    half3 irradiance = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    return irradiance * occlusion * _ProbeReflectionColor * _ProbeReflectionIntensity;</span><br><span class="line">#else</span><br><span class="line">    return _GlossyEnvironmentColor.rgb * occlusion;</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>该函数实际上还是采样一个引擎内置的Cubemap：unity_SpecCube0。同时，新增了BoxProjectedCubemapDirection支持，该函数使用世界空间位置和Cubemap的位置、范围对反射方向进行了校正，该算法同样可以迁移到普通的Cubemap上。urp管线内BoxProjectedCubemapDirection的实现如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">half3 BoxProjectedCubemapDirection(half3 reflectionWS, float3 positionWS, float4 cubemapPositionWS, float4 boxMin, float4 boxMax)</span><br><span class="line">{</span><br><span class="line">    // Is this probe using box projection?</span><br><span class="line">    if (cubemapPositionWS.w &gt; 0.0f)</span><br><span class="line">    {</span><br><span class="line">        float3 boxMinMax = (reflectionWS &gt; 0.0f) ? boxMax.xyz : boxMin.xyz;</span><br><span class="line">        half3 rbMinMax = half3(boxMinMax - positionWS) / reflectionWS;</span><br><span class="line"></span><br><span class="line">        half fa = half(min(min(rbMinMax.x, rbMinMax.y), rbMinMax.z));</span><br><span class="line"></span><br><span class="line">        half3 worldPos = half3(positionWS - cubemapPositionWS.xyz);</span><br><span class="line"></span><br><span class="line">        half3 result = worldPos + reflectionWS * fa;</span><br><span class="line">        return result;</span><br><span class="line">    }</span><br><span class="line">    else</span><br><span class="line">    {</span><br><span class="line">        return reflectionWS;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>具体算法描述可以参考文章：<a href="https://blog.csdn.net/zengjunjie59/article/details/111884969">BoxProjectedCubemapDirection—镜面反射中的盒型投影函数</a>。</p>
+<h2 id="具体效果-1"><a href="#具体效果-1" class="headerlink" title="具体效果"></a>具体效果</h2><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水反射.gif"><br>可以看到切换到实时反射后，水面能够显示出天空盒的颜色。</p>
+<h1 id="焦散"><a href="#焦散" class="headerlink" title="焦散"></a>焦散</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterCausticsOptions.png"><br>焦散用于模拟水底的焦散现象。实现焦散效果需要一张焦散模式的贴图，采样这张贴图的结果和折射效果进行结合。<br>实现的难点在于如何让焦散看起来在水底，而不是漂浮在水面。这可以使用水底的世界坐标xz分量去采样焦散贴图，这样焦散的效果与水底的世界空间位置就强关联，看起来与水面就会分离。<br>另外，焦散贴图采样时候需要往相反方向采样两次，再取两次采样的最大值作为焦散强度。这样做是为了实现焦散的来回抖动效果，如果只采样一次就是规律性移动。<br>具体代码：<br></p><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">inline half3 <span class="title class_">GetCausticColor</span>(float2 uv, float sceneDeltaDepth)</span><br><span class="line">{</span><br><span class="line">#<span class="keyword">if</span> _CAUSTICS</span><br><span class="line">    uv = <span class="title function_">TRANSFORM_TEX</span>(uv, _CausticsMaskMap);</span><br><span class="line">    half weight = <span class="title function_">saturate</span>(<span class="number">1</span> - <span class="title function_">smoothstep</span>(_WaterDepthAdd, _CausticsDepthCutOff + _WaterDepthAdd, sceneDeltaDepth));</span><br><span class="line">    half3 causticsMask1 = <span class="title function_">SAMPLE_TEXTURE2D</span>(_CausticsMaskMap, sampler_CausticsMaskMap, uv + _Time.<span class="property">y</span> * _CausticsSpeed * <span class="number">0.1</span>).<span class="property">rgb</span>;</span><br><span class="line">    half3 causticsMask2 = <span class="title function_">SAMPLE_TEXTURE2D</span>(_CausticsMaskMap, sampler_CausticsMaskMap, uv - _Time.<span class="property">y</span> * _CausticsSpeed * <span class="number">0.1</span>).<span class="property">rgb</span>;</span><br><span class="line">    <span class="keyword">return</span> weight * _CausticsColor * _CausticsIntensity * <span class="title function_">min</span>(causticsMask1, causticsMask2) * <span class="number">10</span>;</span><br><span class="line">#<span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">half3</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">#<span class="keyword">if</span> _CAUSTICS</span><br><span class="line">	float2 causticsUV = input.<span class="property">uvAndFogAtten</span>.<span class="property">xy</span>;</span><br><span class="line">	#<span class="keyword">if</span> _REALTIME_DEPTH_MAP</span><br><span class="line">		#<span class="keyword">if</span> <span class="variable constant_">UNITY_REVERSED_Z</span></span><br><span class="line">			float deviceDepth = <span class="title function_">SAMPLE_TEXTURE2D_X</span>(_CameraDepthTexture, sampler_PointClamp, screenUV + inputData.<span class="property">normalWS</span>.<span class="property">xz</span> * <span class="number">0.01</span>).<span class="property">r</span>;</span><br><span class="line">	#<span class="keyword">else</span></span><br><span class="line">		float deviceDepth = <span class="title function_">SAMPLE_TEXTURE2D_X</span>(_CameraDepthTexture, sampler_PointClamp, screenUV + inputData.<span class="property">normalWS</span>.<span class="property">xz</span> * <span class="number">0.01</span>).<span class="property">r</span>;</span><br><span class="line">		deviceDepth = deviceDepth * <span class="number">2.0</span> - <span class="number">1.0</span>;</span><br><span class="line">	#endif</span><br><span class="line">		causticsUV = <span class="title class_">ComputeWorldSpacePosition</span>(screenUV + inputData.<span class="property">normalWS</span>.<span class="property">xz</span> * <span class="number">0.01</span>, deviceDepth, unity_MatrixInvVP).<span class="property">xz</span>;</span><br><span class="line">	#endif</span><br><span class="line">	refractColor += <span class="title function_">lerp</span>(<span class="number">1</span>, refractColor, _CausticsRefractWeight) * <span class="title class_">GetCausticColor</span>(causticsUV, sceneDeltaDepth);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure><br>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水焦散.gif"><p></p>
+<h1 id="泡沫"><a href="#泡沫" class="headerlink" title="泡沫"></a>泡沫</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/FoamOptions.png"><br>这个效果是模拟水面的边缘部分的泡沫流动现象。主要包括泡沫的着色以及泡沫的流动，因此需要一张表示泡沫的贴图。比如下面这张贴图的g通道。<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/Foam1.png"><br>实现泡沫的流动类似云阴影的实现，泡沫本身的流动以及泡沫的边缘流动，方法是按照不同的速率采样泡沫贴图两次，然后使用PS的线性加深模式进行叠加即可。<br>具体代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">inline half3 GetFoamColor(float2 uv, float2 UVPanner1, float2 UVPanner2, float flowLerp, float sceneDeltaDepth)</span><br><span class="line">{</span><br><span class="line">#if _FOAM</span><br><span class="line">    uv = TRANSFORM_TEX(uv, _FoamMap);</span><br><span class="line">    half weight = 1 - smoothstep(_WaterDepthAdd, _FoamDepthCutOff + _WaterDepthAdd, sceneDeltaDepth);</span><br><span class="line">    half foamWeight1 = SAMPLE_TEXTURE2D(_FoamMap, sampler_FoamMap, uv + UVPanner1 * _FoamSpeed1).g;</span><br><span class="line">    half foamWeight2 = SAMPLE_TEXTURE2D(_FoamMap, sampler_FoamMap, uv + UVPanner2 * _FoamSpeed2).g;</span><br><span class="line">    half foamWeight = saturate(2 * foamWeight1 + foamWeight2 - 1);</span><br><span class="line"></span><br><span class="line">    return _FoamColor * weight * foamWeight * _FoamIntensity;</span><br><span class="line">#else</span><br><span class="line">    return half3(0, 0, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">#if _FOAM</span><br><span class="line">	color.rgb += GetFoamColor(input.uvAndFogAtten.xy, UVPanner1, UVPanner2, flowLerp, sceneDeltaDepth);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>最后将泡沫颜色叠加到渲染结果上即可。<br>具体效果：</p>
+<h1 id="假SSS模拟"><a href="#假SSS模拟" class="headerlink" title="假SSS模拟"></a>假SSS模拟</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/WaterSSSOptions.png"><br>这个是对SSS的简单模拟。实现算法比较简单，根据光照方向做一定偏移作为SSS的方向，然后计算SSS方向与视线方向的夹角，以这个夹角作为因子来计算额外的SSS光强度，叠加到最终的渲染上。<br>具体代码：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">inline half3 GetSSSColor(Light light, half3 viewDirectionWS, half3 normalWS, float sceneDeltaDepth)</span><br><span class="line">{</span><br><span class="line">#if _SSS</span><br><span class="line">    half3 sssLightDirection = normalize(light.direction + normalWS * _SSSLightDistortion);</span><br><span class="line">    half sss = pow(saturate(dot(viewDirectionWS, sssLightDirection)), _SSSLightPower) * _SSSLightIntensity;</span><br><span class="line">    half weight = 1 - smoothstep(_WaterDepthAdd, _SSSLighDepthCutOff + _WaterDepthAdd, sceneDeltaDepth);</span><br><span class="line"></span><br><span class="line">    return _SSSColor * light.color * sss * weight;</span><br><span class="line">#else</span><br><span class="line">    return half3(0, 0, 0);</span><br><span class="line">#endif</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">#if _SSS</span><br><span class="line">	color.rgb += GetSSSColor(GetMainLight(), inputData.viewDirectionWS, inputData.normalWS, sceneDeltaDepth);</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
+<p>具体效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水SSS.gif"></p>
+<h1 id="整体效果"><a href="#整体效果" class="headerlink" title="整体效果"></a>整体效果</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/水整体效果.gif"></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/364821684">Normal Blend方法总结</a><br><a href="https://zhuanlan.zhihu.com/p/660311527">FlowMap技术介绍 和 案例展示</a><br><a href="https://blog.csdn.net/zengjunjie59/article/details/111884969">BoxProjectedCubemapDirection—镜面反射中的盒型投影函数</a></p>
+</blockquote>
 </body></html>
       
     </div>
@@ -1374,403 +1631,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">角色妆容的实现</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-30 11:10:00" itemprop="dateCreated datePublished" datetime="2022-07-30T11:10:00+08:00">2022-07-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/Rendering/" itemprop="url" rel="index">
-                    <span itemprop="name">Rendering</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="角色妆容的实现" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/30/%E8%A7%92%E8%89%B2%E5%A6%86%E5%AE%B9%E7%9A%84%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>前段时间做了下角色妆容的实现，想写个文章记录一下这个事情。妆容看起来很复杂，实际上整理实现思路很简单，主要是两个方面的内容，改变基础色和改变高光（金粉效果）。<br>先贴一个妆容效果：<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果1.jpg"></p>
-<p>没有开启妆容的情况下，基础色就是从颜色贴图和基础颜色中获得；开启妆容后，要根据各个状态模块的模板和比例来插值妆容颜色和基本颜色；金粉则是改变特定区域的高光，金粉的浓淡可以用滑块控制，最好同时结合妆容色的浓淡；额外可能需要改变特定妆容区域的光滑度，比如唇彩。</p>
-<h1 id="妆容界面"><a href="#妆容界面" class="headerlink" title="妆容界面"></a>妆容界面</h1><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容0.png"><br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容1.png"></p>
-<h2 id="妆容开关"><a href="#妆容开关" class="headerlink" title="妆容开关"></a>妆容开关</h2><p>最上面有一个Toggle来开关妆容模块，可以使用shader_feature_local的关键字，比如_MAKEUP来区分。</p>
-<h2 id="妆容金粉"><a href="#妆容金粉" class="headerlink" title="妆容金粉"></a>妆容金粉</h2><p>最上面的界面是指定金粉贴图贴图和相应的缩放，使用同样的UV缩放和位移的好处是避免重复读取金粉贴图，提高性能，避免每个妆容模块都要去读一次贴图。毕竟贴图是存储在内存中，要读取到GPU内的话，如果没有Cache中，则速度相比一个计算来说要慢一个数量级的可能。</p>
-<h2 id="妆容模块"><a href="#妆容模块" class="headerlink" title="妆容模块"></a>妆容模块</h2><p>接下来是具体的妆容模块，虽然模块比较多，实际上大同小异。功能都是通过通道贴图去改变指定位置的基础颜色，有些通道贴图还有图案的作用。有一些模块有额外的功能，比如唇彩的光滑度滑块、面纹的UV变化。</p>
-<h1 id="妆容的实现原理"><a href="#妆容的实现原理" class="headerlink" title="妆容的实现原理"></a>妆容的实现原理</h1><p>下面介绍妆容的具体实现原理。</p>
-<h2 id="妆容颜色"><a href="#妆容颜色" class="headerlink" title="妆容颜色"></a>妆容颜色</h2><p>这里的妆容颜色实际上对应的就是界面上具体的妆容模块。以第一个腮红为例子来说明，参考如下代码：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">half3 makeup = baseColor;</span><br><span class="line">half4 blush = SAMPLE_TEXTURE2D(_BlushMap, sampler_BlushMap, uv0);</span><br><span class="line">makeup = lerp(makeup, blush.rgb * _BlushColor, blush.a * _BlusIntensity);</span><br></pre></td></tr></tbody></table></figure>
-<p>从代码可以看到妆容色makeup是基础颜色和妆容颜色的插值结果。妆容颜色是从通道贴图读取的rgb和腮红颜色的结合，同样插值比例是通道贴图的a和腮红比例的结合。不过大部分妆容模块的妆容颜色不需要通道贴图的rgb，这种通道贴图实际上可以做合并处理。</p>
-<h3 id="妆容模块的结合"><a href="#妆容模块的结合" class="headerlink" title="妆容模块的结合"></a>妆容模块的结合</h3><p>妆容模块有一定的叠加顺序，最底部的是基础色，然后是按照顺序叠加的妆容模块，比如界面上的妆容模块顺序。那么，计算的时候，首先也是一个个按照顺序插值过来，比如先插值基础颜色和腮红，然后用插值结果继续和下一个妆容模块做插值，这样得到的最终妆容颜色就是多个妆容模块的结合。</p>
-<h2 id="妆容金粉-1"><a href="#妆容金粉-1" class="headerlink" title="妆容金粉"></a>妆容金粉</h2><p>金粉实际上改变的是高光。没有金粉的话，高光就是默认的情况，比如pbr的金属流高光或者Bling-Phong的高光。有金粉的话，根据金粉计算出一个高光，同时与默认高光进行插值，插值的因子同具体妆容模块的颜色计算。<br>可以参考以下代码实现：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">half3 golddustUV0 = SAMPLE_TEXTURE2D(_GolddustMap, sampler_GolddustMap, _GolddustUVTile * uv0 + _GolddustUVSpeed * _Time.x).rgb;</span><br><span class="line">half4 blush = SAMPLE_TEXTURE2D(_BlushMap, sampler_BlushMap, uv0);</span><br><span class="line">half3 specular = lerp((half3)0, _BlusGolddustColor * golddustUV0 * _BlusGolddustIntensity, blush.a * _BlusIntensity);</span><br></pre></td></tr></tbody></table></figure>
-<p>对于Pbr的金属流，默认的高光是0，所以金粉是为了增加额外的高光。关键的一句是在默认的高光和金粉高光之间做插值，插值比例是金粉浓度和妆容的比例。金粉高光是从金粉贴图读取出来同时应用金粉颜色和强度。</p>
-<h2 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h2><p>比如唇彩模块可以改变光滑度，这个改变的前提是唇彩的通道贴图a通道是大于0的；另外还有面纹的一些UV变化，实际上这个是简单模仿贴花的功能。</p>
-<h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><p>下面介绍一些妆容性能相关的优化策略。</p>
-<h2 id="妆容通道贴图采样器的合并"><a href="#妆容通道贴图采样器的合并" class="headerlink" title="妆容通道贴图采样器的合并"></a>妆容通道贴图采样器的合并</h2><p>上述界面的妆容模块过多，如果每个妆容通道贴图一个采样器，肯定会超过限制。方式是所有妆容模块共用一个或者几个采样器。不过，理解上来说，一个贴图采样器对应一个贴图设置，所以去改变贴图的设置会不会有一些影响这个待验证。</p>
-<h2 id="妆容通道贴图合并"><a href="#妆容通道贴图合并" class="headerlink" title="妆容通道贴图合并"></a>妆容通道贴图合并</h2><p>其实根本没必要一个妆容模块一个贴图，完全可以做贴图合并，比如不需要使用rgb的妆容模块，那么一个贴图可以对应四个妆容模块了。实际上，跟美术沟通后发现，妆容的效果主要是依赖妆容的通道掩码和妆容颜色，所以基本上不需要使用妆容贴图的rgb。</p>
-<h2 id="妆容颜色渲染到基础贴图"><a href="#妆容颜色渲染到基础贴图" class="headerlink" title="妆容颜色渲染到基础贴图"></a>妆容颜色渲染到基础贴图</h2><p>这个理论上来说算是终极优化吧。妆容会暴露很多参数给美术或者用户，用户调整这些参数后会得到一个化妆后的效果。关键的地方是，调整完成之后，可以理解为妹子化妆完成后，效果已经固定了。那么实际上，我们不需要每次再去计算妆容颜色，而是可以将妆容颜色渲染到一张单独的贴图上或者直接覆盖原本的BaseMap。以后的渲染，就不需要使用妆容模块了。</p>
-<h3 id="具体实现思路"><a href="#具体实现思路" class="headerlink" title="具体实现思路"></a>具体实现思路</h3><p>可以新建一个Pass，将妆容颜色的计算结果单独走一遍Pass，同时结合原本的BaseMap作为基础颜色，渲染目标是一个RT，比如是BaseMap。这个Pass的开关可以提供接口供业务代码控制，在化妆完成后调用来覆盖原本的BaseMap。</p>
-<h1 id="妆容效果"><a href="#妆容效果" class="headerlink" title="妆容效果"></a>妆容效果</h1><p>最后上一点效果图吧，从美术大佬那边要来的图，凑合看看吧。<br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果0.jpg"><br><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/妆容效果3.jpg"></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Unity手游性能优化的经验总结</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-18 11:10:00" itemprop="dateCreated datePublished" datetime="2022-05-18T11:10:00+08:00">2022-05-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
-                    <span itemprop="name">游戏开发</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index">
-                    <span itemprop="name">Unity</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="Unity手游性能优化的经验总结" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/18/Unity%E6%89%8B%E6%B8%B8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><h1 id="一、定位游戏性能瓶颈"><a href="#一、定位游戏性能瓶颈" class="headerlink" title="一、定位游戏性能瓶颈"></a>一、定位游戏性能瓶颈</h1><h2 id="1-1-游戏循环"><a href="#1-1-游戏循环" class="headerlink" title="1.1 游戏循环"></a>1.1 游戏循环</h2><p>基本循环：游戏逻辑-渲染提交-等待渲染完成（注意：游戏逻辑指的是除去渲染之外所有的CPU运算）。<br>基本的游戏循环可以理解为先执行游戏逻辑，比如获得输入，然后更新玩家位置，播放动画，物理碰撞等，然后渲染引擎会将要渲染的游戏画面信息提交到GPU，CPU则等待GPU完成该一帧的渲染结果。</p>
-<h3 id="1-1-1-单线程渲染"><a href="#1-1-1-单线程渲染" class="headerlink" title="1.1.1 单线程渲染"></a>1.1.1 单线程渲染</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/singlethreaded_rendering_0.png"><br>上图可以看到主线程直接提交渲染命令GCMD给渲染设备。主线程需要等待图形设备渲染完成。</p>
-<h3 id="1-1-2-多线程渲染"><a href="#1-1-2-多线程渲染" class="headerlink" title="1.1.2 多线程渲染"></a>1.1.2 多线程渲染</h3><p><img alt="" data-src="https://raw.githubusercontent.com/xpc-yx/markdown_img/master/小书匠/multithreaded_rendering_0.png"><br>主线程：游戏逻辑-提交渲染到渲染线程-等待渲染完成。<br>渲染线程：提交渲染命令给GPU-等待渲染完成。<br>GPU：等待渲染命令-执行渲染。</p>
-<p>从上图可以看到，主线程将渲染命令封装后提交给渲染线程，渲染再提交给图形设备渲染画面。因此，渲染线程会比主线程延迟一帧。虽然新增了渲染线程来减少CPU等待渲染完成的时间，但是每一帧主线程还是会等待渲染线程完成上一帧的渲染。因此，还是可以按照基本的游戏循环来分析每一帧的运行过程。</p>
-<h2 id="1-2-利用工具确定执行时间"><a href="#1-2-利用工具确定执行时间" class="headerlink" title="1.2 利用工具确定执行时间"></a>1.2 利用工具确定执行时间</h2><p>我们需要使用工具，比如UWA分析报告或者Unity的Profile等来确定主线程的游戏逻辑、渲染提交、渲染等待，这三个部分的整体执行时间。</p>
-<ol>
-<li>或者利用工具获得GPU每帧耗时是多少，是否超过帧率的要求，比如30帧的话，那么一帧是33.3ms，GPU的每帧耗时就不能就不能超过33.3ms，或者不能比CPU的耗时多，否则就是GPU的性能瓶颈。</li>
-<li>如果GPU不存在瓶颈，那么问题就在CPU上，这个时候要进一步分析CPU的瓶颈是游戏逻辑还是渲染提交上，这个UWA的性能分析报告和Unity的Profile都可以查看。</li>
-<li>如果渲染等待时间过长，说明渲染指令过多，这个时候就需要减少渲染指令的提交，一般就是采样各种合批策略，比如SRP合批、静态合批等，或者是合并网格、减少摄像机距离或者层级Culling等。</li>
-<li>如果渲染等待时间比较小，而游戏逻辑占用时间过长，那么要去分析CPU的耗时，具体是哪一块耗时过多，比如物理、动作、逻辑等。</li>
-</ol>
-<h1 id="二、GPU性能优化"><a href="#二、GPU性能优化" class="headerlink" title="二、GPU性能优化"></a>二、GPU性能优化</h1><p>当GPU遇到性能瓶颈时候就要着重进行GPU的性能优化，下面介绍一些常用的优化策略。</p>
-<h2 id="2-1-降低分辨率"><a href="#2-1-降低分辨率" class="headerlink" title="2.1 降低分辨率"></a>2.1 降低分辨率</h2><p>很多手机的显示器分辨率过高，GPU性能却跟不上。因此，降低分辨率或者对分辨率做限制也是常见的优化手段。比如，最高档设置可以限制1080屏幕高度，依次递减，最低档的设备720就可以。</p>
-<h2 id="2-2-减少OverDraw"><a href="#2-2-减少OverDraw" class="headerlink" title="2.2 减少OverDraw"></a>2.2 减少OverDraw</h2><p>OverDraw的意思是一个像素被重复绘制的次数，也就是该像素位置重复执行像素着色器(片元着色器)的次数。我们可以利用工具，比如固定管线的Unity编辑器是可以显示场景的OverDraw的，Urp的需要做一些扩展支持，来可视化游戏的OverDraw。对OverDraw特别高的部分要想办法优化，下面介绍一些Urp管线下的优化策略。</p>
-<h3 id="2-2-1-自定义渲染Pass"><a href="#2-2-1-自定义渲染Pass" class="headerlink" title="2.2.1 自定义渲染Pass"></a>2.2.1 自定义渲染Pass</h3><p>Urp的渲染Pass是渲染顺序中优先级最高的，因此同一个Pass对应的物体都会在一起按照一定的顺序渲染。那么，为了减少OverDraw或者提高合批的命中，要合理的设计相关的渲染Pass。比如，天空盒是最远的物体，会一直被遮挡，这种就没必要在场景或者角色之前渲染，否则会有没必要的OverDraw。那么，就可以对天空盒单独一个Pass，在场景和角色之后执行。同理，如果角色一直靠近摄像机，也可以强制角色在场景之前的Pass渲染。</p>
-<h3 id="2-2-2-渲染队列"><a href="#2-2-2-渲染队列" class="headerlink" title="2.2.2 渲染队列"></a>2.2.2 渲染队列</h3><p>渲染队列是在Shader中设置的，属于同一个Pass内的渲染顺序微调。同样的，还可以设置Render的sortingOrder等。类似的，在默认管线下，通常会调整天空盒的渲染队列为不透明物体之后来避免OverDraw。</p>
-<h3 id="2-2-3-合理的渲染顺序"><a href="#2-2-3-合理的渲染顺序" class="headerlink" title="2.2.3 合理的渲染顺序"></a>2.2.3 合理的渲染顺序</h3><p>Urp渲染管线对不透明物体会按照从前到后渲染（不支持GPU隐藏面消除），透明物体按照从后到前渲染。Shader的RenderType定义是半透明还是不透明物体。另外前述的渲染Pass和渲染队列等也会影响渲染顺序。合理的渲染顺序能够提高Early-Z的命中率，减少OverDraw。</p>
-<h3 id="2-2-4-减少大范围或者全屏特效"><a href="#2-2-4-减少大范围或者全屏特效" class="headerlink" title="2.2.4 减少大范围或者全屏特效"></a>2.2.4 减少大范围或者全屏特效</h3><p>大范围的特效是OverDraw的杀手，尤其特效反复重叠的情况，项目中最好从设计层面规避这种情况的出现，实在没办法的再想办法优化特效本身的执行效率，比如特效的粒子数或者面片数、Shader复杂度等。</p>
-<h3 id="2-2-5-减少UI的重叠层数"><a href="#2-2-5-减少UI的重叠层数" class="headerlink" title="2.2.5 减少UI的重叠层数"></a>2.2.5 减少UI的重叠层数</h3><p>由于UI是按照半透明物体渲染的，因此要尽可能减少UI的重叠。下面的UI要隐藏而不是被覆盖。不过，这一点通常要在UI框架中做好解决，因为不仅仅是有OverDraw，UI的网格计算等CPU消耗也很大。</p>
-<h2 id="2-3-提高Early-Z-Test的命中率"><a href="#2-3-提高Early-Z-Test的命中率" class="headerlink" title="2.3 提高Early-Z Test的命中率"></a>2.3 提高Early-Z Test的命中率</h2><p>理论上来说，从前到后渲染就是尽可能的提高Early-Z的命中率，从而降低OverDraw。所以，这一项优化通常是和优化OverDraw是一起进行的。</p>
-<h3 id="2-3-1-减少Alpha测试"><a href="#2-3-1-减少Alpha测试" class="headerlink" title="2.3.1 减少Alpha测试"></a>2.3.1 减少Alpha测试</h3><p>但是Alpha-Test，也就是在Shader中丢弃像素，即在片元着色器中执行Discard指令，可能会破坏Early-Z Test，因为硬件不执行片元着色器就无法预测最终的深度。因此，要尽量避免大范围的Early-Z Test，除非特殊的渲染要求，比如溶解、植物、头发等，不要使用Alpha-Test。</p>
-<h2 id="2-4-减少半透明物体"><a href="#2-4-减少半透明物体" class="headerlink" title="2.4 减少半透明物体"></a>2.4 减少半透明物体</h2><p>半透明物体一个是渲染顺序必须从后到前，因此OverDraw严重，性能肯定比不上不透明物体。<a href="https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/PerformanceAndProfiling/Guidelines/">按照虚幻的官方文档</a>，不透明最快，蒙版（Alpha测试）其次，半透明最慢(OverDraw严重)。</p>
-<h2 id="2-5-降低GPU带宽"><a href="#2-5-降低GPU带宽" class="headerlink" title="2.5 降低GPU带宽"></a>2.5 降低GPU带宽</h2><h3 id="2-5-1-压缩纹理"><a href="#2-5-1-压缩纹理" class="headerlink" title="2.5.1 压缩纹理"></a>2.5.1 压缩纹理</h3><ol>
-<li>纹理压缩格式：比如现今基本都支持ASTC纹理压缩，通过合理设置不同资源的压缩率，尽可能压缩纹理大小。</li>
-<li>纹理大小：一些贴图根本不需要过大的尺寸，但是美术导入的原始资源通常过大，因此可以在资源导入脚本中强制压缩到一定的尺寸或者写工具扫描压缩一遍。</li>
-<li>去除不必要的纹理通道：比如Alpha通道或者灰度图改成单通道</li>
-</ol>
-<h3 id="2-5-2-减少纹理采样次数"><a href="#2-5-2-减少纹理采样次数" class="headerlink" title="2.5.2 减少纹理采样次数"></a>2.5.2 减少纹理采样次数</h3><ol>
-<li>尽可能关闭各向异性纹理</li>
-<li>降低纹理质量</li>
-<li>UI或者角色展示场景关闭Mipmap</li>
-</ol>
-<p>其中1和2都可以在工程设置的Quality中选择，可以根据不同的设备等级来选择不同的设置。3的话需要在贴图中设置，可以通过贴图导入脚本来设置。</p>
-<h3 id="2-5-3-提高纹理缓存命中率"><a href="#2-5-3-提高纹理缓存命中率" class="headerlink" title="2.5.3 提高纹理缓存命中率"></a>2.5.3 提高纹理缓存命中率</h3><ol>
-<li>减少贴图尺寸</li>
-<li>开启Mipmap<br>GPU的片内缓冲大小是有限的，因此尽可能小的贴图或者Mipmap才更可能被缓存命中。纹理被缓存命中，那么读取速度会比从内存中读取快一个数量级。</li>
-</ol>
-<h3 id="2-5-4-压缩网格"><a href="#2-5-4-压缩网格" class="headerlink" title="2.5.4 压缩网格"></a>2.5.4 压缩网格</h3><ol>
-<li>尽可能减少网格大小：比如限制面数、顶点数</li>
-<li>开启顶点压缩<br>网格的大小也会影响带宽，但是更多的是会影响渲染面数，从而增大GPU的负担。</li>
-</ol>
-<h3 id="2-5-5-减少全屏Blit"><a href="#2-5-5-减少全屏Blit" class="headerlink" title="2.5.5 减少全屏Blit"></a>2.5.5 减少全屏Blit</h3><p>尽可能减少全屏特效，或者合并全屏特效的计算，减少全屏Blit的次数。</p>
-<h2 id="2-6-Shader优化"><a href="#2-6-Shader优化" class="headerlink" title="2.6 Shader优化"></a>2.6 Shader优化</h2><h3 id="2-6-1-降低Shader中的数值精度"><a href="#2-6-1-降低Shader中的数值精度" class="headerlink" title="2.6.1 降低Shader中的数值精度"></a>2.6.1 降低Shader中的数值精度</h3><p>现在版本的Shader中已经不需要使用fixed类型，实际上Urp的Shader中也会编译失败。尽可能使用half类型，减少float类型的使用，float类型主要是用在postion和uv上，对应颜色等属性值尽量都用half。精度更大的话，计算时间就更多。</p>
-<h3 id="2-6-2-减少Shader中的分支和循环"><a href="#2-6-2-减少Shader中的分支和循环" class="headerlink" title="2.6.2 减少Shader中的分支和循环"></a>2.6.2 减少Shader中的分支和循环</h3><p>尽可能避免分支出现，尽量不要使用循环。分支会破坏Shader的并行，严重影响Shader的执行效率。尽可能用其它方式替换，比如条件操作符、乘法等。</p>
-<h3 id="2-6-3-降低Shader的计算复杂度"><a href="#2-6-3-降低Shader的计算复杂度" class="headerlink" title="2.6.3 降低Shader的计算复杂度"></a>2.6.3 降低Shader的计算复杂度</h3><p>分析一些OverDraw高或者屏幕占比高的Shader，尽可能或者根据项目要求来简化其计算复杂度，或者利用Shader LOD，写几个简化版本的Shader来对应中低端机器。</p>
-<h3 id="2-6-4-减少纹理的读取次数"><a href="#2-6-4-减少纹理的读取次数" class="headerlink" title="2.6.4 减少纹理的读取次数"></a>2.6.4 减少纹理的读取次数</h3><p>在Shader中尽量减少纹理的读取次数，比如控制贴图对应的纹元可以一次性读取到变量中，不要反复读取。</p>
-<h3 id="2-6-5-Shader-LOD"><a href="#2-6-5-Shader-LOD" class="headerlink" title="2.6.5 Shader LOD"></a>2.6.5 Shader LOD</h3><p>Unity的Shader支持LOD，可以针对中低端机器编写简化版本的SubShader，然后针对性的运行时切换到简化Shader运行。</p>
-<h2 id="2-7-尽可能剔除不必要的物体渲染"><a href="#2-7-尽可能剔除不必要的物体渲染" class="headerlink" title="2.7 尽可能剔除不必要的物体渲染"></a>2.7 尽可能剔除不必要的物体渲染</h2><ol>
-<li>合理设置摄像机远平面距离，不渲染远处的物体</li>
-<li>给物体设置不同的Layer，给不同的Layer设置不同的摄像机裁剪距离</li>
-<li>使用Unity自带的遮挡剔除（要烘焙数据，占用额外的包体和内存，可能占用额外的CPU，一般不建议使用）</li>
-<li>自定义的剔除算法，比如检测到物体超过摄像机多远，不渲染或者只渲染部分效果（可以参考项目内的WorldCullingManager，这个是利用Unity自带的CullingGroup来检测角色的距离变化，从而缩放角色的渲染效果）。</li>
-</ol>
-<h2 id="2-8-LOD"><a href="#2-8-LOD" class="headerlink" title="2.8 LOD"></a>2.8 LOD</h2><h3 id="2-8-1-模型LOD"><a href="#2-8-1-模型LOD" class="headerlink" title="2.8.1 模型LOD"></a>2.8.1 模型LOD</h3><p>模型也可以使用Lod，默认情况下是随着摄像机距离变大切换到更简单的Lod。不过，也可以根据任意条件来切换Lod，比如机型匹配，帧率下降等。</p>
-<h3 id="2-8-2-动画LOD"><a href="#2-8-2-动画LOD" class="headerlink" title="2.8.2 动画LOD"></a>2.8.2 动画LOD</h3><p>可以在切换模型LOD时候，选择更简单的动画状态机，这个Unity是支持分层动画和Mask的，具体参考相关文档。</p>
-<h3 id="2-8-3-渲染LOD"><a href="#2-8-3-渲染LOD" class="headerlink" title="2.8.3 渲染LOD"></a>2.8.3 渲染LOD</h3><ol>
-<li>不同的距离开启不一样的渲染效果，类似模型LOD，远处的物体采用更简单的渲染方式。</li>
-<li>不同档次设置采用不同级别的渲染效果，比如切换Shader Lod，关闭一些Pass等。</li>
-<li>不同重要度的物体，比如小怪等，可以关闭一些渲染特性或者效果，或者使用更低的Shader Lod等</li>
-<li>同理，类似的其它一些缩放方式。</li>
-</ol>
-<h2 id="2-9-Fake渲染"><a href="#2-9-Fake渲染" class="headerlink" title="2.9 Fake渲染"></a>2.9 Fake渲染</h2><h3 id="2-9-1-假阴影"><a href="#2-9-1-假阴影" class="headerlink" title="2.9.1 假阴影"></a>2.9.1 假阴影</h3><p>比如角色下面的影子是一个黑色面片，或者使用平面阴影（Planar Shadow）。</p>
-<h3 id="2-9-2-公告板"><a href="#2-9-2-公告板" class="headerlink" title="2.9.2 公告板"></a>2.9.2 公告板</h3><p>比如公告板技术实现的远处面片树木、面片房子等</p>
-<h1 id="三、CPU性能优化"><a href="#三、CPU性能优化" class="headerlink" title="三、CPU性能优化"></a>三、CPU性能优化</h1><p>按照第一节的游戏循环的说法，CPU的性能优化主要包括：游戏逻辑和渲染提交。或者更准确的说，应该把CPU性能优化分为渲染优化和其它的优化；其它的优化，主要指的是游戏逻辑相关的优化，具体包括：物体、动画、粒子、UI、资源加载、游戏逻辑（游戏层脚本）、GC等。下面，我们来一个个的做一些经验介绍。</p>
-<h2 id="3-1-渲染优化"><a href="#3-1-渲染优化" class="headerlink" title="3.1 渲染优化"></a>3.1 渲染优化</h2><p>CPU上的渲染主要包括两个部分，一个是计算需要渲染的物体，另一个是提交渲染和等待渲染完成。</p>
-<h3 id="3-1-1-Culling优化"><a href="#3-1-1-Culling优化" class="headerlink" title="3.1.1 Culling优化"></a>3.1.1 Culling优化</h3><p>Culling也可以叫做裁剪，实质上裁剪有很多种算法或者方式。从现今的游戏引擎来说，一般是使用层次包围盒(Bounding Volume Hierarchy)，来粗略的和摄像机的可视范围做交集来进行裁剪。这一部分通常是在游戏引擎内的，因此我们不能控制。但是，SRP渲染管线提供了一些可能性来做优化。</p>
-<ol>
-<li>隔帧Culling：如果游戏场景更新不频繁，那么可以隔帧或者过几帧才计算一次Culling。</li>
-<li>修改Urp的Renderer中的SetupCullingParameters：该函数控制渲染引擎的裁剪参数，可以尝试修改该函数以提高特定项目的裁剪效率。</li>
-<li>在主线程中自定义Culling逻辑：和2.6的第四点意思一样。</li>
-</ol>
-<h3 id="3-1-2-渲染批次优化"><a href="#3-1-2-渲染批次优化" class="headerlink" title="3.1.2 渲染批次优化"></a>3.1.2 渲染批次优化</h3><p>本质上是优化主线程提交给渲染线程的指令数目，从而减少渲染线程提交给图形接口的渲染指令数目。对应到Unity上则是各种合批策略的体现。</p>
-<ol>
-<li>自定义Pass：对于要合批的物体，尤其是动态物体，比如特效，最好是定义一个专门的Pass，就不会被其它不相干物体打断动态合批（对于SRP Batcher没发现这种限制）。</li>
-<li>SRP Batcher：尽可能所有的Shader兼容SRP Batcher，除非特别低端的机器，这种合批方式对性能的提高很大。</li>
-<li>静态合批：静态合批通常用于场景（SRP Batcher实际上也兼容静态合批），不过静态合批需要打开网格读写，静态合批只合并材质一样的物体，因此静态合批需要美术那边尽量提高材质的重用度后使用的意义才大；同时因为静态合批会合并网格（比如，同样的网格和材质出现多次，会将网格复制多次合并成一个更大的网格）可能会导致包体和内存显著增长；因此，静态合批最适合材质重复度高，网格重复很少的场景。</li>
-<li>动态合批：静态合批的运行时版本，因为有运行时的CPU消耗，类似静态合批也可能会增大内存消耗；有限制，比如要求顶点属性之和不超过900等；适合于动态的小物体的合批，比如粒子特效、小道具等。</li>
-<li>Draw Instancing：也叫实例化渲染，适合的场景是网格重复多次（只是朝向、缩放等不一样），材质一样（或者材质属性基本一致的）的情况，比如大规模渲染树木和草地。</li>
-<li>手动合并网格和材质：用软件来离线合并场景内的模型和材质；理论上来说，最自由但是最繁琐，如果场景小的话可以这样试试；合理控制的话，不会显著增大内存和包体，也没有运行时消耗，美术乐意的话，何乐而不为？</li>
-</ol>
-<h2 id="3-2-物理优化"><a href="#3-2-物理优化" class="headerlink" title="3.2 物理优化"></a>3.2 物理优化</h2><h3 id="3-2-1-降低Unity的物理更新频率"><a href="#3-2-1-降低Unity的物理更新频率" class="headerlink" title="3.2.1 降低Unity的物理更新频率"></a>3.2.1 降低Unity的物理更新频率</h3><p>可以在工程设置的Physics选项中关闭Auto Simulation，然后选择在框架更新的时候降低频率（比如2倍的Fixed Timestep）来调用Physics.Simulate来更新物理。同样可以直接设置Fixed Timestep来降低更新频率。</p>
-<h3 id="3-2-2-少用或者不用MeshCollider"><a href="#3-2-2-少用或者不用MeshCollider" class="headerlink" title="3.2.2 少用或者不用MeshCollider"></a>3.2.2 少用或者不用MeshCollider</h3><h3 id="3-2-3-减少频繁射线检测的使用"><a href="#3-2-3-减少频繁射线检测的使用" class="headerlink" title="3.2.3 减少频繁射线检测的使用"></a>3.2.3 减少频繁射线检测的使用</h3><p>可以缓存计算结果或者用更快速的检测方式替代，比如boxcast。</p>
-<h3 id="3-2-4-关闭碰撞矩阵中没必要的部分"><a href="#3-2-4-关闭碰撞矩阵中没必要的部分" class="headerlink" title="3.2.4 关闭碰撞矩阵中没必要的部分"></a>3.2.4 关闭碰撞矩阵中没必要的部分</h3><h2 id="3-3-动画优化"><a href="#3-3-动画优化" class="headerlink" title="3.3 动画优化"></a>3.3 动画优化</h2><h3 id="3-3-1-限制骨骼数目"><a href="#3-3-1-限制骨骼数目" class="headerlink" title="3.3.1 限制骨骼数目"></a>3.3.1 限制骨骼数目</h3><p>要求美术制作时候在规定的骨骼数目范围内，骨骼数目会影响动画大小也会影响执行效率。通常80-100已经非常足够了。</p>
-<h3 id="3-3-3-动画的CPU性能优化"><a href="#3-3-3-动画的CPU性能优化" class="headerlink" title="3.3.3 动画的CPU性能优化"></a>3.3.3 动画的CPU性能优化</h3><p>参考UWA的文章：<a href="https://zhuanlan.zhihu.com/p/382656748">Unity性能优化 — 动画模块</a><br>参考Unity文档：<a href="https://docs.unity3d.com/cn/current/Manual/MecanimPeformanceandOptimization.html">性能和优化</a></p>
-<h2 id="3-4-粒子优化"><a href="#3-4-粒子优化" class="headerlink" title="3.4 粒子优化"></a>3.4 粒子优化</h2><p>可以参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule3.html">粒子系统优化——如何优化你的技能特效</a><br>特效的优化一般在项目的中后期，快上线的时候，针对性的对战斗这种特效集中度很高的场景进行测试和优化。</p>
-<h3 id="3-4-1-限制特效的最大粒子数"><a href="#3-4-1-限制特效的最大粒子数" class="headerlink" title="3.4.1 限制特效的最大粒子数"></a>3.4.1 限制特效的最大粒子数</h3><p>通常会限制普通特效只能有5-10个粒子或者更小。</p>
-<h3 id="3-4-2-限制特效的批次"><a href="#3-4-2-限制特效的批次" class="headerlink" title="3.4.2 限制特效的批次"></a>3.4.2 限制特效的批次</h3><p>最好是一个特效能在几个批次或者1个批次内渲染完成。</p>
-<h3 id="3-4-3-限制特效使用的贴图尺寸"><a href="#3-4-3-限制特效使用的贴图尺寸" class="headerlink" title="3.4.3 限制特效使用的贴图尺寸"></a>3.4.3 限制特效使用的贴图尺寸</h3><p>特效尽量使用小贴图，比如不超256或者512的，尽量都是128或者更细的贴图或者贴图合集。</p>
-<h3 id="3-4-3-限制特效的重叠层数和范围"><a href="#3-4-3-限制特效的重叠层数和范围" class="headerlink" title="3.4.3 限制特效的重叠层数和范围"></a>3.4.3 限制特效的重叠层数和范围</h3><p>这一部分应该算GPU的优化，可以减少OverDraw和GPU的计算。</p>
-<h2 id="3-5-UI优化"><a href="#3-5-UI优化" class="headerlink" title="3.5 UI优化"></a>3.5 UI优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule8.html">Unity性能优化 — UI模块</a><br>优化UI的基本原则是：</p>
-<ol>
-<li>减少UI变化重新生成网格：因为UI本质上也是网格加贴图绘制出来的，因此要避免各种操作或者设置到UI频繁变化导致网格重复生成。</li>
-<li>减少UI的射线检测</li>
-<li>UI的图集控制：比如一个界面最多2个图集等</li>
-<li>战斗这种3D场景可以不使用UGUI来绘制3D的UI，而是直接用3D网格来绘制，避免UGUI的各种性能消耗。</li>
-</ol>
-<h2 id="3-6-资源加载优化"><a href="#3-6-资源加载优化" class="headerlink" title="3.6 资源加载优化"></a>3.6 资源加载优化</h2><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule2.html">Unity性能优化系列—加载与资源管理</a></p>
-<h3 id="3-6-1-Shader变体的预热"><a href="#3-6-1-Shader变体的预热" class="headerlink" title="3.6.1 Shader变体的预热"></a>3.6.1 Shader变体的预热</h3><p>Shader变体的预热比较耗时，可能需要拆分处理。Shader需要优化关键字数目，尤其是全局关键字数目，这个会显著影响Shader的包体和加载进来的内存。</p>
-<h3 id="3-6-2-游戏对象池"><a href="#3-6-2-游戏对象池" class="headerlink" title="3.6.2 游戏对象池"></a>3.6.2 游戏对象池</h3><p>尽量使用对象池，对象池回收时候可以隐藏GO，也可以选择移动到远处（关闭组件）。</p>
-<h3 id="3-6-3-资源管理方案推荐YooAsset"><a href="#3-6-3-资源管理方案推荐YooAsset" class="headerlink" title="3.6.3 资源管理方案推荐YooAsset"></a>3.6.3 资源管理方案推荐YooAsset</h3><h2 id="3-7-游戏脚本优化"><a href="#3-7-游戏脚本优化" class="headerlink" title="3.7 游戏脚本优化"></a>3.7 游戏脚本优化</h2><p>这里主要讲的是游戏框架和游戏逻辑的代码优化，包括C#和Lua。</p>
-<h3 id="3-7-1-游戏框架优化"><a href="#3-7-1-游戏框架优化" class="headerlink" title="3.7.1 游戏框架优化"></a>3.7.1 游戏框架优化</h3><p>框架应该尽可能优化，尽可能减少对使用者（游戏逻辑层）带来的性能损耗。</p>
-<ol>
-<li>框架代码尽量不要有GC</li>
-<li>框架代码尽量不要占用额外的大内存</li>
-<li>框架代码尽量不要消耗过多的CPU，使用者不用担心性能消耗<h3 id="3-7-2-游戏逻辑优化"><a href="#3-7-2-游戏逻辑优化" class="headerlink" title="3.7.2 游戏逻辑优化"></a>3.7.2 游戏逻辑优化</h3>具体的游戏逻辑优化，跟实际的游戏类型有关，需要针对性优化。</li>
-</ol>
-<h3 id="3-7-3-常见的脚本优化策略"><a href="#3-7-3-常见的脚本优化策略" class="headerlink" title="3.7.3 常见的脚本优化策略"></a>3.7.3 常见的脚本优化策略</h3><ol>
-<li>缓存计算结果：中间结果或者初始参数尽量预计算好</li>
-<li>不产生GC：任何引用类型的对象都尽量使用缓存池内的</li>
-<li>对缓存友好的存储方式：比如尽量使用小数组存储数据，而不用链表或者字典</li>
-<li>限帧法：限制部分逻辑的更新频率，比如2-3帧更新一次</li>
-<li>多线程：部分独立性很强的逻辑，可以考虑多线程处理</li>
-<li>主次法：比如非关键的角色或者物体，使用更少的计算逻辑</li>
-<li>减少项目的MonoBehavior的更新函数入口，游戏逻辑尽量保持一个更新入口。</li>
-</ol>
-<h3 id="3-7-4-Lua代码优化"><a href="#3-7-4-Lua代码优化" class="headerlink" title="3.7.4 Lua代码优化"></a>3.7.4 Lua代码优化</h3><p>参考UWA的文章：<a href="https://blog.uwa4d.com/archives/UWA_ReportModule4.html">Unity性能优化系列—Lua代码优化</a></p>
-<h2 id="3-8-GC优化"><a href="#3-8-GC优化" class="headerlink" title="3.8 GC优化"></a>3.8 GC优化</h2><p>由于Unity的Mono堆在超过最大值或者一定数值后会自动扩容，而且扩容后无法往回缩，因此必须非常关注Mono堆的峰值。</p>
-<ol>
-<li>降低Mono堆的峰值：这样可以避免Mono堆一直增长或者过大</li>
-<li>降低GC的频率：减少不必要的CPU消耗，尽量使用缓存池中的引用对象</li>
-</ol>
-<h1 id="四、资源优化"><a href="#四、资源优化" class="headerlink" title="四、资源优化"></a>四、资源优化</h1><h2 id="4-1-纹理优化"><a href="#4-1-纹理优化" class="headerlink" title="4.1 纹理优化"></a>4.1 纹理优化</h2><p>这个在优化GPU代码有提到。</p>
-<ol>
-<li>合理降低纹理大小</li>
-<li>尽量使用更高的压缩格式（ASTC更高压缩率）</li>
-<li>UI或立绘关闭Mipmap</li>
-<li>减少纹理通道</li>
-<li>提高纹理复用（单色图复用，重复图案复用）</li>
-</ol>
-<h2 id="4-2-网格优化"><a href="#4-2-网格优化" class="headerlink" title="4.2 网格优化"></a>4.2 网格优化</h2><ol>
-<li>关闭网格读写：除了特效外的网格关闭读写</li>
-<li>开启项目的顶点压缩：会降低内存和GPU消耗，应该不会影响资源大小</li>
-<li>MeshCompression：开启据说会降低网格的资源占用，但是不影响内存占用</li>
-<li>尽量减少面数和顶点数：和美术制作规范，正式资源要符合要求</li>
-</ol>
-<h2 id="4-3-动画优化"><a href="#4-3-动画优化" class="headerlink" title="4.3 动画优化"></a>4.3 动画优化</h2><ol>
-<li>压缩方式选择Optimal：官方推荐的方式</li>
-<li>如果没有缩放，去除Scale曲线。</li>
-<li>网上的一些剔除动画原始数据的方法以实测为准，可能剔除后动画文件变小，包体变小了，但是内存中大小不变。</li>
-</ol>
-<h1 id="五、内存优化"><a href="#五、内存优化" class="headerlink" title="五、内存优化"></a>五、内存优化</h1><h2 id="5-1-优化资源"><a href="#5-1-优化资源" class="headerlink" title="5.1 优化资源"></a>5.1 优化资源</h2><p>资源本身都会加载进入内存，因此优化资源本身大小对优化内存大小非常关键，第四节已经讲到。</p>
-<h2 id="5-2-优化打包和资源管理"><a href="#5-2-优化打包和资源管理" class="headerlink" title="5.2 优化打包和资源管理"></a>5.2 优化打包和资源管理</h2><p>减少打AB包时候的重复，以及智能的资源加载管理方案，可以减少AB包加载后的内存占用，以及去除没必要的资源常驻现象，同时也可以优化资源加载的CPU消耗。</p>
-<h2 id="5-3-优化Mono堆"><a href="#5-3-优化Mono堆" class="headerlink" title="5.3 优化Mono堆"></a>5.3 优化Mono堆</h2><p>前述已经提到Mono堆只增不涨，因此优化C#的Mono堆内存非常必要。</p>
-<h2 id="5-4-优化Native内存"><a href="#5-4-优化Native内存" class="headerlink" title="5.4 优化Native内存"></a>5.4 优化Native内存</h2><p>一些插件包括引擎都会占用Native的内存，因此合理使用插件或者检测插件占用的Native内存在某些时候也有意义。如果插件造成的Native内存占用过多，是否可以考虑更换插件？比如音频插件等。</p>
-<h2 id="5-5-优化Lua内存"><a href="#5-5-优化Lua内存" class="headerlink" title="5.5 优化Lua内存"></a>5.5 优化Lua内存</h2><p>Lua同样有虚拟机有自己管理的堆内存，同样是不能无限增长的。因此，Lua代码也要避免频繁创建新的对象造成GC严重或者导致堆内存一直上升。<br>UWA和UPR都有检测Lua内存的选项，可以试试。</p>
-<h2 id="5-6-减少包体二进制大小"><a href="#5-6-减少包体二进制大小" class="headerlink" title="5.6 减少包体二进制大小"></a>5.6 减少包体二进制大小</h2><p>应用都会加载到内存中才会运行，因此更小的二进制包体自然会占用更小的内存。可以尝试剔除一些没有使用的代码（引擎代码或者C#脚本代码），这个Unity打包时候有相关设置。</p>
-<h2 id="5-7-配置优化"><a href="#5-7-配置优化" class="headerlink" title="5.7 配置优化"></a>5.7 配置优化</h2><p>游戏项目到中后期配置可能会增大非常严重，如果一次性加载可能会造成加载时间过长，同时造成Mono内存增长过大。</p>
-<ol>
-<li>避免一次性加载全部配置到C#中</li>
-<li>如果内存占用过高，考虑其它压缩存储方式，比如二进制存储，不要使用Json</li>
-<li>Lua加载配置速度更快，但是配置过大同样内存占用高</li>
-<li>实在占用过高，可以考虑小型数据库存储配置</li>
-<li>是不是该让策划清理或者使用工具清理重复配置，配置本身是否严重冗余？</li>
-</ol>
-<h1 id="六、二进制包体优化"><a href="#六、二进制包体优化" class="headerlink" title="六、二进制包体优化"></a>六、二进制包体优化</h1><h2 id="6-1-代码裁剪"><a href="#6-1-代码裁剪" class="headerlink" title="6.1 代码裁剪"></a>6.1 代码裁剪</h2><p>Unity可以设置裁剪引擎代码，和脚本层代码。经过测试开启引擎代码裁剪问题不大，但是脚本层代码裁剪设置过高可能引起代码丢失问题，可能可以通过link.xml中的设置解决。</p>
-<h2 id="6-2-安卓架构"><a href="#6-2-安卓架构" class="headerlink" title="6.2 安卓架构"></a>6.2 安卓架构</h2><p>通常ARMv7和ARM64只需要打一个架构，当前ARM64的性能更好但是兼容性不够，关闭一个架构能减少包体。</p>
-<h2 id="6-3-其它跟App打包相关的方法"><a href="#6-3-其它跟App打包相关的方法" class="headerlink" title="6.3 其它跟App打包相关的方法"></a>6.3 其它跟App打包相关的方法</h2><p>具体请查阅相关文档，参考并且实验是否有效。</p>
-<h1 id="七、其它"><a href="#七、其它" class="headerlink" title="七、其它"></a>七、其它</h1><p>性能优化是一个迭代的长期工作，关键是底子打好，后期优化压力就小很多；或者明白优化的思路，能够快速定位关键的性能瓶颈。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1821,7 +1681,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">225</span>
+          <span class="site-state-item-count">227</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1834,7 +1694,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1886,12 +1746,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">680k</span>
+    <span title="站点总字数">692k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:18</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

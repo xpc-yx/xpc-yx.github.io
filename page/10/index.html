@@ -222,6 +222,233 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-title-link" itemprop="url">CMFCToolBar上添加组合框的bug</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-12-21 20:04:29" itemprop="dateCreated datePublished" datetime="2013-12-21T20:04:29+08:00">2013-12-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MFC/" itemprop="url" rel="index">
+                    <span itemprop="name">MFC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" class="post-meta-item leancloud_visitors" data-flag-title="CMFCToolBar上添加组合框的bug" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/12/21/CMFCToolBar%E4%B8%8A%E6%B7%BB%E5%8A%A0%E7%BB%84%E5%90%88%E6%A1%86%E7%9A%84bug/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>说实话，这几天为了CMFCToolBarComboBoxButton上的莫名其妙自动切换选择的bug烦死了，浪费了很多时间。也是过其它替代方法，发现都实现不了需要的界面效果。<br>我也不知道为什么自己对界面效果这么纠结。伤不起啊。本来我就没用过vs2008更新版本的MFC，也没打算用这个。由于上一次做的东西用到了切分视图，但是发现FormView自适应控件大小的实现非常麻烦，老是出现些不爽的bug，而且添加新的控件还得编辑界面，非常不爽。所以，打算使用新版本MFC里面的属性窗口。<br>刚好发现vs2010的项目导航可以生成这样的工程，果断试验之。虽然过程无比艰辛，总算可以使用这些自适应的DockPane窗口了。而且还发现这样的结构非常合适添加子窗口，以后的项目都可以采用这样的界面了，只要平台在windows下。<br>但是，美中最不足的是CFrameWndEx(使用CDockablePane必须使用扩展的框架窗口)，<strong>只能使用恶心的CMFCToolBar</strong>，因为CFrameWndEx的菜单和工具栏都是可以DockPane的子类。我只能说CMFCToolBar的使用太TMD的讲究了，一个不注意效果就不对。因为使用这个东西的人少，网上资料也很少。只能一直google，还有查看类定义的源码，慢慢尝试了。<br>现在，我这里说的只是添加组合框。<br>首先，在资源编辑器中新建工具栏IDR_BUILD，留下一个<strong>空位</strong>，如ID_BUILD_CHOOSE。如下图，第二个就是我预留的ID_BUILD_CHOOSE的空位。<img alt="" data-src="https://c8.staticflickr.com/8/7637/27379836511_65ae3047e4_o.jpg"><br>然后，在CMainFrame::OnCreate中创建两个工具栏，代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&nbsp; &nbsp;<span class="keyword">if</span> (!m_wndToolBar<span class="selector-class">.CreateEx</span>(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER</span><br><span class="line">| CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC)</span><br><span class="line">	|| !m_wndToolBar<span class="selector-class">.LoadToolBar</span>(IDR_MAINFRAME))</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">TRACE0</span>(<span class="string">"未能创建工具栏\n"</span>);</span><br><span class="line">	return -<span class="number">1</span>;      <span class="comment">// 未能创建</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndToolBarBuild<span class="selector-class">.Create</span>(this, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_TOOLTIPS | CBRS_FLYBY</span><br><span class="line">	| CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC| CBRS_GRIPPER | CBRS_BORDER_3D, IDC_MFCTOOLBAR_BUILD)</span><br><span class="line">	|| !m_wndToolBarBuild<span class="selector-class">.LoadToolBar</span>(IDR_BUILD))</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">TRACE0</span>(<span class="string">"未能创建build工具栏\n"</span>);</span><br><span class="line">	return -<span class="number">1</span>;      <span class="comment">// 未能创建</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!m_wndStatusBar<span class="selector-class">.Create</span>(this))</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">TRACE0</span>(<span class="string">"未能创建状态栏\n"</span>);</span><br><span class="line">	return -<span class="number">1</span>;      <span class="comment">// 未能创建</span></span><br><span class="line">}</span><br><span class="line">m_wndStatusBar<span class="selector-class">.SetIndicators</span>(indicators, <span class="built_in">sizeof</span>(indicators)/<span class="built_in">sizeof</span>(UINT));</span><br><span class="line"></span><br><span class="line">m_wndMenuBar<span class="selector-class">.EnableDocking</span>(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBar<span class="selector-class">.EnableDocking</span>(CBRS_ALIGN_ANY);</span><br><span class="line">m_wndToolBarBuild<span class="selector-class">.EnableDocking</span>(CBRS_ALIGN_ANY);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">EnableDocking</span><span class="params">(CBRS_ALIGN_ANY)</span></span>;</span><br><span class="line"><span class="function"><span class="title">DockPane</span><span class="params">(m_wndMenuBar)</span></span>;</span><br><span class="line"><span class="function"><span class="title">DockPane</span><span class="params">(m_wndToolBarBuild)</span></span>;</span><br><span class="line"><span class="function"><span class="title">DockPaneLeftOf</span><span class="params">(m_wndToolBar, m_wndToolBarBuild)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>注意，创建第二个工具栏的时候需要使用<strong>Create</strong>而不是CreateEx，如果使用CreateEx就不能使用后面的ID参数。<br>现在需要实现三个消息。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ON_REGISTERED_MESSAGE</span><span class="params">(AFX_WM_RESETTOOLBAR, CMainFrame::OnToolbarReset)</span></span></span><br><span class="line"><span class="function"><span class="title">ON_COMMAND</span><span class="params">(ID_BUILD_CHOOSE, CMainFrame::OnClickChoose)</span></span></span><br><span class="line"><span class="function"><span class="title">ON_CBN_SELCHANGE</span><span class="params">(ID_BUILD_CHOOSE, CMainFrame::OnSelChangeClick)</span></span></span><br></pre></td></tr></tbody></table></figure>
+<p>代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">LRESULT CMainFrame::<span class="built_in">OnToolbarReset</span>(WPARAM wParam, LPARAM lParam)</span><br><span class="line">{</span><br><span class="line">	UINT uiToolBarId = (UINT)wParam;</span><br><span class="line"></span><br><span class="line">	switch (uiToolBarId)</span><br><span class="line">	{</span><br><span class="line">	case IDR_MAINFRAME:</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	case IDR_BUILD:</span><br><span class="line">		{</span><br><span class="line">		   CMFCToolBarComboBoxButton <span class="built_in">comboButton</span>(ID_BUILD_CHOOSE, <span class="built_in">GetCmdMgr</span>()-&gt;<span class="built_in">GetCmdImage</span>(ID_BUILD_CHOOSE, FALSE), CBS_DROPDOWN);</span><br><span class="line">		   comboButton<span class="selector-class">.EnableWindow</span>(TRUE);</span><br><span class="line">		   comboButton<span class="selector-class">.SetCenterVert</span>();</span><br><span class="line">		   comboButton<span class="selector-class">.SetFlatMode</span>();</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Example Stack"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Upsample Pyramid"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Jitter Pyramid"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.AddItem</span>(<span class="built_in">_T</span>(<span class="string">"Correct Pyramid"</span>));</span><br><span class="line">		   comboButton<span class="selector-class">.SelectItem</span>(<span class="number">0</span>);</span><br><span class="line">		   m_wndToolBarBuild<span class="selector-class">.ReplaceButton</span>(ID_BUILD_CHOOSE, comboButton);</span><br><span class="line">		}</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	default:</span><br><span class="line">		break;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CMainFrame::<span class="built_in">OnClickChoose</span>()</span><br><span class="line">{</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void CMainFrame::<span class="built_in">OnSelChangeClick</span>()</span><br><span class="line">{</span><br><span class="line">	CMFCToolBarComboBoxButton* pCombo = CMFCToolBarComboBoxButton::<span class="built_in">GetByCmd</span>(ID_BUILD_CHOOSE, TRUE);</span><br><span class="line"></span><br><span class="line">	int nIndex = pCombo-&gt;<span class="built_in">GetCurSel</span>();</span><br><span class="line">	theAppState<span class="selector-class">.ts</span><span class="selector-class">.m_nDisplayMode</span> = nIndex;</span><br><span class="line">	theAppState<span class="selector-class">.ts</span><span class="selector-class">.UpdateDisplayWnd</span>();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>OnToolbarReset中实现的是添加组合框，根据MSDN的文档，应该采用这样的方法，当然也可以采用CMFCToolBar的protected方法InsertButton，不过需要把这个方法改成public的，这个就需要修改类定义的源码。必须响应ID_BUILD_CHOOSE的点击消息，否则组合框是灰的，无法点击。<br>OnSelChangeClick响应的是组合框选择变化的消息，这个消息的实现必须用 CMFCToolBarComboBoxButton::GetByCmd获得组合框的指针，否则得不到正确的效果。<br>最后要讲的是我碰到的一个bug，恶心了我一周了。我在工具栏上面定义了向前和向后操作，如果我一直点击向前或者向后按钮，<strong>组合框会自动切换选择到最后一项</strong>。我调试了很久，发现跟我的算法实现代码一点关系都没有，我什么都不做，操作界面就会出现这个bug。最后，我偶然发现修改CMFCToolBarComboBoxButton comboButton(ID_BUILD_CHOOSE, GetCmdMgr()-&gt;GetCmdImage(ID_BUILD_CHOOSE, FALSE), <strong>CBS_DROPDOWNLIST</strong>);的最后一个参数为<strong>CBS_DROPDOWN</strong>就不会出现这样的bug。只是有一个不爽的地方，那就是点击组合框的时候，会出现光标而已。勉强接受了吧。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/" class="post-title-link" itemprop="url">如何用OpenCV实现PCA降维</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-12-19 10:23:10" itemprop="dateCreated datePublished" datetime="2013-12-19T10:23:10+08:00">2013-12-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/" class="post-meta-item leancloud_visitors" data-flag-title="如何用OpenCV实现PCA降维" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/12/19/%E5%A6%82%E4%BD%95%E7%94%A8OpenCV%E5%AE%9E%E7%8E%B0PCA%E9%99%8D%E7%BB%B4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>这里讲的不是pca的原理，我还没仔细去研究过。我刚刚使用过opencv进行pca降维，效果成功过。所以只是记录下方式和注意的地方。当然也参考了网上很多的代码。网上的代码大多大同小异，我的代码当然也和别人的差不多。</p>
+<p>首先，我用的是C版本的OpenCV。我不是嫌弃C++版本的，而是C版本的OpenCV本来已经够复杂了，我不想再跟踪C++版本的这些对象的内存了。我们需要使用到OpenCV的CvMat结构存储数据。</p>
+<p>我们需要使用以下的CvMat。<br>CvMat<em> m_pData;//原始样本集<br>CvMat</em> m_pMean;//平均值向量、<br>CvMat<em> m_pEigVals;//协方差矩阵的特征值<br>CvMat</em> m_pEigVecs;//协方差矩阵的特征向量<br>CvMat<em> m_pResult;//PCA降维的结果<br>CvMat</em> m_pQueryIn;//输入的一个数据<br>CvMat* m_pQueryOut;//用样本集的PCA信息降维后的一个数据</p>
+<p>首先，我们创建数据m_pData = cvCreateMat(m_nRows, m_nDim, CV_64FC1);然后初始化数据。再创建m_pMean，m_pEigVals，m_pEigVecs。然后调用cvCalcPCA计算平均值向量和协方差矩阵的特征值和特征向量。最后一步是cvProjectPCA，在这个函数里面可以指定维度。我们就可以得到降维之后的数据。</p>
+<p>现在再讲查询。首先创建一个数据。m_pQueryIn = cvCreateMat(1, m_nDim, CV_64FC1);m_pQueryOut = cvCreateMat(1, m_nUseDim, CV_64FC1);然后，我们初始化m_pQueryIn。再调用cvProjectPCA(m_pQueryIn, m_pMean, m_pEigVecs, m_pQueryOut);就可以得到降维之后的数据。</p>
+<p>下面看下综合起来的代码。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (m_pData)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pData);</span><br><span class="line">}</span><br><span class="line">m_pData = <span class="built_in">cvCreateMat</span>(m_nRows, m_nDim, CV_64FC1);</span><br><span class="line"><span class="comment">//在这里初始化样本集合</span></span><br><span class="line"><span class="keyword">if</span> (m_pMean)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pMean);</span><br><span class="line">}</span><br><span class="line">m_pMean = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, m_nDim, CV_64FC1);</span><br><span class="line"><span class="keyword">if</span> (m_pEigVals)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pEigVals);</span><br><span class="line">}</span><br><span class="line">m_pEigVals = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, std::<span class="built_in">min</span>(m_nRows, m_nDim), CV_64FC1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (m_pEigVecs)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pEigVecs);</span><br><span class="line">}</span><br><span class="line">m_pEigVecs = <span class="built_in">cvCreateMat</span>(std::<span class="built_in">min</span>(m_nRows, m_nDim), m_nDim, CV_64FC1);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">cvCalcPCA</span><span class="params">(m_pData, m_pMean, m_pEigVals, m_pEigVecs, CV_PCA_DATA_AS_ROW)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (m_pResult)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pResult);</span><br><span class="line">}</span><br><span class="line">m_pResult = <span class="built_in">cvCreateMat</span>(m_nRows, m_nUseDim, CV_64FC1);</span><br><span class="line"><span class="function"><span class="title">cvProjectPCA</span><span class="params">(m_pData, m_pMean, m_pEigVecs, m_pResult)</span></span>;<span class="comment">//现在m_pResult保存的就是降低维度之后的信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化查询需要使用的数据</span></span><br><span class="line"><span class="keyword">if</span> (m_pQueryIn)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pQueryIn);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">if</span> (m_pQueryOut)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cvReleaseMat</span>(m_pQueryOut);</span><br><span class="line">}</span><br><span class="line">m_pQueryIn = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, m_nDim, CV_64FC1);</span><br><span class="line">m_pQueryOut = <span class="built_in">cvCreateMat</span>(<span class="number">1</span>, m_nUseDim, CV_64FC1);</span><br><span class="line"></span><br><span class="line"><span class="comment">//从m_nDim降到m_nUseDim维</span></span><br><span class="line">double* CNeighborSet::<span class="built_in">Pca</span>(double* pfIn)</span><br><span class="line">{</span><br><span class="line">	m_pQueryIn-&gt;data<span class="selector-class">.db</span> = pfIn;</span><br><span class="line">	<span class="built_in">cvProjectPCA</span>(m_pQueryIn, m_pMean, m_pEigVecs, m_pQueryOut);<span class="comment">//现在pResult保存的是降低维度之后的信息</span></span><br><span class="line">	return m_pQueryOut-&gt;data.db;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>现在还有一个问题，是确定我们到底能够降低到多少维度了。<strong>如果维度降低太多，就保持不了足够的信息，就会失真，达不到应用的效果。</strong>当然如果效果不对，可以慢慢增大维度，直到够用为止。<br>当然还有其它办法了。<strong>比如说，在代码中计算我们应该保留多少维度就能够保持90%的信息了。</strong>下面要给出的就是这个办法。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">double fSum = <span class="number">0.0</span>;</span><br><span class="line">double fSum0 = <span class="number">0.0</span>;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_pEigVals-&gt;cols; ++i)</span><br><span class="line">{</span><br><span class="line">	fSum += *(m_pEigVals-&gt;data<span class="selector-class">.db</span> + i);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double fTmp = fSum * m_fPcaRatio;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_pEigVals-&gt;cols; ++i)</span><br><span class="line">{</span><br><span class="line">	fSum0 += *(m_pEigVals-&gt;data<span class="selector-class">.db</span> + i);</span><br><span class="line">	<span class="keyword">if</span> (fSum0 &gt;= fTmp)</span><br><span class="line">	{</span><br><span class="line">		m_nUseDim = <span class="selector-tag">i</span> + <span class="number">1</span>;</span><br><span class="line">		break;</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/12/19/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%90%86%E8%A7%A3%E9%94%99%E8%AF%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1166,241 +1393,6 @@ CImage CImage::operator=(const CImage yxImage)
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" class="post-title-link" itemprop="url">使用CGAL实现简单的模型分割</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-08-05 22:00:43" itemprop="dateCreated datePublished" datetime="2013-08-05T22:00:43+08:00">2013-08-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
-                    <span itemprop="name">CGAL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL实现简单的模型分割" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>第一步，先把鼠标轨迹点<strong>逆投影</strong>到三维世界的观察坐标系。<br>第二步，把第一步获得的三维坐标点集合<strong>投射到模型上面</strong>，获得笔画，就是模型内部的一些相互连接的边。<br>第三步，沿着第二步获得那些相互连接的边进行<strong>欧拉操作分裂边</strong>。可能需要多分割几次才会分割出模型的一部分。<br>第四步，<strong>搜索整个模型，对不同的部分进行标记</strong>。</p>
-<p>下面是实现的一些效果。绿色线是鼠标轨迹，红色线是投影到模型上面的边的连接线。</p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png"></p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7046/27417002526_77b7704140_o.png"></p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7021/27174724330_dab475eef1_o.png"><br>下面具体解释下以上几个步骤。<br>步骤一，比较简单，网上代码一堆，不过要自己注意理解。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">glGetIntegerv</span><span class="params">(GL_VIEWPORT, m_nViewPort)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glGetDoublev</span><span class="params">(GL_PROJECTION_MATRIX, m_fProjmatrix)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glGetDoublev</span><span class="params">(GL_MODELVIEW_MATRIX, m_fMvmatrix)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="attribute">float</span> fWinX, fWinY, fWinZ;</span><br><span class="line">int nX, nY;</span><br><span class="line">double fX, fY, fZ;</span><br><span class="line"></span><br><span class="line">m_pt3ds<span class="selector-class">.clear</span>();</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_ptStroke<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    nX = m_ptStroke<span class="selector-attr">[i]</span>.x;</span><br><span class="line">    nY = m_nViewPort<span class="selector-attr">[3]</span> - m_ptStroke<span class="selector-attr">[i]</span><span class="selector-class">.y</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">glReadBuffer</span>(GL_BACK);</span><br><span class="line">    <span class="built_in">glReadPixels</span>(nX, nY, <span class="number">1</span>, <span class="number">1</span>, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);</span><br><span class="line">    <span class="comment">//if (fabs(fWinZ - 1.0) &gt; 1e-8)</span></span><br><span class="line">    {</span><br><span class="line">        fWinX = nX;</span><br><span class="line">        fWinY = nY;</span><br><span class="line">        <span class="built_in">gluUnProject</span>(fWinX, fWinY, fWinZ, m_fMvmatrix, m_fProjmatrix, m_nViewPort,</span><br><span class="line">            fX, fY, fZ);</span><br><span class="line">        m_pt3ds<span class="selector-class">.push_back</span>(<span class="built_in">Point_3</span>(fX, fY, fZ));</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">m_ptStroke<span class="selector-class">.clear</span>();</span><br></pre></td></tr></tbody></table></figure>
-<p>该代码就是把m_ptStroke的点转化为观察坐标系的点m_pt3ds。<br>步骤二，大致思路如下：第一步，把所有鼠标经过的点，都投影回观察空间。第二步，找到离第一个鼠标点p[0]，最近的模型内的顶点pClosed。第三步，循环剩余的鼠标点，如果当前鼠标点离pClosed的相邻顶点更近的话，那么将pClosed更新为上一次找到的pClosed的相邻顶点。所有的这些，pClosed点就是笔画的投影点。</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">FILE* fpLog = <span class="built_in">fopen</span>(<span class="string">"log.txt"</span>, <span class="string">"w"</span>);</span><br><span class="line">char szStr<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">CString str;</span><br><span class="line">str<span class="selector-class">.Format</span>(<span class="string">"%d"</span>, pt3ds<span class="selector-class">.size</span>());</span><br><span class="line"><span class="comment">//AfxMessageBox(str);</span></span><br><span class="line"><span class="function"><span class="title">sprintf</span><span class="params">(szStr, <span class="string">"pt3ds.size():%d\n"</span>, pt3ds.size()</span></span>);</span><br><span class="line"><span class="function"><span class="title">fprintf</span><span class="params">(fpLog, <span class="string">"%s"</span>, szStr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (pt3ds<span class="selector-class">.size</span>() == <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line">    return;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double fX = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[0]</span><span class="selector-class">.x</span>());</span><br><span class="line">double fY = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[0]</span><span class="selector-class">.y</span>());</span><br><span class="line">double fZ = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[0]</span><span class="selector-class">.z</span>());</span><br><span class="line">double fX1, fY1, fZ1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获得离第一个投影点最近的halfedge_handle</span></span><br><span class="line">Halfedge_handle heClosed = <span class="built_in">facets_begin</span>()-&gt;<span class="built_in">halfedge</span>();</span><br><span class="line">double fDiff = <span class="number">1</span>e10;</span><br><span class="line"><span class="function"><span class="title">for</span><span class="params">(Face_iterator pf = facets_begin()</span></span>;</span><br><span class="line">    pf != <span class="built_in">facets_end</span>(); pf++)</span><br><span class="line">{</span><br><span class="line">    Halfedge_handle he = pf-&gt;<span class="built_in">halfedge</span>();</span><br><span class="line"></span><br><span class="line">    do</span><br><span class="line">    {</span><br><span class="line">        Point_3 <span class="selector-tag">p</span> = he-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>();</span><br><span class="line">        fX1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.x</span>());</span><br><span class="line">        fY1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.y</span>());</span><br><span class="line">        fZ1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.z</span>());</span><br><span class="line">        double fTemp = (fX1 - fX) * (fX1 - fX) + (fY1 - fY) * (fY1 - fY)</span><br><span class="line">            + (fZ1 - fZ) * (fZ1 - fZ);</span><br><span class="line">        <span class="keyword">if</span> (fTemp &lt; fDiff)</span><br><span class="line">        {</span><br><span class="line">            fDiff = fTemp;</span><br><span class="line">            heClosed = he;</span><br><span class="line">        }</span><br><span class="line">        he = he-&gt;<span class="built_in">next</span>();</span><br><span class="line">    }<span class="built_in">while</span>(he!= pf-&gt;<span class="built_in">halfedge</span>());</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">vector&lt;Halfedge_handle&gt; vh;</span><br><span class="line">vh<span class="selector-class">.push_back</span>(heClosed);</span><br><span class="line"><span class="keyword">for</span> (unsigned <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; pt3ds<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"处理第:%d个笔画点\n"</span>, i);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">    fX = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[i]</span><span class="selector-class">.x</span>());</span><br><span class="line">    fY = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[i]</span><span class="selector-class">.y</span>());</span><br><span class="line">    fZ = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[i]</span><span class="selector-class">.z</span>());</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"笔画点坐标为:%f,%f,%f\n"</span>, fX, fY, fZ);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">    Halfedge_handle next = heClosed;</span><br><span class="line">    Point_3 <span class="selector-tag">p</span> = heClosed-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>();</span><br><span class="line"></span><br><span class="line">    fX1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.x</span>());</span><br><span class="line">    fY1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.y</span>());</span><br><span class="line">    fZ1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.z</span>());</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"heClosed坐标为:%f,%f,%f\n"</span>, fX1, fY1, fZ1);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">    fDiff = (fX1 - fX) * (fX1 - fX) + (fY1 - fY) * (fY1 - fY)</span><br><span class="line">        + (fZ1 - fZ) * (fZ1 - fZ);</span><br><span class="line"></span><br><span class="line">    Vertex_handle v = heClosed-&gt;<span class="built_in">vertex</span>();</span><br><span class="line">    Halfedge_around_vertex_circulator he, end;</span><br><span class="line">    he = end = v-&gt;<span class="built_in">vertex_begin</span>();</span><br><span class="line">    <span class="built_in">CGAL_For_all</span>(he, end)</span><br><span class="line">    {</span><br><span class="line">        Halfedge_handle heTemp = he-&gt;<span class="built_in">opposite</span>();</span><br><span class="line">        <span class="selector-tag">p</span> = heTemp-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>();</span><br><span class="line">        fX1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.x</span>());</span><br><span class="line">        fY1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.y</span>());</span><br><span class="line">        fZ1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.z</span>());</span><br><span class="line"></span><br><span class="line">        double fTemp = (fX1 - fX) * (fX1 - fX) + (fY1 - fY) * (fY1 - fY)</span><br><span class="line">            + (fZ1 - fZ) * (fZ1 - fZ);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fTemp &lt; fDiff  heClosed != he)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">sprintf</span>(szStr, <span class="string">"heTemp坐标为:%f,%f,%f\n"</span>, fX1, fY1, fZ1);</span><br><span class="line">            <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">sprintf</span>(szStr, <span class="string">"fDiff:%f,fTemp:%f\n"</span>, fDiff, fTemp);</span><br><span class="line">            <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (std::<span class="built_in">find</span>(vh<span class="selector-class">.begin</span>(), vh<span class="selector-class">.end</span>(), heTemp) != vh<span class="selector-class">.end</span>())</span><br><span class="line">            {</span><br><span class="line">                continue;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="comment">//if (vh.size() != 1  heClosed-&gt;facet() == heTemp-&gt;facet())</span></span><br><span class="line">            {</span><br><span class="line">            <span class="comment">//  continue;</span></span><br><span class="line">            }</span><br><span class="line">            fDiff = fTemp;</span><br><span class="line">            next = heTemp;</span><br><span class="line">            <span class="comment">//sprintf(szStr, "next坐标为:%f,%f,%f\n", fX1, fY1, fZ1);</span></span><br><span class="line">            <span class="comment">//fprintf(fpLog, szStr);</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//去掉已经出现过的顶点</span></span><br><span class="line">    <span class="keyword">if</span> (next != heClosed)</span><br><span class="line">    {</span><br><span class="line">        heClosed = next;</span><br><span class="line">        vh<span class="selector-class">.push_back</span>(heClosed);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">glDisable</span><span class="params">(GL_LIGHTING)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glDisable</span><span class="params">(GL_DEPTH_TEST)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glColor3f</span><span class="params">(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glLineWidth</span><span class="params">(<span class="number">3.0</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glBegin</span><span class="params">(GL_LINE_STRIP)</span></span>;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; vh<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glVertex3d</span>(CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.x</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.y</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.z</span>()));</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"i:%d, x:%f,y:%f,z:%f\n"</span>, <span class="selector-tag">i</span>,</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.x</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.y</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.z</span>()));</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line">}</span><br><span class="line"><span class="function"><span class="title">glEnd</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="title">glFlush</span><span class="params">()</span></span>;</span><br></pre></td></tr></tbody></table></figure>
-<p>步骤三是欧拉操作。我的思路是将经过的边都变成边界边，方便第四步的搜索。首先，split_edge。然后，把沿着边的相邻的两个面沿着原来的边split_facet，再删除多余的面。那么，该经过的边就会变成边界边。代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; vh<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    Halfedge_handle hBegOne = vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">next</span>()-&gt;<span class="built_in">next</span>();</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog ,<span class="string">"处理i:%d\n"</span>, i);</span><br><span class="line">    <span class="built_in">split_edge</span>(vh<span class="selector-attr">[i]</span>);</span><br><span class="line"></span><br><span class="line">    Halfedge_handle hBegTwo = vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">opposite</span>()-&gt;<span class="built_in">next</span>();</span><br><span class="line">    Halfedge_handle hEndOne = vh<span class="selector-attr">[i]</span>;</span><br><span class="line">    Halfedge_handle hEndTwo = hBegTwo-&gt;<span class="built_in">next</span>()-&gt;<span class="built_in">next</span>();</span><br><span class="line">    <span class="built_in">split_facet</span>(hBegOne, hEndOne);</span><br><span class="line">    <span class="built_in">split_facet</span>(hBegTwo, hEndTwo);</span><br><span class="line">    <span class="built_in">erase_facet</span>(hEndOne);</span><br><span class="line">    <span class="built_in">erase_facet</span>(hBegTwo);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, <span class="string">"is border:%d\n"</span>, hBegOne-&gt;<span class="built_in">next</span>()-&gt;<span class="built_in">is_border_edge</span>());</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>步骤五，对整个模型的面进行dfs即可了。代码如下：</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">SetComponent</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">for</span> (Facet_iterator <span class="selector-tag">i</span> = <span class="built_in">facets_begin</span>(); <span class="selector-tag">i</span> != <span class="built_in">facets_end</span>(); ++i)</span><br><span class="line">    {</span><br><span class="line">        i-&gt;<span class="built_in">component</span>(-<span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int nComponent = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (Facet_iterator <span class="selector-tag">i</span> = <span class="built_in">facets_begin</span>(); <span class="selector-tag">i</span> != <span class="built_in">facets_end</span>(); ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (i-&gt;<span class="built_in">component</span>() == -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">DfsComponent</span>(<span class="selector-tag">i</span>, nComponent);</span><br><span class="line">            nComponent++;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">DfsComponent</span>(Facet_iterator <span class="selector-tag">i</span>, int nComponent)</span><br><span class="line">{</span><br><span class="line">    CString str;</span><br><span class="line">    str<span class="selector-class">.Format</span>(<span class="string">"处理第:%d个面"</span>, i-&gt;<span class="built_in">tag</span>());</span><br><span class="line">    <span class="comment">//AfxMessageBox(str);</span></span><br><span class="line">    i-&gt;<span class="built_in">component</span>(nComponent);</span><br><span class="line"></span><br><span class="line">    Halfedge_around_facet_circulator  j = i-&gt;<span class="built_in">facet_begin</span>();</span><br><span class="line"></span><br><span class="line">    do {</span><br><span class="line">        Halfedge_handle hfTemp = j;</span><br><span class="line">        <span class="keyword">if</span> (hfTemp-&gt;<span class="built_in">is_border_edge</span>())</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//AfxMessageBox("找到边界边");</span></span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        Halfedge_handle hf = j-&gt;<span class="built_in">opposite</span>();</span><br><span class="line">        Facet_handle fh = hf-&gt;<span class="built_in">facet</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fh-&gt;<span class="built_in">component</span>() == -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">DfsComponent</span>(fh, nComponent);</span><br><span class="line">        }</span><br><span class="line">    } while ( ++j != i-&gt;<span class="built_in">facet_begin</span>());</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>因为每个面里面都有个代表属于哪个组件的标记，这样就实现了模型的分割。利用该方法就能实现分割出狗的腿和头部等等。</p>
-<p>代码分享链接：链接: <a href="http://pan.baidu.com/s/1eQ50rf0">http://pan.baidu.com/s/1eQ50rf0</a> 密码: 7f6v</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">使用CGAL实现平面分割三维模型</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-08-05 21:29:42" itemprop="dateCreated datePublished" datetime="2013-08-05T21:29:42+08:00">2013-08-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
-                    <span itemprop="name">CGAL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL实现平面分割三维模型" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>433</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>关于cgal的使用就不介绍了。安装了也很麻烦，但是可以直接使用库，可以去我的上一篇文章下载，<a href="http://www.xpc-yx.com/2013/07/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84opengl%EF%BC%8Ccgal%EF%BC%8Cboost%E5%BA%93/" title="cgal下载">cgal下载</a>。<br>这里只简单的说说实现切割模型的方法。<br>判断所有的顶点在面的哪一面，如果一个面的<strong>所有点</strong>都在切割面的正面，那么这个面就是在切割面的positive部分，反之，如果一个面的所有点都在切割面的负面，那么这个面就是在切割面的negative部分，其余的面就是和切割面<strong>相交</strong>了。根据这个简单的原理，我们就可以用切割面把模型分为<strong>三部分</strong>。以下是我用cgal实现的效果。<br><img alt="" data-src="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png"></p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7623/27451282835_e4faaef81a_o.png"></p>
-<p><img alt="" data-src="https://c2.staticflickr.com/8/7010/27379670911_ebe4a7eace_o.png"><br>从图片来看，效果基本还行，只是切割处不光滑，但是对于这么简单的算法能实现的效果，已经不错了，性价比很高。<br>如果想进一步平滑分割处，有什么办法了？我们既然已经把模型内部的面分成三部分了，那么我们只需要计算会和切割面相交的面和切割面的交点，面和面的交点应该是一条直线，那么应该有2个交点，我们再沿着这条相交线，<strong>对模型内部的面进行分割</strong>就行了。如果分割后出现非三角面，我们还可以进行<strong>三角面片化</strong>。具体的实现也不会难如上青天。</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1451,7 +1443,7 @@ CImage CImage::operator=(const CImage yxImage)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">225</span>
+          <span class="site-state-item-count">227</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1464,7 +1456,7 @@ CImage CImage::operator=(const CImage yxImage)
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1516,12 +1508,12 @@ CImage CImage::operator=(const CImage yxImage)
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">680k</span>
+    <span title="站点总字数">692k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:18</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>

@@ -222,6 +222,241 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" class="post-title-link" itemprop="url">使用CGAL实现简单的模型分割</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-08-05 22:00:43" itemprop="dateCreated datePublished" datetime="2013-08-05T22:00:43+08:00">2013-08-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
+                    <span itemprop="name">CGAL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL实现简单的模型分割" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%9E%8B%E5%88%86%E5%89%B2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>第一步，先把鼠标轨迹点<strong>逆投影</strong>到三维世界的观察坐标系。<br>第二步，把第一步获得的三维坐标点集合<strong>投射到模型上面</strong>，获得笔画，就是模型内部的一些相互连接的边。<br>第三步，沿着第二步获得那些相互连接的边进行<strong>欧拉操作分裂边</strong>。可能需要多分割几次才会分割出模型的一部分。<br>第四步，<strong>搜索整个模型，对不同的部分进行标记</strong>。</p>
+<p>下面是实现的一些效果。绿色线是鼠标轨迹，红色线是投影到模型上面的边的连接线。</p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7641/27451248125_5ea8669c0c_o.png"></p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7046/27417002526_77b7704140_o.png"></p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7021/27174724330_dab475eef1_o.png"><br>下面具体解释下以上几个步骤。<br>步骤一，比较简单，网上代码一堆，不过要自己注意理解。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">glGetIntegerv</span><span class="params">(GL_VIEWPORT, m_nViewPort)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glGetDoublev</span><span class="params">(GL_PROJECTION_MATRIX, m_fProjmatrix)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glGetDoublev</span><span class="params">(GL_MODELVIEW_MATRIX, m_fMvmatrix)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="attribute">float</span> fWinX, fWinY, fWinZ;</span><br><span class="line">int nX, nY;</span><br><span class="line">double fX, fY, fZ;</span><br><span class="line"></span><br><span class="line">m_pt3ds<span class="selector-class">.clear</span>();</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; m_ptStroke<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    nX = m_ptStroke<span class="selector-attr">[i]</span>.x;</span><br><span class="line">    nY = m_nViewPort<span class="selector-attr">[3]</span> - m_ptStroke<span class="selector-attr">[i]</span><span class="selector-class">.y</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">glReadBuffer</span>(GL_BACK);</span><br><span class="line">    <span class="built_in">glReadPixels</span>(nX, nY, <span class="number">1</span>, <span class="number">1</span>, GL_DEPTH_COMPONENT, GL_FLOAT, fWinZ);</span><br><span class="line">    <span class="comment">//if (fabs(fWinZ - 1.0) &gt; 1e-8)</span></span><br><span class="line">    {</span><br><span class="line">        fWinX = nX;</span><br><span class="line">        fWinY = nY;</span><br><span class="line">        <span class="built_in">gluUnProject</span>(fWinX, fWinY, fWinZ, m_fMvmatrix, m_fProjmatrix, m_nViewPort,</span><br><span class="line">            fX, fY, fZ);</span><br><span class="line">        m_pt3ds<span class="selector-class">.push_back</span>(<span class="built_in">Point_3</span>(fX, fY, fZ));</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">m_ptStroke<span class="selector-class">.clear</span>();</span><br></pre></td></tr></tbody></table></figure>
+<p>该代码就是把m_ptStroke的点转化为观察坐标系的点m_pt3ds。<br>步骤二，大致思路如下：第一步，把所有鼠标经过的点，都投影回观察空间。第二步，找到离第一个鼠标点p[0]，最近的模型内的顶点pClosed。第三步，循环剩余的鼠标点，如果当前鼠标点离pClosed的相邻顶点更近的话，那么将pClosed更新为上一次找到的pClosed的相邻顶点。所有的这些，pClosed点就是笔画的投影点。</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">FILE* fpLog = <span class="built_in">fopen</span>(<span class="string">"log.txt"</span>, <span class="string">"w"</span>);</span><br><span class="line">char szStr<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">CString str;</span><br><span class="line">str<span class="selector-class">.Format</span>(<span class="string">"%d"</span>, pt3ds<span class="selector-class">.size</span>());</span><br><span class="line"><span class="comment">//AfxMessageBox(str);</span></span><br><span class="line"><span class="function"><span class="title">sprintf</span><span class="params">(szStr, <span class="string">"pt3ds.size():%d\n"</span>, pt3ds.size()</span></span>);</span><br><span class="line"><span class="function"><span class="title">fprintf</span><span class="params">(fpLog, <span class="string">"%s"</span>, szStr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (pt3ds<span class="selector-class">.size</span>() == <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line">    return;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">double fX = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[0]</span><span class="selector-class">.x</span>());</span><br><span class="line">double fY = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[0]</span><span class="selector-class">.y</span>());</span><br><span class="line">double fZ = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[0]</span><span class="selector-class">.z</span>());</span><br><span class="line">double fX1, fY1, fZ1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获得离第一个投影点最近的halfedge_handle</span></span><br><span class="line">Halfedge_handle heClosed = <span class="built_in">facets_begin</span>()-&gt;<span class="built_in">halfedge</span>();</span><br><span class="line">double fDiff = <span class="number">1</span>e10;</span><br><span class="line"><span class="function"><span class="title">for</span><span class="params">(Face_iterator pf = facets_begin()</span></span>;</span><br><span class="line">    pf != <span class="built_in">facets_end</span>(); pf++)</span><br><span class="line">{</span><br><span class="line">    Halfedge_handle he = pf-&gt;<span class="built_in">halfedge</span>();</span><br><span class="line"></span><br><span class="line">    do</span><br><span class="line">    {</span><br><span class="line">        Point_3 <span class="selector-tag">p</span> = he-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>();</span><br><span class="line">        fX1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.x</span>());</span><br><span class="line">        fY1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.y</span>());</span><br><span class="line">        fZ1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.z</span>());</span><br><span class="line">        double fTemp = (fX1 - fX) * (fX1 - fX) + (fY1 - fY) * (fY1 - fY)</span><br><span class="line">            + (fZ1 - fZ) * (fZ1 - fZ);</span><br><span class="line">        <span class="keyword">if</span> (fTemp &lt; fDiff)</span><br><span class="line">        {</span><br><span class="line">            fDiff = fTemp;</span><br><span class="line">            heClosed = he;</span><br><span class="line">        }</span><br><span class="line">        he = he-&gt;<span class="built_in">next</span>();</span><br><span class="line">    }<span class="built_in">while</span>(he!= pf-&gt;<span class="built_in">halfedge</span>());</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">vector&lt;Halfedge_handle&gt; vh;</span><br><span class="line">vh<span class="selector-class">.push_back</span>(heClosed);</span><br><span class="line"><span class="keyword">for</span> (unsigned <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; pt3ds<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"处理第:%d个笔画点\n"</span>, i);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">    fX = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[i]</span><span class="selector-class">.x</span>());</span><br><span class="line">    fY = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[i]</span><span class="selector-class">.y</span>());</span><br><span class="line">    fZ = CGAL::<span class="built_in">to_double</span>(pt3ds<span class="selector-attr">[i]</span><span class="selector-class">.z</span>());</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"笔画点坐标为:%f,%f,%f\n"</span>, fX, fY, fZ);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">    Halfedge_handle next = heClosed;</span><br><span class="line">    Point_3 <span class="selector-tag">p</span> = heClosed-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>();</span><br><span class="line"></span><br><span class="line">    fX1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.x</span>());</span><br><span class="line">    fY1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.y</span>());</span><br><span class="line">    fZ1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.z</span>());</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"heClosed坐标为:%f,%f,%f\n"</span>, fX1, fY1, fZ1);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">    fDiff = (fX1 - fX) * (fX1 - fX) + (fY1 - fY) * (fY1 - fY)</span><br><span class="line">        + (fZ1 - fZ) * (fZ1 - fZ);</span><br><span class="line"></span><br><span class="line">    Vertex_handle v = heClosed-&gt;<span class="built_in">vertex</span>();</span><br><span class="line">    Halfedge_around_vertex_circulator he, end;</span><br><span class="line">    he = end = v-&gt;<span class="built_in">vertex_begin</span>();</span><br><span class="line">    <span class="built_in">CGAL_For_all</span>(he, end)</span><br><span class="line">    {</span><br><span class="line">        Halfedge_handle heTemp = he-&gt;<span class="built_in">opposite</span>();</span><br><span class="line">        <span class="selector-tag">p</span> = heTemp-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>();</span><br><span class="line">        fX1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.x</span>());</span><br><span class="line">        fY1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.y</span>());</span><br><span class="line">        fZ1 = CGAL::<span class="built_in">to_double</span>(<span class="selector-tag">p</span><span class="selector-class">.z</span>());</span><br><span class="line"></span><br><span class="line">        double fTemp = (fX1 - fX) * (fX1 - fX) + (fY1 - fY) * (fY1 - fY)</span><br><span class="line">            + (fZ1 - fZ) * (fZ1 - fZ);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fTemp &lt; fDiff  heClosed != he)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">sprintf</span>(szStr, <span class="string">"heTemp坐标为:%f,%f,%f\n"</span>, fX1, fY1, fZ1);</span><br><span class="line">            <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">sprintf</span>(szStr, <span class="string">"fDiff:%f,fTemp:%f\n"</span>, fDiff, fTemp);</span><br><span class="line">            <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (std::<span class="built_in">find</span>(vh<span class="selector-class">.begin</span>(), vh<span class="selector-class">.end</span>(), heTemp) != vh<span class="selector-class">.end</span>())</span><br><span class="line">            {</span><br><span class="line">                continue;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="comment">//if (vh.size() != 1  heClosed-&gt;facet() == heTemp-&gt;facet())</span></span><br><span class="line">            {</span><br><span class="line">            <span class="comment">//  continue;</span></span><br><span class="line">            }</span><br><span class="line">            fDiff = fTemp;</span><br><span class="line">            next = heTemp;</span><br><span class="line">            <span class="comment">//sprintf(szStr, "next坐标为:%f,%f,%f\n", fX1, fY1, fZ1);</span></span><br><span class="line">            <span class="comment">//fprintf(fpLog, szStr);</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//去掉已经出现过的顶点</span></span><br><span class="line">    <span class="keyword">if</span> (next != heClosed)</span><br><span class="line">    {</span><br><span class="line">        heClosed = next;</span><br><span class="line">        vh<span class="selector-class">.push_back</span>(heClosed);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">glDisable</span><span class="params">(GL_LIGHTING)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glDisable</span><span class="params">(GL_DEPTH_TEST)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glColor3f</span><span class="params">(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glLineWidth</span><span class="params">(<span class="number">3.0</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="title">glBegin</span><span class="params">(GL_LINE_STRIP)</span></span>;</span><br><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">0</span>; <span class="selector-tag">i</span> &lt; vh<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glVertex3d</span>(CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.x</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.y</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.z</span>()));</span><br><span class="line">    <span class="built_in">sprintf</span>(szStr, <span class="string">"i:%d, x:%f,y:%f,z:%f\n"</span>, <span class="selector-tag">i</span>,</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.x</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.y</span>()),</span><br><span class="line">        CGAL::<span class="built_in">to_double</span>(vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">vertex</span>()-&gt;<span class="built_in">point</span>()<span class="selector-class">.z</span>()));</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, szStr);</span><br><span class="line">}</span><br><span class="line"><span class="function"><span class="title">glEnd</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="title">glFlush</span><span class="params">()</span></span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>步骤三是欧拉操作。我的思路是将经过的边都变成边界边，方便第四步的搜索。首先，split_edge。然后，把沿着边的相邻的两个面沿着原来的边split_facet，再删除多余的面。那么，该经过的边就会变成边界边。代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (int <span class="selector-tag">i</span> = <span class="number">1</span>; <span class="selector-tag">i</span> &lt; vh<span class="selector-class">.size</span>(); ++i)</span><br><span class="line">{</span><br><span class="line">    Halfedge_handle hBegOne = vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">next</span>()-&gt;<span class="built_in">next</span>();</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog ,<span class="string">"处理i:%d\n"</span>, i);</span><br><span class="line">    <span class="built_in">split_edge</span>(vh<span class="selector-attr">[i]</span>);</span><br><span class="line"></span><br><span class="line">    Halfedge_handle hBegTwo = vh<span class="selector-attr">[i]</span>-&gt;<span class="built_in">opposite</span>()-&gt;<span class="built_in">next</span>();</span><br><span class="line">    Halfedge_handle hEndOne = vh<span class="selector-attr">[i]</span>;</span><br><span class="line">    Halfedge_handle hEndTwo = hBegTwo-&gt;<span class="built_in">next</span>()-&gt;<span class="built_in">next</span>();</span><br><span class="line">    <span class="built_in">split_facet</span>(hBegOne, hEndOne);</span><br><span class="line">    <span class="built_in">split_facet</span>(hBegTwo, hEndTwo);</span><br><span class="line">    <span class="built_in">erase_facet</span>(hEndOne);</span><br><span class="line">    <span class="built_in">erase_facet</span>(hBegTwo);</span><br><span class="line">    <span class="built_in">fprintf</span>(fpLog, <span class="string">"is border:%d\n"</span>, hBegOne-&gt;<span class="built_in">next</span>()-&gt;<span class="built_in">is_border_edge</span>());</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>步骤五，对整个模型的面进行dfs即可了。代码如下：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">SetComponent</span>()</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">for</span> (Facet_iterator <span class="selector-tag">i</span> = <span class="built_in">facets_begin</span>(); <span class="selector-tag">i</span> != <span class="built_in">facets_end</span>(); ++i)</span><br><span class="line">    {</span><br><span class="line">        i-&gt;<span class="built_in">component</span>(-<span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    int nComponent = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (Facet_iterator <span class="selector-tag">i</span> = <span class="built_in">facets_begin</span>(); <span class="selector-tag">i</span> != <span class="built_in">facets_end</span>(); ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (i-&gt;<span class="built_in">component</span>() == -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">DfsComponent</span>(<span class="selector-tag">i</span>, nComponent);</span><br><span class="line">            nComponent++;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="built_in">DfsComponent</span>(Facet_iterator <span class="selector-tag">i</span>, int nComponent)</span><br><span class="line">{</span><br><span class="line">    CString str;</span><br><span class="line">    str<span class="selector-class">.Format</span>(<span class="string">"处理第:%d个面"</span>, i-&gt;<span class="built_in">tag</span>());</span><br><span class="line">    <span class="comment">//AfxMessageBox(str);</span></span><br><span class="line">    i-&gt;<span class="built_in">component</span>(nComponent);</span><br><span class="line"></span><br><span class="line">    Halfedge_around_facet_circulator  j = i-&gt;<span class="built_in">facet_begin</span>();</span><br><span class="line"></span><br><span class="line">    do {</span><br><span class="line">        Halfedge_handle hfTemp = j;</span><br><span class="line">        <span class="keyword">if</span> (hfTemp-&gt;<span class="built_in">is_border_edge</span>())</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//AfxMessageBox("找到边界边");</span></span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        Halfedge_handle hf = j-&gt;<span class="built_in">opposite</span>();</span><br><span class="line">        Facet_handle fh = hf-&gt;<span class="built_in">facet</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fh-&gt;<span class="built_in">component</span>() == -<span class="number">1</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">DfsComponent</span>(fh, nComponent);</span><br><span class="line">        }</span><br><span class="line">    } while ( ++j != i-&gt;<span class="built_in">facet_begin</span>());</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>因为每个面里面都有个代表属于哪个组件的标记，这样就实现了模型的分割。利用该方法就能实现分割出狗的腿和头部等等。</p>
+<p>代码分享链接：链接: <a href="http://pan.baidu.com/s/1eQ50rf0">http://pan.baidu.com/s/1eQ50rf0</a> 密码: 7f6v</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="远行">
+      <meta itemprop="description" content="远行的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远行's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">使用CGAL实现平面分割三维模型</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2013-08-05 21:29:42" itemprop="dateCreated datePublished" datetime="2013-08-05T21:29:42+08:00">2013-08-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">图形学</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/CGAL/" itemprop="url" rel="index">
+                    <span itemprop="name">CGAL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="使用CGAL实现平面分割三维模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2013/08/05/%E4%BD%BF%E7%94%A8CGAL%E5%AE%9E%E7%8E%B0%E5%B9%B3%E9%9D%A2%E5%88%86%E5%89%B2%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>433</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <html><head></head><body><p>关于cgal的使用就不介绍了。安装了也很麻烦，但是可以直接使用库，可以去我的上一篇文章下载，<a href="http://www.xpc-yx.com/2013/07/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84opengl%EF%BC%8Ccgal%EF%BC%8Cboost%E5%BA%93/" title="cgal下载">cgal下载</a>。<br>这里只简单的说说实现切割模型的方法。<br>判断所有的顶点在面的哪一面，如果一个面的<strong>所有点</strong>都在切割面的正面，那么这个面就是在切割面的positive部分，反之，如果一个面的所有点都在切割面的负面，那么这个面就是在切割面的negative部分，其余的面就是和切割面<strong>相交</strong>了。根据这个简单的原理，我们就可以用切割面把模型分为<strong>三部分</strong>。以下是我用cgal实现的效果。<br><img alt="" data-src="https://c2.staticflickr.com/8/7293/27351899732_519b2ca87f_o.png"></p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7623/27451282835_e4faaef81a_o.png"></p>
+<p><img alt="" data-src="https://c2.staticflickr.com/8/7010/27379670911_ebe4a7eace_o.png"><br>从图片来看，效果基本还行，只是切割处不光滑，但是对于这么简单的算法能实现的效果，已经不错了，性价比很高。<br>如果想进一步平滑分割处，有什么办法了？我们既然已经把模型内部的面分成三部分了，那么我们只需要计算会和切割面相交的面和切割面的交点，面和面的交点应该是一条直线，那么应该有2个交点，我们再沿着这条相交线，<strong>对模型内部的面进行分割</strong>就行了。如果分割后出现非三角面，我们还可以进行<strong>三角面片化</strong>。具体的实现也不会难如上青天。</p>
+</body></html>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+			  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/07/30/%E5%88%86%E4%BA%AB%E4%B8%8B%E6%88%91%E7%9A%84OpenGL%EF%BC%8CCGAL%EF%BC%8CBoost%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1098,242 +1333,6 @@
   
   
 
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" class="post-title-link" itemprop="url">OpenGL如何使用长宽非2次方的纹理</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-03-24 15:52:00" itemprop="dateCreated datePublished" datetime="2013-03-24T15:52:00+08:00">2013-03-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL如何使用长宽非2次方的纹理" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/24/OpenGL%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%95%BF%E5%AE%BD%E9%9D%9E2%E6%AC%A1%E6%96%B9%E7%9A%84%E7%BA%B9%E7%90%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>也许在某些显卡上面，直接用glTexImage2D是可以使用非2次方纹理的。但是在我的机子上，直接用出现<strong>运行错误</strong>了。有没有办法让我们的程序<strong>同时支持2次方纹理和非二次方纹理了，并且我们还不需要改变纹理坐标</strong>了。<br>有，我们可以判断纹理的宽和高是不是都为2次方的。如果都是，那么直接使用就行了。如果不是，我们先用<strong>glTexImage2D申请2次方的纹理</strong>，然后用<strong>glTexSubImage2D</strong>把我们的数据放进去，再计算<strong>纹理坐标的变化因子</strong>，最后用glMatrixMode进入<strong>纹理堆栈</strong>操作，用<strong>glScaled</strong>设置坐标变化因子，这一切做完之后就可以按照非二次方纹理使用了。<br>下面提供部分代码，大致可以看出操作方法。<br></p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">3</span>)</span><br><span class="line">{</span><br><span class="line">    nFormat = GL_BGR_EXT;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (m_nBytesPerPixel == <span class="number">4</span>)</span><br><span class="line">{</span><br><span class="line">    nFormat = GL_BGRA_EXT;<span class="comment">//bitmap内部数据是bgra格式,所以输入格式必须变化下</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (nWidthPowerOfTwo == m_nWidth  nHeightPowerOfTwo == m_nHeight)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//输出格式必须是GL_RGB,写成GL_BGR_EXT会出现空白</span></span><br><span class="line">    <span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, nWidthPowerOfTwo, nHeightPowerOfTwo, </span><br><span class="line">        <span class="number">0</span>, nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">{</span><br><span class="line">    <span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, nWidthPowerOfTwo, nHeightPowerOfTwo,</span><br><span class="line">    <span class="number">0</span>, nFormat, GL_UNSIGNED_BYTE, NULL);</span><br><span class="line">    <span class="built_in">glTexSubImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, m_nWidth, m_nHeight,</span><br><span class="line">    nFormat, GL_UNSIGNED_BYTE, m_byData);</span><br><span class="line">    fTexScaleX = <span class="number">1.0</span> * m_nWidth / nWidthPowerOfTwo;</span><br><span class="line">    fTexScaleY = <span class="number">1.0</span> * m_nHeight / nHeightPowerOfTwo;</span><br><span class="line">    <span class="comment">//设置纹理堆栈</span></span><br><span class="line">    <span class="built_in">glMatrixMode</span>(GL_TEXTURE);</span><br><span class="line">    <span class="built_in">glLoadIdentity</span>();</span><br><span class="line">    <span class="built_in">glScaled</span>(fTexScaleX, fTexScaleY, <span class="number">1.0</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-			  
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaopengcheng.top/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="远行">
-      <meta itemprop="description" content="远行的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远行's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" class="post-title-link" itemprop="url">OpenGL渲染Obj模型(模型·材质·纹理)</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2013-03-08 10:53:24" itemprop="dateCreated datePublished" datetime="2013-03-08T10:53:24+08:00">2013-03-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">图形学</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/OpenGL/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenGL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-            <span id="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" class="post-meta-item leancloud_visitors" data-flag-title="OpenGL渲染Obj模型(模型·材质·纹理)" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2013/03/08/OpenGL%E6%B8%B2%E6%9F%93Obj%E6%A8%A1%E5%9E%8B(%E6%A8%A1%E5%9E%8B%C2%B7%E6%9D%90%E8%B4%A8%C2%B7%E7%BA%B9%E7%90%86)/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <html><head></head><body><p>这是我寒假的一个作业吧，到最后基本是在学校完成的了。这个程序主要完成的功能是读取<strong>.obj文件</strong>，顺便读取了其附带<strong>.mtl文件</strong>，以及.mtl文件附带的<strong>.tga格式的纹理</strong>(我没有处理其它格式了，因为自己下载的几个模型的纹理都是这种图片格式)。然后，用透视投影，调整视点<strong>对准模型正中央</strong>，渲染在视口里面。程序也提供了键盘上下左右旋转，上下左右移动，放大放小的功能，已经鼠标旋转模型的功能，不过鼠标旋转的效果不好。</p>
-<p>首先要介绍下obj模型文件的格式，这个百度或者google肯定能找到不少文章。.obj文件里面主要是定义了点，线，面，当然还描述了其他元素。.mtl文件里面定义了模型的材质以及纹理的路径。我主要描述下我的代码用到的和假定的obj文件格式。<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>v 1.0  2.3 4.5 //代表一个三维点<br>vn 1.0 1.0 1.0 //法线<br>vt 0.3 0.4 //纹理坐标<br>p 1 //第一个v代表的点<br>l 1 2 //第一个v和第二个v连接的直线<br>f 1//  2//  3//  4//  //1,2,3,4构成的面，没有法线和纹理<br>f 1/1/1 2/1/1 3/1/1 4/1/1  //1,2,3,4构成的面,结构是顶点索引,纹理索引,法线索引<br>我的代码基本上假定没有法线和纹理索引的时候，<strong>后面也必须带//</strong>。<br>另外一个最重要的是定义材质库的路径，mtllib xxx.mtl。<br>至于obj文件更加详细的描述，请查阅更标准的文档吧。</p>
-<p>然后，介绍下.mtl的格式，我也只介绍我用到的东西。<br>比如下面这个材质文件的内容，<br>newmtl Arakkoa_Gray //定义材质设置的名字，一个材质库可能会出现多个材质设置<br>d 1.0 //透明度<br>Kd 1.000000 1.000000 1.000000 //模型散射颜色<br>Ka 0.250000 0.250000 0.250000 //模型环境颜色<br>Ks 0.000000 0.000000 0.000000//模型镜面颜色<br>Ke 0.000000 0.000000 0.000000//模型发射颜色<br>Ns 0.000000//模型镜面指数<br>map_Kd Arakkoa_Gray.tga//纹理路径<br>其它设置我就没有用到了。<br>至于tga图片的格式，请自行google吧。我只处理了<strong>未压缩</strong>版本的.tga纹理，格式类似于.bmp文件，处理起来也比较简单。</p>
-<p>以下是我渲染一个魔兽世界模型的效果，<br><img alt="" data-src="https://c3.staticflickr.com/8/7122/27174491730_279a2a593f_o.jpg"></p>
-<p><img alt="" data-src="https://c4.staticflickr.com/8/7331/26843716883_1206d1f53e_o.jpg"></p>
-<p>基本上<strong>启用光照加上纹理</strong>之后的渲染效果还行。下面我来讲述我整个代码的结构吧。</p>
-<p>说实话，这个程序虽然功能不多，但是也可以写出不少代码来的，虽然没多少啰嗦代码，也有近千行。我也定义了不少结构体和类。如下图，<br><img alt="" data-src="https://c2.staticflickr.com/8/7554/27451030815_10517061ce_o.png"><br>S开头的是结构体，主要定义了顶点，法线，纹理的数据，以及三者的索引(SVertexData)，rgb，Tga文件头。其余的，比如CPoint，CLine，CFace对应obj文件里面的p,l,f元素，这三个类里面有<strong>各自的渲染函数</strong>。<br>CObj类最复杂，里面有顶点，法线，纹理坐标的数据集合，为了方便，我使用了vector，同时用<strong>reserve预留空间</strong>。还有，点集合，线集合，面集合，材质设置的集合。CObj的渲染函数则是调用点，线，面集合里面的元素对应的渲染函数。其中，最复杂的是面的渲染函数。面的渲染函数会根据材质设置是否改变来<strong>更换材质</strong>，然后再渲染每个面，同时每个面里面也有个vector集合包含顶点等的索引，所以我的程序<strong>不仅仅支持三角形面</strong>。CObj类里面最复杂的是读取.obj模型的函数，函数写了100多行，我也没进行功能拆分了，不细说了，至于读取材质的相对简单点。<br>CMaterial就描述了我使用的集中材质设置，包括一个CTgaTex类成员等。基本上是在读取的时候初始化下材质，更换材质的时候改变下。CTgaTex主要是读取未压缩的tga文件，并且用读取的数据初始化opengl的纹理设置，更改纹理设置的时候，CMaterial会调用其更改纹理。<br>CBox类也比较复杂，因为该类关系到透视投影，视点等。我是这样考虑的，我读取模型的时候，确定包括整个模型顶点的<strong>最小长方体</strong>，存储在CBox里面。然后，CBox会求出该长方体的<strong>外接球</strong>，我再把操作的对象改变成该外接球，也就是我的透视投影啊，观察点设置，平移，放缩，旋转什么的都针对该外接球了。所以啊，我对模型操作的函数全部放置在CBox类里面了。我的透视函数是调用的gluPerspective，<strong>近平面是球的前切面，远平面是球的后切面，我的观察点是球心，视点是正对球心离开其4-10倍半径距离的点</strong>。<br>至于其余全局函数的实现就不介绍了。</p>
-<p>给出一些关键的类定义，看了这些类定义，就知道我的代码结构了。<br>//obj的定义</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _XPC_YX_OBJ_H</span><br><span class="line"><span class="selector-id">#define</span> _XPC_YX_OBJ_H</span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"vertex.h"</span></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"mtl.h"</span></span><br><span class="line"><span class="selector-id">#include</span></span><br><span class="line">using std::vector;</span><br><span class="line"></span><br><span class="line"><span class="comment">//点元素</span></span><br><span class="line">class CPoint</span><br><span class="line">{</span><br><span class="line">    friend class CObj;</span><br><span class="line">public:</span><br><span class="line">    void <span class="built_in">Render</span>(CObj obj);<span class="comment">//绘制点</span></span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int m_nVI;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">//线元素</span></span><br><span class="line">class CLine</span><br><span class="line">{</span><br><span class="line">    friend class CObj;</span><br><span class="line">public:</span><br><span class="line">    void <span class="built_in">Render</span>(CObj obj);<span class="comment">//绘制点</span></span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    vector m_vis;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">//面元素</span></span><br><span class="line">class CFace</span><br><span class="line">{</span><br><span class="line">    friend class CObj;</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CFace</span>() { m_nNewMtlI = -<span class="number">1</span>; }</span><br><span class="line">    void <span class="built_in">Render</span>(CObj obj);<span class="comment">//绘制面</span></span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    vector m_vds;</span><br><span class="line">    int m_nNewMtlI;<span class="comment">//所使用新的材质索引(如果不修改材质库此索引为-1)</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class CBox;</span><br><span class="line"><span class="comment">//obj模型</span></span><br><span class="line">class CObj</span><br><span class="line">{</span><br><span class="line">    friend class CPoint;</span><br><span class="line">    friend class CLine;</span><br><span class="line">    friend class CFace;</span><br><span class="line"></span><br><span class="line">    enum {VERTEX = <span class="number">0</span>, TEXTURE = <span class="number">1</span>, NORMAL = <span class="number">2</span>};</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CObj</span>(CBox* pBox) { m_pBox = pBox; }</span><br><span class="line">    <span class="built_in">CObj</span>(const char* pcszFileName) { <span class="built_in">LoadFromFile</span>(pcszFileName); }</span><br><span class="line">    int <span class="built_in">LoadFromFile</span>(const char* pcszFileName);<span class="comment">//从文件加载模型</span></span><br><span class="line">    int <span class="built_in">LoadMaterials</span>(const char* pcszFileName);<span class="comment">//加载材质库</span></span><br><span class="line">    void <span class="built_in">Render</span>();<span class="comment">//绘制该模型</span></span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    static const int VERTEX_INIT_NUM;</span><br><span class="line">    static const int POINT_INIT_NUM;</span><br><span class="line">    static const int LINE_INIT_NUM;</span><br><span class="line">    static const int FACE_INIT_NUM;</span><br><span class="line">    vector m_vs;<span class="comment">//顶点坐标集合</span></span><br><span class="line">    vector m_vts;<span class="comment">//顶点纹理坐标集合</span></span><br><span class="line">    vector m_vns;<span class="comment">//顶点法线集合</span></span><br><span class="line">    vector m_ps;<span class="comment">//点集合</span></span><br><span class="line">    vector m_ls;<span class="comment">//线集合</span></span><br><span class="line">    vector m_fs;<span class="comment">//面集合</span></span><br><span class="line">    vector m_ms;<span class="comment">//材质库</span></span><br><span class="line">    CBox* m_pBox;</span><br><span class="line">};</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
-<p>//CBox的定义</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">class CBox</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    void <span class="built_in">Init</span>()</span><br><span class="line">    {</span><br><span class="line">        m_fXMin = m_fYMin = m_fZMin = INT_MAX;</span><br><span class="line">        m_fXMax = m_fYMax = m_fZMax = INT_MIN;</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">InitBoxInfo</span>();</span><br><span class="line">    void <span class="built_in">Adjust</span>(SVertex v) { <span class="built_in">Adjust</span>(v<span class="selector-class">.fX</span>, v<span class="selector-class">.fY</span>, v.fZ); }</span><br><span class="line">    void <span class="built_in">Adjust</span>(double fX, double fY, double fZ);</span><br><span class="line">    void <span class="built_in">LookAtBox</span>(int nW, int nH);</span><br><span class="line">    void <span class="built_in">Big</span>(int nPercent);</span><br><span class="line">    void <span class="built_in">Small</span>(int nPercent);</span><br><span class="line">    void <span class="built_in">Left</span>(int nPercent);</span><br><span class="line">    void <span class="built_in">Right</span>(int nPercent);</span><br><span class="line">    void <span class="built_in">Up</span>(int nPercent);</span><br><span class="line">    void <span class="built_in">Down</span>(int nPercent);</span><br><span class="line">    bool <span class="built_in">IsInBox</span>(SVertex vertex);</span><br><span class="line">    void <span class="built_in">Move</span>(SVertex one, SVertex two);<span class="comment">//移动模型</span></span><br><span class="line">    void <span class="built_in">Rotate</span>(SVertex one, SVertex two);<span class="comment">//旋转模型</span></span><br><span class="line">    void <span class="built_in">RotateLeft</span>(double fTheta);</span><br><span class="line">    void <span class="built_in">RotateRight</span>(double fTheta);</span><br><span class="line">    void <span class="built_in">RotateUp</span>(double fTheta);</span><br><span class="line">    void <span class="built_in">RotateDown</span>(double fTheta);</span><br><span class="line">    void <span class="built_in">SetLight</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    double m_fXMin;</span><br><span class="line">    double m_fXMax;</span><br><span class="line">    double m_fYMin;</span><br><span class="line">    double m_fYMax;</span><br><span class="line">    double m_fZMin;</span><br><span class="line">    double m_fZMax;</span><br><span class="line">    SVertex m_center;<span class="comment">//模型原本的外接球中心</span></span><br><span class="line">    double m_fRadius;<span class="comment">//外接球的半径</span></span><br><span class="line">    double m_fDistance;<span class="comment">//观察点与外接球的距离</span></span><br><span class="line">    double m_fTheta;<span class="comment">//视角</span></span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>//材质类的定义</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _XPC_YX_MTL_H</span><br><span class="line"><span class="selector-id">#define</span> _XPC_YX_MTL_H</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#include</span> <span class="string">"tga.h"</span></span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">class CObj;</span><br><span class="line"></span><br><span class="line">struct SRgb</span><br><span class="line">{</span><br><span class="line">    <span class="attribute">float</span> fR;</span><br><span class="line">    <span class="attribute">float</span> fG;</span><br><span class="line">    <span class="attribute">float</span> fB;</span><br><span class="line">    <span class="attribute">float</span> fA;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class CMaterial</span><br><span class="line">{</span><br><span class="line">    friend class CObj;</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CMaterial</span>()</span><br><span class="line">    {</span><br><span class="line">        m_emission<span class="selector-class">.fR</span> = m_emission<span class="selector-class">.fG</span> = m_emission<span class="selector-class">.fB</span> = <span class="number">0.0</span>;</span><br><span class="line">        m_fTrans = <span class="number">1.0</span>;</span><br><span class="line">    }</span><br><span class="line">    void <span class="built_in">InitTex</span>();</span><br><span class="line">    void <span class="built_in">Set</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    SRgb m_ambient;<span class="comment">//材质的环境颜色</span></span><br><span class="line">    SRgb m_diffuse;<span class="comment">//</span></span><br><span class="line">    SRgb m_specular;</span><br><span class="line">    SRgb m_emission;</span><br><span class="line">    <span class="attribute">float</span> m_fShiness;<span class="comment">//镜面指数</span></span><br><span class="line">    <span class="attribute">float</span> m_fTrans;<span class="comment">//透明度</span></span><br><span class="line">    char m_szName<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    char m_szTextureName<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    CTgaTex m_tgaTex;</span><br><span class="line">};</span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
-<p>//tga纹理的定义</p>
-<figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#ifndef</span> _XPC_YX_TGA_H</span><br><span class="line"><span class="selector-id">#define</span> _XPC_YX_TGA_H</span><br><span class="line"><span class="selector-id">#include</span> &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#define</span> <span class="built_in">RGB16</span>(r,g,b)   ( ((r&gt;&gt;<span class="number">3</span>) &lt;&lt; <span class="number">10</span>) + ((g&gt;&gt;<span class="number">3</span>) &lt;&lt; <span class="number">5</span>) + (<span class="selector-tag">b</span> &gt;&gt; <span class="number">3</span>) )</span><br><span class="line"><span class="selector-id">#define</span> <span class="built_in">RGB24</span>(r,g,b)   ( ((r) &lt;&lt; <span class="number">16</span>) + ((g) &lt;&lt; <span class="number">8</span>) + (b) )</span><br><span class="line"></span><br><span class="line">typedef unsigned char BYTE;</span><br><span class="line"><span class="comment">//tga文件头</span></span><br><span class="line">struct STgaHeader</span><br><span class="line">{</span><br><span class="line">    BYTE  byImageInfoByteCnt;    <span class="comment">//The image information length, in byte</span></span><br><span class="line">    BYTE  byColorTableExist;       <span class="comment">//0-have not color table,1-have</span></span><br><span class="line">    BYTE  byImageType;              <span class="comment">//Image type,2-uncompare RGB image,10-compare RGB image</span></span><br><span class="line">    BYTE  byColorTableInfo<span class="selector-attr">[5]</span>;    <span class="comment">//Color table information</span></span><br><span class="line">    unsigned short uXOrigin;</span><br><span class="line">    unsigned short uYOrigin;</span><br><span class="line">    unsigned short uWidth;</span><br><span class="line">    unsigned short uHeight;</span><br><span class="line">    unsigned char  chBitsPerPixel;  <span class="comment">//每像素的字节数</span></span><br><span class="line">    unsigned char  chImageDescriptor;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">class CTgaTex</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">CTgaTex</span>() { byData = <span class="number">0</span>; m_szTexName<span class="selector-attr">[0]</span> = <span class="number">0</span>; }</span><br><span class="line">    <span class="built_in">CTgaTex</span>(const char* pcszFileName) { byData = <span class="number">0</span>; <span class="built_in">LoadTga</span>(pcszFileName); }</span><br><span class="line">    ~<span class="built_in">CTgaTex</span>() { <span class="keyword">if</span> (byData) <span class="built_in">free</span>(byData); }</span><br><span class="line">    int <span class="built_in">LoadTga</span>(const char* pcszFileName);</span><br><span class="line">    void <span class="built_in">InitTex</span>();</span><br><span class="line">    void <span class="built_in">SetTexture</span>();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    STgaHeader m_header;</span><br><span class="line">    BYTE* byData;</span><br><span class="line">    char m_szTexName<span class="selector-attr">[MAX_PATH]</span>;</span><br><span class="line">    unsigned m_uTexName;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></tbody></table></figure>
-<p>如果你需要完整的代码，可以留言或者给我发邮件，代码写得不怎么样，不过还是尽力写好一点的了。里面肯定会有让老手觉得不规范的地方的。</p>
-<p>由于很多人留言询问代码，为了方便，已上传百度网盘，分享地址：<a href="http://pan.baidu.com/s/1eQJ9mF4" title="渲染obj模型">http://pan.baidu.com/s/1eQJ9mF4</a> 密码：ovnv</p>
-</body></html>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1384,7 +1383,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">225</span>
+          <span class="site-state-item-count">227</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1397,7 +1396,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1449,12 +1448,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">680k</span>
+    <span title="站点总字数">692k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:18</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v7.0.0
   </div>
